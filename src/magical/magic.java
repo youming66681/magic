@@ -1,4 +1,4 @@
-// In src/magical/magicMod.java (after renaming the file to magic.java)
+// In src/magical/magic.java (after renaming the file to magic.java)
 package magical;
 
 import arc.*;
@@ -9,6 +9,9 @@ import mindustry.ui.dialogs.*;
 
 public class magic extends Mod {
     public static String ModName = "magic";
+    public static String name(String add){
+        return ModName + "-" + add;
+    }
     public magic() {}
     @Override
     public void loadContent(){
