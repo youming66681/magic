@@ -3,7 +3,7 @@
 // (powered by FernFlower decompiler)
 //
 
-package magic.content;
+package magical.content;
 
 import arc.graphics.Color;
 import mindustry.content.Items;
