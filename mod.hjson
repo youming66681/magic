@@ -1,17 +1,16 @@
 #the mod name as displayed in-game
-displayName: "Java Mod Template"
+displayName: "magic"
 
 #the internal name of your mod
-name: "magic-java-mod"
+name: "magic"
 
 #your name
-author: "You"
+author: "幻境模组制作团队"
 
 #the fully qualified main class of the mod
-main: "magic.ExampleJavaMod"
-
+main: "magic.magical"
 #the mod description as seen in the mod dialog
-description: "A Mindustry Java mod template."
+description: "幻境永无止境"
 
 #the mod version
 version: 1.0
