@@ -1,3 +1,4 @@
+// In src/magical/magicMod.java (after renaming the file to magic.java)
 package magical;
 
 import arc.*;
@@ -6,7 +7,7 @@ import mindustry.game.EventType.*;
 import mindustry.mod.*;
 import mindustry.ui.dialogs.*;
 
-public class magic extends Mod{
+public class magic extends Mod {
     public static String ModName = "magic";
     public magic() {}
     @Override
