@@ -9,7 +9,7 @@ import arc.graphics.Color;
 import mindustry.content.Items;
 import mindustry.type.Item;
 
-public class MEEItems {
+public class MLItems {
     public static Item 幻钢;
     public static Item 幻钛钢;
     public static Item 玄晶;
