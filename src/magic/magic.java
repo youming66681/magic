@@ -12,5 +12,4 @@ public class magic extends Mod{
     public void loadContent(){
         MLItems.load();
     }
-
 }
