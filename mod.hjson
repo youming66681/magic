@@ -8,7 +8,7 @@ name: "magic"
 author: "幻境模组制作团队"
 
 #the fully qualified main class of the mod
-main: "magic.magical"
+main: "magical.magic"
 #the mod description as seen in the mod dialog
 description: "幻境永无止境"
 
