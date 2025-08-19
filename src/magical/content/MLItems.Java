@@ -5,9 +5,9 @@
 
 package magical.content;
 
-/*import arc.graphics.Color;
+import arc.graphics.Color;
 import mindustry.content.Items;
-import mindustry.type.Item;*/
+import mindustry.type.Item;
 
 public class MLItems {
     public static Item HG;
