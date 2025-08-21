@@ -10,7 +10,7 @@ import mindustry.Vars;
 import magical.content.MLItems;
 
 public class magic extends Mod {
-    public static String ModName = "magic";
+    public static final String ModName = "magic";
     public static Mods.LoadedMod mod;
 
     @Override

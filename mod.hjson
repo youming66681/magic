@@ -16,7 +16,7 @@ description: "幻境永无止境"
 version: 1.0
 
 #the minimum game build required to run this mod
-minGameVersion: 150
+minGameVersion: 149
 
 #this is a java mod
 java: true
