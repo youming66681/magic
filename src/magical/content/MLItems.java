@@ -5,7 +5,6 @@ import arc.graphics.*;
 import mindustry.type.*;
 
 public class MLItems {
-    public static void load(){
         public static Item hg = new Item("幻钢", Color.valueOf("97B5ED")) {
             {
                 description = "用于建造幻境工业的开端";
@@ -13,5 +12,7 @@ public class MLItems {
                 cost = 1.0F;
             }
         };
+    public static void load(){
+
     }
 }
