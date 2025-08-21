@@ -6,6 +6,8 @@ import arc.util.*;
 import mindustry.game.EventType.*;
 import mindustry.mod.*;
 import mindustry.ui.dialogs.*;
+import mindustry.Vars;
+import magica.content.MLItems;
 
 public class magic extends Mod {
     public static String ModName = "magic";
