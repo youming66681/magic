@@ -10,11 +10,8 @@ import mindustry.Vars;
 import java.lang.reflect.Field;
 
 public class MLSounds {
-        public static Sound
-                flying, hugeExplosion, missileX, lancer
-                ;
+        public static Sound;
 
-        public static void load() {
             try {
                 for (Field field : MLSounds.class.getFields()) {
                     if (field.getType().equals(Sound.class)) {
@@ -24,7 +21,6 @@ public class MLSounds {
             } catch (IllegalAccessException e) {
                 Log.err(e);
             }
-        }
 
         private static Sound loadSound(String soundName) {
             if (Vars.headless) {
@@ -39,4 +35,5 @@ public class MLSounds {
             desc.errored = Throwable::printStackTrace;
             return sound;
         }
+    public static void load() {}
 }
