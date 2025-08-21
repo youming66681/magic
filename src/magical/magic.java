@@ -10,8 +10,12 @@ import mindustry.Vars;
 import magical.content.MLItems;
 
 public class magic extends Mod {
-    public static final String ModName = "magic";
+    public static final String ModName = "magic-industry";
     public static Mods.LoadedMod mod;
+    public static String name(String add){
+        return ModName + "-" + add;
+    }
+    public magic() {}
 
     @Override
     public void loadContent() {
