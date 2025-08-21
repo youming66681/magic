@@ -1,4 +1,4 @@
-package magical.conten;
+package magical.content;
 
 import arc.Core;
 import arc.graphics.Color;
