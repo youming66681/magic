@@ -8,14 +8,12 @@ import mindustry.mod.*;
 import mindustry.ui.dialogs.*;
 
 public class magic extends Mod {
-    public static String ModName = "magic-industry";
-    public static String name(String add){
-        return ModName + "-" + add;
-    }
-    public magic() {}
+    public static final ModName = "magic";
+    public static Mods.LoadedMod mod;
 
     @Override
     public void loadContent() {
+        mod = Vars.mods.getMod(this.getClass());
         MLItems.load();
     }
 }
