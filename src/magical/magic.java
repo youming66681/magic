@@ -8,7 +8,7 @@ import mindustry.mod.*;
 import mindustry.ui.dialogs.*;
 import mindustry.Vars;
 import magical.content.MLItems;
-import magical.content.MLSounds;
+//import magical.content.MLSounds;
 
 public class magic extends Mod {
     public static final String ModName = "magic-industry";
@@ -21,6 +21,6 @@ public class magic extends Mod {
     public void loadContent() {
         mod = Vars.mods.getMod(this.getClass());
         MLItems.load();
-        MLSounds.load();
+        //MLSounds.load();
     }
 }
