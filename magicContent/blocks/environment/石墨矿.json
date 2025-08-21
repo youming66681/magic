@@ -1,0 +1,12 @@
+{
+"name":"石墨矿",
+"type":"OreBlock",
+"playerUnmineable":true,
+"Vaviants":3,
+"itemDrop":"graphite",
+"mapColor":"663300",
+"useColor":true,
+"oreDefault":true,
+"oreThreshold":0.8,
+"oreScale":21
+}

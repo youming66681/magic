@@ -45,20 +45,6 @@ import mindustry.world.draw.*;
 import mindustry.world.meta.*;
 
 public class MLBlocks {
-    public static Block hg = new OreBlock(MLItems.hg) {{
-        oreDefault = true;
-        oreThreshold = 0.8f;
-        oreScale = 21.0f;
-    }};
-    public static Block smoker = new OreBlock(Items.graphite) {{
-        oreDefault = true;
-        oreThreshold = 0.8f;
-        oreScale = 21.0f;
-    }};
-    public static Block ys = new OreBlock(MLItems.ys) {{
-        oreDefault = true;
-        oreThreshold = 0.9f;
-        oreScale = 23.0f;
-    }};
+
     public static void load(){}
 }

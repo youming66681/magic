@@ -1,0 +1,12 @@
+{
+"name":"幻钢",
+"type":"OreBlock",
+"playerUnmineable":true,
+"Vaviants":4,
+"itemDrop":"幻钢",
+"mapColor":"99CCFF",
+"useColor":true,
+"oreDefault":true,
+"oreThreshold":0.8,
+"oreScale":21
+}
