@@ -16,7 +16,6 @@ public class magic extends Mod {
         return ModName + "-" + add;
     }
     public magic() {}
-
     @Override
     public void loadContent() {
         mod = Vars.mods.getMod(this.getClass());
