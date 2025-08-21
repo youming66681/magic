@@ -8,7 +8,7 @@ import mindustry.mod.*;
 import mindustry.ui.dialogs.*;
 
 public class magic extends Mod {
-    public static final ModName = "magic";
+    public static String ModName = "magic";
     public static Mods.LoadedMod mod;
 
     @Override
