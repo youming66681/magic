@@ -24,5 +24,5 @@ public class magic extends Mod {
         MLItems.load();
         //MLSounds.load();
         MLBlocks.load();
-    }
+     }
 }
