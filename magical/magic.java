@@ -9,7 +9,6 @@ import mindustry.ui.dialogs.*;
 import mindustry.Vars;
 import magical.content.MLItems;
 import magical.content.MLBlocks;
-import MLcontent;
 //import magical.content.MLSounds;
 
 public class magic extends Mod {
