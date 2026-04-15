@@ -1,0 +1,7 @@
+{
+	"type": "floor",
+	"name": "幻钢溶液沉积物",
+	"speedMultiplier": 0.8,
+	"variants":3,
+	"playerUnmineable": true
+}

@@ -1,0 +1,12 @@
+{
+"name":"荧羽石矿",
+"type":"OreBlock",
+"playerUnmineable":true,
+"Vaviants":6,
+"itemDrop":"荧羽石",
+"mapColor":"CCCEDBFF",
+"useColor":true,
+"oreDefault":true,
+"oreThreshold":0.8,
+"oreScale":18
+}
