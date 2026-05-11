@@ -24,7 +24,7 @@ import magical.content.MLPlanets;
 
 public class MLPlanets {
 
-    public static Planet Cecilia = new Planet("塞西利亚", sun, 1f, 3.3f){{
+    public static Planet Cecilia = new Planet("塞西利亚", Planets.sun, 1, 3.3f){{
         loadPlanetData = true;
         generator = new SerpuloPlanetGenerator();
         meshLoader = () -> new HexMesh(this, 6);
@@ -57,10 +57,6 @@ public class MLPlanets {
         allowSelfSectorLaunch = false;
         landCloudColor = Pal.spore.cpy().a(0.5f);
 
-        sectorCaptureReplacements = ObjectMap.of(
-                Blocks.metalTiles12, Blocks.metalTiles11,
-                Blocks.metalTiles6, Blocks.metalTiles10
-        );
     }};
     public static void load(){}
 }
