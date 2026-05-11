@@ -16,9 +16,9 @@ import magical.content.MLUnitTypes;
 import magical.content.MLTechTree;
 import magical.content.MLPlanets;
 
-public static Block jzhx;
-
 public class MLBlocks {
+    public static Block jzhx;
+
     public static void load(){
         jzhx = new BaseCore("基座核心"){{
             requirements(Category.effect, with(MLItems.幻钛钢, 200, MLItems.玄晶, 200, MLItems.幻荧合金, 100));
