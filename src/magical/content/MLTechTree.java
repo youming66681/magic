@@ -15,6 +15,5 @@ import magical.content.MLUnitTypes;
 import magical.content.MLPlanets;
 
 public class MLTechTree {
-
     public static void load(){}
 }

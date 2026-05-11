@@ -17,6 +17,5 @@ import magical.content.MLTechTree;
 import magical.content.MLPlanets;
 
 public class MLBlocks {
-
     public static void load(){}
 }
