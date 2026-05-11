@@ -10,7 +10,7 @@ import mindustry.game.Objectives.*;
 import mindustry.type.*;
 
 import magical.content.MLItems;
-//import magical.content.MLBlocks;
+import magical.content.MLBlocks;
 import magical.content.MLUnitTypes;
 import magical.content.MLPlanets;
 
