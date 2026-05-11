@@ -5,6 +5,7 @@ import mindustry.world.Tile;
 import mindustry.world.blocks.storage.CoreBlock;
 
 public class ABaseCore extends CoreBlock {
+    public int unitCapModifier;
 
     public ABaseCore(String name) {
         super(name);
