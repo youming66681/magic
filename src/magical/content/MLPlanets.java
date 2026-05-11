@@ -23,7 +23,7 @@ import magical.content.MLTechTree;
 import magical.content.MLPlanets;
 
 public class MLPlanets {
-    public static Planet Cecilia
+    public static Planet Cecilia;
 
     public static void load() {
 

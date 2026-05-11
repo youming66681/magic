@@ -11,7 +11,6 @@ import magical.content.MLPlanets;
 
 public class MLItems {
     public static void load() {
-
         public static Item yjbl = new Item("有机玻璃", Color.valueOf("404040FF")) {{
             hardness = 1;
             cost = 1.0F;
