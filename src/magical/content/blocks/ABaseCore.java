@@ -4,9 +4,9 @@ import mindustry.game.Team;
 import mindustry.world.Tile;
 import mindustry.world.blocks.storage.CoreBlock;
 
-public class BaseCore extends CoreBlock {
+public class ABaseCore extends CoreBlock {
 
-    public BaseCore(String name) {
+    public ABaseCore(String name) {
         super(name);
     }
     public boolean canBreak(Tile tile){

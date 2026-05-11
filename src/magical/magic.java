@@ -24,6 +24,8 @@ public class magic extends Mod {
     @Override
     public void loadContent() {
         mod = Vars.mods.getMod(this.getClass());
+        ABaseCore.load();
+
         MLItems.load();
         //MLSounds.load();
         MLBlocks.load();
