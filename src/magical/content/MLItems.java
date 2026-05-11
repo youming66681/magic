@@ -75,5 +75,14 @@ public class MLItems {
             hardness = 8;
             cost = 1.0F;
     }};
+    public static Item nmthj = new Item("纳米碳合金", Color.valueOf("D1EFFFFF")) {{
+        description = "最坚硬的材料";
+        hardness = 20;
+        cost = 1.0F;
+        radioactivity = 2.6F;
+        explosiveness = 6.0F;
+        flammability = 1.0F;
+        charge = 12.5F;
+    }};
     public static void load(){}
 }
