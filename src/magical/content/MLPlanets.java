@@ -24,7 +24,7 @@ import magical.content.MLPlanets;
 
 public class MLPlanets {
 
-    public static Planet Cecilia = new Planet("塞西利亚", Planets.sun, 1, 3.3f){{
+    public static Planet Cecilia = new Planet("塞西利亚", Planets.sun, 1f, 3){{
         loadPlanetData = true;
         generator = new SerpuloPlanetGenerator();
         meshLoader = () -> new HexMesh(this, 6);
