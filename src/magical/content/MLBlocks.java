@@ -19,7 +19,7 @@ public class MLBlocks {
 
     public static void load(){
         jzhx = new CoreBlock("基座核心"){{
-            requirements(Category.effect, with(MLItems.htg, 200, MLItems.xj, 200, MLItems.hyhj, 100));
+            requirements(Category.effect, with(MLItems.幻钛钢, 200, MLItems.玄晶, 200, MLItems.幻荧合金, 100));
 
             unitType = UnitTypes.alpha;
             health = 500;
