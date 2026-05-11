@@ -19,7 +19,7 @@ public class MLBlocks {
 
     public static void load(){
         jzhx = new CoreBlock("基座核心"){{
-            requirements(Category.effect, ItemStack.with{(MLItems.htg, 200, MLItems.xj, 200, MLItems.hyhj, 100}));
+            requirements(Category.effect, ItemStack.with(new Object[]{(MLItems.htg, 200, MLItems.xj, 200, MLItems.hyhj, 100})));
 
             unitType = UnitTypes.alpha;
             health = 500;
