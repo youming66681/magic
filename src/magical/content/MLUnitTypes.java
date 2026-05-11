@@ -33,7 +33,7 @@ import magical.content.MLBlocks;
 import magical.content.MLTechTree;
 import magical.content.MLPlanets;
 
-public class UnitTypes {
+public class MLUnitTypes {
     //星旗a1~a6
     public static void load(){}
 };
