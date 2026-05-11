@@ -17,7 +17,6 @@ import magical.blocks.ABaseCore;
 //import magical.content.MLSounds;
 
 public class magic extends Mod {
-    public static final ABaseCore aBaseCore = new ABaseCore();
 
     public static final String ModName = "magic-industry";
     public static Mods.LoadedMod mod;

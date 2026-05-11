@@ -15,7 +15,7 @@ import magical.content.MLPlanets;
 import magical.blocks.ABaseCore;
 
 public class MLBlocks {
-    public static ABaseCore jzhx;
+    public static Block jzhx;
 
     public static void load(){
         jzhx = new CoreBlock("基座核心"){{
@@ -28,6 +28,7 @@ public class MLBlocks {
             thrusterLength = 20f;
 
             unitCapModifier = 5;
+
         }};
     }
 }
