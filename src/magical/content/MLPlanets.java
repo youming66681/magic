@@ -35,6 +35,9 @@ public class MLPlanets {
 
         launchCapacityMultiplier = 0f;
         sectorSeed = 1;
+        bloom = false;
+        prebuildBase = false;
+        tidalLock = false;
         allowWaves = true;
         allowLegacyLaunchPads = true;
         allowSectorInvasion = true;
@@ -52,6 +55,8 @@ public class MLPlanets {
         atmosphereColor = Color.valueOf("97B5EDFF");
         atmosphereRadIn = 0.02f;
         atmosphereRadOut = 0.3f;
+        orbitRadius = 40;
+        rotateTime = 3000;
         startSector = 1;
         alwaysUnlocked = true;
         allowSelfSectorLaunch = false;
