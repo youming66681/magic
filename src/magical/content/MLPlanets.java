@@ -22,9 +22,8 @@ import magical.content.MLTechTree;
 import magical.content.MLPlanets;
 
 public class MLPlanets {
-   public static Planet Cecilia;
 
-    Cecilia = new Planet("塞西利亚", sun, 1f, 3.3f){{
+    public static Planet Cecilia = new Planet("塞西利亚", sun, 1f, 3.3f){{
         loadPlanetData = true;
         generator = new SerpuloPlanetGenerator();
         meshLoader = () -> new HexMesh(this, 6);
