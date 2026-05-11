@@ -7,25 +7,24 @@ import mindustry.game.EventType.*;
 import mindustry.mod.*;
 import mindustry.ui.dialogs.*;
 import mindustry.Vars;
+
 import magical.content.MLItems;
 import magical.content.MLBlocks;
 import magical.content.MLUnitTypes;
 import magical.content.MLTechTree;
 import magical.content.MLPlanets;
+import magical.blocks.ABaseCore;
 //import magical.content.MLSounds;
 
 public class magic extends Mod {
+    public static final ABaseCore aBaseCore = new ABaseCore();
+
     public static final String ModName = "magic-industry";
     public static Mods.LoadedMod mod;
-    public static String name(String add){
-        return ModName + "-" + add;
-    }
     public magic() {}
     @Override
     public void loadContent() {
         mod = Vars.mods.getMod(this.getClass());
-        ABaseCore.load();
-
         MLItems.load();
         //MLSounds.load();
         MLBlocks.load();
