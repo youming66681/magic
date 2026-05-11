@@ -4,6 +4,11 @@ import arc.graphics.*;
 //import javafx.scene.paint.Color;
 import mindustry.type.*;
 
+import magical.content.MLBlocks;
+import magical.content.MLUnitTypes;
+import magical.content.MLTechTree;
+import magical.content.MLPlanets;
+
 public class MLItems {
     public static Item yjbl = new Item("有机玻璃", Color.valueOf("404040FF")) {{
             hardness = 1;

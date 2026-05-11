@@ -10,7 +10,11 @@ import mindustry.world.Block;
 import mindustry.world.blocks.defense.turrets.ItemTurret;
 import mindustry.world.meta.BlockGroup;
 import mindustry.content.Blocks;
+
 import magical.content.MLItems;
+import magical.content.MLUnitTypes;
+import magical.content.MLTechTree;
+import magical.content.MLPlanets;
 
 public class MLBlocks {
 
