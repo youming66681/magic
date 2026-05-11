@@ -18,7 +18,7 @@ public class MLBlocks {
     public static ABaseCore jzhx;
 
     public static void load(){
-        jzhx = new ABaseCore("基座核心"){{
+        jzhx = new CoreBlock("基座核心"){{
             requirements(Category.effect, with(MLItems.htg, 200, MLItems.xj, 200, MLItems.hyhj, 100));
 
             unitType = UnitTypes.alpha;
