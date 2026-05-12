@@ -11,9 +11,7 @@ import magical.content.MLPlanets;
 
 public class MLItems {
     public static Item
-     acrylic, mysticCrystal, phantomSteel, phantomTitaniumSteel, wingedStone,
-     mysticSteel, nanoEnergyThread, crystallineCarbon, fluorescentFeatherStone,
-     wingedMetal, phantomLuminousAlloy, nanoCarbonAlloy;
+     acrylic, mysticCrystal, phantomSteel, phantomTitaniumSteel, wingedStone, mysticSteel, nanoEnergyThread, crystallineCarbon, fluorescentFeatherStone, wingedMetal, phantomLuminousAlloy, nanoCarbonAlloy;
 
     public static void load() {
         acrylic = new Item("acrylic", Color.valueOf("404040FF")) {{
