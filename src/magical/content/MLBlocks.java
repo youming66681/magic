@@ -17,19 +17,25 @@ public class MLBlocks {
     public static Block baseCore;
 
     public static void load() {
-        baseCore = new Block("baseCore") {{
+        baseCore = new CoreBlock("baseCore") {{
             requirements(Category.effect, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 200, MLItems.mysticCrystal, 200, MLItems.phantomLuminousAlloy, 100}));
 
             unitType = UnitTypes.alpha;
             health = 500;
             itemCapacity = 2000;
-            group = BlockGroup.cores;
             size = 2;
             thrusterLength = 20f;
 
             unitCapModifier = 5;
 
             destructible = true;
+            @Override
+            public boolean canDelete(Tile tile){
+                return true;
+            }
+            public boolean canPlaceOn(Tile tile){
+                return true;
+            }
         }};
     }
 }
