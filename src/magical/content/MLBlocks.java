@@ -28,14 +28,6 @@ public class MLBlocks {
 
             unitCapModifier = 5;
 
-            destructible = true;
-            @Override
-            public boolean canDelete(Tile tile){
-                return true;
-            }
-            public boolean canPlaceOn(Tile tile){
-                return true;
-            }
         }};
     }
 }
