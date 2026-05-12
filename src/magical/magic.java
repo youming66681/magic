@@ -13,7 +13,6 @@ import magical.content.MLBlocks;
 import magical.content.MLUnitTypes;
 import magical.content.MLTechTree;
 import magical.content.MLPlanets;
-import magical.blocks.ABaseCore;
 //import magical.content.MLSounds;
 
 public class magic extends Mod {
@@ -21,6 +20,9 @@ public class magic extends Mod {
     public static final String ModName = "magic-industry";
     public static Mods.LoadedMod mod;
     public magic() {}
+    /*public static String name(String add) {
+        return "modName" + add;
+    }*/
     @Override
     public void loadContent() {
         mod = Vars.mods.getMod(this.getClass());
