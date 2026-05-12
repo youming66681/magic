@@ -28,13 +28,11 @@ public class MLBlocks {
 
             unitCapModifier = 5;
 
-            canRemove = true;
+            baseCore.deconstructable = true;
 
-            onRemove = (tile, replacing) -> {
-                if (tile.team.cores().size <= 1) {
-                    tile.setBlock(baseCore, tile.team, 0);
-                }
-            };
+            public boolean canDelete (Tile tile){
+                return tile.team.cores().size > 1;
+            }
         }};
     }
 }
