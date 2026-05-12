@@ -28,14 +28,13 @@ public class MLBlocks {
 
             unitCapModifier = 5;
 
-            buildType = RemovableCore::new;
+            buildType = CoreBuild::new;
         }};
     }
-    public static class RemovableCore extends CoreBlock.CoreBuild {
+    public static class CoreBuild extends CoreBlock.CoreBuild {
         @Override
         public boolean canDelete() {
-            int coreCount = team.cores().size;
-            return coreCount > 1;
+            return team.cores().size > 1;
         }
     }
 }
