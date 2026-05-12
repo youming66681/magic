@@ -23,11 +23,11 @@ import magical.content.MLTechTree;
 import magical.content.MLPlanets;
 
 public class MLPlanets {
-    public static Planet Cecilia;
+    public static Planet cecilia;
 
     public static void load() {
 
-         Cecilia = new Planet("塞西利亚", Planets.sun, 1f, 3) {{
+         cecilia = new Planet("cecilia", Planets.sun, 1f, 3) {{
             loadPlanetData = true;
             generator = new SerpuloPlanetGenerator();
             meshLoader = () -> new HexMesh(this, 6);

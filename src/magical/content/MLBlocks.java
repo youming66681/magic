@@ -12,14 +12,16 @@ import magical.content.MLUnitTypes;
 import magical.content.MLTechTree;
 import magical.content.MLPlanets;
 
-import magical.blocks.ABaseCore;
-
 public class MLBlocks {
-    public static Block jzhx;
+    public static Block baseCore;
 
     public static void load(){
-        jzhx = new CoreBlock("基座核心"){{
-            requirements(Category.effect, ItemStack.with(new Object[]{(MLItems.htg, 200, MLItems.xj, 200, MLItems.hyhj, 100})));
+        baseCore = new CoreBlock("baseCore"){{
+            requirements(Category.effect, ItemStack.with(new Object[]{
+                    MLItems.phantom-titanium-steel, 200,
+                    MLItems.mysticCrystal, 200,
+                    MLItems.phantomLuminousAlloy, 100
+            }));
 
             unitType = UnitTypes.alpha;
             health = 500;
