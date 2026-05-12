@@ -12,7 +12,6 @@ public class MLTechTree {
     public static void load(){
         TechTree.TechNode ceciliaRoot = new TechTree.TechNode(null, null, ItemStack.empty);
         ceciliaRoot.name = "cecilia";
-        ceciliaRoot.alwaysUnlocked = true;
 
         TechTree.TechNode coreNode = new TechTree.TechNode(
                 ceciliaRoot,
@@ -22,5 +21,4 @@ public class MLTechTree {
         ceciliaRoot.children.add(coreNode);
 
         TechTree.roots.add(ceciliaRoot);
-    }
 }
