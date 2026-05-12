@@ -29,5 +29,5 @@ public class MLBlocks {
             unitCapModifier = 5;
 
             baseCore.destructible = true;
-    }
+    }};
 }
