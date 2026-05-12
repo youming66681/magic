@@ -6,6 +6,7 @@ import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.Tile;
 import mindustry.game.Team;
 import mindustry.content.UnitTypes;
+import mindustry.type.ItemStack;
 
 import magical.content.MLItems;
 import magical.content.MLUnitTypes;
