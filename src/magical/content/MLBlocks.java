@@ -28,13 +28,13 @@ public class MLBlocks {
 
             unitCapModifier = 5;
 
-            buildType = CoreBuild::new;
+            canRemove = true;
+
+            onRemove = (tile, replacing) -> {
+                if (tile.team.cores().size <= 1) {
+                    tile.setBlock(baseCore, tile.team, 0);
+                }
+            };
         }};
-    }
-    public static class CoreBuild extends CoreBlock.CoreBuild {
-        @Override
-        public boolean canDelete() {
-            return team.cores().size > 1;
-        }
     }
 }
