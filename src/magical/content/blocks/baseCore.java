@@ -1,6 +1,12 @@
 package magical.content;
 
+import mindustry.content.UnitTypes;
+import mindustry.type.Category;
+import mindustry.type.ItemStack;
 import mindustry.world.blocks.storage.CoreBlock;
+import mindustry.world.Tile;
+import mindustry.game.Team;
+
 
 public class baseCore extends CoreBlock{
 
