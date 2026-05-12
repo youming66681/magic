@@ -28,12 +28,11 @@ public class MLBlocks {
 
             unitCapModifier = 5;
 
-            canBeDeleted = true;
-
-            canDelete = (tile, team) -> {
-                int coreCount = team.cores().size;
-                return coreCount > 1;
-            };
+            overrideableDelete = true;
         }};
+        baseCore.canDelete = (Tile tile) -> {
+            int coreCount = tile.team.cores().size;
+            return coreCount > 1;
+        };
     }
 }
