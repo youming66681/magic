@@ -20,14 +20,15 @@ public class magic extends Mod {
     public static final String ModName = "magic-industry";
     public static Mods.LoadedMod mod;
     public magic() {}
-    /*public static String name(String add) {
+    public static String name(String add) {
         return "modName" + add;
-    }*/
+    }
     @Override
     public void loadContent() {
         mod = Vars.mods.getMod(this.getClass());
 
         //MLSounds.load();
+        MLItems.load();
         MLBlocks.load();
         MLPlanets.load();
         MLTechTree.load();
