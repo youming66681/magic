@@ -13,8 +13,6 @@ import magical.content.MLUnitTypes;
 import magical.content.MLTechTree;
 import magical.content.MLPlanets;
 
-import magical.content.blocks.baseCore;
-
 public class MLBlocks {
     public static Block baseCore;
 
