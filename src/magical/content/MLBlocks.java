@@ -17,7 +17,7 @@ public class MLBlocks {
     public static Block baseCore;
 
     public static void load() {
-        baseCore = new CoreBlock("baseCore") {{
+        baseCore = new baseCore("baseCore") {{
             requirements(Category.effect, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 200, MLItems.mysticCrystal, 200, MLItems.phantomLuminousAlloy, 100}));
 
             unitType = UnitTypes.alpha;
