@@ -59,7 +59,7 @@ public class MLBlocks {
                     ItemStack.with(new Object[]{MLItems.phantomSteel, 5000, Items.titanium, 3000, Items.graphite, 1000})
             );
 
-            consumeItem(ItemStack.with(new Object[]{(MLItems.phantomSteel, 1, Items.titanium, 1}));
+            consumeItem(ItemStack.with(new Object[]{MLItems.phantomSteel, 1, Items.titanium, 1}));
             consumePower(1.0f);
         }};
     }
