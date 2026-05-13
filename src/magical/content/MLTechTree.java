@@ -16,12 +16,6 @@ public class MLTechTree {
                 ItemStack.empty
         );
 
-        TechTree.TechNode ceciliaRoot = new TechTree.TechNode(
-                baseCore,
-                MLBlocks.phantomTitaniumSteelCompressor,
-                ItemStack.with(new Object[]{MLItems.phantomSteel, 5000, Items.titanium, 3000, Items.graphite, 1000})
-        );
-
         ceciliaRoot.name = "cecilia";
 
         TechTree.roots.add(ceciliaRoot);

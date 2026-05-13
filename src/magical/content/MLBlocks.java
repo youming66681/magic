@@ -8,6 +8,14 @@ import mindustry.world.Block;
 import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.meta.BlockGroup;
 import mindustry.content.TechTree;
+import mindustry.content.Items;
+import mindustry.content.Fx;
+import mindustry.content.sounds;
+import mindustry.world.draw.DrawMulti;
+import mindustry.world.draw.DrawDefault;
+import mindustry.world.draw.DrawFlame;
+import arc.graphics.Color;
+import mindustry.world.blocks.production.GenericCrafter;
 
 import magical.content.MLItems;
 import magical.content.MLUnitTypes;
@@ -45,6 +53,12 @@ public class MLBlocks {
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame(Color.valueOf()));
             ambientSound = Sounds.loopSmelter;
             ambientSoundVolume = 0.05f;
+
+            TechTree.TechNode phantomTitaniumSteelCompressor = new TechTree.TechNode(
+                    baseCore,
+                    MLBlocks.phantomTitaniumSteelCompressor,
+                    ItemStack.with(new Object[]{MLItems.phantomSteel, 5000, Items.titanium, 3000, Items.graphite, 1000})
+            );
 
             consumeItem(MLItems.phantomSteel, 1, Items.titanium, 1);
             consumePower(1.0f);
