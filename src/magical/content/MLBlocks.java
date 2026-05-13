@@ -10,7 +10,6 @@ import mindustry.world.meta.BlockGroup;
 import mindustry.content.TechTree;
 import mindustry.content.Items;
 import mindustry.content.Fx;
-import mindustry.content.Sounds;
 import mindustry.world.draw.DrawMulti;
 import mindustry.world.draw.DrawDefault;
 import mindustry.world.draw.DrawFlame;
@@ -55,12 +54,12 @@ public class MLBlocks {
             ambientSoundVolume = 0.05f;
 
             TechTree.TechNode phantomTitaniumSteelCompressor = new TechTree.TechNode(
-                    baseCore,
+                    MLBlocks.baseCore,
                     MLBlocks.phantomTitaniumSteelCompressor,
                     ItemStack.with(new Object[]{MLItems.phantomSteel, 5000, Items.titanium, 3000, Items.graphite, 1000})
             );
 
-            consumeItem(with(MLItems.phantomSteel, 1, Items.titanium, 1));
+            consumeItem(ItemStack.with(new Object[]{(MLItems.phantomSteel, 1, Items.titanium, 1}));
             consumePower(1.0f);
         }};
     }
