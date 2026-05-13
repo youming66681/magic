@@ -52,7 +52,7 @@ public class MLBlocks {
             itemCapacity = 10;
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
             ambientSound = loopSmelter;
-            ambientSoundVolume = 0.05f;、
+            ambientSoundVolume = 0.05f;
 
             consumeItems(new ItemStack[]{new ItemStack(MLItems.phantomSteel, 1, Items.titanium, 1)});
 
