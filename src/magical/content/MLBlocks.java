@@ -33,7 +33,7 @@ public class MLBlocks {
         }};
 
         phantomTitaniumSteelCompressor = new GenericCrafter("phantom-titanium-steel-compressor"){{
-            requirements(Category.crafting, ItemStack.with(new Object[]{MLItems.phantom-steel, 50, Items.titanium, 30, Items.graphite, 10}));
+            requirements(Category.crafting, ItemStack.with(new Object[]{MLItems.phantomSteel, 50, Items.titanium, 30, Items.graphite, 10}));
 
             craftEffect = Fx.smeltsmoke;
             outputItem = new ItemStack(MLItems.phantom-titanium-steel, 1);
@@ -49,10 +49,10 @@ public class MLBlocks {
             TechTree.TechNode ceciliaRoot = new TechTree.TechNode(
                     baseCore,
                     MLBlocks.phantomTitaniumSteelCompressor,
-                    ItemStack.with(new Object[]{MLItems.phantom-steel, 5000, Items.titanium, 3000, Items.graphite, 1000});
+                    ItemStack.with(new Object[]{MLItems.phantomSteel, 5000, Items.titanium, 3000, Items.graphite, 1000});
             );
 
-            consumeItem(MLItems.phantom-steel, 1, Items.titanium, 1,);
+            consumeItem(MLItems.phantom-steel, 1, Items.titanium, 1);
             consumePower(1.0f);
         }};
     }
