@@ -19,7 +19,7 @@ public class MLTechTree {
         TechTree.TechNode phantomTitaniumSteelCompressor = new TechTree.TechNode(
                 MLBlocks.baseCore,
                 MLBlocks.phantomTitaniumSteelCompressor,
-                ItemStack.with(new Object[]{MLItems.phantomSteel, 5000, Items.titanium, 3000, Items.graphite, 1000})
+                ItemStack.with(MLItems.phantomSteel, 5000, Items.titanium, 3000, Items.graphite, 1000)
         );
 
         ceciliaRoot.name = "cecilia";
