@@ -49,10 +49,11 @@ public class MLBlocks {
             TechTree.TechNode ceciliaRoot = new TechTree.TechNode(
                     baseCore,
                     MLBlocks.phantomTitaniumSteelCompressor,
-                    ItemStack.with(new Object[]{MLItems.phantom-steel, 5000, Items.titanium, 3000, Items.graphite, 1000}));
+                    ItemStack.with(new Object[]{MLItems.phantom-steel, 5000, Items.titanium, 3000, Items.graphite, 1000});
             );
 
             consumeItem(MLItems.phantom-steel, 1, Items.titanium, 1,);
+            consumePower(1.0f);
         }};
     }
 }
