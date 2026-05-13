@@ -10,7 +10,7 @@ import mindustry.world.meta.BlockGroup;
 import mindustry.content.TechTree;
 import mindustry.content.Items;
 import mindustry.content.Fx;
-import mindustry.content.sounds;
+import mindustry.content.Sounds;
 import mindustry.world.draw.DrawMulti;
 import mindustry.world.draw.DrawDefault;
 import mindustry.world.draw.DrawFlame;
@@ -44,13 +44,13 @@ public class MLBlocks {
             requirements(Category.crafting, ItemStack.with(new Object[]{MLItems.phantomSteel, 50, Items.titanium, 30, Items.graphite, 10}));
 
             craftEffect = Fx.smeltsmoke;
-            outputItem = new ItemStack(MLItems.phantom-titanium-steel, 1);
+            outputItem = new ItemStack(MLItems.phantomTitaniumSteel, 1);
             craftTime = 60f;
             size = 2;
             hasItems = true;
             hasPower = true;
             itemCapacity = 10;
-            drawer = new DrawMulti(new DrawDefault(), new DrawFlame(Color.valueOf()));
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
             ambientSound = Sounds.loopSmelter;
             ambientSoundVolume = 0.05f;
 
@@ -60,7 +60,7 @@ public class MLBlocks {
                     ItemStack.with(new Object[]{MLItems.phantomSteel, 5000, Items.titanium, 3000, Items.graphite, 1000})
             );
 
-            consumeItem(MLItems.phantomSteel, 1, Items.titanium, 1);
+            consumeItem(with(MLItems.phantomSteel, 1, Items.titanium, 1));
             consumePower(1.0f);
         }};
     }
