@@ -16,7 +16,7 @@ public class MLTechTree {
                 ItemStack.empty
         );
 
-        addToNode(MLBlocks.phantomTitaniumSteelCompressor, () -> {
+        node(MLBlocks.phantomTitaniumSteelCompressor, () -> {
         });
         ceciliaRoot.name = "cecilia";
 

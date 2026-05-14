@@ -40,7 +40,7 @@ public class MLBlocks {
 
         }};
 
-        phantomTitaniumSteelCompressor = new GenericCrafter("phantom-titanium-steel-compressor"){{
+        phantomTitaniumSteelCompressor = new GenericCrafter("phantomTitaniumSteelCompressor"){{
             requirements(Category.crafting, ItemStack.with(new Object[]{MLItems.phantomSteel, 50, Items.titanium, 30, Items.graphite, 10}));
 
             craftEffect = Fx.smeltsmoke;
