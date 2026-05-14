@@ -15,13 +15,12 @@ import mindustry.maps.planet.*;
 import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.meta.*;
-import mindustry.world.blocks.production.OreBlock;
+import mindustry.world.blocks.environment.*;
 
 import magical.content.MLItems;
 import magical.content.MLBlocks;
 import magical.content.MLUnitTypes;
 import magical.content.MLTechTree;
-import magical.content.MLPlanets;
 
 public class MLPlanets {
     public static Planet cecilia;

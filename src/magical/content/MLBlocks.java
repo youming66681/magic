@@ -16,7 +16,7 @@ import mindustry.world.draw.DrawFlame;
 import arc.graphics.Color;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.gen.Sounds;
-import mindustry.world.blocks.production.OreBlock;
+import mindustry.world.blocks.environment.*;
 
 import magical.content.MLItems;
 import magical.content.MLUnitTypes;
