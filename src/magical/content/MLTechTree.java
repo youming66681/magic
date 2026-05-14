@@ -2,6 +2,7 @@ package magical.content;
 
 import static mindustry.content.TechTree.*;
 import mindustry.type.ItemStack;
+import mindustry.content.Planets
 
 import magical.content.MLItems;
 import magical.content.MLBlocks;
