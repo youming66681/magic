@@ -16,6 +16,8 @@ public class MLTechTree {
                 ItemStack.empty
         );
 
+        node(phantomTitaniumSteelCompressor, () -> {
+                });
         ceciliaRoot.name = "cecilia";
 
         TechTree.roots.add(ceciliaRoot);
