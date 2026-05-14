@@ -25,6 +25,7 @@ import magical.content.MLPlanets;
 public class MLBlocks {
     public static Block baseCore;
     public static Block phantomTitaniumSteelCompressor;
+    public static Block xuanCrystalManufacturingMachine;
 
     public static void load() {
         baseCore = new baseCore("baseCore") {{
@@ -53,6 +54,21 @@ public class MLBlocks {
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
 
             consumeItems(ItemStack.with(MLItems.phantomSteel, 1, Items.titanium, 1));
+            consumePower(1.0f);
+        }};
+        xuanCrystalManufacturingMachine = new GenericCrafter("xuanCrystalManufacturingMachine"){{
+            requirements(Category.crafting, ItemStack.with(new Object[]{MLItems.phantomSteel, 20, Items.titanium, 30, Items.silicon, 20}));
+
+            craftEffect = Fx.hitEmpSpark;
+            outputItem = new ItemStack(MLItems.phantomTitaniumSteel, 1);
+            craftTime = 45f;
+            size = 2;
+            hasItems = true;
+            hasPower = true;
+            itemCapacity = 10;
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
+
+            consumeItems(ItemStack.with(MLItems.phantomSteel, 1, Items.coal, 1));
             consumePower(1.0f);
         }};
     }
