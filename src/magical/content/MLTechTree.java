@@ -1,6 +1,7 @@
 package magical.content;
 
 import static mindustry.content.TechTree.*;
+import mindustry.content.TechTree.*;
 import mindustry.type.ItemStack;
 
 import magical.content.MLItems;
