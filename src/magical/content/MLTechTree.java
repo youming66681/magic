@@ -17,7 +17,7 @@ public class MLTechTree {
         );
 
         node(MLBlocks.phantomTitaniumSteelCompressor, () -> {
-                });
+        });
         ceciliaRoot.name = "cecilia";
 
         TechTree.roots.add(ceciliaRoot);
