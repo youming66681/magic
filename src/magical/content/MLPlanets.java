@@ -62,7 +62,6 @@ public class MLPlanets {
             rotateTime = 3000;
             startSector = 1;
             alwaysUnlocked = true;
-            useGlobalTech = true;
             allowSelfSectorLaunch = false;
             landCloudColor = Pal.spore.cpy().a(0.5f);
         }};
