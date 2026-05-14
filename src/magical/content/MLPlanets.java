@@ -15,6 +15,7 @@ import mindustry.maps.planet.*;
 import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.meta.*;
+import mindustry.world.blocks.production.OreBlock;
 
 import magical.content.MLItems;
 import magical.content.MLBlocks;
