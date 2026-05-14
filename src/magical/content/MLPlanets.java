@@ -64,6 +64,7 @@ public class MLPlanets {
             alwaysUnlocked = true;
             allowSelfSectorLaunch = false;
             landCloudColor = Pal.spore.cpy().a(0.5f);
+            addOreSpawn(MLBlocks.phantomSteelOre, 21f, 0.8f, 4);
         }};
     }
 }

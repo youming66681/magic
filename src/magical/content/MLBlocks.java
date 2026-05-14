@@ -30,11 +30,8 @@ public class MLBlocks {
     public static Block xuanCrystalManufacturingMachine;
 
     public static void load() {
-        phantomSteelOre = new OreBlock(Items.phantomSteel){{
-            vaviants = 4;
-            oreDefault = true;
-            oreThreshold = 0.8f;
-            oreScale = 21.0f;
+        phantomSteelOre = new OreBlock(MLItems.phantomSteel){{
+            variants = 4;
         }};
         baseCore = new baseCore("baseCore") {{
             requirements(Category.effect, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 200, MLItems.mysticCrystal, 200, MLItems.phantomLuminousAlloy, 100}));
