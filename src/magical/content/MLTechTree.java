@@ -10,16 +10,10 @@ import magical.content.MLPlanets;
 
 public class MLTechTree {
     public static void load() {
-        TechTree.TechNode ceciliaRoot = new TechTree.TechNode(
+        MLPlanets.cecilia.techTree = ceciliaRoot("cecilia", coreShard, () -> {
                 null,
                 MLBlocks.baseCore,
                 ItemStack.empty
-        );
-
-        TechTree.TechNode phantomTitaniumSteelCompressor = new TechTree.TechNode(
-                MLBlocks.baseCore,
-                MLBlocks.phantomTitaniumSteelCompressor,
-                ItemStack.with(MLItems.phantomSteel, 5000, Items.titanium, 3000, Items.graphite, 1000)
         );
 
         ceciliaRoot.name = "cecilia";
