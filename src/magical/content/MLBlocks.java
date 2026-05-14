@@ -34,7 +34,7 @@ public class MLBlocks {
             variants = 4;
             oreDefault = true;
             oreThreshold = 0.8f;
-            oreScale = 21.0;
+            oreScale = 21.0f;
         }};
         baseCore = new baseCore("baseCore") {{
             requirements(Category.effect, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 200, MLItems.mysticCrystal, 200, MLItems.phantomLuminousAlloy, 100}));
