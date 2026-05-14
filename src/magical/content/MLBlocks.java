@@ -52,7 +52,7 @@ public class MLBlocks {
             itemCapacity = 10;
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
 
-            consumeItems(with(MLItems.phantomSteel, 1, Items.titanium, 1));
+            consumeItems(ItemStack.with(MLItems.phantomSteel, 1, Items.titanium, 1));
             consumePower(1.0f);
         }};
     }
