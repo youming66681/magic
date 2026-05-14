@@ -16,6 +16,7 @@ import mindustry.world.draw.DrawFlame;
 import arc.graphics.Color;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.gen.Sounds;
+import mindustry.world.blocks.ore.OreBlock;
 
 import magical.content.MLItems;
 import magical.content.MLUnitTypes;
@@ -30,7 +31,7 @@ public class MLBlocks {
 
     public static void load() {
         phantomSteelOre = new OreBlock(Items.phantomSteel){{
-            Vaviants = 4;
+            vaviants = 4;
             oreDefault = true;
             oreThreshold = 0.8f;
             oreScale = 21.0f;
