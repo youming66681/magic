@@ -1,6 +1,6 @@
 package magical.content;
 
-import mindustry.content.TechTree;
+import static mindustry.content.TechTree.*;
 import mindustry.type.ItemStack;
 
 import magical.content.MLItems;
@@ -14,12 +14,11 @@ public class MLTechTree {
                 null,
                 MLBlocks.baseCore,
                 ItemStack.empty
-        );
 
         node(MLBlocks.phantomTitaniumSteelCompressor, () -> {
         });
         ceciliaRoot.name = "cecilia";
 
         TechTree.roots.add(ceciliaRoot);
-    }
+    });
 }
