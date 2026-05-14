@@ -10,7 +10,7 @@ import magical.content.MLPlanets;
 
 public class MLTechTree {
     public static void load() {
-        MLPlanets.cecilia.techTree = nodeRoot("cecilia", MLBlocks.baseCore, () -> {
+        TechNode root = nodeRoot("cecilia", MLBlocks.baseCore, () -> {
 
             node(MLBlocks.phantomTitaniumSteelCompressor, () -> {
             });
