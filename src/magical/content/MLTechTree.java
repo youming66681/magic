@@ -14,11 +14,12 @@ public class MLTechTree {
                 null,
                 MLBlocks.baseCore,
                 ItemStack.empty
+        );
 
         node(MLBlocks.phantomTitaniumSteelCompressor, () -> {
         });
         ceciliaRoot.name = "cecilia";
 
         TechTree.roots.add(ceciliaRoot);
-    });
+    }
 }
