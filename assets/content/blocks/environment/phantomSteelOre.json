@@ -3,7 +3,7 @@
 "type":"OreBlock",
 "playerUnmineable":true,
 "Variants":4,
-"itemDrop":"phantomSteel",
+"itemDrop":"phantom-steel",
 "mapColor":"99CCFF",
 "useColor":true,
 "oreDefault":true,
