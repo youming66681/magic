@@ -1,9 +1,9 @@
 {
-"name":"幻钢",
+"name":"phantomSteelOre",
 "type":"OreBlock",
 "playerUnmineable":true,
 "Variants":4,
-"itemDrop":"幻钢",
+"itemDrop":"phantomSteel",
 "mapColor":"99CCFF",
 "useColor":true,
 "oreDefault":true,
