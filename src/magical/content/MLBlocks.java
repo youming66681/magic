@@ -70,7 +70,7 @@ public class MLBlocks {
             itemCapacity = 20;
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
 
-            consumeItems(ItemStack.with(MLItems.copper, 2, Items.lead, 2));
+            consumeItems(ItemStack.with(Items.copper, 2, Items.lead, 2));
             consumePower(0.75f);
         }};
 
