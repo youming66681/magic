@@ -15,10 +15,14 @@ public class MLTechTree {
 
         TechNode root = nodeRoot("cecilia", MLBlocks.baseCore, () -> {
 
-              node(MLBlocks.phantomTitaniumSteelCompressor, () -> {
-                node(MLBlocks.xuanCrystalManufacturingMachine, () -> {
-                });
-            });
-        });
+            node(MLBlocks.phantomSteelCompressor, () -> {
+                node(MLBlocks.phantomTitaniumSteelCompressor, () -> {
+                    node(MLBlocks.phantomSteelVoltageMachine, () -> {
+                    });
+                        node(MLBlocks.xuanCrystalManufacturingMachine, () -> {
+                             });
+                       });
+                    });
+                 });
     }
 }

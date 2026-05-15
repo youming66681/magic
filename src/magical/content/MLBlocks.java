@@ -28,6 +28,8 @@ public class MLBlocks {
     public static Block phantomSteelOre;
     public static Block phantomTitaniumSteelCompressor;
     public static Block xuanCrystalManufacturingMachine;
+    public static Block phantomSteelCompressor;
+    public static Block phantomSteelVoltageMachine;
 
     public static void load() {
         baseCore = new baseCore("baseCore") {{
@@ -41,6 +43,35 @@ public class MLBlocks {
 
             unitCapModifier = 5;
 
+        }};
+        phantomSteelCompressor = new GenericCrafter("phantomSteelCompressor"){{
+            requirements(Category.crafting, ItemStack.with(new Object[]{Items.copper, 50, Items.lead, 50}));
+
+            craftEffect = Fx.smeltsmoke;
+            outputItem = new ItemStack(MLItems.phantomSteel, 1);
+            craftTime = 120f;
+            size = 2;
+            hasItems = true;
+            itemCapacity = 20;
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
+
+            consumeItems(ItemStack.with(Items.copper, 2, Items.lead, 2));
+        }};
+
+        phantomSteelVoltageMachine = new GenericCrafter("phantomSteelVoltageMachine"){{
+            requirements(Category.crafting, ItemStack.with(new Object[]{MLItems.phantomSteel, 25, Items.copper, 75, Items.lead, 75}));
+
+            craftEffect = Fx.smeltsmoke;
+            outputItem = new ItemStack(MLItems.phantomSteel, 2);
+            craftTime = 60f;
+            size = 2;
+            hasItems = true;
+            hasPower = true;
+            itemCapacity = 20;
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
+
+            consumeItems(ItemStack.with(MLItems.copper, 2, Items.lead, 2));
+            consumePower(0.75f);
         }};
 
         phantomTitaniumSteelCompressor = new GenericCrafter("phantomTitaniumSteelCompressor"){{
@@ -58,6 +89,7 @@ public class MLBlocks {
             consumeItems(ItemStack.with(MLItems.phantomSteel, 1, Items.titanium, 1));
             consumePower(1.0f);
         }};
+
         xuanCrystalManufacturingMachine = new GenericCrafter("xuanCrystalManufacturingMachine"){{
             requirements(Category.crafting, ItemStack.with(new Object[]{MLItems.phantomSteel, 20, Items.titanium, 30, Items.silicon, 20}));
 
