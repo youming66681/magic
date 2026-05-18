@@ -42,9 +42,12 @@ public class magic extends Mod {
         MLTechTree.load();
         MLUnitTypes.load();
      }
-    private Sound loadSound(String path) {
-        Sound sound = new Sound();
-        Vars.tree.loadSound(path, sound);
-        return sound;
+    private Sound loadSoundReflect(String path){
+        try {
+            Method m = Vars.tree.getClass().getMethod("getAsset", String.class, Class.class);
+            return (Sound)m.invoke(Vars.tree, path, Sound.class);
+        }catch(Exception e){
+            return null;
+        }
     }
 }
