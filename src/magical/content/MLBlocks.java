@@ -203,12 +203,11 @@ public class MLBlocks {
 
             consumePower(6f);
 
-            shootType = new BasicBulletType(30){{
+            shootType = new BasicBulletType(5f, 30f){{
                 hitEffect = MLFx.smallElectricDetonation;
 
                 hitSize = 16f;
                 damage = 30f;
-                speed = 5f;
                 width = 16f;
                 height = 32f;
                 lifetime = 40f;
