@@ -38,7 +38,7 @@ public class MLFx {
     public static void load(){}
 
     public static Effect smallElectricDetonation = new Effect(30, e -> {
-        Mathf.randLenVectors(e.id, 8, 0f, 2f + e.fin() * 4f, (x, y) -> {
+        Mathf.randLenVectors(e.id, 8, 2f + e.fin() * 4f, (x, y) -> {
             Fill.square(e.x + x, e.y + y, 0.5f + e.fout() * 2f, 45);
             Draw.color(Color.valueOf("#FEEBB3FF"), e.color, e.finpow());
         });

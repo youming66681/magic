@@ -187,7 +187,7 @@ public class MLBlocks {
         }};
         //电戈
         electroge = new PowerTurret("electroge"){{
-            requirements(Category.crafting, ItemStack.with(new Object[]{MLItems.phantomSteel, 75, Items.graphite, 25}));
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 75, Items.graphite, 25}));
             range = 200f;
 
             recoil = 2f;

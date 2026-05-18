@@ -1,18 +1,13 @@
 package magical.content;
 
-import mindustry.mod.Mod;
-import mindustry.Vars;
-import mindustry.audio.SoundControl;
+import arc.audio.Sound;
 
 public class MLSounds {
-    // 自定义声音变量
     public static Sound explosionAfflict;
     public static Sound explosionCleroi;
 
-    // 加载方法
     public static void load(){
-        Mod mod = Vars.mods.getMod(magical.Magic.class);
-        explosionAfflict = mod.sound("explosionAfflict");
-        explosionCleroi = mod.sound("explosionCleroi");
+        explosionAfflict = Vars.tree.get("sounds/explosionAfflict.ogg", Sound.class);
+        explosionCleroi = Vars.tree.get("sounds/explosionCleroi.ogg", Sound.class);
     }
 }
