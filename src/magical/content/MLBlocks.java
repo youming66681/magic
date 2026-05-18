@@ -98,7 +98,7 @@ import magical.content.MLUnitTypes;
 import magical.content.MLTechTree;
 import magical.content.MLPlanets;
 import magical.content.MLFx;
-import magical.magic
+import magical.magic;
 //import magical.content.MLSounds;
 
 public class MLBlocks {
