@@ -17,6 +17,8 @@ import arc.graphics.Color;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.gen.Sounds;
 import mindustry.world.blocks.environment.*;
+import mindustry.world.turrets.PowerTurret;
+import mindustry.entities.bullet.BasicBulletType;
 
 import magical.content.MLItems;
 import magical.content.MLUnitTypes;
