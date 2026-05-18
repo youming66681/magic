@@ -35,6 +35,8 @@ public class MLFx {
     public static final Rand rand = new Rand();
     public static final Vec2 v = new Vec2();
 
+    public static void load(){}
+
     public static Effect smallElectricDetonation = new Effect(30, e -> {
         Mathf.randLenVectors(e.id, 8, 0f, 2f + e.fin() * 4f, (x, y) -> {
             Draw.color(Color.valueOf("#FEEBB3FF"), e.color, e.finpow());
