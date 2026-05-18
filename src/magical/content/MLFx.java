@@ -14,8 +14,10 @@ public class MLFx {
 
     public static Effect smallElectricDetonation = new Effect(30, e -> {
         Draw.color(Color.valueOf("#FEEBB3FF"), e.color, e.finpow());
-        randLenVectors(e.id, 8, 2f + e.fin() * 4f, (x, y) -> {
+        for(int i = 0; i < 8; i++){
+        randLenVectors(e.id, i, 2f + e.fin() * 4f, (x, y) -> {
             Fill.square(e.x + x, e.y + y, 0.5f + e.fout() * 2f, 45);
+             }
         });
     });
     public static void load(){}
