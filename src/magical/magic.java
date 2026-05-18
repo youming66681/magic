@@ -18,8 +18,8 @@ import magical.content.MLFx;
 
 public class magic extends Mod {
 
-    explosionAfflict = Vars.tree.get("sounds/explosionAfflict.ogg", Sound.class);
-    explosionCleroi = Vars.tree.get("sounds/explosionCleroi.ogg", Sound.class);
+    public static Sound explosionAfflict;
+    public static Sound explosionCleroi;
 
     public static final String ModName = "magic-industry";
     public static Mods.LoadedMod mod;
@@ -30,6 +30,9 @@ public class magic extends Mod {
     @Override
     public void loadContent() {
         mod = Vars.mods.getMod(this.getClass());
+
+        explosionAfflict = Vars.tree.get("sounds/explosionAfflict.ogg", Sound.class);
+        explosionCleroi = Vars.tree.get("sounds/explosionCleroi.ogg", Sound.class);
 
         //MLSounds.load();
         MLFx.load();
