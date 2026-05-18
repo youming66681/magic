@@ -7,6 +7,7 @@ import mindustry.game.EventType.*;
 import mindustry.mod.*;
 import mindustry.ui.dialogs.*;
 import mindustry.Vars;
+import arc.audio.Sound;
 
 import magical.content.MLItems;
 import magical.content.MLBlocks;

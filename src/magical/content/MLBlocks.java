@@ -98,6 +98,7 @@ import magical.content.MLUnitTypes;
 import magical.content.MLTechTree;
 import magical.content.MLPlanets;
 import magical.content.MLFx;
+import magical.magic
 //import magical.content.MLSounds;
 
 public class MLBlocks {
@@ -198,7 +199,7 @@ public class MLBlocks {
             size = 2;
             health = 600;
             rotateSpeed = 8;
-            shootSound = MLSounds.explosionAfflict;
+            shootSound = magic.explosionAfflict;
             coolant = consumeCoolant(0.2f);
 
             consumePower(6f);
@@ -218,7 +219,7 @@ public class MLBlocks {
                 trailColor = Color.valueOf("FEEBB3FF");
                 frontColor = Color.valueOf("FEEBB3FF");
                 backColor = Color.valueOf("FEEBB3FF");
-                hitSound = MLSounds.explosionCleroi;
+                hitSound = magic.explosionCleroi;
             }};
         }};
     }
