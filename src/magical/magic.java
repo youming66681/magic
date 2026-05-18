@@ -32,8 +32,8 @@ public class magic extends Mod {
     public void loadContent() {
         mod = Vars.mods.getMod(this.getClass());
 
-        explosionAfflict = loadSound("sounds/explosionAfflict.ogg");
-        explosionCleroi = loadSound("sounds/explosionCleroi.ogg");
+        explosionAfflict = Vars.tree.loadSound("sounds/explosionAfflict.ogg");
+        explosionCleroi = Vars.tree.loadSound("sounds/explosionCleroi.ogg");
         //MLSounds.load();
         MLFx.load();
         MLItems.load();
@@ -42,12 +42,4 @@ public class magic extends Mod {
         MLTechTree.load();
         MLUnitTypes.load();
      }
-    private Sound loadSoundReflect(String path){
-        try {
-            Method m = Vars.tree.getClass().getMethod("getAsset", String.class, Class.class);
-            return (Sound)m.invoke(Vars.tree, path, Sound.class);
-        }catch(Exception e){
-            return null;
-        }
-    }
 }
