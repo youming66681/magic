@@ -206,16 +206,15 @@ public class MLBlocks {
 
             shootType = new BasicBulletType(5f, 30f){{
                 hitEffect = MLFx.smallElectricDetonation;
-
+                world war z
                 hitSize = 16f;
                 damage = 30f;
-                width = 16f;
-                height = 32f;
+                width = 8f;
+                height = 24f;
                 lifetime = 40f;
                 ammoMultiplier = 1f;
-                trailLength = 6;
-                trailWidth = 3f;
-                velocityRnd = 1f;
+                trailLength = 8;
+                trailWidth = 4f;
                 trailColor = Color.valueOf("FEEBB3FF");
                 frontColor = Color.valueOf("FEEBB3FF");
                 backColor = Color.valueOf("FEEBB3FF");

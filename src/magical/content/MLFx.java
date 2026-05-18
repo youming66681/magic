@@ -22,7 +22,6 @@ public class MLFx {
             Fill.square(e.x + temp.x, e.y + temp.y, 0.5f + e.fout() * 2f, 45);
         }
 
-        Draw.reset();
     });
 
     public static void load(){}
