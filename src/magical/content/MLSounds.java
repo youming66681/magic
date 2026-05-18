@@ -1,6 +1,7 @@
 package magical.content;
 
 import arc.audio.Sound;
+import mindustry.Vars;
 
 public class MLSounds {
     public static Sound explosionAfflict;

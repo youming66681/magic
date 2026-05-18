@@ -212,7 +212,7 @@ public class MLBlocks {
                 height = 32f;
                 lifetime = 40f;
                 ammoMultiplier = 1f;
-                trailLength = 6f;
+                trailLength = 6;
                 trailWidth = 3f;
                 velocityRnd = 1f;
                 trailColor = Color.valueOf("FEEBB3FF");
