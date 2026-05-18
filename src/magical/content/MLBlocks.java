@@ -206,7 +206,6 @@ public class MLBlocks {
 
             shootType = new BasicBulletType(5f, 30f){{
                 hitEffect = MLFx.smallElectricDetonation;
-                world war z
                 hitSize = 16f;
                 damage = 30f;
                 width = 8f;
