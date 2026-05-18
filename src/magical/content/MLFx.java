@@ -1,13 +1,16 @@
 package magical.content;
 
+import arc.graphics.Color;
+import arc.graphics.g2d.Draw;
+import arc.graphics.g2d.Fill;
 import arc.math.Mathf;
+import arc.math.Rand;
 import arc.math.geom.Vec2;
+import mindustry.entities.Effect;
 
 public class MLFx {
     public static final Rand rand = new Rand();
     public static final Vec2 v = new Vec2();
-
-    public static void load(){}
 
     public static Effect smallElectricDetonation = new Effect(30, e -> {
         Mathf.randLenVectors(e.id, 8, 2f + e.fin() * 4f, (x, y) -> {
@@ -15,4 +18,5 @@ public class MLFx {
             Draw.color(Color.valueOf("#FEEBB3FF"), e.color, e.finpow());
         });
     });
+    public static void load(){}
 }
