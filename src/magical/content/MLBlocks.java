@@ -49,7 +49,7 @@ import mindustry.gen.Bullet;
 import mindustry.gen.Healthc;
 import mindustry.gen.Hitboxc;
 import mindustry.gen.Sounds;
-import mindustry.gen.Unit;
+import core.assets.sounds;
 import mindustry.graphics.CacheLayer;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Pal;
@@ -92,7 +92,7 @@ import mindustry.world.meta.Attribute;
 import mindustry.world.meta.BuildVisibility;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatUnit;
-import mindustry.world.blocks.CoreBlock;
+import mindustry.content.UnitTypes;
 
 import magical.content.MLItems;
 import magical.content.MLUnitTypes;
