@@ -1,13 +1,14 @@
 package magical.content;
 
-import arc.audio.Sound;
+import mindustry.mod.Mod;
+import mindustry.gen.Sounds;
 import mindustry.Vars;
-import mindustry.mod.Mods;
+import mindustry.audio.SoundControl;
 
-public class EUSounds {
+public class MLSounds {
     public static Mods.LoadedMod ML;
     public static Sound explosionAfflict;
-    public static Sound ciallo;
+    public static Sound explosionCleroi;
 
 public static void load() {
     prismLoop = loadSound("explosionAfflict.ogg");
