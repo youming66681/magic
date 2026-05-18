@@ -8,7 +8,8 @@ public class MLSounds {
     public static Sound explosionCleroi;
 
     public static void load(){
-        /*explosionAfflict = Vars.tree.get("sounds/explosionAfflict.ogg", Sound.class);
-        explosionCleroi = Vars.tree.get("sounds/explosionCleroi.ogg", Sound.class);*/
+        Mod mod = Vars.mods.getMod(magical.Magic.class);
+        explosionAfflict = mod.sound("explosionAfflict");
+        explosionCleroi = mod.sound("explosionCleroi");
     }
 }
