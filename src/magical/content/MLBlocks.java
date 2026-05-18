@@ -22,7 +22,7 @@ import magical.content.MLItems;
 import magical.content.MLUnitTypes;
 import magical.content.MLTechTree;
 import magical.content.MLPlanets;
-import magical.content.MLFx
+import magical.content.MLFx;
 
 public class MLBlocks {
     public static Block baseCore;
@@ -121,7 +121,7 @@ public class MLBlocks {
             smokeEffect = Fx.smeltsmoke;
             size = 2;
             health = 600;
-            rotateSpeed: 8;
+            rotateSpeed = 8;
             shootSound = Sounds.explosionAfflict;
             coolant = consumeCoolant(0.2f);
 
@@ -139,7 +139,7 @@ public class MLBlocks {
                 ammoMultiplier = 1f;
                 trailLength = 6f;
                 trailWidth = 3f;
-                velocityRnd = 1f,
+                velocityRnd = 1f;
                 trailColor = Color.valueOf("FEEBB3FF");
                 frontColor = Color.valueOf("FEEBB3FF");
                 backColor = Color.valueOf("FEEBB3FF");
