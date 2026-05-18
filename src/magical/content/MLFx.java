@@ -42,5 +42,5 @@ public class MLFx {
             Lines.circle(e.x, e.y, e.finpow() * 4f);
             Fill.square(e.x + x, e.y + y, 1.0f + e.fout() * 1.5f, 45);
         });
-    }),
+    });
 }
