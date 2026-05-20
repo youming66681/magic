@@ -199,7 +199,7 @@ public class MLBlocks {
             size = 2;
             health = 600;
             rotateSpeed = 8;
-            shootSound = magic.explosionAfflict;
+            shootSound = MLSounds.dg1;
             coolant = consumeCoolant(0.2f);
 
             consumePower(6f);
@@ -218,7 +218,7 @@ public class MLBlocks {
                 trailColor = Color.valueOf("97B5EDFF");
                 frontColor = Color.valueOf("97B5EDFF");
                 backColor = Color.valueOf("97B5EDFF");
-                hitSound = magic.explosionCleroi;
+                hitSound = MLSounds.dg2;
             }};
         }};
     }
