@@ -30,7 +30,7 @@ public class MLFx {
         });
         Angles.randLenVectors((long)e.id, 6, 20f * e.finpow(), (x, y) -> {
             float len = 15f * e.fout() * Mathf.random(4f, 8f) + 2f;
-            Lines.lineAngle(e.x + x, e.y + y, 15f * e.fout() * len);
+            Lines.lineAngle(e.x + x, e.y + y, 15f * e.fout(), len);
         });
     });
 
