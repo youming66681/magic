@@ -32,7 +32,7 @@ public class MLFx {
         });
 
         Drawf.light(e.x, e.y, 45f, Color.valueOf("FEEBB3FF"), 0.8f * e.fout());
-    }),
+    });
 
     public static void load(){}
 }
