@@ -19,8 +19,9 @@ import mindustry.graphics.Lines;
 import mindustry.graphics.Fill;
 
 public class MLFx {
-    public static final Rand rand = new rand();
+    public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
+
     public static Effect smallElectricDetonation = new Effect(30f, (e) -> {
         Draw.color(Color.valueOf("97B5EDFF"), e.color, e.fin() + 0.4F);
         e.scaled(6, (i) -> {
