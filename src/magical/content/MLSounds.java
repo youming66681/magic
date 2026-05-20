@@ -1,15 +1,15 @@
 package magical.content;
 
 import mindustry.audio.Sound;
-import mindustry.content.*;
 import mindustry.type.*;
+import mindustry.content.*;
 
 public class MLSounds {
-    public static Sound dg1;
-    public static Sound dg2;
+    public static Sound explosionAfflict;
+    public static Sound explosionCleroi;
 
-        public static void load(){
-            dg1 = new Sound("dg1");
-            dg2 = new Sound("dg2");
-        }
+    public static void load(){
+        explosionAfflict = new Sound("explosionAfflict");
+        explosionCleroi = new Sound("explosionCleroi");
     }
+}
