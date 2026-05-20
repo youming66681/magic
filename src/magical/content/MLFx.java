@@ -9,11 +9,14 @@ import mindustry.graphics.*;
 import mindustry.type.*;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
-import arc.graphics.g2d.Fill;
 import arc.math.geom.Vec2;
 import mindustry.entities.Effect;
-import mindustry.math.Angles;
-import arc.math.Rand;
+import mindustry.gen.Angles;
+import mindustry.math.Rand;
+import mindustry.math.Interp;
+import mindustry.graphics.Drawf;
+import mindustry.graphics.Lines;
+import mindustry.graphics.Fill;
 
 public class MLFx {
     public static final Rand rand = new rand();
