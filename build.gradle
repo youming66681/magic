@@ -34,7 +34,7 @@ allprojects{
 dependencies{
     compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
     compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
-    implementation files('libs/mindustry-core.jar')
+
     annotationProcessor "com.github.Anuken:jabel:$jabelVersion"
 }
 
