@@ -31,7 +31,7 @@ public class MLFx {
             lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), 1f + e.fout() * 3f);
         });
 
-        Drawf.light(e.x, e.y, 45f, Pal.missileYellowBack, 0.8f * e.fout());
+        Drawf.light(e.x, e.y, 45f, Color.valueOf("FEEBB3FF"), 0.8f * e.fout());
     }),
 
     public static void load(){}
