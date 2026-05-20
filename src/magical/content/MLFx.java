@@ -23,13 +23,14 @@ public class MLFx {
         Draw.color(Color.valueOf("97B5EDFF"), e.color, e.fin() + 0.4F);
         e.scaled(6, (i) -> {
             Lines.stroke(3f * i.foutpow());
-            Lines.circle(i.x, i.y, i.fin(Interp.circleOut) * rotation * 15F);
+            Lines.circle(i.x, i.y, i.fin(Interp.circleOut) * 15f * 15F);
         });
         Angles.randLenVectors((long)e.id, 6, 21f * e.finpow(), (x, y) -> {
             Fill.circle(e.x, e.y, 15f * e.fout() * 4f);
         });
         Angles.randLenVectors((long)e.id, 6, 20f * e.finpow(), (x, y) -> {
-            Lines.lineAngle(e.x + x, e.y + y, 15f * e.fout() * Mathf.random(4f, 8f) + 2f);
+            float len = 15f * e.fout() * Mathf.random(4f, 8f) + 2f;
+            Lines.lineAngle(e.x + x, e.y + y, 15f * e.fout() * len);
         });
     });
 
