@@ -206,6 +206,7 @@ public class MLBlocks {
 
             shootType = new BasicBulletType(5f, 30f){{
                 hitEffect = MLFx.smallElectricDetonation;
+                despawnEffect = MLFx.smallElectricDetonation;
                 hitSize = 16f;
                 damage = 30f;
                 width = 8f;
