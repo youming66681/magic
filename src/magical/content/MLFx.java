@@ -1,28 +1,38 @@
 package magical.content;
 
-import arc.graphics.Color;
-import arc.graphics.g2d.Draw;
-import arc.graphics.g2d.Fill;
-import arc.math.Mathf;
-import arc.math.Rand;
-import arc.math.geom.Vec2;
-import mindustry.entities.Effect;
+import arc.*;
+import arc.graphics.*;
+import arc.math.*;
+import mindustry.game.EventType.*;
+import mindustry.game.*;
+import mindustry.graphics.*;
+import mindustry.type.*;
 
 public class MLFx {
     public static final Rand rand = new Rand();
 
-    public static Effect smallElectricDetonation = new Effect(30, e -> {
-        Draw.color(Color.valueOf("#FEEBB3FF"), e.color, e.finpow());
+    public static Effect smallElectricDetonation = new Effect(22, e -> {
+        color(Color.valueOf("FEEBB3FF"));
 
-        Vec2 temp = new Vec2();
-        for(int i = 0; i < 8; i++){
-            float angle = Mathf.random() * Mathf.PI * 2f;
-            float len = 2f + e.fin() * 4f;
-            temp.set(Mathf.cos(angle) * len, Mathf.sin(angle) * len);
-            Fill.square(e.x + temp.x, e.y + temp.y, 0.5f + e.fout() * 2f, 45);
-        }
+        e.scaled(6, i -> {
+            stroke(3f * i.fout());
+            Lines.circle(e.x, e.y, 3f + i.fin() * 15f);
+        });
 
-    });
+        color(Color.valueOf("FEEBB3FF"));
+
+        randLenVectors(e.id, 6, 2f + 20f * e.finpow(), (x, y) -> {
+            Fill.circle(e.x + x, e.y + y, e.fout() * 3f + 0.5f);
+        });
+
+        color(Color.valueOf("FEEBB3FF"));
+
+        randLenVectors(e.id + 1, 4, 1f + 20f * e.finpow(), (x, y) -> {
+            lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), 1f + e.fout() * 3f);
+        });
+
+        Drawf.light(e.x, e.y, 45f, Pal.missileYellowBack, 0.8f * e.fout());
+    }),
 
     public static void load(){}
 }
