@@ -12,9 +12,12 @@ import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.math.geom.Vec2;
 import mindustry.entities.Effect;
-import mindustry.math.Rand;
+import arc.math.Interp;
+import arc.math.Mathf;
 import arc.graphics.g2d.*;
 import arc.math.*;
+import arc.graphics.g2d.Fill;
+import arc.graphics.g2d.Lines;
 
 public class MLFx {
     public static final Rand rand = new Rand();
