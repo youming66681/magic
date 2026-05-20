@@ -11,7 +11,7 @@ public class MLSounds {
     public static Sound explosionCleroi;
 
     public static void load(){
-        explosionAfflict = new Sound(Core.files.internal("sounds/explosionAfflict.ogg"));
-        explosionCleroi = new Sound(Core.files.internal("sounds/explosionCleroi.ogg"));
+        explosionAfflict = new Sound(Core.files.internal("sounds/explosionAfflict"));
+        explosionCleroi = new Sound(Core.files.internal("sounds/explosionCleroi"));
     }
 }
