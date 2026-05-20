@@ -11,7 +11,7 @@ public class MLSounds {
     public static Sound explosionCleroi;
 
     public static void load(){
-        explosionAfflict = new Sound(("sounds/explosionAfflict"));
-        explosionCleroi = new Sound(("sounds/explosionCleroi"));
+        explosionAfflict = new Sound("sounds/explosionAfflict");
+        explosionCleroi = new Sound("sounds/explosionCleroi");
     }
 }
