@@ -15,7 +15,6 @@ import mindustry.entities.Effect;
 import arc.math.Interp;
 import arc.math.Mathf;
 import arc.graphics.g2d.*;
-import arc.math.Mathf;
 import arc.graphics.g2d.Fill;
 import arc.graphics.g2d.Lines;
 
