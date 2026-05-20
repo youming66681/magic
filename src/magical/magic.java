@@ -14,13 +14,10 @@ import magical.content.MLBlocks;
 import magical.content.MLUnitTypes;
 import magical.content.MLTechTree;
 import magical.content.MLPlanets;
-//import magical.content.MLSounds;
+import magical.content.MLSounds;
 import magical.content.MLFx;
 
 public class magic extends Mod {
-
-    public static Sound explosionAfflict;
-    public static Sound explosionCleroi;
 
     public static final String ModName = "magic-industry";
     public static Mods.LoadedMod mod;
@@ -32,9 +29,7 @@ public class magic extends Mod {
     public void loadContent() {
         mod = Vars.mods.getMod(this.getClass());
 
-        explosionAfflict = Vars.tree.loadSound("assets/sounds/explosionAfflict.ogg");
-        explosionCleroi = Vars.tree.loadSound("assets/sounds/explosionCleroi.ogg");
-        //MLSounds.load();
+        MLSounds.load();
         MLFx.load();
         MLItems.load();
         MLBlocks.load();
