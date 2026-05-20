@@ -1,6 +1,6 @@
 package magical.content;
 
-import mindustry.audio.Sound;
+import arc.audio.Sound;
 import mindustry.type.*;
 import mindustry.content.*;
 
