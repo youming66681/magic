@@ -214,9 +214,9 @@ public class MLBlocks {
                 ammoMultiplier = 1f;
                 trailLength = 8;
                 trailWidth = 4f;
-                trailColor = Color.valueOf("FEEBB3FF");
-                frontColor = Color.valueOf("FEEBB3FF");
-                backColor = Color.valueOf("FEEBB3FF");
+                trailColor = Color.valueOf("97B5EDFF");
+                frontColor = Color.valueOf("97B5EDFF");
+                backColor = Color.valueOf("97B5EDFF");
                 hitSound = magic.explosionCleroi;
             }};
         }};
