@@ -12,31 +12,24 @@ import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
 import arc.math.geom.Vec2;
 import mindustry.entities.Effect;
+import arc.math.Angles;
+import arc.math.Rand;
 
 public class MLFx {
     public static final Rand rand = new rand();
-
-    public static Effect smallElectricDetonation = new Effect(22f, e -> {
-        Draw.color(Color.valueOf("97B5EDFF"));
-
-        e.scaled(6, i -> {
-            Lines.stroke(3f * i.fout());
-            Lines.circle(e.x, e.y, 3f + i.fin() * 15f);
+    Vec2 temp = new Vec2();
+    public static Effect smallElectricDetonation = new Effect(30f, (e) -> {
+        Draw.color(Color.valueOf("97B5EDFF"), e.color, e.fin() + 0.4F);
+        e.scaled(6, (i) -> {
+            Lines.stroke(3f * i.foutpow());
+            Lines.circle(i.x, i.y, i.fin(Interp.circleOut) * rad * 15F);
         });
-
-        Draw.color(Color.valueOf("97B5EDFF"));
-
-        rand(e.id, 6, 2f + 20f * e.finpow(), (x, y) -> {
-            Fill.circle(e.x + x, e.y + y, e.fout() * 3f + 0.5f);
+        Angles.randLenVectors((long)(e.id, 6, 21f * e.finpow(), (x, y)) -> {
+            Fill.circle(e.x, e.y, rad * e.fout() * 4.0F);
         });
-
-        Draw.color(Color.valueOf("97B5EDFF"));
-
-        rand(e.id + 1, 4, 1f + 20f * e.finpow(), (x, y) -> {
-            lineAngle(e.x + x, e.y + y, mathf.angle(x, y), 1f + e.fout() * 3f);
+        Angles.randLenVectors((long)(e.id, 6, 20f * e.finpow(), (x, y)) -> {
+            Lines.lineAngle(e.x + x, e.y + y, ang, e.fout() * (float)rand.random(4, 8) + 2.0F);
         });
-
-        Drawf.light(e.x, e.y, 45f, Color.valueOf("97B5EDFF"), 0.8f * e.fout());
     });
 
     public static void load(){}
