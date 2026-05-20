@@ -32,8 +32,8 @@ public class magic extends Mod {
     public void loadContent() {
         mod = Vars.mods.getMod(this.getClass());
 
-        explosionAfflict = Vars.tree.loadSound("sounds/explosionAfflict.ogg");
-        explosionCleroi = Vars.tree.loadSound("sounds/explosionCleroi.ogg");
+        explosionAfflict = Vars.tree.loadSound("assets/sounds/explosionAfflict.ogg");
+        explosionCleroi = Vars.tree.loadSound("assets/sounds/explosionCleroi.ogg");
         //MLSounds.load();
         MLFx.load();
         MLItems.load();
