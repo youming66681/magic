@@ -25,8 +25,8 @@ public class MLFx {
          smallElectricDetonation = new Effect(30f, (e) -> {
             Draw.color(Color.valueOf("97B5EDFF"), e.color, e.fin() + 0.4F);
             e.scaled(6, (i) -> {
-                Lines.stroke(4f * i.foutpow());
-                Lines.circle(i.x, i.y, i.fin(Interp.circleOut) * 2f * 6F);
+                Lines.stroke(6f * i.foutpow());
+                Lines.circle(i.x, i.y, i.fin(Interp.circleOut) * 3f * 6F);
             });
             Angles.randLenVectors((long) e.id, 1, 8f * e.finpow(), (x, y) -> {
                 Fill.circle(e.x, e.y, 2f * e.fout() * 4f);
