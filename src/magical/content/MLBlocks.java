@@ -228,8 +228,8 @@ public class MLBlocks {
                         lightColor = Color.valueOf("97B5EDFF");
                         damage = 10f;
                         lightning = 6;
-                        lightningLength = 3;
-                        lightningLengthRand= 3;
+                        lightningLength = 5;
+                        lightningLengthRand= 5;
                     }};
                 }};
             }};
