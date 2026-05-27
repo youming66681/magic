@@ -220,7 +220,17 @@ public class MLBlocks {
                 backColor = Color.valueOf("97B5EDFF");
                 hitSound = MLSounds.explosionCleroi;
                 despawnSound = MLSounds.explosionCleroi;
+                fragBullets = 6;
+                fragBullet = new lightningType(0.0001f, 0f){{
+                        lifetime = 30f;
+                        hitEffect = Fx.hitLancer;
+                        lightColor = Color.valueOf("97B5EDFF");
+                        lightningDamage = 5f;
+                        lightning = 1f;
+                        lightningLength = 10f;
+                        lightningLengthRand= 10f;
+                    }};
+                }}
             }};
-        }};
     }
 }
