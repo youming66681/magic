@@ -12,7 +12,7 @@ public class MLSounds {
 
     public static void load() {
         explosionAfflict = loadSound("explosionAfflict.ogg");
-        explosionCleroi = loadSound("explosionCleroi.mp3");
+        explosionCleroi = loadSound("explosionCleroi.ogg");
     }
 
     public static Sound loadSound(String name) {
