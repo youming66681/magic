@@ -5,7 +5,7 @@ import arc.audio.Sound;
 import mindustry.Vars;
 import mindustry.mod.Mods;
 
-public class EUSounds {
+public class MLSounds {
     public static Mods.LoadedMod ML;
     public static Sound explosionAfflict;
     public static Sound explosionCleroi;
