@@ -15,9 +15,9 @@ public class MLSounds {
         explosionCleroi = loadSound("explosionCleroi.ogg");
     }
 
-    public static Sound loadSound(String name) {
-        return new Sound(ML.root.child("sounds").child(name)
-    });
+    private static Sound loadSound(String name) {
+        return new Sound(ML.root.child("sounds").child(name));
+    }
 
     static {
         ML = Vars.mods.getMod(magic.class);
