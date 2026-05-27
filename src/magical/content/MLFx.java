@@ -26,12 +26,12 @@ public class MLFx {
             Draw.color(Color.valueOf("97B5EDFF"), e.color, e.fin() + 0.4F);
             e.scaled(6, (i) -> {
                 Lines.stroke(4f * i.foutpow());
-                Lines.circle(i.x, i.y, i.fin(Interp.circleOut) * 10f * 10F);
+                Lines.circle(i.x, i.y, i.fin(Interp.circleOut) * 2f * 6F);
             });
-            Angles.randLenVectors((long) e.id, 1, 10f * e.finpow(), (x, y) -> {
-                Fill.circle(e.x, e.y, 8f * e.fout() * 4f);
+            Angles.randLenVectors((long) e.id, 1, 8f * e.finpow(), (x, y) -> {
+                Fill.circle(e.x, e.y, 2f * e.fout() * 4f);
             });
-             Angles.randLenVectors((long)e.id, 6, e.finpow() * 10f, (x, y) -> {
+             Angles.randLenVectors((long)e.id, 6, e.finpow() * 20f, (x, y) -> {
                  float ang = Mathf.angle(x, y);
                  Lines.lineAngle(e.x + x, e.y + y, ang, e.fout() * (float)rand.random(4f, 8f) + 2F);
              });
