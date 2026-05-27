@@ -223,7 +223,7 @@ public class MLBlocks {
                 despawnSound = MLSounds.explosionCleroi;
                 fragBullets = 1;
                 fragBullet = new LightningBulletType(){{
-                        lifetime = 30f;
+                        lifetime = 1f;
                         hitEffect = Fx.hitLancer;
                         lightColor = Color.valueOf("97B5EDFF");
                         damage = 10f;
