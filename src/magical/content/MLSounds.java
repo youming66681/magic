@@ -16,8 +16,8 @@ public class MLSounds {
     }
 
     public static Sound loadSound(String name) {
-        return new Sound(ML.root.child("sounds").child(name));
-    }
+        return new Sound(ML.root.child("sounds").child(name)
+    });
 
     static {
         ML = Vars.mods.getMod(magic.class);

@@ -7,6 +7,8 @@ import mindustry.game.EventType.*;
 import mindustry.mod.*;
 import mindustry.ui.dialogs.*;
 import mindustry.Vars;
+import mindustry.mod.Mod;
+import mindustry.mod.Mods;
 import arc.audio.Sound;
 
 import magical.content.MLItems;
@@ -18,7 +20,7 @@ import magical.content.MLSounds;
 import magical.content.MLFx;
 
 public class magic extends Mod {
-
+    public static Mods.LoadedMod ML;
     public static final String ModName = "magic-industry";
     public static Mods.LoadedMod mod;
     public magic() {}
