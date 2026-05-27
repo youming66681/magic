@@ -221,15 +221,15 @@ public class MLBlocks {
                 backColor = Color.valueOf("97B5EDFF");
                 hitSound = MLSounds.explosionCleroi;
                 despawnSound = MLSounds.explosionCleroi;
-                fragBullets = 6;
+                fragBullets = 1;
                 fragBullet = new LightningBulletType(){{
                         lifetime = 30f;
                         hitEffect = Fx.hitLancer;
                         lightColor = Color.valueOf("97B5EDFF");
                         damage = 10f;
-                        lightning = 1;
-                        lightningLength = 10;
-                        lightningLengthRand= 10;
+                        lightning = 6;
+                        lightningLength = 3;
+                        lightningLengthRand= 3;
                     }};
                 }};
             }};
