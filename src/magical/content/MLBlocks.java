@@ -230,7 +230,7 @@ public class MLBlocks {
                         lightningLength = 10f;
                         lightningLengthRand= 10f;
                     }};
-                }}
+                }};
             }};
     }
 }
