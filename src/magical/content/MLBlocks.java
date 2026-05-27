@@ -219,7 +219,7 @@ public class MLBlocks {
                 frontColor = Color.valueOf("97B5EDFF");
                 backColor = Color.valueOf("97B5EDFF");
                 hitSound = MLSounds.explosionCleroi;
-                despawnEffect = MLSounds.explosionCleroi;
+                despawnSound = MLSounds.explosionCleroi;
             }};
         }};
     }
