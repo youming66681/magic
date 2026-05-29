@@ -37,17 +37,21 @@ public class fluvialErosion extends LiquidBulletType{
     };
 
     public Color[] colors = {Color.valueOf("eb7abe").a(0.55f), Color.valueOf("e189f5").a(0.7f), Color.valueOf("907ef7").a(0.8f), Color.valueOf("91a4ff"), Color.white.cpy()};
-
+    public float beamLength = 120f;
     public fluvialErosion(float damage){
+        super(Liquids.water);
+        super(Liquids.cryofluid);
         this.damage = damage;
     }
 
     public fluvialErosion(){
+        super(Liquids.water);
+        super(Liquids.cryofluid);
     }
 
     {
         optimalLifeFract = 0.5f;
-        length = 120f;
+        beamLength = 100f;
         hitEffect = Fx.hitFlameBeam;
         hitSize = 4;
         drawSize = 420f;
@@ -77,7 +81,7 @@ public class fluvialErosion extends LiquidBulletType{
         }
 
         if(drawFlare){
-            color(flareColor);
+            Draw.color(flareColor);
             Draw.z(flareLayer);
 
             float angle = Time.time * flareRotSpeed + (rotateFlare ? b.rotation() : 0f);
@@ -86,7 +90,7 @@ public class fluvialErosion extends LiquidBulletType{
                 Drawf.tri(b.x, b.y, flareWidth, flareLength * (mult + sin), i*90 + 45 + angle);
             }
 
-            color();
+            Draw.color();
             for(int i = 0; i < 4; i++){
                 Drawf.tri(b.x, b.y, flareWidth * flareInnerScl, flareLength * flareInnerLenScl * (mult + sin), i*90 + 45 + angle);
             }
