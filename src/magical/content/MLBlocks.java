@@ -102,6 +102,7 @@ import magical.content.MLFx;
 import magical.magic;
 import magical.content.MLSounds;
 
+
 public class MLBlocks {
     public static Block baseCore;
     public static Block phantomTitaniumSteelCompressor;
@@ -109,6 +110,7 @@ public class MLBlocks {
     public static Block phantomSteelCompressor;
     public static Block phantomSteelVoltageMachine;
     public static Block electroge;
+    public static Block fluvialErosion;
 
     public static void load() {
         /*基础科技*/
