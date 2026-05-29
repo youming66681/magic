@@ -261,5 +261,6 @@ public class MLBlocks {
             flareColor = Color.valueOf("596ab8");
                }};
         }};
+        );
     }
 }
