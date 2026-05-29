@@ -11,7 +11,6 @@ import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.content.*;
 import mindustry.type.*;
-import mindustry.entities.bullet.ContinuousLiquidBulletType;
 
 public class fluvialErosion extends LiquidBulletType{
 
@@ -95,15 +94,4 @@ public class fluvialErosion extends LiquidBulletType{
         Drawf.light(b.x, b.y, b.x + Tmp.v1.x, b.y + Tmp.v1.y, lightStroke, lightColor, lightOpacity);
         Draw.reset();
     }
-
-    @Override
-    public float currentLength(Bullet b){
-        return length * b.fin(lengthInterp);
-    }
-
-    @Override
-    public void drawLight(Bullet b){
-        //no light drawn here
-    }
-
 }
