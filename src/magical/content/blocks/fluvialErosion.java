@@ -61,7 +61,7 @@ public class fluvialErosion extends LiquidBulletType{
     @Override
     public void draw(Bullet b){
         float mult = b.fin(lengthInterp);
-        float realLength = Damage.findLength(b, length * mult, laserAbsorb, pierceCap);
+        float realLength = 40f * mult;
 
         float sin = Mathf.sin(Time.time, oscScl, oscMag);
 
