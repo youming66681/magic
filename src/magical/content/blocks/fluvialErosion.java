@@ -11,12 +11,9 @@ import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.content.*;
 import mindustry.type.*;
+import mindustry.entities.bullet.ContinuousLiquidBulletType;
 
 public class fluvialErosion extends LiquidBulletType{
-
-    public fluvialErosion(String name) {
-        super(name);
-    }
 
     public float lightStroke = 40f;
     public float width = 3.7f, oscScl = 1.2f, oscMag = 0.02f;
@@ -40,13 +37,11 @@ public class fluvialErosion extends LiquidBulletType{
     public float beamLength = 120f;
     public fluvialErosion(float damage){
         super(Liquids.water);
-        super(Liquids.cryofluid);
         this.damage = damage;
     }
 
     public fluvialErosion(){
         super(Liquids.water);
-        super(Liquids.cryofluid);
     }
 
     {
