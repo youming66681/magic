@@ -33,7 +33,6 @@ public class fluvialErosion extends LiquidBulletType{
     };
 
     public Color[] colors = {Color.valueOf("eb7abe").a(0.55f), Color.valueOf("e189f5").a(0.7f), Color.valueOf("907ef7").a(0.8f), Color.valueOf("91a4ff"), Color.white.cpy()};
-    public float beamLength = 120f;
     public fluvialErosion(float damage){
         super(Liquids.water);
         this.damage = damage;
@@ -45,7 +44,7 @@ public class fluvialErosion extends LiquidBulletType{
 
     {
         optimalLifeFract = 0.5f;
-        beamLength = 100f;
+        length = 100f;
         hitEffect = Fx.hitFlameBeam;
         hitSize = 4;
         drawSize = 420f;

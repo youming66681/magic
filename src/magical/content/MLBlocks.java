@@ -233,5 +233,34 @@ public class MLBlocks {
                     }};
                 }};
             }};
+        //流冲
+        FluvialErosion = new fluvialErosion("fluvialErosion"){{
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 100, Items.phantomTitaniumSteel, 30, MLItems.mysticSteel, 50, MLItems.metaglass, 80}));
+            liquidCapacity = 60f;
+            liquidConsumed = 18f / 60f;
+            targetInterval = 5f;
+            newTargetInterval = 30f;
+            targetUnderBlocks = false;
+            shootY = 3f;
+            range = 144f;
+            size = 3;
+            health = 1200;
+
+            loopSound = MLSounds.shootSublimate;
+            shootEffect = Fx.shootLiquid;
+            ammo(
+            Liquids.water, new ContinuousFlameBulletType(){{
+            damage = 20f;
+            length = 144;
+            ammoMultiplier = 1f;
+            knockback = 2f;
+            pierceCap = 2;
+            timescaleDamage = true;
+
+            colors = new Color[]{Color.valueOf("596ab8").a(0.55f), Color.valueOf("596ab8").a(0.7f), Color.valueOf("596ab8").a(0.8f), Color.valueOf("596ab8"), Color.white};
+            flareColor = Color.valueOf("596ab8");
+               }};
+            }};
+        }}
     }
 }
