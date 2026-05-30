@@ -11,6 +11,7 @@ import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.content.*;
 import mindustry.type.*;
+import mindustry.world.blocks.defense.turrets.LiquidTurret;
 
 public class fluvialErosion extends LiquidBulletType{
 
