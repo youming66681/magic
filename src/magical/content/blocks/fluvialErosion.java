@@ -14,6 +14,10 @@ import mindustry.type.*;
 
 public class fluvialErosion extends LiquidBulletType{
 
+    public fluvialErosion(String name){
+        super(name);
+    }
+
     public float lightStroke = 40f;
     public float width = 3.7f, oscScl = 1.2f, oscMag = 0.02f;
     public int divisions = 25;

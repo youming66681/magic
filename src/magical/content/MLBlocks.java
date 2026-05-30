@@ -236,7 +236,7 @@ public class MLBlocks {
                 }};
             }};
         //流冲
-        fluvialErosion = new fluvialErosion("fluvialErosion"){{
+        fluvialErosion = new ContinuousLiquidTurret("fluvialErosion"){{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 100, Items.phantomTitaniumSteel, 30, MLItems.mysticSteel, 50, MLItems.metaglass, 80}));
             liquidCapacity = 60f;
             liquidConsumed = 18f / 60f;
@@ -251,7 +251,7 @@ public class MLBlocks {
             loopSound = MLSounds.shootSublimate;
             shootEffect = Fx.shootLiquid;
             ammo(
-            Liquids.water, new ContinuousFlameBulletType(){{
+            Liquids.water, new fluvialErosion(){{
             damage = 20f;
             length = 144;
             ammoMultiplier = 1f;
