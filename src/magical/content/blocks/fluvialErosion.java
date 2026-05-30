@@ -14,10 +14,6 @@ import mindustry.type.*;
 
 public class fluvialErosion extends LiquidBulletType{
 
-    public fluvialErosion(String name){
-        super(name);
-    }
-
     public float lightStroke = 40f;
     public float width = 3.7f, oscScl = 1.2f, oscMag = 0.02f;
     public int divisions = 25;
@@ -48,7 +44,6 @@ public class fluvialErosion extends LiquidBulletType{
 
     {
         optimalLifeFract = 0.5f;
-        length = 100f;
         hitEffect = Fx.hitFlameBeam;
         hitSize = 4;
         drawSize = 420f;
