@@ -132,14 +132,24 @@ public class AdaptiveWall extends Wall {
         }
 
         @Override
-        public void displayBars(arc.scene.ui.layout.Table table){
+        public void displayBars(Table table){
             super.displayBars(table);
 
+            // 原生命值位置显示总生命值
             table.add(new Bar(
-                    () -> "connections: " + connections.size + " | health: " + (int)totalHealth,
+                    () -> "health: " + (int)totalHealth,
                     () -> team.color,
                     () -> totalHealth / totalMax
-            ));
+            )).growX();
+
+            table.row();
+
+            // 单独显示连接数量
+            table.add(new Bar(
+                    () -> "bind: " + linked.size,
+                    () -> team.color,
+                    () -> 1f
+            )).growX();
         }
     }
 }
