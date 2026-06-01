@@ -133,16 +133,20 @@ public class fluvialErosion extends LiquidBulletType{
     @Override
     public void hit(Bullet b, float hitx, float hity){
         super.hit(b, hitx, hity);
-        if(liquid != null && liquid.canExtinguish()){
-            Tile tile = Vars.world.tileWorld(hitx, hity);
-            if(tile != null && Fires.has(tile.x, tile.y)){
-                Fires.extinguish(tile, 150f);
-        if(liquid.temperature <= 0.5f && liquid.flammability < 0.3f){
-            float intensity = 400f * puddleSize/6f;
-            Fires.extinguish(Vars.world.tileWorld(hitx, hity), intensity);
-            for(Point2 p : Geometry.d4) {
-                Fires.extinguish(Vars.world.tileWorld(hitx + p.x * Vars.tilesize, hity + p.y * Vars.tilesize), intensity);
-                    }
+
+        Tile tile = Vars.world.tileWorld(hitx, hity);
+
+        if(tile != null){
+            Fires.extinguish(tile, 150f);
+
+            for(Point2 p : Geometry.d4){
+                Tile other = Vars.world.tileWorld(
+                        hitx + p.x * Vars.tilesize,
+                        hity + p.y * Vars.tilesize
+                );
+
+                if(other != null){
+                    Fires.extinguish(other, 150f);
                 }
             }
         }
