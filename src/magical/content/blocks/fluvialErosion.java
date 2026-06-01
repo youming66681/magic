@@ -12,6 +12,9 @@ import mindustry.graphics.*;
 import mindustry.content.*;
 import mindustry.type.*;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
+import mindustry.Vars;
+import mindustry.world.Tile;
+import mindustry.entities.Fires;
 
 public class fluvialErosion extends LiquidBulletType{
 
@@ -93,5 +96,19 @@ public class fluvialErosion extends LiquidBulletType{
         Tmp.v1.trns(b.rotation(), realLength * 1.1f);
         Drawf.light(b.x, b.y, b.x + Tmp.v1.x, b.y + Tmp.v1.y, lightStroke, lightColor, lightOpacity);
         Draw.reset();
+    }
+    @Override
+    public void update(Bullet b){
+        super.update(b);
+
+        for(float i = 0; i < 144f; i += 8f){
+            float x = b.x + Angles.trnsx(b.rotation(), i);
+            float y = b.y + Angles.trnsy(b.rotation(), i);
+
+            Tile tile = Vars.world.tileWorld(x, y);
+            if(tile != null){
+                Fires.extinguish(tile, 100f);
+            }
+        }
     }
 }
