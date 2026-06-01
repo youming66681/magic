@@ -88,6 +88,10 @@ public class AdaptiveWall extends Wall {
 
             for(AdaptiveWallBuild build : linked){
                 build.health = each;
+
+                build.totalHealth = totalHealth;
+                build.totalMax = totalMax;
+                build.linked = linked;
             }
         }
 
