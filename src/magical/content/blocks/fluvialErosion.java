@@ -42,7 +42,7 @@ public class fluvialErosion extends LiquidBulletType{
     public fluvialErosion(){
         super(Liquids.water);
     }
-
+    public float length = 144f;
     {
         optimalLifeFract = 0.5f;
         hitEffect = Fx.hitFlameBeam;
