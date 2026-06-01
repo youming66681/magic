@@ -253,21 +253,50 @@ public class MLBlocks {
             loopSound = MLSounds.shootSublimate;
             shootEffect = Fx.shootLiquid;
             ammo(
-            Liquids.water, new fluvialErosion(){{
+            Liquids.water, new ContinuousFlameBulletType(){{
             damage = 20f;
             length = 144f;
             ammoMultiplier = 1f;
             knockback = 2f;
             pierceCap = 2;
-            collides = true;
-            collidesAir = true;
-            collidesGround = true;
-            hittable = true;
-            pierce = false;
+            timescaleDamage = true;
 
             colors = new Color[]{Color.valueOf("596ab8").a(0.55f), Color.valueOf("596ab8").a(0.7f), Color.valueOf("596ab8").a(0.8f), Color.valueOf("596ab8"), Color.white};
             flareColor = Color.valueOf("596ab8");
                }}
+            Liquids.cryofluid, new ContinuousFlameBulletType(){{
+            damage = 30f;
+            length = 144f;
+            ammoMultiplier = 1f;
+            knockback = 2f;
+            pierceCap = 2;
+            timescaleDamage = true;
+
+            colors = new Color[]{Color.valueOf("6ecdec").a(0.55f), Color.valueOf("6ecdec").a(0.7f), Color.valueOf("6ecdec").a(0.8f), Color.valueOf("6ecdec"), Color.white};
+            flareColor = Color.valueOf("6ecdec");
+                        }}
+            Liquids.slag, new ContinuousFlameBulletType() {{
+            damage = 40f;
+            length = 144f;
+            ammoMultiplier = 1f;
+            knockback = 3f;
+            pierceCap = 3;
+            timescaleDamage = true;
+
+            colors = new Color[]{Color.valueOf("ffa166").a(0.55f), Color.valueOf("ffa166").a(0.7f), Color.valueOf("ffa166").a(0.8f), Color.valueOf("ffa166"), Color.white};
+            flareColor = Color.valueOf("ffa166");
+                    }}
+            Liquids.oil, new ContinuousFlameBulletType() {{
+            damage = 20f;
+            length = 144f;
+            ammoMultiplier = 1f;
+            knockback = 2f;
+            pierceCap = 2;
+            timescaleDamage = true;
+
+            colors = new Color[]{Color.valueOf("313131").a(0.55f), Color.valueOf("313131").a(0.7f), Color.valueOf("313131").a(0.8f), Color.valueOf("313131"), Color.white};
+            flareColor = Color.valueOf("313131");
+                    }}
             );
         }};
     }
