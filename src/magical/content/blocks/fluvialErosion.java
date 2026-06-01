@@ -140,8 +140,10 @@ public class fluvialErosion extends LiquidBulletType{
         if(liquid.temperature <= 0.5f && liquid.flammability < 0.3f){
             float intensity = 400f * puddleSize/6f;
             Fires.extinguish(Vars.world.tileWorld(hitx, hity), intensity);
-            for(Point2 p : Geometry.d4){
+            for(Point2 p : Geometry.d4) {
                 Fires.extinguish(Vars.world.tileWorld(hitx + p.x * Vars.tilesize, hity + p.y * Vars.tilesize), intensity);
+                    }
+                }
             }
         }
     }
