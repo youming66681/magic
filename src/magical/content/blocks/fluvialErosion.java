@@ -71,7 +71,11 @@ public class fluvialErosion extends LiquidBulletType{
         collidesAir = true;
         collidesGround = true;
         hittable = true;
-        pierce = true;
+        pierce = false;
+        damage = 35f;
+        speed = 0.01f;
+        keepVelocity = false;
+        despawnHit = true;
     }
 
     @Override
@@ -117,13 +121,12 @@ public class fluvialErosion extends LiquidBulletType{
     public void update(Bullet b){
         super.update(b);
 
-        float realLength = Damage.findLength(b, length, laserAbsorb, pierceCap);
-
-        for(float i = 0; i < realLength; i += 8f){
+        for(float i = 0; i <= length; i += Vars.tilesize / 2f){
             float x = b.x + Angles.trnsx(b.rotation(), i);
             float y = b.y + Angles.trnsy(b.rotation(), i);
 
             Tile tile = Vars.world.tileWorld(x, y);
+
             if(tile != null){
                 Fires.extinguish(tile, 150f);
             }
@@ -131,7 +134,6 @@ public class fluvialErosion extends LiquidBulletType{
     }
 
     @Override
-    if(liquid.temperature <= 0.5f && liquid.flammability < 0.3f){
     public void hit(Bullet b, float hitx, float hity){
         super.hit(b, hitx, hity);
 
@@ -148,7 +150,6 @@ public class fluvialErosion extends LiquidBulletType{
 
                 if(other != null) {
                     Fires.extinguish(other, 150f);
-                   }
                 }
             }
         }
