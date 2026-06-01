@@ -63,6 +63,8 @@ public class fluvialErosion extends LiquidBulletType{
 
     @Override
     public void draw(Bullet b){
+        super.draw(b);
+
         float mult = b.fin(lengthInterp);
         float realLength = Damage.findLength(b, length * mult, laserAbsorb, pierceCap);
 
@@ -110,5 +112,10 @@ public class fluvialErosion extends LiquidBulletType{
                 Fires.extinguish(tile, 100f);
             }
         }
+    }
+    @Override
+    public void hit(Bullet b, float x, float y){
+        super.hit(b, x, y);
+
     }
 }
