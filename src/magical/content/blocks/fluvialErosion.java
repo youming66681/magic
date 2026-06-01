@@ -12,6 +12,7 @@ import mindustry.graphics.*;
 import mindustry.content.*;
 import mindustry.type.*;
 import mindustry.world.blocks.defense.turrets.LiquidTurret;
+import mindustry.entities.bullet.ContinuousLiquidBulletType;
 import mindustry.Vars;
 import mindustry.world.Tile;
 import mindustry.entities.Fires;
@@ -20,7 +21,8 @@ import arc.math.geom.Geometry;
 import mindustry.type.Liquid;
 import mindustry.content.Liquids;
 
-public class fluvialErosion extends LiquidBulletType{
+
+public class fluvialErosion extends ContinuousLiquidBulletType{
 
     public float lightStroke = 40f;
     public float width = 3.7f, oscScl = 1.2f, oscMag = 0.02f;
@@ -75,7 +77,6 @@ public class fluvialErosion extends LiquidBulletType{
         damage = 35f;
         speed = 0.01f;
         keepVelocity = false;
-        despawnHit = true;
     }
 
     @Override
