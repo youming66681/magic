@@ -126,13 +126,18 @@ public class AdaptiveWall extends Wall {
         public void remove(){
             super.remove();
 
+            float ratio = totalHealth / totalMax;
+
             linked.remove(this);
 
             for(AdaptiveWallBuild build : linked){
                 build.linked = new Seq<>();
                 build.linked.add(build);
-                build.totalHealth = build.health;
+
                 build.totalMax = build.block.health;
+                build.totalHealth = build.totalMax * ratio;
+
+                build.health = build.totalHealth;
                 build.needUpdate = true;
             }
         }
