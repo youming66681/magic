@@ -116,6 +116,7 @@ public class MLBlocks {
     public static Block fluvialErosion;
 
     public static void load() {
+
         /*基础科技*/
         //基座核心
         baseCore = new baseCore("baseCore") {{
@@ -246,7 +247,6 @@ public class MLBlocks {
             targetInterval = 5f;
             newTargetInterval = 30f;
             targetUnderBlocks = false;
-            shootY = 3f;
             range = 144f;
             size = 3;
             health = 1200;
@@ -303,6 +303,12 @@ public class MLBlocks {
             flareColor = Color.valueOf("313131");
                     }}
             );
+        }};
+        int whm = 4;
+        adaptiveWall = new adaptiveWall("adaptiveWall"){{
+            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticSteel, 6, Items.silicon, 6}));
+            health = 110 * whm;
+            gname = adaptive;
         }};
     }
 }
