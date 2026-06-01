@@ -305,7 +305,7 @@ public class MLBlocks {
             );
         }};
         int whm = 4;
-        adaptiveWall = new adaptiveWall("adaptiveWall"){{
+        adaptiveWall = new AdaptiveWall("adaptiveWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticSteel, 6, Items.silicon, 6}));
             health = 110 * whm;
             gname = adaptive;

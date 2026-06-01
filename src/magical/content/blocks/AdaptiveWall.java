@@ -136,9 +136,9 @@ public class AdaptiveWall extends Wall {
             super.displayBars(table);
 
             table.add(new Bar(
-                    () -> "connections: " + connections.size,
+                    () -> "connections: " + linked.size,
                     () -> team.color,
-                    () -> (float)connections.size / maxConnections
+                    () -> (float)linked.size / totalMax * block.health
             ));
         }
     }
