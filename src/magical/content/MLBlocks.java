@@ -308,11 +308,11 @@ public class MLBlocks {
         }};
         int whm = 4;
         adaptiveWall = new AdaptiveWall("adaptiveWall"){{
-            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticSteel, 6, Items.silicon, 6}));
+            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticCrystal, 6, Items.silicon, 6}));
             health = 110 * whm;
         }};
         largeAdaptiveWall = new AdaptiveWall("largeAdaptiveWall"){{
-            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticSteel, 6 * whm, Items.silicon, 6 * whm}));
+            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticCrystal, 6 * whm, Items.silicon, 6 * whm}));
             health = 110 * whm * 4;
             size = 2;
         }};
