@@ -16,6 +16,9 @@ import mindustry.Vars;
 import mindustry.world.Tile;
 import mindustry.entities.Fires;
 import arc.util.Nullable;
+import arc.math.geom.Geometry;
+import mindustry.type.Liquid;
+import mindustry.content.Liquids;
 
 public class fluvialErosion extends LiquidBulletType{
 
@@ -55,6 +58,7 @@ public class fluvialErosion extends LiquidBulletType{
             this.status = liquid.effect;
         }
 
+        update = true;
         optimalLifeFract = 0.5f;
         hitEffect = Fx.hitFlameBeam;
         length = 144f;
@@ -107,6 +111,7 @@ public class fluvialErosion extends LiquidBulletType{
         Drawf.light(b.x, b.y, b.x + Tmp.v1.x, b.y + Tmp.v1.y, lightStroke, lightColor, lightOpacity);
         Draw.reset();
     }
+
     @Override
     public void update(Bullet b){
         super.update(b);
@@ -121,16 +126,17 @@ public class fluvialErosion extends LiquidBulletType{
             }
         }
     }
+
         @Override
         public void hit(Bullet b, float hitx, float hity, boolean createFrags){
         hitEffect.at(hitx, hity, liquid.color);
-        Puddles.deposit(world.tileWorld(hitx, hity), liquid, puddleSize);
+        Puddles.deposit(Vars.world.tileWorld(hitx, hity), liquid, puddleSize);
 
         if(liquid.temperature <= 0.5f && liquid.flammability < 0.3f){
             float intensity = 400f * puddleSize/6f;
-            Fires.extinguish(world.tileWorld(hitx, hity), intensity);
+            Fires.extinguish(Vars.world.tileWorld(hitx, hity), intensity);
             for(Point2 p : Geometry.d4){
-                Fires.extinguish(world.tileWorld(hitx + p.x * tilesize, hity + p.y * tilesize), intensity);
+                Fires.extinguish(Vars.world.tileWorld(hitx + p.x * Vars.tilesize, hity + p.y * Vars.tilesize), intensity);
             }
         }
     }
