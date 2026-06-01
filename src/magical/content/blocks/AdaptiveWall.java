@@ -3,7 +3,7 @@ package magical.content;
 import arc.struct.Seq;
 import mindustry.gen.Building;
 import mindustry.ui.Bar;
-import mindustry.ui.Table;
+import arc.scene.ui.layout.Table;
 import mindustry.world.blocks.defense.Wall;
 
 public class AdaptiveWall extends Wall {
@@ -134,9 +134,7 @@ public class AdaptiveWall extends Wall {
 
         @Override
         public void displayBars(Table table){
-            super.displayBars(table);
 
-            // 原生命值位置显示总生命值
             table.add(new Bar(
                     () -> "health: " + (int)totalHealth,
                     () -> team.color,
@@ -145,12 +143,7 @@ public class AdaptiveWall extends Wall {
 
             table.row();
 
-            // 单独显示连接数量
-            table.add(new Bar(
-                    () -> "bind: " + linked.size,
-                    () -> team.color,
-                    () -> 1f
-            )).growX();
+            table.label(() -> "bind: " + linked.size).growX();
         }
     }
 }
