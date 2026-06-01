@@ -311,7 +311,7 @@ public class MLBlocks {
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticSteel, 6, Items.silicon, 6}));
             health = 110 * whm;
         }};
-        largeAdaptiveWall = new AdaptiveWall("adaptiveWall"){{
+        largeAdaptiveWall = new AdaptiveWall("largeAdaptiveWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticSteel, 6 * whm, Items.silicon, 6 * whm}));
             health = 110 * whm * 4;
             size = 2;
