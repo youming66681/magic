@@ -115,6 +115,7 @@ public class MLBlocks {
     public static Block electroge;
     public static Block fluvialErosion;
     public static Block adaptiveWall;
+    public static Block largeAdaptiveWall;
 
     public static void load() {
 
@@ -309,6 +310,11 @@ public class MLBlocks {
         adaptiveWall = new AdaptiveWall("adaptiveWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticSteel, 6, Items.silicon, 6}));
             health = 110 * whm;
+        }};
+        largeAdaptiveWall = new AdaptiveWall("adaptiveWall"){{
+            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticSteel, 6 * whm, Items.silicon, 6 * whm}));
+            health = 110 * whm * 4;
+            size = 2;
         }};
     }
 }
