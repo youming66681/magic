@@ -122,7 +122,7 @@ public class fluvialErosion extends ContinuousBulletType{
     public void update(Bullet b){
         super.update(b);
 
-        for(float i = 0; i <= length; i += 4f){
+        for(float i = 0; i <= length; i += Vars.tilesize / 2f){
             float x = b.x + Angles.trnsx(b.rotation(), i);
             float y = b.y + Angles.trnsy(b.rotation(), i);
 
@@ -130,17 +130,6 @@ public class fluvialErosion extends ContinuousBulletType{
 
             if(tile != null){
                 Fires.extinguish(tile, 150f);
-
-                for(Point2 p : Geometry.d4){
-                    Tile other = Vars.world.tile(
-                            tile.x + p.x,
-                            tile.y + p.y
-                    );
-
-                    if(other != null){
-                        Fires.extinguish(other, 150f);
-                    }
-                }
             }
         }
     }
