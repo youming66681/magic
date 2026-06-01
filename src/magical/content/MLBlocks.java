@@ -257,7 +257,7 @@ public class MLBlocks {
             Liquids.water, new ContinuousFlameBulletType(){{
             damage = 20f;
             length = 144f;
-            status = liquid.effect;
+            status = Liquids.water.effect;
             ammoMultiplier = 1f;
             knockback = 2f;
             pierceCap = 2;
@@ -269,7 +269,7 @@ public class MLBlocks {
             Liquids.cryofluid, new ContinuousFlameBulletType(){{
             damage = 30f;
             length = 144f;
-            status = liquid.effect;
+            status = Liquids.cryofluid.effect;
             ammoMultiplier = 1f;
             knockback = 2f;
             pierceCap = 2;
@@ -281,7 +281,7 @@ public class MLBlocks {
             Liquids.slag, new ContinuousFlameBulletType() {{
             damage = 40f;
             length = 144f;
-            status = liquid.effect;
+            status = Liquids.slag.effect;
             ammoMultiplier = 1f;
             knockback = 3f;
             pierceCap = 3;
@@ -293,7 +293,7 @@ public class MLBlocks {
             Liquids.oil, new ContinuousFlameBulletType() {{
             damage = 20f;
             length = 144f;
-            status = liquid.effect;
+            status = Liquids.oil.effect;
             ammoMultiplier = 1f;
             knockback = 2f;
             pierceCap = 2;
