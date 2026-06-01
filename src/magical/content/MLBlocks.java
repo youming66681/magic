@@ -250,12 +250,14 @@ public class MLBlocks {
             size = 3;
             health = 1200;
 
+            float r = range = 144f;
+
             loopSound = MLSounds.shootSublimate;
             shootEffect = Fx.shootLiquid;
             ammo(
             Liquids.water, new fluvialErosion(){{
             damage = 20f;
-            length = 144f;
+            length = r;
             ammoMultiplier = 1f;
             knockback = 2f;
             pierceCap = 2;

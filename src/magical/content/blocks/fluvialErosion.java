@@ -46,6 +46,7 @@ public class fluvialErosion extends LiquidBulletType{
     {
         optimalLifeFract = 0.5f;
         hitEffect = Fx.hitFlameBeam;
+        length = 144f;
         hitSize = 4;
         drawSize = 420f;
         lifetime = 16f;
