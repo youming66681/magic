@@ -131,6 +131,7 @@ public class fluvialErosion extends LiquidBulletType{
     }
 
     @Override
+    if(liquid.temperature <= 0.5f && liquid.flammability < 0.3f){
     public void hit(Bullet b, float hitx, float hity){
         super.hit(b, hitx, hity);
 
@@ -145,8 +146,9 @@ public class fluvialErosion extends LiquidBulletType{
                         hity + p.y * Vars.tilesize
                 );
 
-                if(other != null){
+                if(other != null) {
                     Fires.extinguish(other, 150f);
+                   }
                 }
             }
         }
