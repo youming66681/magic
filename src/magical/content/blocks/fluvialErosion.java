@@ -59,7 +59,6 @@ public class fluvialErosion extends LiquidBulletType{
     }
 
     @Override
-    @Override
     public void draw(Bullet b){
         float mult = b.fin(lengthInterp);
         float realLength = Damage.findLength(b, length * mult, laserAbsorb, pierceCap);
@@ -76,7 +75,7 @@ public class fluvialErosion extends LiquidBulletType{
         }
 
         if(drawFlare){
-            color(flareColor);
+            Draw.color(flareColor);
             Draw.z(flareLayer);
 
             float angle = Time.time * flareRotSpeed + (rotateFlare ? b.rotation() : 0f);
@@ -85,7 +84,7 @@ public class fluvialErosion extends LiquidBulletType{
                 Drawf.tri(b.x, b.y, flareWidth, flareLength * (mult + sin), i*90 + 45 + angle);
             }
 
-            color();
+            Draw.color();
             for(int i = 0; i < 4; i++){
                 Drawf.tri(b.x, b.y, flareWidth * flareInnerScl, flareLength * flareInnerLenScl * (mult + sin), i*90 + 45 + angle);
             }
