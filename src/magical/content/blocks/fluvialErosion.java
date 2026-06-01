@@ -15,6 +15,7 @@ import mindustry.world.blocks.defense.turrets.LiquidTurret;
 import mindustry.Vars;
 import mindustry.world.Tile;
 import mindustry.entities.Fires;
+import arc.util.Nullable;
 
 public class fluvialErosion extends LiquidBulletType{
 
