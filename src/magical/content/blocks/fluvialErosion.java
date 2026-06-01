@@ -43,10 +43,18 @@ public class fluvialErosion extends LiquidBulletType{
     }
 
     public fluvialErosion(){
-        super(Liquids.water);
+        this(null);
     }
     public float length = 144f;
     {
+        public fluvialErosion(@Nullable Liquid liquid){
+        super();
+
+        if(liquid != null) {
+            this.liquid = liquid;
+            this.status = liquid.effect;
+        }
+
         optimalLifeFract = 0.5f;
         hitEffect = Fx.hitFlameBeam;
         length = 144f;
@@ -99,23 +107,36 @@ public class fluvialErosion extends LiquidBulletType{
         Drawf.light(b.x, b.y, b.x + Tmp.v1.x, b.y + Tmp.v1.y, lightStroke, lightColor, lightOpacity);
         Draw.reset();
     }
-    @Override
-    public void update(Bullet b){
+        @Override
+        public void update(Bullet b){
         super.update(b);
 
-        for(float i = 0; i < 144f; i += 8f){
-            float x = b.x + Angles.trnsx(b.rotation(), i);
-            float y = b.y + Angles.trnsy(b.rotation(), i);
+        if(liquid.willBoil() && b.time >= Mathf.randomSeed(b.id, boilTime)){
+            Fx.vaporSmall.at(b.x, b.y, liquid.gasColor);
+            b.remove();
+            return;
+        }
 
-            Tile tile = Vars.world.tileWorld(x, y);
-            if(tile != null){
+        if(liquid.canExtinguish()){
+            Tile tile = world.tileWorld(b.x, b.y);
+            if(tile != null && Fires.has(tile.x, tile.y)){
                 Fires.extinguish(tile, 100f);
+                b.remove();
+                hit(b);
             }
         }
     }
-    @Override
-    public void hit(Bullet b, float x, float y){
-        super.hit(b, x, y);
+        @Override
+        public void hit(Bullet b, float hitx, float hity, boolean createFrags){
+        hitEffect.at(hitx, hity, liquid.color);
+        Puddles.deposit(world.tileWorld(hitx, hity), liquid, puddleSize);
 
+        if(liquid.temperature <= 0.5f && liquid.flammability < 0.3f){
+            float intensity = 400f * puddleSize/6f;
+            Fires.extinguish(world.tileWorld(hitx, hity), intensity);
+            for(Point2 p : Geometry.d4){
+                Fires.extinguish(world.tileWorld(hitx + p.x * tilesize, hity + p.y * tilesize), intensity);
+            }
+        }
     }
-}
+    }
