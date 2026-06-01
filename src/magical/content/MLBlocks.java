@@ -259,7 +259,6 @@ public class MLBlocks {
             ammoMultiplier = 1f;
             knockback = 2f;
             pierceCap = 2;
-            extinguish = true;
             //timescaleDamage = true;
 
             colors = new Color[]{Color.valueOf("596ab8").a(0.55f), Color.valueOf("596ab8").a(0.7f), Color.valueOf("596ab8").a(0.8f), Color.valueOf("596ab8"), Color.white};
