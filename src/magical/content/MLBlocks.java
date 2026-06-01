@@ -255,7 +255,7 @@ public class MLBlocks {
             ammo(
             Liquids.water, new fluvialErosion(){{
             damage = 20f;
-            shootLength = 144f;
+            length = 144f;
             ammoMultiplier = 1f;
             knockback = 2f;
             pierceCap = 2;
