@@ -3,6 +3,7 @@ package magical.content;
 import arc.struct.Seq;
 import mindustry.gen.Building;
 import mindustry.ui.Bar;
+import mindustry.ui.Table;
 import mindustry.world.blocks.defense.Wall;
 
 public class AdaptiveWall extends Wall {
