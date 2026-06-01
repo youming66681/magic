@@ -58,7 +58,6 @@ public class fluvialErosion extends LiquidBulletType{
             this.status = liquid.effect;
         }
 
-        update = true;
         optimalLifeFract = 0.5f;
         hitEffect = Fx.hitFlameBeam;
         length = 144f;
@@ -127,7 +126,6 @@ public class fluvialErosion extends LiquidBulletType{
         }
     }
 
-        @Override
         public void hit(Bullet b, float hitx, float hity, boolean createFrags){
         hitEffect.at(hitx, hity, liquid.color);
         Puddles.deposit(Vars.world.tileWorld(hitx, hity), liquid, puddleSize);
@@ -140,4 +138,4 @@ public class fluvialErosion extends LiquidBulletType{
             }
         }
     }
-    }
+}
