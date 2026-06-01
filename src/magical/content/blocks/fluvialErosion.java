@@ -22,7 +22,7 @@ import mindustry.type.Liquid;
 import mindustry.content.Liquids;
 
 
-public class fluvialErosion extends ContinuousLiquidBulletType{
+public class fluvialErosion extends LiquidBulletType{
 
     public float lightStroke = 40f;
     public float width = 3.7f, oscScl = 1.2f, oscMag = 0.02f;
@@ -63,7 +63,7 @@ public class fluvialErosion extends ContinuousLiquidBulletType{
         length = 144f;
         hitSize = 4;
         drawSize = 420f;
-        lifetime = 16f;
+        lifetime = 30f;
         hitColor = colors[1].cpy().a(1f);
         lightColor = hitColor;
         lightOpacity = 0.7f;
@@ -122,7 +122,7 @@ public class fluvialErosion extends ContinuousLiquidBulletType{
     public void update(Bullet b){
         super.update(b);
 
-        for(float i = 0; i <= length; i += Vars.tilesize / 2f){
+        for(float i = 0; i <= length; i += 4f){
             float x = b.x + Angles.trnsx(b.rotation(), i);
             float y = b.y + Angles.trnsy(b.rotation(), i);
 
@@ -130,6 +130,17 @@ public class fluvialErosion extends ContinuousLiquidBulletType{
 
             if(tile != null){
                 Fires.extinguish(tile, 150f);
+
+                for(Point2 p : Geometry.d4){
+                    Tile other = Vars.world.tile(
+                            tile.x + p.x,
+                            tile.y + p.y
+                    );
+
+                    if(other != null){
+                        Fires.extinguish(other, 150f);
+                    }
+                }
             }
         }
     }
