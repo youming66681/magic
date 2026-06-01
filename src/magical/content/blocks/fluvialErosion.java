@@ -47,12 +47,10 @@ public class fluvialErosion extends LiquidBulletType{
     }
 
     public fluvialErosion(){
-        this(null);
+        super(Liquids.water);
     }
     public float length = 144f;
-        public fluvialErosion(@Nullable Liquid liquid){
-        super();
-
+    {
         if(liquid != null) {
             this.liquid = liquid;
             this.status = liquid.effect;
