@@ -335,7 +335,7 @@ public class MLBlocks {
                         speed = brange;
                         hitShake = 3f;
                         ammoMultiplier = 1f;
-                    }}
+                    }};
             );
 
             maxAmmo = 30;
