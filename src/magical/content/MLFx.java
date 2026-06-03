@@ -39,19 +39,20 @@ public class MLFx {
                  Lines.lineAngle(e.x + x, e.y + y, ang, e.fout() * (float)rand.random(4f, 8f) + 2F);
              });
         });
-        squareWaveRot =  new Effect(14, 40f, e -> {
+        squareWaveRot = new Effect(14, 40f, e -> {
             rand.setSeed(e.id);
-            Draw.color(Color.valueOf("FEEBB3FF"), e.color, rand.random(0.8f, 1.5f) * e.fin());
-            Lines.stroke(rand.random(0.4f, 0.8f) + e.fout() * 2);
+            Draw.color(Color.valueOf("FEEBB3"));
+            Lines.stroke(rand.random(0.4f, 0.8f) + e.fout() * 2f);
+            float size = rand.random(7f, 14f) * e.fout();
             float rot = rand.random(45f, 180f) * e.fin();
-            float rotation = rand.random(0f, 1f) > 0.5f ? rot : -rot;
-            Lines.square(e.x, e.y, e.fin() * rand.random(4f, 10f) + 4f, e.rotation + rand.random(360f) + rotation);
-            Drawf.light(e.x, e.y, 21f, e.color, e.fout() * 0.7f);
+            Lines.square(e.x, e.y, size, e.rotation + rot);
+            Lines.square(e.x, e.y, size * 1.6f, e.rotation - rot);
+            Drawf.light(e.x, e.y, 14f, e.color, e.fout() * 0.7f);
         });
         beamEffect = new Effect(30f, e -> {
             Draw.color(Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF"), e.fin());
             Lines.stroke(Mathf.lerp(9f, 0f, e.fin()));
-            float len = 18f;
+            float len = 21f * e.fout();
             Lines.lineAngle(e.x, e.y, e.rotation, len);
             Draw.reset();
         });
