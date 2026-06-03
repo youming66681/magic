@@ -32,6 +32,7 @@ import mindustry.entities.bullet.BulletType;
 import mindustry.entities.bullet.PointLaserBulletType;
 import mindustry.entities.bullet.ShrapnelBulletType;
 import mindustry.entities.bullet.LightningBulletType;
+import mindustry.entities.bullet.PointBulletType;
 import mindustry.entities.part.DrawPart;
 import mindustry.entities.part.HaloPart;
 import mindustry.entities.part.RegionPart;
