@@ -324,6 +324,7 @@ public class MLBlocks {
         //裂光
         Birefringence = new PowerTurret("Birefringence"){{
             float brange = range = 320f;
+            shootY = 0;
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 150, MLItems.phantomTitaniumSteel, 50, MLItems.mysticSteel, 80, Items.silicon, 100}));
             shootType = new PointBulletType(){{
                         shootEffect = Fx.despawn;
