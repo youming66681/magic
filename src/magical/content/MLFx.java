@@ -46,12 +46,12 @@ public class MLFx {
             float rot = rand.random(45f, 180f) * e.fin();
             float rotation = rand.random(0f, 1f) > 0.5f ? rot : -rot;
             Lines.square(e.x, e.y, e.fin() * rand.random(4f, 10f) + 4f, e.rotation + rand.random(360f) + rotation);
-            Drawf.light(e.x, e.y, 14f, e.color, e.fout() * 0.7f);
+            Drawf.light(e.x, e.y, 21f, e.color, e.fout() * 0.7f);
         });
         beamEffect = new Effect(30f, e -> {
             Draw.color(Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF"), e.fin());
             Lines.stroke(Mathf.lerp(9f, 0f, e.fin()));
-            float len = 15f;
+            float len = 18f;
             Lines.lineAngle(e.x, e.y, e.rotation, len);
             Draw.reset();
         });

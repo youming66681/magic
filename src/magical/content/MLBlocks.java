@@ -343,7 +343,7 @@ public class MLBlocks {
             ammoPerShot = 6;
             rotateSpeed = 6f;
             reload = 120f;
-            ammoUseEffect = Fx.dynamicSpikes;
+            ammoUseEffect = Fx.casing3Double;
             recoil = 6f;
             cooldownTime = reload/2;
             shake = 3f;
