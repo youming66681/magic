@@ -117,6 +117,7 @@ public class MLBlocks {
     public static Block fluvialErosion;
     public static Block adaptiveWall;
     public static Block largeAdaptiveWall;
+    public static Block Birefringence;
 
     public static void load() {
 
@@ -323,7 +324,7 @@ public class MLBlocks {
         //裂光
         Birefringence = new PowerTurret("Birefringence"){{
             float brange = range = 320f;
-            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 150, MLItems.phantomTitaniumSteel, 50, MLItems.mysticSteel, 80, Items.silicon, 100}));requirements(Category.turret, with(Items.copper, 1000, Items.metaglass, 600, Items.surgeAlloy, 300, Items.plastanium, 200, Items.silicon, 600));
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 150, MLItems.phantomTitaniumSteel, 50, MLItems.mysticSteel, 80, Items.silicon, 100}));
             shootType = new PointBulletType(){{
                         shootEffect = Fx.despawn;
                         hitEffect = MLFx.squareWaveRot;

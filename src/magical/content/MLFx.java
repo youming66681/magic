@@ -14,6 +14,7 @@ import mindustry.gen.*;
 import mindustry.entities.Effect;
 import mindustry.type.*;
 import mindustry.content.*;
+import mindustry.graphics.Drawf;
 
 public class MLFx {
     public static Effect smallElectricDetonation;
@@ -40,8 +41,8 @@ public class MLFx {
         });
         squareWaveRot =  new Effect(14, 40f, e -> {
             rand.setSeed(e.id);
-            color(color.valueOf("FEEBB3FF"), e.color.valueOf("FEEBB3FF"), rand.random(0.8f, 1.5f) * e.fin());
-            stroke(rand.random(0.4f, 0.8f) + e.fout() * 2);
+            Draw.color(color.valueOf("FEEBB3FF"), e.color.valueOf("FEEBB3FF"), rand.random(0.8f, 1.5f) * e.fin());
+            Lines.stroke(rand.random(0.4f, 0.8f) + e.fout() * 2);
             float rot = rand.random(45f, 180f) * e.fin();
             float rotation = rand.random(0, 1) > 0.5f ? rot : -rot;
             Lines.square(e.x, e.y, e.fin() * rand.random(4f, 10f) + 4f, e.rotation + rand.random(360f) + rotation);
