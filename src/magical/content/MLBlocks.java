@@ -336,7 +336,6 @@ public class MLBlocks {
                         hitShake = 3f;
                         ammoMultiplier = 1f;
                     }};
-            );
 
             maxAmmo = 30;
             ammoPerShot = 6;
