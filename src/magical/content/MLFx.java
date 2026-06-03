@@ -17,6 +17,8 @@ import mindustry.content.*;
 
 public class MLFx {
     public static Effect smallElectricDetonation;
+    public static Effect squareWaveRot;
+    public static Effect beamEffect;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -35,6 +37,22 @@ public class MLFx {
                  float ang = Mathf.angle(x, y);
                  Lines.lineAngle(e.x + x, e.y + y, ang, e.fout() * (float)rand.random(4f, 8f) + 2F);
              });
+        });
+        squareWaveRot =  new Effect(14, 40f, e -> {
+            rand.setSeed(e.id);
+            color(color.valueOf("FEEBB3FF"), e.color.valueOf("FEEBB3FF"), rand.random(0.8f, 1.5f) * e.fin());
+            stroke(rand.random(0.4f, 0.8f) + e.fout() * 2);
+            float rot = rand.random(45f, 180f) * e.fin();
+            float rotation = rand.random(0, 1) > 0.5f ? rot : -rot;
+            Lines.square(e.x, e.y, e.fin() * rand.random(4f, 10f) + 4f, e.rotation + rand.random(360f) + rotation);
+            Drawf.light(e.x, e.y, 14f, e.color, e.fout() * 0.7f);
+        }),
+        beamEffect = new Effect(30f, e -> {
+            Draw.color(Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF"), e.fin());
+            Lines.stroke(Mathf.lerp(9f, 0f, e.fin()));
+            float len = 15f;
+            Lines.lineAngle(e.x, e.y, e.rotation, len);
+            Draw.reset();
         });
     }
 }

@@ -252,6 +252,7 @@ public class MLBlocks {
             range = 144f;
             size = 3;
             health = 1200;
+            shootY = 0;
 
             loopSound = MLSounds.shootSublimate;
             shootEffect = Fx.shootLiquid;
@@ -306,6 +307,7 @@ public class MLBlocks {
                     }}
             );
         }};
+        //！？强强？！
         int whm = 4;
         adaptiveWall = new AdaptiveWall("adaptiveWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticCrystal, 6, Items.silicon, 6}));
@@ -315,6 +317,44 @@ public class MLBlocks {
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticCrystal, 6 * whm, Items.silicon, 6 * whm}));
             health = 110 * whm * 4;
             size = 2;
+        }};
+        //wall
+        //裂光
+        Birefringence = new PowerTurret("Birefringence"){{
+            float brange = range = 320f;
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 150, MLItems.phantomTitaniumSteel, 50, MLItems.mysticSteel, 80, Items.silicon, 100}));requirements(Category.turret, with(Items.copper, 1000, Items.metaglass, 600, Items.surgeAlloy, 300, Items.plastanium, 200, Items.silicon, 600));
+            shootType = new PointBulletType(){{
+                        shootEffect = Fx.despawn;
+                        hitEffect = MLFx.squareWaveRot;
+                        smokeEffect = Fx.smeltsmoke;
+                        trailEffect = MLFx.beamEffect;
+                        despawnEffect = MLFx.squareWaveRot;
+                        trailSpacing = 20f;
+                        damage = 200;
+                        buildingDamageMultiplier = 0.1f;
+                        speed = brange;
+                        hitShake = 3f;
+                        ammoMultiplier = 1f;
+                    }}
+            );
+
+            maxAmmo = 30;
+            ammoPerShot = 6;
+            rotateSpeed = 6f;
+            reload = 120f;
+            ammoUseEffect = Fx.dynamicSpikes;
+            recoil = 6f;
+            cooldownTime = reload/2;
+            shake = 3f;
+            size = 3;
+            shootCone = 2f;
+            shootSound = MLSounds.shootForeshadow;
+            unitSort = UnitSorts.strongest;
+
+            scaledHealth = 1400;
+
+            coolant = consumeCoolant(0.3f);
+            consumePower(8f);
         }};
     }
 }
