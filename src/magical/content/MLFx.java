@@ -41,10 +41,10 @@ public class MLFx {
         });
         squareWaveRot =  new Effect(14, 40f, e -> {
             rand.setSeed(e.id);
-            Draw.color(color.valueOf("FEEBB3FF"), e.color.valueOf("FEEBB3FF"), rand.random(0.8f, 1.5f) * e.fin());
+            Draw.color(Color.valueOf("FEEBB3FF"), e.color, rand.random(0.8f, 1.5f) * e.fin());
             Lines.stroke(rand.random(0.4f, 0.8f) + e.fout() * 2);
             float rot = rand.random(45f, 180f) * e.fin();
-            float rotation = rand.random(0, 1) > 0.5f ? rot : -rot;
+            float rotation = rand.random(0f, 1f) > 0.5f ? rot : -rot;
             Lines.square(e.x, e.y, e.fin() * rand.random(4f, 10f) + 4f, e.rotation + rand.random(360f) + rotation);
             Drawf.light(e.x, e.y, 14f, e.color, e.fout() * 0.7f);
         });
