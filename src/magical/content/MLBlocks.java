@@ -373,7 +373,7 @@ public class MLBlocks {
             tier = 3;
             updateEffect = Fx.pulverizeMedium;
             drillEffect = Fx.mineBig;
-            rotateSpeed = 2f;
+            rotateSpeed = 4f;
             itemCapacity = 40;
             health = 700;
 
