@@ -369,7 +369,6 @@ public class MLBlocks {
             drillTime = 180;
             size = 4;
             drawRim = true;
-            hasPower = true;
             tier = 3;
             updateEffect = Fx.pulverizeMedium;
             drillEffect = Fx.mineBig;
