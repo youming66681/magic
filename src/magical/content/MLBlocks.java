@@ -366,7 +366,7 @@ public class MLBlocks {
         //出来了，出来了
         phantomSteelDrill = new Drill("phantomSteelDrill"){{
             requirements(Category.production, ItemStack.with(new Object[]{MLItems.phantomSteel, 60,Items.graphite, 30}));
-            drillTime = 160;
+            drillTime = 180;
             size = 4;
             drawRim = true;
             hasPower = true;
@@ -377,7 +377,7 @@ public class MLBlocks {
             itemCapacity = 40;
             health = 700;
 
-            liquidBoostIntensity = 1f;
+            liquidBoostIntensity = 1.2f;
 
             consumeLiquid(Liquids.water, 0.2f).boost();
         }};
