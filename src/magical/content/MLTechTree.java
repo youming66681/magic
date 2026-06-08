@@ -15,12 +15,17 @@ public class MLTechTree {
 
         TechNode root = nodeRoot("cecilia", MLBlocks.baseCore, () -> {
            //基础科技
+            /*幻钢钻*/node(MLBlocks.phantomSteelDrill, () -> {
+
+                    });
             /*幻钢压缩机*/node(MLBlocks.phantomSteelCompressor, () -> {
                 /*流冲*/node(MLBlocks.fluvialErosion, () -> {
 
                 });
                 /*电戈*/node(MLBlocks.electroge, () -> {
+                    /*裂光*/node(MLBlocks.Birefringence, () -> {
 
+               });
             });
                 /*幻钢电压机*/node(MLBlocks.phantomSteelVoltageMachine, () -> {
                     /*幻钛钢熔炼机*/node(MLBlocks.phantomTitaniumSteelCompressor, () -> {

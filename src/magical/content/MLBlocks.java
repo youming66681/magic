@@ -118,10 +118,12 @@ public class MLBlocks {
     public static Block adaptiveWall;
     public static Block largeAdaptiveWall;
     public static Block Birefringence;
+    public static Block phantomSteelDrill;
 
     public static void load() {
 
         /*基础科技*/
+        //我超，盒
         //基座核心
         baseCore = new baseCore("baseCore") {{
             requirements(Category.effect, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 200, MLItems.mysticCrystal, 200, MLItems.phantomLuminousAlloy, 100}));
@@ -135,6 +137,8 @@ public class MLBlocks {
             unitCapModifier = 5;
 
         }};
+        //强强
+        //厂子
         //幻钢压缩机
         phantomSteelCompressor = new GenericCrafter("phantomSteelCompressor"){{
             requirements(Category.crafting, ItemStack.with(new Object[]{Items.copper, 50, Items.lead, 50}));
@@ -197,6 +201,8 @@ public class MLBlocks {
             consumeItems(ItemStack.with(MLItems.phantomSteel, 1, Items.coal, 1));
             consumePower(1.0f);
         }};
+        //factor
+        //炮
         //电戈
         electroge = new PowerTurret("electroge"){{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 75, Items.graphite, 25}));
@@ -309,39 +315,24 @@ public class MLBlocks {
                     }}
             );
         }};
-        //！？强强？！
-        int whm = 4;
-        adaptiveWall = new AdaptiveWall("adaptiveWall"){{
-            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticCrystal, 6, Items.silicon, 6}));
-            health = 110 * whm;
-        }};
-        largeAdaptiveWall = new AdaptiveWall("largeAdaptiveWall"){{
-            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticCrystal, 6 * whm, Items.silicon, 6 * whm}));
-            health = 110 * whm * 4;
-            size = 2;
-        }};
-        //wall
         //裂光
         Birefringence = new PowerTurret("Birefringence"){{
             float brange = range = 320f;
             shootY = 0;
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 150, MLItems.phantomTitaniumSteel, 50, MLItems.mysticSteel, 80, Items.silicon, 100}));
             shootType = new PointBulletType(){{
-                        shootEffect = Fx.despawn;
-                        hitEffect = MLFx.squareWaveRot;
-                        smokeEffect = Fx.smeltsmoke;
-                        trailEffect = MLFx.beamEffect;
-                        despawnEffect = MLFx.squareWaveRot;
-                        trailSpacing = 20f;
-                        damage = 200;
-                        buildingDamageMultiplier = 0.1f;
-                        speed = brange;
-                        hitShake = 3f;
-                        ammoMultiplier = 1f;
-                    }};
-
-            maxAmmo = 30;
-            ammoPerShot = 6;
+                shootEffect = Fx.despawn;
+                hitEffect = MLFx.squareWaveRot;
+                smokeEffect = Fx.smeltsmoke;
+                trailEffect = MLFx.beamEffect;
+                despawnEffect = MLFx.squareWaveRot;
+                trailSpacing = 20f;
+                damage = 200;
+                buildingDamageMultiplier = 0.1f;
+                speed = brange;
+                hitShake = 3f;
+                ammoMultiplier = 1f;
+            }};
             rotateSpeed = 6f;
             reload = 120f;
             ammoUseEffect = Fx.casing3Double;
@@ -358,5 +349,37 @@ public class MLBlocks {
             coolant = consumeCoolant(0.3f);
             consumePower(8f);
         }};
+        //turret
+        //！？强强？！
+        int whm = 4;
+        adaptiveWall = new AdaptiveWall("adaptiveWall"){{
+            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticCrystal, 6, Items.silicon, 6}));
+            health = 110 * whm;
+        }};
+        largeAdaptiveWall = new AdaptiveWall("largeAdaptiveWall"){{
+            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticCrystal, 6 * whm, Items.silicon, 6 * whm}));
+            health = 110 * whm * 4;
+            size = 2;
+        }};
+        //wall
+        //出来了，出来了
+        phantomSteelDrill = new Drill("phantomSteelDrill"){{
+            requirements(Category.production, ItemStack.with(new Object[]{MLItems.phantomSteel, 60,Items.graphite, 30}));
+            drillTime = 160;
+            size = 4;
+            drawRim = true;
+            hasPower = true;
+            tier = 3;
+            updateEffect = Fx.pulverizeMedium;
+            drillEffect = Fx.mineBig;
+            rotateSpeed = 2f;
+            itemCapacity = 40;
+            health = 700;
+
+            liquidBoostIntensity = 1f;
+
+            consumeLiquid(Liquids.water, 0.2f).boost();
+        }};
+        //钻头
     }
 }
