@@ -97,6 +97,7 @@ import mindustry.world.meta.BuildVisibility;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatUnit;
 import mindustry.content.UnitTypes;
+import mindustry.world.blocks.production.Drill;
 
 import magical.content.MLItems;
 import magical.content.MLUnitTypes;
