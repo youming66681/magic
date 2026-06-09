@@ -102,6 +102,7 @@ import mindustry.world.blocks.distribution.Conveyor;
 import mindustry.world.blocks.distribution.Junction;
 import mindustry.world.blocks.distribution.BufferedItemBridge;
 import mindustry.world.blocks.storage.Unloader;
+import mindustry.world.meta.BlockGroup;
 
 import magical.content.MLItems;
 import magical.content.MLUnitTypes;
