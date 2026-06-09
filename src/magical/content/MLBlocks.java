@@ -123,6 +123,7 @@ public class MLBlocks {
     public static Block Birefringence;
     public static Block phantomSteelDrill;
     public static Block phantomSteelConveyor;
+    public static Block phantomSteelBridge;
 
     public static void load() {
 
@@ -397,7 +398,6 @@ public class MLBlocks {
             range = 8;
             health = 60;
             transportTime = 3;
-            crushFragile = true;
         }};
         //Conveyor
     }
