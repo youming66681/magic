@@ -99,6 +99,7 @@ import mindustry.world.meta.StatUnit;
 import mindustry.content.UnitTypes;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.distribution.Conveyor;
+import mindustry.world.blocks.distribution.junction;
 import mindustry.world.blocks.distribution.BufferedItemBridge;
 
 import magical.content.MLItems;
@@ -124,6 +125,7 @@ public class MLBlocks {
     public static Block phantomSteelDrill;
     public static Block phantomSteelConveyor;
     public static Block phantomSteelBridge;
+    public static Block phantomSteeljunction;
 
     public static void load() {
 
@@ -370,7 +372,7 @@ public class MLBlocks {
         //出来了，出来了
         phantomSteelDrill = new Drill("phantomSteelDrill"){{
             requirements(Category.production, ItemStack.with(new Object[]{MLItems.phantomSteel, 60,Items.graphite, 30}));
-            drillTime = 210;
+            drillTime = 220;
             size = 4;
             drawRim = true;
             tier = 3;
@@ -393,11 +395,16 @@ public class MLBlocks {
             displayedSpeed = 15.5f;
         }};
         phantomSteelBridge = new BufferedItemBridge("phantomSteelBridge"){{
-            requirements(Category.distribution, ItemStack.with(new Object[]{Items.lead, 6, Items.copper, 6}));
+            requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.phantomSteel, 9, Items.graphite, 18}));
             fadeIn = moveArrows = false;
             range = 8;
             health = 60;
             transportTime = 3;
+        }};
+        phantomSteeljunction = new Junction("phantomSteeljunction"){{
+            requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.phantomSteel, 6}));
+            speed = 18;
+            health = 60;
         }};
         //Conveyor
     }
