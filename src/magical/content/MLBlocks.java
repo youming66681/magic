@@ -99,7 +99,7 @@ import mindustry.world.meta.StatUnit;
 import mindustry.content.UnitTypes;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.distribution.Conveyor;
-import mindustry.world.blocks.distribution.junction;
+import mindustry.world.blocks.distribution.Junction;
 import mindustry.world.blocks.distribution.BufferedItemBridge;
 
 import magical.content.MLItems;
