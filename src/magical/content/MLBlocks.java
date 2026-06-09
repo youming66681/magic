@@ -128,7 +128,7 @@ public class MLBlocks {
     public static Block phantomSteelConveyor;
     public static Block phantomSteelBridge;
     public static Block phantomSteeljunction;
-    public static Block phantomSteelunloader;
+    public static Block phantomSteelUnloader;
 
     public static void load() {
 
@@ -409,7 +409,7 @@ public class MLBlocks {
             speed = 18;
             health = 60;
         }};
-        phantomSteelunloader = new Unloader("phantomSteelunloader"){{
+        phantomSteelUnloader = new Unloader("phantomSteelUnloader"){{
             requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.phantomSteel, 60, Items.titanium, 60, Items.silicon,60}));
             speed = 1;
             group = BlockGroup.transportation;
