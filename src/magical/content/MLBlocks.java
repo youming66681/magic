@@ -120,6 +120,7 @@ public class MLBlocks {
     public static Block largeAdaptiveWall;
     public static Block Birefringence;
     public static Block phantomSteelDrill;
+    public static Block phantomSteelConveyor;
 
     public static void load() {
 
@@ -366,7 +367,7 @@ public class MLBlocks {
         //出来了，出来了
         phantomSteelDrill = new Drill("phantomSteelDrill"){{
             requirements(Category.production, ItemStack.with(new Object[]{MLItems.phantomSteel, 60,Items.graphite, 30}));
-            drillTime = 200;
+            drillTime = 210;
             size = 4;
             drawRim = true;
             tier = 3;
@@ -381,5 +382,21 @@ public class MLBlocks {
             consumeLiquid(Liquids.water, 0.2f).boost();
         }};
         //钻头
+        //物流溜溜溜
+        phantomSteelConveyor = new Conveyor("phantomSteelConveyor"){{
+            requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.phantomSteel, 1, Items.graphite, 2}));
+            health = 150;
+            speed = 0.12f;
+            displayedSpeed = 15.5f;
+        }};
+        phantomSteelBridge = new BufferedItemBridge("phantomSteelBridge"){{
+            requirements(Category.distribution, ItemStack.with(new Object[]{Items.lead, 6, Items.copper, 6}));
+            fadeIn = moveArrows = false;
+            range = 8;
+            health = 60;
+            transportTime = 3;
+            crushFragile = true;
+        }};
+        //Conveyor
     }
 }
