@@ -98,6 +98,8 @@ import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatUnit;
 import mindustry.content.UnitTypes;
 import mindustry.world.blocks.production.Drill;
+import mindustry.world.blocks.distribution.Conveyor;
+import mindustry.world.blocks.distribution.BufferedItemBridge;
 
 import magical.content.MLItems;
 import magical.content.MLUnitTypes;
