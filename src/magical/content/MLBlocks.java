@@ -101,7 +101,7 @@ import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.distribution.Conveyor;
 import mindustry.world.blocks.distribution.Junction;
 import mindustry.world.blocks.distribution.BufferedItemBridge;
-import mindustry.world.blocks.distribution.ItemUnloader;
+import mindustry.world.blocks.storage.Unloader;
 
 import magical.content.MLItems;
 import magical.content.MLUnitTypes;
@@ -408,7 +408,7 @@ public class MLBlocks {
             speed = 18;
             health = 60;
         }};
-        phantomSteelunloader = new ItemUnloader("phantomSteelunloader"){{
+        phantomSteelunloader = new Unloader("phantomSteelunloader"){{
             requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.phantomSteel, 60, Items.titanium, 60, Items.silicon,60}));
             speed = 1;
             group = BlockGroup.transportation;
