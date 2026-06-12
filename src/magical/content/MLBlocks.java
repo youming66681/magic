@@ -431,7 +431,6 @@ public class MLBlocks {
             laserRange = 15;
             health = 200;
             underBullets = true;
-            crushFragile = true;
             consumePowerBuffered(2000f);
         }};
         phantomTitaniumSteelPowerNode = new PowerNode("phantomTitaniumSteelPowerNode"){{
@@ -441,7 +440,6 @@ public class MLBlocks {
             health = 400;
             laserRange = 30;
             underBullets = true;
-            crushFragile = true;
             consumePowerBuffered(4000f);
         }};
         //power
