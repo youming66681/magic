@@ -104,6 +104,12 @@ import mindustry.world.blocks.distribution.BufferedItemBridge;
 import mindustry.world.blocks.storage.Unloader;
 import mindustry.world.meta.BlockGroup;
 import mindustry.world.blocks.power.PowerNode;
+import mindustry.world.blocks.power.Battery;
+import mindustry.world.blocks.power.ConsumeGenerator;
+import mindustry.world.blocks.power.ThermalGenerator;
+import mindustry.world.blocks.power.SolarGenerator;
+import mindustry.world.blocks.power.ImpactReactor;
+import mindustry.world.blocks.power.NuclearReactor;
 
 import magical.content.MLItems;
 import magical.content.MLUnitTypes;
@@ -130,7 +136,7 @@ public class MLBlocks {
     public static Block phantomSteelBridge;
     public static Block phantomSteeljunction;
     public static Block phantomSteelUnloader;
-    public static Block phantomSteelPowerNode
+    public static Block phantomSteelPowerNode;
     public static Block phantomTitaniumSteelPowerNode;
 
     public static void load() {
