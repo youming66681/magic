@@ -26,16 +26,21 @@ public class MLTechTree {
 
                 });
             });
+            /*幻钢节点*/node(MLBlocks.phantomSteelPowerNode, () -> {
+                /*幻钛钢节点*/node(MLBlocks.phantomTitaniumSteelPowerNode, () -> {
+
+                        });
+                    });
             /*幻钢钻*/node(MLBlocks.phantomSteelDrill, () -> {
 
                     });
-            /*流冲*/node(MLBlocks.fluvialErosion, () -> {
-
-            });
             /*电戈*/node(MLBlocks.electroge, () -> {
                 /*裂光*/node(MLBlocks.Birefringence, () -> {
 
                 });
+            });
+            /*流冲*/node(MLBlocks.fluvialErosion, () -> {
+
             });
             /*幻钢压缩机*/node(MLBlocks.phantomSteelCompressor, () -> {
                 /*幻钢电压机*/node(MLBlocks.phantomSteelVoltageMachine, () -> {

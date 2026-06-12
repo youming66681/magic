@@ -103,6 +103,7 @@ import mindustry.world.blocks.distribution.Junction;
 import mindustry.world.blocks.distribution.BufferedItemBridge;
 import mindustry.world.blocks.storage.Unloader;
 import mindustry.world.meta.BlockGroup;
+import mindustry.world.blocks.power.PowerNode;
 
 import magical.content.MLItems;
 import magical.content.MLUnitTypes;
@@ -129,6 +130,8 @@ public class MLBlocks {
     public static Block phantomSteelBridge;
     public static Block phantomSteeljunction;
     public static Block phantomSteelUnloader;
+    public static Block phantomSteelPowerNode
+    public static Block phantomTitaniumSteelPowerNode;
 
     public static void load() {
 
@@ -329,7 +332,7 @@ public class MLBlocks {
         Birefringence = new PowerTurret("Birefringence"){{
             float brange = range = 320f;
             shootY = 0;
-            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 150, MLItems.phantomTitaniumSteel, 50, MLItems.mysticSteel, 80, Items.silicon, 100}));
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 150, MLItems.phantomTitaniumSteel, 50, MLItems.mysticCrystal, 80, Items.silicon, 100}));
             shootType = new PointBulletType(){{
                 shootEffect = Fx.despawn;
                 hitEffect = MLFx.squareWaveRot;
@@ -415,5 +418,26 @@ public class MLBlocks {
             group = BlockGroup.transportation;
         }};
         //Conveyor
+        //电死你
+        phantomSteelPowerNode = new PowerNode("phantomSteelPowerNode"){{
+            requirements(Category.power, ItemStack.with(new Object[]{MLItems.phantomSteel, 3, Items.silicon, 1, Items.graphite, 5}));
+            maxNodes = 15;
+            laserRange = 15;
+            health = 200;
+            underBullets = true;
+            crushFragile = true;
+            consumePowerBuffered(2000f);
+        }};
+        phantomTitaniumSteelPowerNode = new PowerNode("phantomTitaniumSteelPowerNode"){{
+            requirements(Category.power, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 2, Items.silicon, 6, MLItems.acrylic, 4}));
+            maxNodes = 30;
+            size = 2;
+            health = 400;
+            laserRange = 30;
+            underBullets = true;
+            crushFragile = true;
+            consumePowerBuffered(4000f);
+        }};
+        //power
     }
 }
