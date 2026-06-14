@@ -121,23 +121,11 @@ import magical.content.MLSounds;
 
 
 public class MLBlocks {
-    public static Block baseCore;
-    public static Block phantomTitaniumSteelCompressor;
-    public static Block xuanCrystalManufacturingMachine;
-    public static Block phantomSteelCompressor;
-    public static Block phantomSteelVoltageMachine;
-    public static Block electroge;
-    public static Block fluvialErosion;
-    public static Block adaptiveWall;
-    public static Block largeAdaptiveWall;
-    public static Block Birefringence;
-    public static Block phantomSteelDrill;
-    public static Block phantomSteelConveyor;
-    public static Block phantomSteelBridge;
-    public static Block phantomSteeljunction;
-    public static Block phantomSteelUnloader;
-    public static Block phantomSteelPowerNode;
-    public static Block phantomTitaniumSteelPowerNode;
+    public static Block
+            //基础科技
+            baseCore, phantomTitaniumSteelCompressor, xuanCrystalManufacturingMachine, phantomSteelCompressor, phantomSteelVoltageMachine, electroge,
+            fluvialErosion, adaptiveWall, largeAdaptiveWall, Birefringence, phantomSteelDrill, phantomSteelConveyor, phantomSteelBridge, phantomSteeljunction,
+            phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode;
 
     public static void load() {
 
