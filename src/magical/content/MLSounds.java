@@ -18,7 +18,7 @@ public class MLSounds {
         explosionCleroi = loadSound("explosionCleroi.ogg");
         shootSublimate = loadSound("shootSublimate.ogg");
         shootForeshadow = loadSound("shootForeshadow.ogg");
-        shootAlt = loadSound("shootForeshadow.ogg");
+        shootAlt = loadSound("shootAlt.ogg");
     }
 
     private static Sound loadSound(String name) {
