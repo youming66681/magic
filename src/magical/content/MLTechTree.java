@@ -39,8 +39,9 @@ public class MLTechTree {
 
                 });
             });
+       /*激沅*/node(MLBlocks.excitedYuan, () -> {
             /*流冲*/node(MLBlocks.fluvialErosion, () -> {
-
+                });
             });
             /*幻钢压缩机*/node(MLBlocks.phantomSteelCompressor, () -> {
                 /*幻钢电压机*/node(MLBlocks.phantomSteelVoltageMachine, () -> {

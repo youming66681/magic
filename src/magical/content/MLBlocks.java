@@ -125,7 +125,7 @@ public class MLBlocks {
             //基础科技
             baseCore, phantomTitaniumSteelCompressor, xuanCrystalManufacturingMachine, phantomSteelCompressor, phantomSteelVoltageMachine, electroge,
             fluvialErosion, adaptiveWall, largeAdaptiveWall, Birefringence, phantomSteelDrill, phantomSteelConveyor, phantomSteelBridge, phantomSteeljunction,
-            phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode;
+            phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode, excitedYuan;
 
     public static void load() {
 
@@ -355,6 +355,42 @@ public class MLBlocks {
 
             coolant = consumeCoolant(0.3f);
             consumePower(8f);
+        }};
+        //激沅
+        excitedYuan = new ItemTurret("excitedYuan"){{
+        requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 50, Items.graphite, 80, Items.titanium, 40}));
+        ammo(
+                Items.copper, new BasicBulletType(8f, 20){{
+                    hitSize = 2f;
+                    width = 16f;
+                    height = 24f;
+                    shootEffect = Fx.shootSmall;
+                    ammoMultiplier = 1;
+                    reloadMultiplier = 2f;
+                    //knockback = 0.3f;
+                    lifetime = 25f;
+                    trailLength = 6;
+                    trailWidth = 3f;
+
+                    hitEffect = despawnEffect = Fx.hitBulletColor;
+                    hitColor = backColor = trailColor = Color.valueOf("97B5EDFF");
+                    frontColor = Color.valueOf("97B5EDFF");
+                }}
+        );
+        reload = 30f;
+        recoilTime = reload / 2f;
+        ammoUseEffect = Fx.casing1;
+        range = 200f;
+        inaccuracy = 0f;
+        recoil = 3f;
+        shoot = new ShootAlternate(10f);
+        shake = 2f;
+        size = 3;
+        shootCone = 24f;
+        shootSound = MLSounds.shootAlt;
+
+        health = 1120;
+        coolant = consumeCoolant(0.3f);
         }};
         //turret
         //！？强强？！
