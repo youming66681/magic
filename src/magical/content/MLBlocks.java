@@ -365,7 +365,7 @@ public class MLBlocks {
                     width = 16f;
                     height = 24f;
                     shootEffect = Fx.shootSmall;
-                    ammoMultiplier = 1;
+                    ammoMultiplier = 2;
                     reloadMultiplier = 2f;
                     //knockback = 0.3f;
                     lifetime = 25f;
@@ -373,11 +373,27 @@ public class MLBlocks {
                     trailWidth = 3f;
 
                     hitEffect = despawnEffect = Fx.hitBulletColor;
-                    hitColor = backColor = trailColor = Color.valueOf("97B5EDFF");
-                    frontColor = Color.valueOf("97B5EDFF");
+                    hitColor = backColor = trailColor = Color.valueOf("d99d73");
+                    frontColor = Color.valueOf("d99d73");
+                }},
+                Items.graphite, new BasicBulletType(8f, 30){{
+                    hitSize = 2f;
+                    width = 16f;
+                    height = 24f;
+                    shootEffect = Fx.shootSmall;
+                    ammoMultiplier = 1;
+                    reloadMultiplier = 1.5f;
+                    knockback = 0.5f;
+                    lifetime = 25f;
+                    trailLength = 6;
+                    trailWidth = 3f;
+
+                    hitEffect = despawnEffect = Fx.hitBulletColor;
+                    hitColor = backColor = trailColor = Color.valueOf("b2c6d2");
+                    frontColor = Color.valueOf("b2c6d2");
                 }}
         );
-        reload = 30f;
+        reload = 25f;
         recoilTime = reload / 2f;
         ammoUseEffect = Fx.casing1;
         range = 200f;
