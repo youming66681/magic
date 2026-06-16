@@ -500,6 +500,7 @@ public class MLBlocks {
             laserRange = 30;
             underBullets = true;
             consumePowerBuffered(4000f);
+        }};
             //燃能发电机
             fuelPoweredGenerator = new ConsumeGenerator("fuelPoweredGenerator"){{
                 requirements(Category.power, ItemStack.with(new Object[]{MLItems.phantomSteel, 60, Items.graphite, 30}));
@@ -514,7 +515,7 @@ public class MLBlocks {
                 consume(new ConsumeItemExplode());
 
                 drawer = new DrawMulti(new DrawDefault(), new DrawWarmupRegion());
-            }};
+
         }};
 
         //power
