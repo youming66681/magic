@@ -512,7 +512,7 @@ public class MLBlocks {
                 ambientSoundVolume = 0.03f;
                 generateEffect = Fx.generatespark;
 
-                consume(new ConsumeItemFlammable(
+                consume(new ConsumeItemFilter(
                         item -> item.flammability > 0f
                 ));
 
