@@ -506,13 +506,15 @@ public class MLBlocks {
                 requirements(Category.power, ItemStack.with(new Object[]{MLItems.phantomSteel, 60, Items.graphite, 30}));
                 powerProduction = 5f;
                 itemDuration = 150f;
+                size = 2;
 
                 ambientSound = MLSounds.loopSmelter;
                 ambientSoundVolume = 0.03f;
                 generateEffect = Fx.generatespark;
 
-                consume(new ConsumeItemFlammable());
-                consume(new ConsumeItemExplode());
+                consume(new ConsumeItemFlammable(
+                        item -> item.flammability > 0f
+                ));
 
                 drawer = new DrawMulti(new DrawDefault(), new DrawWarmupRegion());
 
