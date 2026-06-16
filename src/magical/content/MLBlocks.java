@@ -110,8 +110,8 @@ import mindustry.world.blocks.power.ThermalGenerator;
 import mindustry.world.blocks.power.SolarGenerator;
 import mindustry.world.blocks.power.ImpactReactor;
 import mindustry.world.blocks.power.NuclearReactor;
-import magical.content.consumers.ConsumeItemFlammable;
-import magical.content.consumers.ConsumeItemExplode;
+import mindustry.world.consumers.ConsumeItems;
+import mindustry.world.consumers.ConsumeLiquid;
 import mindustry.world.draw.DrawWarmupRegion;
 
 import magical.content.MLItems;
