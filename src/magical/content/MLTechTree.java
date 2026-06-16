@@ -27,6 +27,8 @@ public class MLTechTree {
                 });
             });
             /*幻钢节点*/node(MLBlocks.phantomSteelPowerNode, () -> {
+                /*燃能发电机*/node(MLBlocks.fuelPoweredGenerator, () -> {
+                        });
                 /*幻钛钢节点*/node(MLBlocks.phantomTitaniumSteelPowerNode, () -> {
 
                         });

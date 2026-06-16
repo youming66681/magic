@@ -125,7 +125,7 @@ public class MLBlocks {
             //基础科技
             baseCore, phantomTitaniumSteelCompressor, xuanCrystalManufacturingMachine, phantomSteelCompressor, phantomSteelVoltageMachine, electroge,
             fluvialErosion, adaptiveWall, largeAdaptiveWall, Birefringence, phantomSteelDrill, phantomSteelConveyor, phantomSteelBridge, phantomSteeljunction,
-            phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode, excitedYuan;
+            phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode, excitedYuan, fuelPoweredGenerator;
 
     public static void load() {
 
@@ -391,6 +391,22 @@ public class MLBlocks {
                     hitEffect = despawnEffect = Fx.hitBulletColor;
                     hitColor = backColor = trailColor = Color.valueOf("b2c6d2");
                     frontColor = Color.valueOf("b2c6d2");
+                }},
+                Items.titanium, new BasicBulletType(8f, 40){{
+                    hitSize = 2f;
+                    width = 16f;
+                    height = 24f;
+                    shootEffect = Fx.shootSmall;
+                    ammoMultiplier = 1;
+                    reloadMultiplier = 1f;
+                    knockback = 1f;
+                    lifetime = 25f;
+                    trailLength = 6;
+                    trailWidth = 3f;
+
+                    hitEffect = despawnEffect = Fx.hitBulletColor;
+                    hitColor = backColor = trailColor = Color.valueOf("8da1e3");
+                    frontColor = Color.valueOf("8da1e3");
                 }}
         );
         reload = 25f;
@@ -481,7 +497,23 @@ public class MLBlocks {
             laserRange = 30;
             underBullets = true;
             consumePowerBuffered(4000f);
+            //燃能发电机
+            fuelPoweredGenerator = new ConsumeGenerator("fuelPoweredGenerator"){{
+                requirements(Category.power, ItemStack.with(new Object[]{MLItems.phantomSteel, 60, Items.graphite, 30}));
+                powerProduction = 5f;
+                itemDuration = 150f;
+
+                ambientSound = MLSounds.loopSmelter;
+                ambientSoundVolume = 0.03f;
+                generateEffect = Fx.generatespark;
+
+                consume(new ConsumeItemFlammable());
+                consume(new ConsumeItemExplode());
+
+                drawer = new DrawMulti(new DrawDefault(), new DrawWarmupRegion());
+            }};
         }};
+
         //power
     }
 }
