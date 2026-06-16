@@ -512,9 +512,14 @@ public class MLBlocks {
                 ambientSoundVolume = 0.03f;
                 generateEffect = Fx.generatespark;
 
-                consume(new ConsumeItemFilter(
-                        item -> item.flammability > 0f
-                ));
+                consumeItems(new Cons<Item>() {
+                    @Override
+                    public void get(Item item) {
+                        if(item.flammability > 0f) {
+                            // consume logic here
+                        }
+                    }
+                });
 
                 drawer = new DrawMulti(new DrawDefault(), new DrawWarmupRegion());
 
