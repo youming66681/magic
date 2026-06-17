@@ -48,8 +48,9 @@ public class baseCore extends CoreBlock{
         int cores = Vars.player.team().cores().size;
 
         drawPlaceText(
-                Core.bundle.format("bar.core-count", cores, 10),
+                Core.bundle.format("bar.core-count", cores),
                 x, y, valid
         );
     }
+
 }
