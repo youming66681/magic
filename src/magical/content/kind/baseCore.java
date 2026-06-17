@@ -7,6 +7,7 @@ import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.Tile;
 import mindustry.game.Team;
 import mindustry.Vars;
+import arc.Core;
 
 public class baseCore extends CoreBlock{
 
