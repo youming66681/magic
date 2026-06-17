@@ -59,7 +59,7 @@ public class MLTechTree {
                         });
                             /*联合墙*/node(MLBlocks.largeAdaptiveWall, () -> {
                                 /*大联合墙*/node(MLBlocks.xuanCrystalManufacturingMachine, () -> {
-                            }});
+                            });
                         });
                     });
                 });
