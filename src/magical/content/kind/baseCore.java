@@ -18,6 +18,15 @@ public class baseCore extends CoreBlock {
     }
 
     @Override
+    public boolean canPlace(Tile tile, Team team, int rotation){
+        if(tile == null) return false;
+
+        if(Vars.state.isEditor()) return true;
+
+        return Vars.state.teams.cores(team).size < 10;
+    }
+
+    @Override
     public boolean canBreak(Tile tile) {
         return Vars.state.teams.cores(tile.team()).size > 1;
     }
@@ -30,9 +39,7 @@ public class baseCore extends CoreBlock {
 
         CoreBuild core = team.core();
 
-        if(Vars.state.teams.cores(team).size >= 10){
-            return false;
-        }
+        return Vars.state.teams.cores(team).size < 10;
 
         //special floor upon which cores can be placed
 
