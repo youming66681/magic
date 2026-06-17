@@ -7,8 +7,9 @@ import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.Tile;
 import mindustry.game.Team;
 import mindustry.Vars;
-import mindustry.ui.Bar;
+import arc.Core;
 import mindustry.graphics.Pal;
+import mindustry.ui.Bar;
 
 public class baseCore extends CoreBlock{
 
@@ -49,13 +50,15 @@ public class baseCore extends CoreBlock{
     public void setBars(){
         super.setBars();
 
-        addBar("core-count", (CoreBuild build) ->
+        addBar("core-count", build ->
                 new Bar(
                         () -> Core.bundle.format(
                                 "bar.core-count",
                                 Vars.state.teams.cores(build.team).size,
                                 10
-                        )
+                        ),
+                        () -> Pal.accent,
+                        () -> (float)Vars.state.teams.cores(build.team).size / 10f
+                )
         );
-    }
 }
