@@ -17,13 +17,10 @@ public class MLTechTree {
            //基础科技
             /*幻钢传送带*/node(MLBlocks.phantomSteelConveyor, () -> {
                 /*幻钛钢传送带*/node(MLBlocks.phantomTitaniumSteelConveyor, () -> {
-
                         });
                       /*幻钢装卸器*/node(MLBlocks.phantomSteelUnloader, () -> {
-
                               });
                 /*幻钢连接器*/node(MLBlocks.phantomSteeljunction, () -> {
-
                 });
                 /*幻钢带桥*/node(MLBlocks.phantomSteelBridge, () -> {
 
@@ -37,7 +34,6 @@ public class MLTechTree {
                         });
                     });
             /*幻钢钻*/node(MLBlocks.phantomSteelDrill, () -> {
-
                     });
             /*电戈*/node(MLBlocks.electroge, () -> {
                 /*裂光*/node(MLBlocks.Birefringence, () -> {
@@ -56,6 +52,18 @@ public class MLTechTree {
                              });
                        });
                     });
+            /*幻钢墙*/node(MLBlocks.phantomSteeWall, () -> {
+                /*大幻钢墙*/node(MLBlocks.largePhantomSteeWall, () -> {
+                    /*幻钛钢墙*/node(MLBlocks.phantomTitaniumSteelWall, () -> {
+                        /*大幻钛钢墙*/node(MLBlocks.largePhantomTitaniumSteelWall, () -> {
+                        });
+                            /*联合墙*/node(MLBlocks.largeAdaptiveWall, () -> {
+                                /*大联合墙*/node(MLBlocks.xuanCrystalManufacturingMachine, () -> {
+                            }});
+                        });
+                    });
+                });
+            });
                  });
     }
 }

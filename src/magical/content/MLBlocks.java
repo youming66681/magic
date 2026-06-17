@@ -128,7 +128,8 @@ public class MLBlocks {
             //基础科技
             baseCore, phantomTitaniumSteelCompressor, xuanCrystalManufacturingMachine, phantomSteelCompressor, phantomSteelVoltageMachine, electroge,
             fluvialErosion, adaptiveWall, largeAdaptiveWall, Birefringence, phantomSteelDrill, phantomSteelConveyor, phantomSteelBridge, phantomSteeljunction,
-            phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode, excitedYuan, fuelPoweredGenerator, phantomTitaniumSteelConveyor;
+            phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode, excitedYuan, fuelPoweredGenerator, phantomTitaniumSteelConveyor,
+            phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall;
 
     public static void load() {
 
@@ -403,6 +404,7 @@ public class MLBlocks {
                     ammoMultiplier = 1;
                     reloadMultiplier = 1f;
                     knockback = 1f;
+                    pierceCap = 2;
                     lifetime = 25f;
                     trailLength = 6;
                     trailWidth = 3f;
@@ -432,16 +434,32 @@ public class MLBlocks {
         int whm = 4;
         adaptiveWall = new AdaptiveWall("adaptiveWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticCrystal, 6, Items.silicon, 6}));
-            health = 110 * whm;
+            health = 120 * whm;
         }};
         largeAdaptiveWall = new AdaptiveWall("largeAdaptiveWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticCrystal, 6 * whm, Items.silicon, 6 * whm}));
-            health = 110 * whm * 4;
+            health = 120 * whm * 4;
             size = 2;
+        }};
+        phantomSteelWall = new Wall("phantomSteeWall"){{
+            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.phantomSteel, 6}));
+            health = 100 * whm;
+        }};
+        largePhantomSteelWall = new Wall("largePhantomSteeWall"){{
+            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.phantomSteel, 6 * whm}));
+            health = 100 * whm * 4;
+        }};
+        phantomTitaniumSteelWall = new Wall("phantomTitaniumSteelWall"){{
+            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 6}));
+            health = 160 * whm;
+        }};
+        largePhantomTitaniumSteelWall = new Wall("largePhantomTitaniumSteelWall"){{
+            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 6 * whm}));
+            health = 160 * whm * 4;
         }};
         //wall
         //出来了，出来了
-        phantomSteelDrill = new Drill("phantomSteelDrill"){{
+        phantomSteelDrill  = new Drill("phantomSteelDrill"){{
             requirements(Category.production, ItemStack.with(new Object[]{MLItems.phantomSteel, 60,Items.graphite, 30}));
             drillTime = 220;
             size = 4;
