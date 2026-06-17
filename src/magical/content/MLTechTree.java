@@ -52,8 +52,8 @@ public class MLTechTree {
                              });
                        });
                     });
-            /*幻钢墙*/node(MLBlocks.phantomSteeWall, () -> {
-                /*大幻钢墙*/node(MLBlocks.largePhantomSteeWall, () -> {
+            /*幻钢墙*/node(MLBlocks.phantomSteelWall, () -> {
+                /*大幻钢墙*/node(MLBlocks.largePhantomSteelWall, () -> {
                     /*幻钛钢墙*/node(MLBlocks.phantomTitaniumSteelWall, () -> {
                         /*大幻钛钢墙*/node(MLBlocks.largePhantomTitaniumSteelWall, () -> {
                         });
