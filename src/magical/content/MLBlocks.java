@@ -469,7 +469,7 @@ public class MLBlocks {
             requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 1, MLItems.phantomSteel, 1, Items.titanium, 1}));
             health = 200;
             speed = 0.2f;
-            displayedSpeed = 15.5f;
+            displayedSpeed = 25f;
         }};
         phantomSteelBridge = new BufferedItemBridge("phantomSteelBridge"){{
             requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.phantomSteel, 9, Items.graphite, 18}));
