@@ -27,7 +27,7 @@ public class baseCore extends CoreBlock {
         if (tile == null) return false;
         //in the editor, you can place them anywhere for convenience
         if (Vars.state.isEditor()) return true;
-        if (!Vars.state.isEditor()) return true;
+        //if (!Vars.state.isEditor()) return true;
 
         CoreBuild core = team.core();
 
@@ -49,19 +49,16 @@ public class baseCore extends CoreBlock {
     }
 
     @Override
-    public void setBars() {
-        super.setBars();
+    public void drawPlace(int x, int y, int rotation, boolean valid){
+        super.drawPlace(x, y, rotation, valid);
 
-        addBar("core-count", build ->
-                new Bar(
-                        () -> Core.bundle.format(
-                                "bar.core-count",
-                                Vars.state.teams.cores(build.team).size,
-                                10
-                        ),
-                        () -> Pal.accent,
-                        () -> (float) Vars.state.teams.cores(build.team).size / 10f
-                )
+        if(Vars.player == null) return;
+
+        int cores = Vars.player.team().cores().size;
+
+        drawPlaceText(
+                Core.bundle.format("bar.core-count", cores, 10),
+                x, y, valid
         );
     }
 }
