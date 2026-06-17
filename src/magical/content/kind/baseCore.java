@@ -7,6 +7,8 @@ import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.world.Tile;
 import mindustry.game.Team;
 import mindustry.Vars;
+import mindustry.ui.Bar;
+import mindustry.graphics.Pal;
 
 public class baseCore extends CoreBlock{
 
@@ -28,6 +30,10 @@ public class baseCore extends CoreBlock{
 
         CoreBuild core = team.core();
 
+        if(Vars.state.teams.cores(team).size >= 10){
+            return false;
+        }
+
         //special floor upon which cores can be placed
         tile.getLinkedTilesAs(this, tempTiles);
         if(!tempTiles.contains(o -> !o.floor().allowCorePlacement || o.block() instanceof CoreBlock)){
@@ -38,5 +44,18 @@ public class baseCore extends CoreBlock{
         if(core == null || (!Vars.state.rules.infiniteResources && !core.items.has(requirements, Vars.state.rules.buildCostMultiplier))) return false;
 
         return tile.block() instanceof CoreBlock && size > tile.block().size && (!requiresCoreZone || tempTiles.allMatch(o -> o.floor().allowCorePlacement));
+    }
+    @Override
+    public void setBars(){
+        super.setBars();
+
+        addBar("core-count", (CoreBuild build) ->
+                new Bar(
+                        () -> Core.bundle.format(
+                                "bar.core-count",
+                                Vars.state.teams.cores(build.team).size,
+                                10
+                        )
+        );
     }
 }
