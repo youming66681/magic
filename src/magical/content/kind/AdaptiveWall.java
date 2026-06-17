@@ -5,6 +5,8 @@ import mindustry.gen.Building;
 import mindustry.ui.Bar;
 import arc.scene.ui.layout.Table;
 import mindustry.world.blocks.defense.Wall;
+import arc.Core;
+import mindustry.graphics.Pal;
 
 public class AdaptiveWall extends Wall {
 
