@@ -113,6 +113,7 @@ import mindustry.world.blocks.power.NuclearReactor;
 import mindustry.world.consumers.ConsumeItems;
 import mindustry.world.consumers.ConsumeLiquid;
 import mindustry.world.draw.DrawWarmupRegion;
+import mindustry.world.blocks.defense.Wall;
 
 import magical.content.MLItems;
 import magical.content.MLUnitTypes;
