@@ -62,15 +62,16 @@ public class baseCore extends CoreBlock {
         );
     }
     @Override
-    public Building createBuilding(){
-        return new CoreBuild(){
+    public Building createBuilding() {
+        return new CoreBuild() {
             @Override
-            public void placed(){
+            public void placed() {
                 super.placed();
 
-                if(!Vars.state.isEditor() && team.cores().size > 10){
+                if (!Vars.state.isEditor() && team.cores().size > 10) {
                     kill();
                 }
             }
         };
+    }
 }
