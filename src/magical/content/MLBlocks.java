@@ -449,6 +449,7 @@ public class MLBlocks {
         largePhantomSteelWall = new Wall("largePhantomSteeWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.phantomSteel, 6 * whm}));
             health = 100 * whm * 4;
+            size = 2;
         }};
         phantomTitaniumSteelWall = new Wall("phantomTitaniumSteelWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 6}));
@@ -457,6 +458,7 @@ public class MLBlocks {
         largePhantomTitaniumSteelWall = new Wall("largePhantomTitaniumSteelWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 6 * whm}));
             health = 160 * whm * 4;
+            size = 2;
         }};
         //wall
         //出来了，出来了
