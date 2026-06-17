@@ -128,7 +128,7 @@ public class MLBlocks {
             //基础科技
             baseCore, phantomTitaniumSteelCompressor, xuanCrystalManufacturingMachine, phantomSteelCompressor, phantomSteelVoltageMachine, electroge,
             fluvialErosion, adaptiveWall, largeAdaptiveWall, Birefringence, phantomSteelDrill, phantomSteelConveyor, phantomSteelBridge, phantomSteeljunction,
-            phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode, excitedYuan, fuelPoweredGenerator;
+            phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode, excitedYuan, fuelPoweredGenerator, phantomTitaniumSteelConveyor;
 
     public static void load() {
 
@@ -463,6 +463,12 @@ public class MLBlocks {
             requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.phantomSteel, 1, Items.graphite, 2}));
             health = 150;
             speed = 0.12f;
+            displayedSpeed = 17f;
+        }};
+        phantomTitaniumSteelConveyor = new Conveyor("phantomTitaniumSteelConveyor"){{
+            requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 1, MLItems.phantomSteel, 1, Items.titanium, 1}));
+            health = 200;
+            speed = 0.18f;
             displayedSpeed = 15.5f;
         }};
         phantomSteelBridge = new BufferedItemBridge("phantomSteelBridge"){{
@@ -502,22 +508,21 @@ public class MLBlocks {
             consumePowerBuffered(4000f);
         }};
             //燃能发电机
-            fuelPoweredGenerator = new ConsumeGenerator("fuelPoweredGenerator"){{
-                requirements(Category.power, ItemStack.with(new Object[]{MLItems.phantomSteel, 60, Items.graphite, 30}));
-                powerProduction = 5f;
-                itemDuration = 150f;
-                size = 2;
+        fuelPoweredGenerator = new ConsumeGenerator("fuelPoweredGenerator"){{
+            requirements(Category.power, ItemStack.with(new Object[]{MLItems.phantomSteel, 60, Items.graphite, 30}));
+            powerProduction = 5f;
+            itemDuration = 150f;
+            size = 2;
 
-                ambientSound = MLSounds.loopSmelter;
-                ambientSoundVolume = 0.03f;
-                generateEffect = Fx.generatespark;
+            ambientSound = MLSounds.loopSmelter;
+            ambientSoundVolume = 0.03f;
+            generateEffect = Fx.generatespark;
 
-                consume(new ConsumeItemFlammable());
+            consume(new ConsumeItemFlammable());
 
-                drawer = new DrawMulti(new DrawDefault(), new DrawWarmupRegion());
+            drawer = new DrawMulti(new DrawDefault(), new DrawWarmupRegion());
 
         }};
-
         //power
     }
 }

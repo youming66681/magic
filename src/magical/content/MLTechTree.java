@@ -16,6 +16,9 @@ public class MLTechTree {
         TechNode root = nodeRoot("cecilia", MLBlocks.baseCore, () -> {
            //基础科技
             /*幻钢传送带*/node(MLBlocks.phantomSteelConveyor, () -> {
+                /*幻钛钢传送带*/node(MLBlocks.phantomTitaniumSteelConveyor, () -> {
+
+                        });
                       /*幻钢装卸器*/node(MLBlocks.phantomSteelUnloader, () -> {
 
                               });
