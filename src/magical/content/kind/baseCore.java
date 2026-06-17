@@ -27,7 +27,6 @@ public class baseCore extends CoreBlock {
         if (tile == null) return false;
         //in the editor, you can place them anywhere for convenience
         if (Vars.state.isEditor()) return true;
-        if (!Vars.state.isEditor()) return true;
 
         CoreBuild core = team.core();
 
