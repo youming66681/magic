@@ -148,12 +148,12 @@ public class AdaptiveWall extends Wall {
         public void displayBars(Table table){
 
             table.add(new Bar(
-                    () -> Core.bundle.format("bar.total-health", (int)totalHealth, (int)totalMax),
+                    () -> Core.bundle.format("bar.total-health" + (int)totalHealth),
                     () -> Pal.health,
                     () -> totalHealth / totalMax
             )).growX();
             table.row();
-            table.label(() -> Core.bundle.format("bar.bind-count", linked.size)
+            table.label(() -> Core.bundle.format("bar.bind-count" + linked.size)
             ).growX();
         }
     }
