@@ -442,11 +442,11 @@ public class MLBlocks {
             health = 120 * whm * 4;
             size = 2;
         }};
-        phantomSteelWall = new Wall("phantomSteeWall"){{
+        phantomSteelWall = new Wall("phantomSteelWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.phantomSteel, 6}));
             health = 100 * whm;
         }};
-        largePhantomSteelWall = new Wall("largePhantomSteeWall"){{
+        largePhantomSteelWall = new Wall("largePhantomSteelWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.phantomSteel, 6 * whm}));
             health = 100 * whm * 4;
             size = 2;
