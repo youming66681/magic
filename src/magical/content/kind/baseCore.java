@@ -31,13 +31,11 @@ public class baseCore extends CoreBlock {
 
         CoreBuild core = team.core();
 
-        return Vars.state.teams.cores(team).size <= 10;
+        if(Vars.state.teams.cores(team).size >= 10){
+            return false;
+        }
 
         //special floor upon which cores can be placed
-        tile.getLinkedTilesAs(this, tempTiles);
-        if (!tempTiles.contains(o -> !o.floor().allowCorePlacement || o.block() instanceof CoreBlock)) {
-            return true;
-        }
 
         //must have all requirements
         if (core == null || (!Vars.state.rules.infiniteResources && !core.items.has(requirements, Vars.state.rules.buildCostMultiplier)))
