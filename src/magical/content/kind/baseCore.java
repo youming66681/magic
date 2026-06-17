@@ -38,7 +38,8 @@ public class baseCore extends CoreBlock {
 
         CoreBuild core = team.core();
 
-        return Vars.state.teams.cores(team).size < 10;
+        if(Vars.state.teams.cores(team).size >= 10)
+            return false;
 
         //special floor upon which cores can be placed
 
