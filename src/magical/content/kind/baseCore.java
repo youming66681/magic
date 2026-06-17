@@ -17,7 +17,6 @@ public class baseCore extends CoreBlock {
         super(name);
     }
 
-    @Override
     public boolean canPlace(Tile tile, Team team, int rotation){
         if(tile == null) return false;
 
