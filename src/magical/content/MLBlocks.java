@@ -468,7 +468,7 @@ public class MLBlocks {
         phantomTitaniumSteelConveyor = new Conveyor("phantomTitaniumSteelConveyor"){{
             requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 1, MLItems.phantomSteel, 1, Items.titanium, 1}));
             health = 200;
-            speed = 0.18f;
+            speed = 0.2f;
             displayedSpeed = 15.5f;
         }};
         phantomSteelBridge = new BufferedItemBridge("phantomSteelBridge"){{
