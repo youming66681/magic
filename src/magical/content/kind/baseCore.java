@@ -31,9 +31,7 @@ public class baseCore extends CoreBlock {
 
         CoreBuild core = team.core();
 
-        if (Vars.state.teams.cores(team).size >= 10) {
-            return false;
-        }
+        return Vars.state.teams.cores(team).size <= 10;
 
         //special floor upon which cores can be placed
         tile.getLinkedTilesAs(this, tempTiles);
@@ -60,18 +58,5 @@ public class baseCore extends CoreBlock {
                 Core.bundle.format("bar.core-count", cores, 10),
                 x, y, valid
         );
-    }
-    @Override
-    public Building createBuilding() {
-        return new CoreBuild() {
-            @Override
-            public void placed() {
-                super.placed();
-
-                if (!Vars.state.isEditor() && team.cores().size > 10) {
-                    kill();
-                }
-            }
-        };
     }
 }
