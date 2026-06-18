@@ -547,7 +547,7 @@ public class MLBlocks {
         //power
         //单位
         //曲率进化舱
-        curvatureEvolutionPod = new Reconstructor("curvatureEvolutionPod"){{
+        curvatureEvolutionPod = new DualReconstructor("curvatureEvolutionPod"){{
             requirements(Category.units, ItemStack.with(new Object[]{Items.copper, 200, Items.lead, 120, Items.silicon, 90}));
 
             size = 5;

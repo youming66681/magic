@@ -28,6 +28,11 @@ public class DualReconstructor extends Reconstructor {
             build.mode = value;
         });
     }
+    config(Integer.class, (DualReconstructorBuild build, Integer value) -> {
+        build.mode = value;
+
+        build.updateConsumes();
+    });
 
     public class DualReconstructorBuild extends ReconstructorBuild {
 
@@ -97,11 +102,7 @@ public class DualReconstructor extends Reconstructor {
                             : ItemStack.with(Items.titanium, 30, Items.silicon, 20)
             );
         }
-        config(Integer.class, (DualReconstructorBuild build, Integer value) -> {
-            build.mode = value;
 
-            build.updateConsumes();
-        });
         @Override
         public void init(){
             super.init();
