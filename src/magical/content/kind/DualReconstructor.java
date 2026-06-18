@@ -35,16 +35,16 @@ public class DualReconstructor extends Reconstructor {
         public int mode = 0;
 
         @Override
-        public void updateTile(){
+        public void updateTile() {
             super.updateTile();
 
-            if(progress >= constructTime){
+            if (progress >= constructTime) {
                 progress = 0f;
             }
         }
 
         @Override
-        public void buildConfiguration(Table table){
+        public void buildConfiguration(Table table) {
             super.buildConfiguration(table);
 
             table.button(
@@ -59,77 +59,79 @@ public class DualReconstructor extends Reconstructor {
         }
 
         @Override
-        public void write(Writes w){
+        public void write(Writes w) {
             super.write(w);
             w.i(mode);
         }
 
         @Override
-        public void read(Reads r, byte rev){
+        public void read(Reads r, byte rev) {
             super.read(r, rev);
             mode = r.i();
         }
-    }
-}
-    @Override
-    public void buildConfiguration(Table table){
 
-        table.row();
+        @Override
+        public void buildConfiguration(Table table) {
 
-        table.label(() ->
-                Core.bundle.format("bar.mode", modeName())
-        );
+            table.row();
 
-        table.row();
+            table.label(() ->
+                    Core.bundle.format("bar.mode", modeName())
+            );
 
-        table.button(
-                Icon.refresh,
-                Styles.cleart,
-                () -> {
-                    configure(mode == 0 ? 1 : 0);
-                    progress = 0f;
+            table.row();
+
+            table.button(
+                    Icon.refresh,
+                    Styles.cleart,
+                    () -> {
+                        configure(mode == 0 ? 1 : 0);
+                        progress = 0f;
+                    }
+            ).size(50f);
+
+            table.row();
+        }
+
+        @Override
+        public void display(Table table) {
+            super.display(table);
+
+            table.row();
+
+            table.label(() ->
+                    Core.bundle.format("bar.mode", modeName())
+            );
+
+            table.row();
+
+            table.label(() -> {
+                Seq<UnitType[]> list = currentUpgrades();
+
+                StringBuilder sb = new StringBuilder();
+
+                for (UnitType[] u : list) {
+                    sb.append(u[0].localizedName)
+                            .append(" → ")
+                            .append(u[1].localizedName)
+                            .append("\n");
                 }
-        ).size(50f);
 
-        table.row();
-    }
-    @Override
-    public void display(Table table){
-        super.display(table);
+                return sb.toString();
+            });
+        }
 
-        table.row();
+        @Override
+        public void setBars() {
+            super.setBars();
 
-        table.label(() ->
-                Core.bundle.format("bar.mode", modeName())
-        );
-
-        table.row();
-
-        table.label(() -> {
-            Seq<UnitType[]> list = currentUpgrades();
-
-            StringBuilder sb = new StringBuilder();
-
-            for(UnitType[] u : list){
-                sb.append(u[0].localizedName)
-                        .append(" → ")
-                        .append(u[1].localizedName)
-                        .append("\n");
-            }
-
-            return sb.toString();
-        });
-    }
-    @Override
-    public void setBars(){
-        super.setBars();
-
-        addBar("mode", (DualReconstructorBuild build) ->
-                new mindustry.ui.Bar(
-                        () -> Core.bundle.format("bar.mode", build.modeName()),
-                        () -> build.mode == 0 ? 1f : 1f,
-                        () -> build.mode == 0 ? arc.graphics.Color.sky : arc.graphics.Color.orange
-                )
-        );
+            addBar("mode", (DualReconstructorBuild build) ->
+                    new mindustry.ui.Bar(
+                            () -> Core.bundle.format("bar.mode", build.modeName()),
+                            () -> build.mode == 0 ? 1f : 1f,
+                            () -> build.mode == 0 ? arc.graphics.Color.sky : arc.graphics.Color.orange
+                    )
+            );
+        }
     }
 }
