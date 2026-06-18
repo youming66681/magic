@@ -27,12 +27,13 @@ public class DualReconstructor extends Reconstructor {
         config(Integer.class, (DualReconstructorBuild build, Integer value) -> {
             build.mode = value;
         });
-    }
-    config(Integer.class, (DualReconstructorBuild build, Integer value) -> {
-        build.mode = value;
+        config(Integer.class, (DualReconstructorBuild build, Integer value) -> {
+            build.mode = value;
 
-        build.updateConsumes();
-    });
+            build.updateConsumes();
+        });
+    }
+
 
     public class DualReconstructorBuild extends ReconstructorBuild {
 
