@@ -554,7 +554,7 @@ public class MLBlocks {
 
             size = 5;
 
-            haspower = true;
+            consumes.power(10f);
 
             firstUpgrades.add(new UnitType[]{UnitTypes.dagger, UnitTypes.nova});
             secondUpgrades.add(new UnitType[]{UnitTypes.nova, UnitTypes.pulsar});

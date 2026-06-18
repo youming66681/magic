@@ -17,11 +17,14 @@ import mindustry.content.UnitTypes;
 
 public class DualReconstructor extends Reconstructor {
 
-    public Seq<UnitType[]> firstUpgrades = new Seq<>();
-    public Seq<UnitType[]> secondUpgrades = new Seq<>();
+    public ModeConfig[] modes = new ModeConfig[2];
 
-    public float firstConstructTime = 15f * 60f;
-    public float secondConstructTime = 45f * 60f;
+    public static class ModeConfig{
+        public Seq<UnitType[]> upgrades = new Seq<>();
+        public float constructTime;
+        public float power;
+        public ItemStack[] items;
+    }
 
     public DualReconstructor(String name){
         super(name);
@@ -38,21 +41,13 @@ public class DualReconstructor extends Reconstructor {
 
         public int mode = 0;
 
-        public String modeName(){
-            return Core.bundle.get(mode == 0 ? "mode.first" : "mode.second");
-        }
-
-        public Seq<UnitType[]> currentUpgrades(){
-            return mode == 0 ? firstUpgrades : secondUpgrades;
-        }
-
-        public float currentConstructTime(){
-            return mode == 0 ? firstConstructTime : secondConstructTime;
+        ModeConfig cfg(){
+            return modes[mode];
         }
 
         @Override
         public UnitType upgrade(UnitType type){
-            UnitType[] r = currentUpgrades().find(u -> u[0] == type);
+            UnitType[] r = cfg().upgrades.find(u -> u[0] == type);
             return r == null ? null : r[1];
         }
 
@@ -60,7 +55,10 @@ public class DualReconstructor extends Reconstructor {
         public void updateTile(){
             super.updateTile();
 
-            if(progress >= currentConstructTime()){
+            // 动态耗电（真正有效方式）
+            this.powerUse = cfg().power;
+
+            if(progress >= cfg().constructTime){
                 progress = 0f;
             }
         }
@@ -71,7 +69,7 @@ public class DualReconstructor extends Reconstructor {
 
             if(payload == null || payload.unit == null) return;
 
-            float f = progress / currentConstructTime();
+            float f = progress / cfg().constructTime;
 
             arc.graphics.g2d.Draw.alpha(1f - f);
 
@@ -82,31 +80,6 @@ public class DualReconstructor extends Reconstructor {
                     f,
                     speedScl,
                     time
-            );
-        }
-        @Override
-        public void buildConfiguration(Table table){
-            super.buildConfiguration(table);
-
-            table.button(
-                    modeName(),
-                    Icon.refresh,
-                    Styles.cleart,
-                    () -> {
-                        configure(mode == 0 ? 1 : 0);
-                        hideConfiguration();
-                    }
-            ).size(140f, 50f);
-        }
-
-        @Override
-        public void display(Table table){
-            super.display(table);
-
-            table.row();
-
-            table.label(() ->
-                    Core.bundle.format("bar.mode", modeName())
             );
         }
 
@@ -121,5 +94,59 @@ public class DualReconstructor extends Reconstructor {
             super.read(read, revision);
             mode = read.i();
         }
+    }
+    @Override
+    public void buildConfiguration(Table table){
+
+        table.row();
+
+        table.label(() ->
+                Core.bundle.format("bar.mode", modeName())
+        );
+
+        table.row();
+
+        table.button(
+                Icon.refresh,
+                Styles.cleart,
+                () -> {
+                    configure(mode == 0 ? 1 : 0);
+                    progress = 0f;
+                }
+        ).size(50f);
+
+        table.row();
+    }
+    @Override
+    public void display(Table table){
+        super.display(table);
+
+        table.row();
+
+        table.label(() ->
+                Core.bundle.format("bar.mode", modeName())
+        );
+
+        table.row();
+
+        table.label(() -> {
+            Seq<UnitType[]> list = currentUpgrades();
+
+            StringBuilder sb = new StringBuilder();
+
+            for(UnitType[] u : list){
+                sb.append(u[0].localizedName)
+                        .append(" → ")
+                        .append(u[1].localizedName)
+                        .append("\n");
+            }
+
+            return sb.toString();
+        });
+    }
+    public String modeName(){
+        return mode == 0
+                ? Core.bundle.get("mode.first")
+                : Core.bundle.get("mode.second");
     }
 }
