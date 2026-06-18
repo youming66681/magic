@@ -101,7 +101,7 @@ public class DualReconstructor extends Reconstructor {
         table.row();
 
         table.label(() ->
-                Core.bundle.format("bar.mode", modeName())
+                Core.bundle.format("mode.current", modeName())
         );
 
         table.row();
@@ -118,8 +118,8 @@ public class DualReconstructor extends Reconstructor {
         table.row();
     }
     @Override
-    public void buildConfiguration(Table table){
-        super.buildConfiguration(table);
+    public void display(Table table){
+        super.display(table);
 
         table.row();
 
@@ -129,15 +129,31 @@ public class DualReconstructor extends Reconstructor {
 
         table.row();
 
-        table.button(
-                Core.bundle.get("mode.switch"),
-                Icon.refresh,
-                Styles.cleart,
-                () -> {
-                    configure(mode == 0 ? 1 : 0);
-                    progress = 0f;
-                }
-        ).size(140f, 50f);
+        table.label(() -> {
+            Seq<UnitType[]> list = currentUpgrades();
+
+            StringBuilder sb = new StringBuilder();
+
+            for(UnitType[] u : list){
+                sb.append(u[0].localizedName)
+                        .append(" → ")
+                        .append(u[1].localizedName)
+                        .append("\n");
+            }
+
+            return sb.toString();
+        });
     }
+    @Override
+    public void setBars(){
+        super.setBars();
+
+        addBar("mode", (DualReconstructorBuild build) ->
+                new mindustry.ui.Bar(
+                        () -> Core.bundle.format("bar.mode", build.modeName()),
+                        () -> build.mode == 0 ? 1f : 1f,
+                        () -> build.mode == 0 ? arc.graphics.Color.sky : arc.graphics.Color.orange
+                )
+        );
     }
 }
