@@ -80,7 +80,6 @@ public class DualReconstructor extends Reconstructor{
             super.read(read, revision);
             mode = read.i();
         }
-    }
     public Seq<UnitType[]> currentUpgrades(){
         return mode == 0 ?
                 firstUpgrades :
