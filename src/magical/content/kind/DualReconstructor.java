@@ -118,8 +118,8 @@ public class DualReconstructor extends Reconstructor {
         table.row();
     }
     @Override
-    public void display(Table table){
-        super.display(table);
+    public void buildConfiguration(Table table){
+        super.buildConfiguration(table);
 
         table.row();
 
@@ -129,24 +129,15 @@ public class DualReconstructor extends Reconstructor {
 
         table.row();
 
-        table.label(() -> {
-            Seq<UnitType[]> list = currentUpgrades();
-
-            StringBuilder sb = new StringBuilder();
-
-            for(UnitType[] u : list){
-                sb.append(u[0].localizedName)
-                        .append(" → ")
-                        .append(u[1].localizedName)
-                        .append("\n");
-            }
-
-            return sb.toString();
-        });
+        table.button(
+                Core.bundle.get("mode.switch"),
+                Icon.refresh,
+                Styles.cleart,
+                () -> {
+                    configure(mode == 0 ? 1 : 0);
+                    progress = 0f;
+                }
+        ).size(140f, 50f);
     }
-    public String modeName(){
-        return mode == 0
-                ? Core.bundle.get("mode.first")
-                : Core.bundle.get("mode.second");
     }
 }
