@@ -14,6 +14,7 @@ import mindustry.world.blocks.units.Reconstructor;
 import mindustry.type.ItemStack;
 import mindustry.content.Items;
 import mindustry.content.UnitTypes;
+import mindustry.gen.UnitPayload;
 
 public class DualReconstructor extends Reconstructor {
 
