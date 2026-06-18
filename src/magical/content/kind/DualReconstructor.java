@@ -92,7 +92,10 @@ public class DualReconstructor extends Reconstructor {
                     modeName(),
                     Icon.refresh,
                     Styles.cleart,
-                    () -> configure(mode == 0 ? 1 : 0)
+                    () -> {
+                        configure(mode == 0 ? 1 : 0);
+                        hideConfiguration();
+                    }
             ).size(140f, 50f);
         }
 
