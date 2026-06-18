@@ -14,7 +14,6 @@ import mindustry.world.blocks.units.Reconstructor;
 import mindustry.type.ItemStack;
 import mindustry.content.Items;
 import mindustry.content.UnitTypes;
-import mindustry.gen.UnitPayload;
 
 public class DualReconstructor extends Reconstructor {
 
@@ -70,7 +69,7 @@ public class DualReconstructor extends Reconstructor {
         public void draw(){
             super.draw();
 
-            if(!(payload instanceof UnitPayload up)) return;
+            if(payload == null || payload.unit == null) return;
 
             float f = progress / currentConstructTime();
 
@@ -78,8 +77,8 @@ public class DualReconstructor extends Reconstructor {
 
             mindustry.graphics.Drawf.construct(
                     this,
-                    upgrade(up.unit.type),
-                    up.unit.rotation - 90f,
+                    upgrade(payload.unit.type),
+                    payload.unit.rotation - 90f,
                     f,
                     speedScl,
                     time
