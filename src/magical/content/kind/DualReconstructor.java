@@ -30,7 +30,7 @@ public class DualReconstructor extends Reconstructor {
 
         config(Integer.class, (DualReconstructorBuild build, Integer value) -> {
             build.mode = value;
-            build.progress = 0f; // 切换模式重置进度
+            build.progress = 0f;
         });
     }
 
@@ -60,9 +60,6 @@ public class DualReconstructor extends Reconstructor {
         public void updateTile(){
             super.updateTile();
 
-            // 这里不能改 consumes，只能影响逻辑
-            progress += edelta() * state.rules.unitBuildSpeed(team);
-
             if(progress >= currentConstructTime()){
                 progress = 0f;
             }
@@ -72,21 +69,21 @@ public class DualReconstructor extends Reconstructor {
         public void draw(){
             super.draw();
 
-            if(payload == null || payload.unit == null) return;
+            if(!(payload instanceof UnitPayload up)) return;
 
             float f = progress / currentConstructTime();
 
             arc.graphics.g2d.Draw.alpha(1f - f);
+
             mindustry.graphics.Drawf.construct(
                     this,
-                    upgrade(payload.unit.type),
-                    payload.rotation - 90f,
+                    upgrade(up.unit.type),
+                    up.unit.rotation - 90f,
                     f,
                     speedScl,
                     time
             );
         }
-
         @Override
         public void buildConfiguration(Table table){
             super.buildConfiguration(table);
