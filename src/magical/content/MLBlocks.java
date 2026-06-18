@@ -114,6 +114,8 @@ import mindustry.world.consumers.ConsumeItems;
 import mindustry.world.consumers.ConsumeLiquid;
 import mindustry.world.draw.DrawWarmupRegion;
 import mindustry.world.blocks.defense.Wall;
+import mindustry.type.UnitType;
+import mindustry.content.UnitTypes;
 
 import magical.content.MLItems;
 import magical.content.MLUnitTypes;
@@ -130,7 +132,7 @@ public class MLBlocks {
             baseCore, phantomTitaniumSteelCompressor, xuanCrystalManufacturingMachine, phantomSteelCompressor, phantomSteelVoltageMachine, electroge,
             fluvialErosion, adaptiveWall, largeAdaptiveWall, Birefringence, phantomSteelDrill, phantomSteelConveyor, phantomSteelBridge, phantomSteeljunction,
             phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode, excitedYuan, fuelPoweredGenerator, phantomTitaniumSteelConveyor,
-            phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall;
+            phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod;
 
     public static void load() {
 

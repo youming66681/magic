@@ -5,11 +5,15 @@ import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
+
 import mindustry.gen.Icon;
 import mindustry.type.UnitType;
 import mindustry.ui.Styles;
 import mindustry.world.blocks.units.Reconstructor;
-import arc.Core;
+
+import mindustry.type.ItemStack;
+import mindustry.content.Items;
+import mindustry.content.UnitTypes;
 
 public class DualReconstructor extends Reconstructor {
 
@@ -26,14 +30,9 @@ public class DualReconstructor extends Reconstructor {
 
         config(Integer.class, (DualReconstructorBuild build, Integer value) -> {
             build.mode = value;
-        });
-        config(Integer.class, (DualReconstructorBuild build, Integer value) -> {
-            build.mode = value;
-
-            build.updateConsumes();
+            build.progress = 0f; // 切换模式重置进度
         });
     }
-
 
     public class DualReconstructorBuild extends ReconstructorBuild {
 
@@ -55,6 +54,37 @@ public class DualReconstructor extends Reconstructor {
         public UnitType upgrade(UnitType type){
             UnitType[] r = currentUpgrades().find(u -> u[0] == type);
             return r == null ? null : r[1];
+        }
+
+        @Override
+        public void updateTile(){
+            super.updateTile();
+
+            // 这里不能改 consumes，只能影响逻辑
+            progress += edelta() * state.rules.unitBuildSpeed(team);
+
+            if(progress >= currentConstructTime()){
+                progress = 0f;
+            }
+        }
+
+        @Override
+        public void draw(){
+            super.draw();
+
+            if(payload == null || payload.unit == null) return;
+
+            float f = progress / currentConstructTime();
+
+            arc.graphics.g2d.Draw.alpha(1f - f);
+            mindustry.graphics.Drawf.construct(
+                    this,
+                    upgrade(payload.unit.type),
+                    payload.rotation - 90f,
+                    f,
+                    speedScl,
+                    time
+            );
         }
 
         @Override
@@ -90,26 +120,6 @@ public class DualReconstructor extends Reconstructor {
         public void read(Reads read, byte revision){
             super.read(read, revision);
             mode = read.i();
-        }
-        public void updateConsumes(){
-
-            consumes.power(
-                    mode == 0 ? 1.5f : 3.0f
-            );
-
-            consumes.items(
-                    mode == 0
-                            ? ItemStack.with(Items.copper, 20, Items.lead, 10)
-                            : ItemStack.with(Items.titanium, 30, Items.silicon, 20)
-            );
-        }
-
-        @Override
-        public void init(){
-            super.init();
-
-            // 默认消耗（mode 0）
-            consumes.power(1.5f);
         }
     }
 }
