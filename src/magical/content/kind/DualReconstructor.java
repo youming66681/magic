@@ -11,9 +11,31 @@ import mindustry.ui.Styles;
 import mindustry.world.blocks.units.Reconstructor;
 import arc.Core;
 
-    public class DualReconstructor extends Reconstructor{
+public class DualReconstructor extends Reconstructor {
+
+    public Seq<UnitType[]> firstUpgrades = new Seq<>();
+    public Seq<UnitType[]> secondUpgrades = new Seq<>();
+
+    public float firstConstructTime = 15f * 60f;
+    public float secondConstructTime = 45f * 60f;
+
+    public DualReconstructor(String name){
+        super(name);
+
+        configurable = true;
+
+        config(Integer.class, (DualReconstructorBuild build, Integer value) -> {
+            build.mode = value;
+        });
+    }
+
+    public class DualReconstructorBuild extends ReconstructorBuild {
 
         public int mode = 0;
+
+        public String modeName(){
+            return Core.bundle.get(mode == 0 ? "mode.first" : "mode.second");
+        }
 
         public Seq<UnitType[]> currentUpgrades(){
             return mode == 0 ? firstUpgrades : secondUpgrades;
@@ -23,31 +45,32 @@ import arc.Core;
             return mode == 0 ? firstConstructTime : secondConstructTime;
         }
 
-        public String modeName(){
-            return Core.bundle.get(
-                    mode == 0 ? "mode.first" : "mode.second"
-            );
+        @Override
+        public UnitType upgrade(UnitType type){
+            UnitType[] r = currentUpgrades().find(u -> u[0] == type);
+            return r == null ? null : r[1];
         }
 
         @Override
         public void buildConfiguration(Table table){
             super.buildConfiguration(table);
 
-            table.row();
-
             table.button(
+                    modeName(),
                     Icon.refresh,
-                    Styles.cleari,
+                    Styles.cleart,
                     () -> configure(mode == 0 ? 1 : 0)
-            ).size(50f);
+            ).size(140f, 50f);
+        }
+
+        @Override
+        public void display(Table table){
+            super.display(table);
 
             table.row();
 
             table.label(() ->
-                    Core.bundle.format(
-                            "bar.mode",
-                            modeName()
-                    )
+                    Core.bundle.format("bar.mode", modeName())
             );
         }
 
@@ -62,51 +85,5 @@ import arc.Core;
             super.read(read, revision);
             mode = read.i();
         }
-    public Seq<UnitType[]> currentUpgrades(){
-        return mode == 0 ?
-                firstUpgrades :
-                secondUpgrades;
-    }
-
-    public float currentConstructTime(){
-        return mode == 0 ?
-                firstConstructTime :
-                secondConstructTime;
-    }
-    @Override
-    public UnitType upgrade(UnitType type){
-        UnitType[] r = currentUpgrades().find(u -> u[0] == type);
-        return r == null ? null : r[1];
-    }
-    @Override
-    public float fraction(){
-        return progress / currentConstructTime();
-    }
-        @Override
-        public void draw() {
-            Draw.alpha(1f - progress / currentConstructTime());
-
-            Drawf.construct(
-                    this,
-                    upgrade(payload.unit.type),
-                    payload.rotation() - 90f,
-                    progress / currentConstructTime(),
-                    speedScl,
-                    time
-            );
-            progress += edelta() * state.rules.unitBuildSpeed(team);
-            if (progress >= currentConstructTime()) {
-            }
-        }
-    @Override
-    public void display(Table table){
-        super.display(table);
-        table.row();
-        table.label(() ->
-                Core.bundle.format(
-                        "bar.mode",
-                        modeName()
-                )
-        );
     }
 }
