@@ -545,5 +545,16 @@ public class MLBlocks {
 
         }};
         //power
+        //单位
+        //曲率进化舱
+        curvatureEvolutionPod = new Reconstructor("curvatureEvolutionPod"){{
+            requirements(Category.units, ItemStack.with(new Object[]{Items.copper, 200, Items.lead, 120, Items.silicon, 90}));
+
+            size = 5;
+
+            firstUpgrades.add(new UnitType[]{UnitTypes.dagger, UnitTypes.nova});
+            firstUpgrades.add(new UnitType[]{UnitTypes.nova, UnitTypes.pulsar});
+        }};
+        //unit
     }
 }

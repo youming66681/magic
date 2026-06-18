@@ -85,5 +85,29 @@ public class DualReconstructor extends Reconstructor {
             super.read(read, revision);
             mode = read.i();
         }
+        public void updateConsumes(){
+
+            consumes.power(
+                    mode == 0 ? 1.5f : 3.0f
+            );
+
+            consumes.items(
+                    mode == 0
+                            ? ItemStack.with(Items.copper, 20, Items.lead, 10)
+                            : ItemStack.with(Items.titanium, 30, Items.silicon, 20)
+            );
+        }
+        config(Integer.class, (DualReconstructorBuild build, Integer value) -> {
+            build.mode = value;
+
+            build.updateConsumes();
+        });
+        @Override
+        public void init(){
+            super.init();
+
+            // 默认消耗（mode 0）
+            consumes.power(1.5f);
+        }
     }
 }
