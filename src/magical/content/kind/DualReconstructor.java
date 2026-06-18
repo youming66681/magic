@@ -11,25 +11,7 @@ import mindustry.ui.Styles;
 import mindustry.world.blocks.units.Reconstructor;
 import arc.Core;
 
-public class DualReconstructor extends Reconstructor{
-
-    public Seq<UnitType[]> firstUpgrades = new Seq<>();
-    public Seq<UnitType[]> secondUpgrades = new Seq<>();
-
-    public float firstConstructTime = 15f * 60f;
-    public float secondConstructTime = 45f * 60f;
-
-    public DualReconstructor(String name){
-        super(name);
-
-        configurable = true;
-
-        config(Integer.class, (DualReconstructorBuild build, Integer value) -> {
-            build.mode = value;
-        });
-    }
-
-    public class DualReconstructorBuild extends ReconstructorBuild{
+    public class DualReconstructor extends Reconstructor{
 
         public int mode = 0;
 
@@ -110,19 +92,13 @@ public class DualReconstructor extends Reconstructor{
     speedScl,
     time
     );
-
     progress += edelta() * state.rules.unitBuildSpeed(team);
-
     if(progress >= currentConstructTime()){
-
     }
     @Override
     public void display(Table table){
-
         super.display(table);
-
         table.row();
-
         table.label(() ->
                 Core.bundle.format(
                         "bar.mode",
