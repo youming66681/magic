@@ -82,19 +82,22 @@ import arc.Core;
     public float fraction(){
         return progress / currentConstructTime();
     }
-    Draw.alpha(1f - progress / currentConstructTime());
+        @Override
+        public void draw() {
+            Draw.alpha(1f - progress / currentConstructTime());
 
-     Drawf.construct(
-        this,
-    upgrade(payload.unit.type),
-    payload.rotation() - 90f,
-    progress / currentConstructTime(),
-    speedScl,
-    time
-    );
-    progress += edelta() * state.rules.unitBuildSpeed(team);
-    if(progress >= currentConstructTime()){
-    }
+            Drawf.construct(
+                    this,
+                    upgrade(payload.unit.type),
+                    payload.rotation() - 90f,
+                    progress / currentConstructTime(),
+                    speedScl,
+                    time
+            );
+            progress += edelta() * state.rules.unitBuildSpeed(team);
+            if (progress >= currentConstructTime()) {
+            }
+        }
     @Override
     public void display(Table table){
         super.display(table);
