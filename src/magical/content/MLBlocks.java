@@ -561,6 +561,16 @@ public class MLBlocks {
             firstPowerUse = 5f;
             secondPowerUse = 15f;
 
+            firstRequirements = ItemStack.with(
+                    Items.copper, 20,
+                    Items.lead, 10
+            );
+
+            secondRequirements = ItemStack.with(
+                    Items.titanium, 30,
+                    Items.silicon, 20
+            );
+
         firstUpgrades.add(
                 new UnitType[]{UnitTypes.dagger, UnitTypes.nova}
         );
