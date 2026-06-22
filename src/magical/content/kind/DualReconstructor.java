@@ -14,19 +14,6 @@ import mindustry.graphics.Pal;
 
 public class DualReconstructor extends Block {
 
-    public static class Path {
-        public String nameKey;
-        public UnitType from, to;
-        public float time;
-
-        public Path(String nameKey, UnitType from, UnitType to, float time){
-            this.nameKey = nameKey;
-            this.from = from;
-            this.to = to;
-            this.time = time;
-        }
-    }
-
     public java.util.ArrayList<Path> paths = new java.util.ArrayList<>();
 
     public DualReconstructor(String name){
@@ -118,13 +105,14 @@ public class DualReconstructor extends Block {
         }
 
         @Override
-        public void setBars(){
-            super.setBars();
+        @Override
+        public void init(){
+            super.init();
 
-            addBar("upgrade", b ->
-                    new Bar(
-                            () -> Core.bundle.get("upgrade.progress"),
-                            () -> Pal.accent,
+            addBar("progress", b ->
+                    new mindustry.ui.Bar(
+                            () -> "upgrade.progress",
+                            () -> mindustry.graphics.Pal.accent,
                             () -> progress
                     )
             );

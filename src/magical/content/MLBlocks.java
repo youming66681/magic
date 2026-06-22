@@ -124,7 +124,7 @@ import magical.content.MLPlanets;
 import magical.content.MLFx;
 import magical.magic;
 import magical.content.MLSounds;
-
+import magical.content.UpgradePath;
 
 public class MLBlocks {
     public static Block
@@ -555,16 +555,16 @@ public class MLBlocks {
             size = 5;
 
             factory.paths.add(
-                    new DualReconstructor.UpgradePath(
+                    new UpgradePath(
                             "upgrade.first",
                             UnitTypes.dagger,
                             UnitTypes.nova,
-                            60f * 15
+                            60f * 10
                     )
             );
 
             factory.paths.add(
-                    new DualReconstructor.UpgradePath(
+                    new UpgradePath(
                             "upgrade.second",
                             UnitTypes.nova,
                             UnitTypes.pulsar,
