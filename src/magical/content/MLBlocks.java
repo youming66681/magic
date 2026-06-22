@@ -554,21 +554,14 @@ public class MLBlocks {
 
             size = 5;
 
-            firstConstructTime = 15f * 60f;
-            secondConstructTime = 45f * 60f;
+            firstReq = ItemStack.with(Items.copper, 20, Items.lead, 10);
+            secondReq = ItemStack.with(Items.titanium, 30, Items.silicon, 20);
 
-            firstPowerUse = 5f;
-            secondPowerUse = 15f;
+            firstTime = 15f * 60f;
+            secondTime = 45f * 60f;
 
-            firstRequirements = ItemStack.with(
-                    Items.copper, 20,
-                    Items.lead, 10
-            );
-
-            secondRequirements = ItemStack.with(
-                    Items.titanium, 30,
-                    Items.silicon, 20
-            );
+            firstPower = 5f;
+            secondPower = 20f;
 
         firstUpgrades.add(
                 new UnitType[]{UnitTypes.dagger, UnitTypes.nova}
@@ -578,6 +571,7 @@ public class MLBlocks {
                 new UnitType[]{UnitTypes.flare, UnitTypes.horizon}
         );
 
+        health = 2400;
         }};
          //unit
     }
