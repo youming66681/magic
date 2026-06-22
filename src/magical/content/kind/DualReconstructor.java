@@ -10,7 +10,7 @@ import mindustry.gen.Icon;
 import mindustry.type.UnitType;
 import mindustry.ui.Styles;
 import mindustry.world.blocks.units.Reconstructor;
-
+import mindustry.type.ItemStack;
 
 public class DualReconstructor extends Reconstructor{
 
