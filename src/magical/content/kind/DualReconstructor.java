@@ -148,13 +148,16 @@ public class DualReconstructor extends Reconstructor{
                             firstConstructTime :
                             secondConstructTime);
         }
-        @Override
+        public float currentConstructTime(){
+            return mode == 0 ?
+                    firstConstructTime :
+                    secondConstructTime;
+        }
         public float currentPowerUse(){
             return mode == 0 ?
                     firstPowerUse :
                     secondPowerUse;
         }
-        @Override
         public ItemStack[] currentRequirements(){
             return mode == 0 ?
                     firstRequirements :
