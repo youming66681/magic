@@ -553,12 +553,16 @@ public class MLBlocks {
             requirements(Category.units, ItemStack.with(new Object[]{Items.copper, 200, Items.lead, 120, Items.silicon, 90}));
 
             size = 5;
-
-            consumes.power(10f);
-
-            firstUpgrades.add(new UnitType[]{UnitTypes.dagger, UnitTypes.nova});
-            secondUpgrades.add(new UnitType[]{UnitTypes.nova, UnitTypes.pulsar});
+            consumePower(10f);
         }};
+
+        firstUpgrades.add(
+                new UnitType[]{UnitTypes.dagger, UnitTypes.nova}
+        );
+
+        secondUpgrades.add(
+                new UnitType[]{UnitTypes.flare, UnitTypes.horizon}
+        );
         //unit
     }
 }
