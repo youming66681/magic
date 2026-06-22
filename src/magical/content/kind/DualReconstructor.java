@@ -5,195 +5,157 @@ import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
-import arc.graphics.Color;
-
-import mindustry.gen.Icon;
+import mindustry.gen.Building;
+import mindustry.gen.Unit;
 import mindustry.type.UnitType;
-import mindustry.type.ItemStack;
-import mindustry.ui.Styles;
-import mindustry.world.blocks.units.Reconstructor;
+import mindustry.world.Block;
+import mindustry.world.meta.Stat;
 
-public class DualReconstructor extends Reconstructor{
+public class DualReconstructor extends Block {
 
-    // ====== MODE DATA ======
+    public static class UpgradePath {
+        public String nameKey;
 
-    public Seq<UnitType[]> firstUpgrades = new Seq<>();
-    public Seq<UnitType[]> secondUpgrades = new Seq<>();
+        public UnitType from;
+        public UnitType to;
 
-    public ItemStack[] firstReq = ItemStack.empty;
-    public ItemStack[] secondReq = ItemStack.empty;
+        public float time;
 
-    public float firstTime = 15f * 60f;
-    public float secondTime = 45f * 60f;
+        public UpgradePath(String nameKey, UnitType from, UnitType to, float time) {
+            this.nameKey = nameKey;
+            this.from = from;
+            this.to = to;
+            this.time = time;
+        }
+    }
 
-    public float firstPower = 5f;
-    public float secondPower = 15f;
+    public Seq<UpgradePath> paths = new Seq();
 
-    public DualReconstructor(String name){
+    public DualReconstructor(String name) {
         super(name);
+        update = true;
+        solid = true;
+    }
 
-        configurable = true;
+    @Override
+    public void setStats() {
+        super.setStats();
 
-        config(Integer.class, (DualReconstructorBuild build, Integer v) -> {
-            build.mode = v;
-            build.progress = 0f;
+        stats.add(Stat.repairTime, table -> {
+            for (UpgradePath p : paths) {
+                table.row();
+                table.add(Core.bundle.get(p.nameKey));
+                table.add(" : " + p.time / 60f + "s");
+            }
         });
     }
 
-    public class DualReconstructorBuild extends ReconstructorBuild{
+    @Override
+    public Building create(int x, int y) {
+        return new UpgradeBuild();
+    }
+
+    public class UpgradeBuild extends Building {
 
         public int mode = 0;
+        public float progress = 0f;
 
-        public boolean isFirst(){
-            return mode == 0;
+        public Unit targetUnit;
+
+        public UpgradePath path() {
+            return paths.get(mode);
         }
 
-        public float time(){
-            return isFirst() ? firstTime : secondTime;
+        public void nextMode() {
+            mode = (mode + 1) % paths.size;
+            progress = 0f;
         }
 
-        public float powerUse(){
-            return isFirst() ? firstPower : secondPower;
-        }
-
-        public ItemStack[] req(){
-            return isFirst() ? firstReq : secondReq;
-        }
-
-        public Seq<UnitType[]> upgrades(){
-            return isFirst() ? firstUpgrades : secondUpgrades;
-        }
-
-        public String modeName(){
-            return Core.bundle.get(isFirst() ? "mode.first" : "mode.second");
-        }
-
-        public Color modeColor(){
-            return isFirst() ? Color.sky : Color.orange;
+        public boolean acceptUnit(Unit unit) {
+            return unit != null && unit.type == path().from;
         }
 
         @Override
-        public UnitType upgrade(UnitType type){
-            UnitType[] r = upgrades().find(u -> u[0] == type);
-            return r == null ? null : r[1];
-        }
+        public void updateTile() {
 
-        public boolean hasReq(){
-            for(ItemStack s : req()){
-                if(items.get(s.item) < s.amount){
-                    return false;
-                }
-            }
-            return true;
-        }
+            if (targetUnit == null) return;
 
-        public void consumeReq(){
-            for(ItemStack s : req()){
-                items.remove(s.item, s.amount);
-            }
-        }
+            UpgradePath p = path();
 
-        @Override
-        public void updateTile(){
-            super.updateTile();
+            if (targetUnit.type != p.from) return;
 
-            if(payload == null) return;
+            progress += delta() / p.time;
 
-            UnitType result = upgrade(payload.unit.type);
-            if(result == null) return;
+            if (progress >= 1f) {
 
-            if(!hasReq()) return;
+                Unit u = p.to.create(team);
+                u.set(targetUnit.x, targetUnit.y);
+                u.rotation = targetUnit.rotation;
+                u.velocity().set(targetUnit.velocity());
 
-            if(power == null || power.status <= 0.01f) return;
+                targetUnit.remove();
+                u.add();
 
-            float p = power.status;
-
-            progress += edelta() * p;
-
-            if(progress >= time()){
-                consumeReq();
-                payload.unit.type = result;
+                targetUnit = null;
                 progress = 0f;
             }
         }
 
         @Override
-        public void draw(){
-            super.draw();
-
-            if(payload == null || payload.unit == null) return;
-
-            float f = progress / time();
-
-            arc.graphics.g2d.Draw.alpha(1f - f);
-
-            mindustry.graphics.Drawf.construct(
-                    this,
-                    upgrade(payload.unit.type),
-                    payload.unit.rotation - 90f,
-                    f,
-                    speedScl,
-                    time()
-            );
-        }
-
-        // ===== UI =====
-
-        @Override
-        public void buildConfiguration(Table table){
-
-            table.button(
-                    modeName(),
-                    Icon.refresh,
-                    Styles.cleart,
-                    () -> {
-                        configure(isFirst() ? 1 : 0);
-                        progress = 0f;
-                    }
-            ).size(160f, 50f);
-
-            table.row();
-
-            table.label(() ->
-                    Core.bundle.format("bar.mode", modeName())
-            );
+        public void handleUnitPayload(Unit unit) {
+            if (targetUnit == null && unit.type == path().from) {
+                targetUnit = unit;
+            }
         }
 
         @Override
-        public void display(Table table){
+        public void buildConfiguration(Table table) {
 
-            super.display(table);
-
-            table.row();
-
-            table.label(() ->
-                    Core.bundle.format("bar.mode", modeName())
-            );
-
-            table.row();
-
-            table.label(() -> {
-                StringBuilder sb = new StringBuilder();
-                for(UnitType[] u : upgrades()){
-                    sb.append(u[0].localizedName)
-                            .append(" → ")
-                            .append(u[1].localizedName)
-                            .append("\n");
-                }
-                return sb.toString();
-            });
+            table.button(b -> {
+                b.label(() ->
+                        Core.bundle.get("upgrade.mode") + ": " +
+                                Core.bundle.get(path().nameKey)
+                );
+            }, () -> {
+                nextMode();
+            }).width(240f).row();
         }
 
         @Override
-        public void write(Writes w){
+        public void displayStats(Table table) {
+
+            UpgradePath p = path();
+
+            table.add(Core.bundle.get("upgrade.from") + ": " + p.from.localizedName).row();
+            table.add(Core.bundle.get("upgrade.to") + ": " + p.to.localizedName).row();
+            table.add(Core.bundle.get("upgrade.time") + ": " + p.time / 60f + "s").row();
+        }
+
+        @Override
+        public void setBars() {
+            super.setBars();
+
+            addBar("upgrade", (UpgradeBuild b) ->
+                    new Bar(
+                            () -> Core.bundle.get("upgrade.progress"),
+                            () -> mindustry.ui.Bar.green,
+                            () -> b.progress
+                    )
+            );
+        }
+
+        @Override
+        public void write(Writes w) {
             super.write(w);
             w.i(mode);
+            w.f(progress);
         }
 
         @Override
-        public void read(Reads r, byte rev){
+        public void read(Reads r, byte rev) {
             super.read(r, rev);
             mode = r.i();
+            progress = r.f();
         }
     }
 }

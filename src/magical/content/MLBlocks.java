@@ -554,22 +554,23 @@ public class MLBlocks {
 
             size = 5;
 
-            firstReq = ItemStack.with(Items.copper, 20, Items.lead, 10);
-            secondReq = ItemStack.with(Items.titanium, 30, Items.silicon, 20);
+            factory.paths.add(
+                    new UnitUpgradeFactory.UpgradePath(
+                            "upgrade.first",
+                            UnitTypes.dagger,
+                            UnitTypes.nova,
+                            60f * 15
+                    )
+            );
 
-            firstTime = 15f * 60f;
-            secondTime = 45f * 60f;
-
-            firstPower = 5f;
-            secondPower = 20f;
-
-        firstUpgrades.add(
-                new UnitType[]{UnitTypes.dagger, UnitTypes.nova}
-        );
-
-        secondUpgrades.add(
-                new UnitType[]{UnitTypes.flare, UnitTypes.horizon}
-        );
+            factory.paths.add(
+                    new UnitUpgradeFactory.UpgradePath(
+                            "upgrade.second",
+                            UnitTypes.nova,
+                            UnitTypes.pulsar,
+                            60f * 45
+                    )
+            );
 
         health = 2400;
         }};
