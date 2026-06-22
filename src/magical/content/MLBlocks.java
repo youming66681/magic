@@ -555,6 +555,12 @@ public class MLBlocks {
             size = 5;
             consumePower(10f);
 
+            firstConstructTime = 15f * 60f;
+            secondConstructTime = 45f * 60f;
+
+            firstPowerUse = 5f;
+            secondPowerUse = 15f;
+
         firstUpgrades.add(
                 new UnitType[]{UnitTypes.dagger, UnitTypes.nova}
         );

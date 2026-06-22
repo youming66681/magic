@@ -11,6 +11,16 @@ import mindustry.type.UnitType;
 import mindustry.ui.Styles;
 import mindustry.world.blocks.units.Reconstructor;
 
+
+public float firstConstructTime = 15f * 60f;
+public float secondConstructTime = 45f * 60f;
+
+public float firstPowerUse = 5f;
+public float secondPowerUse = 15f;
+
+public ItemStack[] firstRequirements = ItemStack.empty;
+public ItemStack[] secondRequirements = ItemStack.empty;
+
 public class DualReconstructor extends Reconstructor{
 
     public Seq<UnitType[]> firstUpgrades = new Seq<>();
