@@ -124,7 +124,6 @@ import magical.content.MLPlanets;
 import magical.content.MLFx;
 import magical.magic;
 import magical.content.MLSounds;
-import magical.content.UpgradePath;
 
 public class MLBlocks {
     public static Block
@@ -559,7 +558,7 @@ public class MLBlocks {
                             "upgrade.first",
                             UnitTypes.dagger,
                             UnitTypes.nova,
-                            60f * 10
+                            60f * 15
                     )
             );
 

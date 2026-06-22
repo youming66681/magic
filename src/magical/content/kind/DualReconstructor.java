@@ -1,4 +1,4 @@
-package magical.content;
+package magical.content.kind;
 
 import arc.Core;
 import arc.scene.ui.layout.Table;
@@ -12,9 +12,11 @@ import mindustry.world.meta.Stat;
 import mindustry.ui.Bar;
 import mindustry.graphics.Pal;
 
+import java.util.ArrayList;
+
 public class DualReconstructor extends Block {
 
-    public java.util.ArrayList<Path> paths = new java.util.ArrayList<>();
+    public ArrayList<UpgradePath> paths = new ArrayList<>();
 
     public DualReconstructor(String name){
         super(name);
@@ -28,7 +30,7 @@ public class DualReconstructor extends Block {
         super.setStats();
 
         stats.add(Stat.repairTime, t -> {
-            for(Path p : paths){
+            for(UpgradePath p : paths){
                 t.row();
                 t.add(Core.bundle.get(p.nameKey) + ": " + (p.time / 60f) + "s");
             }
@@ -46,7 +48,7 @@ public class DualReconstructor extends Block {
         public float progress = 0f;
         public Unit unit;
 
-        public Path path(){
+        public UpgradePath path(){
             return paths.get(mode);
         }
 
@@ -60,7 +62,7 @@ public class DualReconstructor extends Block {
 
             if(unit == null) return;
 
-            Path p = path();
+            UpgradePath p = path();
 
             if(unit.type != p.from) return;
 
@@ -101,18 +103,17 @@ public class DualReconstructor extends Block {
                         Core.bundle.get("upgrade.mode") + ": " +
                                 Core.bundle.get(path().nameKey)
                 );
-            }, () -> nextMode()).width(240f).row();
+            }, () -> nextMode()).width(220f).row();
         }
 
         @Override
-        @Override
-        public void init(){
-            super.init();
+        public void setBars(){
+            super.setBars();
 
             addBar("progress", b ->
-                    new mindustry.ui.Bar(
-                            () -> "upgrade.progress",
-                            () -> mindustry.graphics.Pal.accent,
+                    new Bar(
+                            () -> Core.bundle.get("upgrade.progress"),
+                            () -> Pal.accent,
                             () -> progress
                     )
             );
