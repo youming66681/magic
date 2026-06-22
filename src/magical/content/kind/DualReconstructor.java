@@ -141,5 +141,75 @@ public class DualReconstructor extends Reconstructor{
 
             mode = read.i();
         }
+        @Override
+        public float fraction(){
+            return progress /
+                    (mode == 0 ?
+                            firstConstructTime :
+                            secondConstructTime);
+        }
+        @Override
+        public float currentPowerUse(){
+            return mode == 0 ?
+                    firstPowerUse :
+                    secondPowerUse;
+        }
+        @Override
+        public ItemStack[] currentRequirements(){
+            return mode == 0 ?
+                    firstRequirements :
+                    secondRequirements;
+        }
+        public boolean hasRequirements(){
+
+            for(ItemStack stack : currentRequirements()){
+
+                if(items.get(stack.item) < stack.amount){
+                    return false;
+                }
+
+            }
+
+            return true;
+        }
+        public void consumeRequirements(){
+
+            for(ItemStack stack : currentRequirements()){
+
+                items.remove(
+                        stack.item,
+                        stack.amount
+                );
+
+            }
+
+        }
+        @Override
+        public void updateTile(){
+
+            if(payload == null) return;
+
+            UnitType result =
+                    upgrade(payload.unit.type);
+
+            if(result == null) return;
+
+            if(!hasRequirements()) return;
+
+            if(power == null || power.status <= 0.01f){
+                return;
+            }
+
+            progress += edelta();
+
+            if(progress >= currentConstructTime()){
+
+                consumeRequirements();
+
+                payload.unit.type = result;
+
+                progress = 0f;
+            }
+        }
     }
 }

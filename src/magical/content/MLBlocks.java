@@ -553,7 +553,6 @@ public class MLBlocks {
             requirements(Category.units, ItemStack.with(new Object[]{Items.copper, 200, Items.lead, 120, Items.silicon, 90}));
 
             size = 5;
-            consumePower(10f);
 
             firstConstructTime = 15f * 60f;
             secondConstructTime = 45f * 60f;
