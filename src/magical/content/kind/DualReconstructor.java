@@ -1,4 +1,4 @@
-package magical.content;
+package magical.content.kind;
 
 import arc.Core;
 import arc.scene.ui.layout.Table;
@@ -23,6 +23,7 @@ public class DualReconstructor extends Block {
 
         update = true;
         solid = true;
+        hasItems = false;
     }
 
     @Override
