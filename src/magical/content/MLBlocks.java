@@ -554,7 +554,6 @@ public class MLBlocks {
 
             size = 5;
             consumePower(10f);
-        }};
 
         firstUpgrades.add(
                 new UnitType[]{UnitTypes.dagger, UnitTypes.nova}
@@ -563,6 +562,8 @@ public class MLBlocks {
         secondUpgrades.add(
                 new UnitType[]{UnitTypes.flare, UnitTypes.horizon}
         );
-        //unit
+
+        }};
+         //unit
     }
 }
