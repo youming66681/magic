@@ -5,214 +5,195 @@ import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
+import arc.graphics.Color;
 
 import mindustry.gen.Icon;
 import mindustry.type.UnitType;
+import mindustry.type.ItemStack;
 import mindustry.ui.Styles;
 import mindustry.world.blocks.units.Reconstructor;
-import mindustry.type.ItemStack;
 
 public class DualReconstructor extends Reconstructor{
 
-    public float firstConstructTime = 15f * 60f;
-    public float secondConstructTime = 45f * 60f;
-
-    public float firstPowerUse = 5f;
-    public float secondPowerUse = 15f;
-
-    public ItemStack[] firstRequirements = ItemStack.empty;
-    public ItemStack[] secondRequirements = ItemStack.empty;
+    // ====== MODE DATA ======
 
     public Seq<UnitType[]> firstUpgrades = new Seq<>();
     public Seq<UnitType[]> secondUpgrades = new Seq<>();
+
+    public ItemStack[] firstReq = ItemStack.empty;
+    public ItemStack[] secondReq = ItemStack.empty;
+
+    public float firstTime = 15f * 60f;
+    public float secondTime = 45f * 60f;
+
+    public float firstPower = 5f;
+    public float secondPower = 15f;
 
     public DualReconstructor(String name){
         super(name);
 
         configurable = true;
 
-        config(Integer.class, (DualReconstructorBuild build, Integer value) -> {
-            build.mode = value;
+        config(Integer.class, (DualReconstructorBuild build, Integer v) -> {
+            build.mode = v;
+            build.progress = 0f;
         });
-    }
-
-    @Override
-    public void setBars(){
-        super.setBars();
     }
 
     public class DualReconstructorBuild extends ReconstructorBuild{
 
         public int mode = 0;
 
-        public String modeName(){
-            return Core.bundle.get(
-                    mode == 0 ?
-                            "mode.first" :
-                            "mode.second"
-            );
+        public boolean isFirst(){
+            return mode == 0;
         }
 
-        public Seq<UnitType[]> currentUpgrades(){
-            return mode == 0 ?
-                    firstUpgrades :
-                    secondUpgrades;
+        public float time(){
+            return isFirst() ? firstTime : secondTime;
+        }
+
+        public float powerUse(){
+            return isFirst() ? firstPower : secondPower;
+        }
+
+        public ItemStack[] req(){
+            return isFirst() ? firstReq : secondReq;
+        }
+
+        public Seq<UnitType[]> upgrades(){
+            return isFirst() ? firstUpgrades : secondUpgrades;
+        }
+
+        public String modeName(){
+            return Core.bundle.get(isFirst() ? "mode.first" : "mode.second");
+        }
+
+        public Color modeColor(){
+            return isFirst() ? Color.sky : Color.orange;
         }
 
         @Override
         public UnitType upgrade(UnitType type){
-
-            UnitType[] found =
-                    currentUpgrades().find(
-                            u -> u[0] == type
-                    );
-
-            return found == null ?
-                    null :
-                    found[1];
+            UnitType[] r = upgrades().find(u -> u[0] == type);
+            return r == null ? null : r[1];
         }
+
+        public boolean hasReq(){
+            for(ItemStack s : req()){
+                if(items.get(s.item) < s.amount){
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void consumeReq(){
+            for(ItemStack s : req()){
+                items.remove(s.item, s.amount);
+            }
+        }
+
+        @Override
+        public void updateTile(){
+            super.updateTile();
+
+            if(payload == null) return;
+
+            UnitType result = upgrade(payload.unit.type);
+            if(result == null) return;
+
+            if(!hasReq()) return;
+
+            if(power == null || power.status <= 0.01f) return;
+
+            float p = power.status;
+
+            progress += edelta() * p;
+
+            if(progress >= time()){
+                consumeReq();
+                payload.unit.type = result;
+                progress = 0f;
+            }
+        }
+
+        @Override
+        public void draw(){
+            super.draw();
+
+            if(payload == null || payload.unit == null) return;
+
+            float f = progress / time();
+
+            arc.graphics.g2d.Draw.alpha(1f - f);
+
+            mindustry.graphics.Drawf.construct(
+                    this,
+                    upgrade(payload.unit.type),
+                    payload.unit.rotation - 90f,
+                    f,
+                    speedScl,
+                    time()
+            );
+        }
+
+        // ===== UI =====
 
         @Override
         public void buildConfiguration(Table table){
 
-            super.buildConfiguration(table);
-
-            table.row();
-
-            table.label(() ->
-                    Core.bundle.format(
-                            "bar.mode",
-                            modeName()
-                    )
-            );
-
-            table.row();
-
             table.button(
-                    Core.bundle.get("mode.switch"),
+                    modeName(),
                     Icon.refresh,
                     Styles.cleart,
-                    () -> configure(
-                            mode == 0 ? 1 : 0
-                    )
+                    () -> {
+                        configure(isFirst() ? 1 : 0);
+                        progress = 0f;
+                    }
             ).size(160f, 50f);
 
             table.row();
 
+            table.label(() ->
+                    Core.bundle.format("bar.mode", modeName())
+            );
+        }
+
+        @Override
+        public void display(Table table){
+
+            super.display(table);
+
+            table.row();
+
+            table.label(() ->
+                    Core.bundle.format("bar.mode", modeName())
+            );
+
+            table.row();
+
             table.label(() -> {
-
-                StringBuilder sb =
-                        new StringBuilder();
-
-                for(UnitType[] u : currentUpgrades()){
-
-                    sb.append(
-                            u[0].localizedName
-                    );
-
-                    sb.append(" → ");
-
-                    sb.append(
-                            u[1].localizedName
-                    );
-
-                    sb.append("\n");
+                StringBuilder sb = new StringBuilder();
+                for(UnitType[] u : upgrades()){
+                    sb.append(u[0].localizedName)
+                            .append(" → ")
+                            .append(u[1].localizedName)
+                            .append("\n");
                 }
-
                 return sb.toString();
             });
         }
 
         @Override
-        public void write(Writes write){
-
-            super.write(write);
-
-            write.i(mode);
+        public void write(Writes w){
+            super.write(w);
+            w.i(mode);
         }
 
         @Override
-        public void read(
-                Reads read,
-                byte revision
-        ){
-
-            super.read(read, revision);
-
-            mode = read.i();
-        }
-        @Override
-        public float fraction(){
-            return progress /
-                    (mode == 0 ?
-                            firstConstructTime :
-                            secondConstructTime);
-        }
-        public float currentConstructTime(){
-            return mode == 0 ?
-                    firstConstructTime :
-                    secondConstructTime;
-        }
-        public float currentPowerUse(){
-            return mode == 0 ?
-                    firstPowerUse :
-                    secondPowerUse;
-        }
-        public ItemStack[] currentRequirements(){
-            return mode == 0 ?
-                    firstRequirements :
-                    secondRequirements;
-        }
-        public boolean hasRequirements(){
-
-            for(ItemStack stack : currentRequirements()){
-
-                if(items.get(stack.item) < stack.amount){
-                    return false;
-                }
-
-            }
-
-            return true;
-        }
-        public void consumeRequirements(){
-
-            for(ItemStack stack : currentRequirements()){
-
-                items.remove(
-                        stack.item,
-                        stack.amount
-                );
-
-            }
-
-        }
-        @Override
-        public void updateTile(){
-
-            if(payload == null) return;
-
-            UnitType result =
-                    upgrade(payload.unit.type);
-
-            if(result == null) return;
-
-            if(!hasRequirements()) return;
-
-            if(power == null || power.status <= 0.01f){
-                return;
-            }
-
-            progress += edelta();
-
-            if(progress >= currentConstructTime()){
-
-                consumeRequirements();
-
-                payload.unit.type = result;
-
-                progress = 0f;
-            }
+        public void read(Reads r, byte rev){
+            super.read(r, rev);
+            mode = r.i();
         }
     }
 }
