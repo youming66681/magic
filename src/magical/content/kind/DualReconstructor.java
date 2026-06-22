@@ -14,12 +14,12 @@ import mindustry.graphics.Pal;
 
 public class DualReconstructor extends Block {
 
-    public static class UpgradePath {
+    public static class Path {
         public String nameKey;
         public UnitType from, to;
         public float time;
 
-        public UpgradePath(String nameKey, UnitType from, UnitType to, float time) {
+        public Path(String nameKey, UnitType from, UnitType to, float time){
             this.nameKey = nameKey;
             this.from = from;
             this.to = to;
@@ -27,28 +27,29 @@ public class DualReconstructor extends Block {
         }
     }
 
-    public java.util.ArrayList<UpgradePath> paths = new java.util.ArrayList<>();
+    public java.util.ArrayList<Path> paths = new java.util.ArrayList<>();
 
-    public DualReconstructor(String name) {
+    public DualReconstructor(String name){
         super(name);
+
         update = true;
         solid = true;
     }
 
     @Override
-    public void setStats() {
+    public void setStats(){
         super.setStats();
 
-        stats.add(Stat.repairTime, table -> {
-            for (UpgradePath p : paths) {
-                table.row();
-                table.add(Core.bundle.get(p.nameKey) + ": " + (p.time / 60f) + "s");
+        stats.add(Stat.repairTime, t -> {
+            for(Path p : paths){
+                t.row();
+                t.add(Core.bundle.get(p.nameKey) + ": " + (p.time / 60f) + "s");
             }
         });
     }
 
     @Override
-    public Building create(int x, int y) {
+    public Building create(int x, int y){
         return new UpgradeBuild();
     }
 
@@ -56,86 +57,88 @@ public class DualReconstructor extends Block {
 
         public int mode = 0;
         public float progress = 0f;
-        public Unit target;
+        public Unit unit;
 
-        public UpgradePath path() {
+        public Path path(){
             return paths.get(mode);
         }
 
-        public void nextMode() {
+        public void nextMode(){
             mode = (mode + 1) % paths.size();
             progress = 0f;
         }
 
         @Override
-        public void updateTile() {
-            if (target == null) return;
+        public void updateTile(){
 
-            UpgradePath p = path();
+            if(unit == null) return;
 
-            if (target.type != p.from) return;
+            Path p = path();
+
+            if(unit.type != p.from) return;
 
             progress += delta() / p.time;
 
-            if (progress >= 1f) {
+            if(progress >= 1f){
 
                 Unit u = p.to.create(team);
-                u.set(target.x, target.y);
-                u.rotation = target.rotation;
-                u.vel.set(target.vel); // ✔ 修复 velocity()
+                u.set(unit.x, unit.y);
+                u.rotation = unit.rotation;
+                u.vel.set(unit.vel);
 
-                target.remove();
+                unit.remove();
                 u.add();
 
-                target = null;
+                unit = null;
                 progress = 0f;
             }
         }
 
         @Override
-        public boolean acceptUnit(Unit unit) {
-            return target == null && unit.type == path().from;
+        public boolean acceptUnit(Unit u){
+            return unit == null && u.type == path().from;
         }
 
         @Override
-        public void handleUnit(Unit unit) {
-            if (target == null && unit.type == path().from) {
-                target = unit;
+        public void handleUnit(Unit u){
+            if(unit == null && u.type == path().from){
+                unit = u;
             }
         }
 
         @Override
-        public void buildConfiguration(Table table) {
+        public void buildConfiguration(Table table){
 
             table.button(b -> {
                 b.label(() ->
                         Core.bundle.get("upgrade.mode") + ": " +
                                 Core.bundle.get(path().nameKey)
                 );
-            }, () -> nextMode()).width(220f).row();
+            }, () -> nextMode()).width(240f).row();
         }
+
         @Override
-        public void setBars() {
+        public void setBars(){
             super.setBars();
 
-            addBar("progress", (UpgradeBuild b) ->
+            addBar("upgrade", b ->
                     new Bar(
                             () -> Core.bundle.get("upgrade.progress"),
                             () -> Pal.accent,
-                            () -> b.progress
+                            () -> progress
                     )
             );
         }
 
         @Override
-        public void write(Writes w) {
+        public void write(Writes w){
             super.write(w);
             w.i(mode);
             w.f(progress);
         }
 
         @Override
-        public void read(Reads r, byte rev) {
+        public void read(Reads r, byte rev){
             super.read(r, rev);
             mode = r.i();
             progress = r.f();

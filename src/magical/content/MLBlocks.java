@@ -555,7 +555,7 @@ public class MLBlocks {
             size = 5;
 
             factory.paths.add(
-                    new UnitUpgradeFactory.UpgradePath(
+                    new DualReconstructor.UpgradePath(
                             "upgrade.first",
                             UnitTypes.dagger,
                             UnitTypes.nova,
@@ -564,7 +564,7 @@ public class MLBlocks {
             );
 
             factory.paths.add(
-                    new UnitUpgradeFactory.UpgradePath(
+                    new DualReconstructor.UpgradePath(
                             "upgrade.second",
                             UnitTypes.nova,
                             UnitTypes.pulsar,
