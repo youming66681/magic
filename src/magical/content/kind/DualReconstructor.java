@@ -1,4 +1,4 @@
-package magical.content;
+package magical.content.kind;
 
 import arc.Core;
 import arc.scene.ui.layout.Table;
