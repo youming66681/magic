@@ -2,7 +2,6 @@ package magical.content;
 
 import arc.Core;
 import arc.scene.ui.layout.Table;
-import arc.struct.Seq;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
 import mindustry.gen.Building;
@@ -10,15 +9,14 @@ import mindustry.gen.Unit;
 import mindustry.type.UnitType;
 import mindustry.world.Block;
 import mindustry.world.meta.Stat;
+import mindustry.ui.Bar;
+import mindustry.graphics.Pal;
 
 public class DualReconstructor extends Block {
 
     public static class UpgradePath {
         public String nameKey;
-
-        public UnitType from;
-        public UnitType to;
-
+        public UnitType from, to;
         public float time;
 
         public UpgradePath(String nameKey, UnitType from, UnitType to, float time) {
@@ -29,7 +27,7 @@ public class DualReconstructor extends Block {
         }
     }
 
-    public Seq<UpgradePath> paths = new Seq();
+    public java.util.ArrayList<UpgradePath> paths = new java.util.ArrayList<>();
 
     public DualReconstructor(String name) {
         super(name);
@@ -44,8 +42,7 @@ public class DualReconstructor extends Block {
         stats.add(Stat.repairTime, table -> {
             for (UpgradePath p : paths) {
                 table.row();
-                table.add(Core.bundle.get(p.nameKey));
-                table.add(" : " + p.time / 60f + "s");
+                table.add(Core.bundle.get(p.nameKey) + ": " + (p.time / 60f) + "s");
             }
         });
     }
@@ -59,52 +56,51 @@ public class DualReconstructor extends Block {
 
         public int mode = 0;
         public float progress = 0f;
-
-        public Unit targetUnit;
+        public Unit target;
 
         public UpgradePath path() {
             return paths.get(mode);
         }
 
         public void nextMode() {
-            mode = (mode + 1) % paths.size;
+            mode = (mode + 1) % paths.size();
             progress = 0f;
-        }
-
-        public boolean acceptUnit(Unit unit) {
-            return unit != null && unit.type == path().from;
         }
 
         @Override
         public void updateTile() {
-
-            if (targetUnit == null) return;
+            if (target == null) return;
 
             UpgradePath p = path();
 
-            if (targetUnit.type != p.from) return;
+            if (target.type != p.from) return;
 
             progress += delta() / p.time;
 
             if (progress >= 1f) {
 
                 Unit u = p.to.create(team);
-                u.set(targetUnit.x, targetUnit.y);
-                u.rotation = targetUnit.rotation;
-                u.velocity().set(targetUnit.velocity());
+                u.set(target.x, target.y);
+                u.rotation = target.rotation;
+                u.vel.set(target.vel); // ✔ 修复 velocity()
 
-                targetUnit.remove();
+                target.remove();
                 u.add();
 
-                targetUnit = null;
+                target = null;
                 progress = 0f;
             }
         }
 
         @Override
-        public void handleUnitPayload(Unit unit) {
-            if (targetUnit == null && unit.type == path().from) {
-                targetUnit = unit;
+        public boolean acceptUnit(Unit unit) {
+            return target == null && unit.type == path().from;
+        }
+
+        @Override
+        public void handleUnit(Unit unit) {
+            if (target == null && unit.type == path().from) {
+                target = unit;
             }
         }
 
@@ -116,29 +112,16 @@ public class DualReconstructor extends Block {
                         Core.bundle.get("upgrade.mode") + ": " +
                                 Core.bundle.get(path().nameKey)
                 );
-            }, () -> {
-                nextMode();
-            }).width(240f).row();
+            }, () -> nextMode()).width(220f).row();
         }
-
-        @Override
-        public void displayStats(Table table) {
-
-            UpgradePath p = path();
-
-            table.add(Core.bundle.get("upgrade.from") + ": " + p.from.localizedName).row();
-            table.add(Core.bundle.get("upgrade.to") + ": " + p.to.localizedName).row();
-            table.add(Core.bundle.get("upgrade.time") + ": " + p.time / 60f + "s").row();
-        }
-
         @Override
         public void setBars() {
             super.setBars();
 
-            addBar("upgrade", (UpgradeBuild b) ->
+            addBar("progress", (UpgradeBuild b) ->
                     new Bar(
                             () -> Core.bundle.get("upgrade.progress"),
-                            () -> mindustry.ui.Bar.green,
+                            () -> Pal.accent,
                             () -> b.progress
                     )
             );
