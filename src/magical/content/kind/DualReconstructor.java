@@ -23,7 +23,6 @@ public class DualReconstructor extends Block {
 
         update = true;
         solid = true;
-        hasItems = false;
     }
 
     @Override
@@ -33,7 +32,7 @@ public class DualReconstructor extends Block {
         stats.add(Stat.repairTime, t -> {
             for(UpgradePath p : paths){
                 t.row();
-                t.add(Core.bundle.get(p.nameKey) + ": " + (p.time / 60f) + "s");
+                t.add(Core.bundle.get(p.nameKey));
             }
         });
     }
