@@ -16,6 +16,7 @@ public class MLSounds {
     public static Sound loopSmelter;
 
 
+
     public static void load() {
         explosionAfflict = loadSound("explosionAfflict.ogg");
         explosionCleroi = loadSound("explosionCleroi.ogg");
