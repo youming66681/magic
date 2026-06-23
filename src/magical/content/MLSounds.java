@@ -15,7 +15,7 @@ public class MLSounds {
     public static Sound shootAlt;
     public static Sound loopSmelter;
     public static Sound boss1;
-    public static Sound boss2
+    public static Sound boss2;
 
 
     public static void load() {
