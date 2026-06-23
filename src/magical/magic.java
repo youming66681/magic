@@ -31,6 +31,7 @@ public class magic extends Mod {
     public void loadContent() {
         mod = Vars.mods.getMod(this.getClass());
 
+        MLMusic.load();
         MLSounds.load();
         MLFx.load();
         MLItems.load();
