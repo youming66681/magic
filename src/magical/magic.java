@@ -11,7 +11,6 @@ import mindustry.mod.Mod;
 import mindustry.mod.Mods;
 import arc.audio.Sound;
 
-import magical.content.BossMusicController;
 import magical.content.MLItems;
 import magical.content.MLBlocks;
 import magical.content.MLUnitTypes;
@@ -32,7 +31,6 @@ public class magic extends Mod {
     public void loadContent() {
         mod = Vars.mods.getMod(this.getClass());
 
-        MLMusic.load();
         MLSounds.load();
         MLFx.load();
         MLItems.load();
