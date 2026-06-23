@@ -553,22 +553,12 @@ public class MLBlocks {
 
             size = 5;
 
-            factory.paths.add(
-                    new UpgradePath(
-                            "upgrade.first",
-                            UnitTypes.dagger,
-                            UnitTypes.nova,
-                            60f * 15
-                    )
+            first.add(
+                    new UpgradePath("upgrade.first", UnitTypes.nova, UnitTypes.pulsar)
             );
 
-            factory.paths.add(
-                    new UpgradePath(
-                            "upgrade.second",
-                            UnitTypes.nova,
-                            UnitTypes.pulsar,
-                            60f * 45
-                    )
+            second.add(
+                    new UpgradePath("upgrade.second", UnitTypes.dagger, UnitTypes.fortress)
             );
 
         health = 2400;

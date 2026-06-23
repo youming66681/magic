@@ -2,16 +2,15 @@ package magical.content;
 
 import mindustry.type.UnitType;
 
-public class UpgradePath {
+public class UpgradePath{
 
-    public String nameKey;
-    public UnitType from, to;
-    public float time;
+    public String bundleKey;
+    public UnitType from;
+    public UnitType to;
 
-    public UpgradePath(String nameKey, UnitType from, UnitType to, float time){
-        this.nameKey = nameKey;
+    public UpgradePath(String bundleKey, UnitType from, UnitType to){
+        this.bundleKey = bundleKey;
         this.from = from;
         this.to = to;
-        this.time = time;
     }
 }

@@ -1,136 +1,118 @@
-package magical.content.kind;
+package magical.content;
 
 import arc.Core;
 import arc.scene.ui.layout.Table;
+import arc.struct.Seq;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
-import mindustry.gen.Building;
-import mindustry.gen.Unit;
-import mindustry.type.UnitType;
-import mindustry.world.Block;
-import mindustry.world.meta.Stat;
+
 import mindustry.ui.Bar;
 import mindustry.graphics.Pal;
 
-import java.util.ArrayList;
+import mindustry.world.blocks.units.Reconstructor;
+import mindustry.world.meta.Stat;
+import mindustry.type.UnitType;
 
-public class DualReconstructor extends Block {
+public class DualReconstructor extends Reconstructor{
 
-    public ArrayList<UpgradePath> paths = new ArrayList<>();
+    public Seq<UpgradePath> first = new Seq<>();
+    public Seq<UpgradePath> second = new Seq<>();
 
     public DualReconstructor(String name){
         super(name);
 
-        update = true;
-        solid = true;
+        configurable = true;
+
+        config(Integer.class, (DualReconstructorBuild tile, Integer value) -> {
+            tile.mode = value;
+        });
     }
 
     @Override
     public void setStats(){
         super.setStats();
 
-        stats.add(Stat.repairTime, t -> {
-            for(UpgradePath p : paths){
-                t.row();
-                t.add(Core.bundle.get(p.nameKey));
+        stats.add(Stat.output, table -> {
+
+            table.row();
+            table.add("[accent]" + Core.bundle.get("mode.first"));
+
+            for(var p : first){
+                table.row();
+                table.add(p.from.localizedName + " → " + p.to.localizedName);
+            }
+
+            table.row();
+            table.add("[accent]" + Core.bundle.get("mode.second"));
+
+            for(var p : second){
+                table.row();
+                table.add(p.from.localizedName + " → " + p.to.localizedName);
             }
         });
     }
 
-    @Override
-    public Building create(int x, int y){
-        return new UpgradeBuild();
-    }
-
-    public class UpgradeBuild extends Building {
+    public class DualReconstructorBuild extends ReconstructorBuild{
 
         public int mode = 0;
-        public float progress = 0f;
-        public Unit unit;
 
-        public UpgradePath path(){
-            return paths.get(mode);
-        }
-
-        public void nextMode(){
-            mode = (mode + 1) % paths.size();
-            progress = 0f;
-        }
-
-        @Override
-        public void updateTile(){
-
-            if(unit == null) return;
-
-            UpgradePath p = path();
-
-            if(unit.type != p.from) return;
-
-            progress += delta() / p.time;
-
-            if(progress >= 1f){
-
-                Unit u = p.to.create(team);
-                u.set(unit.x, unit.y);
-                u.rotation = unit.rotation;
-                u.vel.set(unit.vel);
-
-                unit.remove();
-                u.add();
-
-                unit = null;
-                progress = 0f;
-            }
-        }
-
-        @Override
-        public boolean acceptUnit(Unit u){
-            return unit == null && u.type == path().from;
-        }
-
-        @Override
-        public void handleUnit(Unit u){
-            if(unit == null && u.type == path().from){
-                unit = u;
-            }
+        public Seq<UpgradePath> current(){
+            return mode == 0 ? first : second;
         }
 
         @Override
         public void buildConfiguration(Table table){
 
-            table.button(b -> {
-                b.label(() ->
-                        Core.bundle.get("upgrade.mode") + ": " +
-                                Core.bundle.get(path().nameKey)
-                );
-            }, () -> nextMode()).width(220f).row();
+            table.button(() -> Core.bundle.get(
+                    mode == 0 ? "mode.first" : "mode.second"
+            ), () -> {
+
+                configure(mode == 0 ? 1 : 0);
+
+            }).size(220f, 50f);
         }
 
         @Override
-        public void setBars(){
-            super.setBars();
+        public UnitType upgrade(UnitType type){
 
-            addBar("progress", b ->
-                    new Bar(
-                            () -> Core.bundle.get("upgrade.progress"),
-                            () -> Pal.accent,
-                            () -> progress
-                    )
-            );
+            for(var p : current()){
+                if(p.from == type){
+                    return p.to;
+                }
+            }
+
+            return null;
         }
 
         @Override
-        public void write(Writes w){
-            super.write(w);
-            w.i(mode);
-            w.f(progress);
+        public void write(Writes write){
+            super.write(write);
+
+            write.i(mode);
         }
 
         @Override
-        public void read(Reads r, byte rev){
-            super.read(r, rev);
-            mode = r.i();
-            progress = r.f();
+        public void read(Reads read, byte revision){
+            super.read(read, revision);
+
+            mode = read.i();
         }
+    }
+
+    @Override
+    public void setBars(){
+        super.setBars();
+
+        addBar("mode", (DualReconstructorBuild build) ->
+                new Bar(
+                        () -> Core.bundle.get(
+                                build.mode == 0 ?
+                                        "mode.first" :
+                                        "mode.second"
+                        ),
+                        () -> Pal.accent,
+                        () -> 1f
+                )
+        );
     }
 }
