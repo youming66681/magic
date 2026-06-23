@@ -10,7 +10,6 @@ import mindustry.Vars;
 import mindustry.mod.Mod;
 import mindustry.mod.Mods;
 import arc.audio.Sound;
-package magical.content;
 
 import magical.content.BossMusicController;
 import magical.content.MLItems;
