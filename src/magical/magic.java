@@ -18,6 +18,7 @@ import magical.content.MLUnitTypes;
 import magical.content.MLTechTree;
 import magical.content.MLPlanets;
 import magical.content.MLSounds;
+import magical.content.MLMusic
 import magical.content.MLFx;
 
 public class magic extends Mod {
