@@ -557,7 +557,7 @@ public class MLBlocks {
             health = 720;
 
             upgrades.addAll(
-                    new UnitType[]{UnitTypes.nova, UnitTypes.pulsar},
+                    new UnitType[]{UnitTypes.nova, UnitTypes.pulsar}
             );
         }};
          //unit
