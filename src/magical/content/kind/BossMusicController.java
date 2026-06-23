@@ -65,12 +65,8 @@ public class BossMusicController {
 
         if(u == null) return false;
 
-        UnitType t = u.type;
+        if(u.isBoss()) return true;
 
-        if(t == null) return false;
-
-        // 1. 官方 Wave Boss
-        if (u.isBoss()) return true;
-
+        return false;
     }
 }
