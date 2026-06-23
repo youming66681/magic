@@ -548,20 +548,17 @@ public class MLBlocks {
         //power
         //单位
         //曲率进化舱
-        curvatureEvolutionPod = new DualReconstructor("curvatureEvolutionPod"){{
-            requirements(Category.units, ItemStack.with(new Object[]{Items.copper, 200, Items.lead, 120, Items.silicon, 90}));
-
+        curvatureEvolutionPod = new Reconstructor("curvatureEvolutionPod"){{
+            requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 240, Items.graphite, 120, Items.silicon, 90}));
             size = 5;
+            consumePower(6f);
+            consumeItems(ItemStack.with(new Object[]{Items.silicon, 40, MLItems.phantomSteel, 60, Items.graphite, 50}));
+            constructTime = 60f * 15f;
+            health = 720;
 
-            first.add(
-                    new UpgradePath("upgrade.first", UnitTypes.nova, UnitTypes.pulsar)
+            upgrades.addAll(
+                    new UnitType[]{UnitTypes.nova, UnitTypes.pulsar},
             );
-
-            second.add(
-                    new UpgradePath("upgrade.second", UnitTypes.dagger, UnitTypes.fortress)
-            );
-
-        health = 2400;
         }};
          //unit
     }
