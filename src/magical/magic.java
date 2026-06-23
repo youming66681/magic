@@ -40,4 +40,9 @@ public class magic extends Mod {
         MLTechTree.load();
         MLUnitTypes.load();
      }
+    @Override
+    public void init(){
+
+        BossMusicController.init();
+    }
 }
