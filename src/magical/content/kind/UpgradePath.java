@@ -1,21 +1,34 @@
 package magical.content;
 
+import mindustry.type.ItemStack;
 import mindustry.type.UnitType;
 
 public class UpgradePath{
 
     public String bundleKey;
+
     public UnitType from;
     public UnitType to;
 
-    public consumePower();
-    public consumeItems(ItemStack.with(new Object[]{MLItems.phantomSteel, 60, Items.graphite, 30}));
+    public float consumePower();
+    public consumeItems(ItemStack.with(new Object[]{}));
 
-    public constructTime = 60f * 15f;
+    public float constructTime;
 
-    public UpgradePath(String bundleKey, UnitType from, UnitType to){
+    public UpgradePath(
+            String bundleKey,
+            UnitType from,
+            UnitType to,
+            float constructTime,
+            float consumePower,
+            consumeItems(ItemStack.with(new Object[]{}))
+    ){
         this.bundleKey = bundleKey;
         this.from = from;
         this.to = to;
+
+        this.constructTime = constructTime;
+        this.consumePower = consumePower;
+        this.consumeItems(ItemStack.with(new Object[]{})) = consumeItems(ItemStack.with(new Object[]{}));
     }
 }
