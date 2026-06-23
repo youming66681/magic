@@ -8,6 +8,7 @@ public class MLMusic {
     public static Music boss1;
 
     public static void load(){
-        boss1 = Core.assets.get("sounds/boss1", Music.class);
+
+        boss1 = Core.assets.get("boss1", Music.class);
     }
 }
