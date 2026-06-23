@@ -9,6 +9,6 @@ public class MLMusic {
 
     public static void load(){
 
-        boss1 = Core.assets.get("boss1", Music.class);
+        boss1 = Core.assets.get("boss1.ogg", Music.class);
     }
 }
