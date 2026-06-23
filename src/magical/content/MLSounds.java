@@ -4,7 +4,6 @@ import magical.magic;
 import arc.audio.Sound;
 import mindustry.Vars;
 import mindustry.mod.Mods;
-import arc.audio.Music;
 import arc.Core;
 
 public class MLSounds {
@@ -15,7 +14,7 @@ public class MLSounds {
     public static Sound shootForeshadow;
     public static Sound shootAlt;
     public static Sound loopSmelter;
-    public static Music boss1;
+    public static Sound boss1;
 
     public static void load() {
         explosionAfflict = loadSound("explosionAfflict.ogg");

@@ -116,6 +116,7 @@ import mindustry.world.draw.DrawWarmupRegion;
 import mindustry.world.blocks.defense.Wall;
 import mindustry.type.UnitType;
 import mindustry.content.UnitTypes;
+import mindustry.world.blocks.units.Reconstructor;
 
 import magical.content.MLItems;
 import magical.content.MLUnitTypes;
