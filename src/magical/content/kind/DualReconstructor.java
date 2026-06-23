@@ -63,12 +63,16 @@ public class DualReconstructor extends Reconstructor{
         @Override
         public void buildConfiguration(Table table){
 
-            table.button(() -> Core.bundle.get(
-                    mode == 0 ? "mode.first" : "mode.second"
-            ), () -> {
-
+            table.button(b -> {
+                b.label(() ->
+                        Core.bundle.get(
+                                mode == 0 ?
+                                        "mode.first" :
+                                        "mode.second"
+                        )
+                );
+            }, () -> {
                 configure(mode == 0 ? 1 : 0);
-
             }).size(220f, 50f);
         }
 
