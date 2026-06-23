@@ -18,7 +18,7 @@ public class MLMusic {
     }
 
     private static Music loadMusic(String name) {
-        return new Sound(ML.root.child("music").child(name));
+        return new Music(ML.root.child("music").child(name));
     }
 
     static {
