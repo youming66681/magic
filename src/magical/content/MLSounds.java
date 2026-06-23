@@ -14,8 +14,6 @@ public class MLSounds {
     public static Sound shootForeshadow;
     public static Sound shootAlt;
     public static Sound loopSmelter;
-    public static Sound boss1;
-    public static Sound boss2;
 
 
     public static void load() {
@@ -25,8 +23,6 @@ public class MLSounds {
         shootForeshadow = loadSound("shootForeshadow.ogg");
         shootAlt = loadSound("shootAlt.ogg");
         loopSmelter = loadSound("loopSmelter.ogg");
-        boss1 = loadSound("boss1.ogg");
-        boss2 = loadSound("boss2.ogg");
     }
 
     private static Sound loadSound(String name) {
@@ -41,7 +37,5 @@ public class MLSounds {
         shootForeshadow = new Sound();
         shootAlt = new Sound();
         loopSmelter = new Sound();
-        boss1 = new Sound();
-        boss2 = new Sound();
     }
 }
