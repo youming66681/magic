@@ -59,8 +59,8 @@ public class MLFx {
         return new Effect(30f, e -> {
 
             Draw.color(colorExternal, 0.5f); // 更透明一点
-            Drawf.tri(e.x, e.y, width * 1.1f * e.fout(), len * 1.1, e.rotation);
-            Drawf.tri(e.x, e.y, width * 1.1f * e.fout(), len * 1.1, e.rotation + 180f);
+            Drawf.tri(e.x, e.y, width * 1.1f * e.fout(), len, e.rotation);
+            Drawf.tri(e.x, e.y, width * 1.1f * e.fout(), len, e.rotation + 180f);
             Draw.color(colorInternal);
             Drawf.tri(e.x, e.y, width * e.fout(), len, e.rotation);
             Drawf.tri(e.x, e.y, width * e.fout(), len, e.rotation + 180f);
