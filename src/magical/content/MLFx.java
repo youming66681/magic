@@ -73,7 +73,7 @@ public class MLFx {
                 tri(e.x + x, e.y + y, width, range / 3 * e.fout(Interp.pow2In), angle - 180);
                 tri(e.x + x, e.y + y, width, length, angle);
 
-                this.color(colorInternal);
+                Draw.color(colorInternal);
 
                 width *= e.fout();
 
