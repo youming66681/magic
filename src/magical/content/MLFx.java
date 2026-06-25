@@ -65,15 +65,15 @@ public class MLFx {
                 float length = rand.random(range / 2, range * 1f) * e.fout();
 
                 Draw.color(colorExternal);
-                DrawFunc.tri(e.x + x, e.y + y, width, range / 3 * e.fout(Interp.pow2In), angle - 180);
-                DrawFunc.tri(e.x + x, e.y + y, width, length, angle);
+                Drawf.tri(e.x + x, e.y + y, width, range / 3 * e.fout(Interp.pow2In), angle - 180);
+                Drawf.tri(e.x + x, e.y + y, width, length, angle);
 
                 Draw.color(colorInternal);
 
                 width *= e.fout();
 
-                DrawFunc.tri(e.x + x, e.y + y, width / 2, range / 3 * e.fout(Interp.pow2In) * 0.9f * e.fout(), angle - 180);
-                DrawFunc.tri(e.x + x, e.y + y, width / 2, length / 1.5f * e.fout(), angle);
+                Drawf.tri(e.x + x, e.y + y, width / 2, range / 3 * e.fout(Interp.pow2In) * 0.9f * e.fout(), angle - 180);
+                Drawf.tri(e.x + x, e.y + y, width / 2, length / 1.5f * e.fout(), angle);
             });
         });
     }
