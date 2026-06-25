@@ -20,7 +20,6 @@ public class MLFx {
     public static Effect smallElectricDetonation;
     public static Effect squareWaveRot;
     public static Effect beamEffect;
-    public static Effect Slash;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -55,27 +54,27 @@ public class MLFx {
             Lines.lineAngle(e.x, e.y, e.rotation, 20f);
             Draw.reset();
         });
-        Slash(Color colorExternal, Color colorInternal, float lifetime, float range) {
-            return new Effect(lifetime, range * 2, e -> {
-                Angles.randLenVectors(e.id, (int) Mathf.clamp(range / 8, 4, 18), range / 8, range * (1 + e.fout(Interp.pow2OutInverse)) / 2f, (x, y) -> {
-                    float angle = Mathf.angle(x, y);
-                    float width = e.foutpowdown() * rand.random(range / 8, range / 4) / 2 * e.fout();
+    }
+    public static Effect Slash(Color colorExternal, Color colorInternal, float lifetime, float range) {
+        return new Effect(lifetime, range * 2, e -> {
+            Angles.randLenVectors(e.id, (int) Mathf.clamp(range / 8, 4, 18), range / 8, range * (1 + e.fout(Interp.pow2OutInverse)) / 2f, (x, y) -> {
+                float angle = Mathf.angle(x, y);
+                float width = e.foutpowdown() * rand.random(range / 8, range / 4) / 2 * e.fout();
 
-                    rand.setSeed(e.id);
-                    float length = rand.random(range / 2, range * 1f) * e.fout();
+                rand.setSeed(e.id);
+                float length = rand.random(range / 2, range * 1f) * e.fout();
 
-                    Draw.color(colorExternal);
-                    DrawFunc.tri(e.x + x, e.y + y, width, range / 3 * e.fout(Interp.pow2In), angle - 180);
-                    DrawFunc.tri(e.x + x, e.y + y, width, length, angle);
+                Draw.color(colorExternal);
+                DrawFunc.tri(e.x + x, e.y + y, width, range / 3 * e.fout(Interp.pow2In), angle - 180);
+                DrawFunc.tri(e.x + x, e.y + y, width, length, angle);
 
-                    Draw.color(colorInternal);
+                Draw.color(colorInternal);
 
-                    width *= e.fout();
+                width *= e.fout();
 
-                    DrawFunc.tri(e.x + x, e.y + y, width / 2, range / 3 * e.fout(Interp.pow2In) * 0.9f * e.fout(), angle - 180);
-                    DrawFunc.tri(e.x + x, e.y + y, width / 2, length / 1.5f * e.fout(), angle);
-                });
+                DrawFunc.tri(e.x + x, e.y + y, width / 2, range / 3 * e.fout(Interp.pow2In) * 0.9f * e.fout(), angle - 180);
+                DrawFunc.tri(e.x + x, e.y + y, width / 2, length / 1.5f * e.fout(), angle);
             });
-        }
+        });
     }
 }
