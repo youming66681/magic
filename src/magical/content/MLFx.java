@@ -55,8 +55,8 @@ public class MLFx {
             Draw.reset();
         });
     }
-    public static Effect sharpBlast(Color colorExternal, Color colorInternal, float len, float width){
-        return new Effect(lifetime, range * 2, e -> {
+    public static Effect Slash(Color colorExternal, Color colorInternal, float len, float width){
+        return new Effect(lifetime, e -> {
 
             Draw.color(colorExternal);
             //外层刀光
