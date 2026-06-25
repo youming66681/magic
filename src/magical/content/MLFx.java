@@ -59,27 +59,32 @@ public class MLFx {
             Lines.lineAngle(e.x, e.y, e.rotation, 20f);
             Draw.reset();
         });
-    }
-    public static Effect Slash(Color colorExternal, Color colorInternal, float lifetime, float range) {
-        return new Effect(lifetime, range * 2, e -> {
-            Angles.randLenVectors(e.id, (int) Mathf.clamp(range / 8, 4, 18), range / 8, range * (1 + e.fout(Interp.pow2OutInverse)) / 2f, (x, y) -> {
-                float angle = Mathf.angle(x, y);
-                float width = e.foutpowdown() * rand.random(range / 6, range / 3) / 2 * e.fout();
+        public static Effect spaceSlash = new Effect(30f, e -> {
 
-                rand.setSeed(e.id);
-                float length = rand.random(range / 2, range * 1.1f) * e.fout();
+            float len = 180f;
+            float width = 20f;
 
-                Draw.color(colorExternal);
-                tri(e.x + x, e.y + y, width, range / 3 * e.fout(Interp.pow2In), angle - 180);
-                tri(e.x + x, e.y + y, width, length, angle);
-
-                Draw.color(colorInternal);
-
-                width *= e.fout();
-
-                tri(e.x + x, e.y + y, width / 2, range / 3 * e.fout(Interp.pow2In) * 0.9f * e.fout(), angle - 180);
-                tri(e.x + x, e.y + y, width / 2, length / 1.5f * e.fout(), angle);
-            });
+            Draw.color(Color.valueOf("7efcff"));
+            //外层刀光
+            Drawf.tri(e.x, e.y, width, len * e.fout(), e.rotation
+            );
+            Drawf.tri(e.x, e.y, width, len * 0.5f * e.fout(), e.rotation + 180f
+            );
+            //内层高亮
+            Draw.color(Color.white);
+            Drawf.tri(e.x, e.y, width * 0.5f, len * 0.8f * e.fout(), e.rotation
+            );
+            //空间裂纹
+            Draw.color(Color.valueOf("a6ffff"));
+            Angles.randLenVectors(e.id, 15, len * e.fin(), e.rotation, 30f, (x, y) -> {
+                        Lines.stroke(1.5f * e.fout());
+                        Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), 8f * e.fout());
+                    }
+            );
+            //冲击波
+            Draw.color(Color.white);
+            Lines.stroke(3f * e.fout());
+            Lines.circle(e.x, e.y, 50f * e.fin());
         });
     }
 }
