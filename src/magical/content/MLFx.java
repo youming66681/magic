@@ -20,6 +20,7 @@ public class MLFx {
     public static Effect smallElectricDetonation;
     public static Effect squareWaveRot;
     public static Effect beamEffect;
+    public static Effect Slash;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -54,8 +55,7 @@ public class MLFx {
             Lines.lineAngle(e.x, e.y, e.rotation, 20f);
             Draw.reset();
         });
-        public static final Effect Slash = new Effect(30f, e -> {
-
+         Slash = new Effect(30f, e -> {
             float fin = e.fin();
             float fout = e.fout();
             float rot = e.rotation;
