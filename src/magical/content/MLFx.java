@@ -24,6 +24,11 @@ public class MLFx {
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
 
+    public static tri(float x, float y, float width, float length, float angle) {
+        float wx = Angles.trnsx(angle + 90, width), wy = Angles.trnsy(angle + 90, width);
+        Fill.tri(x + wx, y + wy, x - wx, y - wy, Angles.trnsx(angle, length) + x, Angles.trnsy(angle, length) + y);
+    }
+
     public static void load() {
          smallElectricDetonation = new Effect(30f, (e) -> {
             Draw.color(Color.valueOf("97B5EDFF"), e.color, e.fin() + 0.4F);
@@ -65,15 +70,15 @@ public class MLFx {
                 float length = rand.random(range / 2, range * 1f) * e.fout();
 
                 Draw.color(colorExternal);
-                Drawf.tri(e.x + x, e.y + y, width, range / 3 * e.fout(Interp.pow2In), angle - 180);
-                Drawf.tri(e.x + x, e.y + y, width, length, angle);
+                this.tri(e.x + x, e.y + y, width, range / 3 * e.fout(Interp.pow2In), angle - 180);
+                this.tri(e.x + x, e.y + y, width, length, angle);
 
-                Draw.color(colorInternal);
+                this.color(colorInternal);
 
                 width *= e.fout();
 
-                Drawf.tri(e.x + x, e.y + y, width / 2, range / 3 * e.fout(Interp.pow2In) * 0.9f * e.fout(), angle - 180);
-                Drawf.tri(e.x + x, e.y + y, width / 2, length / 1.5f * e.fout(), angle);
+                this.tri(e.x + x, e.y + y, width / 2, range / 3 * e.fout(Interp.pow2In) * 0.9f * e.fout(), angle - 180);
+                this.tri(e.x + x, e.y + y, width / 2, length / 1.5f * e.fout(), angle);
             });
         });
     }
