@@ -20,6 +20,7 @@ public class MLFx {
     public static Effect smallElectricDetonation;
     public static Effect squareWaveRot;
     public static Effect beamEffect;
+    public static Effect Slash;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -54,7 +55,7 @@ public class MLFx {
             Lines.lineAngle(e.x, e.y, e.rotation, 20f);
             Draw.reset();
         });
-        public static Effect Slash(Color colorExternal, Color colorInternal, float lifetime, float range) {
+        Slash(Color colorExternal, Color colorInternal, float lifetime, float range) {
             return new Effect(lifetime, range * 2, e -> {
                 Angles.randLenVectors(e.id, (int) Mathf.clamp(range / 8, 4, 18), range / 8, range * (1 + e.fout(Interp.pow2OutInverse)) / 2f, (x, y) -> {
                     float angle = Mathf.angle(x, y);
