@@ -56,7 +56,7 @@ public class MLFx {
         });
     }
     public static Effect Slash(Color colorExternal, Color colorInternal, float len, float width){
-        return new Effect(lifetime, e -> {
+        return new Effect(30f, e -> {
 
             Draw.color(colorExternal);
             //外层刀光
