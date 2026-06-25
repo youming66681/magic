@@ -64,7 +64,7 @@ public class MLFx {
             Drawf.tri(e.x, e.y, width * e.fout(), len, e.rotation + 180f);
             //内层高
             //Drawf.tri(e.x, e.y, width * 0.5f, len * 0.8f * e.fout(), e.rotation
-            );
+            //);
             //裂纹
             /*Draw.color(colorInternal);
             Angles.randLenVectors(e.id, 15, len * e.fin(), e.rotation, 30f, (x, y) -> {
