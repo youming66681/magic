@@ -58,13 +58,13 @@ public class MLFx {
     public static Effect Slash(Color colorExternal, Color colorInternal, float len, float width){
         return new Effect(30f, e -> {
 
+            Draw.color(colorExternal, 0.5f); // 更透明一点
+            Drawf.tri(e.x, e.y, width * 1.1f * e.fout(), len * 1.1, e.rotation);
+            Drawf.tri(e.x, e.y, width * 1.1f * e.fout(), len * 1.1, e.rotation + 180f);
             Draw.color(colorInternal);
-            //外层光
             Drawf.tri(e.x, e.y, width * e.fout(), len, e.rotation);
             Drawf.tri(e.x, e.y, width * e.fout(), len, e.rotation + 180f);
-            Draw.color(colorExternal, 0.5f); // 更透明一点
-            Drawf.tri(e.x, e.y, width * 0.5f * e.fout(), len, e.rotation);
-            Drawf.tri(e.x, e.y, width * 0.5f * e.fout(), len, e.rotation + 180f);
+
         });
     }
 }
