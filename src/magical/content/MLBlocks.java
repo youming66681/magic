@@ -236,8 +236,8 @@ public class MLBlocks {
             consumePower(6f);
 
             shootType = new BasicBulletType(5f, 30f){{
-                hitEffect = MLFx.smallElectricDetonation;
-                despawnEffect = MLFx.smallElectricDetonation;
+                hitEffect = MLFx.Slash;
+                despawnEffect = MLFx.Slash;
                 hitSize = 16f;
                 damage = 30f;
                 width = 8f;
@@ -358,7 +358,7 @@ public class MLBlocks {
             shootSound = MLSounds.shootForeshadow;
             unitSort = UnitSorts.strongest;
 
-            scaledHealth = 1400;
+            health = 1400;
 
             coolant = consumeCoolant(0.3f);
             consumePower(8f);

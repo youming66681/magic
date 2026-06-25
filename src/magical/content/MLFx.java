@@ -54,5 +54,44 @@ public class MLFx {
             Lines.lineAngle(e.x, e.y, e.rotation, 20f);
             Draw.reset();
         });
+        public static final Effect Slash = new Effect(30f, e -> {
+
+            float fin = e.fin();
+            float fout = e.fout();
+            float rot = e.rotation;
+            //外层能量弧
+            Draw.color(Color.valueOf("6EE7FF"));
+            Lines.stroke(16f * fout);
+            Lines.arc(e.x, e.y, 220f * fin, 0.18f, rot - 60f
+            );
+            //内层高亮
+            Draw.color(Color.white);
+            Lines.stroke(8f * fout);
+            Lines.arc(e.x, e.y, 220f * fin, 0.18f, rot - 60f
+            );
+            //残影
+            Draw.color(Color.valueOf("A6FFFF"));
+            for(int i = 1; i <= 3; i++){
+                float off = i * 8f;
+                Lines.stroke((10f - i * 2f) * fout);
+                Lines.arc(e.x, e.y, (220f - off) * fin, 0.18f, rot - 60f
+                );
+            }
+            //空间裂缝
+            Draw.color(Color.valueOf("97B5EDFF"));
+            Angles.randLenVectors(e.id, 25, 180f * fin, rot, 50f,
+                   (x, y) -> {Lines.stroke(2f * fout);Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), 8f + 20f * fout
+                        );
+                    });
+            //粒子
+            Draw.color(Color.white);
+            Angles.randLenVectors(e.id + 1, 40, 240f * fin, rot, 60f, (x, y) -> Fill.circle(e.x + x, e.y + y, 2f * fout));
+            //冲击波
+            Draw.color(Color.valueOf("B8FFFF"));
+            Lines.stroke(4f * fout);
+            Lines.circle(e.x, e.y, 40f + 180f * fin);
+            //终末闪光
+            if(fin > 0.85f){Draw.color(Color.white);Fill.circle(e.x, e.y, 60f * fout);}
+        });
     }
 }
