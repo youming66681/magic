@@ -24,11 +24,6 @@ public class MLFx {
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
 
-    public static void tri(float x, float y, float width, float length, float angle) {
-        float wx = Angles.trnsx(angle + 90, width), wy = Angles.trnsy(angle + 90, width);
-        Fill.tri(x + wx, y + wy, x - wx, y - wy, Angles.trnsx(angle, length) + x, Angles.trnsy(angle, length) + y);
-    }
-
     public static void load() {
          smallElectricDetonation = new Effect(30f, (e) -> {
             Draw.color(Color.valueOf("97B5EDFF"), e.color, e.fin() + 0.4F);
@@ -59,30 +54,27 @@ public class MLFx {
             Lines.lineAngle(e.x, e.y, e.rotation, 20f);
             Draw.reset();
         });
-        public static Effect spaceSlash = new Effect(30f, e -> {
+    }
+    public static Effect sharpBlast(Color colorExternal, Color colorInternal, float len, float width){
+        return new Effect(lifetime, range * 2, e -> {
 
-            float len = 180f;
-            float width = 20f;
-
-            Draw.color(Color.valueOf("7efcff"));
+            Draw.color(colorExternal);
             //外层刀光
             Drawf.tri(e.x, e.y, width, len * e.fout(), e.rotation
             );
             Drawf.tri(e.x, e.y, width, len * 0.5f * e.fout(), e.rotation + 180f
             );
-            //内层高亮
-            Draw.color(Color.white);
+            //内层高
             Drawf.tri(e.x, e.y, width * 0.5f, len * 0.8f * e.fout(), e.rotation
             );
             //空间裂纹
-            Draw.color(Color.valueOf("a6ffff"));
+            Draw.color(colorInternal);
             Angles.randLenVectors(e.id, 15, len * e.fin(), e.rotation, 30f, (x, y) -> {
                         Lines.stroke(1.5f * e.fout());
                         Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), 8f * e.fout());
                     }
             );
             //冲击波
-            Draw.color(Color.white);
             Lines.stroke(3f * e.fout());
             Lines.circle(e.x, e.y, 50f * e.fin());
         });
