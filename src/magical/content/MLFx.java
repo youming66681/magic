@@ -57,12 +57,24 @@ public class MLFx {
     }
     public static Effect Slash(Color colorExternal, Color colorInternal, float len, float width){
         return new Effect(30f, e -> {
-            Draw.color(colorInternal);
-            Drawf.tri(e.x, e.y, width * e.fout(), len, e.rotation);
-            Drawf.tri(e.x, e.y, width * 0.5f * e.fout(), len, e.rotation + 180f);
+
             Draw.color(colorExternal);
-            Drawf.tri(e.x, e.y, width * 1.2f, len, e.rotation);
-            Drawf.tri(e.x, e.y, width * 0.6f, len, e.rotation + 180f);
+            //外层光
+            Drawf.tri(e.x, e.y, width * e.fout(), len, e.rotation);
+            Drawf.tri(e.x, e.y, width * e.fout(), len, e.rotation + 180f);
+            //内层高
+            Drawf.tri(e.x, e.y, width * 0.5f, len * 0.8f * e.fout(), e.rotation
+            );
+            //裂纹
+            Draw.color(colorInternal);
+            Angles.randLenVectors(e.id, 15, len * e.fin(), e.rotation, 30f, (x, y) -> {
+                        Lines.stroke(1.5f * e.fout());
+                        Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), 8f * e.fout());
+                    }
+            );
+            //冲击波
+            //Lines.stroke(3f * e.fout());
+            //Lines.circle(e.x, e.y, 50f * e.fin());
         });
     }
 }
