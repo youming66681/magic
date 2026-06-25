@@ -59,15 +59,13 @@ public class MLFx {
         return new Effect(30f, e -> {
 
             Draw.color(colorExternal);
-            //外层刀光
-            Drawf.tri(e.x, e.y, width, len * e.fout(), e.rotation
-            );
-            Drawf.tri(e.x, e.y, width, len * 0.5f * e.fout(), e.rotation + 180f
-            );
+            //外层光
+            Drawf.tri(e.x, e.y, width * e.fout(), len, e.rotation);
+            Drawf.tri(e.x, e.y, width * 0.5f * e.fout(), len, e.rotation + 180f);
             //内层高
             Drawf.tri(e.x, e.y, width * 0.5f, len * 0.8f * e.fout(), e.rotation
             );
-            //空间裂纹
+            //裂纹
             Draw.color(colorInternal);
             Angles.randLenVectors(e.id, 15, len * e.fin(), e.rotation, 30f, (x, y) -> {
                         Lines.stroke(1.5f * e.fout());
@@ -75,8 +73,8 @@ public class MLFx {
                     }
             );
             //冲击波
-            Lines.stroke(3f * e.fout());
-            Lines.circle(e.x, e.y, 50f * e.fin());
+            //Lines.stroke(3f * e.fout());
+            //Lines.circle(e.x, e.y, 50f * e.fin());
         });
     }
 }
