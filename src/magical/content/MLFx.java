@@ -20,7 +20,6 @@ public class MLFx {
     public static Effect smallElectricDetonation;
     public static Effect squareWaveRot;
     public static Effect beamEffect;
-    public static Effect Slash;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -55,43 +54,27 @@ public class MLFx {
             Lines.lineAngle(e.x, e.y, e.rotation, 20f);
             Draw.reset();
         });
-         Slash = new Effect(30f, e -> {
-            float fin = e.fin();
-            float fout = e.fout();
-            float rot = e.rotation;
-            //外层能量弧
-            Draw.color(Color.valueOf("6EE7FF"));
-            Lines.stroke(16f * fout);
-            Lines.arc(e.x, e.y, 220f * fin, 0.18f, rot - 60f
-            );
-            //内层高亮
-            Draw.color(Color.white);
-            Lines.stroke(8f * fout);
-            Lines.arc(e.x, e.y, 220f * fin, 0.18f, rot - 60f
-            );
-            //残影
-            Draw.color(Color.valueOf("A6FFFF"));
-            for(int i = 1; i <= 3; i++){
-                float off = i * 8f;
-                Lines.stroke((10f - i * 2f) * fout);
-                Lines.arc(e.x, e.y, (220f - off) * fin, 0.18f, rot - 60f
-                );
-            }
-            //空间裂缝
-            Draw.color(Color.valueOf("97B5EDFF"));
-            Angles.randLenVectors(e.id, 25, 180f * fin, rot, 50f,
-                   (x, y) -> {Lines.stroke(2f * fout);Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), 8f + 20f * fout
-                        );
-                    });
-            //粒子
-            Draw.color(Color.white);
-            Angles.randLenVectors(e.id + 1, 40, 240f * fin, rot, 60f, (x, y) -> Fill.circle(e.x + x, e.y + y, 2f * fout));
-            //冲击波
-            Draw.color(Color.valueOf("B8FFFF"));
-            Lines.stroke(4f * fout);
-            Lines.circle(e.x, e.y, 40f + 180f * fin);
-            //终末闪光
-            if(fin > 0.85f){Draw.color(Color.white);Fill.circle(e.x, e.y, 60f * fout);}
-        });
+        public static Effect Slash(Color colorExternal, Color colorInternal, float lifetime, float range) {
+            return new Effect(lifetime, range * 2, e -> {
+                Angles.randLenVectors(e.id, (int) Mathf.clamp(range / 8, 4, 18), range / 8, range * (1 + e.fout(Interp.pow2OutInverse)) / 2f, (x, y) -> {
+                    float angle = Mathf.angle(x, y);
+                    float width = e.foutpowdown() * rand.random(range / 8, range / 4) / 2 * e.fout();
+
+                    rand.setSeed(e.id);
+                    float length = rand.random(range / 2, range * 1f) * e.fout();
+
+                    Draw.color(colorExternal);
+                    DrawFunc.tri(e.x + x, e.y + y, width, range / 3 * e.fout(Interp.pow2In), angle - 180);
+                    DrawFunc.tri(e.x + x, e.y + y, width, length, angle);
+
+                    Draw.color(colorInternal);
+
+                    width *= e.fout();
+
+                    DrawFunc.tri(e.x + x, e.y + y, width / 2, range / 3 * e.fout(Interp.pow2In) * 0.9f * e.fout(), angle - 180);
+                    DrawFunc.tri(e.x + x, e.y + y, width / 2, length / 1.5f * e.fout(), angle);
+                });
+            });
+        }
     }
 }
