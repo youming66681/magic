@@ -64,10 +64,10 @@ public class MLFx {
         return new Effect(lifetime, range * 2, e -> {
             Angles.randLenVectors(e.id, (int) Mathf.clamp(range / 8, 4, 18), range / 8, range * (1 + e.fout(Interp.pow2OutInverse)) / 2f, (x, y) -> {
                 float angle = Mathf.angle(x, y);
-                float width = e.foutpowdown() * rand.random(range / 8, range / 4) / 2 * e.fout();
+                float width = e.foutpowdown() * rand.random(range / 6, range / 3) / 2 * e.fout();
 
                 rand.setSeed(e.id);
-                float length = rand.random(range / 2, range * 1f) * e.fout();
+                float length = rand.random(range / 2, range * 1.1f) * e.fout();
 
                 Draw.color(colorExternal);
                 tri(e.x + x, e.y + y, width, range / 3 * e.fout(Interp.pow2In), angle - 180);
