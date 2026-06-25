@@ -63,8 +63,8 @@ public class MLFx {
             Drawf.tri(e.x, e.y, width * e.fout(), len, e.rotation);
             Drawf.tri(e.x, e.y, width * e.fout(), len, e.rotation + 180f);
             Draw.color(colorExternal, 0.5f); // 更透明一点
-            Drawf.tri(e.x, e.y, width * 0.5 * e.fout(), len, e.rotation);
-            Drawf.tri(e.x, e.y, width * 0.5 * e.fout(), len, e.rotation + 180f);
+            Drawf.tri(e.x, e.y, width * 0.5f * e.fout(), len, e.rotation);
+            Drawf.tri(e.x, e.y, width * 0.5f * e.fout(), len, e.rotation + 180f);
         });
     }
 }
