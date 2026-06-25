@@ -236,8 +236,8 @@ public class MLBlocks {
             consumePower(6f);
 
             shootType = new BasicBulletType(5f, 30f){{
-                hitEffect = MLFx.Slash(Color.valueOf("8da1e3"), frontColor, 60f, 10f);
-                despawnEffect = MLFx.Slash(Color.valueOf("8da1e3"), frontColor, 60f, 10f);
+                hitEffect = MLFx.smallElectricDetonation;
+                despawnEffect = MLFx.smallElectricDetonation;
                 hitSize = 16f;
                 damage = 30f;
                 width = 8f;
