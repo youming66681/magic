@@ -217,24 +217,24 @@ public class MLBlocks {
         }};
         //芯片制造机
         chipMachine = new MultiRecipeFactory("chipMachine"){{
-        requirements(Category.crafting, ItemStack.with(new Object[]{MLItems.phantomSteel, 30, MLItems.phantomTitaniumSteel, 10, MLItems.mysticCrystal, 20, Items.silicon, 40, Items.metaglass, 50}));
-        chipMachine.recipes = new Recipe[]{
-                new Recipe("LogicChip", 30f,
-                        ItemStack.with(MLItems.phantomSteel, 1, MLItems.phantomTitaniumSteel, 1, MLItems.mysticCrystal, 1,Items.silicon, 1)，
-                        LiquidStack.empty()
-                        ItemStack.with(MLItems.LogicChip, 1),
-                        LiquidStack.empty()
-                ),
-        };
-        powerConsume = 15f;
-        health = 400;
-        itemCapacity = 10;
-        liquidCapacity = 40;
-        canOverdrive = false;
-        hasItems = true;
-        hasPower = true;
-        craftEffect = Fx.hitEmpSpark;
-        drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
+            requirements(Category.crafting, ItemStack.with(MLItems.phantomSteel, 30, MLItems.phantomTitaniumSteel, 10, MLItems.mysticCrystal, 20, Items.silicon, 40, Items.metaglass, 50));
+            recipes = new Recipe[]{
+                    new Recipe("LogicChip", 30f,
+                            ItemStack.with(MLItems.phantomSteel, 1, MLItems.phantomTitaniumSteel, 1, MLItems.mysticCrystal, 1, Items.silicon, 1),
+                            LiquidStack.empty(),
+                            ItemStack.with(MLItems.LogicChip, 1),
+                            LiquidStack.empty()
+                    ),
+            };
+            powerConsume = 15f;
+            health = 400;
+            itemCapacity = 10;
+            liquidCapacity = 40;
+            canOverdrive = false;
+            hasItems = true;
+            hasPower = true;
+            craftEffect = Fx.hitEmpSpark;
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
         }};
         //factor
         //炮
