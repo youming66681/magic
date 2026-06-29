@@ -74,11 +74,10 @@ this.displayConsumption = function(table){
 
             table.add(
                 new ReqImage(
-                    new ItemImage(item.uiIcon, amount),
+                    new Image(new TextureRegionDrawable(item.uiIcon)),
                     () => this.items != null && this.items.has(item, amount)
                 )
             ).size(28);
-        }
 
         for(let j = 0; j < liquids.length; j++){
             const stack = liquids[j];
