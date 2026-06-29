@@ -128,6 +128,15 @@ import magical.magic;
 import magical.content.MLSounds;
 
 public class MLBlocks {
+
+    private static CraftRecipe recipe1 () {
+        CraftRecipe r = new CraftRecipe();
+        r.consumeItems = ItemStack.with(MLItems.phantomSteel, 1, MLItems.phantomTitaniumSteel, 1, MLItems.mysticCrystal, 1, Items.silicon, 3);
+        r.outputItems = ItemStack.with(Items.graphite, 1);
+        r.craftTime = 30f;
+        return r;
+    };
+
     public static Block
             //基础科技
             baseCore, phantomTitaniumSteelCompressor, xuanCrystalManufacturingMachine, phantomSteelCompressor, phantomSteelVoltageMachine, electroge,
@@ -155,7 +164,7 @@ public class MLBlocks {
         //强强
         //厂子
         //幻钢压缩机
-        phantomSteelCompressor = new GenericCrafter("phantomSteelCompressor"){{
+        phantomSteelCompressor = new GenericCrafter("phantomSteelCompressor") {{
             requirements(Category.crafting, ItemStack.with(new Object[]{Items.copper, 50, Items.lead, 50}));
 
             craftEffect = Fx.smeltsmoke;
@@ -169,7 +178,7 @@ public class MLBlocks {
             consumeItems(ItemStack.with(Items.copper, 2, Items.lead, 2));
         }};
         //幻钢电压机
-        phantomSteelVoltageMachine = new GenericCrafter("phantomSteelVoltageMachine"){{
+        phantomSteelVoltageMachine = new GenericCrafter("phantomSteelVoltageMachine") {{
             requirements(Category.crafting, ItemStack.with(new Object[]{MLItems.phantomSteel, 25, Items.copper, 75, Items.lead, 75}));
 
             craftEffect = Fx.smeltsmoke;
@@ -185,7 +194,7 @@ public class MLBlocks {
             consumePower(0.75f);
         }};
         //幻钛钢熔炼机
-        phantomTitaniumSteelCompressor = new GenericCrafter("phantomTitaniumSteelCompressor"){{
+        phantomTitaniumSteelCompressor = new GenericCrafter("phantomTitaniumSteelCompressor") {{
             requirements(Category.crafting, ItemStack.with(new Object[]{MLItems.phantomSteel, 50, Items.titanium, 30, Items.graphite, 10}));
 
             craftEffect = Fx.smeltsmoke;
@@ -201,7 +210,7 @@ public class MLBlocks {
             consumePower(1.0f);
         }};
         //玄晶混制机
-        xuanCrystalManufacturingMachine = new GenericCrafter("xuanCrystalManufacturingMachine"){{
+        xuanCrystalManufacturingMachine = new GenericCrafter("xuanCrystalManufacturingMachine") {{
             requirements(Category.crafting, ItemStack.with(new Object[]{MLItems.phantomSteel, 20, Items.titanium, 30, Items.silicon, 20}));
 
             craftEffect = Fx.hitEmpSpark;
@@ -235,13 +244,6 @@ public class MLBlocks {
             hasItems = true;
             hasPower = true;
             recipes.add(recipe1());
-            private static CraftRecipe recipe1(){
-                CraftRecipe r = new CraftRecipe();
-                r.consumeItems = ItemStack.with(MLItems.phantomSteel, 1, MLItems.phantomTitaniumSteel, 1, MLItems.mysticCrystal, 1, Items.silicon, 3);
-                r.outputItems = ItemStack.with(Items.graphite,1);
-                r.craftTime = 30f;
-                return r;
-            }
         }};
         //factor
         //炮
