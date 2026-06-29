@@ -233,7 +233,7 @@ public class MLBlocks {
             liquidCapacity = 40;
             canOverdrive = false;
             hasItems = true;
-            hasPower = true
+            hasPower = true;
         }};
         //factor
         //炮
