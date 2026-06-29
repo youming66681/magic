@@ -33,7 +33,6 @@ class Recipe{
 public class MultiRecipeFactory extends Block {
     public Recipe[] recipes;
     public float powerConsume = 10f;
-    public float powerCapacity = 60f;
 
     public MultiRecipeFactory(String name){
         super(name);
@@ -69,12 +68,12 @@ public class MultiRecipeFactory extends Block {
                 for(int i = 0; i < recipes.length; i++){
                     int id = i;
                     Recipe r = recipes[i];
-                    t.button(Vars.localization.get(r.key), () -> {
+                    t.button(Vars.bundle.get(r.key), () -> {
                         configure(id);
                         dialog.hide();
                     }).size(180, 100).margin(8).table(sub -> {
                         sub.left();
-                        sub.label(Vars.localization.get(r.key)).row();
+                        sub.label(Vars.bundle.get(r.key)).row();
                         sub.table(inT -> {
                             for(ItemStack is : r.inputItems) inT.add(is.item.uiIcon).size(32);
                             for(LiquidStack ls : r.inputLiquids) inT.add(ls.liquid.uiIcon).size(32);
@@ -127,9 +126,9 @@ public class MultiRecipeFactory extends Block {
 
             float powerNeed = powerConsume * Time.delta;
             PowerGraph graph = power.graph;
-            float availablePower = graph.production - graph.consumption;
+            float availablePower = graph.getBalance();
             if(canCraft && availablePower >= powerNeed){
-                graph.addConsumption(powerNeed);
+                graph.consume(powerNeed);
                 progress += Time.delta;
 
                 if(progress >= r.craftTime){
