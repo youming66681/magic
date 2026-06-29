@@ -215,7 +215,7 @@ public class MLBlocks {
             consumeItems(ItemStack.with(MLItems.phantomSteel, 1, Items.coal, 1));
             consumePower(1.0f);
         }};
-        chipMachine = new MultiRecipeFactory("chipMachine");
+        chipMachine = new MultiRecipeFactory("chipMachine"){{
         requirements(Category.crafting, ItemStack.with(new Object[]{MLItems.phantomSteel, 30, MLItems.phantomTitaniumSteel, 10, MLItems.mysticCrystal, 20, Items.silicon, 40, Items.metaglass, 50}));
         chipMachine.recipes = new Recipe[]{
                 new Recipe("LogicChip", 30f,
@@ -234,6 +234,7 @@ public class MLBlocks {
         hasPower = true;
         craftEffect = Fx.hitEmpSpark;
         drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
+        }};
         //factor
         //炮
         //电戈
