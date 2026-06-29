@@ -53,53 +53,53 @@ function MultiCrafterBuild() {
         if((this.block.doDumpToggle() ? current > -1 && this.block.getRecipes()[current].output.items.some(a => a.item == item) : this.block.getOutputItemSet().contains(item)) && !this.items.has(item)) this.toOutputItemSet.add(item);
         this.items.add(item, amount);
     };
-    this.displayConsumption = function(table){
-        if(typeof this.block.getRecipes !== "function") return;
+this.displayConsumption = function(table){
+    if(typeof this.block.getRecipes !== "function") return;
 
-        const recs = this.block.getRecipes();
+    const recs = this.block.getRecipes();
 
-        table.left();
+    table.left();
 
-        for(let i = 0; i < recs.length; i++){
-            const items = recs[i].input.items;
-            const liquids = recs[i].input.liquids;
+    for(let i = 0; i < recs.length; i++){
+        const input = recs[i].input;
+        const items = input.items;
+        const liquids = input.liquids;
 
-            let empty = true;
+        const empty = items.length === 0 && liquids.length === 0;
 
-            // items
-            for(let j = 0; j < items.length; j++){
-                empty = false;
-                let stack = items[j];
+        for(let j = 0; j < items.length; j++){
+            const stack = items[j];
+            const item = stack.item;
+            const amount = stack.amount;
 
-                table.add(
-                    new ReqImage(
-                        new ItemImage(stack.item.uiIcon, stack.amount),
-                        () => this.items != null && this.items.has(stack.item, stack.amount)
-                    )
-                ).size(32);
-            }
-
-            // liquids
-            for(let j = 0; j < liquids.length; j++){
-                empty = false;
-                let stack = liquids[j];
-
-                table.add(
-                    new ReqImage(
-                        new ItemImage(stack.liquid.uiIcon, stack.amount),
-                        () => this.liquids != null && this.liquids.get(stack.liquid) >= stack.amount
-                    )
-                ).size(32);
-            }
-
-            // empty recipe
-            if(empty){
-                table.image(Icon.cancel).size(32);
-            }
-
-            table.row();
+            table.add(
+                new ReqImage(
+                    new ItemImage(item.uiIcon, amount),
+                    () => this.items != null && this.items.has(item, amount)
+                )
+            ).size(28);
         }
-    };
+
+        for(let j = 0; j < liquids.length; j++){
+            const stack = liquids[j];
+            const liquid = stack.liquid;
+            const amount = stack.amount;
+
+            table.add(
+                new ReqImage(
+                    new ItemImage(liquid.uiIcon, amount),
+                    () => this.liquids != null && this.liquids.get(liquid) >= amount
+                )
+            ).size(28);
+        }
+
+        if(empty){
+            table.image(Icon.cancel).size(28);
+        }
+
+        table.row();
+    }
+};
     this.getPowerProduction = function() {
         var i = this._toggle;
         if(i < 0 || typeof this.block["getRecipes"] !== "function") return 0;
