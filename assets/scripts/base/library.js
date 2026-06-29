@@ -53,47 +53,51 @@ function MultiCrafterBuild() {
         if((this.block.doDumpToggle() ? current > -1 && this.block.getRecipes()[current].output.items.some(a => a.item == item) : this.block.getOutputItemSet().contains(item)) && !this.items.has(item)) this.toOutputItemSet.add(item);
         this.items.add(item, amount);
     };
-    this.displayConsumption = function(table) {
-        if(typeof this.block["getRecipes"] !== "function") return;
+    this.displayConsumption = function(table){
+        if(typeof this.block.getRecipes !== "function") return;
+
         const recs = this.block.getRecipes();
-        var z = 0;
-        var y = 0;
-        var x = 0;
-        var recLen = recs.length;
+
         table.left();
-        for(var i = 0; i < recLen; i++) {
-            var items = recs[i].input.items;
-            var liquids = recs[i].input.liquids;
-            for(var j = 0, len = items.length; j < len; j++) {
-                (function(that, stack) {
-                    table.add(new ReqImage(new ItemImage(stack.item.uiIcon, stack.amount), () => that.items != null && that.items.has(stack.item, stack.amount))).size(8 * 4);
-                })(this, items[j]);
-            };
-            z += len;
-            for(var l = 0, len = liquids.length; l < len; l++) {
-                (function(that, stack) {
-                    table.add(new ReqImage(new ItemImage(stack.liquid.uiIcon, stack.amount), () => that.liquids != null && that.liquids.get(stack.liquid) > stack.amount)).size(8 * 4);
-                })(this, liquids[l]);
-            };
-            z += len;
-            if(z == 0) {
-                table.image(Icon.cancel).size(8 * 4);
-                x += 1;
-            };
-            if(i < recLen - 1) {
-                var next = recs[i + 1].input;
-                y += next.items.length + next.liquids.length;
-                x += z;
-                if(x + y <= 8 && y != 0 || x + y <= 7 && y == 0) {
-                    table.image(Icon.pause).size(8 * 4);
-                    x += 1;
-                } else {
-                    table.row();
-                    x = 0;
-                };
-            };
-            y = 0;
-            z = 0;
+
+        for(let i = 0; i < recs.length; i++){
+            const items = recs[i].input.items;
+            const liquids = recs[i].input.liquids;
+
+            let empty = true;
+
+            // items
+            for(let j = 0; j < items.length; j++){
+                empty = false;
+                let stack = items[j];
+
+                table.add(
+                    new ReqImage(
+                        new ItemImage(stack.item.uiIcon, stack.amount),
+                        () => this.items != null && this.items.has(stack.item, stack.amount)
+                    )
+                ).size(32);
+            }
+
+            // liquids
+            for(let j = 0; j < liquids.length; j++){
+                empty = false;
+                let stack = liquids[j];
+
+                table.add(
+                    new ReqImage(
+                        new ItemImage(stack.liquid.uiIcon, stack.amount),
+                        () => this.liquids != null && this.liquids.get(stack.liquid) >= stack.amount
+                    )
+                ).size(32);
+            }
+
+            // empty recipe
+            if(empty){
+                table.image(Icon.cancel).size(32);
+            }
+
+            table.row();
         }
     };
     this.getPowerProduction = function() {
