@@ -561,7 +561,7 @@ public class MLBlocks {
                     new UnitType[]{UnitTypes.nova, UnitTypes.pulsar}
             );
         }};
-        quantumFactory = new Reconstructor("curvatureEvolutionPod"){{
+        quantumFactory = new Reconstructor("quantumFactory"){{
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 300, Items.graphite, 150, Items.silicon, 120, MLItems.phantomTitaniumSteel, 60, MLItems.mysticCrystal, 90}));
             size = 7;
             consumePower(10f);
