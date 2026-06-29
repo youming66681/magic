@@ -1,5 +1,4 @@
 const library = require("base/library");
-const myitems = require("物品");
 const chipMachine = library.MultiCrafter(GenericCrafter, GenericCrafter.GenericCrafterBuild, "chipMachine", [
   {
     input: {
