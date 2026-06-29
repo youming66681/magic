@@ -1,9 +1,9 @@
 package magical.content.kind;
 
 import arc.func.Cons;
-import arc.graphics.Color;
-import arc.graphics.g2d.Draw;
 import arc.util.Time;
+import mindustry.Vars;
+import mindustry.content.Fx;
 import mindustry.gen.Building;
 import mindustry.type.Item;
 import mindustry.type.ItemStack;
@@ -11,9 +11,7 @@ import mindustry.type.Liquid;
 import mindustry.type.LiquidStack;
 import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Block;
-import mindustry.world.meta.StatUnit;
-
-import static mindustry.Vars.*;
+import mindustry.world.blocks.power.PowerGraph;
 
 class Recipe{
     public String key;
@@ -37,7 +35,6 @@ public class MultiRecipeFactory extends Block {
     public Recipe[] recipes;
     public float powerConsume = 10f;
     public float powerCapacity = 60f;
-    public float craftEffect;
 
     public MultiRecipeFactory(String name){
         super(name);
@@ -61,7 +58,6 @@ public class MultiRecipeFactory extends Block {
             return recipes[currentRecipe];
         }
 
-        @Override
         public void configure(Object value){
             if(value instanceof Integer idx && idx >=0 && idx < recipes.length){
                 currentRecipe = idx;
@@ -69,7 +65,6 @@ public class MultiRecipeFactory extends Block {
             }
         }
 
-        @Override
         public void buildConfiguration(BaseDialog dialog){
             dialog.cont.table(t -> {
                 for(int i = 0; i < recipes.length; i++){
@@ -82,20 +77,19 @@ public class MultiRecipeFactory extends Block {
                         sub.left();
                         sub.label(Vars.bundle.get(r.key)).row();
                         sub.table(inT -> {
-                            for(ItemStack is : r.inputItems) inT.add(is.item.icon).size(32);
-                            for(LiquidStack ls : r.inputLiquids) inT.add(ls.liquid.icon).size(32);
+                            for(ItemStack is : r.inputItems) inT.add(is.item.uiIcon).size(32);
+                            for(LiquidStack ls : r.inputLiquids) inT.add(ls.liquid.uiIcon).size(32);
                         }).row();
                         sub.label("→").row();
                         sub.table(outT -> {
-                            for(ItemStack is : r.outputItems) outT.add(is.item.icon).size(32);
-                            for(LiquidStack ls : r.outputLiquids) outT.add(ls.liquid.icon).size(32);
+                            for(ItemStack is : r.outputItems) outT.add(is.item.uiIcon).size(32);
+                            for(LiquidStack ls : r.outputLiquids) outT.add(ls.liquid.uiIcon).size(32);
                         });
                     });
                 }
             });
         }
 
-        @Override
         public void updateTile(){
             Recipe r = getCur();
             boolean canCraft = true;
@@ -132,9 +126,10 @@ public class MultiRecipeFactory extends Block {
             }
 
             float powerNeed = powerConsume * Time.delta;
-            float powerAvail = power.graph.getBalance();
-            if(canCraft && powerAvail >= powerNeed){
-                power.graph.consume(powerNeed);
+            PowerGraph graph = power.graph;
+            float available = graph.production - graph.consumption;
+            if(canCraft && available >= powerNeed){
+                graph.consumePower(powerNeed);
                 progress += Time.delta;
 
                 if(progress >= r.craftTime){
@@ -148,15 +143,9 @@ public class MultiRecipeFactory extends Block {
             }
         }
 
-        @Override
         public void draw(){
             super.draw();
-            Draw.color();
-            Draw.rect(block.region, x, y);
             float p = progress / getCur().craftTime;
-            Draw.color(0.2f, 0.8f, 1f);
-            Draw.rect(block.region, x, y, size * tilesize * p, size * tilesize / 4);
-            Draw.color();
         }
     }
 }
