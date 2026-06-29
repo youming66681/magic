@@ -3,10 +3,10 @@ const myitems = require("物品");
 const chipMachine = library.MultiCrafter(GenericCrafter, GenericCrafter.GenericCrafterBuild, "chipMachine", [
   {
     input: {
-    items: ["magic-phantom-steel/1","magic-phantom-titanium-steel/1","mystic-crystal/1","silicon/3"],
+    items: ["magic-phantomSteel/1","magic-phantomTitaniumSteel/1","mystic-mysticCrystal/1","silicon/3"],
     },
     output: {
-      items: ["magic-phantom-steel/1"],
+      items: ["magic-phantomSteel/1"],
     },
     craftTime: 30,
   }, 

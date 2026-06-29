@@ -4,6 +4,6 @@ function newItem(name) {
 		return myItem;
 	})();
 }
-newItem("phantom-steel")
-newItem("phantom-titanium-steel")
-newItem("mystic-crystal")
+newItem("phantomSteel")
+newItem("phantomTitaniumSteel")
+newItem("mysticCrystal")
