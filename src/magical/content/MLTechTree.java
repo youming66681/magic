@@ -44,6 +44,11 @@ public class MLTechTree {
             /*流冲*/node(MLBlocks.fluvialErosion, () -> {
                 });
             });
+            /*曲率进化舱*/node(MLBlocks.curvatureEvolutionPod, () -> {
+                /*曲率进化舱*/node(MLBlocks.quantumFactory, () -> {
+
+                });
+                    });
             /*幻钢压缩机*/node(MLBlocks.phantomSteelCompressor, () -> {
                 /*幻钢电压机*/node(MLBlocks.phantomSteelVoltageMachine, () -> {
                     /*幻钛钢熔炼机*/node(MLBlocks.phantomTitaniumSteelCompressor, () -> {

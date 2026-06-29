@@ -132,7 +132,7 @@ public class MLBlocks {
             baseCore, phantomTitaniumSteelCompressor, xuanCrystalManufacturingMachine, phantomSteelCompressor, phantomSteelVoltageMachine, electroge,
             fluvialErosion, adaptiveWall, largeAdaptiveWall, Birefringence, phantomSteelDrill, phantomSteelConveyor, phantomSteelBridge, phantomSteeljunction,
             phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode, excitedYuan, fuelPoweredGenerator, phantomTitaniumSteelConveyor,
-            phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod;
+            phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod, quantumFactory;
 
     public static void load() {
 
@@ -556,6 +556,18 @@ public class MLBlocks {
             consumeItems(ItemStack.with(new Object[]{Items.silicon, 40, MLItems.phantomSteel, 60, Items.graphite, 50}));
             constructTime = 60f * 15f;
             health = 720;
+
+            upgrades.addAll(
+                    new UnitType[]{UnitTypes.nova, UnitTypes.pulsar}
+            );
+        }};
+        quantumFactory = new Reconstructor("curvatureEvolutionPod"){{
+            requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 300, Items.graphite, 150, Items.silicon, 120, MLItems.phantomTitaniumSteel, 60, MLItems.mysticCrystal, 90}));
+            size = 7;
+            consumePower(10f);
+            consumeItems(ItemStack.with(new Object[]{Items.silicon, 70, MLItems.phantomSteel, 80, Items.graphite, 90, MLItems.phantomTitaniumSteel, 50, MLItems.mysticCrystal, 30}));
+            constructTime = 60f * 30f;
+            health = 1440;
 
             upgrades.addAll(
                     new UnitType[]{UnitTypes.nova, UnitTypes.pulsar}
