@@ -117,6 +117,7 @@ import mindustry.world.blocks.defense.Wall;
 import mindustry.type.UnitType;
 import mindustry.content.UnitTypes;
 import mindustry.world.blocks.units.Reconstructor;
+import mindustry.type.LiquidStack;
 
 import magical.content.MLItems;
 import magical.content.MLUnitTypes;
@@ -221,9 +222,9 @@ public class MLBlocks {
             recipes = new Recipe[]{
                     new Recipe("LogicChip", 30f,
                             ItemStack.with(MLItems.phantomSteel, 1, MLItems.phantomTitaniumSteel, 1, MLItems.mysticCrystal, 1, Items.silicon, 1),
-                            LiquidStack.empty(),
+                            LiquidStack.emptyStack(),
                             ItemStack.with(MLItems.LogicChip, 1),
-                            LiquidStack.empty()
+                            LiquidStack.emptyStack()
                     ),
             };
             powerConsume = 15f;
@@ -232,9 +233,7 @@ public class MLBlocks {
             liquidCapacity = 40;
             canOverdrive = false;
             hasItems = true;
-            hasPower = true;
-            craftEffect = Fx.hitEmpSpark;
-            drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
+            hasPower = true
         }};
         //factor
         //炮

@@ -1,40 +1,35 @@
-package magical.content;
+package magical.content.kind;
 
+import arc.func.Cons;
+import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
-import arc.math.Mathf;
 import arc.util.Time;
-import mindustry.content.Fx;
 import mindustry.gen.Building;
 import mindustry.type.Item;
 import mindustry.type.ItemStack;
 import mindustry.type.Liquid;
 import mindustry.type.LiquidStack;
-import mindustry.ui.Bar;
-import mindustry.ui.Cicon;
-import mindustry.ui.ItemImage;
-import mindustry.ui.LiquidImage;
 import mindustry.ui.dialogs.BaseDialog;
 import mindustry.world.Block;
-import mindustry.world.meta.BlockStat;
 import mindustry.world.meta.StatUnit;
 
 import static mindustry.Vars.*;
 
 class Recipe{
+    public String key;
     public ItemStack[] inputItems;
     public LiquidStack[] inputLiquids;
     public ItemStack[] outputItems;
     public LiquidStack[] outputLiquids;
     public float craftTime;
-    public String name;
 
-    public Recipe(String name, float craftTime, ItemStack[] inItems, LiquidStack[] inLiquids, ItemStack[] outItems, LiquidStack[] outLiquids){
-        this.name = name;
-        this.craftTime = craftTime;
+    public Recipe(String key, float craftTime, ItemStack[] inItems, LiquidStack[] inLiquids, ItemStack[] outItems, LiquidStack[] outLiquids){
+        this.key = key;
         this.inputItems = inItems;
         this.inputLiquids = inLiquids;
         this.outputItems = outItems;
         this.outputLiquids = outLiquids;
+        this.craftTime = craftTime;
     }
 }
 
@@ -42,6 +37,7 @@ public class MultiRecipeFactory extends Block {
     public Recipe[] recipes;
     public float powerConsume = 10f;
     public float powerCapacity = 60f;
+    public float craftEffect;
 
     public MultiRecipeFactory(String name){
         super(name);
@@ -55,14 +51,7 @@ public class MultiRecipeFactory extends Block {
         configurable = true;
         saveConfig = true;
         update = true;
-
         buildType = FactoryBuild::new;
-    }
-
-    @Override
-    public void setStats(){
-        super.setStats();
-        stats.add(BlockStat.powerUse, powerConsume, StatUnit.powerSecond);
     }
 
     public class FactoryBuild extends Building {
@@ -86,24 +75,21 @@ public class MultiRecipeFactory extends Block {
                 for(int i = 0; i < recipes.length; i++){
                     int id = i;
                     Recipe r = recipes[i];
-                    t.button(b -> {
-                        b.left();
-                        b.label(r.name);
-                        b.row();
-                        b.table(in -> {
-                            for(ItemStack is : r.inputItems) in.add(new ItemImage(is));
-                            for(LiquidStack ls : r.inputLiquids) in.add(new LiquidImage(ls));
-                        });
-                        b.row();
-                        b.label("→");
-                        b.row();
-                        b.table(out -> {
-                            for(ItemStack is : r.outputItems) out.add(new ItemImage(is));
-                            for(LiquidStack ls : r.outputLiquids) out.add(new LiquidImage(ls));
-                        });
-                    }).size(180, 100).margin(8).clicked(() -> {
+                    t.button(Vars.bundle.get(r.key), () -> {
                         configure(id);
                         dialog.hide();
+                    }).size(180, 100).margin(8).table(sub -> {
+                        sub.left();
+                        sub.label(Vars.bundle.get(r.key)).row();
+                        sub.table(inT -> {
+                            for(ItemStack is : r.inputItems) inT.add(is.item.icon).size(32);
+                            for(LiquidStack ls : r.inputLiquids) inT.add(ls.liquid.icon).size(32);
+                        }).row();
+                        sub.label("→").row();
+                        sub.table(outT -> {
+                            for(ItemStack is : r.outputItems) outT.add(is.item.icon).size(32);
+                            for(LiquidStack ls : r.outputLiquids) outT.add(ls.liquid.icon).size(32);
+                        });
                     });
                 }
             });
@@ -145,8 +131,10 @@ public class MultiRecipeFactory extends Block {
                 }
             }
 
-            if(canCraft && power.graph.getPower() >= powerConsume * Time.delta){
-                power.graph.consumePower(powerConsume * Time.delta);
+            float powerNeed = powerConsume * Time.delta;
+            float powerAvail = power.graph.getBalance();
+            if(canCraft && powerAvail >= powerNeed){
+                power.graph.consume(powerNeed);
                 progress += Time.delta;
 
                 if(progress >= r.craftTime){
@@ -155,15 +143,9 @@ public class MultiRecipeFactory extends Block {
                     for(LiquidStack stack : r.inputLiquids) liquids.remove(stack.liquid, stack.amount);
                     for(ItemStack stack : r.outputItems) items.add(stack.item, stack.amount);
                     for(LiquidStack stack : r.outputLiquids) liquids.add(stack.liquid, stack.amount);
-                    Fx.factorySmoke.at(x, y);
+                    Fx.smeltsmoke.at(x, y);
                 }
             }
-        }
-
-        @Override
-        public void displayBars(Bar[] bars){
-            super.displayBars(bars);
-            bars[bars.length - 1].set(progress / getCur().craftTime);
         }
 
         @Override
