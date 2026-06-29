@@ -1,22 +1,17 @@
-package magical.world;
+package magical.content;
 
 import mindustry.type.*;
+import arc.scene.ui.layout.Table;
+import arc.struct.Seq;
+import arc.util.io.Reads;
+import arc.util.io.Writes;
 
-public class CraftRecipe{
-
-    public ItemStack[] consumeItems = ItemStack.empty;
-    public LiquidStack[] consumeLiquids = LiquidStack.empty;
-
-    public ItemStack[] outputItems = ItemStack.empty;
-    public LiquidStack outputLiquid;
-
-    public float craftTime = 60f;
-    public float power = 0f;
-
-    public Effect craftEffect = Fx.none;
-
-    public CraftRecipe(){}
-}
+import mindustry.content.Fx;
+import mindustry.entities.Effect;
+import mindustry.type.ItemStack;
+import mindustry.type.LiquidStack;
+import mindustry.ui.Styles;
+import mindustry.world.blocks.production.GenericCrafter;
 
 public class MultiCrafter extends GenericCrafter {
 
