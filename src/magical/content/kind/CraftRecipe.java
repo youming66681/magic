@@ -1,5 +1,10 @@
 package magical.content;
 
+import mindustry.content.Fx;
+import mindustry.entities.Effect;
+import mindustry.type.ItemStack;
+import mindustry.type.LiquidStack;
+
 public class CraftRecipe{
 
     public ItemStack[] consumeItems = ItemStack.empty;
