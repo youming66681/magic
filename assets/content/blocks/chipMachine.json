@@ -25,9 +25,9 @@
   "itemCapacity": 10,
   "canOverdrive": false,
   "requirements": [
-    { "item": "phantom-steel", "amount": 30},
-    { "item": "phantom-titanium-steel", "amount": 10 },
-    { "item": "mystic-crystal", "amount": 20},
+    { "item": "phantomSteel", "amount": 30},
+    { "item": "phantomTitaniumSteel", "amount": 10 },
+    { "item": "mysticCrystal", "amount": 20},
     { "item": "silicon", "amount": 40 },
     { "item": "metaglass", "amount": 50 },
 
