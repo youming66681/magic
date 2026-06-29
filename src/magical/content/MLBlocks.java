@@ -129,14 +129,6 @@ import magical.content.MLSounds;
 
 public class MLBlocks {
 
-    private static CraftRecipe recipe1 () {
-        CraftRecipe r = new CraftRecipe();
-        r.consumeItems = ItemStack.with(MLItems.phantomSteel, 1, MLItems.phantomTitaniumSteel, 1, MLItems.mysticCrystal, 1, Items.silicon, 3);
-        r.outputItems = ItemStack.with(Items.graphite, 1);
-        r.craftTime = 30f;
-        return r;
-    };
-
     public static Block
             //基础科技
             baseCore, phantomTitaniumSteelCompressor, xuanCrystalManufacturingMachine, phantomSteelCompressor, phantomSteelVoltageMachine, electroge,
