@@ -90,6 +90,7 @@ public class MultiRecipeFactory extends Block {
             });
         }
 
+        @Override
         public void updateTile(){
             Recipe r = getCur();
             boolean canCraft = true;
@@ -127,15 +128,17 @@ public class MultiRecipeFactory extends Block {
 
             float powerNeed = powerConsume * Time.delta;
             PowerGraph graph = power.graph;
-            float available = graph.production - graph.consumption;
-            if(canCraft && available >= powerNeed){
+            float availablePower = graph.getBalance();
+            if(canCraft && availablePower >= powerNeed){
                 graph.consumePower(powerNeed);
                 progress += Time.delta;
 
                 if(progress >= r.craftTime){
                     progress = 0;
+                    // 扣原料
                     for(ItemStack stack : r.inputItems) items.remove(stack.item, stack.amount);
                     for(LiquidStack stack : r.inputLiquids) liquids.remove(stack.liquid, stack.amount);
+                    // 出产物
                     for(ItemStack stack : r.outputItems) items.add(stack.item, stack.amount);
                     for(LiquidStack stack : r.outputLiquids) liquids.add(stack.liquid, stack.amount);
                     Fx.smeltsmoke.at(x, y);
@@ -143,6 +146,7 @@ public class MultiRecipeFactory extends Block {
             }
         }
 
+        @Override
         public void draw(){
             super.draw();
             float p = progress / getCur().craftTime;
