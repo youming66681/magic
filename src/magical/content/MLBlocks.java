@@ -234,6 +234,7 @@ public class MLBlocks {
             liquidCapacity = 40;
             canOverdrive = false;
             hasItems = true;
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
             hasPower = true;
             recipes.add(recipe1());
         }};
