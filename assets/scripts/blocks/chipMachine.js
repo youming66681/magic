@@ -1,5 +1,6 @@
 const library = require("base/library");
 const myItems = require("items");
+const ItemImage = Packages.mindustry.ui.ItemImage;
 const chipMachine = library.MultiCrafter(GenericCrafter, GenericCrafter.GenericCrafterBuild, "chipMachine", [
   {
     input: {
