@@ -132,7 +132,7 @@ public class MLBlocks {
             baseCore, phantomTitaniumSteelCompressor, xuanCrystalManufacturingMachine, phantomSteelCompressor, phantomSteelVoltageMachine, electroge,
             fluvialErosion, adaptiveWall, largeAdaptiveWall, Birefringence, phantomSteelDrill, phantomSteelConveyor, phantomSteelBridge, phantomSteeljunction,
             phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode, excitedYuan, fuelPoweredGenerator, phantomTitaniumSteelConveyor,
-            phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod, quantumFactory;
+            phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod, quantumFactory, chipMachine;
 
     public static void load() {
 
@@ -215,17 +215,18 @@ public class MLBlocks {
             consumeItems(ItemStack.with(MLItems.phantomSteel, 1, Items.coal, 1));
             consumePower(1.0f);
         }};
+        //芯片制造机
         chipMachine = new MultiRecipeFactory("chipMachine"){{
         requirements(Category.crafting, ItemStack.with(new Object[]{MLItems.phantomSteel, 30, MLItems.phantomTitaniumSteel, 10, MLItems.mysticCrystal, 20, Items.silicon, 40, Items.metaglass, 50}));
         chipMachine.recipes = new Recipe[]{
                 new Recipe("LogicChip", 30f,
-                        ItemStack.with(MLItems.phantomSteel, 1, MLItems.phantomTitaniumSteel, 1, MLItems.mysticCrystal, 1,Items.silicon, 1 )
+                        ItemStack.with(MLItems.phantomSteel, 1, MLItems.phantomTitaniumSteel, 1, MLItems.mysticCrystal, 1,Items.silicon, 1)，
                         LiquidStack.empty()
                         ItemStack.with(MLItems.LogicChip, 1),
                         LiquidStack.empty()
                 ),
         };
-        consumePower(15f);
+        powerConsume = 15f;
         health = 400;
         itemCapacity = 10;
         liquidCapacity = 40;
