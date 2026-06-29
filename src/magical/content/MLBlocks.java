@@ -142,7 +142,7 @@ public class MLBlocks {
             baseCore, phantomTitaniumSteelCompressor, xuanCrystalManufacturingMachine, phantomSteelCompressor, phantomSteelVoltageMachine, electroge,
             fluvialErosion, adaptiveWall, largeAdaptiveWall, Birefringence, phantomSteelDrill, phantomSteelConveyor, phantomSteelBridge, phantomSteeljunction,
             phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode, excitedYuan, fuelPoweredGenerator, phantomTitaniumSteelConveyor,
-            phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod, quantumFactory, chipMachine;
+            phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod, quantumFactory;
 
     public static void load() {
 
@@ -224,21 +224,6 @@ public class MLBlocks {
 
             consumeItems(ItemStack.with(MLItems.phantomSteel, 1, Items.coal, 1));
             consumePower(1.0f);
-        }};
-        //芯片制造机
-        chipMachine = new MultiCrafter("chipMachine"){{
-            requirements(Category.crafting, ItemStack.with(MLItems.phantomSteel, 30, MLItems.phantomTitaniumSteel, 10, MLItems.mysticCrystal, 20, Items.silicon, 40, Items.metaglass, 50));
-            consumePower(15f);
-            health = 400;
-            itemCapacity = 10;
-            size = 4;
-            liquidCapacity = 40;
-            canOverdrive = false;
-            hasItems = true;
-            drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
-            hasPower = true;
-            Object obj = jsRecipe;
-            Scriptable s = (Scriptable)obj;
         }};
         //factor
         //炮
