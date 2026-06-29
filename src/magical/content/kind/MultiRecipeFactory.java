@@ -1,6 +1,5 @@
 package magical.content.kind;
 
-import arc.func.Cons;
 import arc.util.Time;
 import mindustry.Vars;
 import mindustry.content.Fx;
@@ -70,12 +69,12 @@ public class MultiRecipeFactory extends Block {
                 for(int i = 0; i < recipes.length; i++){
                     int id = i;
                     Recipe r = recipes[i];
-                    t.button(Vars.bundle.get(r.key), () -> {
+                    t.button(Vars.localization.get(r.key), () -> {
                         configure(id);
                         dialog.hide();
                     }).size(180, 100).margin(8).table(sub -> {
                         sub.left();
-                        sub.label(Vars.bundle.get(r.key)).row();
+                        sub.label(Vars.localization.get(r.key)).row();
                         sub.table(inT -> {
                             for(ItemStack is : r.inputItems) inT.add(is.item.uiIcon).size(32);
                             for(LiquidStack ls : r.inputLiquids) inT.add(ls.liquid.uiIcon).size(32);
@@ -128,17 +127,15 @@ public class MultiRecipeFactory extends Block {
 
             float powerNeed = powerConsume * Time.delta;
             PowerGraph graph = power.graph;
-            float availablePower = graph.getBalance();
+            float availablePower = graph.production - graph.consumption;
             if(canCraft && availablePower >= powerNeed){
-                graph.consumePower(powerNeed);
+                graph.addConsumption(powerNeed);
                 progress += Time.delta;
 
                 if(progress >= r.craftTime){
                     progress = 0;
-                    // 扣原料
                     for(ItemStack stack : r.inputItems) items.remove(stack.item, stack.amount);
                     for(LiquidStack stack : r.inputLiquids) liquids.remove(stack.liquid, stack.amount);
-                    // 出产物
                     for(ItemStack stack : r.outputItems) items.add(stack.item, stack.amount);
                     for(LiquidStack stack : r.outputLiquids) liquids.add(stack.liquid, stack.amount);
                     Fx.smeltsmoke.at(x, y);
