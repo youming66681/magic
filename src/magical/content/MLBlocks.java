@@ -227,10 +227,15 @@ public class MLBlocks {
             liquidCapacity = 40;
             canOverdrive = false;
             hasItems = true;
-            drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
+            //drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
             hasPower = true;
             factory.recipes.add(new MultiCrafter.Recipe(30f,
-                    new ItemStack[]{new ItemStack(MLItems.phantomSteel, 1, MLItems.phantomTitaniumSteel, 1, MLItems.mysticCrystal, 1, Items.silicon, 3)},
+                    new ItemStack[]{
+                            new ItemStack(MLItems.phantomSteel, 1),
+                            new ItemStack(MLItems.phantomTitaniumSteel, 1),
+                            new ItemStack(MLItems.mysticCrystal, 1),
+                            new ItemStack(Items.silicon, 3)
+            },
                     new ItemStack[]{new ItemStack(Items.lead, 1)})
             );
         }};

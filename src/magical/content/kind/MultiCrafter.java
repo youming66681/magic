@@ -11,6 +11,8 @@ import mindustry.type.ItemStack;
 import mindustry.world.Block;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatUnit;
+import mindustry.gen.Unit;
+import mindustry.ui.Styles;
 
 public class MultiCrafter extends Block {
 
@@ -101,7 +103,7 @@ public class MultiCrafter extends Block {
     public void setStats(){
         super.setStats();
 
-        stats.remove(Stat.craftTime);
-        stats.add(Stat.craftTime, recipes.toArray(Recipe.class));
+        stats.remove(Stat.productionTime);
+        stats.add(Stat.productionTime, recipes.toArray(Recipe.class));
     }
 }
