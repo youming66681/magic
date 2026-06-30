@@ -238,7 +238,7 @@ public class MLBlocks {
                             new ItemStack(MLItems.mysticCrystal, 1),
                             new ItemStack(Items.silicon, 3)
             },
-                    new ItemStack[]{new ItemStack(Items.lead, 1)})
+                    new ItemStack[]{new ItemStack(MLItems.logicChip, 1)})
             );
         }};
         //factor
