@@ -126,6 +126,7 @@ import magical.content.MLPlanets;
 import magical.content.MLFx;
 import magical.magic;
 import magical.content.MLSounds;
+import magical.content.kind.Formula;
 
 public class MLBlocks {
 
@@ -231,7 +232,10 @@ public class MLBlocks {
             hasPower = true;
             Formula f1 = new Formula("logicChip");
             f1.craftTime = 30f;
-            f1.inputs.add(new ItemStack(MLItems.phantomSteel, 1, MLItems.phantomTitaniumSteel, 1, MLItems.mysticCrystal, 1, Items.silicon, 3));
+            f1.inputs.add(new ItemStack(MLItems.phantomSteel, 1));
+            f1.inputs.add(new ItemStack(MLItems.phantomTitaniumSteel, 1));
+            f1.inputs.add(new ItemStack(MLItems.mysticCrystal, 1));
+            f1.inputs.add(new ItemStack(Items.silicon, 3));
             f1.outputs.add(new ItemStack(MLItems.logicChip, 1));
         }};
         //factor
