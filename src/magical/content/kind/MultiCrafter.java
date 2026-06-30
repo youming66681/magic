@@ -52,7 +52,7 @@ public class MultiCrafter extends Block {
                 progress = 0f;
 
                 for(ItemStack in : r.input){
-                    items.remove(in.item, in.amount);
+                    consumeItem(in.item, in.amount);
                 }
 
                 for(ItemStack out : r.output){
