@@ -105,14 +105,14 @@ public class MLItems {
             hardness = 1;
             cost = 1.0F;
             frames = 6;
-            frameTime = 18;
+            frameTime = 6;
         }};
         arrayChip = new Item("arrayChip", Color.valueOf("9C88C3FF")) {{
             description = "";
             hardness = 2;
             cost = 1.0F;
             frames = 6;
-            frameTime = 12;
+            frameTime = 6;
         }};
         matrixChip = new Item("matrixChip", Color.valueOf("6569C9FF")) {{
             description = "";

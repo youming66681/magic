@@ -40,9 +40,7 @@ public class MultiCrafter extends Block {
             Recipe r = recipes.get(selected);
 
             for(ItemStack in : r.input){
-                if(items.get(in.item) < in.amount){
-                    return;
-                }
+                if(items.get(in.item) < in.amount) return;
             }
 
             progress += edelta();
@@ -55,9 +53,7 @@ public class MultiCrafter extends Block {
                 }
 
                 for(ItemStack out : r.output){
-                    for(int i = 0; i < out.amount; i++){
-                        offload(out.item);
-                    }
+                    offload(out.item);
                 }
             }
         }
