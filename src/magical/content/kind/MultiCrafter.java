@@ -5,6 +5,7 @@ import arc.scene.ui.layout.Table;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
 import arc.Core;
+import arc.scene.ui.layout.TextureRegionDrawable;
 
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
