@@ -35,12 +35,15 @@ public class MultiCrafter extends Block {
 
         @Override
         public void updateTile(){
+
             if(recipes.size == 0) return;
 
             Recipe r = recipes.get(selected);
 
             for(ItemStack in : r.input){
-                if(items.get(in.item) < in.amount) return;
+                if(items.get(in.item) < in.amount){
+                    return;
+                }
             }
 
             progress += edelta();
@@ -67,10 +70,10 @@ public class MultiCrafter extends Block {
                 Recipe r = recipes.get(i);
 
                 table.button(
-                        Core.bundle.get("recipe." + r.key + ".name"),
-                        Icon.ok,
+                        new TextureRegionDrawable(r.output[0].item.uiIcon),
+                        Icon.none,
                         () -> configure(id)
-                );
+                ).size(48f);
             }
         }
 
