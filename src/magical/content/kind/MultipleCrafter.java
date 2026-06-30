@@ -64,6 +64,8 @@ public class MultipleCrafter extends Block {
     public void getRegionsToOutline(Seq<TextureRegion> out) {
     }
 
+    formulas = new FormulaStack();
+
     // =========================
     // Building class
     // =========================
