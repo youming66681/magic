@@ -227,6 +227,7 @@ public class MLBlocks {
             liquidCapacity = 40;
             canOverdrive = false;
             hasItems = true;
+            solid = true;
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
             hasPower = true;
             Formula f1 = new Formula("logicChip");
@@ -236,6 +237,7 @@ public class MLBlocks {
             f1.inputs.add(new ItemStack(MLItems.mysticCrystal, 1));
             f1.inputs.add(new ItemStack(Items.silicon, 3));
             f1.outputs.add(new ItemStack(MLItems.logicChip, 1));
+            formulas.add(f1);
         }};
         //factor
         //炮
