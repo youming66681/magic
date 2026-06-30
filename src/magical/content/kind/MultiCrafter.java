@@ -5,7 +5,9 @@ import arc.scene.ui.layout.Table;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
 import arc.Core;
-import arc.scene.ui.layout.TextureRegionDrawable;
+import arc.scene.ui.Image;
+import arc.scene.ui.layout.Cell;
+import arc.graphics.g2d.TextureRegionDrawable;
 
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
@@ -71,8 +73,7 @@ public class MultiCrafter extends Block {
                 Recipe r = recipes.get(i);
 
                 table.button(
-                        new TextureRegionDrawable(r.output[0].item.uiIcon),
-                        Icon.none,
+                        r.output[0].item.uiIcon,
                         () -> configure(id)
                 ).size(48f);
             }
