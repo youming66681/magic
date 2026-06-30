@@ -26,6 +26,7 @@ public class MultiCrafter extends Block {
         update = true;
         solid = true;
         hasItems = true;
+        configurable = true;
     }
     public class MultiCrafterBuild extends Building{
 

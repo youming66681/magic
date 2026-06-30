@@ -11,7 +11,9 @@ import magical.content.MLPlanets;
 
 public class MLItems {
     public static Item
-     acrylic, mysticCrystal, phantomSteel, phantomTitaniumSteel, wingedStone, mysticSteel, nanoEnergyThread, crystallineCarbon, fluorescentFeatherStone, wingedMetal, phantomLuminousAlloy, nanoCarbonAlloy;
+     acrylic, mysticCrystal, phantomSteel, phantomTitaniumSteel, wingedStone, mysticSteel,
+     nanoEnergyThread, crystallineCarbon, fluorescentFeatherStone, wingedMetal,
+     phantomLuminousAlloy, nanoCarbonAlloy, logicChip, arrayChip, matrixChip;
 
     public static void load() {
         acrylic = new Item("acrylic", Color.valueOf("404040FF")) {{
@@ -97,6 +99,27 @@ public class MLItems {
             explosiveness = 6.0F;
             flammability = 1.0F;
             charge = 12.5F;
+        }};
+        logicChip = new Item("logicChip", Color.valueOf("97B5EDFF")) {{
+            description = "";
+            hardness = 1;
+            cost = 1.0F;
+            frames = 6;
+            frameTime = 18;
+        }};
+        arrayChip = new Item("arrayChip", Color.valueOf("9C88C3FF")) {{
+            description = "";
+            hardness = 2;
+            cost = 1.0F;
+            frames = 6;
+            frameTime = 12;
+        }};
+        matrixChip = new Item("matrixChip", Color.valueOf("6569C9FF")) {{
+            description = "";
+            hardness = 3;
+            cost = 1.0F;
+            frames = 6;
+            frameTime = 6;
         }};
     }
 }
