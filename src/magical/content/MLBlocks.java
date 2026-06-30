@@ -230,7 +230,7 @@ public class MLBlocks {
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
             hasPower = true;
             factory.recipes.add(new MultiCrafter.Recipe(30f,
-                    new ItemStack[]{new ItemStack(Items.copper, 2)},
+                    new ItemStack[]{new ItemStack(MLItems.phantomSteel, 1, MLItems.phantomTitaniumSteel, 1, MLItems.mysticCrystal, 1, Items.silicon, 3)},
                     new ItemStack[]{new ItemStack(Items.lead, 1)})
             );
         }};
