@@ -1,168 +1,113 @@
-package magical.content;
+package magical.content.kind;
 
-import arc.graphics.g2d.TextureRegion;
 import arc.scene.ui.layout.Table;
-import arc.struct.Seq;
-import arc.util.Eachable;
-import arc.util.io.Reads;
-import arc.util.io.Writes;
-import mindustry.entities.units.BuildPlan;
 import mindustry.gen.Building;
-import mindustry.type.ItemStack;
-import mindustry.type.Liquid;
-import mindustry.type.LiquidStack;
 import mindustry.world.Block;
-import mindustry.world.consumers.Consume;
-import mindustry.world.consumers.ConsumePower;
-import mindustry.world.draw.DrawBlock;
 
 public class MultipleCrafter extends Block {
 
-    public FormulaStack formulas;
+    public FormulaStack formulas = new FormulaStack();
 
-    public boolean dumpExtraLiquid;
-    public boolean ignoreLiquidFullness;
-
-    public DrawBlock drawer;
-
-    public MultipleCrafter(String name) {
+    public MultipleCrafter(String name){
         super(name);
     }
 
     @Override
-    public void setStats() {
+    public Building createBuilding(){
+        return new MultipleCrafterBuild();
     }
 
-    public void addLiquidBar(Liquid liq) {
-    }
+    public class MultipleCrafterBuild extends Building {
 
-    public void setBars() {
-    }
+        public int formulaIndex = 0;
+        public float progress = 0f;
 
-    @Override
-    public void load() {
-    }
+        public Formula current(){
 
-    @Override
-    public void init() {
-    }
+            if(formulas == null || formulas.size() == 0){
+                return null;
+            }
 
-    @Override
-    public void drawPlanRegion(BuildPlan plan, Eachable<BuildPlan> list) {
-    }
+            // clamp index
+            formulaIndex = Math.max(0, Math.min(formulaIndex, formulas.size() - 1));
 
-    @Override
-    public TextureRegion[] icons() {
-        return null;
-    }
+            Formula f = formulas.get(formulaIndex);
 
-    @Override
-    public boolean outputsItems() {
-        return false;
-    }
-
-    public void getRegionsToOutline(Seq<TextureRegion> out) {
-    }
-
-    // =========================
-    // Building class
-    // =========================
-    public class MultipleCrafterBuilding extends Building {
-
-        public float progress;
-        public float totalProgress;
-        public float warmup;
-
-        public int formulaIndex;
-        public Formula formula;
-
-        public Seq<ItemStack> outputItems = new Seq<>();
-        public Seq<LiquidStack> outputLiquids = new Seq<>();
-
-        public ConsumePower consPower;
-
-        @Override
-        public Object config() {
-            return null;
+            return (f != null && f.valid()) ? f : formulas.get(0);
         }
 
         @Override
-        public void draw() {
+        public void buildConfiguration(Table table){
+
+            table.clear();
+
+            if(formulas == null || formulas.size() == 0){
+                table.label("No formulas").row();
+                return;
+            }
+
+            for(int i = 0; i < formulas.size(); i++){
+                int id = i;
+                Formula f = formulas.get(i);
+
+                String name = (f == null || f.name == null) ? "null" : f.name;
+
+                table.button(name, () -> {
+                    formulaIndex = id;
+                }).width(140).row();
+            }
         }
 
         @Override
-        public void drawSelect() {
+        public void updateTile(){
+
+            Formula f = current();
+
+            if(f == null){
+                progress = 0f;
+                return;
+            }
+
+            if(f.craftTime <= 0){
+                f.craftTime = 60f;
+            }
+
+            progress += edelta() / f.craftTime;
+
+            if(progress >= 1f){
+                craftSafe(f);
+                progress = 0f;
+            }
+        }
+
+        private void craftSafe(Formula f){
+
+            if(f == null) return;
+
+            if(f.outputs != null){
+                for(int i = 0; i < f.outputs.size; i++){
+                    if(f.outputs.get(i) != null){
+                        offload(f.outputs.get(i).item, f.outputs.get(i).amount);
+                    }
+                }
+            }
         }
 
         @Override
-        public void drawLight() {
+        public Object config(){
+            return formulaIndex;
         }
 
         @Override
-        public void drawStatus() {
+        public void write(mindustry.io.Writes write){
+            super.write(write);
+            write.i(formulaIndex);
         }
 
         @Override
-        public boolean shouldConsume() {
-            return true;
-        }
-
-        public void updateConsumption() {
-        }
-
-        public void displayConsumption(Table table) {
-        }
-
-        @Override
-        public void updateTile() {
-        }
-
-        public float getProgressIncrease(float baseTime) {
-            return 0f;
-        }
-
-        public float getPowerProduction() {
-            return 0f;
-        }
-
-        public float warmup() {
-            return warmup;
-        }
-
-        public float totalProgress() {
-            return totalProgress;
-        }
-
-        private void craft() {
-        }
-
-        public void dumpOutputs() {
-        }
-
-        public void getContent(Table ta, Seq<Consume> consume) {
-        }
-
-        private Table add(Table t1, String s2) {
-            return t1;
-        }
-
-        public void buildConfiguration(Table table) {
-        }
-
-        public float progress() {
-            return progress;
-        }
-
-        public void setIndex(int index) {
-            this.formulaIndex = index;
-        }
-
-        @Override
-        public void write(Writes write) {
-        }
-
-        @Override
-        public void read(Reads read, byte revision) {
+        public void read(mindustry.io.Reads read, byte revision){
+            super.read(read, revision);
+            formulaIndex = read.i();
         }
     }
 }
