@@ -218,7 +218,7 @@ public class MLBlocks {
             consumePower(1.0f);
         }};
         //芯片制造机
-        chipMachine = new MultiCrafter("chipMachine"){{
+        chipMachine = new MultiFactory("chipMachine"){{
             requirements(Category.crafting, ItemStack.with(MLItems.phantomSteel, 30, MLItems.phantomTitaniumSteel, 10, MLItems.mysticCrystal, 20, Items.silicon, 40, Items.metaglass, 50));
             consumePower(15f);
             health = 400;
@@ -229,16 +229,16 @@ public class MLBlocks {
             hasItems = true;
             //drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
             hasPower = true;
-            recipes.add(new Recipe(
-                    "logicChip",
-                    30f,
+            addRecipe(new MultiFactory.Recipe(
                     new ItemStack[]{
                             new ItemStack(MLItems.phantomSteel, 1),
                             new ItemStack(MLItems.phantomTitaniumSteel, 1),
                             new ItemStack(MLItems.mysticCrystal, 1),
                             new ItemStack(Items.silicon, 3)
             },
-                    new ItemStack[]{new ItemStack(MLItems.logicChip, 1)})
+                    new ItemStack[]{new ItemStack(MLItems.logicChip, 1)}
+                   30f
+                )
             );
         }};
         //factor
