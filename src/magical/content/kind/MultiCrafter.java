@@ -112,8 +112,7 @@ public class MultiCrafter extends Block {
         stats.add(Stat.productionTime, table -> {
             for(Recipe r : recipes){
                 table.row();
-                table.add(Vars.bundle.get("recipe." + r.key + ".name"));
-                        .left();
+                table.add(Vars.bundle.get("recipe." + r.key + ".desc")).left();
                 table.add(" : " + (r.craftTime / 60f) + "s");
             }
         });
