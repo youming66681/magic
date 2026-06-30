@@ -67,7 +67,7 @@ public class MultiCrafter extends Block {
                 int id = i;
                 Recipe r = recipes.get(i);
 
-                table.button(Core.bundle.get("recipe." + r.key + ".name"), Icon.ok, () -> configure(id))
+                table.button(Core.bundle.get("recipe." + r.key + ".name"), Icon.ok, () -> configure(id));
             }
         }
 
