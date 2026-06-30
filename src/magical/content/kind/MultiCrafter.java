@@ -14,6 +14,8 @@ import mindustry.world.meta.StatUnit;
 import mindustry.gen.Unit;
 import mindustry.ui.Styles;
 import mindustry.world.meta.StatValue;
+import mindustry.core.Core;
+import mindustry.Vars;
 
 public class MultiCrafter extends Block {
 
