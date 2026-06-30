@@ -44,20 +44,14 @@ public class MultiCrafter extends Block {
 
             Recipe r = recipes.get(selected);
 
-            for(ItemStack in : r.input){
-                if(items.get(in.item) < in.amount){
-                    return;
-                }
-            }
+            if(efficiency() <= 0f) return;
 
             progress += edelta();
 
             if(progress >= r.craftTime){
                 progress = 0f;
 
-                for(ItemStack in : r.input){
-                    consumeItem(in.item, in.amount);
-                }
+                consume();
 
                 for(ItemStack out : r.output){
                     offload(out.item);
@@ -68,15 +62,41 @@ public class MultiCrafter extends Block {
         @Override
         public void buildConfiguration(Table table){
             table.clear();
+            if(recipes.size == 0){
+                table.add("no recipes");
+                return;
+            }
+            int cols = 4;
+            int i = 0;
+            for(Recipe r : recipes){
+                Recipe local = r;
+
+                Item iconItem = (local.output != null && local.output.length > 0)
+                        ? local.output[0].item
+                        : Items.copper;
+                table.button(
+                        iconItem.icon(Cicon.medium),
+                        () -> configure(recipes.indexOf(local))
+                ).size(48f);
+                i++;
+                if(i % cols == 0){
+                    table.row();
+                }
+            }
+        }
+
+        @Override
+        public void drawConfigure(){
+            super.drawConfigure();
+
+            Draw.color();
 
             for(int i = 0; i < recipes.size; i++){
-                int id = i;
-                Recipe r = recipes.get(i);
-
-                table.button(
-                        r.output[0].item.name,
-                        () -> configure(id)
-                );
+                if(i == selected){
+                    // 高亮框
+                    Draw.alpha(0.6f);
+                    Draw.rect(Core.atlas.find("select"), x, y);
+                }
             }
         }
 
