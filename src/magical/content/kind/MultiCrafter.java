@@ -1,25 +1,13 @@
 package magical.content;
 
-import arc.struct.Seq;
-import arc.scene.ui.layout.Table;
-import arc.util.io.Reads;
-import arc.util.io.Writes;
 import arc.Core;
-import arc.scene.ui.Image;
-import arc.scene.ui.layout.Cell;
-import arc.graphics.g2d.TextureRegion;
-import arc.scene.style.Drawable;
-
+import arc.scene.ui.layout.Table;
 import mindustry.gen.Building;
-import mindustry.gen.Icon;
-import mindustry.type.ItemStack;
-import mindustry.world.Block;
-import mindustry.world.meta.Stat;
-import mindustry.world.meta.StatUnit;
 import mindustry.gen.Unit;
-import mindustry.ui.Styles;
-import mindustry.world.meta.StatValue;
-import mindustry.Vars;
+import mindustry.type.Item;
+import mindustry.type.ItemStack;
+import mindustry.type.Items;
+import mindustry.ui.Cicon;
 
 public class MultiCrafter extends Block {
 
@@ -27,10 +15,11 @@ public class MultiCrafter extends Block {
 
     public MultiCrafter(String name){
         super(name);
+
         update = true;
-        solid = true;
-        hasItems = true;
         configurable = true;
+        hasItems = true;
+        solid = true;
     }
     public class MultiCrafterBuild extends Building{
 
@@ -44,14 +33,20 @@ public class MultiCrafter extends Block {
 
             Recipe r = recipes.get(selected);
 
-            if(efficiency() <= 0f) return;
+            for(ItemStack in : r.input){
+                if(items.get(in.item) < in.amount){
+                    return;
+                }
+            }
 
             progress += edelta();
 
             if(progress >= r.craftTime){
                 progress = 0f;
 
-                consume();
+                for(ItemStack in : r.input){
+                    items.remove(in.item, in.amount);
+                }
 
                 for(ItemStack out : r.output){
                     offload(out.item);
@@ -62,41 +57,19 @@ public class MultiCrafter extends Block {
         @Override
         public void buildConfiguration(Table table){
             table.clear();
-            if(recipes.size == 0){
-                table.add("no recipes");
-                return;
-            }
-            int cols = 4;
-            int i = 0;
-            for(Recipe r : recipes){
-                Recipe local = r;
-
-                Item iconItem = (local.output != null && local.output.length > 0)
-                        ? local.output[0].item
-                        : Items.copper;
-                table.button(
-                        iconItem.icon(Cicon.medium),
-                        () -> configure(recipes.indexOf(local))
-                ).size(48f);
-                i++;
-                if(i % cols == 0){
-                    table.row();
-                }
-            }
-        }
-
-        @Override
-        public void drawConfigure(){
-            super.drawConfigure();
-
-            Draw.color();
 
             for(int i = 0; i < recipes.size; i++){
-                if(i == selected){
-                    // 高亮框
-                    Draw.alpha(0.6f);
-                    Draw.rect(Core.atlas.find("select"), x, y);
-                }
+                int id = i;
+                Recipe r = recipes.get(i);
+
+                Item iconItem = (r.output != null && r.output.length > 0)
+                        ? r.output[0].item
+                        : Items.copper;
+
+                table.button(
+                        iconItem.icon(Cicon.medium),
+                        () -> configure(id)
+                ).size(48f);
             }
         }
 
