@@ -7,6 +7,7 @@ import mindustry.world.meta.StatUnit;
 import mindustry.gen.Building;
 import mindustry.type.Item;
 import mindustry.type.ItemStack;
+import arc.scene.ui.layout.Table;
 
 public class MultiFactory extends Block {
 
@@ -67,7 +68,9 @@ public class MultiFactory extends Block {
                 if(progress >= r.time){
                     consumeItems(r.input);
                     for(ItemStack out : r.output){
-                        offload(out.item, out.amount);
+                        for(int i = 0; i < out.amount; i++){
+                            offload(out.item);
+                        }
                     }
                     progress = 0f;
                 }
