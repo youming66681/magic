@@ -13,6 +13,7 @@ import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatUnit;
 import mindustry.gen.Unit;
 import mindustry.ui.Styles;
+import mindustry.world.meta.StatValue;
 
 public class MultiCrafter extends Block {
 
@@ -66,9 +67,7 @@ public class MultiCrafter extends Block {
                 int id = i;
                 Recipe r = recipes.get(i);
 
-                table.button(Icon.ok, () -> configure(id))
-                        .size(140f, 40f)
-                        .checked(b -> selected == id);
+                table.button(Core.bundle.get("recipe." + r.key + ".name"), Icon.ok, () -> configure(id))
             }
         }
 
@@ -104,13 +103,12 @@ public class MultiCrafter extends Block {
         super.setStats();
 
         stats.remove(Stat.productionTime);
-        stats.add(Stat.productionTime, new StatValue(){
-            @Override
-            public void display(Table table){
-                for(Recipe r : recipes){
-                    table.row();
-                    table.add(r.name + " - " + (r.craftTime / 60f) + "s");
-                }
+        stats.add(Stat.productionTime, table -> {
+            for(Recipe r : recipes){
+                table.row();
+                table.add(Core.bundle.get("recipe." + r.key + ".name"))
+                        .left();
+                table.add(" : " + (r.craftTime / 60f) + "s");
             }
         });
     }

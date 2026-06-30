@@ -229,7 +229,9 @@ public class MLBlocks {
             hasItems = true;
             //drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
             hasPower = true;
-            recipes.add(new Recipe(30f,
+            recipes.add(new Recipe(
+                    "logicChip",
+                    30f,
                     new ItemStack[]{
                             new ItemStack(MLItems.phantomSteel, 1),
                             new ItemStack(MLItems.phantomTitaniumSteel, 1),
