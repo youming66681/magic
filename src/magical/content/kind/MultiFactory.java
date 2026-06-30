@@ -20,9 +20,23 @@ public class MultiFactory extends Block {
         hasItems = true;
         update = true;
         solid = true;
+        configurable = true;
     }
 
-    // 添加配方
+    @Override
+    public void buildConfiguration(Table table){
+        if(recipes == null || recipes.size == 0){
+            table.label("No recipes");
+            return;
+        }
+
+        for(int i = 0; i < recipes.size; i++){
+            int id = i;
+            table.button("Recipe " + i, () -> selected = id).width(140f);
+            table.row();
+        }
+    }
+
     public void addRecipe(Recipe r){
         recipes.add(r);
     }
@@ -52,7 +66,8 @@ public class MultiFactory extends Block {
         public float progress = 0f;
 
         public Recipe current(){
-            return recipes.get(Math.min(selected, recipes.size - 1));
+            if(recipes.size == 0) return null;
+            return recipes.get(Mathf.clamp(selected, 0, recipes.size - 1));
         }
 
         @Override
@@ -61,24 +76,26 @@ public class MultiFactory extends Block {
             if(recipes.size == 0) return;
 
             Recipe r = current();
+            if(r == null) return;
 
             if(consValid(r.input)){
                 progress += edelta();
 
                 if(progress >= r.time){
                     consumeItems(r.input);
+
                     for(ItemStack out : r.output){
                         for(int i = 0; i < out.amount; i++){
                             offload(out.item);
                         }
                     }
+
                     progress = 0f;
                 }
             }else{
                 progress = 0f;
             }
         }
-
 
         public boolean consValid(ItemStack[] req){
             for(ItemStack s : req){
@@ -89,9 +106,19 @@ public class MultiFactory extends Block {
 
         @Override
         public void buildConfiguration(Table table){
+
+            if(recipes == null || recipes.size == 0){
+                table.label("No recipes");
+                return;
+            }
+
             for(int i = 0; i < recipes.size; i++){
                 int id = i;
-                table.button("Recipe " + i, () -> selected = id).width(140f);
+
+                table.button("Recipe " + id, () -> {
+                    selected = id;
+                }).width(140f);
+
                 table.row();
             }
         }
