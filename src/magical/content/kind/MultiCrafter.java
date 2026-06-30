@@ -4,6 +4,7 @@ import arc.struct.Seq;
 import arc.scene.ui.layout.Table;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
+import arc.Core;
 
 import mindustry.gen.Building;
 import mindustry.gen.Icon;
@@ -14,7 +15,6 @@ import mindustry.world.meta.StatUnit;
 import mindustry.gen.Unit;
 import mindustry.ui.Styles;
 import mindustry.world.meta.StatValue;
-import mindustry.core.Core;
 import mindustry.Vars;
 
 public class MultiCrafter extends Block {
@@ -70,7 +70,7 @@ public class MultiCrafter extends Block {
                 Recipe r = recipes.get(i);
 
                 table.button(
-                        Vars.bundle.get("recipe." + r.key + ".name"),
+                        Core.bundle.get("recipe." + r.key + ".name"),
                         Icon.ok,
                         () -> configure(id)
                 );
@@ -112,7 +112,7 @@ public class MultiCrafter extends Block {
         stats.add(Stat.productionTime, table -> {
             for(Recipe r : recipes){
                 table.row();
-                table.add(Vars.bundle.get("recipe." + r.key + ".desc")).left();
+                table.add(Core.bundle.get("recipe." + r.key + ".desc")).left();
                 table.add(" : " + (r.craftTime / 60f) + "s");
             }
         });
