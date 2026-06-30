@@ -238,6 +238,7 @@ public class MLBlocks {
             f1.inputs.add(new ItemStack(Items.silicon, 3));
             f1.outputs.add(new ItemStack(MLItems.logicChip, 1));
             formulas.add(f1);
+            this.generateIcons = false;
         }};
         //factor
         //炮
