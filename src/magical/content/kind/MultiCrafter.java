@@ -66,7 +66,7 @@ public class MultiCrafter extends Block {
                 int id = i;
                 Recipe r = recipes.get(i);
 
-                table.button(r.name, Icon.ok, () -> configure(id))
+                table.button(Icon.ok, () -> configure(id))
                         .size(140f, 40f)
                         .checked(b -> selected == id);
             }
@@ -104,6 +104,14 @@ public class MultiCrafter extends Block {
         super.setStats();
 
         stats.remove(Stat.productionTime);
-        stats.add(Stat.productionTime, recipes.toArray(Recipe.class));
+        stats.add(Stat.productionTime, new StatValue(){
+            @Override
+            public void display(Table table){
+                for(Recipe r : recipes){
+                    table.row();
+                    table.add(r.name + " - " + (r.craftTime / 60f) + "s");
+                }
+            }
+        });
     }
 }
