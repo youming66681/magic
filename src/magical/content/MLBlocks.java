@@ -236,7 +236,9 @@ public class MLBlocks {
                             new ItemStack(MLItems.mysticCrystal, 1),
                             new ItemStack(Items.silicon, 3)
             },
-                    new ItemStack[]{new ItemStack(MLItems.logicChip, 1)}
+                    new ItemStack[]{
+                            new ItemStack(MLItems.logicChip, 1)
+                    },
                    30f
                 )
             );
