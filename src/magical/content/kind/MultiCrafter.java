@@ -73,9 +73,10 @@ public class MultiCrafter extends Block {
                 int id = i;
                 Recipe r = recipes.get(i);
 
-                Drawable icon = new TextureRegionDrawable(r.output[0].item.uiIcon);
-
-                table.button(icon, () -> configure(id)).size(48f);
+                table.button(
+                        r.output[0].item.name,
+                        () -> configure(id)
+                );
             }
         }
 
