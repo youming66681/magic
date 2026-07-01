@@ -3,7 +3,7 @@
 // (powered by FernFlower decompiler)
 //
 
-package dc.world.blocks.complex;
+package magical.content;
 
 import arc.func.Prov;
 import arc.graphics.Color;
