@@ -5,11 +5,11 @@ import mindustry.world.Block;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatUnit;
 
-public class MultiCrafterBlock extends Block {
+public class MultipleCrafter extends Block {
 
     public Seq<Recipe> recipes = new Seq<>();
 
-    public MultiCrafterBlock(String name){
+    public MultipleCrafter(String name){
         super(name);
         update = true;
         solid = true;
