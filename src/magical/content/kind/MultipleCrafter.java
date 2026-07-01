@@ -42,19 +42,30 @@ public class MultipleCrafter extends Block {
 
     @Override
     public void load() {
+        super.load();
+
+        if(drawer != null){
+            drawer.load(this);
+        }
     }
 
     @Override
     public void init() {
+        super.init();
     }
 
     @Override
-    public void drawPlanRegion(BuildPlan plan, Eachable<BuildPlan> list) {
+    public void drawPlanRegion(BuildPlan plan, Eachable<BuildPlan> list){
+        if(drawer != null){
+            drawer.drawPlan(this, plan, list);
+        }else{
+            super.drawPlanRegion(plan, list);
+        }
     }
 
     @Override
     public TextureRegion[] icons() {
-        return null;
+        return drawer == null ? super.icons() : drawer.finalIcons(this);
     }
 
     @Override
