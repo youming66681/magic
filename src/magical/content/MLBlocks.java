@@ -246,7 +246,7 @@ public class MLBlocks {
                             new ItemStack(Items.silicon, 30)
                     };
                 }};
-            }},
+            }};
         }};
         //factor
         //炮
