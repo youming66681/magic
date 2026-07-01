@@ -230,15 +230,18 @@ public class MLBlocks {
             solid = true;
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
             hasPower = true;
-            Formula f1 = new Formula("logicChip");
-            f1.craftTime = 30f;
-            f1.inputs.add(new ItemStack(MLItems.phantomSteel, 1));
-            f1.inputs.add(new ItemStack(MLItems.phantomTitaniumSteel, 1));
-            f1.inputs.add(new ItemStack(MLItems.mysticCrystal, 1));
-            f1.inputs.add(new ItemStack(Items.silicon, 3));
-            f1.outputs.add(new ItemStack(MLItems.logicChip, 1));
-            formulas.add(f1);
-            this.generateIcons = false;
+            addFormula(
+                    new Formula()
+                            .input(
+                                    new ItemStack(Items.copper,2),
+                                    new ItemStack(Items.lead,1)
+                            )
+                            .output(
+                                    new ItemStack(Items.graphite,1)
+                            )
+                            .craftTime(60)
+                            .power(1)
+                    )
         }};
         //factor
         //炮
