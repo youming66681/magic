@@ -218,7 +218,7 @@ public class MLBlocks {
             consumePower(1.0f);
         }};
         //芯片制造机
-        chipMachine = new MultiCrafter("chipMachine"){{
+        chipMachine = new MultiCrafterParser("chipMachine"){{
             requirements(Category.crafting, ItemStack.with(MLItems.phantomSteel, 30, MLItems.phantomTitaniumSteel, 10, MLItems.mysticCrystal, 20, Items.silicon, 40, Items.metaglass, 50));
             consumePower(15f);
             health = 400;
