@@ -230,18 +230,13 @@ public class MLBlocks {
             solid = true;
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
             hasPower = true;
-            addFormula(
-                    new Formula()
-                            .input(
-                                    new ItemStack(Items.copper,2),
-                                    new ItemStack(Items.lead,1)
-                            )
-                            .output(
-                                    new ItemStack(Items.graphite,1)
-                            )
-                            .craftTime(60)
-                            .power(1)
-                    );
+            var r1 = new MultiCrafterBlock.Recipe("铁板");
+            r1.time = 60f;
+            r1.power = 1.2f;
+            r1.inputs = new ItemStack[]{
+                    new ItemStack(Items.copper, 2, Items.lead, 2)
+            };
+            r1.output = new ItemStack(Items.lead, 1);
         }};
         //factor
         //炮

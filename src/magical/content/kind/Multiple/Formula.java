@@ -1,63 +1,75 @@
-package magical.world.blocks.production;
+package magical.content.kind.Multiple;
 
-import arc.graphics.Color;
-import arc.graphics.g2d.TextureRegion;
+import arc.struct.Seq;
 import mindustry.entities.Effect;
 import mindustry.type.ItemStack;
 import mindustry.type.LiquidStack;
 import mindustry.world.draw.DrawBlock;
+import mindustry.world.draw.DrawDefault;
+import mindustry.content.Fx;
 
 public class Formula{
 
-    public ItemStack[] inputItems = ItemStack.empty;
-    public ItemStack[] outputItems = ItemStack.empty;
+    /** 输入物品 */
+    public final Seq<ItemStack> inputItems = new Seq<>();
 
-    public LiquidStack[] inputLiquids = LiquidStack.empty;
-    public LiquidStack[] outputLiquids = LiquidStack.empty;
+    /** 输出物品 */
+    public final Seq<ItemStack> outputItems = new Seq<>();
 
+    /** 输入液体 */
+    public final Seq<LiquidStack> inputLiquids = new Seq<>();
+
+    /** 输出液体 */
+    public final Seq<LiquidStack> outputLiquids = new Seq<>();
+
+    /** 生产时间 */
     public float craftTime = 60f;
+
+    /** 每秒耗电 */
     public float powerUse = 0f;
 
-    public Effect craftEffect = Effect.none;
-    public Effect updateEffect = Effect.none;
-    public float updateEffectChance = 0.04f;
+    /** 更新特效 */
+    public Effect updateEffect = Fx.none;
 
-    public DrawBlock drawer;
+    /** 合成特效 */
+    public Effect craftEffect = Fx.none;
 
-    public TextureRegion icon;
+    /** 绘制器 */
+    public DrawBlock drawer = new DrawDefault();
 
-    public Color color = Color.white.cpy();
-
-    public String name = "";
-    public String description = "";
 
     public Formula input(ItemStack... stacks){
-        inputItems = stacks;
+        inputItems.add(stacks);
         return this;
     }
 
     public Formula output(ItemStack... stacks){
-        outputItems = stacks;
+        outputItems.add(stacks);
         return this;
     }
 
-    public Formula inputLiquid(LiquidStack... stacks){
-        inputLiquids = stacks;
+    public Formula input(LiquidStack... stacks){
+        inputLiquids.add(stacks);
         return this;
     }
 
-    public Formula outputLiquid(LiquidStack... stacks){
-        outputLiquids = stacks;
+    public Formula output(LiquidStack... stacks){
+        outputLiquids.add(stacks);
         return this;
     }
 
-    public Formula craftTime(float craftTime){
-        this.craftTime = craftTime;
+    public Formula craftTime(float time){
+        craftTime = time;
         return this;
     }
 
     public Formula power(float power){
-        this.powerUse = power;
+        powerUse = power;
+        return this;
+    }
+
+    public Formula drawer(DrawBlock draw){
+        drawer = draw;
         return this;
     }
 
@@ -66,35 +78,8 @@ public class Formula{
         return this;
     }
 
-    public Formula updateEffect(Effect effect, float chance){
+    public Formula updateEffect(Effect effect){
         updateEffect = effect;
-        updateEffectChance = chance;
         return this;
     }
-
-    public Formula drawer(DrawBlock drawer){
-        this.drawer = drawer;
-        return this;
-    }
-
-    public Formula icon(TextureRegion region){
-        icon = region;
-        return this;
-    }
-
-    public Formula color(Color color){
-        this.color = color;
-        return this;
-    }
-
-    public Formula name(String name){
-        this.name = name;
-        return this;
-    }
-
-    public Formula description(String description){
-        this.description = description;
-        return this;
-    }
-
 }

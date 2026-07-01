@@ -1,46 +1,109 @@
-package magical.world.blocks.production;
+package magical.content.kind.multiple;
 
 import arc.struct.Seq;
-import mindustry.world.blocks.production.GenericCrafter;
+import mindustry.world.Block;
+import mindustry.world.meta.Stat;
+import mindustry.world.meta.StatUnit;
 
-public class MultipleCrafter extends GenericCrafter{
+public class MultiCrafterBlock extends Block {
 
-    public final Seq<Formula> formulas = new Seq<>();
+    public Seq<Recipe> recipes = new Seq<>();
 
-    public MultipleCrafter(String name){
+    public MultiCrafterBlock(String name){
         super(name);
+        update = true;
+        solid = true;
+        hasItems = true;
+        hasPower = true;
+    }
 
-        configurable = true;
-        saveConfig = true;
-        sync = true;
+    @Override
+    public void setStats(){
+        super.setStats();
 
-        config(Integer.class, (MultipleCrafterBuild build, Integer id) -> {
-            build.setRecipe(id);
+        stats.add(Stat.output, table -> {
+            for(Recipe r : recipes){
+                table.row();
+                table.add(r.name + "[]").left();
+                table.row();
+
+                table.add(r.time / 60f + "s").left();
+                table.row();
+
+                table.add(r.power + " power/t").left();
+                table.row();
+
+                table.add(r.output).left();
+            }
         });
-
-        buildType = MultipleCrafterBuild::new;
-
-        consume(new DynamicConsumePower(build -> {
-
-            MultipleCrafterBuild b = (MultipleCrafterBuild)build;
-
-            Formula f = b.formula();
-
-            return f == null ? 0f : f.powerUse;
-
-        }));
     }
 
-    public Formula addFormula(Formula formula){
-        formulas.add(formula);
-        return formula;
+    public static class Recipe{
+        public String name;
+        public float time = 60f;
+        public float power = 1f;
+
+        public mindustry.type.ItemStack[] inputs;
+        public mindustry.type.ItemStack output;
+
+        public Recipe(String name){
+            this.name = name;
+        }
     }
 
-    public Formula formula(int index){
-        return formulas.get(index);
+public class MultiCrafterBuild extends GenericCrafter.GenericCrafterBuild {
+
+    public int recipeIndex = 0;
+    public float progress = 0f;
+
+    @Override
+    public void updateTile(){
+
+        MultiCrafterBlock block = (MultiCrafterBlock) this.block;
+        var recipe = block.recipes.get(recipeIndex);
+
+        // 电力
+        float eff = power.status;
+
+        if(eff <= 0f) return;
+
+        // 检查输入
+        if(!hasItems(recipe)) return;
+
+        progress += edelta() * eff;
+
+        if(progress >= recipe.time){
+            consumeItems(recipe);
+            if(outputItems != null){
+                outputItems.add(recipe.output.item, recipe.output.amount);
+            }
+            progress = 0f;
+        }
     }
 
-    public int formulaCount(){
-        return formulas.size;
+    boolean hasItems(MultiCrafterBlock.Recipe r){
+        for(var i : r.inputs){
+            if(items.get(i.item) < i.amount){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    void consumeItems(MultiCrafterBlock.Recipe r){
+        for(var i : r.inputs){
+            items.remove(i);
+        }
+    }
+
+    @Override
+    public void buildConfiguration(mindustry.ui.BuildConfig config){
+        MultiCrafterBlock block = (MultiCrafterBlock) this.block;
+
+        config.button("切换配方: " + block.recipes.get(recipeIndex).name, () -> {
+            recipeIndex++;
+            if(recipeIndex >= block.recipes.size) recipeIndex = 0;
+            });
+        }
     }
 }
