@@ -218,7 +218,7 @@ public class MLBlocks {
             consumePower(1.0f);
         }};
         //芯片制造机
-        chipMachine = new MultipleCrafter("chipMachine"){{
+        chipMachine = new MultiCrafter("chipMachine"){{
             requirements(Category.crafting, ItemStack.with(MLItems.phantomSteel, 30, MLItems.phantomTitaniumSteel, 10, MLItems.mysticCrystal, 20, Items.silicon, 40, Items.metaglass, 50));
             consumePower(15f);
             health = 400;
@@ -230,13 +230,23 @@ public class MLBlocks {
             solid = true;
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
             hasPower = true;
-            var r1 = new MultiCrafterBlock.Recipe("铁板");
-            r1.time = 60f;
-            r1.power = 1.2f;
-            r1.inputs = new ItemStack[]{
-                    new ItemStack(Items.copper, 2, Items.lead, 2)
-            };
-            r1.output = new ItemStack(Items.lead, 1);
+            new Recipe(){{
+                craftTime = 60f;
+
+                input = new Input(){{
+                    power = 15f;
+                    items = new ItemStack[]{
+                            new ItemStack(Items.sand, 30),
+                            new ItemStack(Items.surgeAlloy, 2)
+                    };
+                }};
+
+                output = new Output(){{
+                    items = new ItemStack[]{
+                            new ItemStack(Items.silicon, 30)
+                    };
+                }};
+            }},
         }};
         //factor
         //炮
