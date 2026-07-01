@@ -19,6 +19,16 @@ public class MultipleCrafter extends GenericCrafter{
         });
 
         buildType = MultipleCrafterBuild::new;
+
+        consume(new DynamicConsumePower(build -> {
+
+            MultipleCrafterBuild b = (MultipleCrafterBuild)build;
+
+            Formula f = b.formula();
+
+            return f == null ? 0f : f.powerUse;
+
+        }));
     }
 
     public Formula addFormula(Formula formula){

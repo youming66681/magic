@@ -241,7 +241,7 @@ public class MLBlocks {
                             )
                             .craftTime(60)
                             .power(1)
-                    )
+                    );
         }};
         //factor
         //炮

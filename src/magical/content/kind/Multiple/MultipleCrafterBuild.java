@@ -244,15 +244,6 @@ public class MultipleCrafterBuild extends GenericCrafter.GenericCrafterBuild{
             craftFormula();
         }
     }
-    consume(new DynamicConsumePower(build -> {
-
-        MultipleCrafterBuild b = (MultipleCrafterBuild)build;
-
-        Formula f = b.formula();
-
-        return f == null ? 0f : f.powerUse;
-
-    }));
     @Override
     public boolean shouldConsume(){
 
