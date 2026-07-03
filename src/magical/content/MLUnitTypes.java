@@ -23,6 +23,7 @@ import mindustry.type.weapons.*;
 import mindustry.world.meta.*;
 import mindustry.type.UnitType;
 import mindustry.content.UnitTypes;
+import mindustry.content.Fx;
 
 import static arc.graphics.g2d.Draw.*;
 import static arc.graphics.g2d.Lines.*;
