@@ -41,10 +41,10 @@ public class MLUnitTypes {
             Drizzle;
 
     public static void load(){
-        Drizzle = new UnitType("Drizzle") {{
+        Drizzle = new UnitType("drizzle") {{
             constructor = UnitTypes.stell.constructor;
-            //omniMovement = false;
-            rotateMoveFirst = true;
+            omniMovement = false;
+            rotateMoveFirst = false;
             rotateSpeed = 3;
             speed = 1.5f;
             hitSize = 8f;
@@ -55,7 +55,7 @@ public class MLUnitTypes {
             accel = 0.12f;
             itemCapacity = 10;
             faceTarget = false;
-            weapons.add(new Weapon("DrizzleOne") {{
+            weapons.add(new Weapon("drizzle1") {{
                 reload = 120f;
                 recoil = 3;
                 x = y = 0;
@@ -74,7 +74,7 @@ public class MLUnitTypes {
                     height = 16;
                     splashDamageRadius = 24;
                     splashDamage = 25;
-                    hitEffect = despawnEffect = MLFx.smallExplosion1;
+                    hitEffect = despawnEffect = MLFx.smallExplosion2;
                 }};
             }});
         }};
