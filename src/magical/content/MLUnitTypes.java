@@ -35,9 +35,7 @@ import magical.content.MLFx;
 
 public class MLUnitTypes {
     public static void load(){
-        public static MLUnitType
-        Drizzle
-        ;
+        public static MLUnitType Drizzle;
         Drizzle = new UnitType("Drizzle") {{
             constructor = UnitTypes.stell.constructor;
             //omniMovement = false;
@@ -76,4 +74,4 @@ public class MLUnitTypes {
             }});
         }};
     }
-};
+}
