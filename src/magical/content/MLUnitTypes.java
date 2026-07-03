@@ -21,6 +21,8 @@ import mindustry.type.ammo.*;
 import mindustry.type.unit.*;
 import mindustry.type.weapons.*;
 import mindustry.world.meta.*;
+import mindustry.type.UnitType;
+import mindustry.content.UnitTypes;
 
 import static arc.graphics.g2d.Draw.*;
 import static arc.graphics.g2d.Lines.*;
@@ -34,7 +36,7 @@ import magical.content.MLPlanets;
 import magical.content.MLFx;
 
 public class MLUnitTypes {
-    public static MLUnitType
+    public static UnitType
             Drizzle;
 
     public static void load(){
@@ -52,7 +54,7 @@ public class MLUnitTypes {
             accel = 0.1f;
             itemCapacity = 10;
             faceTarget = false;
-            weapons.add(new Weapon(name("Drizzle1")) {{
+            weapons.add(new Weapon("Drizzle1") {{
                 reload = 60f;
                 recoil = 3;
                 x = y = 0;
@@ -62,7 +64,7 @@ public class MLUnitTypes {
                 rotateSpeed = 5;
                 inaccuracy = 1f;
                 ejectEffect = Fx.casing1;
-                shootSound = MLSounds.shootArtillery.ogg;
+                shootSound = MLSounds.shootArtillery;
                 shoot.shots = 6;
                 shoot.shotDelay = 6;
                 bullet = new BasicBulletType(8, 25) {{
@@ -71,7 +73,7 @@ public class MLUnitTypes {
                     height = 16;
                     splashDamageRadius = 24;
                     splashDamage = 25;
-                    hitEffect = despawnEffect = smallExplosion1;
+                    hitEffect = despawnEffect = MLFx.smallExplosion1;
                 }};
             }});
         }};
