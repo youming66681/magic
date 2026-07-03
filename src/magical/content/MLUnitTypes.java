@@ -34,8 +34,10 @@ import magical.content.MLPlanets;
 import magical.content.MLFx;
 
 public class MLUnitTypes {
+    public static MLUnitType
+            Drizzle;
+
     public static void load(){
-        public static MLUnitType Drizzle;
         Drizzle = new UnitType("Drizzle") {{
             constructor = UnitTypes.stell.constructor;
             //omniMovement = false;
