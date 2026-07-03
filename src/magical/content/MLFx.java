@@ -20,6 +20,7 @@ public class MLFx {
     public static Effect smallElectricDetonation;
     public static Effect squareWaveRot;
     public static Effect beamEffect;
+    public static Effect smallExplosion1;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -52,7 +53,26 @@ public class MLFx {
             Draw.color(Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF"), e.fin());
             Lines.stroke(Mathf.lerp(9f, 0f, e.fin()));
             Lines.lineAngle(e.x, e.y, e.rotation, 20f);
-            Draw.reset();
+        });
+        smallExplosion1 = new Effect(30f, e -> {
+            Draw.color(Color.white, Color.valueOf("ffb347"), e.fin());
+            Fill.circle(e.x, e.y, 6f * e.fout());
+
+            Draw.color(Color.valueOf("ffb347"));
+            Draw.alpha(e.fout());
+            Lines.stroke(2f * e.fout());
+            Lines.circle(e.x, e.y, 32f * e.fin()); // 24 = 3格
+
+            Draw.color(Color.valueOf("ff9248"));
+            Angles.randLenVectors(e.id, 18, 32f * e.fin(), (x, y) -> {
+                Fill.circle(e.x + x, e.y + y, 1.6f * e.fout());
+            });
+
+            Draw.color(Color.gray);
+            Angles.randLenVectors(e.id + 1, 10, 24f * e.fin(), (x, y) -> {
+                Fill.circle(e.x + x, e.y + y, 2.8f * e.fout());
+            });
+
         });
     }
     public static Effect Slash(Color colorSlash, float len, float width){
