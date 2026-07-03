@@ -51,7 +51,7 @@ public class MLUnitTypes {
             health = 600;
             armor = 3;
             drag = 0.02f;
-            accel = 0.1f;
+            accel = 0.12f;
             itemCapacity = 10;
             faceTarget = false;
             weapons.add(new Weapon("Drizzle1") {{
