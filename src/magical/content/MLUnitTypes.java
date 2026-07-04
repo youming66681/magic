@@ -76,6 +76,7 @@ public class MLUnitTypes {
                     splashDamageRadius = 24;
                     splashDamage = 25;
                     hitEffect = despawnEffect = MLFx.smallExplosion1;
+                    hitSound = MLSounds.explosion;
                 }};
             }});
         }};
