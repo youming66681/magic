@@ -55,7 +55,7 @@ public class MLUnitTypes {
             accel = 0.12f;
             itemCapacity = 10;
             faceTarget = false;
-            weapons.add(new Weapon("drizzle1") {{
+            weapons.add(new Weapon("drizzle-1") {{
                 reload = 120f;
                 recoil = 3;
                 x = y = 0;
