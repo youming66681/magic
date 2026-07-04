@@ -45,8 +45,8 @@ public class MLUnitTypes {
             constructor = UnitTypes.stell.constructor;
             omniMovement = false;
             rotateMoveFirst = false;
-            rotateSpeed = 3;
-            speed = 1.5f;
+            rotateSpeed = 6;
+            speed = 3f;
             hitSize = 8f;
 
             health = 600;
