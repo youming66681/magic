@@ -27,7 +27,7 @@ public class MLFx {
     Vec2 temp = new Vec2();
 
     public static void load() {
-         smallElectricDetonation = new Effect(30f, (e) -> {
+        smallElectricDetonation = new Effect(30f, (e) -> {
             Draw.color(Color.valueOf("97B5EDFF"), e.color, e.fin() + 0.4F);
             e.scaled(6, (i) -> {
                 Lines.stroke(6f * i.foutpow());
@@ -36,12 +36,12 @@ public class MLFx {
             Angles.randLenVectors((long) e.id, 1, 8f * e.finpow(), (x, y) -> {
                 Fill.circle(e.x, e.y, 2f * e.fout() * 4f);
             });
-             Angles.randLenVectors((long)e.id, 6, e.finpow() * 20f, (x, y) -> {
-                 float ang = Mathf.angle(x, y);
-                 Lines.lineAngle(e.x + x, e.y + y, ang, e.fout() * (float)rand.random(4f, 8f) + 2F);
-             });
+            Angles.randLenVectors((long) e.id, 6, e.finpow() * 20f, (x, y) -> {
+                float ang = Mathf.angle(x, y);
+                Lines.lineAngle(e.x + x, e.y + y, ang, e.fout() * (float) rand.random(4f, 8f) + 2F);
+            });
         });
-        squareWaveRot =  new Effect(14, 40f, e -> {
+        squareWaveRot = new Effect(14, 40f, e -> {
             rand.setSeed(e.id);
             Draw.color(Color.valueOf("FEEBB3FF"), e.color, rand.random(0.8f, 1.5f) * e.fin());
             Lines.stroke(rand.random(0.6f, 0.9f) + e.fout() * 2);
@@ -74,6 +74,7 @@ public class MLFx {
                 Fill.circle(e.x + x, e.y + y, 2.8f * e.fout());
             });
         });
+    }
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
 
