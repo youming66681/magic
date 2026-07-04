@@ -59,7 +59,7 @@ public class MLUnitTypes {
                 reload = 120f;
                 recoil = 3;
                 x = y = 0;
-                shootY = 0f;
+                shootY = 2f;
                 mirror = false;
                 rotate = true;
                 rotateSpeed = 5;
