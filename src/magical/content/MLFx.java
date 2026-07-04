@@ -74,32 +74,45 @@ public class MLFx {
                 Fill.circle(e.x + x, e.y + y, 2.8f * e.fout());
             });
         });
-         smallExplosion2 = new Effect(30f, e -> {
-                Draw.color(Color.white, Pal.lightOrange, e.fin());
-                Drawf.stroke(2f * e.fout());
-                Drawf.circle(e.x, e.y, 32f * e.fin());
+        smallExplosion2 = new Effect(30f, e -> {
 
-                Draw.color(Color.white);
-                Fill.circle(e.x, e.y, 4f * e.fout());
-                Draw.color(Pal.lightOrange);
+            Draw.color(Color.white, Color.orange, e.fin());
+            Lines.stroke(2f * e.fout());
+            Lines.circle(e.x, e.y, 32f * e.fin());
 
-                Angles.randLenVectors(e.id, 18, 32f * e.fin(), (x, y) -> {
-                    Fill.circle(e.x + x, e.y + y, 1.8f * e.fout());
-                });
+            Draw.color(Color.white);
+            Fill.circle(e.x, e.y, 4f * e.fout());
 
-                Draw.color(Pal.remove);
-                Angles.randLenVectors(e.id + 1, 10, 20f * e.fin(), (x, y) -> {
-                    Drawf.tri(e.x + x, e.y + y, 2f * e.fout(), 6f * e.fout(), Mathf.angle(x, y));
-                });
+            Draw.color(Color.orange);
+            Angles.randLenVectors(e.id, 18, 24f * e.fin(), (x, y) -> {
+                Fill.circle(e.x + x, e.y + y, 1.8f * e.fout());
             });
+
+            Draw.color(Color.scarlet);
+            Angles.randLenVectors(e.id + 1, 10, 20f * e.fin(), (x, y) -> {
+                Drawf.tri(e.x + x, e.y + y, 2f * e.fout(), 6f * e.fout(), Mathf.angle(x, y)
+                );
+            });
+
+            Draw.reset();
+        });
     }
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
 
             Draw.color(colorSlash);
-            Drawf.tri(e.x, e.y, width * e.fout(), len, e.rotation);
-            Drawf.tri(e.x, e.y, width * e.fout(), len, e.rotation + 180f);
 
+            for(int i = 0; i < 8; i++){
+
+                float fin = e.fin() - i * 0.08f;
+                if(fin < 0) continue;
+
+                float x = e.x + Angles.trnsx(e.rotation, fin * len);
+                float y = e.y + Angles.trnsy(e.rotation, fin * len);
+
+                Drawf.tri(x, y, width * (1f - fin), len * 0.15f, e.rotation
+                );
+            }
         });
     }
 }
