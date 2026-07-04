@@ -78,15 +78,15 @@ public class MLFx {
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
 
-            Draw.color(Color.colorSlash);
+            Draw.color(colorSlash);
 
             Fill.circle(e.x, e.y, 3f * e.fout());
 
             Angles.randLenVectors(e.id, 18, 30f * e.fin(),
                     (x, y) -> {
                         float rot = Mathf.angle(x, y);
-                        Drawf.tri(e.x + x, e.y + y, width * e.fout(), len * e.fout(), rot);
-                        Drawf.tri(e.x + x, e.y + y, width * e.fout(), len * e.fout(), rot + 180);
+                        Lines.stroke(2f * e.fout());
+                        Lines.lineAngle(e.x + x, e.y + y, rot, width * e.fout());
                     }
             );
             float rot = Mathf.angle(x, y) + e.fin() * 180f;

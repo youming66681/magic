@@ -21,11 +21,11 @@ import magical.content.MLFx;
 
 public class magic extends Mod {
     public static Mods.LoadedMod ML;
-    public static final String ModName = "magic-industry";
+    public static final String ModName = "magic";
     public static Mods.LoadedMod mod;
     public magic() {}
     public static String name(String add) {
-        return "modName" + add;
+        return ModName + "-" + add;
     }
     @Override
     public void loadContent() {
