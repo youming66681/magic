@@ -55,16 +55,17 @@ public class MLUnitTypes {
             accel = 0.12f;
             itemCapacity = 10;
             faceTarget = false;
-            weapons.add(new Weapon(magic.name("drizzle-1")) {{
+            weapons.add(new Weapon("drizzle-1") {{
                 reload = 120f;
                 recoil = 3;
                 x = y = 0;
-                shootY = 5.5f;
+                shootY = 0f;
                 mirror = false;
                 rotate = true;
                 rotateSpeed = 5;
                 inaccuracy = 1f;
                 ejectEffect = Fx.casing1;
+                layerOffset = 0.001f;
                 shootSound = MLSounds.shootArtillery;
                 shoot.shots = 6;
                 shoot.shotDelay = 6;

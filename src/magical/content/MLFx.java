@@ -74,28 +74,13 @@ public class MLFx {
                 Fill.circle(e.x + x, e.y + y, 2.8f * e.fout());
             });
         });
-    }
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
 
             Draw.color(colorSlash);
+            Drawf.tri(e.x, e.y, width * e.fout(), len, e.rotation);
+            Drawf.tri(e.x, e.y, width * e.fout(), len, e.rotation + 180f);
 
-            Fill.circle(e.x, e.y, 3f * e.fout());
-
-            Angles.randLenVectors(e.id, 18, 30f * e.fin(),
-                    (x, y) -> {
-                        float rot = Mathf.angle(x, y);
-                        Lines.stroke(2f * e.fout());
-                        Lines.lineAngle(e.x + x, e.y + y, rot, width * e.fout());
-                    }
-            );
-            float rot = Mathf.angle(x, y) + e.fin() * 180f;
-            Lines.stroke(2f * e.fout());
-            Lines.lineAngle(e.x + x, e.y + y, rot, 12f * e.fout());
-            Angles.randLenVectors(e.id + 1, 25, 40f * e.fin(), (x, y)->{
-                Fill.circle(e.x + x, e.y + y, 1.2f * e.fout());
-                }
-            );
         });
     }
 }
