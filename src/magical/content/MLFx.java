@@ -73,6 +73,7 @@ public class MLFx {
             Angles.randLenVectors(e.id + 1, 10, 24f * e.fin(), (x, y) -> {
                 Fill.circle(e.x + x, e.y + y, 2.8f * e.fout());
             });
+        });
          smallExplosion2 = new Effect(30f, e -> {
                 Draw.color(Color.white, Pal.lightOrange, e.fin());
                 Drawf.stroke(2f * e.fout());
@@ -90,10 +91,7 @@ public class MLFx {
                 Angles.randLenVectors(e.id + 1, 10, 20f * e.fin(), (x, y) -> {
                     Drawf.tri(e.x + x, e.y + y, 2f * e.fout(), 6f * e.fout(), Mathf.angle(x, y));
                 });
-
-                Draw.reset();
             });
-        });
     }
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
