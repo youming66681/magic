@@ -74,45 +74,28 @@ public class MLFx {
                 Fill.circle(e.x + x, e.y + y, 2.8f * e.fout());
             });
         });
-        smallExplosion2 = new Effect(30f, e -> {
-
-            Draw.color(Color.white, Color.orange, e.fin());
-            Lines.stroke(2f * e.fout());
-            Lines.circle(e.x, e.y, 32f * e.fin());
-
-            Draw.color(Color.white);
-            Fill.circle(e.x, e.y, 4f * e.fout());
-
-            Draw.color(Color.orange);
-            Angles.randLenVectors(e.id, 18, 24f * e.fin(), (x, y) -> {
-                Fill.circle(e.x + x, e.y + y, 1.8f * e.fout());
-            });
-
-            Draw.color(Color.scarlet);
-            Angles.randLenVectors(e.id + 1, 10, 20f * e.fin(), (x, y) -> {
-                Drawf.tri(e.x + x, e.y + y, 2f * e.fout(), 6f * e.fout(), Mathf.angle(x, y)
-                );
-            });
-
-            Draw.reset();
-        });
     }
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
 
-            Draw.color(colorSlash);
+            Draw.color(Color.colorSlash);
 
-            for(int i = 0; i < 8; i++){
+            Fill.circle(e.x, e.y, 3f * e.fout());
 
-                float fin = e.fin() - i * 0.08f;
-                if(fin < 0) continue;
-
-                float x = e.x + Angles.trnsx(e.rotation, fin * len);
-                float y = e.y + Angles.trnsy(e.rotation, fin * len);
-
-                Drawf.tri(x, y, width * (1f - fin), len * 0.15f, e.rotation
-                );
-            }
+            Angles.randLenVectors(e.id, 18, 30f * e.fin(),
+                    (x, y) -> {
+                        float rot = Mathf.angle(x, y);
+                        Drawf.tri(e.x + x, e.y + y, width * e.fout(), len * e.fout(), rot);
+                        Drawf.tri(e.x + x, e.y + y, width * e.fout(), len * e.fout(), rot + 180);
+                    }
+            );
+            float rot = Mathf.angle(x, y) + e.fin() * 180f;
+            Lines.stroke(2f * e.fout());
+            Lines.lineAngle(e.x + x, e.y + y, rot, 12f * e.fout());
+            Angles.randLenVectors(e.id + 1, 25, 40f * e.fin(), (x, y)->{
+                Fill.circle(e.x + x, e.y + y, 1.2f * e.fout());
+                }
+            );
         });
     }
 }

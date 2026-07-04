@@ -55,7 +55,7 @@ public class MLUnitTypes {
             accel = 0.12f;
             itemCapacity = 10;
             faceTarget = false;
-            weapons.add(new Weapon("drizzle-1") {{
+            weapons.add(new Weapon(magic.name("drizzle-1")) {{
                 reload = 120f;
                 recoil = 3;
                 x = y = 0;
@@ -74,7 +74,7 @@ public class MLUnitTypes {
                     height = 16;
                     splashDamageRadius = 24;
                     splashDamage = 25;
-                    hitEffect = despawnEffect = MLFx.smallExplosion2;
+                    hitEffect = despawnEffect = MLFx.smallExplosion1;
                 }};
             }});
         }};
