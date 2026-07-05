@@ -56,10 +56,12 @@ public class MLUnitTypes {
             accel = 0.12f;
             itemCapacity = 10;
             faceTarget = false;
-            weapons.add(new Weapon("magic-drizzle1") {{
+            weapons.add(new PivotWeapon("magic-drizzle1") {{
                 reload = 120f;
                 recoil = 3;
                 x = y = 0;
+                pivotX = -4f;
+                pivotY = 0f;
                 shootY = 2f;
                 mirror = false;
                 rotate = true;
@@ -89,14 +91,15 @@ public class MLUnitTypes {
             rotateSpeed = 3.5f;
             speed = 1.75f;
             hitSize = 16f;
-
+            pivotX = -4f;
+            pivotY = 0f;
             health = 1200;
             armor = 6;
             drag = 0.04f;
             accel = 0.1f;
             itemCapacity = 20;
             faceTarget = false;
-            weapons.add(new Weapon("magic-Drizzle1") {{
+            weapons.add(new PivotWeapon("magic-Drizzle1") {{
                 reload = 20f;
                 recoil = 0;
                 x = y = 0;
@@ -116,12 +119,14 @@ public class MLUnitTypes {
                         new RegionPart("-l") {{
                             mirror = false;
                             heatProgress = PartProgress.recoil;
+                            recoilIndex = 0;
                             progress = PartProgress.recoil;
                             moveY = -2;
                         }},
                         new RegionPart("-r") {{
                             mirror = false;
                             heatProgress = PartProgress.recoil;
+                            recoilIndex = 1;
                             progress = PartProgress.recoil;
                             moveY = -2;
                         }});
