@@ -76,7 +76,7 @@ public class MLUnitTypes {
                     height = 16;
                     splashDamageRadius = 24;
                     splashDamage = 25;
-                    hitEffect = despawnEffect = MLFx.smallExplosion1;
+                    hitEffect = despawnEffect = MLFx.Explosion1;
                     hitSound = MLSounds.explosion;
                 }};
             }});
@@ -86,7 +86,7 @@ public class MLUnitTypes {
             omniMovement = false;
             rotateMoveFirst = false;
             squareShape = true;
-            rotateSpeed = 3.5;
+            rotateSpeed = 3.5f;
             speed = 1.75f;
             hitSize = 16f;
 
@@ -132,7 +132,7 @@ public class MLUnitTypes {
                     height = 12;
                     splashDamageRadius = 16;
                     splashDamage = 30;
-                    hitEffect = despawnEffect = MLFx.smallExplosion1;
+                    hitEffect = despawnEffect = MLFx.Explosion2;
                     hitSound = MLSounds.explosion;
                 }};
             }});
