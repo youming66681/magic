@@ -20,8 +20,8 @@ public class MLFx {
     public static Effect smallElectricDetonation;
     public static Effect squareWaveRot;
     public static Effect beamEffect;
-    public static Effect smallExplosion1;
-    public static Effect smallExplosion2;
+    public static Effect Explosion1;
+    public static Effect Explosion2;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
