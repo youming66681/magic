@@ -45,7 +45,7 @@ public class MLUnitTypes {
             constructor = UnitTypes.stell.constructor;
             omniMovement = false;
             rotateMoveFirst = false;
-            squareShape = true,
+            squareShape = true;
             rotateSpeed = 4;
             speed = 2f;
             hitSize = 8f;
@@ -85,7 +85,7 @@ public class MLUnitTypes {
             constructor = UnitTypes.stell.constructor;
             omniMovement = false;
             rotateMoveFirst = false;
-            squareShape = true,
+            squareShape = true;
             rotateSpeed = 3.5;
             speed = 1.75f;
             hitSize = 16f;
@@ -109,8 +109,8 @@ public class MLUnitTypes {
                 layerOffset = 0.001f;
                 shootSound = MLSounds.shootArtillerySmall;
                 shoot = new ShootAlternate() {{
-                    barrels = 2,
-                    spread = 2,
+                    barrels = 2;
+                    spread = 2;
                 }};
                 parts.addAll(
                         new RegionPart("-l") {{
