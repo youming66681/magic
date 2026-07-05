@@ -38,15 +38,16 @@ import magical.content.MLFx;
 
 public class MLUnitTypes {
     public static UnitType
-            Drizzle;
+            drizzle, Drizzle;
 
     public static void load(){
-        Drizzle = new UnitType("drizzle") {{
+        drizzle = new UnitType("drizzle") {{
             constructor = UnitTypes.stell.constructor;
             omniMovement = false;
             rotateMoveFirst = false;
-            rotateSpeed = 6;
-            speed = 3f;
+            squareShape = true,
+            rotateSpeed = 4;
+            speed = 2f;
             hitSize = 8f;
 
             health = 600;
@@ -62,8 +63,8 @@ public class MLUnitTypes {
                 shootY = 2f;
                 mirror = false;
                 rotate = true;
-                rotateSpeed = 5;
-                inaccuracy = 1f;
+                rotateSpeed = 3;
+                inaccuracy = 0f;
                 ejectEffect = Fx.casing1;
                 layerOffset = 0.001f;
                 shootSound = MLSounds.shootArtillery;
@@ -75,6 +76,62 @@ public class MLUnitTypes {
                     height = 16;
                     splashDamageRadius = 24;
                     splashDamage = 25;
+                    hitEffect = despawnEffect = MLFx.smallExplosion1;
+                    hitSound = MLSounds.explosion;
+                }};
+            }});
+        }};
+        Drizzle = new UnitType("Drizzle") {{
+            constructor = UnitTypes.stell.constructor;
+            omniMovement = false;
+            rotateMoveFirst = false;
+            squareShape = true,
+            rotateSpeed = 3.5;
+            speed = 1.75f;
+            hitSize = 16f;
+
+            health = 1200;
+            armor = 6;
+            drag = 0.04f;
+            accel = 0.1f;
+            itemCapacity = 20;
+            faceTarget = false;
+            weapons.add(new Weapon("magic-Drizzle1") {{
+                reload = 20f;
+                recoil = 0;
+                x = y = 0;
+                shootY = 2f;
+                mirror = false;
+                rotate = true;
+                rotateSpeed = 2;
+                inaccuracy = 2f;
+                ejectEffect = Fx.casing2;
+                layerOffset = 0.001f;
+                shootSound = MLSounds.shootArtillerySmall;
+                shoot = new ShootAlternate() {{
+                    barrels = 2,
+                    spread = 2,
+                }};
+                parts.addAll(
+                        new RegionPart("-l") {{
+                            mirror = false;
+                            heatProgress = PartProgress.recoil;
+                            progress = PartProgress.recoil;
+                            moveY = -2;
+                        }},
+                        new RegionPart("-r") {{
+                            mirror = false;
+                            heatProgress = PartProgress.recoil;
+                            progress = PartProgress.recoil;
+                            moveY = -2;
+                        }});
+                recoils = 2;
+                bullet = new BasicBulletType(8, 30) {{
+                    lifetime = 24;
+                    width = 6;
+                    height = 12;
+                    splashDamageRadius = 16;
+                    splashDamage = 30;
                     hitEffect = despawnEffect = MLFx.smallExplosion1;
                     hitSound = MLSounds.explosion;
                 }};
