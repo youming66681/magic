@@ -55,7 +55,7 @@ public class MLUnitTypes {
             drag = 0.02f;
             accel = 0.12f;
             itemCapacity = 10;
-            faceTarget = false;
+            faceTarget = true;
             weapons.add(new Weapon("magic-drizzle1") {{
                 reload = 150f;
                 recoil = 3;
@@ -96,7 +96,7 @@ public class MLUnitTypes {
             drag = 0.04f;
             accel = 0.1f;
             itemCapacity = 20;
-            faceTarget = false;
+            faceTarget = true;
             weapons.add(new Weapon("magic-Drizzle1") {{
                 reload = 20f;
                 recoil = 0;
