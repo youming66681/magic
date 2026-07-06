@@ -60,8 +60,8 @@ public class MLUnitTypes {
                 reload = 120f;
                 recoil = 3;
                 x = y = 0;
-                pivotX = -4f;
-                pivotY = 0f;
+                pivotX = 0f;
+                pivotY = -4f;
                 shootY = 2f;
                 mirror = false;
                 rotate = true;
@@ -101,8 +101,8 @@ public class MLUnitTypes {
                 reload = 20f;
                 recoil = 0;
                 x = y = 0;
-                pivotX = -4f;
-                pivotY = 0f;
+                pivotX = 0f;
+                pivotY = -4f;
                 shootY = 2f;
                 mirror = false;
                 rotate = true;
