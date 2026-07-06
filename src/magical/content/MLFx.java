@@ -57,45 +57,45 @@ public class MLFx {
         });
         Explosion1 = new Effect(30f, e -> {
             Draw.color(Color.white, Color.valueOf("ffb347"), e.fin());
-            Fill.circle(e.x, e.y, 6f * e.fout());
+            Fill.circle(e.x, e.y, 6f * e.foutpow());
 
             Draw.color(Color.valueOf("ffb347"));
             Draw.alpha(e.fout());
-            Lines.stroke(2f * e.fout());
-            Lines.circle(e.x, e.y, 32f * e.fin()); // 24 = 3格
+            Lines.stroke(2f * e.foutpow());
+            Lines.circle(e.x, e.y, 32f * e.finpow()); // 24 = 3格
 
             Draw.color(Color.valueOf("ff9248"));
-            Angles.randLenVectors(e.id, 18, 32f * e.fin(), (x, y) -> {
-                Fill.circle(e.x + x, e.y + y, 1.6f * e.fout());
+            Angles.randLenVectors(e.id, 18, 32f * e.finpow(), (x, y) -> {
+                Fill.circle(e.x + x, e.y + y, 1.6f * e.foutpow());
             });
 
             Draw.color(Color.gray);
-            Angles.randLenVectors(e.id + 1, 10, 24f * e.fin(), (x, y) -> {
-                Fill.circle(e.x + x, e.y + y, 2.8f * e.fout());
+            Angles.randLenVectors(e.id + 1, 10, 24f * e.finpow(), (x, y) -> {
+                Fill.circle(e.x + x, e.y + y, 2.8f * e.foutpow());
             });
         });
         Explosion2 = new Effect(35f, 80f, e -> {
 
             Draw.color(Color.valueOf("ff9b42"));
-            Lines.stroke(2.8f * e.fout());
-            Lines.circle(e.x, e.y, 18f * e.fin());
+            Lines.stroke(2.8f * e.foutpow());
+            Lines.circle(e.x, e.y, 18f * e.finpow());
 
             Draw.color(Color.valueOf("ffb35c"), Color.valueOf("ff6a3d"), e.fin());
             Angles.randLenVectors(e.id, 18, 24f * e.finpow(), (x, y) -> {
-                Fill.circle(e.x + x, e.y + y, 1.8f * e.fout()
+                Fill.circle(e.x + x, e.y + y, 1.8f * e.foutpow()
                 );
             });
 
             Draw.color(Color.gray);
             Angles.randLenVectors(e.id + 1, 12, 20f * e.finpow(), (x, y) -> {
-                Fill.circle(e.x + x, e.y + y, 2.5f * e.fout()
+                Fill.circle(e.x + x, e.y + y, 2.5f * e.foutpow()
                 );
             });
 
             Draw.color(Color.valueOf("ffd37f"));
             Angles.randLenVectors(e.id + 2, 10, 28f * e.finpow(), (x, y) -> {
-                Lines.stroke(1.2f * e.fout());
-                Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), 4f * e.fout()
+                Lines.stroke(1.2f * e.foutpow());
+                Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), 4f * e.foutpow()
                 );
             });
         });
