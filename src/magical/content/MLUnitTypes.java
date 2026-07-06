@@ -91,8 +91,6 @@ public class MLUnitTypes {
             rotateSpeed = 3.5f;
             speed = 1.75f;
             hitSize = 16f;
-            pivotX = -4f;
-            pivotY = 0f;
             health = 1200;
             armor = 6;
             drag = 0.04f;
@@ -103,6 +101,8 @@ public class MLUnitTypes {
                 reload = 20f;
                 recoil = 0;
                 x = y = 0;
+                pivotX = -4f;
+                pivotY = 0f;
                 shootY = 2f;
                 mirror = false;
                 rotate = true;
