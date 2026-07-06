@@ -5,6 +5,7 @@ import arc.math.geom.Vec2;
 import mindustry.entities.units.WeaponMount;
 import mindustry.gen.Unit;
 import mindustry.type.Weapon;
+import arc.util.Tmp;
 
 public class PivotWeapon extends Weapon{
 
