@@ -34,10 +34,14 @@ public class PivotWeapon extends Weapon{
         // 旋转中心补偿
         v.trns(weaponRotation, -pivotX, -pivotY);
 
+        Tmp.v1.trns(weaponRotation, -pivotX, -pivotY);
+
         Draw.rect(
                 region,
-                wx + v.x,
-                wy + v.y,
+                wx + Tmp.v1.x,
+                wy + Tmp.v1.y,
+                region.width * Draw.scl,
+                region.height * Draw.scl,
                 weaponRotation
         );
     }

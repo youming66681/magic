@@ -76,9 +76,6 @@ public class MLFx {
         });
         Explosion2 = new Effect(35f, 80f, e -> {
 
-            Draw.color(Color.white, Color.valueOf("ffb35c"), e.fin());
-            Fill.circle(e.x, e.y, 3f + e.fin() * 10f);
-
             Draw.color(Color.valueOf("ff9b42"));
             Lines.stroke(2.8f * e.fout());
             Lines.circle(e.x, e.y, 18f * e.fin());
