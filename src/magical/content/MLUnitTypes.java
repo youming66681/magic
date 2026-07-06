@@ -65,7 +65,7 @@ public class MLUnitTypes {
                 mirror = false;
                 rotate = true;
                 rotateSpeed = 3;
-                rotationLimit = 15f;
+                rotationLimit = 30f;
                 inaccuracy = 0f;
                 ejectEffect = Fx.casing1;
                 layerOffset = 0.001f;
@@ -106,7 +106,7 @@ public class MLUnitTypes {
                 mirror = false;
                 rotate = true;
                 rotateSpeed = 2;
-                rotationLimit = 15f;
+                rotationLimit = 30f;
                 inaccuracy = 2f;
                 ejectEffect = Fx.casing2;
                 layerOffset = 0.001f;
