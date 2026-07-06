@@ -56,16 +56,14 @@ public class MLUnitTypes {
             accel = 0.12f;
             itemCapacity = 10;
             faceTarget = false;
-            weapons.add(new PivotWeapon("magic-drizzle1") {{
-                reload = 120f;
+            weapons.add(new Weapon("magic-drizzle1") {{
+                reload = 150f;
                 recoil = 3;
-                x = y = 0;
-                pivotX = 0f;
-                pivotY = -4f;
-                shootY = 2f;
+                x = 0;
+                y = 0;
+                shootY = 4f;
                 mirror = false;
-                rotate = true;
-                rotateSpeed = 3;
+                rotate = fasle;
                 inaccuracy = 0f;
                 ejectEffect = Fx.casing1;
                 layerOffset = 0.001f;
@@ -97,16 +95,14 @@ public class MLUnitTypes {
             accel = 0.1f;
             itemCapacity = 20;
             faceTarget = false;
-            weapons.add(new PivotWeapon("magic-Drizzle1") {{
+            weapons.add(new Weapon("magic-Drizzle1") {{
                 reload = 20f;
                 recoil = 0;
-                x = y = 0;
-                pivotX = 0f;
-                pivotY = -4f;
-                shootY = 2f;
+                x = 0;
+                y = 0;
+                shootY = 8f;
                 mirror = false;
-                rotate = true;
-                rotateSpeed = 2;
+                rotate = false;
                 inaccuracy = 2f;
                 ejectEffect = Fx.casing2;
                 layerOffset = 0.001f;
