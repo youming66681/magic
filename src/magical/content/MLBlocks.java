@@ -589,7 +589,8 @@ public class MLBlocks {
         BasicManufacturingPlant = new UnitFactory("BasicManufacturingPlant"){{
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 80, Items.graphite, 60, Items.silicon, 45}));
             plans = Seq.with(
-                    new UnitPlan(MLUnitTypes.drizzle, 60f * 40, ItemStack.with(MLItems.phantomSteel, 20, Items.graphite, 30, Items.silicon, 10))
+                    new UnitPlan(MLUnitTypes.drizzle, 60f * 40, ItemStack.with(MLItems.phantomSteel, 20, Items.graphite, 30, Items.silicon, 10)),
+                    new UnitPlan(MLUnitTypes.Breeze, 60f * 30, ItemStack.with(MLItems.phantomSteel, 30, Items.silicon, 15))
             );
             size = 3;
             consumePower(2f);

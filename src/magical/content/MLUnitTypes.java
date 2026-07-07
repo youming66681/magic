@@ -38,7 +38,8 @@ import magical.content.MLFx;
 
 public class MLUnitTypes {
     public static UnitType
-            drizzle, Drizzle, drizzlingRain;
+    drizzle, Drizzle, drizzlingRain,
+    Breeze;
 
     public static void load(){
         drizzle = new UnitType("drizzle") {{
@@ -181,52 +182,39 @@ public class MLUnitTypes {
                     }};
                 }});
             }};
-        /*air1 = new UnitType("convection") {{
+        Breeze = new UnitType("Breeze") {{
             constructor = UnitTypes.flare.constructor;
             flying = true;
             lowAltitude = true;
             faceTarget = true;
-            rotateSpeed = 8f;
-            speed = 1.8f;
-            drag = 0.05f;
-            accel = 0.1f;
-            hitSize = 8;
-            health = 110;
-            armor = 0;
+            rotateSpeed = 9f;
+            speed = 3.2f;
+            drag = 0.02f;
+            accel = 0.12f;
+            hitSize = 24;
+            health = 480;
+            armor = 1;
             itemCapacity = 0;
-            engineOffset = 8;
-            engineSize = 2.5f;
-            immunities.add(StatusEffects.freezing);
-            weapons.add(new Weapon(name("convection-weapon")) {{
+            engineOffset = 20;
+            engineSize = 3f;
+            weapons.add(new Weapon("Breeze1") {{
                 rotate = false;
-                mirror = false;
-                reload = 60;
-                x = y = 0;
-                shootSound = Sounds.shootMissile;
-                shoot = new ShootSpread(2, 20) {{
-                    shotDelay = 8;
-                }};
-                velocityRnd = 0.02f;
-                bullet = new MissileBulletType(4, 8, "circle-bullet") {{
-                    width = height = 5;
-                    lifetime = 30;
-                    weaveMag = 3;
-                    weaveScale = 3;
-                    reflectable = false;
+                mirror = true;
+                reload = 30;
+                x = 8;
+                y = 0;
+                shootSound = MLSounds.shootAlt;
+                bullet = new BasicBulletType(8, 40) {{//"circle-bullet"
+                    width = 8;
+                    height = 16;
+                    lifetime = 24;
                     frontColor = Color.white;
-                    backColor = SFColor.energySky;
-                    trailColor = SFColor.energySky;
+                    backColor = Color.white;
+                    trailColor = Color.white;
                     trailLength = 4;
                     trailWidth = 2;
-                    trailEffect = Fx.none;
-                    hitEffect = hitEnergySky;
-                    despawnEffect = desEnergySky;
-                    shootEffect = Fx.none;
-                    smokeEffect = Fx.none;
-                    status = SFStatusEffects.magnStrif;
-                    statusDuration = 15;
                 }};
             }});
-        }};*/
+        }};
     }
 }
