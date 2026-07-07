@@ -195,13 +195,14 @@ public class MLUnitTypes {
             health = 480;
             armor = 1;
             itemCapacity = 0;
-            engineOffset = 12;
+            engineOffset = 10;
             engineSize = 3f;
             weapons.add(new Weapon("magic-Breeze1") {{
+                shootY = 2f;
                 rotate = false;
                 mirror = true;
                 reload = 30;
-                x = 8;
+                x = 4;
                 y = 0;
                 shootSound = MLSounds.shootAlt;
                 ejectEffect = Fx.casing1;
