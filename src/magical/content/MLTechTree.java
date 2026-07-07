@@ -55,6 +55,8 @@ public class MLTechTree {
                     });
                         });
                 /*微风*/node(MLUnitTypes.Breeze, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant)), () -> {
+
+                        });
             /*曲率进化舱*/node(MLBlocks.curvatureEvolutionPod, () -> {
                 /*量子制造厂*/node(MLBlocks.quantumFactory, () -> {
 
