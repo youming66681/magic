@@ -47,9 +47,9 @@ public class MLTechTree {
                 });
             });
             /*基础制造厂*/node(MLBlocks.BasicManufacturingPlant, () -> {
-                /*微雨*/node(MLUnitTypes.drizzle, Seq.with(new Research(MLBlocks.BasicManufacturingPlant)), () -> {
-                    /*细雨*/node(MLUnitTypes.Drizzle, Seq.with(new Research(MLBlocks.curvatureEvolutionPod)), () -> {
-                        /*透雨*/node(MLUnitTypes.drizzlingRain, Seq.with(new Research(MLBlocks.quantumFactory)), () -> {
+                /*微雨*/node(MLUnitTypes.drizzle, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant)), () -> {
+                    /*细雨*/node(MLUnitTypes.Drizzle, Seq.with(new Objectives.Research(MLBlocks.curvatureEvolutionPod)), () -> {
+                        /*透雨*/node(MLUnitTypes.drizzlingRain, Seq.with(new Objectives.Research(MLBlocks.quantumFactory)), () -> {
 
                         });
                     });
