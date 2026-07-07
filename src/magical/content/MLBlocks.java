@@ -581,6 +581,14 @@ public class MLBlocks {
         }};
         //power
         //单位
+        BasicManufacturingPlant = new UnitFactory("BasicManufacturingPlant"){{
+            requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 80, Items.graphite, 60, Items.silicon, 45}));
+            plans = Seq.with(
+                    new UnitPlan(MLUnitTypes.drizzle, 60f * 40, with(MLItems.phantomSteel, 20, Items.graphite, 30, Items.silicon, 10)),
+            );
+            size = 3;
+            consumePower(2f);
+        }};
         //曲率进化舱
         curvatureEvolutionPod = new Reconstructor("curvatureEvolutionPod"){{
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 240, Items.graphite, 120, Items.silicon, 90}));
@@ -591,9 +599,10 @@ public class MLBlocks {
             health = 720;
 
             upgrades.addAll(
-                    new UnitType[]{UnitTypes.nova, UnitTypes.pulsar}
+                    new UnitType[]{MLUnitTypes.drizzle, MLUnitTypes.Drizzle}
             );
         }};
+        //量子制造厂
         quantumFactory = new Reconstructor("quantumFactory"){{
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 300, Items.graphite, 150, Items.silicon, 120, MLItems.phantomTitaniumSteel, 60, MLItems.mysticCrystal, 90}));
             size = 7;
@@ -603,7 +612,7 @@ public class MLBlocks {
             health = 1440;
 
             upgrades.addAll(
-                    new UnitType[]{UnitTypes.nova, UnitTypes.pulsar}
+                    new UnitType[]{MLUnitTypes.Drizzle, MLUnitTypes.drizzlingRain}
             );
         }};
          //unit

@@ -44,11 +44,20 @@ public class MLTechTree {
             /*流冲*/node(MLBlocks.fluvialErosion, () -> {
                 });
             });
+            /*基础制造厂*/node(MLBlocks.BasicManufacturingPlant, () -> {
+                /*微雨*/node(drizzle, Seq.with(new Research(BasicManufacturingPlant)), () -> {
+                    /*细雨*/node(Drizzle, Seq.with(new Research(curvatureEvolutionPod)), () -> {
+                        /*透雨*/node(drizzlingRain, Seq.with(new Research(quantumFactory)), () -> {
+
+                        });
+                    });
+                        });
             /*曲率进化舱*/node(MLBlocks.curvatureEvolutionPod, () -> {
-                /*曲率进化舱*/node(MLBlocks.quantumFactory, () -> {
+                /*量子制造厂*/node(MLBlocks.quantumFactory, () -> {
 
                 });
                     });
+            });
             /*幻钢压缩机*/node(MLBlocks.phantomSteelCompressor, () -> {
                 /*幻钢电压机*/node(MLBlocks.phantomSteelVoltageMachine, () -> {
                     /*幻钛钢熔炼机*/node(MLBlocks.phantomTitaniumSteelCompressor, () -> {

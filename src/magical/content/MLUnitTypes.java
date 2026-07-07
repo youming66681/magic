@@ -48,7 +48,7 @@ public class MLUnitTypes {
             squareShape = true;
             rotateSpeed = 4;
             speed = 2f;
-            hitSize = 8f;
+            hitSize = 24f;
 
             health = 600;
             armor = 1;
@@ -90,7 +90,7 @@ public class MLUnitTypes {
             squareShape = true;
             rotateSpeed = 3.5f;
             speed = 1.75f;
-            hitSize = 16f;
+            hitSize = 32f;
             health = 1200;
             armor = 2;
             drag = 0.04f;
@@ -110,6 +110,7 @@ public class MLUnitTypes {
                 inaccuracy = 2f;
                 ejectEffect = Fx.casing2;
                 layerOffset = 0.001f;
+                shootEffect = Fx.shootSmall;
                 shootSound = MLSounds.shootArtillerySmall;
                 shoot = new ShootAlternate() {{
                     barrels = 2;
@@ -149,13 +150,14 @@ public class MLUnitTypes {
                 squareShape = true;
                 rotateSpeed = 3f;
                 speed = 1.5f;
-                hitSize = 16f;
+                hitSize = 40f;
                 health = 2400;
                 armor = 4;
                 drag = 0.06f;
                 accel = 0.08f;
                 itemCapacity = 40;
                 faceTarget = false;
+                crushDamage = 1;
                 weapons.add(new Weapon("magic-drizzlingRain1") {{
                     reload = 60f;
                     recoil = 5;
@@ -169,6 +171,7 @@ public class MLUnitTypes {
                     ejectEffect = Fx.casing3;
                     layerOffset = 0.001f;
                     shootSound = MLSounds.shootArtillery;
+                    shootEffect = Fx.despawn;
                     bullet = new BasicBulletType(12, 60) {{
                         lifetime = 20;
                         width = 12;
@@ -180,5 +183,52 @@ public class MLUnitTypes {
                     }};
                 }});
             }};
+        /*air1 = new UnitType("convection") {{
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            lowAltitude = true;
+            faceTarget = true;
+            rotateSpeed = 8f;
+            speed = 1.8f;
+            drag = 0.05f;
+            accel = 0.1f;
+            hitSize = 8;
+            health = 110;
+            armor = 0;
+            itemCapacity = 0;
+            engineOffset = 8;
+            engineSize = 2.5f;
+            immunities.add(StatusEffects.freezing);
+            weapons.add(new Weapon(name("convection-weapon")) {{
+                rotate = false;
+                mirror = false;
+                reload = 60;
+                x = y = 0;
+                shootSound = Sounds.shootMissile;
+                shoot = new ShootSpread(2, 20) {{
+                    shotDelay = 8;
+                }};
+                velocityRnd = 0.02f;
+                bullet = new MissileBulletType(4, 8, "circle-bullet") {{
+                    width = height = 5;
+                    lifetime = 30;
+                    weaveMag = 3;
+                    weaveScale = 3;
+                    reflectable = false;
+                    frontColor = Color.white;
+                    backColor = SFColor.energySky;
+                    trailColor = SFColor.energySky;
+                    trailLength = 4;
+                    trailWidth = 2;
+                    trailEffect = Fx.none;
+                    hitEffect = hitEnergySky;
+                    despawnEffect = desEnergySky;
+                    shootEffect = Fx.none;
+                    smokeEffect = Fx.none;
+                    status = SFStatusEffects.magnStrif;
+                    statusDuration = 15;
+                }};
+            }});
+        }};*/
     }
 }
