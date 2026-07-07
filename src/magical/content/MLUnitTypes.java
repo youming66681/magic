@@ -169,12 +169,12 @@ public class MLUnitTypes {
                     ejectEffect = Fx.casing3;
                     layerOffset = 0.001f;
                     shootSound = MLSounds.shootArtillery;
-                    bullet = new BasicBulletType(12, 25) {{
+                    bullet = new BasicBulletType(12, 60) {{
                         lifetime = 20;
                         width = 12;
                         height = 24;
                         splashDamageRadius = 32;
-                        splashDamage = 25;
+                        splashDamage = 60;
                         hitEffect = despawnEffect = MLFx.Explosion3;
                         hitSound = MLSounds.explosion;
                     }};
