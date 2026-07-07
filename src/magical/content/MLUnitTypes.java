@@ -195,9 +195,9 @@ public class MLUnitTypes {
             health = 480;
             armor = 1;
             itemCapacity = 0;
-            engineOffset = 20;
+            engineOffset = 12;
             engineSize = 3f;
-            weapons.add(new Weapon("Breeze1") {{
+            weapons.add(new Weapon("magic-Breeze1") {{
                 rotate = false;
                 mirror = true;
                 reload = 30;
