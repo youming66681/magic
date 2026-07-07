@@ -69,6 +69,7 @@ public class MLUnitTypes {
                 inaccuracy = 0f;
                 ejectEffect = Fx.casing1;
                 layerOffset = 0.001f;
+                shootEffect = Fx.shootSmall;
                 shootSound = MLSounds.shootArtillery;
                 shoot.shots = 6;
                 shoot.shotDelay = 6;

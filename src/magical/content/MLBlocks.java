@@ -118,6 +118,9 @@ import mindustry.type.UnitType;
 import mindustry.content.UnitTypes;
 import mindustry.world.blocks.units.Reconstructor;
 import mindustry.type.LiquidStack;
+import mindustry.world.blocks.units.UnitFactory;
+import mindustry.world.blocks.units.UnitFactory.UnitPlan;
+import arc.struct.Seq;
 
 import magical.content.MLItems;
 import magical.content.MLUnitTypes;
@@ -134,7 +137,8 @@ public class MLBlocks {
             baseCore, phantomTitaniumSteelCompressor, xuanCrystalManufacturingMachine, phantomSteelCompressor, phantomSteelVoltageMachine, electroge,
             fluvialErosion, adaptiveWall, largeAdaptiveWall, Birefringence, phantomSteelDrill, phantomSteelConveyor, phantomSteelBridge, phantomSteeljunction,
             phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode, excitedYuan, fuelPoweredGenerator, phantomTitaniumSteelConveyor,
-            phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod, quantumFactory, chipMachine;
+            phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod, quantumFactory, chipMachine,
+            BasicManufacturingPlant;
 
     public static void load() {
 
@@ -581,10 +585,11 @@ public class MLBlocks {
         }};
         //power
         //单位
+        //基础制造厂
         BasicManufacturingPlant = new UnitFactory("BasicManufacturingPlant"){{
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 80, Items.graphite, 60, Items.silicon, 45}));
             plans = Seq.with(
-                    new UnitPlan(MLUnitTypes.drizzle, 60f * 40, with(MLItems.phantomSteel, 20, Items.graphite, 30, Items.silicon, 10))
+                    new UnitPlan(MLUnitTypes.drizzle, 60f * 40, ItemStack.with(MLItems.phantomSteel, 20, Items.graphite, 30, Items.silicon, 10))
             );
             size = 3;
             consumePower(2f);
