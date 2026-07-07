@@ -36,7 +36,7 @@ public class magic extends Mod {
         MLItems.load();
         MLBlocks.load();
         MLPlanets.load();
-        MLTechTree.load();
         MLUnitTypes.load();
+        MLTechTree.load();
      }
 }
