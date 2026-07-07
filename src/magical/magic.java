@@ -34,9 +34,9 @@ public class magic extends Mod {
         MLSounds.load();
         MLFx.load();
         MLItems.load();
-        MLBlocks.load();
         MLPlanets.load();
         MLUnitTypes.load();
+        MLBlocks.load();
         MLTechTree.load();
      }
 }
