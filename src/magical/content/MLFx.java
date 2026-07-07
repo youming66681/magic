@@ -22,6 +22,7 @@ public class MLFx {
     public static Effect beamEffect;
     public static Effect Explosion1;
     public static Effect Explosion2;
+    public static Effect Explosion3;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -62,7 +63,7 @@ public class MLFx {
             Draw.color(Color.valueOf("ffb347"));
             Draw.alpha(e.fout());
             Lines.stroke(2f * e.foutpow());
-            Lines.circle(e.x, e.y, 32f * e.finpow()); // 24 = 3格
+            Lines.circle(e.x, e.y, 32f * e.finpow());
 
             Draw.color(Color.valueOf("ff9248"));
             Angles.randLenVectors(e.id, 18, 32f * e.finpow(), (x, y) -> {
@@ -74,7 +75,7 @@ public class MLFx {
                 Fill.circle(e.x + x, e.y + y, 2.8f * e.foutpow());
             });
         });
-        Explosion2 = new Effect(35f, 80f, e -> {
+        Explosion2 = new Effect(40f, e -> {
 
             Draw.color(Color.valueOf("ff9b42"));
             Lines.stroke(2.8f * e.foutpow());
@@ -98,6 +99,37 @@ public class MLFx {
                 Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), 4f * e.foutpow()
                 );
             });
+        });
+        Explosion3 = new Effect(50f, e -> {
+
+            Draw.color(Pal.lightOrange, Color.white, e.fin());
+            Lines.stroke(3f * e.fout());
+            Lines.circle(e.x, e.y, 32f * e.finpow());
+
+            Draw.color(Pal.lighterOrange, Pal.lightOrange, e.finpow());
+            Angles.randLenVectors(e.id, 18, 30f * e.finpow(), (x, y) -> {
+                Fill.circle(e.x + x, e.y + y, 3f * e.foutpow());
+            });
+
+            Draw.color(Color.white, Pal.lightOrange, e.finpow());
+            Angles.randLenVectors(e.id + 1, 20, 36f * e.finpow(), (x, y) -> {
+                Fill.circle(e.x + x, e.y + y, 1.3f * e.foutpow());
+            });
+
+            Draw.color(Pal.gray);
+            Angles.randLenVectors(e.id + 2, 12, 26f * e.finpow(), (x, y) -> {
+                Fill.square(e.x + x, e.y + y, 1.5f * e.foutpow(), Mathf.randomSeed((long)(e.id + x + y), 360f)
+                );
+            });
+
+            Draw.color(Color.white, Pal.lightOrange, e.fin());
+            Lines.stroke(2f * e.foutpow());
+            Angles.randLenVectors(e.id + 3, 10, 34f * e.finpow(), (x, y) -> {
+                Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), 5f * e.foutpow()
+                );
+            });
+
+            Draw.reset();
         });
     }
     public static Effect Slash(Color colorSlash, float len, float width){

@@ -38,7 +38,7 @@ import magical.content.MLFx;
 
 public class MLUnitTypes {
     public static UnitType
-            drizzle, Drizzle;
+            drizzle, Drizzle, drizzlingRain;
 
     public static void load(){
         drizzle = new UnitType("drizzle") {{
@@ -51,11 +51,11 @@ public class MLUnitTypes {
             hitSize = 8f;
 
             health = 600;
-            armor = 3;
+            armor = 1;
             drag = 0.02f;
             accel = 0.12f;
             itemCapacity = 10;
-            faceTarget = true;
+            faceTarget = false;
             weapons.add(new Weapon("magic-drizzle1") {{
                 reload = 150f;
                 recoil = 3;
@@ -65,7 +65,7 @@ public class MLUnitTypes {
                 mirror = false;
                 rotate = true;
                 rotateSpeed = 3;
-                rotationLimit = 30f;
+                //rotationLimit = 30f;
                 inaccuracy = 0f;
                 ejectEffect = Fx.casing1;
                 layerOffset = 0.001f;
@@ -92,11 +92,11 @@ public class MLUnitTypes {
             speed = 1.75f;
             hitSize = 16f;
             health = 1200;
-            armor = 6;
+            armor = 2;
             drag = 0.04f;
             accel = 0.1f;
             itemCapacity = 20;
-            faceTarget = true;
+            faceTarget = false;
             weapons.add(new Weapon("magic-Drizzle1") {{
                 reload = 20f;
                 recoil = 0;
@@ -106,7 +106,7 @@ public class MLUnitTypes {
                 mirror = false;
                 rotate = true;
                 rotateSpeed = 2;
-                rotationLimit = 30f;
+                //rotationLimit = 30f;
                 inaccuracy = 2f;
                 ejectEffect = Fx.casing2;
                 layerOffset = 0.001f;
@@ -142,5 +142,44 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        public static void load(){
+            drizzlingRain = new UnitType("drizzlingRain") {{
+                constructor = UnitTypes.stell.constructor;
+                omniMovement = false;
+                rotateMoveFirst = false;
+                squareShape = true;
+                rotateSpeed = 3f;
+                speed = 1.5f;
+                hitSize = 16f;
+                health = 2400;
+                armor = 4;
+                drag = 0.06f;
+                accel = 0.08f;
+                itemCapacity = 40;
+                faceTarget = false;
+                weapons.add(new Weapon("magic-drizzlingRain1") {{
+                    reload = 60f;
+                    recoil = 5;
+                    x = 0;
+                    y = 0;
+                    shootY = 8f;
+                    mirror = false;
+                    rotate = true;
+                    rotateSpeed = 1.5;
+                    inaccuracy = 0f;
+                    ejectEffect = Fx.casing3;
+                    layerOffset = 0.001f;
+                    shootSound = MLSounds.shootArtillery;
+                    bullet = new BasicBulletType(12, 25) {{
+                        lifetime = 20;
+                        width = 12;
+                        height = 24;
+                        splashDamageRadius = 32;
+                        splashDamage = 25;
+                        hitEffect = despawnEffect = MLFx.Explosion3;
+                        hitSound = MLSounds.explosion;
+                    }};
+                }});
+            }};
     }
 }
