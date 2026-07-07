@@ -4,7 +4,7 @@ import static mindustry.content.TechTree.*;
 import mindustry.type.ItemStack;
 import mindustry.content.Planets;
 import arc.struct.Seq;
-import mindustry.content.TechTree.Research;
+import mindustry.game.Objectives;
 
 import magical.content.MLItems;
 import magical.content.MLBlocks;
