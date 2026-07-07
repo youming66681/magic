@@ -142,7 +142,6 @@ public class MLUnitTypes {
                 }};
             }});
         }};
-        public static void load(){
             drizzlingRain = new UnitType("drizzlingRain") {{
                 constructor = UnitTypes.stell.constructor;
                 omniMovement = false;
