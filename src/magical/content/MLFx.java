@@ -15,6 +15,7 @@ import mindustry.entities.Effect;
 import mindustry.type.*;
 import mindustry.content.*;
 import mindustry.graphics.Drawf;
+import mindustry.graphics.Pal;
 
 public class MLFx {
     public static Effect smallElectricDetonation;

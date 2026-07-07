@@ -164,7 +164,7 @@ public class MLUnitTypes {
                     shootY = 8f;
                     mirror = false;
                     rotate = true;
-                    rotateSpeed = 1.5;
+                    rotateSpeed = 1.5f;
                     inaccuracy = 0f;
                     ejectEffect = Fx.casing3;
                     layerOffset = 0.001f;
