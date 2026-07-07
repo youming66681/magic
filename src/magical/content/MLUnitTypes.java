@@ -69,7 +69,6 @@ public class MLUnitTypes {
                 inaccuracy = 0f;
                 ejectEffect = Fx.casing1;
                 layerOffset = 0.001f;
-                shootEffect = Fx.shootSmall;
                 shootSound = MLSounds.shootArtillery;
                 shoot.shots = 6;
                 shoot.shotDelay = 6;
@@ -111,7 +110,6 @@ public class MLUnitTypes {
                 inaccuracy = 2f;
                 ejectEffect = Fx.casing2;
                 layerOffset = 0.001f;
-                shootEffect = Fx.shootSmall;
                 shootSound = MLSounds.shootArtillerySmall;
                 shoot = new ShootAlternate() {{
                     barrels = 2;
@@ -172,7 +170,6 @@ public class MLUnitTypes {
                     ejectEffect = Fx.casing3;
                     layerOffset = 0.001f;
                     shootSound = MLSounds.shootArtillery;
-                    shootEffect = Fx.despawn;
                     bullet = new BasicBulletType(12, 60) {{
                         lifetime = 20;
                         width = 12;

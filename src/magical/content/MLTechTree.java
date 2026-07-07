@@ -4,6 +4,7 @@ import static mindustry.content.TechTree.*;
 import mindustry.type.ItemStack;
 import mindustry.content.Planets;
 import arc.struct.Seq;
+import mindustry.content.TechTree.Research;
 
 import magical.content.MLItems;
 import magical.content.MLBlocks;
@@ -46,9 +47,9 @@ public class MLTechTree {
                 });
             });
             /*基础制造厂*/node(MLBlocks.BasicManufacturingPlant, () -> {
-                /*微雨*/node(MLUnitTypes.drizzle, Seq.with(new Research(BasicManufacturingPlant)), () -> {
-                    /*细雨*/node(MLUnitTypes.Drizzle, Seq.with(new Research(curvatureEvolutionPod)), () -> {
-                        /*透雨*/node(MLUnitTypes.drizzlingRain, Seq.with(new Research(quantumFactory)), () -> {
+                /*微雨*/node(MLUnitTypes.drizzle, Seq.with(new Research(MLBlocks.BasicManufacturingPlant)), () -> {
+                    /*细雨*/node(MLUnitTypes.Drizzle, Seq.with(new Research(MLBlocks.curvatureEvolutionPod)), () -> {
+                        /*透雨*/node(MLUnitTypes.drizzlingRain, Seq.with(new Research(MLBlocks.quantumFactory)), () -> {
 
                         });
                     });
