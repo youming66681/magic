@@ -204,6 +204,8 @@ public class MLUnitTypes {
                 x = 8;
                 y = 0;
                 shootSound = MLSounds.shootAlt;
+                ejectEffect = Fx.casing1;
+                layerOffset = 0.001f;
                 bullet = new BasicBulletType(8, 40) {{//"circle-bullet"
                     width = 8;
                     height = 16;
