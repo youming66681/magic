@@ -277,6 +277,7 @@ public class MLUnitTypes {
             targetAir = false;
             engineOffset = 14;
             engineSize = 6f;
+            autoDropBombs = true;
             targetFlags = new BlockFlag[]{BlockFlag.factory};
             weapons.add(new Weapon("magic-Gale1") {{
                 rotate = false;
@@ -288,6 +289,8 @@ public class MLUnitTypes {
                 ejectEffect = Fx.casing1;
                 layerOffset = 0.001f;
                 bullet = new BasicBulletType(0, 10, "large-bomb") {{
+                    ignoreRotation = true;
+                    collidesAir = false;
                     maxRange = 10;
                     width = 24;
                     height = 24;
