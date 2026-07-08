@@ -278,7 +278,7 @@ public class MLUnitTypes {
             engineOffset = 14;
             engineSize = 6f;
             targetFlags = new BlockFlag[]{BlockFlag.factory};
-            weapons.add(new Weapon("magic-SlantingWind1") {{
+            weapons.add(new Weapon("magic-Gale1") {{
                 rotate = false;
                 mirror = false;
                 reload = 60;
