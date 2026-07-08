@@ -293,14 +293,14 @@ public class MLUnitTypes {
                     height = 24;
                     lifetime = 30;
                     frontColor = Color.valueOf(C8BA8FFF);
-                    backColor = Color.valueOf.(958F60FF);
+                    backColor = Color.valueOf(958F60FF);
                     splashDamageRadius = 32;
                     splashDamage = 100;
                     incendAmount = 1;
                     incendSpread = 10;
                     incendChance = 0.05f;
                     spin = 1.5f;
-                    makeFire = true
+                    makeFire = true;
                     hitEffect = despawnEffect = MLFx.Explosion3;
                     hitSound = MLSounds.explosion;
                 }};
