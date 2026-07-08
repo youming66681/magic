@@ -605,7 +605,8 @@ public class MLBlocks {
             health = 720;
 
             upgrades.addAll(
-                    new UnitType[]{MLUnitTypes.drizzle, MLUnitTypes.Drizzle}
+                    new UnitType[]{MLUnitTypes.drizzle, MLUnitTypes.Drizzle},
+                    new UnitType[]{MLUnitTypes.Breeze, MLUnitTypes.SlantingWind}
             );
         }};
         //量子制造厂

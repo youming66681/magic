@@ -245,14 +245,14 @@ public class MLUnitTypes {
                 ejectEffect = Fx.casing1;
                 layerOffset = 0.001f;
                 bullet = new BasicBulletType(8, 30, "circle-bullet") {{
-                    width = 24;
-                    height = 24;
+                    width = 16;
+                    height = 16;
                     lifetime = 24;
                     frontColor = Color.white;
                     backColor = Color.white;
                     trailColor = Color.white;
-                    trailLength = 5;
-                    trailWidth = 3;
+                    trailLength = 6;
+                    trailWidth = 4;
                     splashDamageRadius = 24;
                     splashDamage = 30;
                     hitEffect = despawnEffect = MLFx.smallElectricDetonation;
