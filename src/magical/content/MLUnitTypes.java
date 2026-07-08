@@ -235,11 +235,11 @@ public class MLUnitTypes {
             engineOffset = 16;
             engineSize = 4f;
             weapons.add(new Weapon("magic-SlantingWind1") {{
-                shootY = 2f;
+                shootY = 8f;
                 rotate = false;
                 mirror = true;
                 reload = 30;
-                x = 8;
+                x = 4;
                 y = 0;
                 shootSound = MLSounds.missile;
                 ejectEffect = Fx.casing1;
