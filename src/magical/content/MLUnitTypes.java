@@ -198,7 +198,7 @@ public class MLUnitTypes {
             engineOffset = 10;
             engineSize = 3f;
             weapons.add(new Weapon("magic-Breeze1") {{
-                shootY = 2f;
+                shootY = 4f;
                 rotate = false;
                 mirror = true;
                 reload = 30;
@@ -216,6 +216,47 @@ public class MLUnitTypes {
                     trailColor = Color.white;
                     trailLength = 4;
                     trailWidth = 2;
+                }};
+            }});
+        }};
+        SlantingWind = new UnitType("SlantingWind") {{
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            lowAltitude = true;
+            faceTarget = true;
+            rotateSpeed = 8f;
+            speed = 2.8f;
+            drag = 0.04f;
+            accel = 0.1f;
+            hitSize = 32;
+            health = 960;
+            armor = 2;
+            itemCapacity = 0;
+            engineOffset = 16;
+            engineSize = 4f;
+            weapons.add(new Weapon("magic-SlantingWind1") {{
+                shootY = 6f;
+                rotate = false;
+                mirror = true;
+                reload = 30;
+                x = 8;
+                y = 0;
+                shootSound = MLSounds.missile;
+                ejectEffect = Fx.casing1;
+                layerOffset = 0.001f;
+                bullet = new BasicBulletType(8, 30, "circle-bullet") {{
+                    width = 24;
+                    height = 24;
+                    lifetime = 24;
+                    frontColor = Color.white;
+                    backColor = Color.white;
+                    trailColor = Color.white;
+                    trailLength = 5;
+                    trailWidth = 3;
+                    splashDamageRadius = 24;
+                    splashDamage = 30;
+                    hitEffect = despawnEffect = MLFx.smallElectricDetonation;
+                    hitSound = MLSounds.explosion;
                 }};
             }});
         }};
