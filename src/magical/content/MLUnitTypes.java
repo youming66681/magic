@@ -239,14 +239,14 @@ public class MLUnitTypes {
                 rotate = false;
                 mirror = true;
                 reload = 30;
-                x = 8;
+                x = 4;
                 y = 0;
                 shootSound = MLSounds.missile;
                 ejectEffect = Fx.casing1;
                 layerOffset = 0.001f;
                 bullet = new BasicBulletType(8, 30, "circle-bullet") {{
-                    width = 16;
-                    height = 16;
+                    width = 12;
+                    height = 12;
                     lifetime = 24;
                     frontColor = Color.white;
                     backColor = Color.white;
