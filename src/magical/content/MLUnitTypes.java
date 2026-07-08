@@ -39,7 +39,7 @@ import magical.content.MLFx;
 public class MLUnitTypes {
     public static UnitType
     drizzle, Drizzle, drizzlingRain,
-    Breeze;
+    Breeze, SlantingWind;
 
     public static void load(){
         drizzle = new UnitType("drizzle") {{
