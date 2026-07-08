@@ -292,8 +292,8 @@ public class MLUnitTypes {
                     width = 24;
                     height = 24;
                     lifetime = 30;
-                    frontColor = Color.valueOf(C8BA8FFF);
-                    backColor = Color.valueOf(958F60FF);
+                    frontColor = Color.valueOf("C8BA8FFF");
+                    backColor = Color.valueOf("958F60FF");
                     splashDamageRadius = 32;
                     splashDamage = 100;
                     incendAmount = 1;
