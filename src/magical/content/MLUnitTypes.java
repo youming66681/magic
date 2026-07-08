@@ -235,7 +235,7 @@ public class MLUnitTypes {
             engineOffset = 16;
             engineSize = 4f;
             weapons.add(new Weapon("magic-SlantingWind1") {{
-                shootY = 8f;
+                shootY = 6f;
                 rotate = false;
                 mirror = true;
                 reload = 30;
