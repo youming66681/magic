@@ -619,7 +619,8 @@ public class MLBlocks {
             health = 1440;
 
             upgrades.addAll(
-                    new UnitType[]{MLUnitTypes.Drizzle, MLUnitTypes.drizzlingRain}
+                    new UnitType[]{MLUnitTypes.Drizzle, MLUnitTypes.drizzlingRain},
+                    new UnitType[]{MLUnitTypes.SlantingWind, MLUnitTypes.Gale}
             );
         }};
          //unit

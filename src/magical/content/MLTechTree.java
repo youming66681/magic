@@ -56,7 +56,9 @@ public class MLTechTree {
                         });
                 /*微风*/node(MLUnitTypes.Breeze, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant)), () -> {
                     /*斜风*/node(MLUnitTypes.SlantingWind, Seq.with(new Objectives.Research(MLBlocks.curvatureEvolutionPod)), () -> {
+                        /*狂风*/node(MLUnitTypes.Gale, Seq.with(new Objectives.Research(MLBlocks.quantumFactory)), () -> {
 
+                        });
                     });
                         });
             /*曲率进化舱*/node(MLBlocks.curvatureEvolutionPod, () -> {

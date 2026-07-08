@@ -39,7 +39,7 @@ import magical.content.MLFx;
 public class MLUnitTypes {
     public static UnitType
     drizzle, Drizzle, drizzlingRain,
-    Breeze, SlantingWind;
+    Breeze, SlantingWind, Gale;
 
     public static void load(){
         drizzle = new UnitType("drizzle") {{
@@ -49,7 +49,7 @@ public class MLUnitTypes {
             squareShape = true;
             rotateSpeed = 4;
             speed = 2f;
-            hitSize = 24f;
+            hitSize = 20f;
 
             health = 600;
             armor = 1;
@@ -91,7 +91,7 @@ public class MLUnitTypes {
             squareShape = true;
             rotateSpeed = 3.5f;
             speed = 1.75f;
-            hitSize = 32f;
+            hitSize = 28f;
             health = 1200;
             armor = 2;
             drag = 0.04f;
@@ -150,7 +150,7 @@ public class MLUnitTypes {
                 squareShape = true;
                 rotateSpeed = 3f;
                 speed = 1.5f;
-                hitSize = 40f;
+                hitSize = 36f;
                 health = 2400;
                 armor = 4;
                 drag = 0.06f;
@@ -191,7 +191,7 @@ public class MLUnitTypes {
             speed = 3.2f;
             drag = 0.02f;
             accel = 0.12f;
-            hitSize = 24;
+            hitSize = 18;
             health = 480;
             armor = 1;
             itemCapacity = 0;
@@ -228,7 +228,7 @@ public class MLUnitTypes {
             speed = 2.8f;
             drag = 0.04f;
             accel = 0.1f;
-            hitSize = 32;
+            hitSize = 24;
             health = 960;
             armor = 2;
             itemCapacity = 0;
@@ -256,6 +256,52 @@ public class MLUnitTypes {
                     splashDamageRadius = 24;
                     splashDamage = 30;
                     hitEffect = despawnEffect = MLFx.smallElectricDetonation;
+                    hitSound = MLSounds.explosion;
+                }};
+            }});
+        }};
+        Gale = new UnitType("Gale") {{
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            lowAltitude = true;
+            circleTarget = true;
+            faceTarget = true;
+            rotateSpeed = 7f;
+            speed = 3.5f;
+            drag = 0.06f;
+            accel = 0.08f;
+            hitSize = 28;
+            health = 1920;
+            armor = 4;
+            itemCapacity = 60;
+            targetAir = false;
+            engineOffset = 14;
+            engineSize = 6f;
+            targetFlags = new BlockFlag[]{BlockFlag.factory};
+            weapons.add(new Weapon("magic-SlantingWind1") {{
+                rotate = false;
+                mirror = false;
+                reload = 60;
+                x = 0;
+                y = 0;
+                shootSound = MLSounds.plasmadrop;
+                ejectEffect = Fx.casing1;
+                layerOffset = 0.001f;
+                bullet = new BasicBulletType(0, 10, "large-bomb") {{
+                    maxRange = 10;
+                    width = 24;
+                    height = 24;
+                    lifetime = 30;
+                    frontColor = Color.valueOf(C8BA8FFF);
+                    backColor = Color.valueOf.(958F60FF);
+                    splashDamageRadius = 32;
+                    splashDamage = 100;
+                    incendAmount = 1;
+                    incendSpread = 10;
+                    incendChance = 0.05f;
+                    spin = 1.5f;
+                    makeFire = true
+                    hitEffect = despawnEffect = MLFx.Explosion3;
                     hitSound = MLSounds.explosion;
                 }};
             }});
