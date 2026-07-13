@@ -378,5 +378,48 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        Turbulence = new UnitType("Turbulence") {{
+            constructor = UnitTypes.risso.constructor;
+            speed = 1f;
+            rotateSpeed = 5;
+            waveTrailX = 0;
+            waveTrailY = -8;
+            hitSize = 28;
+            health = 2880;
+            armor = 4;
+            faceTarget = false;
+            weapons.add(new Weapon("magic-Turbulence1") {{
+                reload = 30f;
+                recoil = 3f;
+                x = 0;
+                y = -4;
+                shootY = 8f;
+                mirror = false;
+                rotate = true;
+                rotateSpeed = 3f;
+                inaccuracy = 6f;
+                ejectEffect = Fx.casing3;
+                layerOffset = 0.001f;
+                shootSound = MLSounds.missile;
+                shoot = new ShootAlternate() {{
+                    barrels = 2;
+                    spread = 2;
+                    shots = 30;
+                    shotDelay = 3;
+                }};
+                bullet = new BasicBulletType(14, 30) {{
+                    lifetime = 20;
+                    width = 8;
+                    height = 16;
+                    splashDamageRadius = 32;
+                    splashDamage = 30;
+                    hitEffect = despawnEffect = MLFx.Explosion3;
+                    hitSound = MLSounds.explosion;
+                    trailColor = Color.white;
+                    trailLength = 6;
+                    trailWidth = 4;
+                }};
+            }});
+        }};
     }
 }

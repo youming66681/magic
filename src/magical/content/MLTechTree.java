@@ -61,6 +61,13 @@ public class MLTechTree {
                         });
                     });
                         });
+                /*静水*/node(MLUnitTypes.StillWater, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant)), () -> {
+                    /*涟漪*/node(MLUnitTypes.ripple, Seq.with(new Objectives.Research(MLBlocks.curvatureEvolutionPod)), () -> {
+                        /*湍流*/node(MLUnitTypes.Turbulence, Seq.with(new Objectives.Research(MLBlocks.quantumFactory)), () -> {
+
+                        });
+                    });
+                });
             /*曲率进化舱*/node(MLBlocks.curvatureEvolutionPod, () -> {
                 /*量子制造厂*/node(MLBlocks.quantumFactory, () -> {
 

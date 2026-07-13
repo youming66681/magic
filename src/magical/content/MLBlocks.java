@@ -293,7 +293,7 @@ public class MLBlocks {
             }};
         //流冲
         fluvialErosion = new ContinuousLiquidTurret("fluvialErosion"){{
-            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 100, MLItems.phantomTitaniumSteel, 30, MLItems.mysticSteel, 50, Items.metaglass, 80}));
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 100, MLItems.phantomTitaniumSteel, 30, MLItems.mysticCrystal, 50, Items.metaglass, 80}));
             liquidCapacity = 60f;
             liquidConsumed = 18f / 60f;
             targetInterval = 5f;
@@ -582,6 +582,7 @@ public class MLBlocks {
             plans = Seq.with(
                     new UnitPlan(MLUnitTypes.drizzle, 60f * 40, ItemStack.with(MLItems.phantomSteel, 20, Items.graphite, 30, Items.silicon, 10)),
                     new UnitPlan(MLUnitTypes.Breeze, 60f * 30, ItemStack.with(MLItems.phantomSteel, 30, Items.silicon, 15))
+                    new UnitPlan(MLUnitTypes.StillWater, 60f * 50, ItemStack.with(MLItems.phantomSteel, 40, Items.silicon, 20, Items.graphite, 30)
             );
             size = 3;
             consumePower(2f);
@@ -598,6 +599,7 @@ public class MLBlocks {
             upgrades.addAll(
                     new UnitType[]{MLUnitTypes.drizzle, MLUnitTypes.Drizzle},
                     new UnitType[]{MLUnitTypes.Breeze, MLUnitTypes.SlantingWind}
+                    new UnitType[]{MLUnitTypes.StillWater, MLUnitTypes.ripple}
             );
         }};
         //量子制造厂
@@ -612,6 +614,7 @@ public class MLBlocks {
             upgrades.addAll(
                     new UnitType[]{MLUnitTypes.Drizzle, MLUnitTypes.drizzlingRain},
                     new UnitType[]{MLUnitTypes.SlantingWind, MLUnitTypes.Gale}
+                    new UnitType[]{MLUnitTypes.ripple, MLUnitTypes.Turbulence}
             );
         }};
          //unit
