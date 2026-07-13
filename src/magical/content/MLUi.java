@@ -55,17 +55,16 @@ public final class MLUi{
         }
     }
 
-    public static void buildRecipeConfig(MultiCrafter owner, MultiCrafter.MultiCrafterBuild build, Table table){
+    public static void buildRecipeConfig(MultiCrafter owner, MultiCrafter.MultiCrafterBuild build, Table table) {
         Table rot = new Table();
         rot.left().defaults().size(55);
 
         Table cont = new Table().top();
         cont.left().defaults().left().growX();
-
         Runnable rebuild = () -> {
             rot.clearChildren();
-            if(owner.hasDoubleOutput){
-                for(int i = 0; i < 4; i++){
+            if (owner.hasDoubleOutput) {
+                for (int i = 0; i < 4; i++) {
                     var button = new ImageButton();
                     int ii = i;
                     button.table(img -> img.image(Icon.right).color(Color.white).size(40).pad(10f));
@@ -80,7 +79,7 @@ public final class MLUi{
 
             int columns = 4;
 
-            for(int i = 0; i < owner.craftPlans.size; i++){
+            for (int i = 0; i < owner.craftPlans.size; i++) {
 
                 MultiCrafter.CraftPlan plan = owner.craftPlans.get(i);
 
@@ -88,9 +87,9 @@ public final class MLUi{
 
                 TextureRegion icon = Icon.cancel.getRegion();
 
-                if(plan.outputItems.length > 0){
+                if (plan.outputItems.length > 0) {
                     icon = plan.outputItems[0].item.uiIcon;
-                }else if(plan.outputLiquids.length > 0){
+                } else if (plan.outputLiquids.length > 0) {
                     icon = plan.outputLiquids[0].liquid.uiIcon;
                 }
 
@@ -113,10 +112,12 @@ public final class MLUi{
 
                 cont.add(button).size(60).pad(3);
 
-                if((i + 1) % columns == 0){
+                if ((i + 1) % columns == 0) {
                     cont.row();
                 }
             }
+        }
+    }
 
     public static void buildRecipeBars(MultiCrafter owner, MultiCrafter.MultiCrafterBuild build, Table table){
         table.clear();
