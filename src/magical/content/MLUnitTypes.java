@@ -344,5 +344,39 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        ripple = new UnitType("ripple") {{
+            constructor = UnitTypes.risso.constructor;
+            speed = 1.2f;
+            rotateSpeed = 6;
+            waveTrailX = 0;
+            waveTrailY = -8;
+            hitSize = 24;
+            health = 1440;
+            armor = 2;
+            faceTarget = false;
+            weapons.add(new Weapon("magic-ripple1") {{
+                reload = 30f;
+                recoil = 2f;
+                x = 8;
+                y = 0;
+                shootY = 8f;
+                mirror = true;
+                rotate = true;
+                rotateSpeed = 4f;
+                inaccuracy = 0f;
+                ejectEffect = Fx.casing2;
+                layerOffset = 0.001f;
+                shootSound = MLSounds.shootArtillery;
+                bullet = new BasicBulletType(8, 30) {{
+                    lifetime = 30;
+                    width = 8;
+                    height = 16;
+                    splashDamageRadius = 16;
+                    splashDamage = 30;
+                    hitEffect = despawnEffect = MLFx.Explosion2;
+                    hitSound = MLSounds.explosion;
+                }};
+            }});
+        }};
     }
 }
