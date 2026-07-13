@@ -10,6 +10,7 @@ import arc.struct.*;
 import mindustry.gen.*;
 import mindustry.ui.*;
 import mindustry.world.meta.*;
+import mindustry.graphics.Pal;
 
 import static mindustry.Vars.tilesize;
 
@@ -36,7 +37,7 @@ public final class MLUi{
             if(map.size == 0) continue;
 
             if(stat.useCategories){
-                table.add("@category." + cat.name).color(LPPal.accent.cpy()).fillX();
+                table.add("@category." + cat.name).color(Pal.accent.cpy()).fillX();
                 table.row();
             }
 

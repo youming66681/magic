@@ -64,9 +64,7 @@ public class MultiCrafter extends PayloadBlock{
         update = true;
         solid = true;
         hasItems = true;
-        ambientSound = Sounds.loopMachine;
         sync = true;
-        ambientSoundVolume = 0.03f;
         flags = EnumSet.of(BlockFlag.factory);
         drawArrow = false;
 
@@ -172,7 +170,7 @@ public class MultiCrafter extends PayloadBlock{
                     if(plan.outputLiquids.length > 0)
                         s.add(Stat.output, StatValues.liquids(1f, plan.outputLiquids));
 
-                    info.table(t -> LPUi.statTurnTable(s, t)).pad(8).left();
+                    info.table(t -> MLUi.statTurnTable(s, t)).pad(8).left();
                 }).growX().left().pad(10);
                 table.row();
             }
@@ -508,7 +506,7 @@ public class MultiCrafter extends PayloadBlock{
 
         @Override
         public void displayBars(Table table){
-            LPUi.buildRecipeBars(MultiCrafter.this, this, table);
+            MLUi.buildRecipeBars(MultiCrafter.this, this, table);
         }
 
         @Override

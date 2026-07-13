@@ -238,23 +238,9 @@ public class MLBlocks {
                     new CraftPlan(){{
                         craftTime = 30f;
                         consumePower(15f);
-                        consumeItems(with(MLItems.phantomSteel, 1, MLItems.phantomTitaniumSteel, 1, MLItems.mysticCrystal, 1, Items.silicon, 3));
-                        outputItems = with(MLItems.logicChip, 1);
+                        consumeItems(ItemStack.with(MLItems.phantomSteel, 1, MLItems.phantomTitaniumSteel, 1, MLItems.mysticCrystal, 1, Items.silicon, 3));
+                        outputItems = ItemStack.with(MLItems.logicChip, 1);
                     }}
-
-                    /*new CraftPlan(){{
-                        craftTime = 60f;
-                        consumePower(4f);
-                        consumeItems(with(LPItems.jynsteel, 4, LPItems.crystalite, 4));
-                        outputItems = with(LPItems.bipolarchip, 1);
-                    }},
-
-                    new CraftPlan(){{
-                        craftTime = 120f;
-                        consumePower(2.5f);
-                        consumeItems(with(LPItems.massisteel, 4, LPItems.crystalite, 3, LPItems.erocrys, 2));
-                        outputItems = with(LPItems.converchip, 1);
-                    }},*/
             );
         }};
         //factor
