@@ -389,7 +389,7 @@ public class MLUnitTypes {
             armor = 4;
             faceTarget = false;
             weapons.add(new Weapon("magic-Turbulence1") {{
-                reload = 30f;
+                reload = 150f;
                 recoil = 3f;
                 x = 0;
                 y = -4;
@@ -401,12 +401,8 @@ public class MLUnitTypes {
                 ejectEffect = Fx.casing3;
                 layerOffset = 0.001f;
                 shootSound = MLSounds.missile;
-                shoot = new ShootAlternate() {{
-                    barrels = 2;
-                    spread = 2;
-                    shots = 30;
-                    shotDelay = 3;
-                }};
+                shoot.shots = 30;
+                shoot.shotDelay = 3;
                 bullet = new BasicBulletType(14, 30) {{
                     lifetime = 20;
                     width = 8;
