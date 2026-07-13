@@ -116,7 +116,7 @@ public final class MLUi{
                     cont.row();
                 }
             }
-        }
+        };
     }
 
     public static void buildRecipeBars(MultiCrafter owner, MultiCrafter.MultiCrafterBuild build, Table table){
