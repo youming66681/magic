@@ -263,7 +263,7 @@ public class MLUnitTypes {
         Gale = new UnitType("Gale") {{
             constructor = UnitTypes.flare.constructor;
             flying = true;
-            lowAltitude = true;
+            lowAltitude = false;
             circleTarget = true;
             faceTarget = true;
             rotateSpeed = 7f;

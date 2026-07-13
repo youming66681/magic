@@ -222,7 +222,7 @@ public class MLBlocks {
             consumePower(1.0f);
         }};
         //芯片制造机
-        /*chipMachine = new MultiCrafter("chipMachine"){{
+        chipMachine = new MultiCrafter("chipMachine"){{
             requirements(Category.crafting, ItemStack.with(MLItems.phantomSteel, 30, MLItems.phantomTitaniumSteel, 10, MLItems.mysticCrystal, 20, Items.silicon, 40, Items.metaglass, 50));
             consumePower(15f);
             health = 400;
@@ -234,24 +234,29 @@ public class MLBlocks {
             solid = true;
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
             hasPower = true;
-            new Recipe(){{
-                craftTime = 60f;
+            craftPlans = Seq.with(
+                    new CraftPlan(){{
+                        craftTime = 30f;
+                        consumePower(15f);
+                        consumeItems(with(MLItems.phantomSteel, 1, MLItems.phantomTitaniumSteel, 1, MLItems.mysticCrystal, 1, Items.silicon, 3));
+                        outputItems = with(MLItems.logicChip, 1);
+                    }}
 
-                input = new Input(){{
-                    power = 15f;
-                    items = new ItemStack[]{
-                            new ItemStack(Items.sand, 30),
-                            new ItemStack(Items.surgeAlloy, 2)
-                    };
-                }};
+                    /*new CraftPlan(){{
+                        craftTime = 60f;
+                        consumePower(4f);
+                        consumeItems(with(LPItems.jynsteel, 4, LPItems.crystalite, 4));
+                        outputItems = with(LPItems.bipolarchip, 1);
+                    }},
 
-                output = new Output(){{
-                    items = new ItemStack[]{
-                            new ItemStack(Items.silicon, 30)
-                    };
-                }};
-            }};
-        }};*/
+                    new CraftPlan(){{
+                        craftTime = 120f;
+                        consumePower(2.5f);
+                        consumeItems(with(LPItems.massisteel, 4, LPItems.crystalite, 3, LPItems.erocrys, 2));
+                        outputItems = with(LPItems.converchip, 1);
+                    }},*/
+            );
+        }};
         //factor
         //炮
         //电戈
