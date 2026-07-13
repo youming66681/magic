@@ -389,7 +389,7 @@ public class MLUnitTypes {
             armor = 4;
             faceTarget = false;
             weapons.add(new Weapon("magic-Turbulence1") {{
-                reload = 150f;
+                reload = 180f;
                 recoil = 3f;
                 x = 0;
                 y = -4;
