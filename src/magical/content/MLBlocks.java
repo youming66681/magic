@@ -581,7 +581,7 @@ public class MLBlocks {
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 80, Items.graphite, 60, Items.silicon, 45}));
             plans = Seq.with(
                     new UnitPlan(MLUnitTypes.drizzle, 60f * 40, ItemStack.with(MLItems.phantomSteel, 20, Items.graphite, 30, Items.silicon, 10)),
-                    new UnitPlan(MLUnitTypes.Breeze, 60f * 30, ItemStack.with(MLItems.phantomSteel, 30, Items.silicon, 15))
+                    new UnitPlan(MLUnitTypes.Breeze, 60f * 30, ItemStack.with(MLItems.phantomSteel, 30, Items.silicon, 15)),
                     new UnitPlan(MLUnitTypes.StillWater, 60f * 50, ItemStack.with(MLItems.phantomSteel, 40, Items.silicon, 20, Items.graphite, 30)
             );
             size = 3;
@@ -598,7 +598,7 @@ public class MLBlocks {
 
             upgrades.addAll(
                     new UnitType[]{MLUnitTypes.drizzle, MLUnitTypes.Drizzle},
-                    new UnitType[]{MLUnitTypes.Breeze, MLUnitTypes.SlantingWind}
+                    new UnitType[]{MLUnitTypes.Breeze, MLUnitTypes.SlantingWind},
                     new UnitType[]{MLUnitTypes.StillWater, MLUnitTypes.ripple}
             );
         }};
@@ -613,7 +613,7 @@ public class MLBlocks {
 
             upgrades.addAll(
                     new UnitType[]{MLUnitTypes.Drizzle, MLUnitTypes.drizzlingRain},
-                    new UnitType[]{MLUnitTypes.SlantingWind, MLUnitTypes.Gale}
+                    new UnitType[]{MLUnitTypes.SlantingWind, MLUnitTypes.Gale},
                     new UnitType[]{MLUnitTypes.ripple, MLUnitTypes.Turbulence}
             );
         }};
