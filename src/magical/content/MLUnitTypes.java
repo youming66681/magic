@@ -320,15 +320,15 @@ public class MLUnitTypes {
             health = 720;
             armor = 1;
             faceTarget = false;
-            new Weapon(name("StillWater1")) {{
+            weapons.add(new Weapon(name("StillWater1")) {{
                 reload = 20f;
-                recoil = 5;
+                recoil = 1.5f;
                 x = 0;
                 y = 0;
                 shootY = 8f;
                 mirror = false;
                 rotate = true;
-                rotateSpeed = 1.5f;
+                rotateSpeed = 6f;
                 inaccuracy = 0f;
                 ejectEffect = Fx.casing3;
                 layerOffset = 0.001f;
