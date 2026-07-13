@@ -320,7 +320,7 @@ public class MLUnitTypes {
             health = 720;
             armor = 1;
             faceTarget = false;
-            weapons.add(new Weapon(name("StillWater1")) {{
+            weapons.add(new Weapon("StillWater1") {{
                 reload = 20f;
                 recoil = 1.5f;
                 x = 0;
