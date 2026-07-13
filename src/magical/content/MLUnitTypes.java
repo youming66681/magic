@@ -39,7 +39,8 @@ import magical.content.MLFx;
 public class MLUnitTypes {
     public static UnitType
     drizzle, Drizzle, drizzlingRain,
-    Breeze, SlantingWind, Gale;
+    Breeze, SlantingWind, Gale,
+    StillWater;
 
     public static void load(){
         drizzle = new UnitType("drizzle") {{
@@ -305,6 +306,40 @@ public class MLUnitTypes {
                     spin = 1.5f;
                     makeFire = true;
                     hitEffect = despawnEffect = MLFx.Explosion3;
+                    hitSound = MLSounds.explosion;
+                }};
+            }});
+        }};
+        StillWater = new UnitType("StillWater") {{
+            constructor = UnitTypes.risso.constructor;
+            speed = 1.4f;
+            rotateSpeed = 7;
+            waveTrailX = 0;
+            waveTrailY = -6;
+            hitSize = 18;
+            health = 720;
+            armor = 1;
+            faceTarget = false;
+            new Weapon(name("StillWater1")) {{
+                reload = 20f;
+                recoil = 5;
+                x = 0;
+                y = 0;
+                shootY = 8f;
+                mirror = false;
+                rotate = true;
+                rotateSpeed = 1.5f;
+                inaccuracy = 0f;
+                ejectEffect = Fx.casing3;
+                layerOffset = 0.001f;
+                shootSound = MLSounds.shootArtillery;
+                bullet = new BasicBulletType(8, 30) {{
+                    lifetime = 25;
+                    width = 8;
+                    height = 16;
+                    splashDamageRadius = 24;
+                    splashDamage = 20;
+                    hitEffect = despawnEffect = MLFx.Explosion1;
                     hitSound = MLSounds.explosion;
                 }};
             }});
