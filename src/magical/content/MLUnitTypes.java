@@ -357,7 +357,7 @@ public class MLUnitTypes {
             weapons.add(new Weapon("magic-ripple1") {{
                 reload = 30f;
                 recoil = 2f;
-                x = 8;
+                x = 4;
                 y = 0;
                 shootY = 8f;
                 mirror = true;
