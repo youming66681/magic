@@ -40,7 +40,7 @@ public class MLUnitTypes {
     public static UnitType
     drizzle, Drizzle, drizzlingRain,
     Breeze, SlantingWind, Gale,
-    StillWater, ripple;
+    StillWater, ripple, Turbulence;
 
     public static void load(){
         drizzle = new UnitType("drizzle") {{
