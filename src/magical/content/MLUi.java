@@ -106,11 +106,6 @@ public final class MLUi{
                     button.setChecked(build.craftPlan == plan);
                 });
 
-                button.addListener(new Tooltip(t -> {
-                    t.background(Styles.black6);
-                    t.add(plan.localizedName).pad(6);
-                }));
-
                 cont.add(button).size(60).pad(3);
 
                 if ((i + 1) % columns == 0) {
