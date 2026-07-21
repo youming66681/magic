@@ -72,8 +72,6 @@ import mindustry.world.blocks.environment.OreBlock;
 import mindustry.world.blocks.environment.Prop;
 import mindustry.world.blocks.environment.StaticWall;
 import mindustry.world.blocks.environment.SteamVent;
-import mindustry.world.blocks.power.Battery;
-import mindustry.world.blocks.power.ConsumeGenerator;
 import mindustry.world.blocks.production.GenericCrafter;
 import mindustry.world.blocks.production.SolidPump;
 import mindustry.world.blocks.sandbox.ItemSource;
@@ -96,7 +94,6 @@ import mindustry.world.meta.Attribute;
 import mindustry.world.meta.BuildVisibility;
 import mindustry.world.meta.Stat;
 import mindustry.world.meta.StatUnit;
-import mindustry.content.UnitTypes;
 import mindustry.world.blocks.production.Drill;
 import mindustry.world.blocks.distribution.Conveyor;
 import mindustry.world.blocks.distribution.Junction;
@@ -111,7 +108,6 @@ import mindustry.world.blocks.power.SolarGenerator;
 import mindustry.world.blocks.power.ImpactReactor;
 import mindustry.world.blocks.power.NuclearReactor;
 import mindustry.world.consumers.ConsumeItems;
-import mindustry.world.consumers.ConsumeLiquid;
 import mindustry.world.draw.DrawWarmupRegion;
 import mindustry.world.blocks.defense.Wall;
 import mindustry.type.UnitType;
@@ -121,14 +117,6 @@ import mindustry.type.LiquidStack;
 import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.blocks.units.UnitFactory.UnitPlan;
 import arc.struct.Seq;
-
-import magical.content.MLItems;
-import magical.content.MLUnitTypes;
-import magical.content.MLTechTree;
-import magical.content.MLPlanets;
-import magical.content.MLFx;
-import magical.magic;
-import magical.content.MLSounds;
 
 public class MLBlocks {
 
@@ -223,7 +211,7 @@ public class MLBlocks {
             consumePower(1.0f);
         }};
         //芯片制造机
-        chipMachine = new MultiCrafter("chipMachine"){{
+        chipMachine = new magical.content.MultiCrafter("chipMachine"){{
             requirements(Category.crafting, ItemStack.with(MLItems.phantomSteel, 30, MLItems.phantomTitaniumSteel, 10, MLItems.mysticCrystal, 20, Items.silicon, 40, Items.metaglass, 50));
             consumePower(15f);
             health = 400;
@@ -465,11 +453,11 @@ public class MLBlocks {
         //turret
         //！？强强？！
         int whm = 4;
-        adaptiveWall = new AdaptiveWall("adaptiveWall"){{
+        adaptiveWall = new magical.content.AdaptiveWall("adaptiveWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticCrystal, 6, Items.silicon, 6}));
             health = 120 * whm;
         }};
-        largeAdaptiveWall = new AdaptiveWall("largeAdaptiveWall"){{
+        largeAdaptiveWall = new magical.content.AdaptiveWall("largeAdaptiveWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticCrystal, 6 * whm, Items.silicon, 6 * whm}));
             health = 120 * whm * 4;
             size = 2;
@@ -572,7 +560,7 @@ public class MLBlocks {
             ambientSoundVolume = 0.03f;
             generateEffect = Fx.generatespark;
 
-            consume(new ConsumeItemFlammable());
+            consume(new magical.content.ConsumeItemFlammable());
 
             drawer = new DrawMulti(new DrawDefault(), new DrawWarmupRegion());
 
@@ -620,7 +608,7 @@ public class MLBlocks {
                     new UnitType[]{MLUnitTypes.ripple, MLUnitTypes.Turbulence}
             );
         }};
-        starHarborShipbuildingCenter = new FlexAssembler("starHarborShipbuildingCenter"){{
+        starHarborShipbuildingCenter = new magical.content.FlexAssembler("starHarborShipbuildingCenter"){{
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 300, Items.graphite, 150, Items.silicon, 120, MLItems.phantomTitaniumSteel, 60, MLItems.mysticCrystal, 90}));
             size = 7;
 
