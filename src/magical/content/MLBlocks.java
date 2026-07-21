@@ -287,7 +287,6 @@ public class MLBlocks {
             liquidCapacity = 60f;
             liquidConsumed = 18f / 60f;
             targetInterval = 5f;
-            newTargetInterval = 30f;
             targetUnderBlocks = false;
             range = 144f;
             size = 3;
@@ -304,7 +303,6 @@ public class MLBlocks {
             ammoMultiplier = 1f;
             knockback = 2f;
             pierceCap = 2;
-            timescaleDamage = true;
 
             colors = new Color[]{Color.valueOf("596ab8").a(0.55f), Color.valueOf("596ab8").a(0.7f), Color.valueOf("596ab8").a(0.8f), Color.valueOf("596ab8"), Color.white};
             flareColor = Color.valueOf("596ab8");
@@ -316,7 +314,6 @@ public class MLBlocks {
             ammoMultiplier = 1f;
             knockback = 2f;
             pierceCap = 2;
-            timescaleDamage = true;
 
             colors = new Color[]{Color.valueOf("6ecdec").a(0.55f), Color.valueOf("6ecdec").a(0.7f), Color.valueOf("6ecdec").a(0.8f), Color.valueOf("6ecdec"), Color.white};
             flareColor = Color.valueOf("6ecdec");
@@ -328,7 +325,6 @@ public class MLBlocks {
             ammoMultiplier = 1f;
             knockback = 3f;
             pierceCap = 3;
-            timescaleDamage = true;
 
             colors = new Color[]{Color.valueOf("ffa166").a(0.55f), Color.valueOf("ffa166").a(0.7f), Color.valueOf("ffa166").a(0.8f), Color.valueOf("ffa166"), Color.white};
             flareColor = Color.valueOf("ffa166");
@@ -340,7 +336,6 @@ public class MLBlocks {
             ammoMultiplier = 1f;
             knockback = 2f;
             pierceCap = 2;
-            timescaleDamage = true;
 
             colors = new Color[]{Color.valueOf("313131").a(0.55f), Color.valueOf("313131").a(0.7f), Color.valueOf("313131").a(0.8f), Color.valueOf("313131"), Color.white};
             flareColor = Color.valueOf("313131");

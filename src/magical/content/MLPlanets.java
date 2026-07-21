@@ -28,7 +28,6 @@ public class MLPlanets {
     public static void load() {
 
          cecilia = new Planet("cecilia", Planets.sun, 1f, 3) {{
-            loadPlanetData = true;
             generator = new SerpuloPlanetGenerator();
             meshLoader = () -> new HexMesh(this, 6);
             cloudMeshLoader = () -> new MultiMesh(
@@ -42,7 +41,6 @@ public class MLPlanets {
             prebuildBase = false;
             tidalLock = false;
             allowWaves = true;
-            allowLegacyLaunchPads = true;
             allowSectorInvasion = true;
             allowLaunchSchematics = true;
             enemyCoreSpawnReplace = true;
@@ -50,10 +48,8 @@ public class MLPlanets {
             ruleSetter = r -> {
                 r.waveTeam = Team.crux;
                 r.placeRangeCheck = false;
-                r.showSpawns = false;
                 r.coreDestroyClear = true;
             };
-            showRtsAIRule = true;
             iconColor = Color.valueOf("97B5EDFF");
             atmosphereColor = Color.valueOf("97B5EDFF");
             atmosphereRadIn = 0.02f;
@@ -62,7 +58,6 @@ public class MLPlanets {
             rotateTime = 3000;
             startSector = 1;
             alwaysUnlocked = true;
-            allowSelfSectorLaunch = false;
             landCloudColor = Pal.spore.cpy().a(0.5f);
         }};
     }

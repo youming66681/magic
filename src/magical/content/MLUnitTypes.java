@@ -17,7 +17,6 @@ import mindustry.entities.pattern.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
-import mindustry.type.ammo.*;
 import mindustry.type.unit.*;
 import mindustry.type.weapons.*;
 import mindustry.world.meta.*;
@@ -288,7 +287,6 @@ public class MLUnitTypes {
             targetAir = false;
             engineOffset = 14;
             engineSize = 6f;
-            autoDropBombs = true;
             targetFlags = new BlockFlag[]{BlockFlag.factory};
             weapons.add(new Weapon("magic-Gale1") {{
                 rotate = false;
