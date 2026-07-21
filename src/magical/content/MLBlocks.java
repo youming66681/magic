@@ -630,7 +630,7 @@ public class MLBlocks {
                             UnitTypes.nova,
                             UnitTypes.flare
                     },
- 2
+
                     {
                             UnitTypes.mace,
                             UnitTypes.pulsar
