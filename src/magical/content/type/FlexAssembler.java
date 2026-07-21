@@ -3,10 +3,10 @@ package magical.content;
 import arc.*;
 import arc.graphics.*;
 import arc.graphics.g2d.*;
-import arc.struct.*;
 import arc.scene.style.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
+import arc.struct.*;
 import arc.util.*;
 import arc.util.io.*;
 import mindustry.*;
@@ -33,12 +33,14 @@ public class FlexAssembler extends UnitAssembler {
     /** 解锁模块 */
     public Block moduleBlock = null;
 
-    /** 装配等级列表（实例自定义） */
+    /** 配方等级（实例自定义） */
     public Seq<AssemblerLevel> levels = new Seq<>();
 
     public FlexAssembler(String name) {
         super(name);
         hasItems = false;
+        // 指定建筑工厂（替代超麻烦的 build 重写）
+        setBuildingProvider(FlexAssemblerBuild::new);
     }
 
     @Override
@@ -48,25 +50,16 @@ public class FlexAssembler extends UnitAssembler {
         sideRegion2 = Core.atlas.find(name + "-side2");
     }
 
-    // 返回自定义建筑（关键：不重写 build，而是使用此方法，并确保建筑类可被实例化）
-    // v7 中，方块会通过构造器反射创建建筑，只需保证内部类是 public static 或者在本类内部即可
-    // 但实际上 UnitAssembler 使用内部类 UnitBuild，我们要替换它，所以必须重写 createBuilding 或 build
-    // 这里采用最简单方式：直接在本类中覆写 build 方法，但签名必须匹配：
-    @Override
-    public Building build(Tile tile, Team team, int rotation, boolean lastConfig) {
-        return new FlexAssemblerBuild();
-    }
-
     // ========== 自定义建筑 ==========
-    public class FlexAssemblerBuild extends UnitBuild {
+    public class FlexAssemblerBuild extends UnitBuild {   // UnitBuild 是 UnitAssembler 的内部建筑
 
         public int currentLevel = 0;
         public int currentRecipe = 0;
         public boolean crafting = false;
         public float progress = 0f;
 
-        // 自管理的载荷仓库（用于统计和消耗）
-        public Seq<Payload> storedPayloads = new Seq<>();
+        // 注意：这里使用父类自带的 payloads 字段（UnitBuild 中有 Seq<Payload> payloads）
+        // 但为了兼容，直接使用 getPayloads() 访问
 
         // ---------- 模块计数 ----------
         public int countModules() {
@@ -83,10 +76,10 @@ public class FlexAssembler extends UnitAssembler {
 
         public int maxAvailableLevel() { return countModules(); }
 
-        // ---------- 载荷接收 ----------
+        // ---------- 载荷接收（直接复用父类 UnitBuild 的逻辑） ----------
         @Override
         public boolean acceptPayload(Building source, Payload payload) {
-            // 只要任一配方需要，就接收
+            // 检查是否被配方需要
             for (AssemblerLevel level : levels)
                 for (UnitRecipe r : level.recipes)
                     for (PayloadStack s : r.payloadCost) {
@@ -100,34 +93,33 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void handlePayload(Building source, Payload payload) {
-            // 加入自己的仓库，并解除原绑定
-            storedPayloads.add(payload);
-            payload.set(null);
+            // UnitBuild 内部有 payloads 管理，调用父类处理即可
+            super.handlePayload(source, payload);
         }
 
         // ---------- 载荷统计 ----------
         public int countPayload(Block block) {
             int c = 0;
-            for (Payload p : storedPayloads)
+            for (Payload p : getPayloads())
                 if (p instanceof BlockPayload && ((BlockPayload) p).block() == block) c++;
             return c;
         }
 
         public int countPayload(UnitType unit) {
             int c = 0;
-            for (Payload p : storedPayloads)
+            for (Payload p : getPayloads())
                 if (p instanceof UnitPayload && ((UnitPayload) p).unit.type == unit) c++;
             return c;
         }
 
-        // ---------- 载荷移除 ----------
+        // ---------- 载荷消耗 ----------
         public void removePayload(Block block, int amount) {
             int removed = 0;
-            for (int i = storedPayloads.size - 1; i >= 0 && removed < amount; i--) {
-                Payload p = storedPayloads.get(i);
+            for (int i = getPayloads().size - 1; i >= 0 && removed < amount; i--) {
+                Payload p = getPayloads().get(i);
                 if (p instanceof BlockPayload && ((BlockPayload) p).block() == block) {
-                    p.remove();
-                    storedPayloads.remove(i);
+                    p.remove();                     // 从世界删除
+                    getPayloads().remove(i);
                     removed++;
                 }
             }
@@ -135,17 +127,17 @@ public class FlexAssembler extends UnitAssembler {
 
         public void removePayload(UnitType unit, int amount) {
             int removed = 0;
-            for (int i = storedPayloads.size - 1; i >= 0 && removed < amount; i--) {
-                Payload p = storedPayloads.get(i);
+            for (int i = getPayloads().size - 1; i >= 0 && removed < amount; i--) {
+                Payload p = getPayloads().get(i);
                 if (p instanceof UnitPayload && ((UnitPayload) p).unit.type == unit) {
                     p.remove();
-                    storedPayloads.remove(i);
+                    getPayloads().remove(i);
                     removed++;
                 }
             }
         }
 
-        // ---------- 生产逻辑 ----------
+        // ---------- 生产 ----------
         @Override
         public void updateTile() {
             int max = maxAvailableLevel();
@@ -163,10 +155,7 @@ public class FlexAssembler extends UnitAssembler {
                 boolean can = true;
                 for (PayloadStack s : recipe.payloadCost) {
                     int have = (s.block != null) ? countPayload(s.block) : countPayload(s.unit);
-                    if (have < s.amount) {
-                        can = false;
-                        break;
-                    }
+                    if (have < s.amount) { can = false; break; }
                 }
                 if (can) {
                     for (PayloadStack s : recipe.payloadCost) {
@@ -192,7 +181,6 @@ public class FlexAssembler extends UnitAssembler {
                     progress = 0f;
                 }
             }
-            // 调用父类逻辑（电力等）
             super.updateTile();
         }
 
@@ -273,8 +261,6 @@ public class FlexAssembler extends UnitAssembler {
             write.b(currentRecipe);
             write.f(progress);
             write.bool(crafting);
-            write.i(storedPayloads.size);
-            for (Payload p : storedPayloads) TypeIO.writePayload(write, p);
         }
 
         @Override
@@ -284,9 +270,6 @@ public class FlexAssembler extends UnitAssembler {
             currentRecipe = read.ub();
             progress = read.f();
             crafting = read.bool();
-            int count = read.i();
-            storedPayloads.clear();
-            for (int i = 0; i < count; i++) storedPayloads.add(TypeIO.readPayload(read));
         }
     }
 
