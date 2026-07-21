@@ -1,4 +1,4 @@
-package magical.content.type; // 改为你的包名
+package magical.content.type; // 改成你的包名
 
 import arc.*;
 import arc.audio.*;
@@ -27,34 +27,37 @@ public class FlexAssembler extends UnitAssembler {
     public TextureRegion sideRegion2;
 
     public int areaSize = 11;
-    public Sound createSound = Sounds.place;   // 换成肯定存在的音效，也可以后续改为 unitBuild 如果依赖正确
+    public Sound createSound = Sounds.place;   // 安全音效，可在外覆盖
     public float createSoundVolume = 1f;
 
-    /** 模块方块（用于解锁等级） */
+    /** 用于解锁等级的模块方块 */
     public Block moduleBlock = null;
 
-    /** 自定义等级列表 */
-    public Seq<AssemblerLevel> levels = new Seq<>();
+    /** 自定义等级列表 —— 必须由外部填充 */
+    public Seq<AssemblerLevel> levels;
 
     public FlexAssembler(String name) {
         super(name);
         hasItems = false;
+        levels = new Seq<>();
     }
 
     @Override
     public void load() {
         super.load();
+        // 只做纹理加载，不碰配方（配方由各个实例自己设定）
         sideRegion1 = Core.atlas.find(name + "-side1");
         sideRegion2 = Core.atlas.find(name + "-side2");
+
     }
 
-    // 重写 build 以返回自定义建筑
+    // 返回自定义建筑
     @Override
     public Building build(mindustry.game.Team team) {
         return new FlexAssemblerBuild();
     }
 
-    // ========== 自定义建筑 ==========
+    // ========== 自定义建筑（逻辑不变） ==========
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
 
         public int currentLevel = 0;
@@ -163,7 +166,7 @@ public class FlexAssembler extends UnitAssembler {
                     progress = 0f;
                 }
             }
-            super.updateTile(); // 保留原版逻辑
+            super.updateTile();
         }
 
         public UnitRecipe getCurrentRecipe() {
@@ -174,7 +177,6 @@ public class FlexAssembler extends UnitAssembler {
             return level.recipes.get(currentRecipe);
         }
 
-        // 配置界面
         @Override
         public void buildConfiguration(Table table) {
             int maxLevel = maxAvailableLevel();
