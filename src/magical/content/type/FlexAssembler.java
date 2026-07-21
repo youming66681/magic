@@ -1,4 +1,4 @@
-package magical.content.type;
+package magical.content; // 改成你的包名
 
 import arc.*;
 import arc.audio.*;
@@ -20,13 +20,13 @@ import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.world.*;
 import mindustry.world.blocks.payloads.*;
+import mindustry.world.blocks.units.*;
 import mindustry.world.meta.*;
 
 import static mindustry.Vars.*;
 
-public class FlexAssembler extends Block {
+public class FlexAssembler extends UnitAssembler {
 
-    // 手动加载纹理（避免 @Load 问题）
     public TextureRegion sideRegion1;
     public TextureRegion sideRegion2;
 
@@ -34,52 +34,45 @@ public class FlexAssembler extends Block {
     public Sound createSound = Sounds.unitBuild;
     public float createSoundVolume = 1f;
 
-    /** 模块方块 */
+    /** 用于解锁等级的模块方块 */
     public Block moduleBlock = null;
 
-    /** 装配等级列表 */
+    /** 自定义装配等级列表 */
     public Seq<AssemblerLevel> levels = new Seq<>();
 
     public FlexAssembler(String name) {
         super(name);
-        update = true;
-        solid = true;
         hasItems = false;
-        hasPower = true;
-        configurable = true;
-        size = 3;
     }
 
     @Override
     public void load() {
         super.load();
-        // 手动加载纹理
         sideRegion1 = Core.atlas.find(name + "-side1");
         sideRegion2 = Core.atlas.find(name + "-side2");
-
     }
 
-    // ========== 建筑内部类 ==========
-    public class FlexAssemblerBuild extends Building implements PayloadAcceptor<Building> {
+    // 重写以返回我们的自定义建筑
+    @Override
+    public Building build(Tile tile, Team team, int rotation, boolean lastConfig) {
+        return new FlexAssemblerBuild();
+    }
+
+    // ========== 自定义建筑 ==========
+    public class FlexAssemblerBuild extends UnitAssemblerBuild {
 
         public int currentLevel = 0;
         public int currentRecipe = 0;
         public boolean crafting = false;
         public float progress = 0f;
 
-        // 自定义载荷仓库（因为 Building 没有自带的 payloads 字段！）
-        public Seq<Payload> payloads = new Seq<>();
-
-        // ----- 模块检测 -----
+        // 模块计数
         public int countModules() {
             if (moduleBlock == null) return levels.size - 1;
             int c = 0;
             int off = (areaSize - 1) / 2;
-            // tile 在 Building 中可以直接用 this.tile (或直接 tile，因为继承了父类的 protected 字段)
             for (int dx = -off; dx <= off; dx++)
                 for (int dy = -off; dy <= off; dy++) {
-                    // 注意：world.buildWorld 在 v8 中可用，v7 中可能是 world.locateBuilding 或 world.tile(x,y).build
-                    // 但根据先前的报错，v8 存在 world.buildWorld，我们仍用
                     Building b = world.buildWorld(tile.x + dx, tile.y + dy);
                     if (b != null && b.block == moduleBlock) c++;
                 }
@@ -88,38 +81,7 @@ public class FlexAssembler extends Block {
 
         public int maxAvailableLevel() { return countModules(); }
 
-        // ----- 载荷接口 -----
-        @Override
-        public boolean acceptPayload(Building source, Payload payload) {
-            // 检查是否任何配方需要
-            for (AssemblerLevel level : levels) {
-                for (UnitRecipe r : level.recipes) {
-                    for (PayloadStack s : r.payloadCost) {
-                        if (s.block != null && payload instanceof BlockPayload
-                                && ((BlockPayload) payload).block() == s.block) return true;
-                        if (s.unit != null && payload instanceof UnitPayload
-                                && ((UnitPayload) payload).unit.type == s.unit) return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        @Override
-        public void handlePayload(Building source, Payload payload) {
-            // payload.set 在 v8 中需要两个 float 参数？不，Payload.set(Building) 也存在，但有多个重载
-            // 稳妥起见：payload.set(null); 存在吗？ 我们先尝试 payload.detach() 或直接移除原方块所有权
-            payload.attached(source); // 防止原来的方块丢失
-            payloads.add(payload);
-        }
-
-        // 重写 getPayloads 以返回自定义容器
-        @Override
-        public Seq<Payload> getPayloads() {
-            return payloads;
-        }
-
-        // 统计
+        // 载荷统计（使用父类 payloads 字段）
         public int countPayload(Block block) {
             int c = 0;
             for (Payload p : payloads) {
@@ -136,7 +98,7 @@ public class FlexAssembler extends Block {
             return c;
         }
 
-        // 移除
+        // 移除载荷
         public void removePayload(Block block, int amount) {
             int removed = 0;
             for (int i = payloads.size - 1; i >= 0 && removed < amount; i--) {
@@ -161,9 +123,9 @@ public class FlexAssembler extends Block {
             }
         }
 
-        // ----- 生产逻辑 -----
         @Override
         public void updateTile() {
+            // 模块数量变化时自动降级
             int max = maxAvailableLevel();
             if (currentLevel > max) {
                 currentLevel = max;
@@ -171,19 +133,20 @@ public class FlexAssembler extends Block {
                 crafting = false;
                 progress = 0f;
             }
+
             UnitRecipe recipe = getCurrentRecipe();
             if (recipe == null) return;
 
             if (!crafting) {
                 boolean can = true;
-                for (PayloadStack stack : recipe.payloadCost) {
-                    int have = (stack.block != null) ? countPayload(stack.block) : countPayload(stack.unit);
-                    if (have < stack.amount) { can = false; break; }
+                for (PayloadStack s : recipe.payloadCost) {
+                    int have = (s.block != null) ? countPayload(s.block) : countPayload(s.unit);
+                    if (have < s.amount) { can = false; break; }
                 }
                 if (can) {
-                    for (PayloadStack stack : recipe.payloadCost) {
-                        if (stack.block != null) removePayload(stack.block, stack.amount);
-                        else removePayload(stack.unit, stack.amount);
+                    for (PayloadStack s : recipe.payloadCost) {
+                        if (s.block != null) removePayload(s.block, s.amount);
+                        else removePayload(s.unit, s.amount);
                     }
                     crafting = true;
                     progress = 0f;
@@ -193,6 +156,7 @@ public class FlexAssembler extends Block {
             if (crafting) {
                 float speed = 1f;
                 progress += Time.delta * 60f * speed;
+
                 if (progress >= recipe.craftTime) {
                     crafting = false;
                     if (!net.client()) {
@@ -201,10 +165,12 @@ public class FlexAssembler extends Block {
                             unit.add();
                         }
                     }
-                    createSound.at(x, y);
+                    createSound.at(this);
                     progress = 0f;
                 }
             }
+
+            super.updateTile(); // 保留原版一些逻辑（如电力消耗）
         }
 
         public UnitRecipe getCurrentRecipe() {
@@ -215,7 +181,7 @@ public class FlexAssembler extends Block {
             return level.recipes.get(currentRecipe);
         }
 
-        // ----- 玩家界面 -----
+        // 配置界面
         @Override
         public void buildConfiguration(Table table) {
             int maxLevel = maxAvailableLevel();
@@ -280,7 +246,7 @@ public class FlexAssembler extends Block {
             }
         }
 
-        // ----- 绘制 -----
+        // 绘制
         @Override
         public void draw() {
             super.draw();
@@ -303,7 +269,7 @@ public class FlexAssembler extends Block {
             }
         }
 
-        // ----- 同步 -----
+        // 序列化
         @Override
         public void write(Writes write) {
             super.write(write);
@@ -311,11 +277,6 @@ public class FlexAssembler extends Block {
             write.b(currentRecipe);
             write.f(progress);
             write.bool(crafting);
-            // 载荷序列化
-            write.i(payloads.size);
-            for (Payload p : payloads) {
-                TypeIO.writePayload(write, p);
-            }
         }
 
         @Override
@@ -325,11 +286,6 @@ public class FlexAssembler extends Block {
             currentRecipe = read.ub();
             progress = read.f();
             crafting = read.bool();
-            int count = read.i();
-            payloads.clear();
-            for (int i = 0; i < count; i++) {
-                payloads.add(TypeIO.readPayload(read));
-            }
         }
     }
 
@@ -341,10 +297,10 @@ public class FlexAssembler extends Block {
         public int outputCount = 1;
 
         public UnitRecipe() {}
-        public UnitRecipe(UnitType unit, float craftTime, PayloadStack[] payloadCost) {
+        public UnitRecipe(UnitType unit, float craftTime, PayloadStack[] cost) {
             this.unit = unit;
             this.craftTime = craftTime;
-            this.payloadCost = payloadCost;
+            this.payloadCost = cost;
         }
     }
 
@@ -357,7 +313,13 @@ public class FlexAssembler extends Block {
         public UnitType unit;
         public int amount;
 
-        public PayloadStack(Block block, int amount) { this.block = block; this.amount = amount; }
-        public PayloadStack(UnitType unit, int amount) { this.unit = unit; this.amount = amount; }
+        public PayloadStack(Block block, int amount) {
+            this.block = block;
+            this.amount = amount;
+        }
+        public PayloadStack(UnitType unit, int amount) {
+            this.unit = unit;
+            this.amount = amount;
+        }
     }
 }
