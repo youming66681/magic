@@ -612,16 +612,25 @@ public class MLBlocks {
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 300, Items.graphite, 150, Items.silicon, 120, MLItems.phantomTitaniumSteel, 60, MLItems.mysticCrystal, 90}));
             size = 7;
 
-            AssemblerLevel tier0 = new AssemblerLevel();
-            tier0.recipes.add(new UnitRecipe(UnitTypes.dagger, 4 * 60f,
-                    new PayloadStack[]{new PayloadStack(UnitTypes.crawler, 1), new PayloadStack(Blocks.copperWall, 2)}));
-            tier0.recipes.add(new UnitRecipe(UnitTypes.crawler, 5 * 60f,
-                    new PayloadStack[]{new PayloadStack(Blocks.copperWall, 3)}));
-            levels.add(tier0);
-            AssemblerLevel tier1 = new AssemblerLevel();
-            tier1.recipes.add(new UnitRecipe(UnitTypes.atrax, 10 * 60f,
-                    new PayloadStack[]{new PayloadStack(UnitTypes.dagger, 2), new PayloadStack(Blocks.titaniumWall, 2)}));
-            levels.add(tier1);
+            assembler.addPlan("T1", UnitTypes.stell, 45f, 4f,
+                    new PayloadStack(UnitTypes.evoke, 2));
+            assembler.addPlan("T1", UnitTypes.locus, 55f, 4.5f,
+                    new PayloadStack(UnitTypes.evoke, 2));
+            assembler.addPlan("T1", UnitTypes.elude, 35f, 4f,
+                    new PayloadStack(Blocks.copperWall, 3));
+
+            assembler.addPlan("T2", UnitTypes.quell, 90f, 5.5f,
+                    new PayloadStack(UnitTypes.locus, 1),
+                    new PayloadStack(UnitTypes.stell, 1));
+            assembler.addPlan("T2", UnitTypes.avert, 100f, 5.8f,
+                    new PayloadStack(UnitTypes.locus, 2));
+            assembler.addPlan("T2", UnitTypes.precept, 110f, 6f,
+                    new PayloadStack(Blocks.berylliumWall, 4),
+                    new PayloadStack(UnitTypes.evoke, 2));
+
+            assembler.addPlan("T3", UnitTypes.obviate, 150f, 7f,
+                    new PayloadStack(UnitTypes.quell, 2),
+                    new PayloadStack(UnitTypes.avert, 1));
 
             areaSize = 13;
 
