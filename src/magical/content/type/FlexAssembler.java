@@ -1,4 +1,4 @@
-package magical.content;
+package magical.content.type;
 
 import arc.Core;
 import arc.graphics.Color;
@@ -6,7 +6,6 @@ import arc.math.Mathf;
 import arc.scene.ui.Button;
 import arc.scene.ui.ImageButton;
 import arc.scene.ui.ScrollPane;
-import arc.scene.ui.layout.Scl;
 import arc.scene.ui.layout.Table;
 import arc.struct.*;
 import arc.util.*;
@@ -27,32 +26,32 @@ import java.util.*;
 import static mindustry.Vars.*;
 
 /**
- * 自定义组装厂：
- * - 通过相邻 UnitAssemblerModule 提高 capacitie 长度来解锁更高等级配方
- * - 分等级标签页手动选择合成单位
- * - 每个配方拥有独立的拾取范围（areaSize）
+ * 自定义组装厂（兼容 Mindustry v7）：
+ * - 通过模块数量扩展 capacities 以解锁高级配方
+ * - 等级标签页手动选择合成单位
+ * - 每个配方独立的拾取范围（areaSize）
  * - 支持单位与方块载荷
  */
 public class FlexAssembler extends UnitAssembler {
 
-    // 存储每个配方对应的拾取面积(格)
+    // 存储每个配方对应的自定义面积（格）
     public Map<AssemblerUnitPlan, Float> areaPerPlan = new HashMap<>();
-    // 存储等级标签 → 配方列表
+    // 等级标签 → 配方列表
     public OrderedMap<String, Seq<AssemblerUnitPlan>> tierMap = new OrderedMap<>();
-    // 存储每个配方所需的不同载荷类型数（用于判断模块容量是否足够）
+    // 配方所需的载荷类型数（用于容量检查）
     public Map<AssemblerUnitPlan, Integer> requiredTypesPerPlan = new HashMap<>();
 
     public FlexAssembler(String name) {
         super(name);
-        plans.clear(); // 手动管理配方列表
+        plans.clear(); // 手动控制配方
     }
 
-    /** 向指定等级添加一个配方（无物品消耗） */
+    /** 添加配方（无物品消耗） */
     public void addPlan(String tier, UnitType output, float time, float areaSize, PayloadStack... inputs) {
         addPlan(tier, output, time, areaSize, null, inputs);
     }
 
-    /** 向指定等级添加一个配方（可带物品消耗） */
+    /** 添加配方（可带物品消耗） */
     public void addPlan(String tier, UnitType output, float time, float areaSize, @Nullable ItemStack payItem, PayloadStack... inputs) {
         AssemblerUnitPlan plan = new AssemblerUnitPlan(output, time, inputs);
         if (payItem != null) plan.payItem = payItem;
@@ -66,30 +65,25 @@ public class FlexAssembler extends UnitAssembler {
         }
         group.add(plan);
 
-        // 计算所需的不同载荷类型数
+        // 计算需要多少种不同的载荷
         int distinct = (int) Arrays.stream(inputs).map(s -> s.item).distinct().count();
         requiredTypesPerPlan.put(plan, distinct);
     }
 
-    @Override
-    public void setBars() {
-        super.setBars();
-    }
-
-    // ============ 配置界面 ============
+    // ============ 建筑配置界面 ============
     @Override
     public void buildConfiguration(Table table, Building build) {
         FlexAssemblerBuild entity = (FlexAssemblerBuild) build;
+        // capacities 长度代表模块提供的槽位数
         int currentCapacity = entity.capacities != null ? entity.capacities.length : 0;
 
         if (!entity.configured) {
-            // 显示等级标签页 + 图标网格
             Table tabs = new Table();
             Table content = new Table();
 
             for (String tier : tierMap.keys()) {
-                Button tabBtn = new Button(Tex.button, Styles.clearToggleTransi);
-                tabBtn.label(tier).growX();
+                Button tabBtn = new Button(Tex.button, Styles.cleari);
+                tabBtn.label(() -> tier).growX();
                 final String tierName = tier;
                 tabBtn.clicked(() -> {
                     content.clear();
@@ -97,7 +91,7 @@ public class FlexAssembler extends UnitAssembler {
                 });
                 tabs.add(tabBtn).growX().pad(4);
 
-                // 若该等级下所有配方均因容量不足而不可用，标签半透明
+                // 若该等级所有配方都不可用，标签置灰
                 boolean allDisabled = tierMap.get(tier).allMatch(p -> requiredTypesPerPlan.getOrDefault(p, 0) > currentCapacity);
                 if (allDisabled) {
                     tabBtn.setDisabled(true);
@@ -107,16 +101,14 @@ public class FlexAssembler extends UnitAssembler {
             ScrollPane pane = new ScrollPane(content);
             tabs.add(pane).colspan(tierMap.size).grow();
 
-            // 默认显示第一个等级
             if (tierMap.size > 0) {
-                String first = tierMap.keys().first();
+                String first = tierMap.keys().next(); // 获取第一个 key
                 buildIconGrid(content, tierMap.get(first), entity, currentCapacity);
             }
 
             table.add(tabs).grow();
         } else {
-            // 已配置：显示当前生产单位，提供更改按钮
-            table.label("Producing: " + entity.selectedPlan.output().localizedName).padBottom(4).row();
+            table.label("Producing: " + entity.selectedPlan.unit.localizedName).padBottom(4).row();
             table.button("Change", () -> {
                 entity.setConfigured(false);
                 ui.build.hide();
@@ -133,8 +125,8 @@ public class FlexAssembler extends UnitAssembler {
 
             boolean canProduce = requiredTypesPerPlan.getOrDefault(plan, 0) <= currentCapacity;
 
-            ImageButton button = new ImageButton(plan.output().uiIcon, Styles.clearToggleTransi);
-            button.getStyle().imageUpColor = canProduce ? plan.output().color : Color.gray;
+            ImageButton button = new ImageButton(plan.unit.uiIcon, Styles.cleari);
+            button.getStyle().imageUpColor = canProduce ? plan.unit.color : Color.gray;
             button.resizeImage(40f);
             if (canProduce) {
                 button.clicked(() -> entity.configure(plan));
@@ -142,7 +134,7 @@ public class FlexAssembler extends UnitAssembler {
                 button.setDisabled(true);
             }
             button.row();
-            button.add(plan.output().localizedName).color(canProduce ? Color.lightGray : Color.darkGray);
+            button.add(plan.unit.localizedName).color(canProduce ? Color.lightGray : Color.darkGray);
             grid.add(button).pad(4);
             i++;
         }
@@ -152,40 +144,35 @@ public class FlexAssembler extends UnitAssembler {
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         public boolean configured = false;
         public AssemblerUnitPlan selectedPlan;
-        public float customAreaSize;
+        public float customAreaSize = areaSize; // 使用 block 的默认值
         public float productionProgress;
         public float warmup = 0f;
 
-        /** 清除配置 */
         public void setConfigured(boolean val) {
             configured = val;
             if (!val) {
                 selectedPlan = null;
-                customAreaSize = areaSize; // 恢复到默认区域大小
-                capacities = block().capacities.clone();
+                customAreaSize = areaSize;
+                capacities = FlexAssembler.this.capacities.clone(); // 恢复默认容量
                 productionProgress = 0f;
                 warmup = 0f;
             }
         }
 
-        /** 选定一个配方 */
         public void configure(AssemblerUnitPlan plan) {
             selectedPlan = plan;
             configured = true;
             Float area = areaPerPlan.get(plan);
             customAreaSize = area != null ? area : areaSize;
-            capacities = block().capacities.clone();
+            capacities = FlexAssembler.this.capacities.clone();
             productionProgress = 0f;
             warmup = 0f;
-            configure(new Integer(selectedPlan.output().id));
+            configure(new Integer(selectedPlan.unit.id)); // 存储单位 ID
         }
 
         @Override
         public Object config() {
-            if (configured && selectedPlan != null) {
-                return selectedPlan.output().id;
-            }
-            return null;
+            return configured && selectedPlan != null ? selectedPlan.unit.id : null;
         }
 
         @Override
@@ -195,7 +182,7 @@ public class FlexAssembler extends UnitAssembler {
                 UnitType type = content.getByID(ContentType.unit, id);
                 if (type != null) {
                     for (AssemblerUnitPlan p : plans) {
-                        if (p.output() == type) {
+                        if (p.unit == type) {
                             configure(p);
                             return;
                         }
@@ -205,114 +192,24 @@ public class FlexAssembler extends UnitAssembler {
             super.configure(value);
         }
 
-        // ========== 动态范围 ==========
-        @Override
-        public float areaSize() {
-            return configured ? customAreaSize : super.areaSize();
-        }
-
-        // ========== 自定义生产逻辑 ==========
+        // ---------- 动态范围（直接覆写 areaSize 字段的读取行为，通过重写 drawSelect 实现） ----------
+        // 注意：v7 的 UnitAssemblerBuild 没有 areaSize() 方法，只有 areaSize 字段
+        // 需要确保无人机拾取范围使用的是我们自定义的 customAreaSize。
+        // 原版会使用 this.areaSize 字段，因此我们只需在合适时机设置 this.areaSize = customAreaSize
         @Override
         public void updateTile() {
+            // 设置当前 areaSize 为配方对应的值
+            if (configured) {
+                areaSize = customAreaSize;
+            } else {
+                areaSize = FlexAssembler.this.areaSize;
+            }
+
+            // 执行父类逻辑（包含无人机拾取、生产等）
             super.updateTile();
-
-            if (!configured || selectedPlan == null) {
-                warmup = Mathf.lerpDelta(warmup, 0f, 0.02f);
-                productionProgress = 0f;
-                return;
-            }
-
-            // 电力检查
-            if (!consPower()) {  // 原版方法：检查电力满足
-                warmup = Mathf.lerpDelta(warmup, 0f, 0.02f);
-                return;
-            }
-
-            // 满足生产条件？
-            if (!meetsPlan(selectedPlan)) {
-                warmup = Mathf.lerpDelta(warmup, 0f, 0.02f);
-                return;
-            }
-
-            warmup = Mathf.lerpDelta(warmup, 1f, 0.02f);
-            productionProgress += delta() / (selectedPlan.time * 60f);
-
-            if (productionProgress >= 1f) {
-                consumePlan(selectedPlan);
-                Unit unit = selectedPlan.output().create(team);
-                unit.set(x, y);
-                unit.add();
-                Fx.producesmoke.at(x, y);
-                productionProgress = 0f;
-            }
         }
 
-        /** 检查当前存储中是否满足计划的载荷和物品需求 */
-        public boolean meetsPlan(AssemblerUnitPlan plan) {
-            // 物品检查
-            if (plan.payItem != null && (items == null || items.get(plan.payItem.item) < plan.payItem.amount)) {
-                return false;
-            }
-            // 载荷检查
-            if (payloads != null && plan.requirements != null) {
-                int[] required = new int[content.units().size + content.blocks().size];
-                for (PayloadStack stack : plan.requirements) {
-                    int idx = stack.item.getPayloadIndex();
-                    if (idx >= 0 && idx < required.length) {
-                        required[idx] += stack.amount;
-                    }
-                }
-                for (int i = 0; i < required.length; i++) {
-                    if (required[i] > 0) {
-                        int present = 0;
-                        for (int j = 0; j < payloads.length; j++) {
-                            if (payloads[j] != null && payloads[j].getPayloadIndex() == i) {
-                                present++;
-                            }
-                        }
-                        if (present < required[i]) return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        /** 消耗计划所需的载荷和物品 */
-        public void consumePlan(AssemblerUnitPlan plan) {
-            if (plan.payItem != null && items != null) {
-                items.remove(plan.payItem);
-            }
-            int[] required = new int[content.units().size + content.blocks().size];
-            for (PayloadStack stack : plan.requirements) {
-                int idx = stack.item.getPayloadIndex();
-                if (idx >= 0 && idx < required.length) {
-                    required[idx] += stack.amount;
-                }
-            }
-            for (int i = 0; i < required.length; i++) {
-                if (required[i] > 0) {
-                    int toRemove = required[i];
-                    for (int j = 0; j < payloads.length && toRemove > 0; j++) {
-                        if (payloads[j] != null && payloads[j].getPayloadIndex() == i) {
-                            payloads[j] = null;
-                            toRemove--;
-                        }
-                    }
-                }
-            }
-            Fx.absorb.at(x, y);
-        }
-
-        @Override
-        public float progress() {
-            return productionProgress;
-        }
-
-        @Override
-        public float warmup() {
-            return warmup;
-        }
-
+        // 绘制自定义范围
         @Override
         public void drawSelect() {
             if (configured) {
@@ -320,6 +217,25 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
+        // 自定义生产进度条（覆盖父类的 progress 和 warmup 方法？）
+        // 原版已有 progress() 和 warmup() 方法，我们直接使用父类的字段，但需要返回正确的值
+        // 在 updateTile 中我们没有调用父类的生产逻辑，而是自己实现
+        // 为简化，我们仍调用父类 updateTile，但通过重写 findPlan() 限制配方
+        // 但我们之前重写了 updateTile，这里改为依赖 findPlan
+        // 修改为：利用原版的 findPlan 机制
+
+        // 重写 findPlan，只返回选定的配方（如果满足条件）
+        @Override
+        public AssemblerUnitPlan findPlan() {
+            if (!configured || selectedPlan == null) return null;
+            // 检查是否能生产
+            if (canProduce(selectedPlan)) {
+                return selectedPlan;
+            }
+            return null;
+        }
+
+        // 序列化
         @Override
         public void write(Writes write) {
             super.write(write);
@@ -335,5 +251,5 @@ public class FlexAssembler extends UnitAssembler {
             customAreaSize = read.f();
             productionProgress = read.f();
         }
-    }   // 闭合 FlexAssemblerBuild
-}   // 闭合 FlexAssembler
+    }
+}
