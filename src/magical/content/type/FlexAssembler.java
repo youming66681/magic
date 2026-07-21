@@ -18,27 +18,31 @@ import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.world.*;
 import mindustry.world.blocks.payloads.*;
-import mindustry.world.blocks.units.*;
 import mindustry.world.meta.*;
 
 import static mindustry.Vars.*;
 
-public class FlexAssembler extends UnitAssembler {
+public class FlexAssembler extends Block {
 
     public TextureRegion sideRegion1, sideRegion2;
     public int areaSize = 11;
     public Sound createSound = Sounds.place;
     public float createSoundVolume = 1f;
 
-    /** 解锁模块 */
+    /** 用于解锁等级的模块方块 */
     public Block moduleBlock = null;
 
-    /** 配方等级（实例自定义） */
+    /** 装配等级（实例自定义） */
     public Seq<AssemblerLevel> levels = new Seq<>();
 
     public FlexAssembler(String name) {
         super(name);
+        update = true;
+        solid = true;
         hasItems = false;
+        hasPower = true;
+        configurable = true;
+        size = 3;
     }
 
     @Override
@@ -48,20 +52,19 @@ public class FlexAssembler extends UnitAssembler {
         sideRegion2 = Core.atlas.find(name + "-side2");
     }
 
-    // 重写建楼方法，返回我们自己的建筑（不再依赖 UnitBuild）
     @Override
     public Building build(Tile tile, Team team, int rotation, boolean lastConfig) {
         return new FlexAssemblerBuild();
     }
 
-    // ========== 自定义建筑（完全自控） ==========
+    // ========== 自定义建筑 ==========
     public class FlexAssemblerBuild extends Building implements PayloadAcceptor<FlexAssemblerBuild> {
 
         public int currentLevel, currentRecipe;
         public boolean crafting;
         public float progress;
 
-        // 自定义载荷仓库（用于统计和消耗）
+        // 自维护载荷仓库（不使用父类的 getPayloads()，避免冲突）
         public Seq<Payload> storedPayloads = new Seq<>();
 
         // ---------- 模块计数 ----------
@@ -79,24 +82,26 @@ public class FlexAssembler extends UnitAssembler {
 
         public int maxAvailableLevel() { return countModules(); }
 
-        // ---------- 载荷接收 ----------
+        // ---------- 载荷接口 ----------
         @Override
         public boolean acceptPayload(FlexAssemblerBuild source, Payload payload) {
-            for (AssemblerLevel level : levels)
-                for (UnitRecipe r : level.recipes)
+            for (AssemblerLevel lv : levels) {
+                for (UnitRecipe r : lv.recipes) {
                     for (PayloadStack s : r.payloadCost) {
                         if (s.block != null && payload instanceof BlockPayload && ((BlockPayload) payload).block() == s.block)
                             return true;
                         if (s.unit != null && payload instanceof UnitPayload && ((UnitPayload) payload).unit.type == s.unit)
                             return true;
                     }
+                }
+            }
             return false;
         }
 
         @Override
         public void handlePayload(FlexAssemblerBuild source, Payload payload) {
             storedPayloads.add(payload);
-            payload.remove();   // 断开与原方块的关系
+            payload.remove();
         }
 
         // ---------- 载荷统计 ----------
@@ -114,7 +119,7 @@ public class FlexAssembler extends UnitAssembler {
             return c;
         }
 
-        // ---------- 载荷消耗 ----------
+        // ---------- 载荷移除 ----------
         public void removePayload(Block block, int amount) {
             int removed = 0;
             for (int i = storedPayloads.size - 1; i >= 0 && removed < amount; i--) {
@@ -183,16 +188,15 @@ public class FlexAssembler extends UnitAssembler {
                     progress = 0f;
                 }
             }
-            // 调用父类 Building 的 updateTile (处理电力等)
             super.updateTile();
         }
 
         public UnitRecipe getCurrentRecipe() {
             if (levels.isEmpty() || currentLevel >= levels.size) return null;
-            AssemblerLevel level = levels.get(currentLevel);
-            if (level == null || level.recipes.isEmpty()) return null;
-            if (currentRecipe >= level.recipes.size) return null;
-            return level.recipes.get(currentRecipe);
+            AssemblerLevel lv = levels.get(currentLevel);
+            if (lv == null || lv.recipes.isEmpty()) return null;
+            if (currentRecipe >= lv.recipes.size) return null;
+            return lv.recipes.get(currentRecipe);
         }
 
         // ---------- UI ----------
@@ -213,12 +217,12 @@ public class FlexAssembler extends UnitAssembler {
                 }).size(40);
             }).row();
 
-            AssemblerLevel level = levels.get(currentLevel);
-            if (level != null) {
+            AssemblerLevel lv = levels.get(currentLevel);
+            if (lv != null) {
                 table.table(icons -> {
-                    for (int i = 0; i < level.recipes.size; i++) {
+                    for (int i = 0; i < lv.recipes.size; i++) {
                         final int idx = i;
-                        UnitRecipe recipe = level.recipes.get(i);
+                        UnitRecipe recipe = lv.recipes.get(i);
                         TextureRegion icon = recipe.unit.uiIcon;
                         icons.button(new TextureRegionDrawable(icon), Styles.cleari, 48, () -> {
                             selectLevelRecipe(currentLevel, idx);
@@ -236,7 +240,6 @@ public class FlexAssembler extends UnitAssembler {
             if (recipeIdx < 0 || recipeIdx >= levels.get(levelIdx).recipes.size) return;
             if (levelIdx > maxAvailableLevel()) return;
             int data = (levelIdx << 8) | recipeIdx;
-            // 注意：Call.tileConfig 的参数顺序可能为 (Player, Building, int)
             Call.tileConfig(player, this, data);
         }
 
@@ -246,8 +249,8 @@ public class FlexAssembler extends UnitAssembler {
                 int levelIdx = (data >> 8) & 0xFF;
                 int recipeIdx = data & 0xFF;
                 if (levelIdx >= 0 && levelIdx < levels.size && levelIdx <= maxAvailableLevel()) {
-                    AssemblerLevel level = levels.get(levelIdx);
-                    if (recipeIdx >= 0 && recipeIdx < level.recipes.size) {
+                    AssemblerLevel lv = levels.get(levelIdx);
+                    if (recipeIdx >= 0 && recipeIdx < lv.recipes.size) {
                         currentLevel = levelIdx;
                         currentRecipe = recipeIdx;
                         crafting = false;
@@ -280,15 +283,9 @@ public class FlexAssembler extends UnitAssembler {
             storedPayloads.clear();
             for (int i = 0; i < count; i++) storedPayloads.add(TypeIO.readPayload(read));
         }
-
-        // 让外界可访问载荷（有些系统可能调用）
-        @Override
-        public Seq<Payload> getPayloads() {
-            return storedPayloads;
-        }
     }
 
-    // ========== 数据结构（不变） ==========
+    // ========== 数据结构 ==========
     public static class UnitRecipe {
         public UnitType unit;
         public float craftTime;
