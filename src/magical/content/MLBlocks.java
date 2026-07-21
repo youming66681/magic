@@ -624,43 +624,19 @@ public class MLBlocks {
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 300, Items.graphite, 150, Items.silicon, 120, MLItems.phantomTitaniumSteel, 60, MLItems.mysticCrystal, 90}));
             regionSuffix = "-dark";
             size = 7;
-            AssemblerLevel tier0 = new AssemblerLevel();
-            tier0.recipes.add(new UnitRecipe() {{
-                unit = UnitTypes.dagger;
-                craftTime = 4 * 60f;
-                payloadCost = new PayloadStack[] {
-                        new PayloadStack(UnitTypes.crawler, 1),
-                        new PayloadStack(Blocks.copperWall, 2)
-                };
-            }});
-            tier0.recipes.add(new UnitRecipe() {{
-                unit = UnitTypes.crawler;
-                craftTime = 5 * 60f;
-                payloadCost = new PayloadStack[] {
-                        new PayloadStack(Blocks.copperWall, 3)
-                };
-            }});
-            levels.add(tier0);
 
-            AssemblerLevel tier1 = new AssemblerLevel();
-            tier1.recipes.add(new UnitRecipe() {{
-                unit = UnitTypes.atrax;
-                craftTime = 10 * 60f;
-                payloadCost = new PayloadStack[] {
-                        new PayloadStack(UnitTypes.dagger, 2),
-                        new PayloadStack(Blocks.titaniumWall, 2)
-                };
-            }});
-            tier1.recipes.add(new UnitRecipe() {{
-                unit = UnitTypes.mace;
-                craftTime = 12 * 60f;
-                payloadCost = new PayloadStack[] {
-                        new PayloadStack(UnitTypes.crawler, 3),
-                        new PayloadStack(Blocks.thoriumWall, 1)
-                };
-            }});
-            levels.add(tier1);
+            AssemblerLevel t0 = new AssemblerLevel();
+            t0.recipes.add(new UnitRecipe(UnitTypes.dagger, 4 * 60f,
+                    new PayloadStack[]{new PayloadStack(UnitTypes.crawler, 1), new PayloadStack(Blocks.copperWall, 2)}));
+            t0.recipes.add(new UnitRecipe(UnitTypes.crawler, 5 * 60f,
+                    new PayloadStack[]{new PayloadStack(Blocks.copperWall, 3)}));
+            levels.add(t0);
 
+            AssemblerLevel t1 = new AssemblerLevel();
+            t1.recipes.add(new UnitRecipe(UnitTypes.atrax, 10 * 60f,
+                    new PayloadStack[]{new PayloadStack(UnitTypes.dagger, 2), new PayloadStack(Blocks.titaniumWall, 2)}));
+            t1.recipes.add(new UnitRecipe(UnitTypes.mace, 12 * 60f,
+                    new PayloadStack[]{new PayloadStack(UnitTypes.crawler, 3), new PayloadStack(Blocks.thoriumWall, 1)}));
 
             areaSize = 13;
 
