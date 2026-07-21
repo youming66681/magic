@@ -1,9 +1,12 @@
-package magical.content.type; // 改成你的包名
+package magical.content.type;
 
 import arc.*;
 import arc.audio.*;
 import arc.graphics.*;
 import arc.graphics.g2d.*;
+import arc.scene.style.*;
+import arc.scene.ui.*;
+import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
 import arc.util.io.*;
@@ -27,13 +30,10 @@ public class FlexAssembler extends UnitAssembler {
     public TextureRegion sideRegion2;
 
     public int areaSize = 11;
-    public Sound createSound = Sounds.place;   // 安全音效，可在外覆盖
+    public Sound createSound = Sounds.place;
     public float createSoundVolume = 1f;
 
-    /** 用于解锁等级的模块方块 */
     public Block moduleBlock = null;
-
-    /** 自定义等级列表 —— 必须由外部填充 */
     public Seq<AssemblerLevel> levels;
 
     public FlexAssembler(String name) {
@@ -45,19 +45,15 @@ public class FlexAssembler extends UnitAssembler {
     @Override
     public void load() {
         super.load();
-        // 只做纹理加载，不碰配方（配方由各个实例自己设定）
         sideRegion1 = Core.atlas.find(name + "-side1");
         sideRegion2 = Core.atlas.find(name + "-side2");
-
     }
 
-    // 返回自定义建筑
     @Override
     public Building build(mindustry.game.Team team) {
         return new FlexAssemblerBuild();
     }
 
-    // ========== 自定义建筑（逻辑不变） ==========
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
 
         public int currentLevel = 0;
@@ -65,7 +61,6 @@ public class FlexAssembler extends UnitAssembler {
         public boolean crafting = false;
         public float progress = 0f;
 
-        // 模块计数
         public int countModules() {
             if (moduleBlock == null) return levels.size - 1;
             int c = 0;
@@ -80,7 +75,6 @@ public class FlexAssembler extends UnitAssembler {
 
         public int maxAvailableLevel() { return countModules(); }
 
-        // 载荷统计（使用父类 payloads）
         public int countPayload(Block block) {
             int c = 0;
             for (Payload p : payloads) {
@@ -282,7 +276,6 @@ public class FlexAssembler extends UnitAssembler {
         }
     }
 
-    // ========== 数据结构 ==========
     public static class UnitRecipe {
         public UnitType unit;
         public float craftTime;
