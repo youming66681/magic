@@ -1,13 +1,9 @@
-package magical.content; // 改成你的包名
+package magical.content.type; // 改为你的包名
 
 import arc.*;
 import arc.audio.*;
 import arc.graphics.*;
 import arc.graphics.g2d.*;
-import arc.math.*;
-import arc.scene.style.*;
-import arc.scene.ui.*;
-import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
 import arc.util.io.*;
@@ -31,13 +27,13 @@ public class FlexAssembler extends UnitAssembler {
     public TextureRegion sideRegion2;
 
     public int areaSize = 11;
-    public Sound createSound = Sounds.unitBuild;
+    public Sound createSound = Sounds.place;   // 换成肯定存在的音效，也可以后续改为 unitBuild 如果依赖正确
     public float createSoundVolume = 1f;
 
-    /** 用于解锁等级的模块方块 */
+    /** 模块方块（用于解锁等级） */
     public Block moduleBlock = null;
 
-    /** 自定义装配等级列表 */
+    /** 自定义等级列表 */
     public Seq<AssemblerLevel> levels = new Seq<>();
 
     public FlexAssembler(String name) {
@@ -52,9 +48,9 @@ public class FlexAssembler extends UnitAssembler {
         sideRegion2 = Core.atlas.find(name + "-side2");
     }
 
-    // 重写以返回我们的自定义建筑
+    // 重写 build 以返回自定义建筑
     @Override
-    public Building build(Tile tile, Team team, int rotation, boolean lastConfig) {
+    public Building build(mindustry.game.Team team) {
         return new FlexAssemblerBuild();
     }
 
@@ -81,7 +77,7 @@ public class FlexAssembler extends UnitAssembler {
 
         public int maxAvailableLevel() { return countModules(); }
 
-        // 载荷统计（使用父类 payloads 字段）
+        // 载荷统计（使用父类 payloads）
         public int countPayload(Block block) {
             int c = 0;
             for (Payload p : payloads) {
@@ -98,7 +94,6 @@ public class FlexAssembler extends UnitAssembler {
             return c;
         }
 
-        // 移除载荷
         public void removePayload(Block block, int amount) {
             int removed = 0;
             for (int i = payloads.size - 1; i >= 0 && removed < amount; i--) {
@@ -125,7 +120,6 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void updateTile() {
-            // 模块数量变化时自动降级
             int max = maxAvailableLevel();
             if (currentLevel > max) {
                 currentLevel = max;
@@ -169,8 +163,7 @@ public class FlexAssembler extends UnitAssembler {
                     progress = 0f;
                 }
             }
-
-            super.updateTile(); // 保留原版一些逻辑（如电力消耗）
+            super.updateTile(); // 保留原版逻辑
         }
 
         public UnitRecipe getCurrentRecipe() {
@@ -246,7 +239,6 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
-        // 绘制
         @Override
         public void draw() {
             super.draw();
@@ -269,7 +261,6 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
-        // 序列化
         @Override
         public void write(Writes write) {
             super.write(write);
