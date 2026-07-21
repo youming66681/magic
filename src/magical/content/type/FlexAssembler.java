@@ -1,4 +1,4 @@
-package your.mod.package; // 改为你的包名
+package magical.content; // 改为你的包名
 
 import arc.*;
 import arc.graphics.*;
@@ -24,7 +24,6 @@ import static mindustry.Vars.*;
 
 /**
  * 单位装配机 – 多等级、多配方、载荷消耗、模块解锁
- * 适用于 Mindustry v7 (build 146~159)
  */
 public class UnitAssembler extends Block {
 
