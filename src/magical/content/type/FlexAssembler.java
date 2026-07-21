@@ -274,4 +274,3 @@ import static mindustry.Vars.*;
             }
         }
     }
-}
