@@ -38,11 +38,19 @@ import magical.content.MLFx;
 
 public class MLUnitTypes {
     public static UnitType
+    //陆
+    //一级
     drizzle, Drizzle, drizzlingRain,
+    //空
+    //一级
     Breeze, SlantingWind, Gale,
+    //海
+    //一级
     StillWater, ripple, Turbulence;
 
     public static void load(){
+        //幻境陆军
+        //一级
         drizzle = new UnitType("drizzle") {{
             constructor = UnitTypes.stell.constructor;
             omniMovement = false;
@@ -167,7 +175,7 @@ public class MLUnitTypes {
                     shootY = 8f;
                     mirror = false;
                     rotate = true;
-                    rotateSpeed = 1.5f;
+                    rotateSpeed = 2f;
                     inaccuracy = 0f;
                     ejectEffect = Fx.casing3;
                     layerOffset = 0.001f;
@@ -183,6 +191,8 @@ public class MLUnitTypes {
                     }};
                 }});
             }};
+        //幻境空军
+        //一级
         Breeze = new UnitType("Breeze") {{
             constructor = UnitTypes.flare.constructor;
             flying = true;
@@ -310,6 +320,8 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        //幻境海军
+        //一级
         StillWater = new UnitType("StillWater") {{
             constructor = UnitTypes.risso.constructor;
             speed = 1.4f;

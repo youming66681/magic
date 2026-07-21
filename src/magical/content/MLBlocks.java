@@ -138,11 +138,12 @@ public class MLBlocks {
             fluvialErosion, adaptiveWall, largeAdaptiveWall, Birefringence, phantomSteelDrill, phantomSteelConveyor, phantomSteelBridge, phantomSteeljunction,
             phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode, excitedYuan, fuelPoweredGenerator, phantomTitaniumSteelConveyor,
             phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod, quantumFactory, chipMachine,
-            BasicManufacturingPlant;
+            BasicManufacturingPlant,
+            //进阶科技
+            starHarborShipbuildingCenter;
 
     public static void load() {
 
-        /*基础科技*/
         //我超，盒
         //基座核心
         baseCore = new baseCore("baseCore") {{
@@ -210,7 +211,7 @@ public class MLBlocks {
             requirements(Category.crafting, ItemStack.with(new Object[]{MLItems.phantomSteel, 20, Items.titanium, 30, Items.silicon, 20}));
 
             craftEffect = Fx.hitEmpSpark;
-            outputItem = new ItemStack(MLItems.phantomTitaniumSteel, 1);
+            outputItem = new ItemStack(MLItems.mysticCrystal, 1);
             craftTime = 45f;
             size = 2;
             hasItems = true;
@@ -234,6 +235,7 @@ public class MLBlocks {
             solid = true;
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
             hasPower = true;
+            craftEffect = Fx.smeltsmoke;
             craftPlans = Seq.with(
                     new CraftPlan(){{
                         craftTime = 30f;
@@ -474,22 +476,23 @@ public class MLBlocks {
         }};
         phantomSteelWall = new Wall("phantomSteelWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.phantomSteel, 6}));
-            health = 100 * whm;
+            health = 140 * whm;
         }};
         largePhantomSteelWall = new Wall("largePhantomSteelWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.phantomSteel, 6 * whm}));
-            health = 100 * whm * 4;
+            health = 140 * whm * 4;
             size = 2;
         }};
         phantomTitaniumSteelWall = new Wall("phantomTitaniumSteelWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 6}));
-            health = 160 * whm;
+            health = 200 * whm;
         }};
         largePhantomTitaniumSteelWall = new Wall("largePhantomTitaniumSteelWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 6 * whm}));
-            health = 160 * whm * 4;
+            health = 200 * whm * 4;
             size = 2;
         }};
+
         //wall
         //出来了，出来了
         phantomSteelDrill  = new Drill("phantomSteelDrill"){{
@@ -616,6 +619,39 @@ public class MLBlocks {
                     new UnitType[]{MLUnitTypes.SlantingWind, MLUnitTypes.Gale},
                     new UnitType[]{MLUnitTypes.ripple, MLUnitTypes.Turbulence}
             );
+        }};
+        starHarborShipbuildingCenter = new SelectableAssembler("starHarborShipbuildingCenter"){{
+            requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 300, Items.graphite, 150, Items.silicon, 120, MLItems.phantomTitaniumSteel, 60, MLItems.mysticCrystal, 90}));
+            regionSuffix = "-dark";
+            size = 7;
+            selectableUnits=new UnitType[][]{
+                    {
+                            UnitTypes.dagger,
+                            UnitTypes.nova,
+                            UnitTypes.flare
+                    },
+ 2
+                    {
+                            UnitTypes.mace,
+                            UnitTypes.pulsar
+                    },
+
+                    {
+                            UnitTypes.fortress,
+                            UnitTypes.spiroct
+                    },
+
+                    {
+                            UnitTypes.zenith,
+                            UnitTypes.antumbra
+                    }
+
+            };
+
+            areaSize = 13;
+
+            consumePower(20f);
+            consumeLiquid(Liquids.water, 1f);
         }};
          //unit
     }
