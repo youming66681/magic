@@ -1,5 +1,6 @@
 package magical.content;
 
+import arc.Core;
 import arc.graphics.*;
 import arc.math.geom.*;
 import arc.scene.ui.*;
@@ -24,7 +25,7 @@ import static mindustry.Vars.*;
 
 public class FlexAssembler extends UnitAssembler {
 
-    // 存储每个配方对应的采摘面积 (格)
+    // 存储每个配方的自定义采摘面积 (格)
     public Map<AssemblerUnitPlan, Integer> planAreaMap = new HashMap<>();
     // 存储每个配方所需的最低模块数量
     public Map<AssemblerUnitPlan, Integer> tierRequired = new HashMap<>();
@@ -69,46 +70,50 @@ public class FlexAssembler extends UnitAssembler {
                 }
 
                 if (available.isEmpty()) {
-                    table.label(() -> "No plans (need more modules)").pad(10);
+                    table.label(() -> Core.bundle.get("flexassembler.no-plans")).pad(10);
                     return;
                 }
 
                 Table grid = new Table();
-                grid.defaults().size(100f, 100f).pad(4f);
                 int cols = 4;
                 for (int i = 0; i < available.size; i++) {
                     if (i % cols == 0 && i != 0) grid.row();
                     AssemblerUnitPlan plan = available.get(i);
+                    // 使用普通按钮，保证点击区域足够大
                     Button btn = new Button(Tex.button);
                     btn.table(inner -> {
                         inner.image(plan.unit.uiIcon).size(40f).padBottom(4f);
                         inner.row();
                         inner.add(plan.unit.localizedName).color(Color.lightGray);
-                    });
+                    }).pad(8);
                     btn.clicked(() -> {
                         chosenPlan = plan;
                         selected = true;
                         myAreaSize = planAreaMap.getOrDefault(plan, areaSize);
-                        configure(plan.unit.id);
+                        configure(plan.unit.id);   // 保存配置
                         table.clear();
-                        buildConfiguration(table);
+                        buildConfiguration(table);  // 刷新面板
                     });
-                    grid.add(btn);
+                    grid.add(btn).size(90f, 90f).pad(4f);
                 }
 
                 ScrollPane pane = new ScrollPane(grid);
                 table.add(pane).grow().maxHeight(400f).row();
-                table.label(() -> "Select a unit to produce").padTop(4).color(Color.gray);
+                table.label(() -> Core.bundle.get("flexassembler.select-unit")).padTop(4).color(Color.gray);
             } else {
-                table.label(() -> "Producing: " + chosenPlan.unit.localizedName).padBottom(8).row();
-                table.button("Change", () -> {
-                    selected = false;
-                    chosenPlan = null;
-                    myAreaSize = areaSize;
-                    configure(null);
-                    table.clear();
-                    buildConfiguration(table);
-                }).size(120f, 40f).row();
+                // 已选中配方时显示状态
+                table.label(() -> Core.bundle.format("flexassembler.producing", chosenPlan.unit.localizedName)).padBottom(8).row();
+                table.button(
+                        () -> Core.bundle.get("flexassembler.change"),
+                        () -> {
+                            selected = false;
+                            chosenPlan = null;
+                            myAreaSize = areaSize;
+                            configure(null);                // 清除 config
+                            table.clear();
+                            buildConfiguration(table);      // 回到选择界面
+                        }
+                ).size(120f, 40f).row();
             }
         }
 
@@ -158,13 +163,13 @@ public class FlexAssembler extends UnitAssembler {
                 }
             }
 
-            // 动态设置 areaSize
+            // 动态设置 areaSize，使原版所有逻辑使用配方专属面积
             AssemblerUnitPlan plan = plan();
             myAreaSize = planAreaMap.getOrDefault(plan, areaSize);
             int prevArea = areaSize;
             areaSize = myAreaSize;
-            super.updateTile();
-            areaSize = prevArea;
+            super.updateTile();          // 执行原版逻辑
+            areaSize = prevArea;         // 恢复
         }
 
         // ---------- 绘制与区域 ----------
