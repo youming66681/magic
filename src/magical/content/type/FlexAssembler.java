@@ -106,13 +106,14 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
+        // 获取当前等级下最合适的默认计划（如果未手动选择）
         private AssemblerUnitPlan getDefaultPlan() {
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
                     return plan;
                 }
             }
-            return plans.first();
+            return plans.isEmpty() ? null : plans.first();
         }
 
         @Override
@@ -125,20 +126,36 @@ public class FlexAssembler extends UnitAssembler {
         }
 
         @Override
-        public void buildConfiguration(Table table) {
-            Seq<AssemblerUnitPlan> available = new Seq<>();
-            for (AssemblerUnitPlan plan : plans) {
-                if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
-                    available.add(plan);
+        public void onProximityUpdate() {
+            super.onProximityUpdate();
+            modules.clear();
+            for (Building other : proximity) {
+                if (other instanceof UnitAssemblerModuleBuild mod) {
+                    modules.add(mod);
                 }
             }
+            checkTier();
+            // 如果选择了配方但当前 tier 不足，不取消选择，只是生产会暂停
+        }
 
-            if (available.isEmpty()) {
+        @Override
+        public void buildConfiguration(Table table) {
+            // 始终列出所有配方，包括等级不足的（灰化）
+            Seq<AssemblerUnitPlan> allPlans = new Seq<>();
+            for (AssemblerUnitPlan plan : plans) {
+                allPlans.add(plan);
+            }
+
+            if (allPlans.isEmpty()) {
                 table.label(() -> Core.bundle.get("flexassembler.no-plans")).pad(10);
                 return;
             }
 
-            if (chosenPlan != null) {
+            // 显示当前选择
+            if (chosenPlan != null && tierRequired.getOrDefault(chosenPlan, 0) > currentTier) {
+                table.label(() -> Core.bundle.format("flexassembler.tier-low", chosenPlan.unit.localizedName, tierRequired.get(chosenPlan)))
+                        .padBottom(4).color(Pal.remove).row();
+            } else if (chosenPlan != null) {
                 table.label(() -> Core.bundle.format("flexassembler.producing", chosenPlan.unit.localizedName))
                         .padBottom(4).row();
             } else {
@@ -147,27 +164,34 @@ public class FlexAssembler extends UnitAssembler {
 
             Table grid = new Table();
             int cols = 4;
-            for (int i = 0; i < available.size; i++) {
+            for (int i = 0; i < allPlans.size; i++) {
                 if (i % cols == 0 && i != 0) grid.row();
-                AssemblerUnitPlan plan = available.get(i);
+                AssemblerUnitPlan plan = allPlans.get(i);
                 boolean isChosen = Objects.equals(chosenPlan, plan);
+                boolean canSelect = tierRequired.getOrDefault(plan, 0) <= currentTier;
 
                 Button btn = new Button(Tex.button);
                 btn.table(inner -> {
-                    inner.image(plan.unit.uiIcon).size(40f).padBottom(4f);
+                    inner.image(plan.unit.uiIcon).size(30f).padBottom(4f);
                     inner.row();
-                    inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
+                    inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : canSelect ? Color.lightGray : Color.darkGray);
                 }).pad(8);
 
-                btn.clicked(() -> {
-                    chosenPlan = plan;
-                    selected = true;
-                    syncArea(plan);
-                    configure(plan.unit.id);
-                    table.clear();
-                    buildConfiguration(table);
-                });
-                grid.add(btn).size(90f, 90f).pad(4f);
+                btn.setDisabled(!canSelect && !isChosen); // 不可用的非选中项灰化不可点击
+                if (canSelect || isChosen) {
+                    btn.clicked(() -> {
+                        if (canSelect) {
+                            chosenPlan = plan;
+                            selected = true;
+                            syncArea(plan);
+                            configure(plan.unit.id);
+                            table.clear();
+                            buildConfiguration(table);
+                        }
+                        // 点击不可用的选中项不做任何事
+                    });
+                }
+                grid.add(btn).size(80f, 80f).pad(4f);
             }
 
             ScrollPane pane = new ScrollPane(grid);
@@ -224,14 +248,7 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void updateTile() {
-            if (selected && chosenPlan != null) {
-                if (tierRequired.getOrDefault(chosenPlan, 0) > currentTier) {
-                    selected = false;
-                    chosenPlan = null;
-                    AssemblerUnitPlan defaultPlan = getDefaultPlan();
-                    if (defaultPlan != null) syncArea(defaultPlan);
-                }
-            }
+
             AssemblerUnitPlan currentPlan = plan();
             if (currentPlan != null) syncArea(currentPlan);
             super.updateTile();
