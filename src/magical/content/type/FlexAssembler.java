@@ -19,6 +19,7 @@ import mindustry.type.PayloadStack;
 import mindustry.ui.*;
 import mindustry.world.*;
 import mindustry.world.blocks.units.*;
+import mindustry.world.blocks.units.UnitAssemblerModule.UnitAssemblerModuleBuild;
 import mindustry.world.meta.*;
 
 import java.util.*;
@@ -106,7 +107,6 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
-        // 获取当前等级下最合适的默认计划（如果未手动选择）
         private AssemblerUnitPlan getDefaultPlan() {
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
@@ -135,23 +135,17 @@ public class FlexAssembler extends UnitAssembler {
                 }
             }
             checkTier();
-            // 如果选择了配方但当前 tier 不足，不取消选择，只是生产会暂停
         }
 
         @Override
         public void buildConfiguration(Table table) {
-            // 始终列出所有配方，包括等级不足的（灰化）
-            Seq<AssemblerUnitPlan> allPlans = new Seq<>();
-            for (AssemblerUnitPlan plan : plans) {
-                allPlans.add(plan);
-            }
+            Seq<AssemblerUnitPlan> allPlans = new Seq<>(plans);
 
             if (allPlans.isEmpty()) {
                 table.label(() -> Core.bundle.get("flexassembler.no-plans")).pad(10);
                 return;
             }
 
-            // 显示当前选择
             if (chosenPlan != null && tierRequired.getOrDefault(chosenPlan, 0) > currentTier) {
                 table.label(() -> Core.bundle.format("flexassembler.tier-low", chosenPlan.unit.localizedName, tierRequired.get(chosenPlan)))
                         .padBottom(4).color(Pal.remove).row();
@@ -177,7 +171,7 @@ public class FlexAssembler extends UnitAssembler {
                     inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : canSelect ? Color.lightGray : Color.darkGray);
                 }).pad(8);
 
-                btn.setDisabled(!canSelect && !isChosen); // 不可用的非选中项灰化不可点击
+                btn.setDisabled(!canSelect && !isChosen);
                 if (canSelect || isChosen) {
                     btn.clicked(() -> {
                         if (canSelect) {
@@ -188,7 +182,6 @@ public class FlexAssembler extends UnitAssembler {
                             table.clear();
                             buildConfiguration(table);
                         }
-                        // 点击不可用的选中项不做任何事
                     });
                 }
                 grid.add(btn).size(80f, 80f).pad(4f);
@@ -248,7 +241,6 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void updateTile() {
-
             AssemblerUnitPlan currentPlan = plan();
             if (currentPlan != null) syncArea(currentPlan);
             super.updateTile();
