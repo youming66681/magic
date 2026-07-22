@@ -42,11 +42,10 @@ public class FlexAssembler extends UnitAssembler {
         planAreaMap.put(plan, customArea);
     }
 
-    // ✅ 修复后的 setStats 方法（使用 Tex.pane 替代 Styles.grayPanel）
+    // ✅ 无编译错误的 setStats
     @Override
     public void setStats() {
         super.setStats();
-
         stats.remove(Stat.output);
 
         stats.add(Stat.output, table -> {
@@ -61,12 +60,12 @@ public class FlexAssembler extends UnitAssembler {
                 Seq<AssemblerUnitPlan> group = byTier.get(tier);
                 if (group == null || group.isEmpty()) continue;
 
-                table.table(Tex.pane, t -> {   // ← 使用 Tex.pane
-                    t.add(Core.bundle.format("flexassembler.tier.stat", tier)).pad(5).left().growX();
-                }).growX().pad(5).row();
+                table.table(Tex.pane, t ->
+                        t.add(Core.bundle.format("flexassembler.tier.stat", tier)).pad(5).left().growX()
+                ).growX().pad(5).row();
 
                 for (AssemblerUnitPlan plan : group) {
-                    table.table(Tex.pane, t -> {   // ← 使用 Tex.pane
+                    table.table(Tex.pane, t -> {
                         if (plan.unit.isBanned()) {
                             t.image(Icon.cancel).color(Pal.remove).size(40).pad(10);
                             return;
@@ -86,8 +85,8 @@ public class FlexAssembler extends UnitAssembler {
                                 info.add(Core.bundle.format("flexassembler.area.stat", planAreaMap.getOrDefault(plan, areaSize))).color(Color.lightGray).left();
                             }).left();
 
+                            // 显示载荷需求
                             t.table(req -> {
-                                req.right().grow();
                                 for (int i = 0; i < plan.requirements.size; i++) {
                                     if (i % 4 == 0) req.row();
                                     req.add(StatValues.stack(plan.requirements.get(i))).pad(5);
@@ -102,7 +101,7 @@ public class FlexAssembler extends UnitAssembler {
         });
     }
 
-    // ========== 建筑实例（无变化）==========
+    // ===================== 建筑实例 =====================
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         public boolean selected = false;
         public AssemblerUnitPlan chosenPlan;
