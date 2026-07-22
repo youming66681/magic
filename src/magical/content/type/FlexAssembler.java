@@ -41,6 +41,72 @@ public class FlexAssembler extends UnitAssembler {
         planAreaMap.put(plan, customArea);
     }
 
+    // ✅ 重写 setStats，展示配方细节
+    @Override
+    public void setStats() {
+        super.setStats(); // 保留原版其他统计信息
+
+        stats.remove(Stat.output); // 移除原版统一输出，改用自定义分组
+
+        stats.add(Stat.output, table -> {
+            table.row();
+            // 按模块等级分组显示
+            Map<Integer, Seq<AssemblerUnitPlan>> byTier = new HashMap<>();
+            for (AssemblerUnitPlan plan : plans) {
+                int tier = tierRequired.getOrDefault(plan, 0);
+                byTier.computeIfAbsent(tier, k -> new Seq<>()).add(plan);
+            }
+
+            // 按等级顺序遍历
+            for (int tier = 0; tier <= byTier.keySet().stream().max(Integer::compareTo).orElse(0); tier++) {
+                Seq<AssemblerUnitPlan> group = byTier.get(tier);
+                if (group == null || group.isEmpty()) continue;
+
+                // 等级标题
+                table.table(Styles.grayPanel, t -> {
+                    t.add(Core.bundle.format("flexassembler.tier.stat", tier)).pad(5).left().growX();
+                }).growX().pad(5).row();
+
+                for (AssemblerUnitPlan plan : group) {
+                    table.table(Styles.grayPanel, t -> {
+                        if (plan.unit.isBanned()) {
+                            t.image(Icon.cancel).color(Pal.remove).size(40).pad(10);
+                            return;
+                        }
+                        if (plan.unit.unlockedNow()) {
+                            t.image(plan.unit.uiIcon).scaling(Scaling.fit).size(40).pad(10f).left();
+                            t.table(info -> {
+                                info.left();
+                                info.add(plan.unit.localizedName).left();
+                                info.row();
+                                info.add(Strings.autoFixed(plan.time / 60f, 1) + " " + Core.bundle.get("unit.seconds")).color(Color.lightGray).left();
+                                // 显示模块需求
+                                if (tierRequired.getOrDefault(plan, 0) > 0) {
+                                    info.row();
+                                    info.add(Core.bundle.format("flexassembler.tier.stat", tierRequired.get(plan))).color(Color.lightGray).left();
+                                }
+                                // 显示采摘面积
+                                info.row();
+                                info.add(Core.bundle.format("flexassembler.area.stat", planAreaMap.getOrDefault(plan, areaSize))).color(Color.lightGray).left();
+                            }).left();
+
+                            t.table(req -> {
+                                req.right().grow();
+                                // 显示载荷需求
+                                for (int i = 0; i < plan.requirements.size; i++) {
+                                    if (i % 4 == 0) req.row();
+                                    req.add(StatValues.stack(plan.requirements.get(i))).pad(5);
+                                }
+                            }).right();
+                        } else {
+                            t.image(Icon.lock).color(Pal.darkerGray).size(40).pad(10);
+                        }
+                    }).growX().pad(5).row();
+                }
+            }
+        });
+    }
+
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         public boolean selected = false;
         public AssemblerUnitPlan chosenPlan;
@@ -156,6 +222,10 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void drawSelect() {
+            for (var module : modules) {
+                Drawf.selected(module, Pal.accent);
+            }
+
             float fulls = myAreaSize * tilesize / 2f;
             Vec2 spawn = getUnitSpawn();
             Drawf.dashRect(Pal.accent, Tmp.r1.set(spawn.x - fulls, spawn.y - fulls, fulls * 2f, fulls * 2f));
