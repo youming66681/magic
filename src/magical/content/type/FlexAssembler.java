@@ -238,14 +238,6 @@ public class FlexAssembler extends UnitAssembler {
         }
 
         @Override
-        public boolean moduleFits(Block other, float ox, float oy, int rotation) {
-            if (!(other instanceof FlexAssemblerModule)) return false;
-            int dx = Math.round((ox - this.x) / tilesize);
-            int dy = Math.round((oy - this.y) / tilesize);
-            return Math.abs(dx) + Math.abs(dy) == 1;
-        }
-
-        @Override
         public Vec2 getUnitSpawn() {
             float len = tilesize * (areaSize + block.size) / 2f;
             return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
