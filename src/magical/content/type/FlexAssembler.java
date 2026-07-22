@@ -42,7 +42,6 @@ public class FlexAssembler extends UnitAssembler {
         planAreaMap.put(plan, customArea);
     }
 
-    // ✅ setStats（未修改）
     @Override
     public void setStats() {
         super.setStats();
@@ -96,7 +95,6 @@ public class FlexAssembler extends UnitAssembler {
         });
     }
 
-    // ===================== 建筑实例 =====================
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         public boolean selected = false;
         public AssemblerUnitPlan chosenPlan;
@@ -139,7 +137,6 @@ public class FlexAssembler extends UnitAssembler {
                 return;
             }
 
-            // ✅ 安全地显示当前选中的单位（修复 NPE）
             if (chosenPlan != null) {
                 table.label(() -> Core.bundle.format("flexassembler.producing", chosenPlan.unit.localizedName))
                         .padBottom(4).row();
@@ -272,6 +269,14 @@ public class FlexAssembler extends UnitAssembler {
                 if (chosenPlan == null) selected = false;
             }
             areaSize = read.i(); // 直接恢复面积
+        }
+        @Override
+        public boolean moduleFits(Block other, float ox, float oy, int rotation) {
+            if (!(other instanceof FlexAssemblerModule)) return false;
+            int dx = Math.round((ox - this.x) / tilesize);
+            int dy = Math.round((oy - this.y) / tilesize);
+            if (Math.abs(dx) + Math.abs(dy) != 1) return false;
+            return Angles.within(Angles.angle(ox, oy, this.x, this.y), rotation * 90f, 5f);
         }
     }
 }
