@@ -1,4 +1,4 @@
-package magical.content.type;
+package magical.content;
 
 import arc.Core;
 import arc.graphics.*;
@@ -31,6 +31,7 @@ public class FlexAssembler extends UnitAssembler {
 
     public FlexAssembler(String name) {
         super(name);
+        configurable = true;
     }
 
     public void addPlan(String label, UnitType output, float time, int customArea, int requiredTier, PayloadStack... requirements) {
