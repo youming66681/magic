@@ -25,31 +25,46 @@ import static mindustry.Vars.*;
 
 public class FlexAssembler extends UnitAssembler {
 
-    public Map<AssemblerUnitPlan, Float> areaPerPlan = new HashMap<>();
     public Map<AssemblerUnitPlan, Integer> tierRequired = new HashMap<>();
     public Map<AssemblerUnitPlan, String> planLabel = new HashMap<>();
+    // 不再需要 areaPerPlan，直接使用整数面积
 
     public FlexAssembler(String name) {
         super(name);
     }
 
-    public void addPlan(String label, UnitType output, float time, float areaSize, int requiredTier, PayloadStack... requirements) {
+    /**
+     * @param label         等级标签（如 "T1"）
+     * @param output        输出单位
+     * @param time          耗时（秒）
+     * @param customArea    该配方对应的采摘范围（格）
+     * @param requiredTier  解锁需要的最小模块数量
+     * @param requirements  载荷需求
+     */
+    public void addPlan(String label, UnitType output, float time, int customArea, int requiredTier, PayloadStack... requirements) {
         Seq<PayloadStack> reqSeq = new Seq<>(requirements);
         AssemblerUnitPlan plan = new AssemblerUnitPlan(output, time, reqSeq);
         plans.add(plan);
-        areaPerPlan.put(plan, areaSize);
+        // 用 plan 对象的 unit 作为 key 存储自定义面积（之后在 selectPlan 中读取）
         tierRequired.put(plan, requiredTier);
         planLabel.put(plan, label);
+        // 存储面积到一个额外 map，这里我们直接使用 unit 作为 key 的 map
+        areaMap.put(plan.unit, customArea);
     }
+
+    // 存储每个输出单位对应的配方面积
+    public Map<UnitType, Integer> areaMap = new HashMap<>();
 
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         public boolean configured = false;
         public AssemblerUnitPlan selectedPlan;
-        public float customAreaSize = (float) areaSize;
+        public int defaultArea = areaSize;   // 保存默认面积
 
+        // ---------- 配方选择 UI ----------
         @Override
         public void buildConfiguration(Table table) {
             if (!configured) {
+                // 收集当前模块等级下可用的配方，按标签分组
                 OrderedMap<String, Seq<AssemblerUnitPlan>> grouped = new OrderedMap<>();
                 for (AssemblerUnitPlan plan : plans) {
                     if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
@@ -63,9 +78,15 @@ public class FlexAssembler extends UnitAssembler {
                     }
                 }
 
+                if (grouped.size == 0) {
+                    table.label("No available plans (need more modules)").colspan(2).pad(10);
+                    return;
+                }
+
                 Table tabs = new Table();
                 Table content = new Table();
 
+                // 标签按钮
                 for (String tier : grouped.keys()) {
                     Button tabBtn = new Button(Tex.button);
                     tabBtn.label(() -> tier).growX();
@@ -80,6 +101,7 @@ public class FlexAssembler extends UnitAssembler {
                 ScrollPane pane = new ScrollPane(content);
                 tabs.add(pane).colspan(grouped.size).grow();
 
+                // 默认显示第一个标签的内容
                 if (grouped.size > 0) {
                     String first = grouped.keys().next();
                     buildIconGrid(content, grouped.get(first));
@@ -87,11 +109,12 @@ public class FlexAssembler extends UnitAssembler {
 
                 table.add(tabs).grow();
             } else {
+                // 已配置状态
                 table.label(() -> "Producing: " + selectedPlan.unit.localizedName).padBottom(4).row();
                 table.button("Change", () -> {
                     configured = false;
                     selectedPlan = null;
-                    customAreaSize = (float) areaSize;
+                    areaSize = defaultArea;   // 恢复默认区域
                 }).size(100f, 40f).row();
             }
         }
@@ -111,13 +134,17 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
+        /** 选定配方 */
         public void selectPlan(AssemblerUnitPlan plan) {
             selectedPlan = plan;
             configured = true;
-            customAreaSize = areaPerPlan.getOrDefault(plan, (float) areaSize);
-            configure(selectedPlan.unit.id);
+            // 设置采摘区域为配方自定义值，若没有则使用默认
+            int newArea = areaMap.getOrDefault(plan.unit, defaultArea);
+            areaSize = newArea;                 // 直接修改父类字段
+            configure(selectedPlan.unit.id);    // 保存到 config
         }
 
+        // ---------- 配置序列化 ----------
         @Override
         public Object config() {
             return (configured && selectedPlan != null) ? selectedPlan.unit.id : null;
@@ -132,7 +159,7 @@ public class FlexAssembler extends UnitAssembler {
                         if (p.unit == type) {
                             selectedPlan = p;
                             configured = true;
-                            customAreaSize = areaPerPlan.getOrDefault(p, (float) areaSize);
+                            areaSize = areaMap.getOrDefault(type, defaultArea);
                             break;
                         }
                     }
@@ -141,6 +168,7 @@ public class FlexAssembler extends UnitAssembler {
             super.configure(value);
         }
 
+        // ---------- 核心：覆盖 plan()，使生产只使用选定配方 ----------
         @Override
         public AssemblerUnitPlan plan() {
             if (configured && selectedPlan != null) {
@@ -149,17 +177,7 @@ public class FlexAssembler extends UnitAssembler {
             return super.plan();
         }
 
-        @Override
-        public void drawSelect() {
-            if (configured) {
-                float fulls = customAreaSize * tilesize / 2f;
-                Vec2 spawn = getUnitSpawn();
-                Drawf.dashRect(Pal.accent, Tmp.r1.set(spawn.x - fulls, spawn.y - fulls, fulls * 2f, fulls * 2f));
-            } else {
-                super.drawSelect();
-            }
-        }
-
+        // ---------- 安全：模块降级时取消选择 ----------
         @Override
         public void updateTile() {
             super.updateTile();
@@ -167,11 +185,12 @@ public class FlexAssembler extends UnitAssembler {
                 if (tierRequired.getOrDefault(selectedPlan, 0) > currentTier) {
                     configured = false;
                     selectedPlan = null;
-                    customAreaSize = (float) areaSize;
+                    areaSize = defaultArea;
                 }
             }
         }
 
+        // ---------- 存档 ----------
         @Override
         public void write(Writes write) {
             super.write(write);
@@ -179,7 +198,6 @@ public class FlexAssembler extends UnitAssembler {
             if (configured && selectedPlan != null) {
                 write.i(selectedPlan.unit.id);
             }
-            write.f(customAreaSize);
         }
 
         @Override
@@ -193,13 +211,13 @@ public class FlexAssembler extends UnitAssembler {
                     for (AssemblerUnitPlan p : plans) {
                         if (p.unit == type) {
                             selectedPlan = p;
+                            areaSize = areaMap.getOrDefault(type, defaultArea);
                             break;
                         }
                     }
                 }
                 if (selectedPlan == null) configured = false;
             }
-            customAreaSize = read.f();
         }
     }
 }
