@@ -238,12 +238,13 @@ public class FlexAssembler extends UnitAssembler {
         }
 
         @Override
+        @Override
         public boolean moduleFits(Block other, float ox, float oy, int rotation) {
-            if (!(other instanceof UnitAssemblerModule)) return false;
+            if (!(other instanceof FlexAssemblerModule)) return false;
             int dx = Math.round((ox - this.x) / tilesize);
             int dy = Math.round((oy - this.y) / tilesize);
-            if (Math.abs(dx) + Math.abs(dy) != 1) return false;
-            return Angles.within(Angles.angle(ox, oy, this.x, this.y), rotation * 90f, 5f);
+            // 相邻即可
+            return Math.abs(dx) + Math.abs(dy) == 1;
         }
 
         @Override
