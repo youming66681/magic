@@ -42,7 +42,7 @@ public class FlexAssembler extends UnitAssembler {
         planAreaMap.put(plan, customArea);
     }
 
-    // ✅ setStats：显示配方信息
+    // ✅ setStats：显示配方详情
     @Override
     public void setStats() {
         super.setStats();
@@ -108,7 +108,7 @@ public class FlexAssembler extends UnitAssembler {
         public AssemblerUnitPlan chosenPlan;
         public int myAreaSize = areaSize;
 
-        // ---------- UI：始终显示单位网格，高亮选中 ----------
+        // UI：始终显示单位网格，高亮选中
         @Override
         public void buildConfiguration(Table table) {
             Seq<AssemblerUnitPlan> available = new Seq<>();
@@ -123,7 +123,6 @@ public class FlexAssembler extends UnitAssembler {
                 return;
             }
 
-            // 状态提示
             if (chosenPlan != null) {
                 table.label(() -> Core.bundle.format("flexassembler.producing", chosenPlan.unit.localizedName))
                         .padBottom(4).row();
@@ -159,7 +158,6 @@ public class FlexAssembler extends UnitAssembler {
             ScrollPane pane = new ScrollPane(grid);
             table.add(pane).grow().maxHeight(400f).row();
 
-            // 取消选择按钮
             if (chosenPlan != null) {
                 table.row();
                 table.button(Core.bundle.get("flexassembler.deselect"), () -> {
@@ -210,7 +208,6 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void updateTile() {
-            // 模块降级保护
             if (selected && chosenPlan != null) {
                 if (tierRequired.getOrDefault(chosenPlan, 0) > currentTier) {
                     selected = false;
@@ -219,7 +216,6 @@ public class FlexAssembler extends UnitAssembler {
                 }
             }
 
-            // 动态设置面积，保证无人机、生产逻辑使用正确值
             AssemblerUnitPlan plan = plan();
             myAreaSize = planAreaMap.getOrDefault(plan, areaSize);
             int prevArea = areaSize;
@@ -228,114 +224,27 @@ public class FlexAssembler extends UnitAssembler {
             areaSize = prevArea;
         }
 
-        // ---------- 视觉重写：完全替换原版绘制，消除旧尺寸残留 ----------
+        // ---------- 绘制重写：临时替换 areaSize，使所有视觉基于 myAreaSize ----------
         @Override
         public void draw() {
-            // 绘制主体
-            Draw.rect(region, x, y);
-
-            // 绘制输入传送带
-            for (int i = 0; i < 4; i++) {
-                if (blends(i) && i != rotation) {
-                    Draw.rect(inRegion, x, y, (i * 90) - 180);
-                }
-            }
-
-            Draw.rect(rotation >= 2 ? sideRegion2 : sideRegion1, x, y, rotdeg());
-
-            Draw.z(Layer.blockOver);
-            payRotation = rotdeg();
-            drawPayload();
-            Draw.z(Layer.blockOver + 0.1f);
-            Draw.rect(topRegion, x, y);
-
-            if (isPayload()) return;
-
-            // 绘制无人机建造动画
-            if (droneWarmup > 0.001f) {
-                Draw.draw(Layer.blockOver + 0.2f, () -> {
-                    Drawf.construct(this, droneType.fullIcon, Pal.accent, 0f, droneProgress, droneWarmup, totalDroneProgress, 14f);
-                });
-            }
-
-            Vec2 spawn = getUnitSpawn();
-            float sx = spawn.x, sy = spawn.y;
-            var plan = plan();
-
-            // 绘制单位轮廓
-            Draw.draw(Layer.blockBuilding, () -> {
-                Draw.color(Pal.accent, warmup);
-                Shaders.blockbuild.region = plan.unit.fullIcon;
-                Shaders.blockbuild.time = Time.time;
-                Shaders.blockbuild.alpha = warmup;
-                Shaders.blockbuild.progress = Mathf.clamp(progress + 0.05f);
-                Draw.rect(plan.unit.fullIcon, sx, sy, rotdeg() - 90f);
-                Draw.flush();
-                Draw.color();
-                Shaders.blockbuild.alpha = 1f;
-            });
-
-            Draw.reset();
-            Draw.z(Layer.buildBeam);
-
-            // 绘制单位影子
-            Draw.mixcol(Tmp.c1.set(Pal.accent).lerp(Pal.remove, invalidWarmup), 1f);
-            Draw.alpha(Math.min(powerWarmup, sameTypeWarmup));
-            Draw.rect(plan.unit.fullIcon, spawn.x, spawn.y, rotdeg() - 90f);
-
-            // 绘制建造光束（使用 myAreaSize 计算位置）
-            Draw.alpha(Math.min(1f - invalidWarmup, warmup));
-            for (var unit : units) {
-                if (!((AssemblerAI)unit.controller()).inPosition()) continue;
-                float px = unit.x + Angles.trnsx(unit.rotation, unit.type.buildBeamOffset);
-                float py = unit.y + Angles.trnsy(unit.rotation, unit.type.buildBeamOffset);
-                Drawf.buildBeam(px, py, spawn.x, spawn.y, plan.unit.hitSize / 2f);
-            }
-
-            // 填充中间方形
-            Fill.square(spawn.x, spawn.y, plan.unit.hitSize / 2f);
-            Draw.reset();
-            Draw.z(Layer.buildBeam);
-
-            // 绘制区域方框（基于 myAreaSize）
-            float fulls = myAreaSize * tilesize / 2f;
-            Lines.stroke(2f, Pal.accent);
-            Draw.alpha(powerWarmup);
-            Drawf.dashRectBasic(spawn.x - fulls, spawn.y - fulls, fulls * 2f, fulls * 2f);
-
-            Draw.reset();
-
-            float outSize = plan.unit.hitSize + 9f;
-            if (invalidWarmup > 0) {
-                Lines.stroke(2f, Tmp.c3.set(Pal.accent).lerp(Pal.remove, invalidWarmup).a(invalidWarmup));
-                Drawf.dashSquareBasic(spawn.x, spawn.y, outSize);
-            }
-
-            Draw.reset();
+            int prevArea = areaSize;
+            areaSize = myAreaSize;
+            super.draw();
+            areaSize = prevArea;
         }
 
         @Override
         public void drawSelect() {
-            // 保留原版的模块高亮
-            for (var module : modules) {
-                Drawf.selected(module, Pal.accent);
-            }
-            // 绘制虚线方框（与 draw 中的实心方框配合，选中时更明显）
-            float fulls = myAreaSize * tilesize / 2f;
-            Vec2 spawn = getUnitSpawn();
-            Drawf.dashRect(Pal.accent, Tmp.r1.set(spawn.x - fulls, spawn.y - fulls, fulls * 2f, fulls * 2f));
+            int prevArea = areaSize;
+            areaSize = myAreaSize;
+            super.drawSelect();
+            areaSize = prevArea;
         }
 
         @Override
         public Vec2 getUnitSpawn() {
             float len = tilesize * (myAreaSize + block.size) / 2f;
             return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
-        }
-
-        // 安全地临时修改 areaSize，供父类方法在 updateTile 期间使用
-        @Override
-        public void update() {
-            // 预留，避免报错
         }
 
         // ---------- 存档 ----------
