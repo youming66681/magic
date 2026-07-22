@@ -16,7 +16,7 @@ import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.world.*;
 import mindustry.world.blocks.units.*;
-import mindustry.world.blocks.payloads.PayloadStack;   // 正确的导入
+import mindustry.type.PayloadStack;
 import mindustry.world.meta.*;
 
 import java.util.*;
