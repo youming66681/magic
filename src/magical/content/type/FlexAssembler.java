@@ -238,14 +238,12 @@ public class FlexAssembler extends UnitAssembler {
         }
 
         @Override
-        @Override
         public boolean moduleFits(Block other, float ox, float oy, int rotation) {
             if (!(other instanceof FlexAssemblerModule)) return false;
             int dx = Math.round((ox - this.x) / tilesize);
             int dy = Math.round((oy - this.y) / tilesize);
-            // 相邻即可
             return Math.abs(dx) + Math.abs(dy) == 1;
-            }
+        }
 
         @Override
         public Vec2 getUnitSpawn() {
