@@ -42,12 +42,11 @@ public class FlexAssembler extends UnitAssembler {
         planAreaMap.put(plan, customArea);
     }
 
-    // ✅ setStats
+    // ✅ setStats（未修改）
     @Override
     public void setStats() {
         super.setStats();
         stats.remove(Stat.output);
-
         stats.add(Stat.output, table -> {
             table.row();
             Map<Integer, Seq<AssemblerUnitPlan>> byTier = new HashMap<>();
@@ -55,17 +54,13 @@ public class FlexAssembler extends UnitAssembler {
                 int tier = tierRequired.getOrDefault(plan, 0);
                 byTier.computeIfAbsent(tier, k -> new Seq<>()).add(plan);
             }
-
             for (int tier = 0; tier <= byTier.keySet().stream().max(Integer::compareTo).orElse(0); tier++) {
                 Seq<AssemblerUnitPlan> group = byTier.get(tier);
                 if (group == null || group.isEmpty()) continue;
-
                 final int currentTier = tier;
-
                 table.table(Tex.pane, t ->
                         t.add(Core.bundle.format("flexassembler.tier.stat", currentTier)).pad(5).left().growX()
                 ).growX().pad(5).row();
-
                 for (AssemblerUnitPlan plan : group) {
                     table.table(Tex.pane, t -> {
                         if (plan.unit.isBanned()) {
@@ -86,7 +81,6 @@ public class FlexAssembler extends UnitAssembler {
                                 info.row();
                                 info.add(Core.bundle.format("flexassembler.area.stat", planAreaMap.getOrDefault(plan, areaSize))).color(Color.lightGray).left();
                             }).left();
-
                             t.table(req -> {
                                 for (int i = 0; i < plan.requirements.size; i++) {
                                     if (i % 4 == 0) req.row();
@@ -108,15 +102,8 @@ public class FlexAssembler extends UnitAssembler {
         public AssemblerUnitPlan chosenPlan;
 
         private void syncArea(AssemblerUnitPlan plan) {
-            areaSize = planAreaMap.getOrDefault(plan, areaSize);
-        }
-
-        @Override
-        public void created() {
-            super.created();
-            if (!selected) {
-                AssemblerUnitPlan defaultPlan = getDefaultPlan();
-                if (defaultPlan != null) syncArea(defaultPlan);
+            if (plan != null) {
+                areaSize = planAreaMap.getOrDefault(plan, areaSize);
             }
         }
 
@@ -127,6 +114,15 @@ public class FlexAssembler extends UnitAssembler {
                 }
             }
             return plans.first();
+        }
+
+        @Override
+        public void created() {
+            super.created();
+            if (!selected) {
+                AssemblerUnitPlan defaultPlan = getDefaultPlan();
+                if (defaultPlan != null) syncArea(defaultPlan);
+            }
         }
 
         @Override
@@ -143,6 +139,7 @@ public class FlexAssembler extends UnitAssembler {
                 return;
             }
 
+            // ✅ 安全地显示当前选中的单位（修复 NPE）
             if (chosenPlan != null) {
                 table.label(() -> Core.bundle.format("flexassembler.producing", chosenPlan.unit.localizedName))
                         .padBottom(4).row();
@@ -178,6 +175,7 @@ public class FlexAssembler extends UnitAssembler {
             ScrollPane pane = new ScrollPane(grid);
             table.add(pane).grow().maxHeight(400f).row();
 
+            // 仅当有选中配方时显示“取消选择”按钮
             if (chosenPlan != null) {
                 table.row();
                 table.button(Core.bundle.get("flexassembler.deselect"), () -> {
@@ -237,21 +235,17 @@ public class FlexAssembler extends UnitAssembler {
                     if (defaultPlan != null) syncArea(defaultPlan);
                 }
             }
-
             AssemblerUnitPlan currentPlan = plan();
             if (currentPlan != null) syncArea(currentPlan);
-
             super.updateTile();
         }
 
-        // 重写生成位置，确保使用最新的 areaSize
         @Override
         public Vec2 getUnitSpawn() {
             float len = tilesize * (areaSize + block.size) / 2f;
             return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
         }
 
-        // ---------- 存档 ----------
         @Override
         public void write(Writes write) {
             super.write(write);
@@ -277,7 +271,7 @@ public class FlexAssembler extends UnitAssembler {
                 }
                 if (chosenPlan == null) selected = false;
             }
-            areaSize = read.i();
+            areaSize = read.i(); // 直接恢复面积
         }
     }
 }
