@@ -30,6 +30,7 @@ public class FlexAssembler extends UnitAssembler {
 
     public FlexAssembler(String name) {
         super(name);
+        configurable = true;
     }
 
     public void addPlan(String label, UnitType output, float time, int customArea, int requiredTier, PayloadStack... requirements) {
@@ -153,15 +154,8 @@ public class FlexAssembler extends UnitAssembler {
             areaSize = prevArea;
         }
 
-        // ------ 绘制修复：始终使用 myAreaSize，并保留模块高亮 ------
         @Override
         public void drawSelect() {
-            // 绘制模块的高亮（原版行为）
-            for (var module : modules) {
-                Drawf.selected(module, Pal.accent);
-            }
-
-            // 绘制基于 myAreaSize 的虚线矩形
             float fulls = myAreaSize * tilesize / 2f;
             Vec2 spawn = getUnitSpawn();
             Drawf.dashRect(Pal.accent, Tmp.r1.set(spawn.x - fulls, spawn.y - fulls, fulls * 2f, fulls * 2f));
