@@ -1,130 +1,151 @@
-package magical.content.type;
+package magical.content;
 
 import arc.graphics.Color;
-import arc.math.Mathf;
+import arc.math.geom.Rect;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
+import arc.util.io.*;
 import mindustry.*;
+import mindustry.content.*;
+import mindustry.ctype.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.world.*;
+import mindustry.world.blocks.units.*;
 import mindustry.world.meta.*;
+
+import java.util.*;
 
 import static mindustry.Vars.*;
 
 /**
- * 等级化单位组装厂，完全自制，支持方块与单位载荷。
- * 通过传送带输入载荷，手动选择配方。
+ * 可手动选择配方的单位组装厂。
+ * 等级分组，动态采摘范围，支持方块载荷。
  */
-public class FlexAssembler extends Block {
-    public Seq<AssemblerRecipe> recipes = new Seq<>();
-    public OrderedMap<String, Seq<AssemblerRecipe>> tierMap = new OrderedMap<>();
+public class FlexAssembler extends UnitAssembler {
+
+    // 存储每个配方对应的采摘范围（格）
+    public Map<AssemblerUnitPlan, Float> areaPerPlan = new HashMap<>();
+    // 存储每个配方需要的最低模块等级（currentTier）
+    public Map<AssemblerUnitPlan, Integer> tierRequired = new HashMap<>();
+    // 存储配方的 UI 标签（如 "T1", "T2" ...）
+    public Map<AssemblerUnitPlan, String> planLabel = new HashMap<>();
 
     public FlexAssembler(String name) {
         super(name);
-        update = true;
-        solid = true;
-        hasPower = true;
-        hasPayloads = true;       // 启用载荷存储
-        acceptsPayload = true;    // 允许传送带输入载荷
-        payloadCapacity = 16;     // 最大载荷容量
-        configurable = true;
-        saveConfig = true;
     }
 
     /**
-     * 添加配方
-     * @param tier      等级标签（"T1", "T2"...）
-     * @param output    输出单位
-     * @param time      生产时间（秒）
-     * @param areaSize  采摘范围视觉提示（格）
-     * @param payloads  载荷需求，格式：{类型1, 数量1, 类型2, 数量2, ...}
-     *                  类型可为 UnitType 或 Block
+     * 添加一个配方。
+     * @param label         等级标签（用于 UI 分组）
+     * @param output        输出单位
+     * @param time          生产时间（秒）
+     * @param areaSize      采摘区域大小（格）
+     * @param requiredTier  需要多少个模块才能解锁（0 为基础）
+     * @param requirements  载荷需求（PayloadStack 数组）
      */
-    public void addRecipe(String tier, UnitType output, float time, float areaSize, Object... payloads) {
-        AssemblerRecipe recipe = new AssemblerRecipe(output, time, areaSize, payloads);
-        recipes.add(recipe);
-        Seq<AssemblerRecipe> group = tierMap.get(tier);
-        if (group == null) {
-            group = new Seq<>();
-            tierMap.put(tier, group);
-        }
-        group.add(recipe);
+    public void addPlan(String label, UnitType output, float time, float areaSize, int requiredTier, PayloadStack... requirements) {
+        // 将 PayloadStack 数组转为 Seq
+        Seq<PayloadStack> reqSeq = new Seq<>(requirements);
+        AssemblerUnitPlan plan = new AssemblerUnitPlan(output, time, reqSeq);
+        plans.add(plan);
+        areaPerPlan.put(plan, areaSize);
+        tierRequired.put(plan, requiredTier);
+        planLabel.put(plan, label);
     }
 
     // ==================== 建筑实体 ====================
-    public class FlexAssemblerBuild extends Building {
-        public AssemblerRecipe selectedRecipe;
-        public boolean configured;
-        public float customAreaSize = 11f;
-        public float progress;
-        public float warmup;
+    public class FlexAssemblerBuild extends UnitAssemblerBuild {
+        public boolean configured = false;
+        public AssemblerUnitPlan selectedPlan;
+        public float customAreaSize = areaSize; // 默认值
 
+        // ---------- 配方选择 UI ----------
         @Override
         public void buildConfiguration(Table table) {
             if (!configured) {
+                // 收集当前 tier 下所有可用的配方，按标签分组
+                OrderedMap<String, Seq<AssemblerUnitPlan>> grouped = new OrderedMap<>();
+                for (AssemblerUnitPlan plan : plans) {
+                    if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
+                        String label = planLabel.getOrDefault(plan, "T" + currentTier);
+                        Seq<AssemblerUnitPlan> group = grouped.get(label);
+                        if (group == null) {
+                            group = new Seq<>();
+                            grouped.put(label, group);
+                        }
+                        group.add(plan);
+                    }
+                }
+
                 Table tabs = new Table();
                 Table content = new Table();
 
-                for (String tier : tierMap.keys()) {
+                for (String tier : grouped.keys()) {
                     Button tabBtn = new Button(Tex.button);
                     tabBtn.label(() -> tier).growX();
                     final String t = tier;
                     tabBtn.clicked(() -> {
                         content.clear();
-                        buildIconGrid(content, tierMap.get(t));
+                        buildIconGrid(content, grouped.get(t));
                     });
                     tabs.add(tabBtn).growX().pad(4);
                 }
                 tabs.row();
                 ScrollPane pane = new ScrollPane(content);
-                tabs.add(pane).colspan(tierMap.size).grow();
+                tabs.add(pane).colspan(grouped.size).grow();
 
-                if (tierMap.size > 0) {
-                    String first = tierMap.keys().next();
-                    buildIconGrid(content, tierMap.get(first));
+                if (grouped.size > 0) {
+                    String first = grouped.keys().next();
+                    buildIconGrid(content, grouped.get(first));
                 }
 
                 table.add(tabs).grow();
             } else {
-                table.label(() -> "Producing: " + selectedRecipe.output.localizedName).padBottom(4).row();
+                table.label(() -> "Producing: " + selectedPlan.unit.localizedName).padBottom(4).row();
                 table.button("Change", () -> {
                     configured = false;
+                    selectedPlan = null;
+                    customAreaSize = areaSize;
+                    ui.build.hide(); // 重新打开配置面板
                 }).size(100f, 40f).row();
             }
         }
 
-        private void buildIconGrid(Table grid, Seq<AssemblerRecipe> group) {
+        private void buildIconGrid(Table grid, Seq<AssemblerUnitPlan> group) {
             grid.clear();
             int i = 0;
-            for (AssemblerRecipe r : group) {
+            for (AssemblerUnitPlan plan : group) {
                 if (i % 4 == 0 && i != 0) grid.row();
-                ImageButton btn = new ImageButton(r.output.uiIcon, Styles.cleari);
+                ImageButton btn = new ImageButton(plan.unit.uiIcon, Styles.cleari);
                 btn.resizeImage(40f);
-                btn.clicked(() -> configureRecipe(r));
+                btn.clicked(() -> {
+                    selectPlan(plan);
+                    ui.build.hide(); // 关闭配置面板
+                });
                 btn.row();
-                btn.add(r.output.localizedName).color(Color.lightGray);
+                btn.add(plan.unit.localizedName).color(Color.lightGray);
                 grid.add(btn).pad(4);
                 i++;
             }
         }
 
-        public void configureRecipe(AssemblerRecipe recipe) {
-            selectedRecipe = recipe;
+        /** 选择一个配方 */
+        public void selectPlan(AssemblerUnitPlan plan) {
+            selectedPlan = plan;
             configured = true;
-            customAreaSize = recipe.areaSize;
-            progress = 0f;
-            warmup = 0f;
-            configure(selectedRecipe.output.id);
+            customAreaSize = areaPerPlan.getOrDefault(plan, areaSize);
+            configure(selectedPlan.unit.id); // 保存到 config
         }
 
+        // ---------- 配置序列化 ----------
         @Override
         public Object config() {
-            return configured && selectedRecipe != null ? selectedRecipe.output.id : null;
+            return (configured && selectedPlan != null) ? selectedPlan.unit.id : null;
         }
 
         @Override
@@ -132,10 +153,12 @@ public class FlexAssembler extends Block {
             if (value instanceof Integer) {
                 UnitType type = content.getByID(ContentType.unit, (Integer) value);
                 if (type != null) {
-                    for (AssemblerRecipe r : recipes) {
-                        if (r.output == type) {
-                            configureRecipe(r);
-                            return;
+                    for (AssemblerUnitPlan p : plans) {
+                        if (p.unit == type) {
+                            selectedPlan = p;
+                            configured = true;
+                            customAreaSize = areaPerPlan.getOrDefault(p, areaSize);
+                            break;
                         }
                     }
                 }
@@ -143,98 +166,77 @@ public class FlexAssembler extends Block {
             super.configure(value);
         }
 
-        // ---------- 生产逻辑（检查载荷） ----------
+        // ---------- 核心：覆盖 plan() 返回选定配方 ----------
         @Override
-        public void updateTile() {
-            if (!configured || selectedRecipe == null) {
-                warmup = Mathf.lerpDelta(warmup, 0f, 0.02f);
-                return;
+        public AssemblerUnitPlan plan() {
+            if (configured && selectedPlan != null) {
+                return selectedPlan;
             }
-            if (power == null || power.status < 1f) {
-                warmup = Mathf.lerpDelta(warmup, 0f, 0.02f);
-                return;
-            }
-            if (!hasPayloads(selectedRecipe)) {
-                warmup = Mathf.lerpDelta(warmup, 0f, 0.02f);
-                return;
-            }
-
-            warmup = Mathf.lerpDelta(warmup, 1f, 0.02f);
-            progress += delta() / (selectedRecipe.time * 60f);
-
-            if (progress >= 1f) {
-                consumePayloads(selectedRecipe);
-                Unit u = selectedRecipe.output.create(team);
-                u.set(this);
-                u.add();
-                progress = 0f;
-            }
+            return super.plan(); // 未选择时使用原版默认
         }
 
-        boolean hasPayloads(AssemblerRecipe recipe) {
-            if (payloads == null) return false;
-            // 对每一种需求计数
-            for (int i = 0; i < recipe.reqTypes.length; i++) {
-                Object type = recipe.reqTypes[i];
-                int need = recipe.reqAmounts[i];
-                int have = 0;
-                for (int j = 0; j < payloads.length; j++) {
-                    if (payloads[j] != null && payloads[j].content() == type) {
-                        have++;
-                    }
-                }
-                if (have < need) return false;
-            }
-            return true;
-        }
-
-        void consumePayloads(AssemblerRecipe recipe) {
-            for (int i = 0; i < recipe.reqTypes.length; i++) {
-                Object type = recipe.reqTypes[i];
-                int need = recipe.reqAmounts[i];
-                for (int j = 0; j < payloads.length && need > 0; j++) {
-                    if (payloads[j] != null && payloads[j].content() == type) {
-                        payloads[j] = null;
-                        need--;
-                    }
-                }
-            }
-        }
-
-        // ---------- 视觉 ----------
+        // ---------- 动态区域绘制 ----------
         @Override
         public void drawSelect() {
             if (configured) {
-                Drawf.dashCircle(x, y, customAreaSize * 8f, Pal.accent);
+                // 绘制自定义矩形
+                Rect rect = getCustomRect(Tmp.r1);
+                Drawf.dashRect(Pal.accent, rect);
+            } else {
+                super.drawSelect(); // 未配置时使用原版
             }
         }
 
+        /** 获取自定义采摘范围的矩形 */
+        public Rect getCustomRect(Rect rect) {
+            float fulls = customAreaSize * tilesize / 2f;
+            Vec2 spawn = getUnitSpawn();
+            return rect.set(spawn.x - fulls, spawn.y - fulls, fulls * 2f, fulls * 2f);
+        }
+
+        // ---------- 安全检查：如果当前 tier 下降导致配方不可用，自动取消选择 ----------
         @Override
-        public float progress() { return progress; }
-        @Override
-        public float warmup() { return warmup; }
-    }
-
-    // ==================== 配方数据类 ====================
-    public static class AssemblerRecipe {
-        public UnitType output;
-        public float time;
-        public float areaSize;
-        public Object[] reqTypes;    // 需求类型（UnitType 或 Block）
-        public int[] reqAmounts;     // 对应数量
-
-        public AssemblerRecipe(UnitType output, float time, float areaSize, Object... payloads) {
-            this.output = output;
-            this.time = time;
-            this.areaSize = areaSize;
-
-            int len = payloads.length / 2;
-            reqTypes = new Object[len];
-            reqAmounts = new int[len];
-            for (int i = 0; i < len; i++) {
-                reqTypes[i] = payloads[i * 2];
-                reqAmounts[i] = (Integer) payloads[i * 2 + 1];
+        public void updateTile() {
+            super.updateTile();
+            if (configured && selectedPlan != null) {
+                if (tierRequired.getOrDefault(selectedPlan, 0) > currentTier) {
+                    configured = false;
+                    selectedPlan = null;
+                    customAreaSize = areaSize;
+                }
             }
+        }
+
+        // ---------- 存档支持 ----------
+        @Override
+        public void write(Writes write) {
+            super.write(write);
+            write.bool(configured);
+            if (configured && selectedPlan != null) {
+                write.i(selectedPlan.unit.id);
+            }
+            write.f(customAreaSize);
+        }
+
+        @Override
+        public void read(Reads read, byte revision) {
+            super.read(read, revision);
+            // 原版 revision 可能是 1，我们的扩展数据在末尾，且 revision 未变，但我们可以安全读取（如果存档版本不同，需另做处理）
+            configured = read.bool();
+            if (configured) {
+                int id = read.i();
+                UnitType type = content.getByID(ContentType.unit, id);
+                if (type != null) {
+                    for (AssemblerUnitPlan p : plans) {
+                        if (p.unit == type) {
+                            selectedPlan = p;
+                            break;
+                        }
+                    }
+                }
+                if (selectedPlan == null) configured = false; // 未找到配方则清除状态
+            }
+            customAreaSize = read.f();
         }
     }
 }

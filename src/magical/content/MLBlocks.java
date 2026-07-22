@@ -607,13 +607,13 @@ public class MLBlocks {
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 300, Items.graphite, 150, Items.silicon, 120, MLItems.phantomTitaniumSteel, 60, MLItems.mysticCrystal, 90}));
             size = 7;
 
-            addRecipe("T1", UnitTypes.stell, 45f, 4f, UnitTypes.evoke, 2);
-            addRecipe("T1", UnitTypes.locus, 55f, 4.5f, UnitTypes.evoke, 2);
-            addRecipe("T1", UnitTypes.elude, 35f, 4f, Blocks.copperWall, 3);
-            addRecipe("T2", UnitTypes.quell, 90f, 5.5f, UnitTypes.locus, 1, UnitTypes.stell, 1);
-            addRecipe("T2", UnitTypes.avert, 100f, 5.8f, UnitTypes.locus, 2);
-            addRecipe("T2", UnitTypes.precept, 110f, 6f, Blocks.berylliumWall, 4, UnitTypes.evoke, 2);
-            addRecipe("T3", UnitTypes.obviate, 150f, 7f, UnitTypes.quell, 2, UnitTypes.avert, 1);
+            addPlan("T1", UnitTypes.stell, 45f, 4f, 0, new PayloadStack(UnitTypes.evoke, 2));
+            addPlan("T1", UnitTypes.locus, 55f, 4.5f, 0, new PayloadStack(UnitTypes.evoke, 2));
+            addPlan("T1", UnitTypes.elude, 35f, 4f, 0, new PayloadStack(Blocks.copperWall, 3));
+            addPlan("T2", UnitTypes.quell, 90f, 5.5f, 1, new PayloadStack(UnitTypes.locus, 1), new PayloadStack(UnitTypes.stell, 1));
+            addPlan("T2", UnitTypes.avert, 100f, 5.8f, 1, new PayloadStack(UnitTypes.locus, 2));
+            addPlan("T2", UnitTypes.precept, 110f, 6f, 1, new PayloadStack(Blocks.berylliumWall, 4), new PayloadStack(UnitTypes.evoke, 2));
+            addPlan("T3", UnitTypes.obviate, 150f, 7f, 2, new PayloadStack(UnitTypes.quell, 2), new PayloadStack(UnitTypes.avert, 1));
 
             areaSize = 13;
 
