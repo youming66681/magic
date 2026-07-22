@@ -1,7 +1,6 @@
 package magical.content;
 
 import arc.graphics.*;
-import arc.math.*;
 import arc.math.geom.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
@@ -9,10 +8,7 @@ import arc.struct.*;
 import arc.util.*;
 import arc.util.io.*;
 import mindustry.*;
-import mindustry.ai.types.AssemblerAI;
-import mindustry.content.*;
 import mindustry.ctype.*;
-import mindustry.entities.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
@@ -28,8 +24,10 @@ import static mindustry.Vars.*;
 
 public class FlexAssembler extends UnitAssembler {
 
-    public Map<AssemblerUnitPlan, Integer> tierRequired = new HashMap<>();
+    // 存储每个配方的自定义面积
     public Map<AssemblerUnitPlan, Integer> planAreaMap = new HashMap<>();
+    // 存储每个配方所需的模块等级
+    public Map<AssemblerUnitPlan, Integer> tierRequired = new HashMap<>();
 
     public FlexAssembler(String name) {
         super(name);
@@ -37,7 +35,7 @@ public class FlexAssembler extends UnitAssembler {
 
     /**
      * 添加一个配方。
-     * @param groupLabel    分组标签（如 "T1"）
+     * @param groupLabel    分组标签（目前未用于 UI，保留扩展）
      * @param output        输出单位
      * @param time          耗时（秒）
      * @param customArea    采摘区域大小（格）
@@ -52,13 +50,12 @@ public class FlexAssembler extends UnitAssembler {
         planAreaMap.put(plan, customArea);
     }
 
-    // ==================== 建筑实例 ====================
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         public boolean selected = false;
         public AssemblerUnitPlan chosenPlan;
-        public int myAreaSize = areaSize;   // 实例专属区域大小
+        public int myAreaSize = areaSize;   // 默认面积
 
-        // ---------- 配置 UI ----------
+        // ---------- 配置界面 ----------
         @Override
         public void buildConfiguration(Table table) {
             if (!selected) {
@@ -80,12 +77,15 @@ public class FlexAssembler extends UnitAssembler {
                 for (int i = 0; i < available.size; i++) {
                     if (i % cols == 0 && i != 0) grid.row();
                     AssemblerUnitPlan plan = available.get(i);
-                    ImageButton btn = new ImageButton(plan.unit.uiIcon, Styles.cleari);
-                    btn.resizeImage(40f);
+                    // 使用普通的按钮，增加可点击区域
+                    Button btn = new Button(Tex.button);
+                    btn.table(t -> {
+                        t.image(plan.unit.uiIcon).size(40f).pad(4);
+                        t.row();
+                        t.add(plan.unit.localizedName).color(Color.lightGray);
+                    });
                     btn.clicked(() -> choosePlan(plan));
-                    btn.row();
-                    btn.add(plan.unit.localizedName).color(Color.lightGray);
-                    grid.add(btn).pad(4);
+                    grid.add(btn).pad(4).size(80f, 80f);
                 }
 
                 ScrollPane pane = new ScrollPane(grid);
@@ -96,17 +96,18 @@ public class FlexAssembler extends UnitAssembler {
                 table.button("Change", () -> {
                     selected = false;
                     chosenPlan = null;
-                    myAreaSize = areaSize;   // 恢复默认面积
+                    myAreaSize = areaSize;   // 恢复默认
                 }).size(100f, 40f).row();
             }
         }
 
-        /** 选定配方 */
+        /** 选中配方 */
         public void choosePlan(AssemblerUnitPlan plan) {
             chosenPlan = plan;
             selected = true;
             myAreaSize = planAreaMap.getOrDefault(plan, areaSize);
-            configure(plan.unit.id);   // 保存配置
+            // 使用 config 保存，触发界面更新
+            configure(plan.unit.id);
         }
 
         // ---------- 序列化 ----------
@@ -133,141 +134,46 @@ public class FlexAssembler extends UnitAssembler {
             super.configure(value);
         }
 
-        // ---------- 生产核心 ----------
+        // ---------- 生产核心：返回选定配方 ----------
         @Override
         public AssemblerUnitPlan plan() {
             if (selected && chosenPlan != null) return chosenPlan;
             return super.plan();
         }
 
+        // 覆盖 findPlan，如果父类使用了它
         public AssemblerUnitPlan findPlan() {
             if (selected && chosenPlan != null) return chosenPlan;
             return super.plan();
         }
 
-        // ---------- 区域绘制（使用实例面积） ----------
+        // ---------- 动态区域绘制 ----------
         @Override
         public void drawSelect() {
+            // 绘制自定义虚线矩形
             float fulls = myAreaSize * tilesize / 2f;
             Vec2 spawn = getUnitSpawn();
             Drawf.dashRect(Pal.accent, Tmp.r1.set(spawn.x - fulls, spawn.y - fulls, fulls * 2f, fulls * 2f));
         }
 
+        // 重写 getUnitSpawn，使单位生成位置适应可能变化的区域
         @Override
         public Vec2 getUnitSpawn() {
             float len = tilesize * (myAreaSize + block.size) / 2f;
             return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
         }
 
-        // 使用实例面积重写整个更新逻辑
+        // 安全：模块降级时取消选择
         @Override
         public void updateTile() {
-            // 复制自 UnitAssemblerBuild.updateTile(), 替换 areaSize 为 myAreaSize
-            if(!readUnits.isEmpty()){
-                units.clear();
-                readUnits.each(i -> {
-                    var unit = Groups.unit.getByID(i);
-                    if(unit != null){
-                        units.add(unit);
-                    }
-                });
-                readUnits.clear();
-            }
-
-            if(lastTier != currentTier){
-                if(lastTier >= 0f) progress = 0f;
-                lastTier = lastTier == -2 ? -1 : currentTier;
-            }
-
-            if(units.size < dronesCreated && whenSyncedUnits.size > 0){
-                whenSyncedUnits.each(id -> {
-                    var unit = Groups.unit.getByID(id);
-                    if(unit != null){
-                        units.addUnique(unit);
-                    }
-                });
-            }
-
-            units.removeAll(u -> !u.isAdded() || u.dead || !(u.controller() instanceof AssemblerAI));
-
-            if(!allowUpdate()){
-                progress = 0f;
-                units.each(Unit::kill);
-                units.clear();
-            }
-
-            float powerStatus = !enabled ? 0f : power == null ? 1f : power.status;
-            powerWarmup = Mathf.lerpDelta(powerStatus, powerStatus > 0.0001f ? 1f : 0f, 0.1f);
-            droneWarmup = Mathf.lerpDelta(droneWarmup, units.size < dronesCreated ? powerStatus : 0f, 0.1f);
-            totalDroneProgress += droneWarmup * delta();
-
-            if(units.size < dronesCreated && enabled && (droneProgress += delta() * state.rules.unitBuildSpeed(team) * powerStatus / droneConstructTime) >= 1f){
-                if(!net.client()){
-                    var unit = droneType.create(team);
-                    if(unit instanceof BuildingTetherc bt){
-                        bt.building(this);
-                    }
-                    unit.set(x, y);
-                    unit.rotation = 90f;
-                    unit.add();
-                    units.add(unit);
-                    Call.assemblerDroneSpawned(tile, unit.id);
+            super.updateTile();   // 完全使用原版逻辑，不干扰
+            if (selected && chosenPlan != null) {
+                if (tierRequired.getOrDefault(chosenPlan, 0) > currentTier) {
+                    selected = false;
+                    chosenPlan = null;
+                    myAreaSize = areaSize;
                 }
             }
-
-            if(units.size >= dronesCreated){
-                droneProgress = 0f;
-            }
-
-            Vec2 spawn = getUnitSpawn();
-
-            if(moveInPayload() && !wasOccupied){
-                yeetPayload(payload);
-                payload = null;
-            }
-
-            // 无人机位置计算（使用 myAreaSize）
-            for(int i = 0; i < units.size; i++){
-                var unit = units.get(i);
-                var ai = (AssemblerAI)unit.controller();
-                ai.targetPos.trns(i * 90f + 45f, myAreaSize / 2f * Mathf.sqrt2 * tilesize).add(spawn);
-                ai.targetAngle = i * 90f + 45f + 180f;
-            }
-
-            wasOccupied = checkSolid(spawn, false);
-            boolean visualOccupied = checkSolid(spawn, true);
-            float eff = (units.count(u -> ((AssemblerAI)u.controller()).inPosition()) / (float)dronesCreated);
-
-            sameTypeWarmup = Mathf.lerpDelta(sameTypeWarmup, wasOccupied && !visualOccupied ? 0f : 1f, 0.1f);
-            invalidWarmup = Mathf.lerpDelta(invalidWarmup, visualOccupied ? 1f : 0f, 0.1f);
-
-            var plan = plan(); // 使用我们重写的 plan()
-
-            // 生产检查与进度
-            if(!wasOccupied && efficiency > 0 && Units.canCreate(team, plan.unit)){
-                warmup = Mathf.lerpDelta(warmup, efficiency, 0.1f);
-                if((progress += edelta() * state.rules.unitBuildSpeed(team) * eff / plan.time) >= 1f){
-                    Call.assemblerUnitSpawned(tile);
-                }
-            }else{
-                warmup = Mathf.lerpDelta(warmup, 0f, 0.1f);
-            }
-
-            // 模块等级降级保护
-            if(selected && chosenPlan != null && tierRequired.getOrDefault(chosenPlan, 0) > currentTier){
-                selected = false;
-                chosenPlan = null;
-                myAreaSize = areaSize;
-            }
-        }
-
-        // checkSolid 使用 myAreaSize 的范围逻辑（此处与原版相同，但面积已体现在 getUnitSpawn 中）
-        public boolean checkSolid(Vec2 v, boolean same){
-            var output = unit();
-            float hsize = output.hitSize * 1.4f;
-            return ((!output.flying && collisions.overlapsTile(Tmp.r1.setCentered(v.x, v.y, output.hitSize), EntityCollisions::solid)) ||
-                    Units.anyEntities(v.x - hsize/2f, v.y - hsize/2f, hsize, hsize, u -> (!same || u.type != output) && !u.spawnedByCore &&
-                            ((u.type.allowLegStep && output.allowLegStep) || (output.flying && u.isFlying()) || (!output.flying && u.isGrounded()))));
         }
 
         // ---------- 存档 ----------
