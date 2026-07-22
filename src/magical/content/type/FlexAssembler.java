@@ -1,4 +1,4 @@
-package magical.content;
+package magical.content.type;
 
 import arc.graphics.Color;
 import arc.math.Mathf;
@@ -7,7 +7,6 @@ import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
 import mindustry.*;
-import mindustry.ctype.ContentType;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
@@ -18,8 +17,8 @@ import mindustry.world.meta.*;
 import static mindustry.Vars.*;
 
 /**
- * 单位组装厂（完全自制，不依赖 UnitAssembler）
- * 只消耗附近单位，不支持方块载荷。
+ * 等级化单位组装厂，完全自制，支持方块与单位载荷。
+ * 通过传送带输入载荷，手动选择配方。
  */
 public class FlexAssembler extends Block {
     public Seq<AssemblerRecipe> recipes = new Seq<>();
@@ -30,20 +29,24 @@ public class FlexAssembler extends Block {
         update = true;
         solid = true;
         hasPower = true;
+        hasPayloads = true;       // 启用载荷存储
+        acceptsPayload = true;    // 允许传送带输入载荷
+        payloadCapacity = 16;     // 最大载荷容量
         configurable = true;
         saveConfig = true;
     }
 
     /**
      * 添加配方
-     * @param tier     等级标签（"T1", "T2"...）
-     * @param output   输出单位
-     * @param time     生产耗时（秒）
-     * @param areaSize 采摘范围视觉提示（格）
-     * @param inputs   需要的单位（可重复，代表多个同种单位）
+     * @param tier      等级标签（"T1", "T2"...）
+     * @param output    输出单位
+     * @param time      生产时间（秒）
+     * @param areaSize  采摘范围视觉提示（格）
+     * @param payloads  载荷需求，格式：{类型1, 数量1, 类型2, 数量2, ...}
+     *                  类型可为 UnitType 或 Block
      */
-    public void addRecipe(String tier, UnitType output, float time, float areaSize, UnitType... inputs) {
-        AssemblerRecipe recipe = new AssemblerRecipe(output, time, areaSize, inputs);
+    public void addRecipe(String tier, UnitType output, float time, float areaSize, Object... payloads) {
+        AssemblerRecipe recipe = new AssemblerRecipe(output, time, areaSize, payloads);
         recipes.add(recipe);
         Seq<AssemblerRecipe> group = tierMap.get(tier);
         if (group == null) {
@@ -57,7 +60,7 @@ public class FlexAssembler extends Block {
     public class FlexAssemblerBuild extends Building {
         public AssemblerRecipe selectedRecipe;
         public boolean configured;
-        public float customAreaSize = 11f; // 默认值
+        public float customAreaSize = 11f;
         public float progress;
         public float warmup;
 
@@ -140,7 +143,7 @@ public class FlexAssembler extends Block {
             super.configure(value);
         }
 
-        // ---------- 生产：扫描附近单位 ----------
+        // ---------- 生产逻辑（检查载荷） ----------
         @Override
         public void updateTile() {
             if (!configured || selectedRecipe == null) {
@@ -151,7 +154,7 @@ public class FlexAssembler extends Block {
                 warmup = Mathf.lerpDelta(warmup, 0f, 0.02f);
                 return;
             }
-            if (!hasUnits(selectedRecipe)) {
+            if (!hasPayloads(selectedRecipe)) {
                 warmup = Mathf.lerpDelta(warmup, 0f, 0.02f);
                 return;
             }
@@ -160,7 +163,7 @@ public class FlexAssembler extends Block {
             progress += delta() / (selectedRecipe.time * 60f);
 
             if (progress >= 1f) {
-                consumeUnits(selectedRecipe);
+                consumePayloads(selectedRecipe);
                 Unit u = selectedRecipe.output.create(team);
                 u.set(this);
                 u.add();
@@ -168,40 +171,37 @@ public class FlexAssembler extends Block {
             }
         }
 
-        boolean hasUnits(AssemblerRecipe recipe) {
-            float radius = customAreaSize * 8f;
-            Seq<Unit> near = new Seq<>();
-            for (Unit u : Groups.unit) {
-                if (u.team == team && !u.spawnedByCore && u.within(this, radius)) {
-                    near.add(u);
+        boolean hasPayloads(AssemblerRecipe recipe) {
+            if (payloads == null) return false;
+            // 对每一种需求计数
+            for (int i = 0; i < recipe.reqTypes.length; i++) {
+                Object type = recipe.reqTypes[i];
+                int need = recipe.reqAmounts[i];
+                int have = 0;
+                for (int j = 0; j < payloads.length; j++) {
+                    if (payloads[j] != null && payloads[j].content() == type) {
+                        have++;
+                    }
                 }
-            }
-            // 检查每种单位是否存在
-            for (UnitType req : recipe.inputs) {
-                if (!near.contains(u -> u.type == req)) {
-                    return false;
-                }
+                if (have < need) return false;
             }
             return true;
         }
 
-        void consumeUnits(AssemblerRecipe recipe) {
-            float radius = customAreaSize * 8f;
-            Seq<Unit> near = new Seq<>();
-            for (Unit u : Groups.unit) {
-                if (u.team == team && !u.spawnedByCore && u.within(this, radius)) {
-                    near.add(u);
-                }
-            }
-            for (UnitType req : recipe.inputs) {
-                Unit found = near.find(u -> u.type == req);
-                if (found != null) {
-                    found.remove();
-                    near.remove(found);
+        void consumePayloads(AssemblerRecipe recipe) {
+            for (int i = 0; i < recipe.reqTypes.length; i++) {
+                Object type = recipe.reqTypes[i];
+                int need = recipe.reqAmounts[i];
+                for (int j = 0; j < payloads.length && need > 0; j++) {
+                    if (payloads[j] != null && payloads[j].content() == type) {
+                        payloads[j] = null;
+                        need--;
+                    }
                 }
             }
         }
 
+        // ---------- 视觉 ----------
         @Override
         public void drawSelect() {
             if (configured) {
@@ -220,13 +220,21 @@ public class FlexAssembler extends Block {
         public UnitType output;
         public float time;
         public float areaSize;
-        public UnitType[] inputs;
+        public Object[] reqTypes;    // 需求类型（UnitType 或 Block）
+        public int[] reqAmounts;     // 对应数量
 
-        public AssemblerRecipe(UnitType output, float time, float areaSize, UnitType... inputs) {
+        public AssemblerRecipe(UnitType output, float time, float areaSize, Object... payloads) {
             this.output = output;
             this.time = time;
             this.areaSize = areaSize;
-            this.inputs = inputs;
+
+            int len = payloads.length / 2;
+            reqTypes = new Object[len];
+            reqAmounts = new int[len];
+            for (int i = 0; i < len; i++) {
+                reqTypes[i] = payloads[i * 2];
+                reqAmounts[i] = (Integer) payloads[i * 2 + 1];
+            }
         }
     }
 }
