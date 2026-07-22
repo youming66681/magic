@@ -15,6 +15,7 @@ import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
 import mindustry.type.PayloadStack;
+import mindustry.ui.*;
 import mindustry.world.*;
 import mindustry.world.blocks.units.*;
 import mindustry.world.meta.*;
@@ -41,34 +42,31 @@ public class FlexAssembler extends UnitAssembler {
         planAreaMap.put(plan, customArea);
     }
 
-    // ✅ 重写 setStats，展示配方细节
+    // ✅ 修复后的 setStats 方法（使用 Tex.pane 替代 Styles.grayPanel）
     @Override
     public void setStats() {
-        super.setStats(); // 保留原版其他统计信息
+        super.setStats();
 
-        stats.remove(Stat.output); // 移除原版统一输出，改用自定义分组
+        stats.remove(Stat.output);
 
         stats.add(Stat.output, table -> {
             table.row();
-            // 按模块等级分组显示
             Map<Integer, Seq<AssemblerUnitPlan>> byTier = new HashMap<>();
             for (AssemblerUnitPlan plan : plans) {
                 int tier = tierRequired.getOrDefault(plan, 0);
                 byTier.computeIfAbsent(tier, k -> new Seq<>()).add(plan);
             }
 
-            // 按等级顺序遍历
             for (int tier = 0; tier <= byTier.keySet().stream().max(Integer::compareTo).orElse(0); tier++) {
                 Seq<AssemblerUnitPlan> group = byTier.get(tier);
                 if (group == null || group.isEmpty()) continue;
 
-                // 等级标题
-                table.table(Styles.grayPanel, t -> {
+                table.table(Tex.pane, t -> {   // ← 使用 Tex.pane
                     t.add(Core.bundle.format("flexassembler.tier.stat", tier)).pad(5).left().growX();
                 }).growX().pad(5).row();
 
                 for (AssemblerUnitPlan plan : group) {
-                    table.table(Styles.grayPanel, t -> {
+                    table.table(Tex.pane, t -> {   // ← 使用 Tex.pane
                         if (plan.unit.isBanned()) {
                             t.image(Icon.cancel).color(Pal.remove).size(40).pad(10);
                             return;
@@ -80,19 +78,16 @@ public class FlexAssembler extends UnitAssembler {
                                 info.add(plan.unit.localizedName).left();
                                 info.row();
                                 info.add(Strings.autoFixed(plan.time / 60f, 1) + " " + Core.bundle.get("unit.seconds")).color(Color.lightGray).left();
-                                // 显示模块需求
                                 if (tierRequired.getOrDefault(plan, 0) > 0) {
                                     info.row();
                                     info.add(Core.bundle.format("flexassembler.tier.stat", tierRequired.get(plan))).color(Color.lightGray).left();
                                 }
-                                // 显示采摘面积
                                 info.row();
                                 info.add(Core.bundle.format("flexassembler.area.stat", planAreaMap.getOrDefault(plan, areaSize))).color(Color.lightGray).left();
                             }).left();
 
                             t.table(req -> {
                                 req.right().grow();
-                                // 显示载荷需求
                                 for (int i = 0; i < plan.requirements.size; i++) {
                                     if (i % 4 == 0) req.row();
                                     req.add(StatValues.stack(plan.requirements.get(i))).pad(5);
@@ -107,6 +102,7 @@ public class FlexAssembler extends UnitAssembler {
         });
     }
 
+    // ========== 建筑实例（无变化）==========
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         public boolean selected = false;
         public AssemblerUnitPlan chosenPlan;
