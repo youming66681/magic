@@ -129,7 +129,7 @@ public class MLBlocks {
             phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod, quantumFactory, chipMachine,
             BasicManufacturingPlant,
             //进阶科技
-            starHarborShipbuildingCenter;
+            starHarborShipbuildingCenter, generalAssemblyPlant;
 
     public static void load() {
 
@@ -622,7 +622,7 @@ public class MLBlocks {
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);
         }};
-        FlexAssemblerModule flexModule = new FlexAssemblerModule("flex-assembler-module") {{
+        generalAssemblyPlant = new FlexAssemblerModule("generalAssemblyPlant") {{
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 300, Items.graphite, 150, Items.silicon, 120, MLItems.phantomTitaniumSteel, 60, MLItems.mysticCrystal, 90}));
             size = 3;
             consumePower(5f);
