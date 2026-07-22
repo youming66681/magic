@@ -24,7 +24,7 @@ import static mindustry.Vars.*;
 
 public class FlexAssembler extends UnitAssembler {
 
-    // 存储每个配方对应的采摘面积（格）
+    // 存储每个配方对应的采摘面积 (格)
     public Map<AssemblerUnitPlan, Integer> planAreaMap = new HashMap<>();
     // 存储每个配方所需的最低模块数量
     public Map<AssemblerUnitPlan, Integer> tierRequired = new HashMap<>();
@@ -35,11 +35,11 @@ public class FlexAssembler extends UnitAssembler {
 
     /**
      * 添加一个配方。
-     * @param label         分组标签（未使用，保留）
+     * @param label         分组标签 (未使用)
      * @param output        输出单位
-     * @param time          耗时（秒）
-     * @param customArea    采摘区域大小（格）
-     * @param requiredTier  最低模块数量（currentTier >= this 才能生产）
+     * @param time          耗时 (秒)
+     * @param customArea    采摘区域大小 (格)
+     * @param requiredTier  最低模块数量
      * @param requirements  载荷需求
      */
     public void addPlan(String label, UnitType output, float time, int customArea, int requiredTier, PayloadStack... requirements) {
@@ -56,11 +56,11 @@ public class FlexAssembler extends UnitAssembler {
         public AssemblerUnitPlan chosenPlan;       // 当前选中的配方
         public int myAreaSize = areaSize;          // 当前建筑的实际面积
 
-        // ---------- 配置面板（核心 UI） ----------
+        // ---------- 配置面板 ----------
         @Override
         public void buildConfiguration(Table table) {
             if (!selected) {
-                // 收集当前模块等级下所有可用的配方
+                // 收集当前模块等级下可用的配方
                 Seq<AssemblerUnitPlan> available = new Seq<>();
                 for (AssemblerUnitPlan plan : plans) {
                     if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
@@ -73,7 +73,6 @@ public class FlexAssembler extends UnitAssembler {
                     return;
                 }
 
-                // 使用滚动面板 + 网格
                 Table grid = new Table();
                 grid.defaults().size(100f, 100f).pad(4f);
                 int cols = 4;
@@ -84,15 +83,13 @@ public class FlexAssembler extends UnitAssembler {
                     btn.table(inner -> {
                         inner.image(plan.unit.uiIcon).size(40f).padBottom(4f);
                         inner.row();
-                        inner.add(plan.unit.localizedName).color(Color.lightGray).labelStyle(Styles.outlineLabel);
+                        inner.add(plan.unit.localizedName).color(Color.lightGray);
                     });
                     btn.clicked(() -> {
-                        // 选中配方
                         chosenPlan = plan;
                         selected = true;
                         myAreaSize = planAreaMap.getOrDefault(plan, areaSize);
-                        configure(plan.unit.id);   // 保存配置
-                        // 刷新面板：清空当前表格并重新构建
+                        configure(plan.unit.id);
                         table.clear();
                         buildConfiguration(table);
                     });
@@ -103,15 +100,14 @@ public class FlexAssembler extends UnitAssembler {
                 table.add(pane).grow().maxHeight(400f).row();
                 table.label(() -> "Select a unit to produce").padTop(4).color(Color.gray);
             } else {
-                // 已选定配方时显示状态
                 table.label(() -> "Producing: " + chosenPlan.unit.localizedName).padBottom(8).row();
                 table.button("Change", () -> {
                     selected = false;
                     chosenPlan = null;
                     myAreaSize = areaSize;
-                    configure(null); // 清除 config
+                    configure(null);
                     table.clear();
-                    buildConfiguration(table);  // 重新显示选择界面
+                    buildConfiguration(table);
                 }).size(120f, 40f).row();
             }
         }
@@ -148,18 +144,27 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public AssemblerUnitPlan plan() {
             if (selected && chosenPlan != null) return chosenPlan;
-            return super.plan(); // 未选择时使用默认（原版第一个）
+            return super.plan();
         }
 
         @Override
         public void updateTile() {
-            // 动态设置 areaSize，使原版无人机、生成位置、碰撞检测使用正确的值
+            // 模块降级保护
+            if (selected && chosenPlan != null) {
+                if (tierRequired.getOrDefault(chosenPlan, 0) > currentTier) {
+                    selected = false;
+                    chosenPlan = null;
+                    myAreaSize = areaSize;
+                }
+            }
+
+            // 动态设置 areaSize
             AssemblerUnitPlan plan = plan();
             myAreaSize = planAreaMap.getOrDefault(plan, areaSize);
             int prevArea = areaSize;
             areaSize = myAreaSize;
             super.updateTile();
-            areaSize = prevArea;  // 恢复（本次更新完成）
+            areaSize = prevArea;
         }
 
         // ---------- 绘制与区域 ----------
@@ -183,19 +188,6 @@ public class FlexAssembler extends UnitAssembler {
             rect.x += Geometry.d4x(rotation) * len;
             rect.y += Geometry.d4y(rotation) * len;
             return rect;
-        }
-
-        // 安全：模块降级时取消选择
-        @Override
-        public void update() {
-            super.update();
-            if (selected && chosenPlan != null) {
-                if (tierRequired.getOrDefault(chosenPlan, 0) > currentTier) {
-                    selected = false;
-                    chosenPlan = null;
-                    myAreaSize = areaSize;
-                }
-            }
         }
 
         // ---------- 存档 ----------
