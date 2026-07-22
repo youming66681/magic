@@ -1,4 +1,4 @@
-package magical.content.type;
+package magical.content;
 
 import arc.graphics.Color;
 import arc.math.Mathf;
@@ -7,6 +7,7 @@ import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
 import mindustry.*;
+import mindustry.ctype.ContentType;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
@@ -17,8 +18,8 @@ import mindustry.world.meta.*;
 import static mindustry.Vars.*;
 
 /**
- * 单位组装厂 (纯手工实现，无任何新版 API 依赖)
- * 特性: 等级标签页、配方选择、动态采摘范围、消耗附近单位
+ * 单位组装厂（完全自制，不依赖 UnitAssembler）
+ * 只消耗附近单位，不支持方块载荷。
  */
 public class FlexAssembler extends Block {
     public Seq<AssemblerRecipe> recipes = new Seq<>();
@@ -35,11 +36,11 @@ public class FlexAssembler extends Block {
 
     /**
      * 添加配方
-     * @param tier     等级标签 (如 "T1")
+     * @param tier     等级标签（"T1", "T2"...）
      * @param output   输出单位
-     * @param time     生产时间 (秒)
-     * @param areaSize 采摘范围 (格)
-     * @param inputs   需要的单位 (可重复)
+     * @param time     生产耗时（秒）
+     * @param areaSize 采摘范围视觉提示（格）
+     * @param inputs   需要的单位（可重复，代表多个同种单位）
      */
     public void addRecipe(String tier, UnitType output, float time, float areaSize, UnitType... inputs) {
         AssemblerRecipe recipe = new AssemblerRecipe(output, time, areaSize, inputs);
@@ -52,11 +53,11 @@ public class FlexAssembler extends Block {
         group.add(recipe);
     }
 
-    // ========== 建筑实体 ==========
+    // ==================== 建筑实体 ====================
     public class FlexAssemblerBuild extends Building {
         public AssemblerRecipe selectedRecipe;
         public boolean configured;
-        public float customAreaSize = FlexAssembler.this.areaSize; // Block.areaSize
+        public float customAreaSize = 11f; // 默认值
         public float progress;
         public float warmup;
 
@@ -69,7 +70,7 @@ public class FlexAssembler extends Block {
                 for (String tier : tierMap.keys()) {
                     Button tabBtn = new Button(Tex.button);
                     tabBtn.label(() -> tier).growX();
-                    String t = tier;
+                    final String t = tier;
                     tabBtn.clicked(() -> {
                         content.clear();
                         buildIconGrid(content, tierMap.get(t));
@@ -139,7 +140,7 @@ public class FlexAssembler extends Block {
             super.configure(value);
         }
 
-        // ========== 生产逻辑 (扫描单位) ==========
+        // ---------- 生产：扫描附近单位 ----------
         @Override
         public void updateTile() {
             if (!configured || selectedRecipe == null) {
@@ -175,7 +176,7 @@ public class FlexAssembler extends Block {
                     near.add(u);
                 }
             }
-            // 每一种需求单位都要存在至少一个
+            // 检查每种单位是否存在
             for (UnitType req : recipe.inputs) {
                 if (!near.contains(u -> u.type == req)) {
                     return false;
@@ -214,12 +215,12 @@ public class FlexAssembler extends Block {
         public float warmup() { return warmup; }
     }
 
-    // ========== 配方数据类 ==========
+    // ==================== 配方数据类 ====================
     public static class AssemblerRecipe {
         public UnitType output;
         public float time;
         public float areaSize;
-        public UnitType[] inputs; // 所需的单位列表，每个元素对应一个要被消耗的单位
+        public UnitType[] inputs;
 
         public AssemblerRecipe(UnitType output, float time, float areaSize, UnitType... inputs) {
             this.output = output;
