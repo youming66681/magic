@@ -1,4 +1,4 @@
-package magical.content
+package magical.content;
 
 import arc.graphics.*;
 import arc.math.*;
