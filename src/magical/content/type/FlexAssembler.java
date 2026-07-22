@@ -42,7 +42,7 @@ public class FlexAssembler extends UnitAssembler {
         planAreaMap.put(plan, customArea);
     }
 
-    // ✅ setStats：显示配方详情
+    // ✅ setStats：展览信息
     @Override
     public void setStats() {
         super.setStats();
@@ -106,24 +106,30 @@ public class FlexAssembler extends UnitAssembler {
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         public boolean selected = false;
         public AssemblerUnitPlan chosenPlan;
-        public int myAreaSize = areaSize;
 
-        // 初始自动设置面积为第一个可用配方的值
+        // 同步 areaSize 的辅助方法
+        private void syncArea(AssemblerUnitPlan plan) {
+            areaSize = planAreaMap.getOrDefault(plan, areaSize);
+        }
+
+        // 初始默认面积跟随第一个可用配方
         @Override
         public void created() {
             super.created();
             if (!selected) {
-                AssemblerUnitPlan defaultPlan = null;
-                for (AssemblerUnitPlan plan : plans) {
-                    if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
-                        defaultPlan = plan;
-                        break;
-                    }
-                }
-                if (defaultPlan != null) {
-                    myAreaSize = planAreaMap.getOrDefault(defaultPlan, areaSize);
+                AssemblerUnitPlan defaultPlan = getDefaultPlan();
+                if (defaultPlan != null) syncArea(defaultPlan);
+            }
+        }
+
+        // 获取当前tier下第一个可用配方
+        private AssemblerUnitPlan getDefaultPlan() {
+            for (AssemblerUnitPlan plan : plans) {
+                if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
+                    return plan;
                 }
             }
+            return plans.first(); // 如果都没有，返回第一个（可能为null）
         }
 
         // UI：始终显示单位网格，高亮选中
@@ -165,7 +171,7 @@ public class FlexAssembler extends UnitAssembler {
                 btn.clicked(() -> {
                     chosenPlan = plan;
                     selected = true;
-                    myAreaSize = planAreaMap.getOrDefault(plan, areaSize);
+                    syncArea(plan);                // ✅ 直接同步 areaSize
                     configure(plan.unit.id);
                     table.clear();
                     buildConfiguration(table);
@@ -181,15 +187,9 @@ public class FlexAssembler extends UnitAssembler {
                 table.button(Core.bundle.get("flexassembler.deselect"), () -> {
                     selected = false;
                     chosenPlan = null;
-                    // 取消选择后，恢复为第一个可用配方的面积（而不是硬编码的areasi在）
-                    AssemblerUnitPlan defaultPlan = null;
-                    for (AssemblerUnitPlan plan : plans) {
-                        if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
-                            defaultPlan = plan;
-                            break;
-                        }
-                    }
-                    myAreaSize = defaultPlan != null ? planAreaMap.getOrDefault(defaultPlan, areaSize) : areaSize;
+                    AssemblerUnitPlan defaultPlan = getDefaultPlan();
+                    if (defaultPlan != null) syncArea(defaultPlan); // 恢复为默认面积
+                    else areaSize = FlexAssembler.this.areaSize;    // 无配方时恢复原始
                     configure(null);
                     table.clear();
                     buildConfiguration(table);
@@ -212,7 +212,7 @@ public class FlexAssembler extends UnitAssembler {
                         if (p.unit == type) {
                             chosenPlan = p;
                             selected = true;
-                            myAreaSize = planAreaMap.getOrDefault(p, areaSize);
+                            syncArea(p);
                             break;
                         }
                     }
@@ -220,15 +220,8 @@ public class FlexAssembler extends UnitAssembler {
             } else if (value == null) {
                 selected = false;
                 chosenPlan = null;
-                // 取消选择后使用默认面积（第一个可用配方）
-                AssemblerUnitPlan defaultPlan = null;
-                for (AssemblerUnitPlan plan : plans) {
-                    if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
-                        defaultPlan = plan;
-                        break;
-                    }
-                }
-                myAreaSize = defaultPlan != null ? planAreaMap.getOrDefault(defaultPlan, areaSize) : areaSize;
+                AssemblerUnitPlan defaultPlan = getDefaultPlan();
+                if (defaultPlan != null) syncArea(defaultPlan);
             }
             super.configure(value);
         }
@@ -237,13 +230,8 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public AssemblerUnitPlan plan() {
             if (selected && chosenPlan != null) return chosenPlan;
-            // 未选择时使用第一个可用配方（与原版自动选择逻辑一致）
-            for (AssemblerUnitPlan plan : plans) {
-                if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
-                    return plan;
-                }
-            }
-            return super.plan();
+            // 未选择时使用默认配方
+            return getDefaultPlan() != null ? getDefaultPlan() : super.plan();
         }
 
         @Override
@@ -253,48 +241,34 @@ public class FlexAssembler extends UnitAssembler {
                 if (tierRequired.getOrDefault(chosenPlan, 0) > currentTier) {
                     selected = false;
                     chosenPlan = null;
-                    // 降级后自动使用当前tier下第一个配方
-                    AssemblerUnitPlan defaultPlan = null;
-                    for (AssemblerUnitPlan plan : plans) {
-                        if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
-                            defaultPlan = plan;
-                            break;
-                        }
-                    }
-                    myAreaSize = defaultPlan != null ? planAreaMap.getOrDefault(defaultPlan, areaSize) : areaSize;
+                    AssemblerUnitPlan defaultPlan = getDefaultPlan();
+                    if (defaultPlan != null) syncArea(defaultPlan);
                 }
             }
 
-            // 动态设置面积，保证无人机、生产逻辑使用正确值
-            AssemblerUnitPlan plan = plan();
-            myAreaSize = planAreaMap.getOrDefault(plan, areaSize);
-            int prevArea = areaSize;
-            areaSize = myAreaSize;
-            super.updateTile();
-            areaSize = prevArea;
+            // 确保 areaSize 与当前计划同步（可能未选择时也能跟随默认配方）
+            AssemblerUnitPlan currentPlan = plan();
+            if (currentPlan != null) syncArea(currentPlan);
+
+            super.updateTile(); // 现在 areaSize 已经是正确的值，生产逻辑会直接使用
         }
 
-        // ---------- 绘制重写：临时替换 areaSize，使所有视觉基于 myAreaSize ----------
-        @Override
-        public void draw() {
-            int prevArea = areaSize;
-            areaSize = myAreaSize;
-            super.draw();
-            areaSize = prevArea;
-        }
-
-        @Override
-        public void drawSelect() {
-            int prevArea = areaSize;
-            areaSize = myAreaSize;
-            super.drawSelect();
-            areaSize = prevArea;
-        }
-
+        // 不再需要重写 draw / drawSelect，因为 areaSize 已同步
+        // 但保留 getUnitSpawn 以修正生成位置（原版使用 areaSize 计算，现在 areaSize 正确，但我们也重写以保持准确）
         @Override
         public Vec2 getUnitSpawn() {
-            float len = tilesize * (myAreaSize + block.size) / 2f;
+            float len = tilesize * (areaSize + block.size) / 2f;
             return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
+        }
+
+        // getRect 也使用同步后的 areaSize，原版已够用，但确保无误
+        @Override
+        public Rect getRect(Rect rect, float x, float y, int rotation) {
+            rect.setCentered(x, y, areaSize * tilesize);
+            float len = tilesize * (areaSize + block.size) / 2f;
+            rect.x += Geometry.d4x(rotation) * len;
+            rect.y += Geometry.d4y(rotation) * len;
+            return rect;
         }
 
         // ---------- 存档 ----------
@@ -303,7 +277,8 @@ public class FlexAssembler extends UnitAssembler {
             super.write(write);
             write.bool(selected);
             if (selected && chosenPlan != null) write.i(chosenPlan.unit.id);
-            write.i(myAreaSize);
+            // areaSize 已经由父类保存，但为了安全我们也存一份
+            write.i(areaSize);
         }
 
         @Override
@@ -323,8 +298,8 @@ public class FlexAssembler extends UnitAssembler {
                 }
                 if (chosenPlan == null) selected = false;
             }
-            myAreaSize = read.i();
-            if (!selected) myAreaSize = areaSize;
+            int savedArea = read.i();
+            areaSize = savedArea; // 直接恢复
         }
     }
 }
