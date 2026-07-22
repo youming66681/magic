@@ -102,9 +102,10 @@ public class FlexAssembler extends UnitAssembler {
                 table.label(() -> Core.bundle.get("flexassembler.select-unit")).padTop(4).color(Color.gray);
             } else {
                 // 已选中配方时显示状态
-                table.label(() -> Core.bundle.format("flexassembler.producing", chosenPlan.unit.localizedName)).padBottom(8).row();
+                table.label(() -> Core.bundle.format("flexassembler.producing", chosenPlan.unit.localizedName))
+                        .padBottom(8).row();
                 table.button(
-                        () -> Core.bundle.get("flexassembler.change"),
+                        Core.bundle.get("flexassembler.change"),
                         () -> {
                             selected = false;
                             chosenPlan = null;
@@ -186,14 +187,8 @@ public class FlexAssembler extends UnitAssembler {
             return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
         }
 
-        @Override
-        public Rect getRect(Rect rect, float x, float y, int rotation) {
-            rect.setCentered(x, y, myAreaSize * tilesize);
-            float len = tilesize * (myAreaSize + block.size) / 2f;
-            rect.x += Geometry.d4x(rotation) * len;
-            rect.y += Geometry.d4y(rotation) * len;
-            return rect;
-        }
+        // 注意：不再重写 getRect，因为父类 UnitAssemblerBuild 没有该方法，避免编译错误。
+        // 区域碰撞由 updateTile 中设置的 areaSize 和原版逻辑自动处理。
 
         // ---------- 存档 ----------
         @Override
