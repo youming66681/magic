@@ -622,6 +622,11 @@ public class MLBlocks {
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);
         }};
+        FlexAssemblerModule flexModule = new FlexAssemblerModule("flex-assembler-module") {{
+            requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 300, Items.graphite, 150, Items.silicon, 120, MLItems.phantomTitaniumSteel, 60, MLItems.mysticCrystal, 90}));
+            size = 3;
+            consumePower(5f);
+        }};
          //unit
     }
 }
