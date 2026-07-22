@@ -42,7 +42,7 @@ public class FlexAssembler extends UnitAssembler {
         planAreaMap.put(plan, customArea);
     }
 
-    // ✅ setStats：展览信息
+    // ✅ setStats
     @Override
     public void setStats() {
         super.setStats();
@@ -107,12 +107,10 @@ public class FlexAssembler extends UnitAssembler {
         public boolean selected = false;
         public AssemblerUnitPlan chosenPlan;
 
-        // 同步 areaSize 的辅助方法
         private void syncArea(AssemblerUnitPlan plan) {
             areaSize = planAreaMap.getOrDefault(plan, areaSize);
         }
 
-        // 初始默认面积跟随第一个可用配方
         @Override
         public void created() {
             super.created();
@@ -122,17 +120,15 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
-        // 获取当前tier下第一个可用配方
         private AssemblerUnitPlan getDefaultPlan() {
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
                     return plan;
                 }
             }
-            return plans.first(); // 如果都没有，返回第一个（可能为null）
+            return plans.first();
         }
 
-        // UI：始终显示单位网格，高亮选中
         @Override
         public void buildConfiguration(Table table) {
             Seq<AssemblerUnitPlan> available = new Seq<>();
@@ -171,7 +167,7 @@ public class FlexAssembler extends UnitAssembler {
                 btn.clicked(() -> {
                     chosenPlan = plan;
                     selected = true;
-                    syncArea(plan);                // ✅ 直接同步 areaSize
+                    syncArea(plan);
                     configure(plan.unit.id);
                     table.clear();
                     buildConfiguration(table);
@@ -188,8 +184,8 @@ public class FlexAssembler extends UnitAssembler {
                     selected = false;
                     chosenPlan = null;
                     AssemblerUnitPlan defaultPlan = getDefaultPlan();
-                    if (defaultPlan != null) syncArea(defaultPlan); // 恢复为默认面积
-                    else areaSize = FlexAssembler.this.areaSize;    // 无配方时恢复原始
+                    if (defaultPlan != null) syncArea(defaultPlan);
+                    else areaSize = FlexAssembler.this.areaSize;
                     configure(null);
                     table.clear();
                     buildConfiguration(table);
@@ -197,7 +193,6 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
-        // ---------- 配置序列化 ----------
         @Override
         public Object config() {
             return (selected && chosenPlan != null) ? chosenPlan.unit.id : null;
@@ -226,17 +221,14 @@ public class FlexAssembler extends UnitAssembler {
             super.configure(value);
         }
 
-        // ---------- 生产核心 ----------
         @Override
         public AssemblerUnitPlan plan() {
             if (selected && chosenPlan != null) return chosenPlan;
-            // 未选择时使用默认配方
             return getDefaultPlan() != null ? getDefaultPlan() : super.plan();
         }
 
         @Override
         public void updateTile() {
-            // 模块降级保护
             if (selected && chosenPlan != null) {
                 if (tierRequired.getOrDefault(chosenPlan, 0) > currentTier) {
                     selected = false;
@@ -246,29 +238,17 @@ public class FlexAssembler extends UnitAssembler {
                 }
             }
 
-            // 确保 areaSize 与当前计划同步（可能未选择时也能跟随默认配方）
             AssemblerUnitPlan currentPlan = plan();
             if (currentPlan != null) syncArea(currentPlan);
 
-            super.updateTile(); // 现在 areaSize 已经是正确的值，生产逻辑会直接使用
+            super.updateTile();
         }
 
-        // 不再需要重写 draw / drawSelect，因为 areaSize 已同步
-        // 但保留 getUnitSpawn 以修正生成位置（原版使用 areaSize 计算，现在 areaSize 正确，但我们也重写以保持准确）
+        // 重写生成位置，确保使用最新的 areaSize
         @Override
         public Vec2 getUnitSpawn() {
             float len = tilesize * (areaSize + block.size) / 2f;
             return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
-        }
-
-        // getRect 也使用同步后的 areaSize，原版已够用，但确保无误
-        @Override
-        public Rect getRect(Rect rect, float x, float y, int rotation) {
-            rect.setCentered(x, y, areaSize * tilesize);
-            float len = tilesize * (areaSize + block.size) / 2f;
-            rect.x += Geometry.d4x(rotation) * len;
-            rect.y += Geometry.d4y(rotation) * len;
-            return rect;
         }
 
         // ---------- 存档 ----------
@@ -277,7 +257,6 @@ public class FlexAssembler extends UnitAssembler {
             super.write(write);
             write.bool(selected);
             if (selected && chosenPlan != null) write.i(chosenPlan.unit.id);
-            // areaSize 已经由父类保存，但为了安全我们也存一份
             write.i(areaSize);
         }
 
@@ -298,8 +277,7 @@ public class FlexAssembler extends UnitAssembler {
                 }
                 if (chosenPlan == null) selected = false;
             }
-            int savedArea = read.i();
-            areaSize = savedArea; // 直接恢复
+            areaSize = read.i();
         }
     }
 }
