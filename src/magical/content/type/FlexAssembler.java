@@ -245,7 +245,7 @@ public class FlexAssembler extends UnitAssembler {
             int dy = Math.round((oy - this.y) / tilesize);
             // 相邻即可
             return Math.abs(dx) + Math.abs(dy) == 1;
-        }
+            }
 
         @Override
         public Vec2 getUnitSpawn() {
