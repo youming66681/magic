@@ -611,23 +611,13 @@ public class MLBlocks {
             droneType = UnitTypes.assemblyDrone;
             dronesCreated = 4;
             // 配方：(等级标签, 输出单位, 时间(秒), 范围(格), 需要模块数, 载荷需求...)
-            addPlan("T1", UnitTypes.stell, 45f, 4, 0,
-                    new PayloadStack(UnitTypes.evoke, 2));
-            addPlan("T1", UnitTypes.locus, 55f, 5, 0,
-                    new PayloadStack(UnitTypes.evoke, 2));
-            addPlan("T1", UnitTypes.elude, 35f, 4, 0,
-                    new PayloadStack(Blocks.copperWall, 3));
-            addPlan("T2", UnitTypes.quell, 90f, 6, 1,
-                    new PayloadStack(UnitTypes.locus, 1),
-                    new PayloadStack(UnitTypes.stell, 1));
-            addPlan("T2", UnitTypes.avert, 100f, 6, 1,
-                    new PayloadStack(UnitTypes.locus, 2));
-            addPlan("T2", UnitTypes.precept, 110f, 7, 1,
-                    new PayloadStack(Blocks.berylliumWall, 4),
-                    new PayloadStack(UnitTypes.evoke, 2));
-            addPlan("T3", UnitTypes.obviate, 150f, 8, 2,
-                    new PayloadStack(UnitTypes.quell, 2),
-                    new PayloadStack(UnitTypes.avert, 1));
+            addPlan("T1", UnitTypes.stell, 45f, 4, 0, new PayloadStack(UnitTypes.evoke, 2));
+            addPlan("T1", UnitTypes.locus, 55f, 5, 0, new PayloadStack(UnitTypes.evoke, 2));
+            addPlan("T1", UnitTypes.elude, 35f, 4, 0, new PayloadStack(Blocks.copperWall, 3));
+            addPlan("T2", UnitTypes.quell, 90f, 6, 1, new PayloadStack(UnitTypes.locus, 1), new PayloadStack(UnitTypes.stell, 1));
+            addPlan("T2", UnitTypes.avert, 100f, 6, 1, new PayloadStack(UnitTypes.locus, 2));
+            addPlan("T2", UnitTypes.precept, 110f, 7, 1, new PayloadStack(Blocks.berylliumWall, 4), new PayloadStack(UnitTypes.evoke, 2));
+            addPlan("T3", UnitTypes.obviate, 150f, 8, 2, new PayloadStack(UnitTypes.quell, 2), new PayloadStack(UnitTypes.avert, 1));
 
             areaSize = 13;
 

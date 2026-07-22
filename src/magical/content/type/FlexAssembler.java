@@ -27,19 +27,21 @@ public class FlexAssembler extends UnitAssembler {
 
     public Map<AssemblerUnitPlan, Integer> tierRequired = new HashMap<>();
     public Map<AssemblerUnitPlan, String> planLabel = new HashMap<>();
-    public Map<UnitType, Integer> areaMap = new HashMap<>();
+    // 存储配方对应的采摘面积
+    public Map<AssemblerUnitPlan, Integer> planAreaMap = new HashMap<>();
 
     public FlexAssembler(String name) {
         super(name);
     }
 
     /**
-     * @param label         等级标签（如 "T1"）
+     * 添加一个配方。
+     * @param label         显示标签（如 "T1"）
      * @param output        输出单位
-     * @param time          耗时（秒）
-     * @param customArea    该配方对应的采摘范围（格）
-     * @param requiredTier  需要的最低模块数量
-     * @param requirements  载荷需求
+     * @param time          生产时间（秒）
+     * @param customArea    采摘范围（格）
+     * @param requiredTier  最低模块数量要求
+     * @param requirements  载荷需求（PayloadStack）
      */
     public void addPlan(String label, UnitType output, float time, int customArea, int requiredTier, PayloadStack... requirements) {
         Seq<PayloadStack> reqSeq = new Seq<>(requirements);
@@ -47,96 +49,80 @@ public class FlexAssembler extends UnitAssembler {
         plans.add(plan);
         tierRequired.put(plan, requiredTier);
         planLabel.put(plan, label);
-        areaMap.put(output, customArea);
+        planAreaMap.put(plan, customArea);
     }
 
+    // ==================== 建筑实例 ====================
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
-        public boolean configured = false;
-        public AssemblerUnitPlan selectedPlan;
-        public int myAreaSize = areaSize;   // 每个建筑独立的采摘范围
+        public boolean selected = false;          // 是否已选择配方
+        public AssemblerUnitPlan chosenPlan;      // 当前选中配方
+        public int myAreaSize = areaSize;         // 实例专属面积
 
-        // ---------- 配方选择 UI ----------
+        // ---------- 配置面板（直接显示所有可用配方的图标） ----------
         @Override
         public void buildConfiguration(Table table) {
-            if (!configured) {
-                OrderedMap<String, Seq<AssemblerUnitPlan>> grouped = new OrderedMap<>();
+            if (!selected) {
+                // 筛选出当前模块等级可用的配方
+                Seq<AssemblerUnitPlan> available = new Seq<>();
                 for (AssemblerUnitPlan plan : plans) {
                     if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
-                        String label = planLabel.getOrDefault(plan, "T" + currentTier);
-                        Seq<AssemblerUnitPlan> group = grouped.get(label);
-                        if (group == null) {
-                            group = new Seq<>();
-                            grouped.put(label, group);
-                        }
-                        group.add(plan);
+                        available.add(plan);
                     }
                 }
 
-                if (grouped.size == 0) {
-                    table.label(() -> "No plans (need more modules)").growX().pad(10);
+                if (available.isEmpty()) {
+                    table.label(() -> "No plans (need more modules)").pad(10);
                     return;
                 }
 
-                Table tabs = new Table();
-                Table content = new Table();
-
-                for (String tier : grouped.keys()) {
-                    Button tabBtn = new Button(Tex.button);
-                    tabBtn.label(() -> tier).growX();
-                    final String t = tier;
-                    tabBtn.clicked(() -> {
-                        content.clear();
-                        buildIconGrid(content, grouped.get(t));
+                // 用按钮网格显示
+                Table grid = new Table();
+                int cols = 4;
+                for (int i = 0; i < available.size; i++) {
+                    if (i % cols == 0 && i != 0) grid.row();
+                    AssemblerUnitPlan plan = available.get(i);
+                    ImageButton btn = new ImageButton(plan.unit.uiIcon, Styles.cleari);
+                    btn.resizeImage(40f);
+                    btn.clicked(() -> {
+                        choosePlan(plan);
+                        // 选择后自动关闭配置面板（默认行为）
                     });
-                    tabs.add(tabBtn).growX().pad(4);
-                }
-                tabs.row();
-                ScrollPane pane = new ScrollPane(content);
-                tabs.add(pane).colspan(grouped.size).grow();
-
-                if (grouped.size > 0) {
-                    String first = grouped.keys().next();
-                    buildIconGrid(content, grouped.get(first));
+                    btn.row();
+                    btn.add(plan.unit.localizedName).color(Color.lightGray).labelStyle(LabelStyle.outline);
+                    grid.add(btn).pad(4);
                 }
 
-                table.add(tabs).grow();
+                ScrollPane pane = new ScrollPane(grid);
+                table.add(pane).grow().maxHeight(400f).row();
+
+                // 添加一个提示标签
+                table.label(() -> "Select a unit to produce").padTop(4).color(Color.gray);
             } else {
-                table.label(() -> "Producing: " + selectedPlan.unit.localizedName).padBottom(4).row();
+                // 已选择配方时显示当前单位
+                table.label(() -> "Producing: " + chosenPlan.unit.localizedName).padBottom(4).row();
                 table.button("Change", () -> {
-                    configured = false;
-                    selectedPlan = null;
-                    myAreaSize = areaSize;   // 恢复默认
+                    selected = false;
+                    chosenPlan = null;
+                    myAreaSize = areaSize; // 恢复默认面积
+                    // 触发重新配置
+                    ui.build.hide();
                 }).size(100f, 40f).row();
             }
         }
 
-        private void buildIconGrid(Table grid, Seq<AssemblerUnitPlan> group) {
-            grid.clear();
-            int i = 0;
-            for (AssemblerUnitPlan plan : group) {
-                if (i % 4 == 0 && i != 0) grid.row();
-                ImageButton btn = new ImageButton(plan.unit.uiIcon, Styles.cleari);
-                btn.resizeImage(40f);
-                btn.clicked(() -> selectPlan(plan));
-                btn.row();
-                btn.add(plan.unit.localizedName).color(Color.lightGray);
-                grid.add(btn).pad(4);
-                i++;
-            }
+        /** 选中一个配方 */
+        public void choosePlan(AssemblerUnitPlan plan) {
+            chosenPlan = plan;
+            selected = true;
+            myAreaSize = planAreaMap.getOrDefault(plan, areaSize);
+            configure(plan.unit.id);   // 保存到 config
+            ui.build.hide();           // 关闭配置面板
         }
 
-        /** 选定配方 */
-        public void selectPlan(AssemblerUnitPlan plan) {
-            selectedPlan = plan;
-            configured = true;
-            myAreaSize = areaMap.getOrDefault(plan.unit, areaSize);
-            configure(selectedPlan.unit.id);
-        }
-
-        // ---------- 配置序列化 ----------
+        // ---------- 序列化 ----------
         @Override
         public Object config() {
-            return (configured && selectedPlan != null) ? selectedPlan.unit.id : null;
+            return (selected && chosenPlan != null) ? chosenPlan.unit.id : null;
         }
 
         @Override
@@ -146,9 +132,9 @@ public class FlexAssembler extends UnitAssembler {
                 if (type != null) {
                     for (AssemblerUnitPlan p : plans) {
                         if (p.unit == type) {
-                            selectedPlan = p;
-                            configured = true;
-                            myAreaSize = areaMap.getOrDefault(type, areaSize);
+                            chosenPlan = p;
+                            selected = true;
+                            myAreaSize = planAreaMap.getOrDefault(p, areaSize);
                             break;
                         }
                     }
@@ -160,39 +146,43 @@ public class FlexAssembler extends UnitAssembler {
         // ---------- 生产核心：重写 plan() ----------
         @Override
         public AssemblerUnitPlan plan() {
-            if (configured && selectedPlan != null) {
-                return selectedPlan;
-            }
+            if (selected && chosenPlan != null) return chosenPlan;
             return super.plan();
         }
 
-        // ---------- 动态区域（使用实例 myAreaSize） ----------
+        // ---------- 区域尺寸重写（使所有功能依赖 myAreaSize） ----------
         @Override
         public void drawSelect() {
-            if (configured) {
-                float fulls = myAreaSize * tilesize / 2f;
-                Vec2 spawn = getUnitSpawn();
-                Drawf.dashRect(Pal.accent, Tmp.r1.set(spawn.x - fulls, spawn.y - fulls, fulls * 2f, fulls * 2f));
-            } else {
-                super.drawSelect();
-            }
+            // 使用实例面积绘制矩形
+            float fulls = myAreaSize * tilesize / 2f;
+            Vec2 spawn = getUnitSpawn();
+            Drawf.dashRect(Pal.accent, Tmp.r1.set(spawn.x - fulls, spawn.y - fulls, fulls * 2f, fulls * 2f));
         }
 
-        // 重写 getUnitSpawn 使生成的单位位置和无人机轨道基于 myAreaSize
         @Override
         public Vec2 getUnitSpawn() {
-            float len = tilesize * (myAreaSize + size) / 2f;
+            float len = tilesize * (myAreaSize + block.size) / 2f;
             return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
+        }
+
+        // 重写区域碰撞判断，使建筑不会重叠放置
+        @Override
+        public Rect getRect(Rect rect, float x, float y, int rotation) {
+            rect.setCentered(x, y, myAreaSize * tilesize);
+            float len = tilesize * (myAreaSize + block.size) / 2f;
+            rect.x += Geometry.d4x(rotation) * len;
+            rect.y += Geometry.d4y(rotation) * len;
+            return rect;
         }
 
         // 安全：模块降级时取消选择
         @Override
         public void updateTile() {
             super.updateTile();
-            if (configured && selectedPlan != null) {
-                if (tierRequired.getOrDefault(selectedPlan, 0) > currentTier) {
-                    configured = false;
-                    selectedPlan = null;
+            if (selected && chosenPlan != null) {
+                if (tierRequired.getOrDefault(chosenPlan, 0) > currentTier) {
+                    selected = false;
+                    chosenPlan = null;
                     myAreaSize = areaSize;
                 }
             }
@@ -202,32 +192,30 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void write(Writes write) {
             super.write(write);
-            write.bool(configured);
-            if (configured && selectedPlan != null) {
-                write.i(selectedPlan.unit.id);
-            }
+            write.bool(selected);
+            if (selected && chosenPlan != null) write.i(chosenPlan.unit.id);
             write.i(myAreaSize);
         }
 
         @Override
         public void read(Reads read, byte revision) {
             super.read(read, revision);
-            configured = read.bool();
-            if (configured) {
+            selected = read.bool();
+            if (selected) {
                 int id = read.i();
                 UnitType type = content.getByID(ContentType.unit, id);
                 if (type != null) {
                     for (AssemblerUnitPlan p : plans) {
                         if (p.unit == type) {
-                            selectedPlan = p;
+                            chosenPlan = p;
                             break;
                         }
                     }
                 }
-                if (selectedPlan == null) configured = false;
+                if (chosenPlan == null) selected = false;
             }
             myAreaSize = read.i();
-            if (!configured) myAreaSize = areaSize;   // 恢复默认
+            if (!selected) myAreaSize = areaSize;
         }
     }
 }
