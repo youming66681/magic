@@ -13,10 +13,10 @@ import mindustry.ctype.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
+import mindustry.type.PayloadStack;
 import mindustry.ui.*;
 import mindustry.world.*;
 import mindustry.world.blocks.units.*;
-import mindustry.type.PayloadStack;
 import mindustry.world.meta.*;
 
 import java.util.*;
@@ -36,6 +36,15 @@ public class FlexAssembler extends UnitAssembler {
         super(name);
     }
 
+    /**
+     * 添加配方
+     * @param label         等级标签 (如 "T1")
+     * @param output        输出单位
+     * @param time          生产时间（秒）
+     * @param areaSize      采摘范围（格）
+     * @param requiredTier  需要的最低模块等级 (currentTier >= this)
+     * @param requirements  载荷需求
+     */
     public void addPlan(String label, UnitType output, float time, float areaSize, int requiredTier, PayloadStack... requirements) {
         Seq<PayloadStack> reqSeq = new Seq<>(requirements);
         AssemblerUnitPlan plan = new AssemblerUnitPlan(output, time, reqSeq);
@@ -51,9 +60,11 @@ public class FlexAssembler extends UnitAssembler {
         public AssemblerUnitPlan selectedPlan;
         public float customAreaSize = (float) areaSize;
 
+        // ---------- 配方选择 UI ----------
         @Override
         public void buildConfiguration(Table table) {
             if (!configured) {
+                // 根据当前 tier 筛选可用的配方，并按标签分组
                 OrderedMap<String, Seq<AssemblerUnitPlan>> grouped = new OrderedMap<>();
                 for (AssemblerUnitPlan plan : plans) {
                     if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
@@ -115,13 +126,15 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
+        /** 选定配方 */
         public void selectPlan(AssemblerUnitPlan plan) {
             selectedPlan = plan;
             configured = true;
             customAreaSize = areaPerPlan.getOrDefault(plan, (float) areaSize);
-            configure(selectedPlan.unit.id);
+            configure(selectedPlan.unit.id); // 保存选择
         }
 
+        // ---------- 序列化（与父类兼容） ----------
         @Override
         public Object config() {
             return (configured && selectedPlan != null) ? selectedPlan.unit.id : null;
@@ -145,6 +158,7 @@ public class FlexAssembler extends UnitAssembler {
             super.configure(value);
         }
 
+        // ---------- 核心：覆盖 plan()，返回选定配方 ----------
         @Override
         public AssemblerUnitPlan plan() {
             if (configured && selectedPlan != null) {
@@ -153,6 +167,7 @@ public class FlexAssembler extends UnitAssembler {
             return super.plan();
         }
 
+        // ---------- 动态采摘区域绘制 ----------
         @Override
         public void drawSelect() {
             if (configured) {
@@ -164,6 +179,7 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
+        // ---------- 安全：模块等级下降时取消选择 ----------
         @Override
         public void updateTile() {
             super.updateTile();
@@ -176,6 +192,7 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
+        // ---------- 存档支持 ----------
         @Override
         public void write(Writes write) {
             super.write(write);
