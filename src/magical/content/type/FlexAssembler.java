@@ -139,14 +139,41 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void buildConfiguration(Table table) {
-            Seq<AssemblerUnitPlan> allPlans = new Seq<>(plans);
+            // 只获取当前 t ier 可用的配方
+            Seq<AssemblerUnitPlan> available = new Seq<>();
+            for (AssemblerUnitPlan plan : plans) {
+                if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
+                    available.add(plan);
+                }
+            }
 
-            if (allPlans.isEmpty()) {
+            // 如果可用配方为空，显示提示
+            if (available.isEmpty()) {
                 table.label(() -> Core.bundle.get("flexassembler.no-plans")).pad(10);
+                // 但若有已选但不可用的配方，仍显示警告
+                if (chosenPlan != null) {
+                    table.row();
+                    table.label(() -> Core.bundle.format("flexassembler.tier-low", chosenPlan.unit.localizedName, tierRequired.get(chosenPlan)))
+                            .color(Pal.remove).padTop(4).row();
+                    table.button(Core.bundle.get("flexassembler.deselect"), () -> {
+                        selected = false;
+                        chosenPlan = null;
+                        AssemblerUnitPlan defaultPlan = getDefaultPlan();
+                        if (defaultPlan != null) syncArea(defaultPlan);
+                        else areaSize = FlexAssembler.this.areaSize;
+                        configure(null);
+                        table.clear();
+                        buildConfiguration(table);
+                    }).size(120f, 40f).padTop(8).row();
+                }
                 return;
             }
 
-            if (chosenPlan != null && tierRequired.getOrDefault(chosenPlan, 0) > currentTier) {
+            // 检查已选配方是否在当前可用列表中
+            boolean chosenAvailable = chosenPlan != null && available.contains(chosenPlan);
+
+            // 标题显示
+            if (!chosenAvailable && chosenPlan != null) {
                 table.label(() -> Core.bundle.format("flexassembler.tier-low", chosenPlan.unit.localizedName, tierRequired.get(chosenPlan)))
                         .padBottom(4).color(Pal.remove).row();
             } else if (chosenPlan != null) {
@@ -158,32 +185,26 @@ public class FlexAssembler extends UnitAssembler {
 
             Table grid = new Table();
             int cols = 4;
-            for (int i = 0; i < allPlans.size; i++) {
+            for (int i = 0; i < available.size; i++) {
                 if (i % cols == 0 && i != 0) grid.row();
-                AssemblerUnitPlan plan = allPlans.get(i);
+                AssemblerUnitPlan plan = available.get(i);
                 boolean isChosen = Objects.equals(chosenPlan, plan);
-                boolean canSelect = tierRequired.getOrDefault(plan, 0) <= currentTier;
 
                 Button btn = new Button(Tex.button);
                 btn.table(inner -> {
                     inner.image(plan.unit.uiIcon).size(30f).padBottom(4f);
                     inner.row();
-                    inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : canSelect ? Color.lightGray : Color.darkGray);
+                    inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
                 }).pad(8);
 
-                btn.setDisabled(!canSelect && !isChosen);
-                if (canSelect || isChosen) {
-                    btn.clicked(() -> {
-                        if (canSelect) {
-                            chosenPlan = plan;
-                            selected = true;
-                            syncArea(plan);
-                            configure(plan.unit.id);
-                            table.clear();
-                            buildConfiguration(table);
-                        }
-                    });
-                }
+                btn.clicked(() -> {
+                    chosenPlan = plan;
+                    selected = true;
+                    syncArea(plan);
+                    configure(plan.unit.id);
+                    table.clear();
+                    buildConfiguration(table);
+                });
                 grid.add(btn).size(80f, 80f).pad(4f);
             }
 
