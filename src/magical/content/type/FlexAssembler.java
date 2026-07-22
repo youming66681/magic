@@ -108,6 +108,24 @@ public class FlexAssembler extends UnitAssembler {
         public AssemblerUnitPlan chosenPlan;
         public int myAreaSize = areaSize;
 
+        // 初始自动设置面积为第一个可用配方的值
+        @Override
+        public void created() {
+            super.created();
+            if (!selected) {
+                AssemblerUnitPlan defaultPlan = null;
+                for (AssemblerUnitPlan plan : plans) {
+                    if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
+                        defaultPlan = plan;
+                        break;
+                    }
+                }
+                if (defaultPlan != null) {
+                    myAreaSize = planAreaMap.getOrDefault(defaultPlan, areaSize);
+                }
+            }
+        }
+
         // UI：始终显示单位网格，高亮选中
         @Override
         public void buildConfiguration(Table table) {
@@ -163,7 +181,15 @@ public class FlexAssembler extends UnitAssembler {
                 table.button(Core.bundle.get("flexassembler.deselect"), () -> {
                     selected = false;
                     chosenPlan = null;
-                    myAreaSize = areaSize;
+                    // 取消选择后，恢复为第一个可用配方的面积（而不是硬编码的areasi在）
+                    AssemblerUnitPlan defaultPlan = null;
+                    for (AssemblerUnitPlan plan : plans) {
+                        if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
+                            defaultPlan = plan;
+                            break;
+                        }
+                    }
+                    myAreaSize = defaultPlan != null ? planAreaMap.getOrDefault(defaultPlan, areaSize) : areaSize;
                     configure(null);
                     table.clear();
                     buildConfiguration(table);
@@ -194,7 +220,15 @@ public class FlexAssembler extends UnitAssembler {
             } else if (value == null) {
                 selected = false;
                 chosenPlan = null;
-                myAreaSize = areaSize;
+                // 取消选择后使用默认面积（第一个可用配方）
+                AssemblerUnitPlan defaultPlan = null;
+                for (AssemblerUnitPlan plan : plans) {
+                    if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
+                        defaultPlan = plan;
+                        break;
+                    }
+                }
+                myAreaSize = defaultPlan != null ? planAreaMap.getOrDefault(defaultPlan, areaSize) : areaSize;
             }
             super.configure(value);
         }
@@ -203,19 +237,35 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public AssemblerUnitPlan plan() {
             if (selected && chosenPlan != null) return chosenPlan;
+            // 未选择时使用第一个可用配方（与原版自动选择逻辑一致）
+            for (AssemblerUnitPlan plan : plans) {
+                if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
+                    return plan;
+                }
+            }
             return super.plan();
         }
 
         @Override
         public void updateTile() {
+            // 模块降级保护
             if (selected && chosenPlan != null) {
                 if (tierRequired.getOrDefault(chosenPlan, 0) > currentTier) {
                     selected = false;
                     chosenPlan = null;
-                    myAreaSize = areaSize;
+                    // 降级后自动使用当前tier下第一个配方
+                    AssemblerUnitPlan defaultPlan = null;
+                    for (AssemblerUnitPlan plan : plans) {
+                        if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
+                            defaultPlan = plan;
+                            break;
+                        }
+                    }
+                    myAreaSize = defaultPlan != null ? planAreaMap.getOrDefault(defaultPlan, areaSize) : areaSize;
                 }
             }
 
+            // 动态设置面积，保证无人机、生产逻辑使用正确值
             AssemblerUnitPlan plan = plan();
             myAreaSize = planAreaMap.getOrDefault(plan, areaSize);
             int prevArea = areaSize;
