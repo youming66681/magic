@@ -42,7 +42,7 @@ public class FlexAssembler extends UnitAssembler {
         planAreaMap.put(plan, customArea);
     }
 
-    // ✅ 无编译错误、显示更友好的 setStats
+    // ✅ setStats：无编译错误
     @Override
     public void setStats() {
         super.setStats();
@@ -60,7 +60,7 @@ public class FlexAssembler extends UnitAssembler {
                 Seq<AssemblerUnitPlan> group = byTier.get(tier);
                 if (group == null || group.isEmpty()) continue;
 
-                final int currentTier = tier; // 创建 effectively final 副本
+                final int currentTier = tier;
 
                 table.table(Tex.pane, t ->
                         t.add(Core.bundle.format("flexassembler.tier.stat", currentTier)).pad(5).left().growX()
@@ -102,16 +102,15 @@ public class FlexAssembler extends UnitAssembler {
         });
     }
 
-    // ===================== 建筑实例 =====================
+    // ===================== 建筑实例（高亮用文字颜色） =====================
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         public boolean selected = false;
         public AssemblerUnitPlan chosenPlan;
         public int myAreaSize = areaSize;
 
-        // ---------- 始终显示网格，选中单位高亮 ----------
         @Override
         public void buildConfiguration(Table table) {
-            // 收集当前模块等级下可用的配方
+            // 始终显示所有可用配方，选中项高亮（accent 颜色）
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
@@ -124,7 +123,6 @@ public class FlexAssembler extends UnitAssembler {
                 return;
             }
 
-            // 标题：当前选中单位或提示
             if (chosenPlan != null) {
                 table.label(() -> Core.bundle.format("flexassembler.producing", chosenPlan.unit.localizedName))
                         .padBottom(4).row();
@@ -140,28 +138,17 @@ public class FlexAssembler extends UnitAssembler {
                 boolean isChosen = Objects.equals(chosenPlan, plan);
 
                 Button btn = new Button(Tex.button);
-                // 高亮背景
-                if (isChosen) {
-                    btn.table(inner -> {
-                        inner.background(Tex.flatOver);
-                        inner.image(plan.unit.uiIcon).size(40f).padBottom(4f);
-                        inner.row();
-                        inner.add(plan.unit.localizedName).color(Pal.accent);
-                    }).pad(4);
-                } else {
-                    btn.table(inner -> {
-                        inner.image(plan.unit.uiIcon).size(40f).padBottom(4f);
-                        inner.row();
-                        inner.add(plan.unit.localizedName).color(Color.lightGray);
-                    }).pad(4);
-                }
+                btn.table(inner -> {
+                    inner.image(plan.unit.uiIcon).size(40f).padBottom(4f);
+                    inner.row();
+                    inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
+                }).pad(8);
 
                 btn.clicked(() -> {
                     chosenPlan = plan;
                     selected = true;
                     myAreaSize = planAreaMap.getOrDefault(plan, areaSize);
                     configure(plan.unit.id);
-                    // 刷新面板以更新高亮
                     table.clear();
                     buildConfiguration(table);
                 });
@@ -171,7 +158,6 @@ public class FlexAssembler extends UnitAssembler {
             ScrollPane pane = new ScrollPane(grid);
             table.add(pane).grow().maxHeight(400f).row();
 
-            // 如果已选中，提供取消选择按钮
             if (chosenPlan != null) {
                 table.row();
                 table.button(Core.bundle.get("flexassembler.deselect"), () -> {
@@ -185,7 +171,6 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
-        // ---------- 配置序列化 ----------
         @Override
         public Object config() {
             return (selected && chosenPlan != null) ? chosenPlan.unit.id : null;
@@ -213,7 +198,6 @@ public class FlexAssembler extends UnitAssembler {
             super.configure(value);
         }
 
-        // ---------- 生产核心 ----------
         @Override
         public AssemblerUnitPlan plan() {
             if (selected && chosenPlan != null) return chosenPlan;
@@ -222,7 +206,6 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void updateTile() {
-            // 模块降级保护
             if (selected && chosenPlan != null) {
                 if (tierRequired.getOrDefault(chosenPlan, 0) > currentTier) {
                     selected = false;
@@ -239,7 +222,6 @@ public class FlexAssembler extends UnitAssembler {
             areaSize = prevArea;
         }
 
-        // ---------- 绘制与区域 ----------
         @Override
         public void drawSelect() {
             for (var module : modules) {
@@ -257,7 +239,6 @@ public class FlexAssembler extends UnitAssembler {
             return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
         }
 
-        // ---------- 存档 ----------
         @Override
         public void write(Writes write) {
             super.write(write);

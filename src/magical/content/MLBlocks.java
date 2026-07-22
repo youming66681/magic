@@ -619,7 +619,7 @@ public class MLBlocks {
             addPlan("T2", UnitTypes.precept, 110f, 7, 1, new PayloadStack(Blocks.berylliumWall, 4), new PayloadStack(UnitTypes.evoke, 2));
             addPlan("T3", UnitTypes.obviate, 150f, 8, 2, new PayloadStack(UnitTypes.quell, 2), new PayloadStack(UnitTypes.avert, 1));
 
-            areaSize = 0;
+            areaSize = myAreaSize;
 
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);
