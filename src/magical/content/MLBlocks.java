@@ -117,7 +117,7 @@ import mindustry.type.LiquidStack;
 import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.blocks.units.UnitFactory.UnitPlan;
 import arc.struct.Seq;
-import mindustry.world.blocks.units.PayloadStack;
+import mindustry.world.blocks.payloads.PayloadStack;
 
 public class MLBlocks {
 

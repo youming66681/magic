@@ -16,6 +16,7 @@ import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.world.*;
 import mindustry.world.blocks.units.*;
+import mindustry.world.blocks.payloads.PayloadStack;   // 正确的导入
 import mindustry.world.meta.*;
 
 import java.util.*;
@@ -23,7 +24,7 @@ import java.util.*;
 import static mindustry.Vars.*;
 
 /**
- * 等级化单位组装厂（基于 UnitAssembler），支持方块载荷、等级标签、手动选择、动态范围。
+ * 等级化单位组装厂（基于 UnitAssembler）
  */
 public class FlexAssembler extends UnitAssembler {
 
@@ -35,15 +36,6 @@ public class FlexAssembler extends UnitAssembler {
         super(name);
     }
 
-    /**
-     * 添加配方
-     * @param label         等级标签 (如 "T1")
-     * @param output        输出单位
-     * @param time          生产时间（秒）
-     * @param areaSize      采摘范围（格）
-     * @param requiredTier  需要的模块数量 (0 为基础)
-     * @param requirements  载荷需求 (PayloadStack 数组)
-     */
     public void addPlan(String label, UnitType output, float time, float areaSize, int requiredTier, PayloadStack... requirements) {
         Seq<PayloadStack> reqSeq = new Seq<>(requirements);
         AssemblerUnitPlan plan = new AssemblerUnitPlan(output, time, reqSeq);
@@ -57,13 +49,11 @@ public class FlexAssembler extends UnitAssembler {
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         public boolean configured = false;
         public AssemblerUnitPlan selectedPlan;
-        public float customAreaSize = (float) areaSize; // 默认使用父类 areaSize
+        public float customAreaSize = (float) areaSize;
 
-        // ---------- 配方选择 UI ----------
         @Override
         public void buildConfiguration(Table table) {
             if (!configured) {
-                // 按标签分组显示
                 OrderedMap<String, Seq<AssemblerUnitPlan>> grouped = new OrderedMap<>();
                 for (AssemblerUnitPlan plan : plans) {
                     if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
@@ -101,7 +91,6 @@ public class FlexAssembler extends UnitAssembler {
 
                 table.add(tabs).grow();
             } else {
-                // 已配置：显示当前生产单位，提供更改按钮
                 table.label(() -> "Producing: " + selectedPlan.unit.localizedName).padBottom(4).row();
                 table.button("Change", () -> {
                     configured = false;
@@ -126,15 +115,13 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
-        /** 选定配方 */
         public void selectPlan(AssemblerUnitPlan plan) {
             selectedPlan = plan;
             configured = true;
             customAreaSize = areaPerPlan.getOrDefault(plan, (float) areaSize);
-            configure(selectedPlan.unit.id); // 保存到 config
+            configure(selectedPlan.unit.id);
         }
 
-        // ---------- 序列化 ----------
         @Override
         public Object config() {
             return (configured && selectedPlan != null) ? selectedPlan.unit.id : null;
@@ -158,7 +145,6 @@ public class FlexAssembler extends UnitAssembler {
             super.configure(value);
         }
 
-        // ---------- 核心：覆盖 plan()，返回选定配方 ----------
         @Override
         public AssemblerUnitPlan plan() {
             if (configured && selectedPlan != null) {
@@ -167,7 +153,6 @@ public class FlexAssembler extends UnitAssembler {
             return super.plan();
         }
 
-        // ---------- 动态采摘区域绘制 ----------
         @Override
         public void drawSelect() {
             if (configured) {
@@ -179,7 +164,6 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
-        // ---------- 安全：模块等级下降时取消选择 ----------
         @Override
         public void updateTile() {
             super.updateTile();
@@ -192,7 +176,6 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
-        // ---------- 存档支持 ----------
         @Override
         public void write(Writes write) {
             super.write(write);
@@ -218,7 +201,7 @@ public class FlexAssembler extends UnitAssembler {
                         }
                     }
                 }
-                if (selectedPlan == null) configured = false; // 未找到则清除状态
+                if (selectedPlan == null) configured = false;
             }
             customAreaSize = read.f();
         }
