@@ -42,7 +42,7 @@ public class FlexAssembler extends UnitAssembler {
         planAreaMap.put(plan, customArea);
     }
 
-    // ✅ 无编译错误的 setStats
+    // ✅ 无编译错误的 setStats（修复了 effectively final 问题）
     @Override
     public void setStats() {
         super.setStats();
@@ -60,8 +60,10 @@ public class FlexAssembler extends UnitAssembler {
                 Seq<AssemblerUnitPlan> group = byTier.get(tier);
                 if (group == null || group.isEmpty()) continue;
 
+                final int currentTier = tier; // 创建 effectively final 副本，供 lambda 使用
+
                 table.table(Tex.pane, t ->
-                        t.add(Core.bundle.format("flexassembler.tier.stat", tier)).pad(5).left().growX()
+                        t.add(Core.bundle.format("flexassembler.tier.stat", currentTier)).pad(5).left().growX()
                 ).growX().pad(5).row();
 
                 for (AssemblerUnitPlan plan : group) {
