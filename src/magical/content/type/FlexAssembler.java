@@ -8,12 +8,12 @@ import arc.struct.*;
 import arc.util.*;
 import arc.util.io.*;
 import mindustry.*;
+import mindustry.content.*;
 import mindustry.ctype.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
 import mindustry.type.PayloadStack;
-import mindustry.ui.*;
 import mindustry.world.*;
 import mindustry.world.blocks.units.*;
 import mindustry.world.meta.*;
@@ -24,9 +24,9 @@ import static mindustry.Vars.*;
 
 public class FlexAssembler extends UnitAssembler {
 
-    // 存储每个配方的自定义面积
+    // 存储每个配方对应的采摘面积（格）
     public Map<AssemblerUnitPlan, Integer> planAreaMap = new HashMap<>();
-    // 存储每个配方所需的模块等级
+    // 存储每个配方所需的最低模块数量
     public Map<AssemblerUnitPlan, Integer> tierRequired = new HashMap<>();
 
     public FlexAssembler(String name) {
@@ -35,14 +35,14 @@ public class FlexAssembler extends UnitAssembler {
 
     /**
      * 添加一个配方。
-     * @param groupLabel    分组标签（目前未用于 UI，保留扩展）
+     * @param label         分组标签（未使用，保留）
      * @param output        输出单位
      * @param time          耗时（秒）
      * @param customArea    采摘区域大小（格）
-     * @param requiredTier  最低模块数量
+     * @param requiredTier  最低模块数量（currentTier >= this 才能生产）
      * @param requirements  载荷需求
      */
-    public void addPlan(String groupLabel, UnitType output, float time, int customArea, int requiredTier, PayloadStack... requirements) {
+    public void addPlan(String label, UnitType output, float time, int customArea, int requiredTier, PayloadStack... requirements) {
         Seq<PayloadStack> reqSeq = new Seq<>(requirements);
         AssemblerUnitPlan plan = new AssemblerUnitPlan(output, time, reqSeq);
         plans.add(plan);
@@ -50,16 +50,17 @@ public class FlexAssembler extends UnitAssembler {
         planAreaMap.put(plan, customArea);
     }
 
+    // ===================== 建筑实例 =====================
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
-        public boolean selected = false;
-        public AssemblerUnitPlan chosenPlan;
-        public int myAreaSize = areaSize;   // 默认面积
+        public boolean selected = false;           // 是否已选定配方
+        public AssemblerUnitPlan chosenPlan;       // 当前选中的配方
+        public int myAreaSize = areaSize;          // 当前建筑的实际面积
 
-        // ---------- 配置界面 ----------
+        // ---------- 配置面板（核心 UI） ----------
         @Override
         public void buildConfiguration(Table table) {
             if (!selected) {
-                // 收集当前模块等级可用的配方
+                // 收集当前模块等级下所有可用的配方
                 Seq<AssemblerUnitPlan> available = new Seq<>();
                 for (AssemblerUnitPlan plan : plans) {
                     if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
@@ -72,45 +73,50 @@ public class FlexAssembler extends UnitAssembler {
                     return;
                 }
 
+                // 使用滚动面板 + 网格
                 Table grid = new Table();
+                grid.defaults().size(100f, 100f).pad(4f);
                 int cols = 4;
                 for (int i = 0; i < available.size; i++) {
                     if (i % cols == 0 && i != 0) grid.row();
                     AssemblerUnitPlan plan = available.get(i);
-                    // 使用普通的按钮，增加可点击区域
                     Button btn = new Button(Tex.button);
-                    btn.table(t -> {
-                        t.image(plan.unit.uiIcon).size(40f).pad(4);
-                        t.row();
-                        t.add(plan.unit.localizedName).color(Color.lightGray);
+                    btn.table(inner -> {
+                        inner.image(plan.unit.uiIcon).size(40f).padBottom(4f);
+                        inner.row();
+                        inner.add(plan.unit.localizedName).color(Color.lightGray).labelStyle(Styles.outlineLabel);
                     });
-                    btn.clicked(() -> choosePlan(plan));
-                    grid.add(btn).pad(4).size(80f, 80f);
+                    btn.clicked(() -> {
+                        // 选中配方
+                        chosenPlan = plan;
+                        selected = true;
+                        myAreaSize = planAreaMap.getOrDefault(plan, areaSize);
+                        configure(plan.unit.id);   // 保存配置
+                        // 刷新面板：清空当前表格并重新构建
+                        table.clear();
+                        buildConfiguration(table);
+                    });
+                    grid.add(btn);
                 }
 
                 ScrollPane pane = new ScrollPane(grid);
                 table.add(pane).grow().maxHeight(400f).row();
                 table.label(() -> "Select a unit to produce").padTop(4).color(Color.gray);
             } else {
-                table.label(() -> "Producing: " + chosenPlan.unit.localizedName).padBottom(4).row();
+                // 已选定配方时显示状态
+                table.label(() -> "Producing: " + chosenPlan.unit.localizedName).padBottom(8).row();
                 table.button("Change", () -> {
                     selected = false;
                     chosenPlan = null;
-                    myAreaSize = areaSize;   // 恢复默认
-                }).size(100f, 40f).row();
+                    myAreaSize = areaSize;
+                    configure(null); // 清除 config
+                    table.clear();
+                    buildConfiguration(table);  // 重新显示选择界面
+                }).size(120f, 40f).row();
             }
         }
 
-        /** 选中配方 */
-        public void choosePlan(AssemblerUnitPlan plan) {
-            chosenPlan = plan;
-            selected = true;
-            myAreaSize = planAreaMap.getOrDefault(plan, areaSize);
-            // 使用 config 保存，触发界面更新
-            configure(plan.unit.id);
-        }
-
-        // ---------- 序列化 ----------
+        // ---------- 配置序列化 ----------
         @Override
         public Object config() {
             return (selected && chosenPlan != null) ? chosenPlan.unit.id : null;
@@ -130,43 +136,59 @@ public class FlexAssembler extends UnitAssembler {
                         }
                     }
                 }
+            } else if (value == null) {
+                selected = false;
+                chosenPlan = null;
+                myAreaSize = areaSize;
             }
             super.configure(value);
         }
 
-        // ---------- 生产核心：返回选定配方 ----------
+        // ---------- 生产核心 ----------
         @Override
         public AssemblerUnitPlan plan() {
             if (selected && chosenPlan != null) return chosenPlan;
-            return super.plan();
+            return super.plan(); // 未选择时使用默认（原版第一个）
         }
 
-        // 覆盖 findPlan，如果父类使用了它
-        public AssemblerUnitPlan findPlan() {
-            if (selected && chosenPlan != null) return chosenPlan;
-            return super.plan();
+        @Override
+        public void updateTile() {
+            // 动态设置 areaSize，使原版无人机、生成位置、碰撞检测使用正确的值
+            AssemblerUnitPlan plan = plan();
+            myAreaSize = planAreaMap.getOrDefault(plan, areaSize);
+            int prevArea = areaSize;
+            areaSize = myAreaSize;
+            super.updateTile();
+            areaSize = prevArea;  // 恢复（本次更新完成）
         }
 
-        // ---------- 动态区域绘制 ----------
+        // ---------- 绘制与区域 ----------
         @Override
         public void drawSelect() {
-            // 绘制自定义虚线矩形
             float fulls = myAreaSize * tilesize / 2f;
             Vec2 spawn = getUnitSpawn();
             Drawf.dashRect(Pal.accent, Tmp.r1.set(spawn.x - fulls, spawn.y - fulls, fulls * 2f, fulls * 2f));
         }
 
-        // 重写 getUnitSpawn，使单位生成位置适应可能变化的区域
         @Override
         public Vec2 getUnitSpawn() {
             float len = tilesize * (myAreaSize + block.size) / 2f;
             return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
         }
 
+        @Override
+        public Rect getRect(Rect rect, float x, float y, int rotation) {
+            rect.setCentered(x, y, myAreaSize * tilesize);
+            float len = tilesize * (myAreaSize + block.size) / 2f;
+            rect.x += Geometry.d4x(rotation) * len;
+            rect.y += Geometry.d4y(rotation) * len;
+            return rect;
+        }
+
         // 安全：模块降级时取消选择
         @Override
-        public void updateTile() {
-            super.updateTile();   // 完全使用原版逻辑，不干扰
+        public void update() {
+            super.update();
             if (selected && chosenPlan != null) {
                 if (tierRequired.getOrDefault(chosenPlan, 0) > currentTier) {
                     selected = false;
