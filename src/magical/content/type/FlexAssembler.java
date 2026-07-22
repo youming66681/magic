@@ -2,6 +2,7 @@ package magical.content;
 
 import arc.Core;
 import arc.graphics.*;
+import arc.math.*;
 import arc.math.geom.*;
 import arc.scene.ui.*;
 import arc.scene.ui.layout.*;
@@ -172,7 +173,6 @@ public class FlexAssembler extends UnitAssembler {
             ScrollPane pane = new ScrollPane(grid);
             table.add(pane).grow().maxHeight(400f).row();
 
-            // 仅当有选中配方时显示“取消选择”按钮
             if (chosenPlan != null) {
                 table.row();
                 table.button(Core.bundle.get("flexassembler.deselect"), () -> {
@@ -238,6 +238,15 @@ public class FlexAssembler extends UnitAssembler {
         }
 
         @Override
+        public boolean moduleFits(Block other, float ox, float oy, int rotation) {
+            if (!(other instanceof UnitAssemblerModule)) return false;
+            int dx = Math.round((ox - this.x) / tilesize);
+            int dy = Math.round((oy - this.y) / tilesize);
+            if (Math.abs(dx) + Math.abs(dy) != 1) return false;
+            return Angles.within(Angles.angle(ox, oy, this.x, this.y), rotation * 90f, 5f);
+        }
+
+        @Override
         public Vec2 getUnitSpawn() {
             float len = tilesize * (areaSize + block.size) / 2f;
             return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
@@ -268,15 +277,7 @@ public class FlexAssembler extends UnitAssembler {
                 }
                 if (chosenPlan == null) selected = false;
             }
-            areaSize = read.i(); // 直接恢复面积
-        }
-        @Override
-        public boolean moduleFits(Block other, float ox, float oy, int rotation) {
-            if (!(other instanceof FlexAssemblerModule)) return false;
-            int dx = Math.round((ox - this.x) / tilesize);
-            int dy = Math.round((oy - this.y) / tilesize);
-            if (Math.abs(dx) + Math.abs(dy) != 1) return false;
-            return Angles.within(Angles.angle(ox, oy, this.x, this.y), rotation * 90f, 5f);
+            areaSize = read.i();
         }
     }
 }
