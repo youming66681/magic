@@ -96,7 +96,11 @@ public class MLTechTree {
             });
             //进阶科技
             /*基站核心*/node(MLBlocks.baseStationCore, () -> {
+                /*翼石冲压机*/node(MLBlocks.WingStonePunchingMachine, () -> {
+                    /*钢化玻璃强化器*/node(MLBlocks.metaglassBooster, () -> {
 
+                    });
+                });
             });
                  });
     }

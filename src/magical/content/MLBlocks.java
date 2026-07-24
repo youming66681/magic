@@ -130,7 +130,7 @@ public class MLBlocks {
             phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod, quantumFactory, chipMachine,
             BasicManufacturingPlant,
             //进阶科技
-            starHarborShipbuildingCenter, baseStationCore;
+            starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster;
 
     public static void load() {
 
@@ -149,7 +149,7 @@ public class MLBlocks {
         }};
         //基站核心
         baseStationCore = new CoreBlock("baseStationCore") {{
-            requirements(Category.effect, ItemStack.with(new Object[]{MLItems.phantomSteel, 5000, Items.silicon, 2000, MLItems.phantomTitaniumSteel, 1000, MLItems.mysticCrystal, 1000, MLItems.logicChip, 500,}));
+            requirements(Category.effect, ItemStack.with(new Object[]{MLItems.phantomSteel, 5000, Items.silicon, 2000, MLItems.phantomTitaniumSteel, 1000, MLItems.mysticCrystal, 1000, MLItems.logicChip, 500}));
 
             unitType = MLUnitTypes.Popular;
             health = 5000;
@@ -246,6 +246,43 @@ public class MLBlocks {
                         outputItems = ItemStack.with(MLItems.logicChip, 1);
                     }}
             );
+        }};
+        //翼石冲压机
+        WingStonePunchingMachine = new GenericCrafter("WingStonePunchingMachine") {{
+            requirements(Category.crafting, ItemStack.with(new Object[]{Items.metaglass, 25, Items.silicon, 50, Items.titanium, 25, MLItems.logicChip, 10}));
+
+            craftEffect = Fx.hitEmpSpark;
+            outputItem = new ItemStack(MLItems.wingedStone, 1);
+            craftTime = 90f;
+            health = 200;
+            size = 2;
+            hasItems = true;
+            hasPower = true;
+            itemCapacity = 15;
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
+
+            consumeItems(ItemStack.with(MLItems.phantomSteel, 1, Items.graphite, 1));
+            consumePower(1.5f);
+        }};
+        //钢化玻璃强化器
+        metaglassBooster = new GenericCrafter("metaglassBooster") {{
+            requirements(Category.crafting, ItemStack.with(new Object[]{Items.metaglass, 15, Items.silicon, 40, MLItems.phantomSteel, 30, MLItems.logicChip, 10}));
+
+            craftEffect = Fx.smeltsmoke;
+            outputItem = new ItemStack(MLItems.acrylic, 1);
+            craftTime = 120f;
+            health = 200;
+            size = 2;
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = true;
+            itemCapacity = 15;
+            liquidCapacity = 20;
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame(), new DrawRegion("-bottom"), new DrawLiquidTile(Liquids.oil));
+
+            consumeItems(ItemStack.with(Items.metaglass, 1));
+            consumeLiquid(Liquids.oil, 0.2f);
+            consumePower(1.5f);
         }};
         //factor
         //炮
