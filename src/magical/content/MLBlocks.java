@@ -118,6 +118,7 @@ import mindustry.world.blocks.units.UnitFactory;
 import mindustry.world.blocks.units.UnitFactory.UnitPlan;
 import arc.struct.Seq;
 import mindustry.type.PayloadStack;
+import mindustry.world.blocks.storage.CoreBlock;
 
 public class MLBlocks {
 
