@@ -123,7 +123,7 @@ import mindustry.world.blocks.storage.CoreBlock;
 import mindustry.entities.effect.ParticleEffect;
 import arc.graphics.Color;
 import mindustry.world.draw.DrawTurret;
-import mindustry.world.draw.RegionPart;
+import mindustry.entities.part.RegionPart;
 
 public class MLBlocks {
 
@@ -503,7 +503,7 @@ public class MLBlocks {
         }};
         //光降
         LightDescends = new ItemTurret("LightDescends"){{
-            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 120, Items.silicon, 80, Items.titanium, 90, Items.phantomTitaniumSteel, 75, Items.logicChip, 60,}));
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 120, Items.silicon, 80, Items.titanium, 90, MLItems.phantomTitaniumSteel, 75, MLItems.logicChip, 60,}));
             ammo(
                     Items.graphite, new BasicBulletType(16f, 30) {{
                         splashDamageRadius = 32f;
@@ -621,8 +621,8 @@ public class MLBlocks {
             rotateSpeed = 0;
             ammoPerShot = 8;
 
-            drawer = new DrawTurret();
-            drawer.parts.addAll(
+            drawer = new DrawMulti(){{
+                parts.addAll(
                     new RegionPart() {{
                         mirror = false;
                         x = 0f;
@@ -659,6 +659,7 @@ public class MLBlocks {
                         moveY = -4f;
                         layer = 110;
                     }}
+               }};
             );
 
             health = 1600;
