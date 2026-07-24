@@ -617,9 +617,11 @@ public class MLBlocks {
             shootCone = 360f;
             shootSound = MLSounds.missileLaunch;
             canOverdrive = false;
+            hasPower = true;
             shake = 1;
             rotateSpeed = 0;
             ammoPerShot = 8;
+            shootY = 0;
 
             drawer = new DrawTurret(){{
             parts.add(new RegionPart("-1") {{
@@ -628,7 +630,7 @@ public class MLBlocks {
                         y = 0f;
                         moveX = 4f;
                         moveY = 4f;
-                        layer = 110;
+                        layerOffset = 0.001f;
                     }},
             new RegionPart("-2") {{
                         mirror = false;
@@ -636,7 +638,7 @@ public class MLBlocks {
                         y = 0f;
                         moveX = -4f;
                         moveY = -4f;
-                        layer = 110;
+                        layerOffset = 0.001f;
                     }},
             new RegionPart("-3") {{
                         mirror = false;
@@ -644,7 +646,7 @@ public class MLBlocks {
                         y = 0f;
                         moveX = -4f;
                         moveY = 4f;
-                        layer = 110;
+                        layerOffset = 0.001f;
                     }},
             new RegionPart("-4") {{
                         mirror = false;
@@ -652,12 +654,12 @@ public class MLBlocks {
                         y = 0f;
                         moveX = 4f;
                         moveY = -4f;
-                        layer = 110;
+                        layerOffset = 0.001f;
                }});
             }};
 
             health = 1600;
-            coolant = consumeCoolant(5f);
+            consumePower(5f);
         }};
         //turret
         //！？强强？！

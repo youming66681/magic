@@ -36,7 +36,7 @@ public class MLSounds {
         missile = loadSound("missile.ogg");
         plasmadrop = loadSound("plasmadrop.ogg");
         laser = loadSound("laser.ogg");
-        missileLaunch = loadSound("laser.ogg");
+        missileLaunch = loadSound("missileLaunch.ogg");
     }
 
     private static Sound loadSound(String name) {
