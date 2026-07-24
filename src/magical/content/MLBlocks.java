@@ -805,7 +805,7 @@ public class MLBlocks {
                 }};
                 fragBullets = 2;
                 fragBullet = new BasicBulletType(16f, 1f){{
-                    hitSound = Sounds.laser;
+                    hitSound = MLSounds.laser;
                     width = 8f;
                     height = 8f;
                     frontColor = Color.valueOf("97B5EDFF");
