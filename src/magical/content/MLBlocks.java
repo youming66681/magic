@@ -135,7 +135,8 @@ public class MLBlocks {
             phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod, quantumFactory, chipMachine,
             BasicManufacturingPlant,
             //进阶科技
-            starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends;
+            starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
+            ;
 
     public static void load() {
 
@@ -288,6 +289,25 @@ public class MLBlocks {
             consumeItems(ItemStack.with(Items.metaglass, 1));
             consumeLiquid(Liquids.oil, 0.2f);
             consumePower(1.5f);
+        }};
+        //大塑钢
+        LargePlastaniumCompressor = new GenericCrafter("LargePlastaniumCompressor") {{
+            requirements(Category.crafting, ItemStack.with(new Object[]{Items.silicon, 100, Items.lead, 130, Items.graphite, 80, Items.titanium, 100, MLItems.logicChip, 15}));
+
+            hasItems = true;
+            liquidCapacity = 60f;
+            craftTime = 60f;
+            outputItem = new ItemStack(Items.plastanium, 2);
+            size = 3;
+            health = 640;
+            hasPower = hasLiquids = true;
+            craftEffect = Fx.formsmoke;
+            updateEffect = Fx.plasticburn;
+            drawer = new DrawMulti(new DrawDefault(), new DrawFade());
+
+            consumeLiquid(Liquids.oil, 0.25f);
+            consumePower(6f);
+            consumeItem(Items.titanium, 2);
         }};
         //factor
         //炮
@@ -451,6 +471,7 @@ public class MLBlocks {
                     hitEffect = despawnEffect = Fx.hitBulletColor;
                     hitColor = backColor = trailColor = Color.valueOf("d99d73");
                     frontColor = Color.valueOf("d99d73");
+                    buildingDamageMultiplier = 0.1f;
                 }},
                 Items.graphite, new BasicBulletType(8f, 30){{
                     hitSize = 2f;
@@ -467,6 +488,7 @@ public class MLBlocks {
                     hitEffect = despawnEffect = Fx.hitBulletColor;
                     hitColor = backColor = trailColor = Color.valueOf("b2c6d2");
                     frontColor = Color.valueOf("b2c6d2");
+                    buildingDamageMultiplier = 0.1f;
                 }},
                 Items.titanium, new BasicBulletType(8f, 40){{
                     hitSize = 2f;
@@ -484,6 +506,7 @@ public class MLBlocks {
                     hitEffect = despawnEffect = Fx.hitBulletColor;
                     hitColor = backColor = trailColor = Color.valueOf("8da1e3");
                     frontColor = Color.valueOf("8da1e3");
+                    buildingDamageMultiplier = 0.1f;
                 }}
         );
         reload = 25f;
@@ -528,6 +551,7 @@ public class MLBlocks {
                         smokeEffect = Fx.shootSmallFlame;
                         hitEffect   = Fx.flakExplosionBig;
                         hitSound    = MLSounds.explosion;
+                        buildingDamageMultiplier = 0.1f;
                     }},
             MLItems.phantomSteel, new BasicBulletType(16f, 60) {{
                 splashDamageRadius = 32f;
@@ -552,6 +576,7 @@ public class MLBlocks {
                 smokeEffect = Fx.shootSmallFlame;
                 hitEffect   = Fx.flakExplosionBig;
                 hitSound    = MLSounds.explosion;
+                buildingDamageMultiplier = 0.1f;
             }},
             MLItems.phantomTitaniumSteel, new BasicBulletType(16f, 90) {{
                 splashDamageRadius = 32f;
@@ -576,6 +601,7 @@ public class MLBlocks {
                 smokeEffect = Fx.shootSmallFlame;
                 hitEffect   = Fx.flakExplosionBig;
                 hitSound    = MLSounds.explosion;
+                buildingDamageMultiplier = 0.1f;
             }}
             );
             reload = 300f;
@@ -655,7 +681,64 @@ public class MLBlocks {
             }};
 
             health = 1600;
+            armor = 4;
             consumePower(5f);
+        }};
+        //幻晶
+        PhantomCrystal = new ItemTurret("PhantomCrystal"){{
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.acrylic,80 , MLItems.phantomTitaniumSteel, 60, MLItems.wingedStone, 90, MLItems.logicChip, 30}));
+            ammo(
+                    MLItems.wingedStone, new BasicBulletType(10f, 40){{
+                        hitSize = 16f;
+                        width = 12f;
+                        height = 21f;
+                        shootEffect = Fx.shootBig;
+                        ammoMultiplier = 1;
+                        reloadMultiplier = 1f;
+                        knockback = 0.3f;
+                        lifetime = 28f;
+                        status = StatusEffects.shocked;
+                        statusDuration = 60;
+                        lightningDamage = 10;
+                        lightning = 3;
+                        lightningLength = 12;
+                        lightningColor = Color.valueOf("9C88C3FF");
+                        hitEffect = despawnEffect = Fx.hitBulletColor;
+                        hitColor = backColor = Color.valueOf("9C88C3FF");
+                        frontColor = Color.valueOf("9C88C3FF");
+                        buildingDamageMultiplier = 0.1f;
+                    }},
+                    Items.titanium, new BasicBulletType(10f, 30){{
+                        hitSize = 16f;
+                        width = 12f;
+                        height = 21f;
+                        shootEffect = Fx.shootBig;
+                        ammoMultiplier = 1.2f;
+                        reloadMultiplier = 1f;
+                        pierceCap = 2;
+                        pierceBuilding = true;
+                        knockback = 0.6f;
+                        lifetime = 28f;
+                        hitEffect = despawnEffect = Fx.hitBulletColor;
+                        hitColor = backColor = Color.valueOf("8da1e3");
+                        frontColor = Color.valueOf("8da1e3");
+                        buildingDamageMultiplier = 0.1f;
+                    }}
+            );
+            reload = 9f;
+            recoilTime = reload / 2f;
+            ammoUseEffect = Fx.casing2;
+            range = 280f;
+            inaccuracy = 3f;
+            recoil = 3f;
+            shoot = new ShootAlternate(16f);
+            shake = 3f;
+            size = 3;
+            //shootSound = MLSounds.shootAlt;
+            armor = 5;
+            health = 2000;
+
+            coolant = consumeCoolant(0.4f);
         }};
         //turret
         //！？强强？！
