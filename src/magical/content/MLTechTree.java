@@ -106,10 +106,11 @@ public class MLTechTree {
                 /*星港造舰中心*/node(MLBlocks.starHarborShipbuildingCenter, () -> {
 
                 });
-                /*光降*/node(MLBlocks.LightDescends, () -> {
-                });
                 /*幻晶*/node(MLBlocks.PhantomCrystal, () -> {
-
+                    /*光降*/node(MLBlocks.LightDescends, () -> {
+                    });
+                    /*雷云*/node(MLBlocks.Thundercloud, () -> {
+                    });
                 });
             });
                  });

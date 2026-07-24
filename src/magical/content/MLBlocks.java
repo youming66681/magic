@@ -124,6 +124,7 @@ import mindustry.entities.effect.ParticleEffect;
 import arc.graphics.Color;
 import mindustry.world.draw.DrawTurret;
 import mindustry.entities.part.RegionPart;
+import mindustry.entities.part.HaloPart;
 
 public class MLBlocks {
 
@@ -135,8 +136,8 @@ public class MLBlocks {
             phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod, quantumFactory, chipMachine,
             BasicManufacturingPlant,
             //进阶科技
-            starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor
-            ;
+            starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
+            Thundercloud;
 
     public static void load() {
 
@@ -739,6 +740,152 @@ public class MLBlocks {
             health = 2000;
 
             coolant = consumeCoolant(0.4f);
+        }};
+        //雷云
+        Thundercloud = new PowerTurret("Thundercloud"){{
+            range = 240f;
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.acrylic,80 , MLItems.phantomTitaniumSteel, 60, MLItems.wingedStone, 90, Items.silicon, 75, MLItems.logicChip, 30}));
+            shootType = new BasicBulletType(8f, 50f){{
+                homingPower = 0.03f;
+                homingDelay = 1.5f;
+                homingRange = 190f;
+                lifetime = 30f;
+                width = 16f;
+                height = 32f;
+                hitSize = 28f;
+                splashDamageRadius = 24f;
+                splashDamage = 50f;
+                frontColor = Color.valueOf("97B5EDFF");
+                backColor = Color.valueOf("97B5EDFF");
+                trailLength = 4;
+                trailWidth = 2f;
+                trailColor = Color.valueOf("97B5EDFF");
+                ammoMultiplier = 1f;
+                hitSound = Sounds.plasmaboom;
+                hitEffect = new MultiEffect(
+                        new WaveEffect(){{
+                            lifetime = 30f;
+                            sizeFrom = 0f;
+                            sizeTo = 24f;
+                            strokeFrom = 0f;
+                            strokeTo = 2f;
+                            colorFrom = Color.valueOf("97B5EDFF");
+                            colorTo = Color.valueOf("97B5EDFF");
+                        }},
+                        new ParticleEffect(){{
+                            particles = 8;
+                            sizeFrom = 4f;
+                            sizeTo = 0f;
+                            length = 24f;
+                            baseLength = 0f;
+                            interp = Interp.pow10Out;
+                            sizeInterp = Interp.pow10In;
+                            lifetime = 30f;
+                            colorFrom = Color.valueOf("97B5EDFF");
+                            colorTo = Color.valueOf("97B5EDFF");
+                        }}
+                );
+                despawnEffect = Fx.none;
+                smokeEffect = Fx.smokeCloud;
+                trailChance = 1f;
+                trailInterval = 20f;
+                trailEffect = new ParticleEffect(){{
+                    particles = 9;
+                    length = 9f;
+                    baseLength = 0f;
+                    lifetime = 9f;
+                    sizeFrom = 3f;
+                    sizeTo = 0f;
+                    colorFrom = Color.valueOf("97B5EDFF");
+                    colorTo = Color.valueOf("97B5EDFF");
+                }};
+                fragBullets = 2;
+                fragBullet = new BasicBulletType(16f, 1f){{
+                    hitSound = Sounds.laser;
+                    width = 8f;
+                    height = 8f;
+                    frontColor = Color.valueOf("97B5EDFF");
+                    backColor = Color.valueOf("97B5EDFF");
+                    hittable = false;
+                    reflectable = false;
+                    collides = false;
+                    absorbable = false;
+                    lifetime = 12f;
+                    shootEffect = Fx.none;
+                    smokeEffect = Fx.none;
+                    hitEffect = Fx.none;
+                    fragBullets = 1;
+                    fragBullet = new LaserBulletType(40f){{
+                        hitSound = Sounds.laser;
+                        lifetime = 32f;
+                        width = 16f;
+                        length = 72f;
+                        lightningSpacing = 5f;
+                        lightningLength = 4;
+                        lightningDelay = 0.4f;
+                        lightningLengthRand = 2;
+                        lightningAngleRand = 4;
+                        lightningDamage = 20f;
+                        lightningColor =
+                        Color.valueOf("97B5EDFF");
+                        collidesTeam = true;
+                        hitEffect = Fx.none;
+                        despawnEffect = Fx.none;
+                        colors = new Color[]{
+                                Color.valueOf("97B5EDFF"),
+                                Color.valueOf("97B5EDFF"),
+                                Color.valueOf("97B5EDFF")
+                        };
+                    }};
+                }};
+            }};
+            drawer = new DrawMulti(
+                    new DrawTurret(){{
+                        parts.add(
+                                new HaloPart(){{
+                                    sides = 4;
+                                    shapes = 1;
+                                    y = 8f;
+                                    color = Color.valueOf("97B5EDFF");
+                                    colorTo = Color.valueOf("97B5EDFF");
+                                    tri = false;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1f;
+                                    radius = 0f;
+                                    radiusTo = 4f;
+                                    haloRadius = 0f;
+                                    haloRotateSpeed = 1f;
+                                    layer = 110f;
+                                }}
+                        );
+                    }}
+            );
+            shoot = new ShootBarrel(){{
+                shots = 7;
+                shotDelay = 1f;
+                barrels = new float[]{
+                        0,0,30,
+                        0,0,20,
+                        0,0,10,
+                        0,0,0,
+                        0,0,-10,
+                        0,0,-20,
+                        0,0,-30
+                };
+            }};
+        }};
+            rotateSpeed = 3f;
+            reload = 300f;
+            ammoUseEffect = Fx.casing3Double;
+            recoil = 1f;
+            shake = 1f;
+            size = 3;
+            shootSound = MLSounds.lasercharge2;
+            armor = 3;
+            health = 2100;
+            coolant = consumeCoolant(0.3f);
+            consumePower(16f);
         }};
         //turret
         //！？强强？！
