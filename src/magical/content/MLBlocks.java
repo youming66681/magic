@@ -621,8 +621,7 @@ public class MLBlocks {
             rotateSpeed = 0;
             ammoPerShot = 8;
 
-            drawer = new DrawMulti(
-                    new RegionPart("-1"){{
+            parts.add(new RegionPart("-1") {{
                         mirror = false;
                         x = 0f;
                         y = 0f;
@@ -630,7 +629,7 @@ public class MLBlocks {
                         moveY = 4f;
                         layer = 110;
                     }},
-                    new RegionPart("-2"){{
+            new RegionPart("-2") {{
                         mirror = false;
                         x = 0f;
                         y = 0f;
@@ -638,7 +637,7 @@ public class MLBlocks {
                         moveY = -4f;
                         layer = 110;
                     }},
-                    new RegionPart("-3"){{
+            new RegionPart("-3") {{
                         mirror = false;
                         x = 0f;
                         y = 0f;
@@ -646,15 +645,14 @@ public class MLBlocks {
                         moveY = 4f;
                         layer = 110;
                     }},
-                    new RegionPart("-4"){{
+            new RegionPart("-4") {{
                         mirror = false;
                         x = 0f;
                         y = 0f;
                         moveX = 4f;
                         moveY = -4f;
                         layer = 110;
-                    }}
-            );
+                    }});
 
             health = 1600;
             coolant = consumeCoolant(5f);
