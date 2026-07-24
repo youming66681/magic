@@ -129,7 +129,7 @@ public class MLBlocks {
             phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod, quantumFactory, chipMachine,
             BasicManufacturingPlant,
             //进阶科技
-            starHarborShipbuildingCenter, generalAssemblyPlant;
+            starHarborShipbuildingCenter, baseStationCore;
 
     public static void load() {
 
@@ -142,9 +142,21 @@ public class MLBlocks {
             health = 500;
             itemCapacity = 2000;
             size = 2;
-            thrusterLength = 20f;
 
             unitCapModifier = 5;
+
+        }};
+        //基站核心
+        baseStationCore = new CoreBlock("baseStationCore") {{
+            requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 5000, Items.graphite, 150, Items.silicon, 2000, MLItems.phantomTitaniumSteel, 1000, MLItems.mysticCrystal, 1000, MLItems.logicChip, 500,}));
+
+            unitType = MLUnitTypes.Popular;
+            health = 5000;
+            itemCapacity = 12000;
+            armor = 5;
+            size = 2;
+
+            unitCapModifier = 24;
 
         }};
         //强强
@@ -604,6 +616,7 @@ public class MLBlocks {
                     new UnitType[]{MLUnitTypes.ripple, MLUnitTypes.Turbulence}
             );
         }};
+        //星港造舰中心
         starHarborShipbuildingCenter = new magical.content.FlexAssembler("starHarborShipbuildingCenter"){{
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 300, Items.graphite, 150, Items.silicon, 120, MLItems.phantomTitaniumSteel, 60, MLItems.mysticCrystal, 90}));
             size = 7;

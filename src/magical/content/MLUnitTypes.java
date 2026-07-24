@@ -45,7 +45,9 @@ public class MLUnitTypes {
     Breeze, SlantingWind, Gale,
     //海
     //一级
-    StillWater, ripple, Turbulence;
+    StillWater, ripple, Turbulence,
+    //核心机
+    Popular;
 
     public static void load(){
         //幻境陆军
@@ -179,12 +181,12 @@ public class MLUnitTypes {
                     ejectEffect = Fx.casing3;
                     layerOffset = 0.001f;
                     shootSound = MLSounds.shootArtillery;
-                    bullet = new BasicBulletType(12, 60) {{
+                    bullet = new BasicBulletType(12, 80) {{
                         lifetime = 20;
                         width = 12;
                         height = 24;
                         splashDamageRadius = 32;
-                        splashDamage = 60;
+                        splashDamage = 80;
                         hitEffect = despawnEffect = MLFx.Explosion3;
                         hitSound = MLSounds.explosion;
                     }};
@@ -343,7 +345,7 @@ public class MLUnitTypes {
                 ejectEffect = Fx.casing3;
                 layerOffset = 0.001f;
                 shootSound = MLSounds.shootArtillery;
-                bullet = new BasicBulletType(8, 30) {{
+                bullet = new BasicBulletType(8, 20) {{
                     lifetime = 25;
                     width = 8;
                     height = 16;
@@ -377,12 +379,12 @@ public class MLUnitTypes {
                 ejectEffect = Fx.casing2;
                 layerOffset = 0.001f;
                 shootSound = MLSounds.shootArtillery;
-                bullet = new BasicBulletType(8, 30) {{
+                bullet = new BasicBulletType(8, 35) {{
                     lifetime = 30;
                     width = 8;
                     height = 16;
                     splashDamageRadius = 16;
-                    splashDamage = 30;
+                    splashDamage = 35;
                     hitEffect = despawnEffect = MLFx.Explosion2;
                     hitSound = MLSounds.explosion;
                 }};
@@ -413,17 +415,56 @@ public class MLUnitTypes {
                 shootSound = MLSounds.missile;
                 shoot.shots = 30;
                 shoot.shotDelay = 3;
-                bullet = new BasicBulletType(14, 30) {{
+                bullet = new BasicBulletType(14, 25) {{
                     lifetime = 20;
                     width = 8;
                     height = 16;
                     splashDamageRadius = 32;
-                    splashDamage = 30;
+                    splashDamage = 25;
                     hitEffect = despawnEffect = MLFx.Explosion3;
                     hitSound = MLSounds.explosion;
                     trailColor = Color.white;
                     trailLength = 6;
                     trailWidth = 4;
+                }};
+            }});
+        }};
+        //核心机
+        //风行
+        Popular = new UnitType("Popular") {{
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            lowAltitude = true;
+            rotateSpeed = 8f;
+            speed = 4.2f;
+            drag = 0.12f;
+            accel = 0.02f;
+            hitSize = 28;
+            health = 220;
+            armor = 2;
+            itemCapacity = 0;
+            engineOffset = 12;
+            engineSize = 3f;
+            mineSpeed = 7.5f;
+            mineTier = 2f;
+            itemCapacity = 60;
+            buildSpeed = 0.9;
+            weapons.add(new Weapon("magic-Popular0") {{
+                shootY = 0f;
+                rotate = false;
+                mirror = false;
+                reload = 30;
+                x = 0;
+                y = 0;
+                shootSound = MLSounds.laser;
+                ejectEffect = Fx.none;
+                layerOffset = 0.001f;
+                bullet = new LaserBulletType(25f) {{
+                    healPercent = 2.5;
+                    width = 16;
+                    height = width * 8;
+                    colors = new Color[]{Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF")};
+                    hitEffect = despawnEffect = MLFx.smallElectricDetonation;
                 }};
             }});
         }};
