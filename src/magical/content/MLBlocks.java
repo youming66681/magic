@@ -28,6 +28,7 @@ import mindustry.entities.Sized;
 import mindustry.entities.UnitSorts;
 import mindustry.entities.Units;
 import mindustry.entities.bullet.BasicBulletType;
+import mindustry.entities.bullet.MissileBulletType;
 import mindustry.entities.bullet.BulletType;
 import mindustry.entities.bullet.PointLaserBulletType;
 import mindustry.entities.bullet.ShrapnelBulletType;
@@ -119,6 +120,10 @@ import mindustry.world.blocks.units.UnitFactory.UnitPlan;
 import arc.struct.Seq;
 import mindustry.type.PayloadStack;
 import mindustry.world.blocks.storage.CoreBlock;
+import mindustry.entities.effect.ParticleEffect;
+import arc.graphics.Color;
+import mindustry.world.draw.DrawTurret;
+import mindustry.world.draw.RegionPart;
 
 public class MLBlocks {
 
@@ -130,7 +135,7 @@ public class MLBlocks {
             phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod, quantumFactory, chipMachine,
             BasicManufacturingPlant,
             //进阶科技
-            starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster;
+            starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends;
 
     public static void load() {
 
@@ -495,6 +500,169 @@ public class MLBlocks {
 
         health = 1120;
         coolant = consumeCoolant(0.3f);
+        }};
+        //光降
+        LightDescends = new ItemTurret("LightDescends"){{
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 120, Items.silicon, 80, Items.titanium, 90, Items.phantomTitaniumSteel, 75, Items.logicChip, 60,}));
+            ammo(
+                    Items.graphite, = new MissileBulletType(4f, 30) {{
+                        splashDamageRadius = 32f;
+                        splashDamage = 30f;
+                        knockback = 1f;
+                        speed = 16f;
+                        damage = 30f;
+                        lifetime = 45f;
+                        homingPower = 0.3f;
+                        sprite = "magic-导弹";
+                        frontColor = Color.valueOf("E3E3E3FF");
+                        backColor  = Color.valueOf("FF5B5BFF");
+                        trailLength = 15;
+                        trailWidth  = 5;
+                        trailColor  = Color.valueOf("E3E3E3");
+                        homingDelay = 9f;
+                        homingRange = 2400f;
+                        width  = 32f;
+                        height = 64f;
+                        hitShake = 1f;
+                        ammoMultiplier = 1f;
+                        smokeEffect = Fx.shootSmallFlame;
+                        hitEffect   = Fx.flakExplosionBig;
+                        hitSound    = MLSounds.explosion;
+                    }};
+            MLItems.phantomSteel, = new MissileBulletType(4f, 60) {{
+                splashDamageRadius = 32f;
+                splashDamage = 60f;
+                knockback = 2f;
+                speed = 16f;
+                damage = 60f;
+                lifetime = 45f;
+                homingPower = 0.6f;
+                sprite = "magic-导弹";
+                frontColor = Color.valueOf("97B5EDFF");
+                backColor  = Color.valueOf("97B5EDFF");
+                trailLength = 15;
+                trailWidth  = 5;
+                trailColor  = Color.valueOf("97B5EDFF");
+                homingDelay = 6f;
+                homingRange = 2400f;
+                width  = 32f;
+                height = 64f;
+                hitShake = 1f;
+                ammoMultiplier = 1f;
+                smokeEffect = Fx.shootSmallFlame;
+                hitEffect   = Fx.flakExplosionBig;
+                hitSound    = MLSounds.explosion;
+            }};
+            MLItems.phantomTitaniumSteel, = new MissileBulletType(4f, 90) {{
+                splashDamageRadius = 32f;
+                splashDamage = 90f;
+                knockback = 4f;
+                speed = 16f;
+                damage = 90f;
+                lifetime = 45f;
+                homingPower = 0.9f;
+                sprite = "magic-导弹";
+                frontColor = Color.valueOf("46649AFF");
+                backColor  = Color.valueOf("46649AFF");
+                trailLength = 15;
+                trailWidth  = 5;
+                trailColor  = Color.valueOf("46649AFF");
+                homingDelay = 3f;
+                homingRange = 2400f;
+                width  = 32f;
+                height = 64f;
+                hitShake = 1f;
+                ammoMultiplier = 1f;
+                smokeEffect = Fx.shootSmallFlame;
+                hitEffect   = Fx.flakExplosionBig;
+                hitSound    = MLSounds.explosion;
+            }};
+            );
+            reload = 300f;
+            recoilTime = 0;
+            ammoUseEffect =  new ParticleEffect() {{
+                particles = 16;
+                sizeFrom = 4f;
+                sizeTo = 0f;
+                length = 60f;
+                lifetime = 60f;
+                lightOpacity = 0f;
+                colorFrom = Color.white;
+                colorTo = Color.white;
+            }};
+            range = 720f;
+            inaccuracy = 0f;
+            recoil = 3f;
+            customShadow = false
+            maxAmmo = 40;
+            cooldownTime = 60;
+            solid = false;
+            underBullets = true;
+            shoot = new ShootBarrel() {{
+                shots = 8;
+                shotDelay = 4f;
+                barrels = new float[]{
+                        8f, 8f, 0f,
+                        8f, 8f, -90f,
+                        8f, -8f, 180f,
+                        8f, -8f, -90f,
+                        -8f, -8f, 90f,
+                        -8f, -8f, 180f,
+                        -8f, 8f, 0f,
+                        -8f, 8f, 90f
+                };
+            }};
+            shake = 2f;
+            size = 3;
+            shootCone = 360f;
+            shootSound = MLSounds.missileLaunch;
+            canOverdrive = false;
+            shake = 1;
+            rotateSpeed = 0;
+            ammoPerShot = 8;
+
+            drawer = new DrawTurret();
+            drawer.parts.addAll(
+                    new RegionPart() {{
+                        mirror = false;
+                        x = 0f;
+                        y = 0f;
+                        suffix = "magic-1";
+                        moveX = 4f;
+                        moveY = 4f;
+                        layer = 110;
+                    }},
+                    new RegionPart() {{
+                        mirror = false;
+                        x = 0f;
+                        y = 0f;
+                        suffix = "magic-2";
+                        moveX = -4f;
+                        moveY = -4f;
+                        layer = 110;
+                    }},
+                    new RegionPart() {{
+                        mirror = false;
+                        x = 0f;
+                        y = 0f;
+                        suffix = "magic-3";
+                        moveX = -4f;
+                        moveY = 4f;
+                        layer = 110;
+                    }},
+                    new RegionPart() {{
+                        mirror = false;
+                        x = 0f;
+                        y = 0f;
+                        suffix = "magic-4";
+                        moveX = 4f;
+                        moveY = -4f;
+                        layer = 110;
+                    }}
+            );
+
+            health = 1600;
+            coolant = consumeCoolant(5f);
         }};
         //turret
         //！？强强？！
