@@ -764,7 +764,7 @@ public class MLBlocks {
                 trailLength = 4;
                 trailWidth = 2f;
                 trailColor = Color.valueOf("97B5EDFF");
-                ammoMultiplier = 1f;
+                ammoMultiplier =  1f;
                 hitSound = MLSounds.plasmadrop;
                 hitEffect = new MultiEffect(
                         new WaveEffect(){{
