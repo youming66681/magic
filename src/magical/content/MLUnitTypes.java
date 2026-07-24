@@ -437,14 +437,14 @@ public class MLUnitTypes {
             lowAltitude = true;
             rotateSpeed = 8f;
             speed = 4.2f;
-            drag = 0.12f;
-            accel = 0.02f;
+            drag = 0.08f;
+            accel = 0.08f;
             hitSize = 28;
             health = 220;
             armor = 2;
             itemCapacity = 0;
-            engineOffset = 12;
-            engineSize = 3f;
+            engineOffset = 16;
+            engineSize = 4f;
             mineSpeed = 7.5f;
             mineTier = 2;
             itemCapacity = 60;
@@ -465,6 +465,7 @@ public class MLUnitTypes {
                     length = width * 8;
                     colors = new Color[]{Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF")};
                     hitEffect = despawnEffect = MLFx.smallElectricDetonation;
+                    smokeEffect = Fx.none;
                 }};
             }});
         }};

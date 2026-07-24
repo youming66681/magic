@@ -149,13 +149,13 @@ public class MLBlocks {
         }};
         //基站核心
         baseStationCore = new CoreBlock("baseStationCore") {{
-            requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 5000, Items.graphite, 150, Items.silicon, 2000, MLItems.phantomTitaniumSteel, 1000, MLItems.mysticCrystal, 1000, MLItems.logicChip, 500,}));
+            requirements(Category.effect, ItemStack.with(new Object[]{MLItems.phantomSteel, 5000, Items.silicon, 2000, MLItems.phantomTitaniumSteel, 1000, MLItems.mysticCrystal, 1000, MLItems.logicChip, 500,}));
 
             unitType = MLUnitTypes.Popular;
             health = 5000;
             itemCapacity = 12000;
             armor = 5;
-            size = 2;
+            size = 4;
 
             unitCapModifier = 24;
 
