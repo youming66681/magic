@@ -731,7 +731,7 @@ public class MLBlocks {
             range = 280f;
             inaccuracy = 3f;
             recoil = 3f;
-            shoot = new ShootAlternate(16f);
+            shoot = new ShootAlternate(12f);
             shake = 3f;
             size = 3;
             //shootSound = MLSounds.shootAlt;
