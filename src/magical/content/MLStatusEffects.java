@@ -18,7 +18,7 @@ public class MLStatusEffects{
     public static StatusEffect blitz;
 
     public static void load(){
-        blitz = new StatusEffect("闪击"){{
+        blitz = new StatusEffect("blitz"){{
 
             damageMultiplier = 1.2f;
             speedMultiplier = 2.4f;
