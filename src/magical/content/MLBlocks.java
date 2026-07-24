@@ -303,7 +303,7 @@ public class MLBlocks {
             hasPower = hasLiquids = true;
             craftEffect = Fx.formsmoke;
             updateEffect = Fx.plasticburn;
-            drawer = new DrawMulti(new DrawDefault(), new DrawFade());
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
 
             consumeLiquid(Liquids.oil, 0.25f);
             consumePower(6f);
