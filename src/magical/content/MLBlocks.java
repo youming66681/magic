@@ -659,8 +659,8 @@ public class MLBlocks {
                         moveY = -4f;
                         layer = 110;
                     }}
+                );
                }};
-            );
 
             health = 1600;
             coolant = consumeCoolant(5f);
