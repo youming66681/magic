@@ -621,6 +621,7 @@ public class MLBlocks {
             rotateSpeed = 0;
             ammoPerShot = 8;
 
+            drawer = new DrawTurret(){{
             parts.add(new RegionPart("-1") {{
                         mirror = false;
                         x = 0f;
@@ -652,7 +653,8 @@ public class MLBlocks {
                         moveX = 4f;
                         moveY = -4f;
                         layer = 110;
-                    }});
+               }});
+            }};
 
             health = 1600;
             coolant = consumeCoolant(5f);
