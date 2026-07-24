@@ -874,7 +874,6 @@ public class MLBlocks {
                         0,0,-30
                 };
             }};
-        }};
             rotateSpeed = 3f;
             reload = 300f;
             ammoUseEffect = Fx.casing3Double;
