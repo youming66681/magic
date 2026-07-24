@@ -519,7 +519,7 @@ public class MLBlocks {
                         trailLength = 15;
                         trailWidth  = 5;
                         trailColor  = Color.valueOf("E3E3E3");
-                        homingDelay = 9f;
+                        homingDelay = 3f;
                         homingRange = 2400f;
                         width  = 32f;
                         height = 64f;
@@ -543,7 +543,7 @@ public class MLBlocks {
                 trailLength = 15;
                 trailWidth  = 5;
                 trailColor  = Color.valueOf("97B5EDFF");
-                homingDelay = 6f;
+                homingDelay = 2f;
                 homingRange = 2400f;
                 width  = 32f;
                 height = 64f;
@@ -567,7 +567,7 @@ public class MLBlocks {
                 trailLength = 15;
                 trailWidth  = 5;
                 trailColor  = Color.valueOf("46649AFF");
-                homingDelay = 3f;
+                homingDelay = 1f;
                 homingRange = 2400f;
                 width  = 32f;
                 height = 64f;
@@ -630,7 +630,6 @@ public class MLBlocks {
                         y = 0f;
                         moveX = 4f;
                         moveY = 4f;
-                        layerOffset = 0.001f;
                     }},
             new RegionPart("-2") {{
                         mirror = false;
@@ -638,7 +637,6 @@ public class MLBlocks {
                         y = 0f;
                         moveX = -4f;
                         moveY = -4f;
-                        layerOffset = 0.001f;
                     }},
             new RegionPart("-3") {{
                         mirror = false;
@@ -646,7 +644,6 @@ public class MLBlocks {
                         y = 0f;
                         moveX = -4f;
                         moveY = 4f;
-                        layerOffset = 0.001f;
                     }},
             new RegionPart("-4") {{
                         mirror = false;
@@ -654,7 +651,6 @@ public class MLBlocks {
                         y = 0f;
                         moveX = 4f;
                         moveY = -4f;
-                        layerOffset = 0.001f;
                }});
             }};
 
