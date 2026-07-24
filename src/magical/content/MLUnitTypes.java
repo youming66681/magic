@@ -446,9 +446,9 @@ public class MLUnitTypes {
             engineOffset = 12;
             engineSize = 3f;
             mineSpeed = 7.5f;
-            mineTier = 2f;
+            mineTier = 2;
             itemCapacity = 60;
-            buildSpeed = 0.9;
+            buildSpeed = 0.9f;
             weapons.add(new Weapon("magic-Popular0") {{
                 shootY = 0f;
                 rotate = false;
@@ -460,9 +460,9 @@ public class MLUnitTypes {
                 ejectEffect = Fx.none;
                 layerOffset = 0.001f;
                 bullet = new LaserBulletType(25f) {{
-                    healPercent = 2.5;
+                    healPercent = 2.5f;
                     width = 16;
-                    height = width * 8;
+                    length = width * 8;
                     colors = new Color[]{Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF")};
                     hitEffect = despawnEffect = MLFx.smallElectricDetonation;
                 }};

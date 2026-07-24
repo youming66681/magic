@@ -19,6 +19,7 @@ public class MLSounds {
     public static Sound shootArtillerySmall;
     public static Sound missile;
     public static Sound plasmadrop;
+    public static Sound laser;
 
 
     public static void load() {
@@ -33,6 +34,7 @@ public class MLSounds {
         shootArtillerySmall = loadSound("shootArtillerySmall.ogg");
         missile = loadSound("missile.ogg");
         plasmadrop = loadSound("plasmadrop.ogg");
+        laser = loadSound("laser.ogg");
     }
 
     private static Sound loadSound(String name) {
@@ -52,5 +54,6 @@ public class MLSounds {
         shootArtillerySmall = new Sound();
         missile = new Sound();
         plasmadrop = new Sound();
+        laser = new Sound();
     }
 }
