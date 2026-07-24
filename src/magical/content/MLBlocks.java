@@ -125,6 +125,10 @@ import arc.graphics.Color;
 import mindustry.world.draw.DrawTurret;
 import mindustry.entities.part.RegionPart;
 import mindustry.entities.part.HaloPart;
+import mindustry.entities.Effect;
+import mindustry.entities.effect.MultiEffect;
+import mindustry.entities.effect.WaveEffect;
+import mindustry.entities.bullet.LaserBulletType;
 
 public class MLBlocks {
 
@@ -761,7 +765,7 @@ public class MLBlocks {
                 trailWidth = 2f;
                 trailColor = Color.valueOf("97B5EDFF");
                 ammoMultiplier = 1f;
-                hitSound = Sounds.plasmaboom;
+                hitSound = MLSounds.plasmadrop;
                 hitEffect = new MultiEffect(
                         new WaveEffect(){{
                             lifetime = 30f;
@@ -816,7 +820,7 @@ public class MLBlocks {
                     hitEffect = Fx.none;
                     fragBullets = 1;
                     fragBullet = new LaserBulletType(40f){{
-                        hitSound = Sounds.laser;
+                        hitSound = MLSounds.laser;
                         lifetime = 32f;
                         width = 16f;
                         length = 72f;

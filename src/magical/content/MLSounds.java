@@ -21,6 +21,7 @@ public class MLSounds {
     public static Sound plasmadrop;
     public static Sound laser;
     public static Sound missileLaunch;
+    public static Sound lasercharge2;
 
 
     public static void load() {
@@ -37,6 +38,7 @@ public class MLSounds {
         plasmadrop = loadSound("plasmadrop.ogg");
         laser = loadSound("laser.ogg");
         missileLaunch = loadSound("missileLaunch.ogg");
+        lasercharge2 = loadSound("lasercharge2.ogg");
     }
 
     private static Sound loadSound(String name) {
@@ -58,5 +60,6 @@ public class MLSounds {
         plasmadrop = new Sound();
         laser = new Sound();
         missileLaunch = new Sound();
+        lasercharge2 = new Sound();
     }
 }
