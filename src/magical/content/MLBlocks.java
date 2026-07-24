@@ -505,7 +505,7 @@ public class MLBlocks {
         LightDescends = new ItemTurret("LightDescends"){{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 120, Items.silicon, 80, Items.titanium, 90, Items.phantomTitaniumSteel, 75, Items.logicChip, 60,}));
             ammo(
-                    Items.graphite, = new BasicBulletType(16f, 30) {{
+                    Items.graphite, new BasicBulletType(16f, 30) {{
                         splashDamageRadius = 32f;
                         splashDamage = 30f;
                         knockback = 1f;
@@ -529,7 +529,7 @@ public class MLBlocks {
                         hitEffect   = Fx.flakExplosionBig;
                         hitSound    = MLSounds.explosion;
                     }},
-            MLItems.phantomSteel, = new BasicBulletType(16f, 60) {{
+            MLItems.phantomSteel, new BasicBulletType(16f, 60) {{
                 splashDamageRadius = 32f;
                 splashDamage = 60f;
                 knockback = 2f;
@@ -553,7 +553,7 @@ public class MLBlocks {
                 hitEffect   = Fx.flakExplosionBig;
                 hitSound    = MLSounds.explosion;
             }},
-            MLItems.phantomTitaniumSteel, = new BasicBulletType(16f, 90) {{
+            MLItems.phantomTitaniumSteel, new BasicBulletType(16f, 90) {{
                 splashDamageRadius = 32f;
                 splashDamage = 90f;
                 knockback = 4f;
