@@ -278,7 +278,7 @@ public class MLBlocks {
             hasPower = true;
             itemCapacity = 15;
             liquidCapacity = 20;
-            drawer = new DrawMulti(new DrawDefault(), new DrawFlame(), new DrawRegion("-bottom"), new DrawLiquidTile(Liquids.oil));
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawFlame(), new DrawLiquidTile(Liquids.oil));
 
             consumeItems(ItemStack.with(Items.metaglass, 1));
             consumeLiquid(Liquids.oil, 0.2f);
