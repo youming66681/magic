@@ -14,18 +14,18 @@ import mindustry.entities.effect.ParticleEffect;
 
 import static mindustry.Vars.*;
 
-public class MLStatusEffects{
+public class MLStatusEffects {
     public static StatusEffect blitz;
 
-    public static void load(){
-        blitz = new StatusEffect("blitz"){{
+    public static void load() {
+        blitz = new StatusEffect("blitz") {{
 
             damageMultiplier = 1.2f;
             speedMultiplier = 2.4f;
             reloadMultiplier = 1.2f;
             healthMultiplier = 0.8f;
             effectChance = 0.4f;
-            effect = new ParticleEffect(){{
+            effect = new ParticleEffect() {{
                 particles = 1;
                 length = 40f;
                 lifetime = 60f;
@@ -39,6 +39,5 @@ public class MLStatusEffects{
                 cone = 360f;
             }};
         }};
-    }
     }
 }
