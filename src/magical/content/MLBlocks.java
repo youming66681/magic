@@ -528,7 +528,7 @@ public class MLBlocks {
                         smokeEffect = Fx.shootSmallFlame;
                         hitEffect   = Fx.flakExplosionBig;
                         hitSound    = MLSounds.explosion;
-                    }};
+                    }},
             MLItems.phantomSteel, = new BasicBulletType(16f, 60) {{
                 splashDamageRadius = 32f;
                 splashDamage = 60f;
@@ -552,7 +552,7 @@ public class MLBlocks {
                 smokeEffect = Fx.shootSmallFlame;
                 hitEffect   = Fx.flakExplosionBig;
                 hitSound    = MLSounds.explosion;
-            }};
+            }},
             MLItems.phantomTitaniumSteel, = new BasicBulletType(16f, 90) {{
                 splashDamageRadius = 32f;
                 splashDamage = 90f;
