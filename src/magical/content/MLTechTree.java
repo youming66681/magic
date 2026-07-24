@@ -107,6 +107,8 @@ public class MLTechTree {
 
                 });
                 /*光降*/node(MLBlocks.LightDescends, () -> {
+                });
+                /*幻晶*/node(MLBlocks.PhantomCrystal, () -> {
 
                 });
             });
