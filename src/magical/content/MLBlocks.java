@@ -576,7 +576,7 @@ public class MLBlocks {
                 smokeEffect = Fx.shootSmallFlame;
                 hitEffect   = Fx.flakExplosionBig;
                 hitSound    = MLSounds.explosion;
-            }};
+            }}
             );
             reload = 300f;
             recoilTime = 0;
