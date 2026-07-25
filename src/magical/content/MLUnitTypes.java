@@ -44,7 +44,7 @@ public class MLUnitTypes {
     //一级
     drizzle, Drizzle, drizzlingRain,
     //二级
-    war,
+    war, BeaconFire, War,
     //空
     //一级
     Breeze, SlantingWind, Gale,
@@ -299,9 +299,9 @@ public class MLUnitTypes {
                             Color.valueOf("D86E56FF"),
                             Color.valueOf("FFA05CFF"),
                             Color.white
-                    };
-                }};
-            }});
+                    }};
+                }});
+            }};
             War = new UnitType("War") {{
                 constructor = UnitTypes.stell.constructor;
                 canDrown = true;
@@ -365,9 +365,9 @@ public class MLUnitTypes {
                                 frontColor = Color.valueOf("FEEBB3FF");
                                 width = 16f;
                                 height = 32f;
-                            };
-                        }};
-                    }});
+                            }};
+                }});
+            }};
         //幻境空军
         //一级
         Breeze = new UnitType("Breeze") {{
