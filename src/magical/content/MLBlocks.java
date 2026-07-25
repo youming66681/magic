@@ -1051,7 +1051,6 @@ public class MLBlocks {
                     }};
                 }};
                 drawer = new DrawTurret() {{
-                    parts.add(
                             parts.add(
                                     new HaloPart() {{
                                         sides = 4;
@@ -1085,7 +1084,6 @@ public class MLBlocks {
                                         haloRotateSpeed = 2f;
                                         layer = 110f;
                                     }});
-                        );
                 }};
             }};
         //turret
