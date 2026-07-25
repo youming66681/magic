@@ -972,16 +972,16 @@ public class MLBlocks {
                         colorFrom = Color.valueOf("FEEBB3FF");
                         colorTo = Color.valueOf("FEEBB3FF");
                     }};
-                    fragBullets = 6;
-                    fragBullet = new BasicBulletType(16f, 120f) {{
+                    fragBullets = 4;
+                    fragBullet = new BasicBulletType(16f, 60f) {{
                         width = 32f;
                         height = 32f;
                         lifetime = 16f;
                         shrinkY = 0f;
                         homingRange = 240f;
-                        homingPower = 0.2f;
+                        homingPower = 0.6f;
                         splashDamageRadius = 24f;
-                        splashDamage = 80f;
+                        splashDamage = 40f;
                         hitSound = MLSounds.plasmaboom;
                         spin = 6f;
                         status = StatusEffects.slow;
@@ -1038,7 +1038,7 @@ public class MLBlocks {
             reload = 150f;
             shake = 9f;
             liquidCapacity = 60;
-            shootEffect = Fx.instShoot;
+            shootEffect = Fx.none;
             smokeEffect = Fx.smeltsmoke;
             size = 3;
             armor = 6;
