@@ -57,9 +57,6 @@ public class MLUnitTypes {
     Popular;
 
     public static void load(){
-        @Override
-        public void drawMech(Mechc mech) {
-        }
         //幻境陆军
         //一级
         drizzle = new UnitType("drizzle") {{
