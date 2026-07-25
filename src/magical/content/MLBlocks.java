@@ -149,7 +149,7 @@ public class MLBlocks {
         //我超，盒
         //基座核心
         baseCore = new baseCore("baseCore") {{
-            requirements(Category.effect, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 200, MLItems.mysticCrystal, 200, MLItems.phantomLuminousAlloy, 100}));
+            requirements(Category.effect, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 200, MLItems.mysticCrystal, 200, MLItems.nanoCarbonAlloy, 100}));
 
             unitType = UnitTypes.alpha;
             health = 500;
@@ -1116,7 +1116,22 @@ public class MLBlocks {
             health = 200 * whm * 4;
             size = 2;
         }};
-
+        wingWall = new Wall("wingWall"){{
+            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.wingedStone, 6}));
+            health = 240 * whm;
+            lightningChance = 0.32f;
+            lightningDamage = 32;
+            lightningLength = 16;
+            lightningColor = Color.valueOf("9C88C3FF");
+        }};
+        LargeWingWall = new Wall("LargeWingWall"){{
+            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.wingedStone, 6 * whm}));
+            health = 240 * whm * 4;
+            lightningChance = 0.32f;
+            lightningDamage = 32;
+            lightningLength = 16;
+            lightningColor = Color.valueOf("9C88C3FF");
+        }};
         //wall
         //出来了，出来了
         phantomSteelDrill  = new Drill("phantomSteelDrill"){{
