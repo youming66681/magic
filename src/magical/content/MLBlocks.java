@@ -1051,7 +1051,7 @@ public class MLBlocks {
                     }};
                 }};
 
-            /*drawer = new DrawMulti(
+            drawer = new DrawMulti(
                     new DrawTurret(){{
                         parts.add(
                                     new HaloPart() {{
@@ -1088,7 +1088,7 @@ public class MLBlocks {
                                     }}
                         );
                     }}
-            );*/
+            );
             }};
         //turret
         //！？强强？！
