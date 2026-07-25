@@ -969,44 +969,6 @@ public class MLBlocks {
 
             consumePower(12f);
 
-            drawer = new DrawMulti(
-                    new DrawTurret(){{
-                        parts.add(
-                                new HaloPart(){{
-                                    sides = 4;
-                                    shapes = 1;
-                                    y = 12f;
-                                    color = Color.valueOf("FEEBB3FF");
-                                    colorTo = Color.valueOf("FEEBB3FF");
-                                    tri = false;
-                                    hollow = true;
-                                    stroke = 0f;
-                                    strokeTo = 1f;
-                                    radius = 0f;
-                                    radiusTo = 4f;
-                                    haloRadius = 0f;
-                                    haloRotateSpeed = -2f;
-                                    layer = 110f;
-                                }},
-                                new HaloPart(){{
-                                    sides = 4;
-                                    shapes = 1;
-                                    y = 12f;
-                                    color = Color.valueOf("FEEBB3FF");
-                                    colorTo = Color.valueOf("FEEBB3FF");
-                                    tri = false;
-                                    hollow = true;
-                                    stroke = 0f;
-                                    strokeTo = 1f;
-                                    radius = 0f;
-                                    radiusTo = 6f;
-                                    haloRadius = 0f;
-                                    haloRotateSpeed = 2f;
-                                    layer = 110f;
-                                }}
-                        );
-                    }}
-            );
             shootType = new BasicBulletType(16f, 50f){{
                 width = 12f;
                 height = 24f;
@@ -1088,6 +1050,44 @@ public class MLBlocks {
                     sprite = "magic-十字星";
                 }};
             }};
+            drawer = new DrawMulti(
+                    new DrawTurret(){{
+                        parts.add(
+                                new HaloPart(){{
+                                    sides = 4;
+                                    shapes = 1;
+                                    y = 12f;
+                                    color = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                    tri = false;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1f;
+                                    radius = 0f;
+                                    radiusTo = 4f;
+                                    haloRadius = 0f;
+                                    haloRotateSpeed = -2f;
+                                    layer = 110f;
+                                }},
+                                new HaloPart(){{
+                                    sides = 4;
+                                    shapes = 1;
+                                    y = 12f;
+                                    color = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                    tri = false;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1f;
+                                    radius = 0f;
+                                    radiusTo = 6f;
+                                    haloRadius = 0f;
+                                    haloRotateSpeed = 2f;
+                                    layer = 110f;
+                                }}
+                        );
+                    }}
+            );
         }};
         //turret
         //！？强强？！
