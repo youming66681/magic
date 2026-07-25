@@ -952,24 +952,6 @@ public class MLBlocks {
         //星云
         Nebula = new PowerTurret("Nebula"){{
                 requirements(Category.turret, ItemStack.with(new Object[]{Items.plastanium, 90, MLItems.phantomTitaniumSteel, 50, Items.silicon, 120, MLItems.logicChip, 30}));
-                range = 360f;
-
-                recoil = 6f;
-                recoilTime = 60f;
-                reload = 150f;
-                shake = 9f;
-                liquidCapacity = 60;
-                shootEffect = Fx.instShoot;
-                smokeEffect = Fx.smeltsmoke;
-                size = 3;
-                armor = 6;
-                health = 1800;
-                rotateSpeed = 4;
-                shootSound = MLSounds.laser;
-                coolant = consumeCoolant(0.3f);
-
-                consumePower(12f);
-
                 shootType = new BasicBulletType(16f, 50f) {{
                     width = 12f;
                     height = 24f;
@@ -1050,7 +1032,21 @@ public class MLBlocks {
                         sprite = "magic-十字星";
                     }};
                 }};
-
+            range = 360f;
+            recoil = 6f;
+            recoilTime = 60f;
+            reload = 150f;
+            shake = 9f;
+            liquidCapacity = 60;
+            shootEffect = Fx.instShoot;
+            smokeEffect = Fx.smeltsmoke;
+            size = 3;
+            armor = 6;
+            health = 1800;
+            rotateSpeed = 4;
+            shootSound = MLSounds.laser;
+            coolant = consumeCoolant(0.3f);
+            consumePower(12f);
             drawer = new DrawMulti(
                     new DrawTurret(){{
                         parts.add(
