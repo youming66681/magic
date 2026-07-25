@@ -1021,11 +1021,12 @@ public class MLBlocks {
                 statusDuration = 120f;
                 shootEffect = new WaveEffect(){{
                     lifetime = 15f;
-                    size = 0f;
+                    size = 0;
                     sizeTo = 24f;
-                    stroke = 0f;
+                    strokeFrom = 0f;
                     strokeTo = 3f;
-                    color = Color.valueOf("FEEBB3FF");
+                    colorFrom = Color.valueOf("FEEBB3FF");
+                    colorTo = Color.valueOf("FEEBB3FF");
                 }};
                 fragBullets = 6;
                 fragBullet = new BasicBulletType(16f, 120f){{
@@ -1037,19 +1038,20 @@ public class MLBlocks {
                     homingPower = 0.2f;
                     splashDamageRadius = 24f;
                     splashDamage = 80f;
-                    hitSound = Sounds.plasmaboom;
+                    hitSound = MLSounds.plasmaboom;
                     spin = 6f;
                     status = StatusEffects.slow;
                     statusDuration = 240f;
                     hitEffect = new MultiEffect(
                             new WaveEffect(){{
                                 lifetime = 10f;
-                                size = 0f;
+                                size = 0;
                                 sizeTo = 24f;
-                                stroke = 0f;
+                                strokeFrom = 0f;
                                 strokeTo = 3f;
-                                color = Color.valueOf("FEEBB3FF");
-                            }},
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
                             new ParticleEffect(){{
                                 particles = 8;
                                 sizeFrom = 2f;
