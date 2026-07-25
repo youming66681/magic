@@ -1231,7 +1231,7 @@ public class MLBlocks {
             consumeLiquid(Liquids.water, 0.8f);
             consumeItem(Items.wingedStone, 2);
 
-            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawLiquidTile(Liquids.water);
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawLiquidTile(Liquids.water));
 
         }};
         //power
