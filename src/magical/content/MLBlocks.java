@@ -966,7 +966,6 @@ public class MLBlocks {
                 rotateSpeed = 4;
                 shootSound = MLSounds.laser;
                 coolant = consumeCoolant(0.3f);
-                drawPower = false;
 
                 consumePower(12f);
 
@@ -1051,7 +1050,8 @@ public class MLBlocks {
                         sprite = "magic-十字星";
                     }};
                 }};
-            drawer = new DrawMulti(
+
+            /*drawer = new DrawMulti(
                     new DrawTurret(){{
                         parts.add(
                                     new HaloPart() {{
@@ -1088,7 +1088,7 @@ public class MLBlocks {
                                     }}
                         );
                     }}
-            );
+            );*/
             }};
         //turret
         //！？强强？！
