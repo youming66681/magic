@@ -141,7 +141,7 @@ public class MLBlocks {
             BasicManufacturingPlant,
             //进阶科技
             starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
-            Thundercloud;
+            Thundercloud, BreakingArmy;
 
     public static void load() {
 
@@ -766,6 +766,7 @@ public class MLBlocks {
                 trailColor = Color.valueOf("97B5EDFF");
                 ammoMultiplier = 1f;
                 hitSound = MLSounds.plasmadrop;
+                buildingDamageMultiplier = 0.1f;
                 hitEffect = new MultiEffect(
                         new WaveEffect(){{
                             lifetime = 30f;
@@ -818,6 +819,7 @@ public class MLBlocks {
                     shootEffect = Fx.none;
                     smokeEffect = Fx.none;
                     hitEffect = Fx.none;
+                    buildingDamageMultiplier = 0.1f;
                     fragBullets = 1;
                     fragBullet = new LaserBulletType(40f){{
                         hitSound = MLSounds.laser;
@@ -835,6 +837,7 @@ public class MLBlocks {
                         collidesTeam = true;
                         hitEffect = Fx.none;
                         despawnEffect = Fx.none;
+                        buildingDamageMultiplier = 0.1f;
                         colors = new Color[]{
                                 Color.valueOf("97B5EDFF"),
                                 Color.valueOf("97B5EDFF"),
@@ -888,7 +891,57 @@ public class MLBlocks {
             armor = 3;
             health = 2100;
             coolant = consumeCoolant(0.3f);
+            consumePower(10f);
+        }};
+        BreakingArmy = new PowerTurret("BreakingArmy"){{
+            requirements(Category.turret, ItemStack.with(new Object[]{Items.plastanium, 80, MLItems.wingedStone, 60, Items.silicon, 110, MLItems.logicChip, 40}));
+            range = 400f;
+
+            recoil = 4f;
+            reload = 180f;
+            shake = 4f;
+            shootEffect = Fx.instShoot;
+            smokeEffect = Fx.smeltsmoke;
+            size = 4;
+            armor = 6;
+            health = 2400;
+            rotateSpeed = 4;
+            shootSound = MLSounds.laser;
+            coolant = consumeCoolant(0.4f);
+
             consumePower(16f);
+
+            drawer = new DrawTurret(){{
+                parts.add(new RegionPart("-l") {{
+                              mirror = false;
+                              x = 0f;
+                              y = 0f;
+                              moveX = -8f;
+                              moveY = 0f;
+                          }},
+                        new RegionPart("-r") {{
+                            mirror = false;
+                            x = 0f;
+                            y = 0f;
+                            moveX = 8f;
+                            moveY = 0f;
+                        }},
+
+            shootType = new BasicBulletType(16f, 480f){{
+                hitEffect = MLFx.colorSparkBig;
+                despawnEffect = hitEffect;
+                hitSize = 16f;
+                width = 16f;
+                height = 32f;
+                lifetime = 25f;
+                trailLength = 8;
+                trailWidth = 3f;
+                trailColor = Color.valueOf("FEEBB3FF");
+                frontColor = Color.valueOf("FEEBB3FF");
+                backColor = Color.valueOf("FEEBB3FF");
+                hitSound = MLSounds.shootFuse;
+                buildingDamageMultiplier = 0.1f;
+            }};
         }};
         //turret
         //！？强强？！
