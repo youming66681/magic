@@ -26,6 +26,7 @@ import mindustry.content.Fx;
 import mindustry.entities.abilities.ShieldArcAbility;
 import mindustry.entities.bullet.ContinuousLaserBulletType;
 import mindustry.entities.pattern.ShootAlternate;
+import mindustry.content.StatusEffects;
 
 import static arc.graphics.g2d.Draw.*;
 import static arc.graphics.g2d.Lines.*;
@@ -206,10 +207,10 @@ public class MLUnitTypes {
             hitSize = 16f;
             health = 900;
             armor = 3;
-            baseRotateSpeed = 2.5;
+            baseRotateSpeed = 2.5f;
             mechStepParticles = true;
-            mechFrontSway = 0.1;
-            mechSideSway = 0.1;
+            mechFrontSway = 0.1f;
+            mechSideSway = 0.1f;
             drownTimeMultiplier = 1;
             range = 176;
             weapons.add(new Weapon("magic-war0"){{
@@ -251,10 +252,10 @@ public class MLUnitTypes {
             hitSize = 24f;
             health = 1800;
             armor = 6;
-            baseRotateSpeed = 2.5;
+            baseRotateSpeed = 2.5f;
             mechStepParticles = true;
-            mechFrontSway = 0.2;
-            mechSideSway = 0.2;
+            mechFrontSway = 0.2f;
+            mechSideSway = 0.2f;
             drownTimeMultiplier = 2;
             range = 176;
             abilities.add(new ShieldArcAbility(){{
@@ -311,10 +312,10 @@ public class MLUnitTypes {
                 hitSize = 32f;
                 health = 3600;
                 armor = 12;
-                baseRotateSpeed = 1.5;
+                baseRotateSpeed = 1.5f;
                 mechStepParticles = true;
-                mechFrontSway = 0.3;
-                mechSideSway = 0.3;
+                mechFrontSway = 0.3f;
+                mechSideSway = 0.3f;
                 drownTimeMultiplier = 3;
                 range = 256;
                 immunities.add(

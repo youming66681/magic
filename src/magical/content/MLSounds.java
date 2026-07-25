@@ -24,6 +24,9 @@ public class MLSounds {
     public static Sound lasercharge2;
     public static Sound shootFuse;
     public static Sound plasmaboom;
+    public static Sound pew;
+    public static Sound pao;
+    public static Sound team;
 
 
     public static void load() {
@@ -43,6 +46,9 @@ public class MLSounds {
         lasercharge2 = loadSound("lasercharge2.ogg");
         shootFuse = loadSound("shootFuse.ogg");
         plasmaboom = loadSound("plasmaboom.ogg");
+        pew = loadSound("pew.ogg");
+        pao = loadSound("pao.ogg");
+        team = loadSound("team.ogg");
     }
 
     private static Sound loadSound(String name) {
@@ -67,5 +73,8 @@ public class MLSounds {
         lasercharge2 = new Sound();
         shootFuse = new Sound();
         plasmaboom = new Sound();
+        pew = new Sound();
+        pao = new Sound();
+        team = new Sound();
     }
 }
