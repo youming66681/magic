@@ -967,7 +967,7 @@ public class MLBlocks {
                 shootSound = MLSounds.laser;
                 coolant = consumeCoolant(0.3f);
 
-                consumePower(12f);
+                consumePower(13f);
 
                 shootType = new BasicBulletType(16f, 50f) {{
                     width = 12f;
