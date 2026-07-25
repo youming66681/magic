@@ -916,14 +916,14 @@ public class MLBlocks {
                               mirror = false;
                               x = 0f;
                               y = 0f;
-                              moveX = -8f;
+                              moveX = -4f;
                               moveY = 0f;
                           }},
                         new RegionPart("-r") {{
                             mirror = false;
                             x = 0f;
                             y = 0f;
-                            moveX = 8f;
+                            moveX = 4f;
                             moveY = 0f;
                         }});
             }};
