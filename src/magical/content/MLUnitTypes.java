@@ -209,7 +209,7 @@ public class MLUnitTypes {
             baseRotateSpeed = 2.5;
             mechStepParticles = true;
             mechFrontSway = 0.1;
-            mechSideSway = 0.1,
+            mechSideSway = 0.1;
             drownTimeMultiplier = 1;
             range = 176;
             weapons.add(new Weapon("magic-war0"){{
@@ -254,7 +254,7 @@ public class MLUnitTypes {
             baseRotateSpeed = 2.5;
             mechStepParticles = true;
             mechFrontSway = 0.2;
-            mechSideSway = 0.2,
+            mechSideSway = 0.2;
             drownTimeMultiplier = 2;
             range = 176;
             abilities.add(new ShieldArcAbility(){{
@@ -313,7 +313,7 @@ public class MLUnitTypes {
                 baseRotateSpeed = 1.5;
                 mechStepParticles = true;
                 mechFrontSway = 0.3;
-                mechSideSway = 0.3,
+                mechSideSway = 0.3;
                 drownTimeMultiplier = 3;
                 range = 256;
                 immunities.add(
@@ -351,19 +351,21 @@ public class MLUnitTypes {
                             barrels = 1;
                             spread = 0f;
                         }};
-                        bullet = new BasicBulletType(8f, 90f){{
-                            pierce = true;
-                            pierceBuilding = true;
-                            pierceCap = 3;
-                            lifetime = 32f;
-                            shootEffect = Fx.none;
-                            trailLength = 6;
-                            trailWidth = 3f;
-                            trailColor = Color.valueOf("FEEBB3FF");
-                            backColor = Color.valueOf("FEEBB3FF");
-                            frontColor = Color.valueOf("FEEBB3FF");
-                            width = 16f;
-                            height = 32f;
+                        bullet = new BasicBulletType(8f, 90f){
+                            {
+                                pierce = true;
+                                pierceBuilding = true;
+                                pierceCap = 3;
+                                lifetime = 32f;
+                                shootEffect = Fx.none;
+                                trailLength = 6;
+                                trailWidth = 3f;
+                                trailColor = Color.valueOf("FEEBB3FF");
+                                backColor = Color.valueOf("FEEBB3FF");
+                                frontColor = Color.valueOf("FEEBB3FF");
+                                width = 16f;
+                                height = 32f;
+                            };
                         }};
                     }});
         //幻境空军
