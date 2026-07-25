@@ -928,7 +928,7 @@ public class MLBlocks {
                         }});
             }};
             shootType = new BasicBulletType(16f, 480f){{
-                hitEffect = MLFx.colorSparkBig;
+                hitEffect = Fx.colorSparkBig;
                 despawnEffect = hitEffect;
                 hitSize = 16f;
                 width = 16f;
