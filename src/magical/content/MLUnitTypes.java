@@ -200,7 +200,7 @@ public class MLUnitTypes {
             }};
             //二级
         war = new UnitType("war") {{
-            constructor = UnitTypes.stell.constructor;
+            constructor = UnitTypes.reign.constructor;
             canDrown = true;
             rotateSpeed = 3f;
             speed = 1.5f;
@@ -245,7 +245,7 @@ public class MLUnitTypes {
             }});
         }};
         BeaconFire = new UnitType("BeaconFire") {{
-            constructor = UnitTypes.stell.constructor;
+            constructor = UnitTypes.reign.constructor;
             canDrown = true;
             rotateSpeed = 2.5f;
             speed = 1.5f;
@@ -259,7 +259,7 @@ public class MLUnitTypes {
             drownTimeMultiplier = 2;
             range = 176;
             abilities.add(new ShieldArcAbility(){{
-                whenShooting = false;
+                whenShooting = true;
                 radius = 12f;
                 width = 6f;
                 max = 500f;
@@ -305,7 +305,7 @@ public class MLUnitTypes {
                 }});
             }};
             War = new UnitType("War") {{
-                constructor = UnitTypes.stell.constructor;
+                constructor = UnitTypes.reign.constructor;
                 canDrown = true;
                 rotateSpeed = 1.5f;
                 speed = 0.4f;
@@ -323,7 +323,7 @@ public class MLUnitTypes {
                         StatusEffects.melting
                 );
                 abilities.add(new ShieldArcAbility(){{
-                    whenShooting = false;
+                    whenShooting = true;
                     radius = 24f;
                     width = 6f;
                     max = 100f;
