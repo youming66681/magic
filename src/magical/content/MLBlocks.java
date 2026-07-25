@@ -1127,6 +1127,7 @@ public class MLBlocks {
         LargeWingWall = new Wall("LargeWingWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.wingedStone, 6 * whm}));
             health = 240 * whm * 4;
+            size = 2;
             lightningChance = 0.32f;
             lightningDamage = 32;
             lightningLength = 16;
@@ -1214,6 +1215,22 @@ public class MLBlocks {
             consume(new magical.content.ConsumeItemFlammable());
 
             drawer = new DrawMulti(new DrawDefault(), new DrawWarmupRegion());
+
+        }};
+        ElectromagneticFissionReactor = new ConsumeGenerator("ElectromagneticFissionReactor"){{
+            requirements(Category.power, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 50, MLItems.acrylic, 60, Items.silicon, 80, MLItems.logicChip, 20 }));
+            powerProduction = 20f;
+            itemDuration = 120f;
+            size = 4;
+
+            ambientSound = MLSounds.loopSmelter;
+            ambientSoundVolume = 0.1f;
+            generateEffect = Fx.smallElectricDetonation;
+
+            consumeLiquid(Liquids.water, 0.8f);
+            consumeItem(Items.wingedStone, 2);
+
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawWarmupRegion(), new DrawLiquidTile(Liquids.water);
 
         }};
         //power
