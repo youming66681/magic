@@ -129,6 +129,7 @@ import mindustry.entities.Effect;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.entities.effect.WaveEffect;
 import mindustry.entities.bullet.LaserBulletType;
+import mindustry.world.consumers.ConsumePower;
 
 public class MLBlocks {
 
@@ -967,7 +968,7 @@ public class MLBlocks {
                 shootSound = MLSounds.laser;
                 coolant = consumeCoolant(0.3f);
 
-                consumePower(12f);
+                consume(new ConsumePower(12f, false));
 
                 shootType = new BasicBulletType(16f, 50f) {{
                     width = 12f;
