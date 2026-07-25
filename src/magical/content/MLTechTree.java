@@ -122,6 +122,13 @@ public class MLTechTree {
                 /*电磁裂变炉*/node(MLBlocks.ElectromagneticFissionReactor, () -> {
 
                 });
+                /*兵戈*/node(MLUnitTypes.war, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant)), () -> {
+                    /*烽火*/node(MLUnitTypes.BeaconFire, Seq.with(new Objectives.Research(MLBlocks.curvatureEvolutionPod)), () -> {
+                        /*战乱*/node(MLUnitTypes.War, Seq.with(new Objectives.Research(MLBlocks.quantumFactory)), () -> {
+
+                        });
+                    });
+                });
             });
                  });
     }

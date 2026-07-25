@@ -202,10 +202,6 @@ public class MLUnitTypes {
             //二级
         war = new UnitType("war") {{
             constructor = MechUnit::create;
-            region = Core.atlas.find("war-base");
-            legs = new LegsUnit() {{
-                legRegion = Core.atlas.find("war-leg");
-            }};
             canDrown = true;
             rotateSpeed = 3f;
             speed = 1.4f;
@@ -219,9 +215,9 @@ public class MLUnitTypes {
             drownTimeMultiplier = 1;
             range = 176;
             weapons.add(new Weapon("magic-war0"){{
-                reload = 5f;
+                reload = 12f;
                 shake = 1f;
-                recoil = 2.5f;
+                recoil = 2.4f;
                 x = 4f;
                 y = 0f;
                 rotate = false;
@@ -620,8 +616,8 @@ public class MLUnitTypes {
             lowAltitude = true;
             rotateSpeed = 8f;
             speed = 4.2f;
-            drag = 0.03f;
-            accel = 0.09f;
+            drag = 0.04f;
+            accel = 0.08f;
             hitSize = 28;
             health = 220;
             armor = 2;
