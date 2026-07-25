@@ -222,7 +222,7 @@ public class MLUnitTypes {
                 rotate = false;
                 top = false;
                 inaccuracy = 2.5f;
-                shootSound = Sounds.pew;
+                shootSound = MLSounds.pew;
                 alternate = true;
                 ejectEffect = Fx.casing4;
                 shootCone = 15f;
@@ -279,7 +279,7 @@ public class MLUnitTypes {
                 continuous = true;
                 alternate = false;
                 cooldownTime = 60f;
-                shootSound = Sounds.beam;
+                shootSound = MLSounds.beam;
                 shootX = -4f;
                 bullet = new ContinuousLaserBulletType(250f){{
                     length = 40f;
@@ -318,7 +318,7 @@ public class MLUnitTypes {
                 mechSideSway = 0.3f;
                 drownTimeMultiplier = 3;
                 range = 256;
-                immunities.add(
+                immunities.addAll(
                         StatusEffects.burning,
                         StatusEffects.melting
                 );
@@ -340,7 +340,7 @@ public class MLUnitTypes {
                         rotate = false;
                         top = false;
                         inaccuracy = 6f;
-                        shootSound = Sounds.pao;
+                        shootSound = MLSounds.pao;
                         alternate = true;
                         ejectEffect = Fx.casing4;
                         shootCone = 15f;
