@@ -201,9 +201,10 @@ public class MLUnitTypes {
             //二级
         war = new UnitType("war") {{
             constructor = UnitTypes.dagger.constructor;
+            draw = new DrawMech(){{}};
             canDrown = true;
             rotateSpeed = 3f;
-            speed = 1.5f;
+            speed = 1.4f;
             hitSize = 16f;
             health = 900;
             armor = 3;
@@ -246,9 +247,10 @@ public class MLUnitTypes {
         }};
         BeaconFire = new UnitType("BeaconFire") {{
             constructor = UnitTypes.dagger.constructor;
+            draw = new DrawMech(){{}};
             canDrown = true;
             rotateSpeed = 2.5f;
-            speed = 1.5f;
+            speed = 1.8f;
             hitSize = 24f;
             health = 1800;
             armor = 6;
@@ -306,9 +308,10 @@ public class MLUnitTypes {
             }};
             War = new UnitType("War") {{
                 constructor = UnitTypes.dagger.constructor;
+                draw = new DrawMech(){{}};
                 canDrown = true;
                 rotateSpeed = 1.5f;
-                speed = 0.4f;
+                speed = 0.8f;
                 hitSize = 32f;
                 health = 3600;
                 armor = 12;
