@@ -200,7 +200,7 @@ public class MLUnitTypes {
             }};
             //二级
         war = new UnitType("war") {{
-            constructor = UnitTypes.reign.constructor;
+            constructor = UnitTypes.dagger.constructor;
             canDrown = true;
             rotateSpeed = 3f;
             speed = 1.5f;
@@ -245,7 +245,7 @@ public class MLUnitTypes {
             }});
         }};
         BeaconFire = new UnitType("BeaconFire") {{
-            constructor = UnitTypes.reign.constructor;
+            constructor = UnitTypes.dagger.constructor;
             canDrown = true;
             rotateSpeed = 2.5f;
             speed = 1.5f;
@@ -305,7 +305,7 @@ public class MLUnitTypes {
                 }});
             }};
             War = new UnitType("War") {{
-                constructor = UnitTypes.reign.constructor;
+                constructor = UnitTypes.dagger.constructor;
                 canDrown = true;
                 rotateSpeed = 1.5f;
                 speed = 0.4f;
