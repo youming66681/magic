@@ -1083,7 +1083,7 @@ public class MLBlocks {
                     trailColor = Color.valueOf("FEEBB3FF");
                     frontColor = Color.valueOf("FEEBB3FF");
                     backColor = Color.valueOf("FEEBB3FF");
-                    sprite:"magic-十字星"
+                    sprite = "magic-十字星";
                 }};
             }};
         }};
