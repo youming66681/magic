@@ -967,7 +967,7 @@ public class MLBlocks {
                 shootSound = MLSounds.laser;
                 coolant = consumeCoolant(0.3f);
 
-                consumePower(13f);
+                consumePower(12f);
 
                 shootType = new BasicBulletType(16f, 50f) {{
                     width = 12f;
@@ -1050,8 +1050,10 @@ public class MLBlocks {
                         sprite = "magic-十字星";
                     }};
                 }};
-                drawer = new DrawTurret() {{
-                            parts.add(
+            drawer = new DrawMulti(
+                    new DrawDefault(),
+                    new DrawTurret(){{
+                        parts.add(
                                     new HaloPart() {{
                                         sides = 4;
                                         shapes = 1;
@@ -1083,8 +1085,10 @@ public class MLBlocks {
                                         haloRadius = 0f;
                                         haloRotateSpeed = 2f;
                                         layer = 110f;
-                                    }});
-                }};
+                                    }}
+                        );
+                    }}
+            );
             }};
         //turret
         //！？强强？！
