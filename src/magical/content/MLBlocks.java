@@ -966,6 +966,7 @@ public class MLBlocks {
                 rotateSpeed = 4;
                 shootSound = MLSounds.laser;
                 coolant = consumeCoolant(0.3f);
+                drawPower = false;
 
                 consumePower(12f);
 
@@ -1051,7 +1052,6 @@ public class MLBlocks {
                     }};
                 }};
             drawer = new DrawMulti(
-                    new DrawDefault(),
                     new DrawTurret(){{
                         parts.add(
                                     new HaloPart() {{
