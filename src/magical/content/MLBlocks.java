@@ -1226,10 +1226,10 @@ public class MLBlocks {
 
             ambientSound = MLSounds.loopSmelter;
             ambientSoundVolume = 0.1f;
-            generateEffect = Fx.smallElectricDetonation;
+            generateEffect = MLFx.smallElectricDetonation;
 
             consumeLiquid(Liquids.water, 0.8f);
-            consumeItem(Items.wingedStone, 2);
+            consumeItem(MLItems.wingedStone, 2);
 
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawLiquidTile(Liquids.water));
 
