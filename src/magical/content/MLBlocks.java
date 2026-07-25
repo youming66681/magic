@@ -142,7 +142,7 @@ public class MLBlocks {
             BasicManufacturingPlant,
             //进阶科技
             starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
-            Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall;
+            Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor;
 
     public static void load() {
 
@@ -1231,7 +1231,7 @@ public class MLBlocks {
             consumeLiquid(Liquids.water, 0.8f);
             consumeItem(Items.wingedStone, 2);
 
-            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawWarmupRegion(), new DrawLiquidTile(Liquids.water);
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawLiquidTile(Liquids.water);
 
         }};
         //power
