@@ -925,7 +925,7 @@ public class MLBlocks {
                             y = 0f;
                             moveX = 8f;
                             moveY = 0f;
-                        }}
+                        }});
             }};
             shootType = new BasicBulletType(16f, 480f){{
                 hitEffect = MLFx.colorSparkBig;
