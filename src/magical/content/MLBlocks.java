@@ -142,7 +142,7 @@ public class MLBlocks {
             BasicManufacturingPlant,
             //进阶科技
             starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
-            Thundercloud, BreakingArmy, Nebula;
+            Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall;
 
     public static void load() {
 
