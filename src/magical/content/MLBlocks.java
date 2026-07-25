@@ -965,7 +965,6 @@ public class MLBlocks {
                 armor = 6;
                 health = 1800;
                 rotateSpeed = 4;
-                hasPower = true;
                 shootSound = MLSounds.laser;
                 coolant = consumeCoolant(0.3f);
 
@@ -980,7 +979,6 @@ public class MLBlocks {
                     trailLength = 6;
                     trailWidth = 3f;
                     trailColor = Color.valueOf("FEEBB3FF");
-                    ammoMultiplier = 1f;
                     status = StatusEffects.sapped;
                     statusDuration = 120f;
                     shootEffect = new WaveEffect() {{

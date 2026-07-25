@@ -91,7 +91,6 @@ public class MultiCrafter extends PayloadBlock{
             }
             if(plan.consPower != null){
                 hasPower = true;
-                consumesPower = true;
             }
             if(plan.consPayload != null){
                 acceptsPayload = true;
