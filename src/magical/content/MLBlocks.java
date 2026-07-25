@@ -290,7 +290,7 @@ public class MLBlocks {
             hasPower = true;
             itemCapacity = 15;
             liquidCapacity = 20;
-            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawFlame(), new DrawLiquidTile(Liquids.oil));
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(Liquids.oil), new DrawDefault(), new DrawFlame());
 
             consumeItems(ItemStack.with(Items.metaglass, 1));
             consumeLiquid(Liquids.oil, 0.2f);
@@ -1231,7 +1231,7 @@ public class MLBlocks {
             consumeLiquid(Liquids.water, 0.8f);
             consumeItem(MLItems.wingedStone, 2);
 
-            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawLiquidTile(Liquids.water));
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(Liquids.water), new DrawDefault());
 
         }};
         //power
