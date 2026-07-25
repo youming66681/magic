@@ -1084,7 +1084,7 @@ public class MLBlocks {
                                     haloRadius = 0f;
                                     haloRotateSpeed = 2f;
                                     layer = 110f;
-                                }}
+                                }});
                         );
             }};
         //turret
