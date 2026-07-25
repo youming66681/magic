@@ -971,7 +971,7 @@ public class MLBlocks {
 
             drawer = new DrawMulti(
                     new DrawTurret(){{
-                        parts.addAll(
+                        parts.add(
                                 new HaloPart(){{
                                     sides = 4;
                                     shapes = 1;
