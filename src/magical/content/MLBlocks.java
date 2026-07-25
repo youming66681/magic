@@ -1050,8 +1050,8 @@ public class MLBlocks {
                     sprite = "magic-十字星";
                 }};
             }};
-            drawer = new DrawMulti(
-                    new DrawTurret(){{
+            drawer = new DrawTurret(){{
+                parts.add(
                         parts.add(
                                 new HaloPart(){{
                                     sides = 4;
@@ -1086,9 +1086,7 @@ public class MLBlocks {
                                     layer = 110f;
                                 }}
                         );
-                    }}
-            );
-        }};
+            }};
         //turret
         //！？强强？！
         int whm = 4;
