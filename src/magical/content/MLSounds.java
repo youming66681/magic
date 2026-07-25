@@ -26,7 +26,7 @@ public class MLSounds {
     public static Sound plasmaboom;
     public static Sound pew;
     public static Sound pao;
-    public static Sound team;
+    public static Sound beam;
 
 
     public static void load() {
@@ -48,7 +48,7 @@ public class MLSounds {
         plasmaboom = loadSound("plasmaboom.ogg");
         pew = loadSound("pew.ogg");
         pao = loadSound("pao.ogg");
-        team = loadSound("team.ogg");
+        beam = loadSound("beam.ogg");
     }
 
     private static Sound loadSound(String name) {
@@ -75,6 +75,6 @@ public class MLSounds {
         plasmaboom = new Sound();
         pew = new Sound();
         pao = new Sound();
-        team = new Sound();
+        beam = new Sound();
     }
 }
