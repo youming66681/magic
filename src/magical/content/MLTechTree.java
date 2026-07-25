@@ -113,6 +113,8 @@ public class MLTechTree {
                         });
                     });
                     /*雷云*/node(MLBlocks.Thundercloud, () -> {
+                        /*星云*/node(MLBlocks.Nebula, () -> {
+                        });
                     });
                 });
             });
