@@ -27,6 +27,7 @@ import mindustry.entities.abilities.ShieldArcAbility;
 import mindustry.entities.bullet.ContinuousLaserBulletType;
 import mindustry.entities.pattern.ShootAlternate;
 import mindustry.content.StatusEffects;
+import mindustry.gen.MechUnit;
 
 import static arc.graphics.g2d.Draw.*;
 import static arc.graphics.g2d.Lines.*;
@@ -56,6 +57,9 @@ public class MLUnitTypes {
     Popular;
 
     public static void load(){
+        @Override
+        public void drawMech(Mechc mech) {
+        }
         //幻境陆军
         //一级
         drizzle = new UnitType("drizzle") {{
@@ -200,8 +204,7 @@ public class MLUnitTypes {
             }};
             //二级
         war = new UnitType("war") {{
-            constructor = UnitTypes.dagger.constructor;
-            draw = new DrawMech(){{}};
+            constructor = MechUnit::create;
             canDrown = true;
             rotateSpeed = 3f;
             speed = 1.4f;
@@ -246,8 +249,7 @@ public class MLUnitTypes {
             }});
         }};
         BeaconFire = new UnitType("BeaconFire") {{
-            constructor = UnitTypes.dagger.constructor;
-            draw = new DrawMech(){{}};
+            constructor = MechUnit::create;
             canDrown = true;
             rotateSpeed = 2.5f;
             speed = 1.8f;
@@ -307,8 +309,7 @@ public class MLUnitTypes {
                 }});
             }};
             War = new UnitType("War") {{
-                constructor = UnitTypes.dagger.constructor;
-                draw = new DrawMech(){{}};
+                constructor = MechUnit::create;
                 canDrown = true;
                 rotateSpeed = 1.5f;
                 speed = 0.8f;
