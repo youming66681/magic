@@ -1051,7 +1051,7 @@ public class MLBlocks {
                                 strokeTo = 3f;
                                 colorFrom = Color.valueOf("FEEBB3FF");
                                 colorTo = Color.valueOf("FEEBB3FF");
-                            }};
+                            }},
                             new ParticleEffect(){{
                                 particles = 8;
                                 sizeFrom = 2f;
