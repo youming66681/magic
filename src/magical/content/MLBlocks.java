@@ -908,6 +908,7 @@ public class MLBlocks {
             rotateSpeed = 4;
             shootSound = MLSounds.laser;
             coolant = consumeCoolant(0.4f);
+            unitSort = strongest;
 
             consumePower(16f);
 
