@@ -120,6 +120,9 @@ public class MLTechTree {
             /*翼石墙*/node(MLBlocks.wingWall, () -> {
                 /*大翼石墙*/node(MLBlocks.LargewingWall, () -> {
                 });
+                /*电磁裂变炉*/node(MLBlocks.ElectromagneticFissionReactor, () -> {
+
+                });
             });
                  });
     }
