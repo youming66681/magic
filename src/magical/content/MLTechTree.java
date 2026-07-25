@@ -115,7 +115,6 @@ public class MLTechTree {
                         /*星云*/node(MLBlocks.Nebula, () -> {
                         });
                     });
-                });
             /*翼石墙*/node(MLBlocks.wingWall, () -> {
                 /*大翼石墙*/node(MLBlocks.LargewingWall, () -> {
                    });
