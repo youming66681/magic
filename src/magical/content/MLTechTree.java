@@ -108,6 +108,9 @@ public class MLTechTree {
                 });
                 /*幻晶*/node(MLBlocks.PhantomCrystal, () -> {
                     /*光降*/node(MLBlocks.LightDescends, () -> {
+                        /*破军*/node(MLBlocks.BreakingArmy, () -> {
+
+                        });
                     });
                     /*雷云*/node(MLBlocks.Thundercloud, () -> {
                     });

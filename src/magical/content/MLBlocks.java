@@ -926,7 +926,7 @@ public class MLBlocks {
                             moveX = 8f;
                             moveY = 0f;
                         }},
-
+            }},
             shootType = new BasicBulletType(16f, 480f){{
                 hitEffect = MLFx.colorSparkBig;
                 despawnEffect = hitEffect;
@@ -936,6 +936,9 @@ public class MLBlocks {
                 lifetime = 25f;
                 trailLength = 8;
                 trailWidth = 3f;
+                pierceCap = 2;
+                pierceBuilding = true;
+                knockback = 4f;
                 trailColor = Color.valueOf("FEEBB3FF");
                 frontColor = Color.valueOf("FEEBB3FF");
                 backColor = Color.valueOf("FEEBB3FF");
