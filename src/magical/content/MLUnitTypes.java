@@ -299,6 +299,7 @@ public class MLUnitTypes {
                             Color.valueOf("D86E56FF"),
                             Color.valueOf("FFA05CFF"),
                             Color.white
+                       };
                     }};
                 }});
             }};
