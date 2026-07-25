@@ -202,6 +202,10 @@ public class MLUnitTypes {
             //二级
         war = new UnitType("war") {{
             constructor = MechUnit::create;
+            region = Core.atlas.find("war-base");
+            legs = new LegsUnit() {{
+                legRegion = Core.atlas.find("war-leg");
+            }};
             canDrown = true;
             rotateSpeed = 3f;
             speed = 1.4f;
