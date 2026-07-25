@@ -23,6 +23,9 @@ import mindustry.world.meta.*;
 import mindustry.type.UnitType;
 import mindustry.content.UnitTypes;
 import mindustry.content.Fx;
+import mindustry.entities.abilities.ShieldArcAbility;
+import mindustry.entities.bullet.ContinuousLaserBulletType;
+import mindustry.entities.pattern.ShootAlternate;
 
 import static arc.graphics.g2d.Draw.*;
 import static arc.graphics.g2d.Lines.*;
@@ -40,6 +43,8 @@ public class MLUnitTypes {
     //陆
     //一级
     drizzle, Drizzle, drizzlingRain,
+    //二级
+    war,
     //空
     //一级
     Breeze, SlantingWind, Gale,
@@ -192,6 +197,175 @@ public class MLUnitTypes {
                     }};
                 }});
             }};
+            //二级
+        war = new UnitType("war") {{
+            constructor = UnitTypes.stell.constructor;
+            canDrown = true;
+            rotateSpeed = 3f;
+            speed = 1.5f;
+            hitSize = 16f;
+            health = 900;
+            armor = 3;
+            baseRotateSpeed = 2.5;
+            mechStepParticles = true;
+            mechFrontSway = 0.1;
+            mechSideSway = 0.1,
+            drownTimeMultiplier = 1;
+            range = 176;
+            weapons.add(new Weapon("magic-war0"){{
+                reload = 5f;
+                shake = 1f;
+                recoil = 2.5f;
+                x = 4f;
+                y = 0f;
+                rotate = false;
+                top = false;
+                inaccuracy = 2.5f;
+                shootSound = Sounds.pew;
+                alternate = true;
+                ejectEffect = Fx.casing4;
+                shootCone = 15f;
+                shootY = 4f;
+                shootX = 2f;
+                bullet = new BasicBulletType(8f, 20f){{
+                    pierce = true;
+                    pierceBuilding = true;
+                    pierceCap = 2;
+                    lifetime = 23f;
+                    shootEffect = Fx.none;
+                    trailLength = 4;
+                    trailWidth = 2f;
+                    trailColor = Color.valueOf("FEEBB3FF");
+                    backColor = Color.valueOf("FEEBB3FF");
+                    frontColor = Color.valueOf("FEEBB3FF");
+                    width = 8f;
+                    height = 16f;
+                }};
+            }});
+        }};
+        BeaconFire = new UnitType("BeaconFire") {{
+            constructor = UnitTypes.stell.constructor;
+            canDrown = true;
+            rotateSpeed = 2.5f;
+            speed = 1.5f;
+            hitSize = 24f;
+            health = 1800;
+            armor = 6;
+            baseRotateSpeed = 2.5;
+            mechStepParticles = true;
+            mechFrontSway = 0.2;
+            mechSideSway = 0.2,
+            drownTimeMultiplier = 2;
+            range = 176;
+            abilities.add(new ShieldArcAbility(){{
+                whenShooting = false;
+                radius = 12f;
+                width = 6f;
+                max = 500f;
+                regen = 0.5f;
+                cooldown = 360f;
+                angle = 180f;
+                angleOffset = 0f;
+            }});
+            weapons.add(new Weapon("magic-BeaconFire0"){{
+                reload = 180f;
+                mirror = true;
+                shootY = 6f;
+                x = -6f;
+                y = -1f;
+                rotate = false;
+                recoil = 0f;
+                continuous = true;
+                alternate = false;
+                cooldownTime = 60f;
+                shootSound = Sounds.beam;
+                shootX = -4f;
+                bullet = new ContinuousLaserBulletType(250f){{
+                    length = 40f;
+                    width = 2f;
+                    incendChance = 2f;
+                    incendSpread = 4f;
+                    incendAmount = 1;
+                    hitEffect = Fx.none;
+                    statusDuration = 60f;
+                    drawSize = 40f;
+                    lifetime = 180f;
+                    shake = 1f;
+                    despawnEffect = Fx.smokeCloud;
+                    smokeEffect = Fx.none;
+                    shootEffect = Fx.none;
+                    collidesTeam = true;
+                    colors = new Color[]{
+                            Color.valueOf("D86E56FF"),
+                            Color.valueOf("FFA05CFF"),
+                            Color.white
+                    };
+                }};
+            }});
+            War = new UnitType("War") {{
+                constructor = UnitTypes.stell.constructor;
+                canDrown = true;
+                rotateSpeed = 1.5f;
+                speed = 0.4f;
+                hitSize = 32f;
+                health = 3600;
+                armor = 12;
+                baseRotateSpeed = 1.5;
+                mechStepParticles = true;
+                mechFrontSway = 0.3;
+                mechSideSway = 0.3,
+                drownTimeMultiplier = 3;
+                range = 256;
+                immunities.add(
+                        StatusEffects.burning,
+                        StatusEffects.melting
+                );
+                abilities.add(new ShieldArcAbility(){{
+                    whenShooting = false;
+                    radius = 24f;
+                    width = 6f;
+                    max = 100f;
+                    regen = 1f;
+                    cooldown = 180f;
+                    angle = 120f;
+                    angleOffset = 0f;
+                }});
+                weapons.add(new Weapon("magic-War0"){{
+                        reload = 60f;
+                        shake = 3f;
+                        recoil = 3f;
+                        x = 12f;
+                        rotate = false;
+                        top = false;
+                        inaccuracy = 6f;
+                        shootSound = Sounds.pao;
+                        alternate = true;
+                        ejectEffect = Fx.casing4;
+                        shootCone = 15f;
+                        cooldownTime = 60f;
+                        shootY = 7f;
+                        shootX = 0f;
+                        shoot = new ShootAlternate(){{
+                            shots = 9;
+                            shotDelay = 3f;
+                            barrels = 1;
+                            spread = 0f;
+                        }};
+                        bullet = new BasicBulletType(8f, 90f){{
+                            pierce = true;
+                            pierceBuilding = true;
+                            pierceCap = 3;
+                            lifetime = 32f;
+                            shootEffect = Fx.none;
+                            trailLength = 6;
+                            trailWidth = 3f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            width = 16f;
+                            height = 32f;
+                        }};
+                    }});
         //幻境空军
         //一级
         Breeze = new UnitType("Breeze") {{
