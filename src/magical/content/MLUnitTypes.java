@@ -58,7 +58,10 @@ public class MLUnitTypes {
     //二级
     ExpelDarkness, ChasingLight, Dawn,
     //核心机
-    Popular;
+    Popular,
+    //星舰
+    //小型
+    Pioneer;
 
     public static void load(){
         //幻境陆军
@@ -1108,6 +1111,38 @@ public class MLUnitTypes {
                     length = width * 8;
                     colors = new Color[]{Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF")};
                     smokeEffect = Fx.none;
+                }};
+            }});
+        }};
+        //星舰
+        //小型
+        Pioneer = new UnitType("Pioneer") {{
+            constructor = UnitTypes.assemblyDrone.constructor;
+            flying = true;
+            controller = u -> new AssemblerAI();
+            lowAltitude = true;
+            speed = 5f;
+            rotateSpeed = 5f;
+            hitSize = 16;
+            buildBeamOffset = 8;
+            isEnemy = false;
+            hidden = true;
+            useUnitCap = false;
+            logicControllable = false;
+            playerControllable = false;
+            allowedInPayloads = false;
+            createWreck = false;
+            engineOffset = 5;
+            engineSize = 3;
+            weapons.add(new RepairBeamWeapon("magic-repair"){{
+                x = 0f;
+                y = 0f;
+                shootY = 0f;
+                mirror = false;
+                beamWidth = 1f;
+                repairSpeed = 5f;
+                bullet = new RepairBeamBulletType(){{
+                    maxRange = 80f;
                 }};
             }});
         }};

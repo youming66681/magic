@@ -19,6 +19,8 @@ public class MLTechTree {
            //基础科技
             nodeProduce(MLItems.phantomSteel, () -> {
                 nodeProduce(MLItems.phantomTitaniumSteel, () -> {
+                    nodeProduce(MLItems.logicChip, () -> {
+                    });
                 });
                     nodeProduce(MLItems.mysticCrystal, () -> {
                     });
@@ -103,7 +105,9 @@ public class MLTechTree {
             //进阶科技
             /*基站核心*/node(MLBlocks.baseStationCore, () -> {
                 nodeProduce(MLItems.wingedStone, () -> {
-                nodeProduce(MLItems.acrylic, () -> {
+                  nodeProduce(MLItems.acrylic, () -> {
+                    nodeProduce(MLItems.arrayChip, () -> {
+                    });
                 });
             });
                 /*大塑钢*/node(MLBlocks.LargePlastaniumCompressor, () -> {

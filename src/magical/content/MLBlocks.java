@@ -1291,7 +1291,7 @@ public class MLBlocks {
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 300, Items.graphite, 150, Items.silicon, 120, MLItems.phantomTitaniumSteel, 60, MLItems.mysticCrystal, 90}));
             size = 7;
 
-            droneType = UnitTypes.assemblyDrone;
+            droneType = MLUnitTypes.Pioneer;
             dronesCreated = 4;
             // 配方：(等级标签, 输出单位, 时间(秒), 范围(格), 需要模块数, 载荷需求...)
             addPlan("T1", UnitTypes.stell, 45f, 4, 0, new PayloadStack(UnitTypes.evoke, 2));
