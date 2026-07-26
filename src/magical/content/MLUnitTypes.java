@@ -588,7 +588,7 @@ public class MLUnitTypes {
                     pierce = true;
                     pierceBuilding = true;
                 }};
-            }};
+            }});
         }};
         glow = new UnitType("glow") {{
             constructor = UnitTypes.flare.constructor;
@@ -646,7 +646,7 @@ public class MLUnitTypes {
                     incendSpread = 8f;
                     incendChance = 0.5f;
                 }};
-            }};
+            }});
         }};
         blazing = new UnitType("blazing") {{
             constructor = UnitTypes.flare.constructor;
@@ -726,7 +726,7 @@ public class MLUnitTypes {
                     colorFrom = Color.white;
                     colorTo = Color.valueOf("FEEBB3FF");
                 }};
-            }};
+            }});
         }};
             weapons.add(new Weapon("magic-blazing1") {{
                     x = 0f;
@@ -805,7 +805,7 @@ public class MLUnitTypes {
                         lifetime = 40f;
                         sprite = "magic-大导弹";
                     }};
-                }};
+                }});
         }};
         //幻境海军
         //一级
