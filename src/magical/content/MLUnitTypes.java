@@ -1071,7 +1071,7 @@ public class MLUnitTypes {
                             rotation = 16f;
                         }};
                         hitSound = MLSounds.plasmaboom;
-                    }}
+                    }};
                 }};
             }});
         }};
