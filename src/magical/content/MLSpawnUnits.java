@@ -21,5 +21,5 @@ public class MLSpawnUnits {
         });
 
     }
-
+    public static void load()
 }

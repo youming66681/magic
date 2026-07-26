@@ -1297,8 +1297,8 @@ public class MLBlocks {
             addPlan("T1", MLUnitTypes.Starlight, 300f, 9, 0,
                     new PayloadStack(MLBlocks.largePhantomSteelWall, 8),
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 8),
-                    new PayloadStack(Blocks.repair-point, 8),
-                    new PayloadStack(Blocks.force-projector, 4));
+                    new PayloadStack(Blocks.repairPoint, 8),
+                    new PayloadStack(Blocks.forceProjector, 4));
 
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);
