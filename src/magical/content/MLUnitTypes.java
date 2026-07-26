@@ -806,7 +806,6 @@ public class MLUnitTypes {
                         sprite = "magic-大导弹";
                     }};
                 }};
-            );
         }};
         //幻境海军
         //一级
