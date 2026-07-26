@@ -62,7 +62,7 @@ public class MLUnitTypes {
     Popular,
     //星舰
     //小型
-    Pioneer;
+    Pioneer, Starlight;
 
     public static void load(){
         //幻境陆军
@@ -1185,7 +1185,7 @@ public class MLUnitTypes {
             itemCapacity = 0;
             engineOffset = 0;
             engineSize = 0f;
-            buildSpeed = 6
+            buildSpeed = 6;
             buildRange = 320;
             mineSpeed = 15f;
             mineTier = 4;
@@ -1235,7 +1235,7 @@ public class MLUnitTypes {
                 bullet = new BulletType() {{
                     maxRange = 160f;
                 }};
-            }};
+            }},
             new RepairBeamWeapon("magic-repair0"){{
                 x = 6f;
                 y = 6f;
