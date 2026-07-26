@@ -994,7 +994,10 @@ public class MLUnitTypes {
                     hitEffect = despawnEffect = Fx.none;
                     hitSound = MLSounds.laser;
                     fragBullets = 1;
-                    fragBullet = new LaserBulletType(40f){{
+                    fragSpread = 0;
+                    fragVelocityMin = 0;
+                    fragRandomSpread = 0;
+                    fragBullet = new LaserBulletType(60f){{
                         hitSound = MLSounds.laser;
                         lifetime = 32f;
                         width = 24f;
@@ -1009,6 +1012,66 @@ public class MLUnitTypes {
                                 Color.valueOf("FEEBB3FF")
                         };
                     }};
+                }};
+            }});
+        }};
+        Dawn = new UnitType("Dawn") {{
+            constructor = UnitTypes.risso.constructor;
+            speed = 1.2f;
+            rotateSpeed = 7;
+            waveTrailX = 0;
+            waveTrailY = -10;
+            hitSize = 28;
+            health = 4320;
+            armor = 8;
+            faceTarget = false;
+            weapons.add(new Weapon("magic-Dawn0") {{
+                reload = 60f;
+                recoil = 3f;
+                x = 0;
+                y = 0;
+                shootY = 0f;
+                mirror = false;
+                rotate = true;
+                rotateSpeed = 5f;
+                inaccuracy = 0f;
+                ejectEffect = Fx.casing4;
+                layerOffset = 0.001f;
+                shootSound = MLSounds.plasmadrop;
+                bullet = new BasicBulletType(12, 50) {{
+                    sprite = "magic-十字星";
+                    spin = 3;
+                    lifetime = 25;
+                    width = 24;
+                    height = 24;
+                    trailLength = 6;
+                    trailWidth = 3f;
+                    trailColor = Color.valueOf("FEEBB3FF");
+                    frontColor = Color.valueOf("FEEBB3FF");
+                    backColor = Color.valueOf("FEEBB3FF");
+                    hitEffect = despawnEffect = MLFx.smallEnergyBlast;
+                    hitSound = MLSounds.plasmaboom;
+                    fragBullets = 1;
+                    fragSpread = 0;
+                    fragVelocityMin = 0;
+                    fragRandomSpread = 0;
+                    fragBullet = new BasicBulletType(6, 25) {{
+                        lifetime = 12;
+                        width = 8;
+                        height = 16;
+                        trailLength = 4;
+                        trailWidth = 2f;
+                        trailColor = Color.valueOf("FEEBB3FF");
+                        frontColor = Color.valueOf("FEEBB3FF");
+                        backColor = Color.valueOf("FEEBB3FF");
+                        hitEffect = despawnEffect = new WrapEffect(
+                                Fx.dynamicSpikes,
+                                Color.valueOf("FEEBB3FF")
+                        ){{
+                            rotation = 16f;
+                        }};
+                        hitSound = MLSounds.plasmaboom;
+                    }}
                 }};
             }});
         }};
