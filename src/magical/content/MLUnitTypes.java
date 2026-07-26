@@ -728,7 +728,7 @@ public class MLUnitTypes {
                     colorTo = Color.valueOf("FEEBB3FF");
                 }};
             }};
-        }};
+       }},
                     new Weapon("magic-blazing1") {{
                     x = 0f;
                     y = 0f;
@@ -805,8 +805,9 @@ public class MLUnitTypes {
                         height = 32f;
                         lifetime = 40f;
                         sprite = "magic-大导弹";
-                    }});
-            }};
+                    }};
+               }}
+            );
         //幻境海军
         //一级
         StillWater = new UnitType("StillWater") {{
