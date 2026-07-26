@@ -1052,9 +1052,6 @@ public class MLUnitTypes {
                     hitEffect = despawnEffect = MLFx.smallEnergyBlast;
                     hitSound = MLSounds.plasmaboom;
                     fragBullets = 3;
-                    fragSpread = 0;
-                    fragVelocityMin = 0;
-                    fragRandomSpread = 0;
                     fragBullet = new BasicBulletType(6, 25) {{
                         lifetime = 12;
                         width = 8;

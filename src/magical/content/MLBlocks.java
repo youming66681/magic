@@ -1244,8 +1244,8 @@ public class MLBlocks {
                     new UnitPlan(MLUnitTypes.Breeze, 60f * 30, ItemStack.with(MLItems.phantomSteel, 30, Items.silicon, 15)),
                     new UnitPlan(MLUnitTypes.StillWater, 60f * 50, ItemStack.with(MLItems.phantomSteel, 40, Items.silicon, 20, Items.graphite, 30)),
                     new UnitPlan(MLUnitTypes.war, 60f * 50, ItemStack.with(MLItems.phantomTitaniumSteel, 20, MLItems.logicChip, 5, Items.silicon, 30)),
-                    new UnitPlan(MLUnitTypes.BlazingFire, 60f * 40, ItemStack.with(MLItems.phantomTitaniumSteel, 10, MLItems.logicChip, 5, Items.silicon, 10))
-                    //new UnitPlan(MLUnitTypes.StillWater, 60f * 60, ItemStack.with(MLItems.phantomTitaniumSteel, 30, MLItems.logicChip, 5, Items.silicon, 40))
+                    new UnitPlan(MLUnitTypes.BlazingFire, 60f * 40, ItemStack.with(MLItems.phantomTitaniumSteel, 10, MLItems.logicChip, 5, Items.silicon, 10)),
+                    new UnitPlan(MLUnitTypes.ExpelDarkness, 60f * 60, ItemStack.with(MLItems.phantomTitaniumSteel, 30, MLItems.logicChip, 5, Items.silicon, 40))
             );
             size = 3;
             consumePower(2f);
@@ -1264,7 +1264,8 @@ public class MLBlocks {
                     new UnitType[]{MLUnitTypes.Breeze, MLUnitTypes.SlantingWind},
                     new UnitType[]{MLUnitTypes.StillWater, MLUnitTypes.ripple},
                     new UnitType[]{MLUnitTypes.war, MLUnitTypes.BeaconFire},
-                    new UnitType[]{MLUnitTypes.BlazingFire, MLUnitTypes.glow}
+                    new UnitType[]{MLUnitTypes.BlazingFire, MLUnitTypes.glow},
+                    new UnitType[]{MLUnitTypes.ExpelDarkness, MLUnitTypes.ChasingLight}
             );
         }};
         //量子制造厂
@@ -1281,7 +1282,8 @@ public class MLBlocks {
                     new UnitType[]{MLUnitTypes.SlantingWind, MLUnitTypes.Gale},
                     new UnitType[]{MLUnitTypes.ripple, MLUnitTypes.Turbulence},
                     new UnitType[]{MLUnitTypes.BeaconFire, MLUnitTypes.War},
-                    new UnitType[]{MLUnitTypes.glow, MLUnitTypes.blazing}
+                    new UnitType[]{MLUnitTypes.glow, MLUnitTypes.blazing},
+                    new UnitType[]{MLUnitTypes.ChasingLight, MLUnitTypes.Dawn}
             );
         }};
         //星港造舰中心

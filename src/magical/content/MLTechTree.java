@@ -15,8 +15,14 @@ public class MLTechTree {
     public static void load() {
         MLPlanets.cecilia.techTree = Planets.serpulo.techTree;
 
-        TechNode root = nodeRoot("cecilia", MLBlocks.baseCore, () -> {
+        TechNode root = nodeRoot("cecilia", MLBlocks.baseCore, true, () -> {
            //基础科技
+            nodeProduce(MLItems.phantomSteel, () -> {
+                nodeProduce(MLItems.phantomTitaniumSteel, () -> {
+                });
+                    nodeProduce(MLItems.mysticCrystal, () -> {
+                    });
+            });
             /*幻钢传送带*/node(MLBlocks.phantomSteelConveyor, () -> {
                 /*幻钛钢传送带*/node(MLBlocks.phantomTitaniumSteelConveyor, () -> {
                         });
@@ -96,6 +102,10 @@ public class MLTechTree {
             });
             //进阶科技
             /*基站核心*/node(MLBlocks.baseStationCore, () -> {
+                nodeProduce(MLItems.wingedStone, () -> {
+                nodeProduce(MLItems.acrylic, () -> {
+                });
+            });
                 /*大塑钢*/node(MLBlocks.LargePlastaniumCompressor, () -> {
                         });
                 /*翼石冲压机*/node(MLBlocks.WingStonePunchingMachine, () -> {
@@ -132,6 +142,13 @@ public class MLTechTree {
                 /*流火*/node(MLUnitTypes.BlazingFire, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant)), () -> {
                     /*荧辉*/node(MLUnitTypes.glow, Seq.with(new Objectives.Research(MLBlocks.curvatureEvolutionPod)), () -> {
                         /*激耀*/node(MLUnitTypes.blazing, Seq.with(new Objectives.Research(MLBlocks.quantumFactory)), () -> {
+
+                        });
+                    });
+                });
+                /*驱暗*/node(MLUnitTypes.ExpelDarkness, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant)), () -> {
+                    /*逐光*/node(MLUnitTypes.ChasingLight, Seq.with(new Objectives.Research(MLBlocks.curvatureEvolutionPod)), () -> {
+                        /*启明*/node(MLUnitTypes.Dawn, Seq.with(new Objectives.Research(MLBlocks.quantumFactory)), () -> {
 
                         });
                     });
