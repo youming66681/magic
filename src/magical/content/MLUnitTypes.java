@@ -727,7 +727,7 @@ public class MLUnitTypes {
                     colorTo = Color.valueOf("FEEBB3FF");
                 }};
             }};
-        }},
+        }};
          weapon = new Weapon("magic-blazing1"){{
                     x = 0f;
                     y = 0f;
@@ -805,7 +805,7 @@ public class MLUnitTypes {
                         lifetime = 40f;
                         sprite = "magic-大导弹";
                     }};
-                }}
+                }};
             );
         }};
         //幻境海军
