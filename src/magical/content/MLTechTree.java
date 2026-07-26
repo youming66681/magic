@@ -129,6 +129,13 @@ public class MLTechTree {
                         });
                     });
                 });
+                /*流火*/node(MLUnitTypes.BlazingFire, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant)), () -> {
+                    /*荧辉*/node(MLUnitTypes.glow, Seq.with(new Objectives.Research(MLBlocks.curvatureEvolutionPod)), () -> {
+                        /*激耀*/node(MLUnitTypes.blazing, Seq.with(new Objectives.Research(MLBlocks.quantumFactory)), () -> {
+
+                        });
+                    });
+                });
             });
                  });
     }
