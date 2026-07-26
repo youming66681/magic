@@ -680,7 +680,8 @@ public class MLUnitTypes {
                     BlockFlag.reactor,
                     BlockFlag.battery
             };
-            weapons.add(new Weapon("magic-blazing0") {{
+            weapons.add(
+            new Weapon("magic-blazing0") {{
             x = -6f;
             y = 0f;
             mirror = true;
@@ -726,9 +727,9 @@ public class MLUnitTypes {
                     colorFrom = Color.white;
                     colorTo = Color.valueOf("FEEBB3FF");
                 }};
-            }});
+            }};
         }};
-            weapons.add(new Weapon("magic-blazing1") {{
+                    new Weapon("magic-blazing1") {{
                     x = 0f;
                     y = 0f;
                     reload = 300f;
