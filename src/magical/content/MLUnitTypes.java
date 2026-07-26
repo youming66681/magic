@@ -1042,8 +1042,8 @@ public class MLUnitTypes {
                     sprite = "magic-十字星";
                     spin = 3;
                     lifetime = 25;
-                    width = 24;
-                    height = 24;
+                    width = 48;
+                    height = 48;
                     trailLength = 6;
                     trailWidth = 3f;
                     trailColor = Color.valueOf("FEEBB3FF");
@@ -1051,7 +1051,7 @@ public class MLUnitTypes {
                     backColor = Color.valueOf("FEEBB3FF");
                     hitEffect = despawnEffect = MLFx.smallEnergyBlast;
                     hitSound = MLSounds.plasmaboom;
-                    fragBullets = 1;
+                    fragBullets = 3;
                     fragSpread = 0;
                     fragVelocityMin = 0;
                     fragRandomSpread = 0;
