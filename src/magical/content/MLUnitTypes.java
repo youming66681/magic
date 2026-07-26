@@ -959,6 +959,59 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        ChasingLight = new UnitType("ChasingLight") {{
+            constructor = UnitTypes.risso.constructor;
+            speed = 1.4f;
+            rotateSpeed = 8;
+            waveTrailX = 0;
+            waveTrailY = -8;
+            hitSize = 24;
+            health = 2160;
+            armor = 6;
+            faceTarget = false;
+            weapons.add(new Weapon("magic-ChasingLight0") {{
+                reload = 40f;
+                recoil = 2f;
+                x = 0;
+                y = 0;
+                shootY = 0f;
+                mirror = false;
+                rotate = true;
+                rotateSpeed = 5f;
+                inaccuracy = 0f;
+                ejectEffect = Fx.casing2;
+                layerOffset = 0.001f;
+                shootSound = MLSounds.shootFuse;
+                bullet = new BasicBulletType(10, 30) {{
+                    lifetime = 20;
+                    width = 12;
+                    height = 24;
+                    trailLength = 6;
+                    trailWidth = 3f;
+                    trailColor = Color.valueOf("FEEBB3FF");
+                    frontColor = Color.valueOf("FEEBB3FF");
+                    backColor = Color.valueOf("FEEBB3FF");
+                    hitEffect = despawnEffect = Fx.none;
+                    hitSound = MLSounds.laser;
+                    fragBullets = 1;
+                    fragBullet = new LaserBulletType(40f){{
+                        hitSound = MLSounds.laser;
+                        lifetime = 32f;
+                        width = 24f;
+                        length = 96f;
+                        Color.valueOf("FEEBB3FF");
+                        collidesTeam = true;
+                        hitEffect = Fx.none;
+                        despawnEffect = Fx.none;
+                        colors = new Color[]{
+                                Color.valueOf("FEEBB3FF"),
+                                Color.valueOf("FEEBB3FF"),
+                                Color.valueOf("FEEBB3FF")
+                        };
+                    }};
+                }};
+            }});
+        }};
         //核心机
         //风行
         Popular = new UnitType("Popular") {{
