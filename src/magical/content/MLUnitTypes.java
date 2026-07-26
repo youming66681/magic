@@ -804,9 +804,9 @@ public class MLUnitTypes {
                         height = 32f;
                         lifetime = 40f;
                         sprite = "magic-大导弹";
-                    }};
-                }});
-        }};
+                    }}; // MissileBulletType结束
+                  }} // Weapon结束
+            );
         //幻境海军
         //一级
         StillWater = new UnitType("StillWater") {{
