@@ -1295,10 +1295,10 @@ public class MLBlocks {
             dronesCreated = 4;
             // 配方：(等级标签, 输出单位, 时间(秒), 范围(格), 需要模块数, 载荷需求...)
             addPlan("T1", MLUnitTypes.Starlight, 300f, 9, 0,
-                    new PayloadStack(MLUnitBlocks.largePhantomSteelWall, 8),
-                    new PayloadStack(MLUnitBlocks.largePhantomTitaniumSteelWall, 8),
-                    new PayloadStack(MLUnitBlocks.repair-point, 8),
-                    new PayloadStack(MLUnitBlocks.force-projector, 4));
+                    new PayloadStack(MLBlocks.largePhantomSteelWall, 8),
+                    new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 8),
+                    new PayloadStack(Blocks.repair-point, 8),
+                    new PayloadStack(Blocks.force-projector, 4));
 
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);
