@@ -27,7 +27,7 @@ public class MLSounds {
     public static Sound pew;
     public static Sound pao;
     public static Sound beam;
-
+    public static Sound JG;
 
     public static void load() {
         explosionAfflict = loadSound("explosionAfflict.ogg");
@@ -49,6 +49,7 @@ public class MLSounds {
         pew = loadSound("pew.ogg");
         pao = loadSound("pao.ogg");
         beam = loadSound("beam.ogg");
+        JG = loadSound("JG.ogg");
     }
 
     private static Sound loadSound(String name) {
@@ -76,5 +77,6 @@ public class MLSounds {
         pew = new Sound();
         pao = new Sound();
         beam = new Sound();
+        JG = new Sound();
     }
 }
