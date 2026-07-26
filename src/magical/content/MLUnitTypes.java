@@ -1212,17 +1212,17 @@ public class MLUnitTypes {
                     )
             );
             abilities.add(new EnergyFieldAbility(
-                    5f,        // damage
-                    90f,        // reload
-                    240f,       // range
-                    0.5f,         // healPercent
-                    Fx.chainLightning, // damageEffect
-                    MLSounds.spark      // shootSound
+                    5f,   // damage
+                    90f,   // reload
+                    240f   // range
             ){{
+                healPercent = 0.5f;
                 x = 0f;
                 y = 0f;
                 maxTargets = 15;
                 effectRadius = 3f;
+                damageEffect = Fx.chainLightning;
+                shootSound = Sounds.spark;
             }});
             weapons.add(
                 new RepairBeamWeapon("magic-repair"){{
