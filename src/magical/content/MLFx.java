@@ -134,8 +134,8 @@ public class MLFx {
             Draw.reset();
         });
         smallEnergyBlast = new Effect(30f, e -> {
-            float fin = e.fin();
-            float fout = e.fout();
+            float fin = e.finpow();
+            float fout = e.foutpow();
             Color core = Color.valueOf("FEEBB3FF");
             Color glow = Color.valueOf("FFD37FFF");
             Draw.color(glow);
