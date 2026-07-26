@@ -680,7 +680,7 @@ public class MLUnitTypes {
                     BlockFlag.reactor,
                     BlockFlag.battery
             };
-            weapons.add(new Weapon("magic-blazing0"){{
+            weapon = new Weapon("magic-blazing0"){{
             x = -6f;
             y = 0f;
             mirror = true;
@@ -689,18 +689,6 @@ public class MLUnitTypes {
             recoil = 3f;
             inaccuracy = 3f;
             shootSound = MLSounds.JG;
-            shootEffect = new ParticleEffect(){{
-                particles = 9;
-                sizeFrom = 3f;
-                sizeTo = 0f;
-                length = 12f;
-                baseLength = 12f;
-                lifetime = 15f;
-                interp = Interp.pow10Out;
-                sizeInterp = Interp.pow10In;
-                colorFrom = Color.valueOf("FEEBB3FF");
-                colorTo = Color.valueOf("FEEBB3FF");
-            }};
             bullet = new BasicBulletType(16f, 30f){{
                 width = 8f;
                 height = 16f;
@@ -740,7 +728,7 @@ public class MLUnitTypes {
                 }};
             }};
         }},
-                new Weapon("magic-blazing1"){{
+         weapon = new Weapon("magic-blazing1"){{
                     x = 0f;
                     y = 0f;
                     reload = 300f;
