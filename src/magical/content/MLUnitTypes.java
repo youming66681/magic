@@ -67,6 +67,7 @@ public class MLUnitTypes {
     public static void load(){
         //幻境陆军
         //一级
+        //t1
         drizzle = new UnitType("drizzle") {{
             constructor = UnitTypes.stell.constructor;
             omniMovement = false;
@@ -109,6 +110,7 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        //t2
         Drizzle = new UnitType("Drizzle") {{
             constructor = UnitTypes.stell.constructor;
             omniMovement = false;
@@ -168,6 +170,7 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        //t3
             drizzlingRain = new UnitType("drizzlingRain") {{
                 constructor = UnitTypes.stell.constructor;
                 omniMovement = false;
@@ -208,6 +211,7 @@ public class MLUnitTypes {
                 }});
             }};
             //二级
+        //t1
         war = new UnitType("war") {{
             constructor = MechUnit::create;
             canDrown = true;
@@ -253,6 +257,7 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        //t2
         BeaconFire = new UnitType("BeaconFire") {{
             constructor = MechUnit::create;
             canDrown = true;
@@ -313,6 +318,7 @@ public class MLUnitTypes {
                     }};
                 }});
             }};
+        //t3
             War = new UnitType("War") {{
                 constructor = MechUnit::create;
                 canDrown = true;
@@ -381,6 +387,7 @@ public class MLUnitTypes {
             }};
         //幻境空军
         //一级
+        //t1
         Breeze = new UnitType("Breeze") {{
             constructor = UnitTypes.flare.constructor;
             flying = true;
@@ -418,6 +425,7 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        //t2
         SlantingWind = new UnitType("SlantingWind") {{
             constructor = UnitTypes.flare.constructor;
             flying = true;
@@ -459,12 +467,15 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        //t3
         Gale = new UnitType("Gale") {{
             constructor = UnitTypes.flare.constructor;
             flying = true;
             lowAltitude = false;
             circleTarget = true;
             faceTarget = true;
+            rotateMoveFirst = true;
+            omniMovement = true;
             rotateSpeed = 7f;
             speed = 3.5f;
             drag = 0.06f;
@@ -508,6 +519,7 @@ public class MLUnitTypes {
             }});
         }};
         //二级
+        //t1
         BlazingFire = new UnitType("BlazingFire") {{
             constructor = UnitTypes.flare.constructor;
             flying = true;
@@ -596,6 +608,7 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        //t2
         glow = new UnitType("glow") {{
             constructor = UnitTypes.flare.constructor;
             flying = true;
@@ -654,6 +667,7 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        //t3
         blazing = new UnitType("blazing") {{
                 constructor = UnitTypes.flare.constructor;
                 flying = true;
@@ -816,6 +830,7 @@ public class MLUnitTypes {
         }};
         //幻境海军
         //一级
+        //t1
         StillWater = new UnitType("StillWater") {{
             constructor = UnitTypes.risso.constructor;
             speed = 1.4f;
@@ -850,6 +865,7 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        //t2
         ripple = new UnitType("ripple") {{
             constructor = UnitTypes.risso.constructor;
             speed = 1.2f;
@@ -884,6 +900,7 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        //t3
         Turbulence = new UnitType("Turbulence") {{
             constructor = UnitTypes.risso.constructor;
             speed = 1f;
@@ -924,6 +941,7 @@ public class MLUnitTypes {
             }});
         }};
         //二级
+        //t1
         ExpelDarkness = new UnitType("ExpelDarkness") {{
             constructor = UnitTypes.risso.constructor;
             speed = 1.6f;
@@ -963,6 +981,7 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        //t2
         ChasingLight = new UnitType("ChasingLight") {{
             constructor = UnitTypes.risso.constructor;
             speed = 1.4f;
@@ -1019,6 +1038,7 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        //t3
         Dawn = new UnitType("Dawn") {{
             constructor = UnitTypes.risso.constructor;
             speed = 1.2f;
@@ -1126,6 +1146,7 @@ public class MLUnitTypes {
             rotateSpeed = 5f;
             hitSize = 16;
             buildBeamOffset = 8;
+            health = 400;
             isEnemy = false;
             hidden = true;
             useUnitCap = false;
@@ -1144,6 +1165,86 @@ public class MLUnitTypes {
                 repairSpeed = 5f;
                 bullet = new BulletType() {{
                     maxRange = 80f;
+                }};
+            }});
+        }};
+        Starlight = new UnitType("Starlight") {{
+            constructor = UnitTypes.flare.constructor;
+            controller = u -> new DefenderAI();
+            flying = true;
+            lowAltitude = true;
+            rotateMoveFirst = true;
+            omniMovement = true;
+            rotateSpeed = 4f;
+            speed = 4f;
+            drag = 0.02f;
+            accel = 0.04f;
+            hitSize = 48;
+            health = 8800;
+            armor = 8;
+            itemCapacity = 0;
+            engineOffset = 0;
+            engineSize = 0f;
+            buildSpeed = 6
+            buildRange = 320;
+            mineSpeed = 15f;
+            mineTier = 4;
+            itemCapacity = 200;
+            trailLength = 12;
+            abilities.add(
+                    new ForceFieldAbility(
+                            160f,     // radius
+                            0.8f,     // regen
+                            800f,    // max
+                            240f,     // cooldown
+                            4,        // sides
+                            0f        // rotation
+                    )
+            );
+            abilities.add(
+                    new ForceFieldAbility(
+                            160f,
+                            0.8f,
+                            800f,
+                            240f,
+                            4,
+                            45f
+                    )
+            );
+            abilities.add(new EnergyFieldAbility(
+                    5f,        // damage
+                    90f,        // reload
+                    240f,       // range
+                    0.5f,         // healPercent
+                    Fx.chainLightning, // damageEffect
+                    MLSounds.spark      // shootSound
+            ){{
+                x = 0f;
+                y = 0f;
+                maxTargets = 15;
+                effectRadius = 3f;
+            }});
+            weapons.add(
+                new RepairBeamWeapon("magic-repair"){{
+                x = -8f;
+                y = -8f;
+                shootY = 2f;
+                mirror = true;
+                beamWidth = 1f;
+                repairSpeed = 3.5f;
+                bullet = new BulletType() {{
+                    maxRange = 160f;
+                }};
+            }};
+            new RepairBeamWeapon("magic-repair0"){{
+                x = 6f;
+                y = 6f;
+                shootY = 2f;
+                mirror = true;
+                beamWidth = 1f;
+                repairSpeed = 3.5f;
+                bullet = new BulletType() {{
+                    maxRange = 160f;
                 }};
             }});
         }};
