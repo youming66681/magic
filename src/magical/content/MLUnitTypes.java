@@ -518,7 +518,7 @@ public class MLUnitTypes {
             engineSize = 4f;
             range = 24;
             targetFlags = new BlockFlag[]{BlockFlag.turret};
-            weapon = new Weapon("magic-BlazingFire0"){{
+            weapons.add(new Weapon("magic-BlazingFire0") {{
                 x = 0f;
                 reload = 60f;
                 mirror = false;
@@ -605,7 +605,7 @@ public class MLUnitTypes {
             engineSize = 4f;
             range = 224;
             targetFlags = new BlockFlag[]{BlockFlag.factory};
-            weapon = new Weapon("magic-BlazingFire0"){{
+            weapons.add(new Weapon("magic-glow0") {{
                 reload = 60f;
                 x = 0f;
                 y = 0f;
@@ -680,7 +680,7 @@ public class MLUnitTypes {
                     BlockFlag.reactor,
                     BlockFlag.battery
             };
-            weapon = new Weapon("magic-blazing0"){{
+            weapons.add(new Weapon("magic-blazing0") {{
             x = -6f;
             y = 0f;
             mirror = true;
@@ -728,7 +728,7 @@ public class MLUnitTypes {
                 }};
             }};
         }};
-         weapon = new Weapon("magic-blazing1"){{
+            weapons.add(new Weapon("magic-blazing1") {{
                     x = 0f;
                     y = 0f;
                     reload = 300f;
