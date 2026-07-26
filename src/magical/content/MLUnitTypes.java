@@ -649,165 +649,165 @@ public class MLUnitTypes {
             }});
         }};
         blazing = new UnitType("blazing") {{
-            constructor = UnitTypes.flare.constructor;
-            flying = true;
-            circleTarget = true;
-            faceTarget = true;
-            lowAltitude = true;
-            rotateSpeed = 6.75f;
-            speed = 4.5f;
-            drag = 0.03f;
-            accel = 0.08f;
-            hitSize = 16;
-            health = 2880;
-            armor = 8;
-            engineOffset = 16;
-            engineSize = 8f;
-            range = 320;
-            trailLength = 9;
-            abilities.add(new ShieldArcAbility(){{
-                whenShooting = true;
-                radius = 24f;
-                width = 6f;
-                max = 1500f;
-                regen = 1.5f;
-                cooldown = 300f;
-                angle = 150f;
-                angleOffset = 0f;
-            }});
-            targetFlags = new BlockFlag[]{
-                    BlockFlag.generator,
-                    BlockFlag.reactor,
-                    BlockFlag.battery
-            };
-            weapons.add(
-            new Weapon("magic-blazing0") {{
-            x = -6f;
-            y = 0f;
-            mirror = true;
-            reload = 6f;
-            rotate = false;
-            recoil = 3f;
-            inaccuracy = 3f;
-            shootSound = MLSounds.JG;
-            bullet = new BasicBulletType(16f, 30f){{
-                width = 8f;
-                height = 16f;
-                lifetime = 16f;
-                pierce = true;
-                pierceBuilding = true;
-                pierceCap = 3;
-                splashDamageRadius = 8f;
-                splashDamage = 20f;
-                frontColor = Color.valueOf("FEEBB3FF");
-                backColor = Color.valueOf("FEEBB3FF");
-                trailLength = 4;
-                trailWidth = 2f;
-                trailColor = Color.valueOf("FEEBB3FF");
-                ammoMultiplier = 1f;
-                makeFire = true;
-                incendAmount = 1;
-                incendSpread = 2f;
-                incendChance = 0.125f;
-                hitEffect = new WaveEffect(){{
-                    lifetime = 8f;
-                    sizeFrom = 0f;
-                    sizeTo = 8f;
-                    strokeFrom = 0f;
-                    strokeTo = 1f;
-                    colorFrom = Color.white;
-                    colorTo = Color.valueOf("FEEBB3FF");
-                }};
-                despawnEffect = new WaveEffect(){{
-                    lifetime = 8f;
-                    sizeFrom = 0f;
-                    sizeTo = 8f;
-                    strokeFrom = 0f;
-                    strokeTo = 1f;
-                    colorFrom = Color.white;
-                    colorTo = Color.valueOf("FEEBB3FF");
-                }};
-            }};
-       }},
-                    new Weapon("magic-blazing1") {{
-                    x = 0f;
-                    y = 0f;
-                    reload = 300f;
-                    mirror = false;
-                    alternate = false;
-                    shootSound = MLSounds.missile;
-                    shoot = new ShootBarrel(){{
-                        shots = 2;
-                        shotDelay = 0f;
-                        barrels = new float[]{
-                                10f,0f,0f,
-                                -10f,0f,0f
-                        };
-                    }};
-                    inaccuracy = 0f;
-                    shootCone = 180f;
-                    bullet = new MissileBulletType(8f,80f){{
-                        hitSound = MLSounds.plasmaboom;
-                        shrinkY = 0f;
-                        homingRange = 180f;
-                        homingPower = 0.06f;
-                        splashDamageRadius = 24f;
-                        splashDamage = 160f;
-                        makeFire = true;
-                        incendAmount = 4;
-                        incendSpread = 8f;
-                        incendChance = 0.5f;
-                        hitEffect = new MultiEffect(
-                                new WaveEffect(){{
-                                    lifetime = 25f;
+                constructor = UnitTypes.flare.constructor;
+                flying = true;
+                circleTarget = true;
+                faceTarget = true;
+                lowAltitude = true;
+                rotateSpeed = 6.75f;
+                speed = 4.5f;
+                drag = 0.03f;
+                accel = 0.08f;
+                hitSize = 16;
+                health = 2880;
+                armor = 8;
+                engineOffset = 16;
+                engineSize = 8f;
+                range = 320;
+                trailLength = 9;
+                abilities.add(new ShieldArcAbility() {{
+                    whenShooting = true;
+                    radius = 24f;
+                    width = 6f;
+                    max = 1500f;
+                    regen = 1.5f;
+                    cooldown = 300f;
+                    angle = 150f;
+                    angleOffset = 0f;
+                }});
+                targetFlags = new BlockFlag[]{
+                        BlockFlag.generator,
+                        BlockFlag.reactor,
+                        BlockFlag.battery
+                };
+                weapons.add(
+                        new Weapon("magic-blazing0") {{
+                            x = -6f;
+                            y = 0f;
+                            mirror = true;
+                            reload = 6f;
+                            rotate = false;
+                            recoil = 3f;
+                            inaccuracy = 3f;
+                            shootSound = MLSounds.JG;
+                            bullet = new BasicBulletType(16f, 30f) {{
+                                width = 8f;
+                                height = 16f;
+                                lifetime = 16f;
+                                pierce = true;
+                                pierceBuilding = true;
+                                pierceCap = 3;
+                                splashDamageRadius = 8f;
+                                splashDamage = 20f;
+                                frontColor = Color.valueOf("FEEBB3FF");
+                                backColor = Color.valueOf("FEEBB3FF");
+                                trailLength = 4;
+                                trailWidth = 2f;
+                                trailColor = Color.valueOf("FEEBB3FF");
+                                ammoMultiplier = 1f;
+                                makeFire = true;
+                                incendAmount = 1;
+                                incendSpread = 2f;
+                                incendChance = 0.125f;
+                                hitEffect = new WaveEffect() {{
+                                    lifetime = 8f;
                                     sizeFrom = 0f;
-                                    sizeTo = 48f;
+                                    sizeTo = 8f;
                                     strokeFrom = 0f;
-                                    strokeTo = 2f;
-                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    strokeTo = 1f;
+                                    colorFrom = Color.white;
                                     colorTo = Color.valueOf("FEEBB3FF");
-                                }},
-                                new ParticleEffect(){{
-                                    particles = 8;
-                                    sizeFrom = 2f;
-                                    sizeTo = 0f;
-                                    length = 24f;
-                                    baseLength = 24f;
-                                    lifetime = 30f;
-                                    interp = Interp.pow10Out;
-                                    sizeInterp = Interp.pow10In;
-                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                }};
+                                despawnEffect = new WaveEffect() {{
+                                    lifetime = 8f;
+                                    sizeFrom = 0f;
+                                    sizeTo = 8f;
+                                    strokeFrom = 0f;
+                                    strokeTo = 1f;
+                                    colorFrom = Color.white;
                                     colorTo = Color.valueOf("FEEBB3FF");
-                                }},
-                                new ParticleEffect(){{
-                                    particles = 8;
-                                    line = true;
-                                    strokeFrom = 2f;
-                                    strokeTo = 0f;
-                                    lenFrom = 4f;
-                                    lenTo = 0f;
-                                    length = 24f;
-                                    baseLength = 24f;
-                                    lifetime = 30f;
-                                    interp = Interp.pow5Out;
-                                    sizeInterp = Interp.pow5In;
-                                    colorFrom = Color.valueOf("FEEBB3FF");
-                                    colorTo = Color.valueOf("FEEBB3FF");
-                                }}
-                        );
-                        despawnEffect = Fx.none;
-                        trailLength = 8;
-                        trailWidth = 4f;
-                        trailColor = Color.valueOf("FEEBB3FF");
-                        frontColor = Color.valueOf("FEEBB3FF");
-                        backColor = Color.valueOf("FEEBB3FF");
-                        width = 16f;
-                        height = 32f;
-                        lifetime = 40f;
-                        sprite = "magic-大导弹";
-                    }};
-               }}
-        });
+                                }};
+                            }};
+                        }},
+                        new Weapon("magic-blazing1") {{
+                            x = 0f;
+                            y = 0f;
+                            reload = 300f;
+                            mirror = false;
+                            alternate = false;
+                            shootSound = MLSounds.missile;
+                            shoot = new ShootBarrel() {{
+                                shots = 2;
+                                shotDelay = 0f;
+                                barrels = new float[]{
+                                        10f, 0f, 0f,
+                                        -10f, 0f, 0f
+                                };
+                            }};
+                            inaccuracy = 0f;
+                            shootCone = 180f;
+                            bullet = new MissileBulletType(8f, 80f) {{
+                                hitSound = MLSounds.plasmaboom;
+                                shrinkY = 0f;
+                                homingRange = 180f;
+                                homingPower = 0.06f;
+                                splashDamageRadius = 24f;
+                                splashDamage = 160f;
+                                makeFire = true;
+                                incendAmount = 4;
+                                incendSpread = 8f;
+                                incendChance = 0.5f;
+                                hitEffect = new MultiEffect(
+                                        new WaveEffect() {{
+                                            lifetime = 25f;
+                                            sizeFrom = 0f;
+                                            sizeTo = 48f;
+                                            strokeFrom = 0f;
+                                            strokeTo = 2f;
+                                            colorFrom = Color.valueOf("FEEBB3FF");
+                                            colorTo = Color.valueOf("FEEBB3FF");
+                                        }},
+                                        new ParticleEffect() {{
+                                            particles = 8;
+                                            sizeFrom = 2f;
+                                            sizeTo = 0f;
+                                            length = 24f;
+                                            baseLength = 24f;
+                                            lifetime = 30f;
+                                            interp = Interp.pow10Out;
+                                            sizeInterp = Interp.pow10In;
+                                            colorFrom = Color.valueOf("FEEBB3FF");
+                                            colorTo = Color.valueOf("FEEBB3FF");
+                                        }},
+                                        new ParticleEffect() {{
+                                            particles = 8;
+                                            line = true;
+                                            strokeFrom = 2f;
+                                            strokeTo = 0f;
+                                            lenFrom = 4f;
+                                            lenTo = 0f;
+                                            length = 24f;
+                                            baseLength = 24f;
+                                            lifetime = 30f;
+                                            interp = Interp.pow5Out;
+                                            sizeInterp = Interp.pow5In;
+                                            colorFrom = Color.valueOf("FEEBB3FF");
+                                            colorTo = Color.valueOf("FEEBB3FF");
+                                        }}
+                                );
+                                despawnEffect = Fx.none;
+                                trailLength = 8;
+                                trailWidth = 4f;
+                                trailColor = Color.valueOf("FEEBB3FF");
+                                frontColor = Color.valueOf("FEEBB3FF");
+                                backColor = Color.valueOf("FEEBB3FF");
+                                width = 16f;
+                                height = 32f;
+                                lifetime = 40f;
+                                sprite = "magic-大导弹";
+                            }};
+                        }});
+        }};
         //幻境海军
         //一级
         StillWater = new UnitType("StillWater") {{
