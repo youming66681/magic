@@ -50,6 +50,8 @@ public class MLUnitTypes {
     //空
     //一级
     Breeze, SlantingWind, Gale,
+    //二级
+    BlazingFire, glow, blazing,
     //海
     //一级
     StillWater, ripple, Turbulence,
