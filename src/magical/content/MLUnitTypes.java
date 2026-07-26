@@ -1247,14 +1247,6 @@ public class MLUnitTypes {
                     maxRange = 160f;
                 }};
             }});
-            @Override
-            public Unit create(Team team){
-                Unit unit = super.create(team);
-
-                MLFx.smallEnergyBlast.at(unit.x, unit.y);
-
-                return unit;
-            }
         }};
     }
 }
