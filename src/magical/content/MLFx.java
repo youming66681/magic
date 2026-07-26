@@ -24,6 +24,7 @@ public class MLFx {
     public static Effect Explosion1;
     public static Effect Explosion2;
     public static Effect Explosion3;
+    public static Effect smallEnergyBlast;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -132,7 +133,7 @@ public class MLFx {
 
             Draw.reset();
         });
-        public static Effect smallEnergyBlast = new Effect(30f, e -> {
+        smallEnergyBlast = new Effect(30f, e -> {
             float fin = e.fin();
             float fout = e.fout();
             Color core = Color.valueOf("FEEBB3FF");

@@ -55,6 +55,8 @@ public class MLUnitTypes {
     //海
     //一级
     StillWater, ripple, Turbulence,
+    //二级
+    ExpelDarkness,
     //核心机
     Popular;
 
