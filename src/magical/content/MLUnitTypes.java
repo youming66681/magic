@@ -28,6 +28,7 @@ import mindustry.entities.bullet.ContinuousLaserBulletType;
 import mindustry.entities.pattern.ShootAlternate;
 import mindustry.content.StatusEffects;
 import mindustry.gen.MechUnit;
+import mindustry.type.weapons.RepairBeamWeapon;
 
 import static arc.graphics.g2d.Draw.*;
 import static arc.graphics.g2d.Lines.*;
@@ -1141,7 +1142,7 @@ public class MLUnitTypes {
                 mirror = false;
                 beamWidth = 1f;
                 repairSpeed = 5f;
-                bullet = new RepairBeamBulletType(){{
+                bullet = new BulletType() {{
                     maxRange = 80f;
                 }};
             }});
