@@ -1222,7 +1222,7 @@ public class MLUnitTypes {
                 maxTargets = 15;
                 effectRadius = 3f;
                 damageEffect = Fx.chainLightning;
-                shootSound = Sounds.spark;
+                shootSound = MLSounds.spark;
             }});
             weapons.add(
                 new RepairBeamWeapon("magic-repair"){{
