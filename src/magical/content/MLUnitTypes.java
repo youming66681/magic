@@ -1225,7 +1225,7 @@ public class MLUnitTypes {
                 shootSound = MLSounds.spark;
             }});
             weapons.add(
-                new RepairBeamWeapon("magic-repair"){{
+                new RepairBeamWeapon("magic-repair0"){{
                 x = -8f;
                 y = -8f;
                 shootY = 2f;
