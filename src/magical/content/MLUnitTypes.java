@@ -917,6 +917,46 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        //二级
+        ExpelDarkness = new UnitType("ExpelDarkness") {{
+            constructor = UnitTypes.risso.constructor;
+            speed = 1.6f;
+            rotateSpeed = 9;
+            waveTrailX = 0;
+            waveTrailY = -6;
+            hitSize = 18;
+            health = 1080;
+            armor = 4;
+            faceTarget = false;
+            weapons.add(new Weapon("magic-ExpelDarkness0") {{
+                reload = 30f;
+                recoil = 1.5f;
+                x = 0;
+                y = 0;
+                shootY = 0f;
+                mirror = false;
+                rotate = true;
+                rotateSpeed = 6f;
+                inaccuracy = 0f;
+                ejectEffect = Fx.casing3;
+                layerOffset = 0.001f;
+                shootSound = MLSounds.JG;
+                bullet = new BasicBulletType(8, 30) {{
+                    lifetime = 30;
+                    width = 10;
+                    height = 20;
+                    trailLength = 6;
+                    trailWidth = 3f;
+                    trailColor = Color.valueOf("FEEBB3FF");
+                    frontColor = Color.valueOf("FEEBB3FF");
+                    backColor = Color.valueOf("FEEBB3FF");
+                    splashDamageRadius = 24;
+                    splashDamage = 30;
+                    hitEffect = despawnEffect = MLFx.smallEnergyBlast;
+                    hitSound = MLSounds.plasmaboom;
+                }};
+            }});
+        }};
         //核心机
         //风行
         Popular = new UnitType("Popular") {{

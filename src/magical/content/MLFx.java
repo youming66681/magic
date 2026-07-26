@@ -132,6 +132,33 @@ public class MLFx {
 
             Draw.reset();
         });
+        public static Effect smallEnergyBlast = new Effect(30f, e -> {
+            float fin = e.fin();
+            float fout = e.fout();
+            Color core = Color.valueOf("FEEBB3FF");
+            Color glow = Color.valueOf("FFD37FFF");
+            Draw.color(glow);
+            Lines.stroke(2f * fout);
+            Lines.circle(
+                    e.x,
+                    e.y,
+                    8f + 24f * fin
+            );
+            Draw.color(core);
+            Lines.stroke(1.5f * fout);
+            Lines.circle(e.x, e.y, 4f + 14f * fin);
+            Draw.color(Color.white, core, fin);
+            Fill.circle(e.x, e.y, 6f * fout
+            );
+            Draw.color(core);
+            Angles.randLenVectors(e.id, 8, 4f + 18f * fin, (x, y) -> {Fill.circle(e.x + x, e.y + y, 2f * fout);
+                    }
+            );
+            Draw.color(Color.white);
+            Lines.stroke(1f * fout);
+            Lines.line(e.x - 18f * fout, e.y, e.x + 18f * fout, e.y);
+            Lines.line(e.x, e.y - 18f * fout, e.x, e.y + 18f * fout);
+        });
     }
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
