@@ -56,7 +56,7 @@ public class MLUnitTypes {
     //一级
     StillWater, ripple, Turbulence,
     //二级
-    ExpelDarkness, ChasingLight,
+    ExpelDarkness, ChasingLight, Dawn,
     //核心机
     Popular;
 
