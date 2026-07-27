@@ -41,59 +41,21 @@ import static mindustry.Vars.*;
 public class MLSpawnUnits {
     public static SpawnUnitType StarlightSpawn;
     public static void load(){
-        StarlightSpawn = new SpawnUnitType("星芒跃迁"){{
-        weapons.add(new Weapon() {{
-                alwaysShooting = shootOnDeath = true;
-                mirror = false;
-                controllable = aiControllable = false;
-                x = shootY = 0f;
-                shootSound = MLSounds.plasmadrop;
-                parts.addAll(
-                    new HaloPart(){{
-                        sides = 3;
-                        shapes = 3;
-                        y = 0f;
-                        color = Color.valueOf("FEEBB3FF");
-                        colorTo = Color.valueOf("FEEBB3FF");
-                        tri = true;
-                        radius = 12f;
-                        radiusTo = 12f;
-                        triLength = 24f;
-                        triLengthTo = 24f;
-                        haloRadius = 10f;
-                        haloRadiusTo = 10f;
-                        haloRotateSpeed = 3f;
-                    }},
-                    new HaloPart(){{
-                        sides = 3;
-                        shapes = 3;
-                        y = 0f;
-                        color = Color.valueOf("FEEBB3FF");
-                        colorTo = Color.valueOf("FEEBB3FF");
-                        tri = true;
-                        radius = 9f;
-                        radiusTo = 9f;
-                        triLength = 18f;
-                        triLengthTo = 18f;
-                        haloRadius = 15f;
-                        haloRadiusTo = 15f;
-                        haloRotateSpeed = -3f;
-                    }}
-                    );
-                bullet = new BasicBulletType() {{
-                        width = height = shrinkY = 0f;
-                        killShooter = ignoreSpawnAngle = true;
-                        collides = absorbable = hittable = keepVelocity = false;
-                        speed = damage = 0f;
-                        lifetime = 60f;
-                        hitSound = despawnSound = MLSounds.plasmaboom;
-                        hitSoundVolume = 1f;
-                        hitShake = 10f;
-                        shootEffect = smokeEffect = hitEffect = despawnEffect = Fx.none;
-                        despawnUnit = MLUnitTypes.Starlight;
-                        despawnUnitRadius = 0f;
-                    }};
-            }});
-    }};
+        Events.on(EventType.UnitCreateEvent.class,e -> {
+
+            Unit u = e.unit;
+
+            if(!u.team.isAI()) return;
+
+            if(u.type == MLUnitTypes.Starlight){
+
+                MLFx.shrinkLightBeam.at(
+                        u.x,
+                        u.y
+                );
+
+            }
+
+        });
     }
 }
