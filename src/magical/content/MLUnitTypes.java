@@ -1321,7 +1321,7 @@ public class MLUnitTypes {
                             spin = 6f;
                             sprite = "magic-十字星";
                             hitEffect = new WrapEffect(){{
-                                effect = MLFx.dynamicSpikes;
+                                effect = Fx.dynamicSpikes;
                                 color = Color.valueOf("FEEBB3FF");
                                 rotation = 48f;
                             }};
@@ -1335,7 +1335,7 @@ public class MLUnitTypes {
                 alternate = true;
                 inaccuracy = 0f;
                 rotate = false;
-                shootSound = Sounds.laser;
+                shootSound = MLSounds.laser;
                 bullet = new LaserBulletType(){{
                     damage = 50f;
                     smokeEffect = Fx.bigShockwave;
@@ -1345,7 +1345,7 @@ public class MLUnitTypes {
                             Color.valueOf("FEEBB3FF")
                     };
                     width = 16f;
-                    height = 640f;
+                    length = 640f;
                 }};
             }});
         }};
