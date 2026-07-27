@@ -11,6 +11,8 @@ import mindustry.entities.effect.WaveEffect;
 import mindustry.game.EventType.UnitCreateEvent;
 import mindustry.gen.Unit;
 import mindustry.type.UnitType;
+import mindustry.game.EventType.WorldLoadEvent;
+import mindustry.game.SpawnGroup;
 
 import static mindustry.Vars.*;
 
@@ -23,5 +25,13 @@ public class MLSpawnUnits {
             }
             // 其他单位继续添加...
         }
+        // 波次专属入场特效（不同单位不同特效）
+       /* for (SpawnGroup group : state.rules.spawns) {
+            if (group.type == MLUnitTypes.Starlight) {
+                group.spawnEffect = MLFx.shrinkLightBeam;
+            } else if (group.type == MLUnitTypes.另一个单位) {
+                group.spawnEffect = Fx.spawnWave;
+            }
+        }*/
     }
 }
