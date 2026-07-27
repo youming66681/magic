@@ -1345,7 +1345,7 @@ public class MLUnitTypes {
                             Color.valueOf("FEEBB3FF")
                     };
                     width = 16f;
-                    length = 640f;
+                    length = 240f;
                 }};
             }});
         }};
