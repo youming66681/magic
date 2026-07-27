@@ -157,6 +157,7 @@ public class MLBlocks {
             health = 500;
             itemCapacity = 2000;
             size = 2;
+            alwaysUnlocked = true;
 
             unitCapModifier = 5;
 
