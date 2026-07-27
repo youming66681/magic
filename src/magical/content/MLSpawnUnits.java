@@ -25,7 +25,7 @@ public class MLSpawnUnits {
             if (unit == null || unit.type == null) return;
             // 为不同的单位设置不同的延迟和特效
             if (unit.type == MLUnitTypes.Starlight) {
-                float delay = 1f ;
+                float delay = 1f;
                 float x = unit.x + Mathf.random(-240f, 240f);
                 float y = unit.y + Mathf.random(-240f, 240f);
                 UnitType type = unit.type;
@@ -38,6 +38,7 @@ public class MLSpawnUnits {
                     newUnit.set(x, y);
                     newUnit.add();
                 });
+            }
                 else if (type == MLUnitTypes.Qingxiao) {
                     float delay = 1f ;
                     float x = unit.x + Mathf.random(-240f, 240f);
@@ -51,8 +52,6 @@ public class MLSpawnUnits {
                         newUnit.add();
                     });
                 }
-
-            }
         });
     }
 }
