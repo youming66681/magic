@@ -14,7 +14,7 @@ public class SpawnUnitType extends UnitType {
         super(name);
         health = 10000;
         hitSize = drownTimeMultiplier = -1f;
-        reload = rotateSpeed = speed = fogRadius = lightRadius = range = buildSpeed = dpsEstimate = 0f;
+        rotateSpeed = speed = fogRadius = lightRadius = range = buildSpeed = dpsEstimate = 0f;
         flying = lowAltitude = hidden = true;
         targetable = isEnemy = canDrown = alwaysUnlocked = physics = wobble = hittable = drawCell = drawShields = drawMinimap = useUnitCap = playerControllable = logicControllable = false;
         createScorch = createWreck = false;
