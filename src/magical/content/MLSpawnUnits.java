@@ -1,42 +1,61 @@
 package magical.content;
 
 import arc.Events;
-import mindustry.game.EventType.UnitSpawnEvent;
-import mindustry.gen.Unit;
-import arc.math.Mathf;
-import arc.util.Time;
+import arc.graphics.Color;
+import arc.struct.ObjectMap;
 import arc.util.Timer;
+import mindustry.content.Fx;
+import mindustry.entities.Effect;
+import mindustry.entities.effect.WaveEffect;
+import mindustry.game.EventType.UnitCreateEvent;
+import mindustry.gen.Unit;
+import mindustry.type.UnitType;
+
+import static mindustry.Vars.*;
 
 public class MLSpawnUnits {
-    public static void load() {
-    ObjectMap<UnitType, Float> entryDelay = new ObjectMap<>();
-    ObjectMap<UnitType, Effect> entryEffect = new ObjectMap<>();
+    // 延迟时间映射 (单位类型 → 延迟秒数)
+    public static ObjectMap<UnitType, Float> entryDelay = new ObjectMap<>();
+    // 入场特效映射 (单位类型 → 特效)
+    public static ObjectMap<UnitType, Effect> entryEffect = new ObjectMap<>();
 
-    entryDelay.put(Starlight, 1f);
-    entryEffect.put(Starlight, MLFx.shrinkLightBeam);
+    public static void load() {
+        // 为特定单位设置延迟和特效
+        entryDelay.put(MLUnitTypes.Starlight, 1f);                // 延迟 1 秒
+        entryEffect.put(MLUnitTypes.Starlight, MLFx.shrinkLightBeam);  // 你的自定义特效，若不存在可换为 Fx.spawn
+
+        // 监听单位创建事件
         Events.on(UnitCreateEvent.class, e -> {
             Unit unit = e.unit;
-            // 只对波次单位生效
+            // 只处理由波次生成的单位（spawner 为 null 且队伍为波次敌队）
             if (e.spawner != null || unit.team != state.rules.waveTeam) return;
+
             Float delay = entryDelay.get(unit.type);
             if (delay == null) return;
-            // 暂存单位当前位置
+
             float startX = unit.x, startY = unit.y;
             float originDelay = delay;
-            // 让单位暂时不可见（将单位移到很远的地方，等时间到再移回）
-            unit.set(-10000f, -10000f);   // 移出屏幕
+
+            // 暂时将单位移出屏幕以实现隐藏
+            unit.set(-10000f, -10000f);
             unit.vel.setZero();
-            // 同时，在原位置播放一个“预警”特效（可选）
+
+            // 在原位置播放一个预警特效（渐大光环）
+            Effect warnFx = new WaveEffect() {{
+                lifetime = originDelay * 60f;
+                sizeFrom = 10f;
+                sizeTo = 40f;
+                colorFrom = Color.valueOf("FFFFFF");
+                colorTo = Color.valueOf("FFFFFF");
+            }};
             warnFx.at(startX, startY);
-            // 定时器：延迟后真正激活单位
+
+            // 延迟后出现
             Timer.schedule(() -> {
-                // 将单位移回原位置
                 unit.set(startX, startY);
-                // 播放入场特效
                 Effect fx = entryEffect.get(unit.type);
                 if (fx != null) fx.at(startX, startY);
-                // 给单位一个初始速度或动作（可选）
-                unit.vel.y = -2f;   // 稍微弹起
+                unit.vel.y = -2f;                 // 轻微弹起
             }, delay);
         });
     }
