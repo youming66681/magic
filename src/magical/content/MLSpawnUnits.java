@@ -26,6 +26,6 @@ public class MLSpawnUnits {
                         // 替换为你的自定义特效（若不存在，先用 Fx.spawnWave 测试）
                         MLFx.shrinkLightBeam.at(e.unit.x, e.unit.y);
                     }
-                }
+                });
     }
 }
