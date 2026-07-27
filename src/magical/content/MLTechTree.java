@@ -5,6 +5,8 @@ import mindustry.type.ItemStack;
 import mindustry.content.Planets;
 import arc.struct.Seq;
 import mindustry.game.Objectives;
+import mindustry.content.SectorPresets;
+import mindustry.game.Objectives.SectorComplete;
 
 import magical.content.MLItems;
 import magical.content.MLBlocks;
