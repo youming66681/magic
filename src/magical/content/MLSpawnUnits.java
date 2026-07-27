@@ -27,7 +27,7 @@ public class MLSpawnUnits {
             if (unit == null || unit.type == null) return;
             // 为不同的单位设置不同的延迟和特效
             if (unit.type == MLUnitTypes.Starlight) {
-                float delay = 1f + Mathf.random(0f, 2f);
+                float delay = 1f ;
                 float x = unit.x + Mathf.random(-240f, 240f);  // 原来是 -8, 8
                 float y = unit.y + Mathf.random(-240f, 240f);
                 UnitType type = unit.type;
