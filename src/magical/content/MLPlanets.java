@@ -37,19 +37,23 @@ public class MLPlanets {
 
             launchCapacityMultiplier = 0f;
             sectorSeed = 1;
-            bloom = false;
-            prebuildBase = false;
-            tidalLock = false;
-            allowWaves = true;
-            allowSectorInvasion = true;
-            allowLaunchSchematics = true;
-            enemyCoreSpawnReplace = true;
-            allowLaunchLoadout = true;
-            ruleSetter = r -> {
-                r.waveTeam = Team.crux;
-                r.placeRangeCheck = false;
-                r.coreDestroyClear = true;
-            };
+             tidalLock = false;
+             alwaysUnlocked = true;
+             clearSectorOnLose = true;
+             showRtsAIRule = false;
+             allowCampaignRules = true;
+             allowLegacyLaunchPads = fasle;
+             allowWaves = true;
+             allowLaunchLoadout = false;
+             visible = true;
+             drawOrbit = true;
+             accessible = true;
+             hasAtmosphere = true;
+             updateLighting = true;
+             allowLaunchToNumbered = false;
+             allowSectorInvasion = true;
+             bloom = false;
+             allowLaunchSchematics = true;
             iconColor = Color.valueOf("97B5EDFF");
             atmosphereColor = Color.valueOf("97B5EDFF");
             atmosphereRadIn = 0.02f;

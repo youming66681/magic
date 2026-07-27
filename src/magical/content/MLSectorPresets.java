@@ -13,19 +13,13 @@ public class MLSectorPresets{
 
         LandingZone = new SectorPreset("LandingZone", MLPlanets.cecilia, 0){{
             alwaysUnlocked = true;
-            addStartingItems = true;
             captureWave = 10;
             difficulty = 1;
-            overrideLaunchDefaults = true;
-            noLighting = true;
-            isLastSector = true;
-            startWaveTimeMultiplier = 2f;
         }};
 
        /* planetaryTerminal = new SectorPreset("planetaryTerminal", serpulo, 93){{
             difficulty = 10;
             captureWave = 78;
-            isLastSector = true;
         }};*/
     }
 }
