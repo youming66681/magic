@@ -25,7 +25,7 @@ public class MLFx {
     public static Effect Explosion2;
     public static Effect Explosion3;
     public static Effect smallEnergyBlast;
-    public static Effect shrinkLightBeam;
+    public static Effect smallTeleport;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -161,21 +161,25 @@ public class MLFx {
             Lines.line(e.x - 18f * fout, e.y, e.x + 18f * fout, e.y);
             Lines.line(e.x, e.y - 18f * fout, e.x, e.y + 18f * fout);
         });
-        shrinkLightBeam = new Effect(60f, e -> {
+        smallTeleport = new Effect(35f, e -> {
             float fin = e.fin();
             float fout = e.fout();
-            float height = 120f * fout;
-            float width = 20f * fout;
-            //外圈
-            Draw.color(Color.valueOf("FEEBB3").cpy().a(fout * 0.4f));
-            Fill.rect(e.x, e.y, width, height);
-            //顶部光环
-            Lines.stroke(3f * fout);
-            Draw.color(Color.valueOf("FEEBB3").cpy().a(fout));
-            Lines.circle(e.x, e.y, 30f * fin);
-            //底部能量圈
+            Draw.color(Color.valueOf("8BE8FFFF"), Color.valueOf("FFFFFF00"), fin);
             Lines.stroke(2f * fout);
-            Lines.circle(e.x, e.y, 12f + 20f * fin);
+            Lines.circle(e.x, e.y, 4f + fin * 18f);
+            Draw.color(Color.valueOf("B8FFFFFF"));
+            Angles.randLenVectors(
+                    e.id,
+                    16,
+                    fin * 20f,
+                    (x, y) -> {
+                        float size = 2f * fout;
+                        Drawf.tri(e.x + x, e.y + y, size, 8f * fout, Mathf.angle(x, y));
+                    });
+            // 中心闪光
+            Draw.color(Color.white);
+            Drawf.light(e.x, e.y, 25f * fout, Color.cyan, fout
+            );
         });
     }
     public static Effect Slash(Color colorSlash, float len, float width){
