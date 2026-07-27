@@ -42,7 +42,7 @@ public class MLPlanets {
              clearSectorOnLose = true;
              showRtsAIRule = false;
              allowCampaignRules = true;
-             allowLegacyLaunchPads = fasle;
+             allowLegacyLaunchPads = false;
              allowWaves = true;
              allowLaunchLoadout = false;
              visible = true;
