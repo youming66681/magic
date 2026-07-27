@@ -41,12 +41,11 @@ import static mindustry.Vars.*;
 public class MLSpawnUnits {
     public static SpawnUnitType StarlightSpawn;
     public static void load(){
-        StarlightSpawn = new SpawnUnitType("StarlightSpawn"){{
+        StarlightSpawn = new SpawnUnitType("星芒跃迁"){{
         weapons.add(new Weapon() {{
                 alwaysShooting = shootOnDeath = true;
                 mirror = false;
-                controllable = false;
-                aiControllable = true;
+                controllable = aiControllable = false;
                 x = shootY = 0f;
                 shootSound = MLSounds.plasmadrop;
                 parts.addAll(
