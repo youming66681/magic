@@ -20,6 +20,7 @@ import magical.content.MLSounds;
 import magical.content.MLFx;
 import magical.content.MLStatusEffects;
 import magical.content.MLSpawnUnits;
+import magical.content.MLSectorPresets;
 
 public class magic extends Mod {
     public static Mods.LoadedMod ML;
