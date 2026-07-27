@@ -30,8 +30,8 @@ public class MLSpawnUnits {
                 float delay = 1f + Mathf.random(0f, 2f);
                 float x = unit.x, y = unit.y;
                 UnitType type = unit.type;
-                // 立即移除原始单位，避免它短暂出现
                 MLFx.smallTeleport.at(x, y);
+                // 立即移除原始单位，避免它短暂出现
                 unit.remove();
                 // 延迟后重新创建单位
                 Time.run(delay * 35f, () -> {

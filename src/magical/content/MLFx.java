@@ -134,54 +134,45 @@ public class MLFx {
 
             Draw.reset();
         });
-        smallEnergyBlast = new Effect(30f, e -> {
-            float fin = e.finpow();
-            float fout = e.foutpow();
-            Color core = Color.valueOf("FEEBB3FF");
-            Color glow = Color.valueOf("FFD37FFF");
-            Draw.color(glow);
-            Lines.stroke(2f * fout);
-            Lines.circle(
-                    e.x,
-                    e.y,
-                    8f + 24f * fin
-            );
-            Draw.color(core);
-            Lines.stroke(1.5f * fout);
-            Lines.circle(e.x, e.y, 4f + 14f * fin);
-            Draw.color(Color.white, core, fin);
-            Fill.circle(e.x, e.y, 6f * fout
-            );
-            Draw.color(core);
-            Angles.randLenVectors(e.id, 8, 4f + 18f * fin, (x, y) -> {Fill.circle(e.x + x, e.y + y, 2f * fout);
-                    }
-            );
-            Draw.color(Color.white);
-            Lines.stroke(1f * fout);
-            Lines.line(e.x - 18f * fout, e.y, e.x + 18f * fout, e.y);
-            Lines.line(e.x, e.y - 18f * fout, e.x, e.y + 18f * fout);
-        });
-        smallTeleport = new Effect(35f, e -> {
+        smallEnergyBlast = new Effect(60f, 96f, e -> {
             float fin = e.fin();
             float fout = e.fout();
-            Draw.color(Color.valueOf("8BE8FFFF"), Color.valueOf("FFFFFF00"), fin);
+            float radius = 32f;
+            Draw.color(Color.valueOf("FEEBB3FF"), Color.white, fin);
+            Lines.stroke(3f * fout);
+            Lines.circle(e.x, e.y, radius * fin);
+            Draw.color(Color.valueOf("FEEBB3AA"));
             Lines.stroke(2f * fout);
-            Lines.circle(e.x, e.y, 4f + fin * 18f);
-            Draw.color(Color.valueOf("B8FFFFFF"));
-            Angles.randLenVectors(
-                    e.id,
-                    16,
-                    fin * 20f,
-                    (x, y) -> {
-                        float size = 2f * fout;
-                        Drawf.tri(e.x + x, e.y + y, size, 8f * fout, Mathf.angle(x, y));
-                    });
-            // 中心闪光
+            Lines.circle(e.x, e.y, radius * 0.7f + radius * 0.3f * fin);
+            Draw.color(Color.valueOf("FEEBB3FF"));
+            for(int i = 0; i < 3; i++){
+                float angle = e.rotation + i * 120f - fin * 360f;
+                float x1 = e.x + Angles.trnsx(angle, radius * 0.35f);
+                float y1 = e.y + Angles.trnsy(angle, radius * 0.35f);
+                float x2 = e.x + Angles.trnsx(angle, radius);
+                float y2 = e.y + Angles.trnsy(angle, radius);
+                Lines.line(x1, y1, x2, y2);
+            }
+            Draw.color(Color.valueOf("FEEBB3FF"));
+            Angles.randLenVectors(e.id, 48, radius, (x, y) -> {
+                float scale = Mathf.sin(fin * Mathf.pi);
+                Drawf.tri(e.x + x * scale, e.y + y * scale, 3f * fout, 12f * fout, Mathf.angle(x, y) + fin * 360f);
+            });
             Draw.color(Color.white);
-            Drawf.light(e.x, e.y, 25f * fout, Color.cyan, fout
-            );
+            Fill.circle(e.x, e.y, 10f * fout);
+            Draw.color(Color.valueOf("FEEBB3FF"));
+            Fill.circle(e.x, e.y, 6f * fout);
+            Draw.color(Color.valueOf("FEEBB3FF"));
+            for(int i = 0; i < 8; i++){
+                float angle = i * 45f + fin * 720f;
+                float length = 20f + 30f * Mathf.sin(fin * Mathf.pi);
+                Drawf.tri(e.x, e.y, 2f * fout, length * fout, angle);
+            }
+            Drawf.light(e.x, e.y, 96f, Color.valueOf("FEEBB3FF"), fout);
         });
-    }
+        smallTeleport = new MultiEffect(
+
+
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
 
