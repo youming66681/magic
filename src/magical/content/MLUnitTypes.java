@@ -1316,7 +1316,7 @@ public class MLUnitTypes {
                             hitSound = MLSounds.plasmaboom;
                             width = 64f;
                             height = 64f;
-                            knockback = 32f;
+                            knockback = 8f;
                             despawnEffect = Fx.none;
                             spin = 6f;
                             sprite = "magic-十字星";
