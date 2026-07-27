@@ -52,13 +52,13 @@ public class MLTechTree {
                         });
             });
        /*激沅*/node(MLBlocks.excitedYuan, () -> {
-            /*流冲*/node(MLBlocks.fluvialErosion, Seq.with(new SectorComplete(MLSectorPresets.LandingZone)), -> {
+            /*流冲*/node(MLBlocks.fluvialErosion, Seq.with(new SectorComplete(MLSectorPresets.LandingZone)), ()-> {
                 });
             });
             /*基础制造厂*/node(MLBlocks.BasicManufacturingPlant, () -> {
-                /*微雨*/node(MLUnitTypes.drizzle, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant), new SectorComplete(MLSectorPresets.LandingZone)) () -> {
-                    /*细雨*/node(MLUnitTypes.Drizzle, Seq.with(new Objectives.Research(MLBlocks.curvatureEvolutionPod), new SectorComplete(MLSectorPresets.LandingZone)) () -> {
-                        /*透雨*/node(MLUnitTypes.drizzlingRain, Seq.with(new Objectives.Research(MLBlocks.quantumFactory), new SectorComplete(MLSectorPresets.LandingZone)) () -> {
+                /*微雨*/node(MLUnitTypes.drizzle, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant), new SectorComplete(MLSectorPresets.LandingZone)), () -> {
+                    /*细雨*/node(MLUnitTypes.Drizzle, Seq.with(new Objectives.Research(MLBlocks.curvatureEvolutionPod), new SectorComplete(MLSectorPresets.LandingZone)), () -> {
+                        /*透雨*/node(MLUnitTypes.drizzlingRain, Seq.with(new Objectives.Research(MLBlocks.quantumFactory), new SectorComplete(MLSectorPresets.LandingZone)), () -> {
 
                         });
                     });
