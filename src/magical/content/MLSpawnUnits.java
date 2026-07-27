@@ -45,7 +45,8 @@ public class MLSpawnUnits {
         weapons.add(new Weapon() {{
                 alwaysShooting = shootOnDeath = true;
                 mirror = false;
-                controllable = aiControllable = false;
+                controllable = false;
+                aiControllable = true;
                 x = shootY = 0f;
                 shootSound = MLSounds.plasmadrop;
                 parts.addAll(
