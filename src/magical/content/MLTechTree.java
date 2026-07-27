@@ -17,7 +17,7 @@ public class MLTechTree {
     public static void load() {
         MLPlanets.cecilia.techTree = Planets.serpulo.techTree;
 
-        TechNode root = nodeRoot("cecilia", MLBlocks.baseCore, true, () -> {
+        TechNode root = nodeRoot("cecilia", MLBlocks.baseCore, () -> {
            //基础科技
             nodeProduce(MLItems.phantomSteel, () -> {
                 nodeProduce(MLItems.phantomTitaniumSteel, () -> {
