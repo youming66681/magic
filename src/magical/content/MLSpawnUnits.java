@@ -33,7 +33,7 @@ public class MLSpawnUnits {
                 // 播放特效（可自行替换成其他特效）
                 MLFx.shrinkLightBeam.at(x, y);
                 // 延迟后重新创建单位
-                Time.run(delay * 0f, () -> {
+                Time.run(delay * 1f, () -> {
                     // 使用波次队伍创建单位，确保攻击正确
                     Unit newUnit = type.create(state.rules.waveTeam);
                     newUnit.set(x, y);
