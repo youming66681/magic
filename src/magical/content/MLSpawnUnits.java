@@ -53,19 +53,42 @@ public class MLSpawnUnits {
                         killShooter = ignoreSpawnAngle = true;
                         collides = absorbable = hittable = keepVelocity = false;
                         speed = damage = 0f;
-                        lifetime = 90f;
+                        lifetime = 60f;
                         hitSound = despawnSound = MLSounds.plasmaboom;
                         hitSoundVolume = 1f;
                         hitShake = 10f;
                         shootEffect = smokeEffect = hitEffect = despawnEffect = Fx.none;
-                        parts.addAll();
-                    @Override
-                    public void despawned(Bullet b){
-
-                        MLFx.teleportEnter.at(b.x, b.y);
-
-                        super.despawned(b);
-                    }
+                        parts.addAll(
+                        new HaloPart(){{
+                        sides = 3;
+                        shapes = 3;
+                        y = 0f;
+                        color = Color.valueOf("FEEBB3FF");
+                        colorTo = Color.valueOf("FEEBB3FF");
+                        tri = true;
+                        radius = 12f;
+                        radiusTo = 12f;
+                        triLength = 24f;
+                        triLengthTo = 24f;
+                        haloRadius = 10f;
+                        haloRadiusTo = 10f;
+                        haloRotateSpeed = 3f;
+                                }}
+                        new HaloPart(){{
+                        sides = 3;
+                        shapes = 3;
+                        y = 0f;
+                        color = Color.valueOf("FEEBB3FF");
+                        colorTo = Color.valueOf("FEEBB3FF");
+                        tri = true;
+                        radius = 9f;
+                        radiusTo = 9f;
+                        triLength = 18f;
+                        triLengthTo = 18f;
+                        haloRadius = 15f;
+                        haloRadiusTo = 15f;
+                        haloRotateSpeed = -3f;
+                          );
                         despawnUnit = MLUnitTypes.Starlight;
                         despawnUnitRadius = 0f;
                     }};

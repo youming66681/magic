@@ -25,7 +25,7 @@ public class MLFx {
     public static Effect Explosion2;
     public static Effect Explosion3;
     public static Effect smallEnergyBlast;
-    public static Effect teleportEnter;
+    public static Effect shrinkLightBeam;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -161,27 +161,30 @@ public class MLFx {
             Lines.line(e.x - 18f * fout, e.y, e.x + 18f * fout, e.y);
             Lines.line(e.x, e.y - 18f * fout, e.x, e.y + 18f * fout);
         });
-        teleportEnter = new Effect(90f, e -> {
+        shrinkLightBeam = new Effect(60f, e -> {
             float fin = e.fin();
             float fout = e.fout();
-            // 粒子聚集
-            Draw.color(Color.valueOf("FEEBB3"));
-            Angles.randLenVectors(e.id, 40, 10f + fin * 40f, (x, y) -> {Fill.circle(e.x + x, e.y + y, 2f * fout);
-                    });
-            // 圆环扩散
-            Lines.stroke(3f * fout, Color.valueOf("FEEBB3"));
-            Lines.circle(e.x, e.y, fin * 70f);
-            Lines.stroke(1f * fout, Color.white);
-            Lines.circle(e.x, e.y, fin * 45f);
-            // 最后光柱
-            if(e.fin() > 0.65f){
-                float t = (e.fin()-0.65f)/0.35f;
-                Draw.color(Color.valueOf("FEEBB3"), Color.white, t);
-                Fill.rect(e.x, e.y, 12f, 160f * t);
-                Fill.circle(e.x, e.y, 20f * t);
-                Draw.color(Color.white);
-                Fill.circle(e.x, e.y, 8f * t);
-            }
+            float height = 120f * fout;
+            float width = 20f * fout;
+            //外圈
+            Draw.color(Color.valueOf("FEEBB3").cpy().a(fout * 0.4f));
+            Fill.rect(
+                    e.x,
+                    e.y,
+                    width,
+                    height
+            );
+            //核心光柱
+            Draw.color(Color.valueOf("FFFFFF").cpy().a(fout));
+            Fill.rect(e.x, e.y, width * 0.35f, height
+            );
+            //顶部光环
+            Lines.stroke(3f * fout);
+            Draw.color(Color.valueOf("FEEBB3").cpy().a(fout));
+            Lines.circle(e.x, e.y, 30f * fin);
+            //底部能量圈
+            Lines.stroke(2f * fout);
+            Lines.circle(e.x, e.y, 12f + 20f * fin);
         });
     }
     public static Effect Slash(Color colorSlash, float len, float width){
