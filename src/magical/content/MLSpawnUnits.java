@@ -3,7 +3,7 @@ package magical.content;
 import arc.Events;
 import arc.graphics.Color;
 import arc.struct.ObjectMap;
-import arc.util.Timer;
+import arc.util.Time;
 import mindustry.content.Fx;
 import mindustry.entities.Effect;
 import mindustry.entities.effect.WaveEffect;
@@ -20,43 +20,46 @@ public class MLSpawnUnits {
     public static ObjectMap<UnitType, Effect> entryEffect = new ObjectMap<>();
 
     public static void load() {
-        // 为特定单位设置延迟和特效
-        entryDelay.put(MLUnitTypes.Starlight, 1f);                // 延迟 1 秒
-        entryEffect.put(MLUnitTypes.Starlight, MLFx.shrinkLightBeam);  // 你的自定义特效，若不存在可换为 Fx.spawn
+        // 设置需要特殊入场的单位及其延迟和特效
+        entryDelay.put(MLUnitTypes.Starlight, 1f);
+        entryEffect.put(MLUnitTypes.Starlight, MLFx.shrinkLightBeam); // 若特效不存在请改为 Fx.spawn
 
         // 监听单位创建事件
         Events.on(UnitCreateEvent.class, e -> {
             Unit unit = e.unit;
-            // 只处理由波次生成的单位（spawner 为 null 且队伍为波次敌队）
-            if (e.spawner != null || unit.team != state.rules.waveTeam) return;
+            // 只处理波次生成的单位（没有 spawner，不是玩家队伍，不是核心产出）
+            if (e.spawner != null || unit.team == player.team() || unit.spawnedByCore) return;
 
             Float delay = entryDelay.get(unit.type);
             if (delay == null) return;
 
             float startX = unit.x, startY = unit.y;
-            float originDelay = delay;
+            UnitType type = unit.type;
 
-            // 暂时将单位移出屏幕以实现隐藏
-            unit.set(-10000f, -10000f);
-            unit.vel.setZero();
+            // 移除原始单位，防止它立即出现
+            unit.remove();
 
-            // 在原位置播放一个预警特效（渐大光环）
-            Effect warnFx = new WaveEffect() {{
-                lifetime = originDelay * 60f;
-                sizeFrom = 10f;
-                sizeTo = 40f;
-                colorFrom = Color.valueOf("FFFFFF");
-                colorTo = Color.valueOf("FFFFFF");
-            }};
-            warnFx.at(startX, startY);
+            // 播放入场特效（可覆盖整个等待时间）
+            Effect fx = entryEffect.get(type);
+            if (fx != null) {
+                fx.at(startX, startY);
+            } else {
+                // 如果没有定义特效，播放一个默认的预警光环
+                new WaveEffect() {{
+                    lifetime = delay * 60f;
+                    sizeFrom = 10f; sizeTo = 40f;
+                    colorFrom = Color.valueOf("FFFFFF");
+                    colorTo = Color.valueOf("FFFFFF");
+                }}.at(startX, startY);
+            }
 
-            // 延迟后出现
-            Timer.schedule(() -> {
-                unit.set(startX, startY);
-                Effect fx = entryEffect.get(unit.type);
-                if (fx != null) fx.at(startX, startY);
-                unit.vel.y = -2f;                 // 轻微弹起
-            }, delay);
+            // 延迟后重新创建单位
+            Time.run(delay * 60f, () -> {
+                Unit newUnit = type.create(unit.team);
+                newUnit.set(startX, startY);
+                newUnit.add();
+                newUnit.vel.y = -2f; // 轻微弹跳
+            });
         });
     }
 }
