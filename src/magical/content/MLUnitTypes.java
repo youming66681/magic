@@ -1178,7 +1178,7 @@ public class MLUnitTypes {
             rotateSpeed = 4f;
             speed = 4f;
             drag = 0.02f;
-            accel = 0.04f;
+            accel = 0.08f;
             hitSize = 48;
             health = 8800;
             armor = 8;
@@ -1258,7 +1258,7 @@ public class MLUnitTypes {
             rotateSpeed = 3f;
             speed = 3.5f;
             drag = 0.02f;
-            accel = 0.04f;
+            accel = 0.08f;
             hitSize = 48;
             health = 12000;
             armor = 12;

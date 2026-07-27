@@ -1299,6 +1299,11 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 8),
                     new PayloadStack(Blocks.repairPoint, 8),
                     new PayloadStack(Blocks.forceProjector, 4));
+            addPlan("T1", MLUnitTypes.Qingxiao, 1500f, 11, 0,
+                    new PayloadStack(MLBlocks.largePhantomSteelWall, 8),
+                    new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 8),
+                    new PayloadStack(Blocks.lancer, 4),
+                    new PayloadStack(MLBlocks.Nebula, 1));
 
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);

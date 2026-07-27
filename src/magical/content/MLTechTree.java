@@ -118,8 +118,9 @@ public class MLTechTree {
                     });
                 });
                 /*星港造舰中心*/node(MLBlocks.starHarborShipbuildingCenter, () -> {
+                    /*箐霄*/node(MLUnitTypes.Qingxiao, () -> {
+                            });
                     /*星芒*/node(MLUnitTypes.Starlight, () -> {
-
                     });
                 });
                 /*幻晶*/node(MLBlocks.PhantomCrystal, () -> {

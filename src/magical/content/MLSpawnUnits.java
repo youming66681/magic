@@ -26,7 +26,7 @@ public class MLSpawnUnits {
             // 为不同的单位设置不同的延迟和特效
             if (unit.type == MLUnitTypes.Starlight) {
                 float delay = 1f ;
-                float x = unit.x + Mathf.random(-240f, 240f);  // 原来是 -8, 8
+                float x = unit.x + Mathf.random(-240f, 240f);
                 float y = unit.y + Mathf.random(-240f, 240f);
                 UnitType type = unit.type;
                 MLFx.smallTeleport.at(x, y);
@@ -38,20 +38,20 @@ public class MLSpawnUnits {
                     newUnit.set(x, y);
                     newUnit.add();
                 });
-                /*
-                else if (type == MLUnitTypes.AnotherUnit) {
-                    float delay = 0.8f + Mathf.random(0f, 1.5f);   // 0.8~2.3秒
-                    float x = unit.x + Mathf.random(-6f, 6f);
-                    float y = unit.y + Mathf.random(-6f, 6f);
-                    Time.run(1f, () -> { if (unit.isAdded()) unit.remove(); });
-                    Fx.spawnWave.at(x, y);                         // 使用原版特效
-                    Time.run(delay * 60f, () -> {
+                else if (type == MLUnitTypes.Qingxiao) {
+                    float delay = 1f ;
+                    float x = unit.x + Mathf.random(-240f, 240f);
+                    float y = unit.y + Mathf.random(-240f, 240f);
+                    UnitType type = unit.type;
+                    MLFx.smallTeleport.at(x, y);
+                    unit.remove();
+                    Time.run(delay * 35f, () -> {
                         Unit newUnit = type.create(state.rules.waveTeam);
                         newUnit.set(x, y);
                         newUnit.add();
                     });
                 }
-                 */
+
             }
         });
     }
