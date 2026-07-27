@@ -1305,8 +1305,7 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.largePhantomSteelWall, 8),
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 8),
                     new PayloadStack(Blocks.lancer, 4),
-                    new PayloadStack(Blocks.forceProjector, 2),
-                    new PayloadStack(MLBlocks.Nebula, 1));
+                    new PayloadStack(Blocks.forceProjector, 2));
 
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);
