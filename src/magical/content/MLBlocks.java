@@ -130,7 +130,8 @@ import mindustry.entities.effect.MultiEffect;
 import mindustry.entities.effect.WaveEffect;
 import mindustry.entities.bullet.LaserBulletType;
 import mindustry.world.consumers.ConsumePower;
-import mindustry.world.blocks.units.PayloadConstructor;
+import mindustry.world.blocks.payloads.Constructor;
+import mindustry.world.blocks.payloads.PayloadDeconstructor;
 
 public class MLBlocks {
 
