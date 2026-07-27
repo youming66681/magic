@@ -62,7 +62,7 @@ public class MLUnitTypes {
     Popular,
     //星舰
     //小型
-    Pioneer, Starlight;
+    Pioneer, Starlight, Qingxiao;
 
     public static void load(){
         //幻境陆军
@@ -678,7 +678,7 @@ public class MLUnitTypes {
                 speed = 4.5f;
                 drag = 0.03f;
                 accel = 0.08f;
-                hitSize = 16;
+                hitSize = 28;
                 health = 2880;
                 armor = 8;
                 engineOffset = 16;
@@ -1223,6 +1223,7 @@ public class MLUnitTypes {
                 effectRadius = 3f;
                 damageEffect = Fx.chainLightning;
                 shootSound = MLSounds.spark;
+                status = StatusEffects.shocked;
             }});
             weapons.add(
                 new RepairBeamWeapon("magic-repair0"){{
@@ -1245,6 +1246,106 @@ public class MLUnitTypes {
                 repairSpeed = 3f;
                 bullet = new BulletType() {{
                     maxRange = 160f;
+                }};
+            }});
+        }};
+        Qingxiao = new UnitType("Qingxiao") {{
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            lowAltitude = true;
+            rotateMoveFirst = true;
+            omniMovement = true;
+            rotateSpeed = 3f;
+            speed = 3.5f;
+            drag = 0.02f;
+            accel = 0.04f;
+            hitSize = 48;
+            health = 12000;
+            armor = 12;
+            itemCapacity = 0;
+            engineOffset = 0;
+            engineSize = 0f;
+            trailLength = 12;
+            range = 360;
+            abilities.add(
+                    new ForceFieldAbility(
+                            96f,     // radius
+                            1.2f,     // regen
+                            1200f,    // max
+                            180f,     // cooldown
+                            4,        // sides
+                            0f        // rotation
+                    )
+            );
+            abilities.add(new EnergyFieldAbility(
+                    60f,   // damage
+                    120f,   // reload
+                    180f   // range
+            ){{
+                healPercent = 0.25f;
+                x = 0f;
+                y = 0f;
+                maxTargets = 10;
+                effectRadius = 1f;
+                damageEffect = Fx.chainLightning;
+                shootSound = MLSounds.spark;
+                status = StatusEffects.shocked;
+            }});
+            weapons.add(
+                    new Weapon("magic-Qingxiao0") {{
+                        reload = 90f;
+                        x = 0f;
+                        y = 0f;
+                        rotate = false;
+                        mirror = false;
+                        alternate = true;
+                        inaccuracy = 0f;
+                        shootSound = MLSounds.plasmadrop;
+                        shake = 5f;
+                        ignoreRotation = true;
+                        bullet = new BasicBulletType(12, 50) {{
+                            damage = 180f;
+                            splashDamage = 120f;
+                            splashDamageRadius = 48f;
+                            lifetime = 30f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            trailLength = 16;
+                            trailWidth = 8f;
+                            trailColor = Color.valueOf("FEEBB3FF")
+                            hitSound = MLSounds.plasmaboom;
+                            width = 64f;
+                            height = 64f;
+                            knockback = 32f;
+                            despawnEffect = Fx.none;
+                            spin = 6f;
+                            sprite = "magic-十字星";
+                            hitEffect = new WrapEffect(){{
+                                effect = MLFx.dynamicSpikes;
+                                color = Color.valueOf("FEEBB3FF");
+                                rotation = 48f;
+                            }};
+                    }};
+              }});
+            new Weapon("magic-Qingxiao1") {{
+                x = -12f;
+                y = -10f;
+                reload = 15f;
+                mirror = true;
+                alternate = true;
+                inaccuracy = 0f;
+                rotate = false;
+                shootSound = Sounds.laser;
+                bullet = new LaserBulletType(){{
+                    damage = 50f;
+                    smokeEffect = Fx.bigShockwave;
+                    colors = new Color[]{
+                            Color.valueOf("FEEBB3FF"),
+                            Color.valueOf("FEEBB3FF"),
+                            Color.valueOf("FEEBB3FF")
+                    };
+                    width = 16f;
+                    height = 640f;
                 }};
             }});
         }};

@@ -18,8 +18,6 @@ import arc.math.Mathf;
 
 import static mindustry.Vars.*;
 
-//by youming
-
 public class MLSpawnUnits {
     public static void load() {
         Events.on(UnitSpawnEvent.class, e -> {
