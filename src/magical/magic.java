@@ -38,6 +38,7 @@ public class magic extends Mod {
         MLFx.load();
         MLItems.load();
         MLPlanets.load();
+        MLSectorPresets.load();
         MLUnitTypes.load();
         MLSpawnUnits.load();
         MLBlocks.load();
