@@ -1288,7 +1288,7 @@ public class MLBlocks {
         }};
         //星港造舰中心
         starHarborShipbuildingCenter = new magical.content.FlexAssembler("starHarborShipbuildingCenter"){{
-            requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 300, Items.graphite, 150, Items.silicon, 120, MLItems.phantomTitaniumSteel, 60, MLItems.mysticCrystal, 90}));
+            requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 500, Items.titanium, 800, Items.silicon, 1200, MLItems.logicChip, 200, MLItems.mysticCrystal, 500}));
             size = 7;
 
             droneType = MLUnitTypes.Pioneer;
@@ -1308,6 +1308,28 @@ public class MLBlocks {
 
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);
+        }};
+        StarshipMaterialConstructor = new Constructor("StarshipMaterialConstructor"){{
+            requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 120, Items.graphite, 90, Items.silicon, 70, MLItems.logicChip, 25}));
+            hasPower = true;
+            buildSpeed = 1f;
+            consumePower(5f);
+            size = 5;
+            filter = Seq.with(
+                    MLBlocks.largePhantomSteelWall,
+                    MLBlocks.largePhantomTitaniumSteelWall,
+                    MLBlocks.Nebula,
+                    Blocks.repairPoint,
+                    Blocks.forceProjector,
+                    Blocks.lancer
+            );
+        }};
+        StarshipMaterialDeconstructor = new PayloadDeconstructor("StarshipMaterialDeconstructor"){{
+            requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 120, Items.graphite, 90, Items.silicon, 70, MLItems.logicChip, 25}));
+            itemCapacity = 250;
+            consumePower(5f);
+            size = 5;
+            deconstructSpeed = 5f;
         }};
          //unit
     }
