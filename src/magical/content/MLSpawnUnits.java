@@ -58,13 +58,14 @@ public class MLSpawnUnits {
                         hitSoundVolume = 1f;
                         hitShake = 10f;
                         shootEffect = smokeEffect = hitEffect = despawnEffect = Fx.none;
-                        parts.addAll(
-                                new EffectSpawnerPart(){{
-                                    x = 0;
-                                    y = 0;
-                                    effect = MLFx.teleportEnter;
-                                }}
-                          );
+                        parts.addAll();
+                    @Override
+                    public void despawned(Bullet b){
+
+                        MLFx.teleportEnter.at(b.x, b.y);
+
+                        super.despawned(b);
+                    }
                         despawnUnit = MLUnitTypes.Starlight;
                         despawnUnitRadius = 0f;
                     }};

@@ -1170,7 +1170,7 @@ public class MLUnitTypes {
         }};
         Starlight = new UnitType("Starlight") {{
             constructor = UnitTypes.flare.constructor;
-            //controller = u -> new DefenderAI();
+            aiController = FlyingFollowAI::new;
             flying = true;
             lowAltitude = true;
             rotateMoveFirst = true;
