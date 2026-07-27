@@ -25,19 +25,16 @@ public class MLSpawnUnits {
             Unit unit = e.unit;
             if (unit == null || unit.type == null) return;
             if (unit.type == MLUnitTypes.Starlight) {
-                float delay = 1f;                // 单位延迟出现的时间（秒）
-                float x = unit.x, y = unit.y;
+                // 基础延迟 1.5 秒，每个单位额外随机 0~2 秒
+                float delay = 0.1f + Mathf.random(0f, 1f);
                 UnitType type = unit.type;
-                // 延迟一帧移除原单位（可改为 unit.remove() 立即移除）
-                Time.run(1f, () -> {
-                    if (unit.isAdded()) {
-                        unit.remove();
-                    }
-                });
-                // 立即播放入场特效
+                // 立即移除原始单位，避免它短暂出现
+                unit.remove();
+                // 播放特效（可自行替换成其他特效）
                 MLFx.shrinkLightBeam.at(x, y);
                 // 延迟后重新创建单位
-                Time.run(delay * 60f, () -> {
+                Time.run(delay * 0f, () -> {
+                    // 使用波次队伍创建单位，确保攻击正确
                     Unit newUnit = type.create(state.rules.waveTeam);
                     newUnit.set(x, y);
                     newUnit.add();
