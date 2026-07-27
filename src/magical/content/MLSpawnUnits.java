@@ -78,7 +78,7 @@ public class MLSpawnUnits {
                         haloRadius = 15f;
                         haloRadiusTo = 15f;
                         haloRotateSpeed = -3f;
-                    }};
+                    }}
                     );
                 bullet = new BasicBulletType() {{
                         width = height = shrinkY = 0f;
