@@ -24,9 +24,10 @@ public class MLSpawnUnits {
         Events.on(UnitSpawnEvent.class, e -> {
             Unit unit = e.unit;
             if (unit == null || unit.type == null) return;
+            // 为不同的单位设置不同的延迟和特效
             if (unit.type == MLUnitTypes.Starlight) {
-                // 基础延迟 1.5 秒，每个单位额外随机 0~2 秒
-                float delay = 0.1f + Mathf.random(0f, 1f);
+                float delay = 1f + Mathf.random(0f, 2f);                // 延迟 1.5 秒
+                float x = unit.x, y = unit.y;
                 UnitType type = unit.type;
                 // 立即移除原始单位，避免它短暂出现
                 unit.remove();
