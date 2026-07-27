@@ -134,7 +134,7 @@ public class MLFx {
 
             Draw.reset();
         });
-        smallEnergyBlast = new Effect(60f, 96f, e -> {
+        smallTeleport = new Effect(60f, 96f, e -> {
             float fin = e.fin();
             float fout = e.fout();
             float radius = 32f;
