@@ -1312,7 +1312,7 @@ public class MLUnitTypes {
                             backColor = Color.valueOf("FEEBB3FF");
                             trailLength = 16;
                             trailWidth = 8f;
-                            trailColor = Color.valueOf("FEEBB3FF")
+                            trailColor = Color.valueOf("FEEBB3FF");
                             hitSound = MLSounds.plasmaboom;
                             width = 64f;
                             height = 64f;
@@ -1326,7 +1326,7 @@ public class MLUnitTypes {
                                 rotation = 48f;
                             }};
                     }};
-              }});
+              }},
             new Weapon("magic-Qingxiao1") {{
                 x = -12f;
                 y = -10f;
