@@ -11,7 +11,7 @@ public class MLSectorPresets{
 
     public static void load(){
 
-        LandingZone = new SectorPreset("LandingZone", MLPlanets.cecilia, 0){{
+        LandingZone = new SectorPreset("LandingZone", MLPlanets.cecilia, 1){{
             alwaysUnlocked = true;
             captureWave = 10;
             difficulty = 1;
