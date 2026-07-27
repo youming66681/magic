@@ -142,7 +142,7 @@ public class MLBlocks {
             BasicManufacturingPlant,
             //进阶科技
             starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
-            Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor;
+            Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, StarshipMaterialConstructor, StarshipMaterialDeconstructor;
 
     public static void load() {
 
@@ -1303,7 +1303,7 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.largePhantomSteelWall, 8),
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 8),
                     new PayloadStack(Blocks.lancer, 4),
-                    new PayloadStack(Blocks.forceProjector, 2));
+                    new PayloadStack(Blocks.forceProjector, 2)),
                     new PayloadStack(MLBlocks.Nebula, 1));
 
             consumePower(20f);
