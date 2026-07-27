@@ -17,13 +17,15 @@ import mindustry.game.EventType.*;
 
 import static mindustry.Vars.*;
 
+//by youming
+
 public class MLSpawnUnits {
     public static void load() {
         Events.on(UnitSpawnEvent.class, e -> {
             Unit unit = e.unit;
             if (unit == null || unit.type == null) return;
             if (unit.type == MLUnitTypes.Starlight) {
-                float delay = 1.5f;                // 单位延迟出现的时间（秒）
+                float delay = 1f;                // 单位延迟出现的时间（秒）
                 float x = unit.x, y = unit.y;
                 UnitType type = unit.type;
                 // 延迟一帧移除原单位（可改为 unit.remove() 立即移除）
