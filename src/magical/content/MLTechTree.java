@@ -15,7 +15,7 @@ public class MLTechTree {
     public static void load() {
         MLPlanets.cecilia.techTree = Planets.serpulo.techTree;
 
-        TechNode root = nodeRoot("cecilia", MLBlocks.baseCore () -> {
+        TechNode root = nodeRoot("cecilia", MLBlocks.baseCore, true, () -> {
            //基础科技
             nodeProduce(MLItems.phantomSteel, () -> {
                 nodeProduce(MLItems.phantomTitaniumSteel, () -> {
@@ -118,13 +118,7 @@ public class MLTechTree {
                     });
                 });
                 /*星港造舰中心*/node(MLBlocks.starHarborShipbuildingCenter, () -> {
-                    /*星舰材料构造器*/node(MLBlocks.StarshipMaterialConstructor, () -> {
-                        /*星舰材料解构器*/node(MLBlocks.StarshipMaterialDeconstructor, () -> {
-                        });
-                            });
-                    /*箐霄*/node(MLUnitTypes.Qingxiao, () -> {
-                            });
-                    /*星芒*/node(MLUnitTypes.Starlight, () -> {
+                    /*星芒*/node(MLUnitTypes.Starlight, () -> {zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
                     });
                 });
                 /*幻晶*/node(MLBlocks.PhantomCrystal, () -> {

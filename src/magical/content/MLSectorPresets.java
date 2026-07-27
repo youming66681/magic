@@ -1,4 +1,4 @@
-package mindustry.content;
+package magical.content;
 
 import mindustry.maps.*;
 import mindustry.type.*;
@@ -7,7 +7,7 @@ import static mindustry.content.Planets.*;
 
 public class SectorPresets{
     public static SectorPreset
-            LandingZone,
+            LandingZone;
 
     public static void load(){
 
