@@ -39,7 +39,7 @@ public class MLSpawnUnits {
                     newUnit.add();
                 });
             }
-                else if (type == MLUnitTypes.Qingxiao) {
+                else if (unit.type == MLUnitTypes.Qingxiao) {
                     float delay = 1f ;
                     float x = unit.x + Mathf.random(-240f, 240f);
                     float y = unit.y + Mathf.random(-240f, 240f);
