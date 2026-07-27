@@ -22,23 +22,23 @@ public class MLSpawnUnits {
         Events.on(UnitSpawnEvent.class, e -> {
             Unit unit = e.unit;
             if (unit == null || unit.type == null) return;
-            // 为不同的单位设置不同的延迟和特效
             if (unit.type == MLUnitTypes.Starlight) {
-                float delay = 1.5f;                // 延迟 1.5 秒
+                float delay = 1.5f;                // 单位延迟出现的时间（秒）
                 float x = unit.x, y = unit.y;
                 UnitType type = unit.type;
-                // 立即移除原始单位，避免它短暂出现
-                unit.remove();
-                // 播放你要的光束特效（可自行替换成其他特效）
+                // 延迟一帧移除原单位（可改为 unit.remove() 立即移除）
+                Time.run(1f, () -> {
+                    if (unit.isAdded()) {
+                        unit.remove();
+                    }
+                });
+                // 立即播放入场特效
                 MLFx.shrinkLightBeam.at(x, y);
                 // 延迟后重新创建单位
                 Time.run(delay * 60f, () -> {
-                    // 使用波次队伍创建单位，确保攻击正确
                     Unit newUnit = type.create(state.rules.waveTeam);
                     newUnit.set(x, y);
                     newUnit.add();
-                    // 如果需要，可附加短时间无敌或定身
-                    // newUnit.apply(StatusEffects.invincible, 30f);
                 });
             }
         });
