@@ -1,4 +1,3 @@
-
 package magical.content;
 
 import mindustry.type.UnitType;
