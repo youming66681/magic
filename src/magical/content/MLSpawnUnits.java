@@ -28,7 +28,8 @@ public class MLSpawnUnits {
             // 为不同的单位设置不同的延迟和特效
             if (unit.type == MLUnitTypes.Starlight) {
                 float delay = 1f + Mathf.random(0f, 2f);
-                float x = unit.x, y = unit.y;
+                float x = unit.x + Mathf.random(-80f, 80f);  // 原来是 -8, 8
+                float y = unit.y + Mathf.random(-80f, 80f);
                 UnitType type = unit.type;
                 MLFx.smallTeleport.at(x, y);
                 // 立即移除原始单位，避免它短暂出现
