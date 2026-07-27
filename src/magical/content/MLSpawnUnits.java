@@ -62,7 +62,6 @@ public class MLSpawnUnits {
                                 new EffectSpawnerPart(){{
                                     x = 0;
                                     y = 0;
-                                    interval = 90f;
                                     effect = MLFx.teleportEnter;
                                 }}
                           );
