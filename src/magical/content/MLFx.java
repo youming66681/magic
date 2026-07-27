@@ -170,9 +170,6 @@ public class MLFx {
             }
             Drawf.light(e.x, e.y, 96f, Color.valueOf("FEEBB3FF"), fout);
         });
-        smallTeleport = new MultiEffect(
-
-
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
 
