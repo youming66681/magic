@@ -73,7 +73,7 @@ public class MLSpawnUnits {
                                 haloRadius = 10f;
                                 haloRadiusTo = 10f;
                                 haloRotateSpeed = 3f;
-                            }}
+                            }},
                         new HaloPart(){{
                                 sides = 3;
                                 shapes = 3;
@@ -88,7 +88,7 @@ public class MLSpawnUnits {
                                 haloRadius = 15f;
                                 haloRadiusTo = 15f;
                                 haloRotateSpeed = -3f;
-                            }}
+                            }};
                           );
                         despawnUnit = MLUnitTypes.Starlight;
                         despawnUnitRadius = 0f;
