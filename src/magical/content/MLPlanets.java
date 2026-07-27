@@ -16,6 +16,8 @@ import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.meta.*;
 import mindustry.world.blocks.environment.*;
+import mindustry.content.SectorPresets;
+import mindustry.game.Objectives.SectorComplete;
 
 import magical.content.MLItems;
 import magical.content.MLBlocks;
