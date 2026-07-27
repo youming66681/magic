@@ -168,16 +168,7 @@ public class MLFx {
             float width = 20f * fout;
             //外圈
             Draw.color(Color.valueOf("FEEBB3").cpy().a(fout * 0.4f));
-            Fill.rect(
-                    e.x,
-                    e.y,
-                    width,
-                    height
-            );
-            //核心光柱
-            Draw.color(Color.valueOf("FFFFFF").cpy().a(fout));
-            Fill.rect(e.x, e.y, width * 0.35f, height
-            );
+            Fill.rect(e.x, e.y, width, height);
             //顶部光环
             Lines.stroke(3f * fout);
             Draw.color(Color.valueOf("FEEBB3").cpy().a(fout));

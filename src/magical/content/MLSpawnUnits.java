@@ -19,14 +19,20 @@ import static mindustry.Vars.*;
 
 public class MLSpawnUnits {
     public static void load() {
-        // 监听 UnitSpawnEvent —— 仅当波次生成单位时触发
         Events.on(UnitSpawnEvent.class, e -> {
-                    if (e.unit == null || e.unit.type == null) return;
-                    // 为不同单位播放不同特效
-                    if (e.unit.type == MLUnitTypes.Starlight) {
-                        // 替换为你的自定义特效（若不存在，先用 Fx.spawnWave 测试）
-                        MLFx.shrinkLightBeam.at(e.unit.x, e.unit.y);
+            Unit unit = e.unit;
+            if (unit == null || unit.type == null) return;
+            // 为不同单位设置不同的延迟和特效
+            if (unit.type == MLUnitTypes.Starlight) {
+                // 延迟30帧（0.5秒）后播放光束特效
+                Time.run(30f, () -> {
+                    // 在单位当前位置播放特效
+                    if (unit.isAdded()) {
+                        MLFx.shrinkLightBeam.at(unit.x, unit.y);
                     }
                 });
+            }
+            // 添加更多单位...
+        });
     }
 }
