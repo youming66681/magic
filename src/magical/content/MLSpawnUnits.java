@@ -18,13 +18,14 @@ import static mindustry.Vars.*;
 
 public class MLSpawnUnits {
     public static void load() {
-        for (SpawnGroup group : state.rules.spawns) {
-            if (group.type == MLUnitTypes.Starlight) {
-                // 替换为你的自定义特效（可以是 MLFx.shrinkLightBeam）
-                group.spawnEffect = MLFx.shrinkLightBeam;
+        // 监听 UnitSpawnEvent —— 仅当波次生成单位时触发
+        Events.on(UnitSpawnEvent.class, e -> {
+            if (e.unit == null || e.unit.type == null) return;
+            // 为不同单位播放不同特效
+            if (e.unit.type == MLUnitTypes.Starlight) {
+                // 替换为你的自定义特效（若不存在，先用 Fx.spawnWave 测试）
+                MLFx.shrinkLightBeam.at(e.unit.x, e.unit.y);
             }
-            // 其他单位继续添加...
-        }
         // 波次专属入场特效（不同单位不同特效）
        /* for (SpawnGroup group : state.rules.spawns) {
             if (group.type == MLUnitTypes.Starlight) {
