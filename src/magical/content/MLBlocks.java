@@ -1317,6 +1317,8 @@ public class MLBlocks {
             buildSpeed = 1f;
             consumePower(5f);
             size = 5;
+            minBlockSize = 1;
+            maxBlockSize = 5;
             filter = Seq.with(
                     MLBlocks.largePhantomSteelWall,
                     MLBlocks.largePhantomTitaniumSteelWall,
