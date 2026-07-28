@@ -21,6 +21,7 @@ import magical.content.MLFx;
 import magical.content.MLStatusEffects;
 import magical.content.MLSpawnUnits;
 import magical.content.MLSectorPresets;
+import magical.content.MLLiquids;
 
 public class magic extends Mod {
     public static Mods.LoadedMod ML;
@@ -37,6 +38,7 @@ public class magic extends Mod {
         MLStatusEffects.load();
         MLSounds.load();
         MLFx.load();
+        MLLiquids.load();
         MLItems.load();
         MLPlanets.load();
         MLSectorPresets.load();

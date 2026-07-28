@@ -20,6 +20,8 @@ public class MLTechTree {
         TechNode root = nodeRoot("cecilia", MLBlocks.baseCore, () -> {
            //基础科技
             nodeProduce(MLItems.phantomSteel, () -> {
+                nodeProduce(MLLiquids.PhantomSteelSolution, () -> {
+                        });
                 nodeProduce(MLItems.phantomTitaniumSteel, () -> {
                     nodeProduce(MLItems.logicChip, () -> {
                     });

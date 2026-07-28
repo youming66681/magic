@@ -259,7 +259,7 @@ public class MLBlocks {
             requirements(Category.crafting, ItemStack.with(MLItems.phantomSteel, 30, MLItems.phantomTitaniumSteel, 10, MLItems.mysticCrystal, 20, Items.silicon, 40, Items.metaglass, 50));
             consumePower(15f);
             health = 400;
-            itemCapacity = 10;
+            itemCapacity = 20;
             size = 4;
             liquidCapacity = 40;
             canOverdrive = false;
@@ -349,10 +349,8 @@ public class MLBlocks {
             health = 600;
             size = 3;
             hasItems = true;
-            hasLiquids = true;
             hasPower = true;
-            itemCapacity = 15;
-            liquidCapacity = 20;
+            itemCapacity = 20;
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawFlame());
 
             consumeItems(ItemStack.with(MLItems.wingedStone, 1, Items.plastanium, 1));
