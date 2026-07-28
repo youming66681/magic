@@ -119,20 +119,19 @@ public class MLTechTree {
                     });
                 });
                 /*星港造舰中心*/node(MLBlocks.starHarborShipbuildingCenter, () -> {
-                            /*星舰材料构造器*/
-                            node(MLBlocks.StarshipMaterialConstructor, () -> {
-                                /*星舰材料解构器*/
-                                node(MLBlocks.StarshipMaterialDeconstructor, () -> {
+
+                    /*星舰材料构造器*/node(MLBlocks.StarshipMaterialConstructor, () -> {
+
+                                /*星舰材料解构器*/node(MLBlocks.StarshipMaterialDeconstructor, () -> {
 
                                 });
                             });
-                            /*星芒*/
-                            node(MLUnitTypes.Starlight, () -> {
-                                /*箐霄*/
-                                node(MLUnitTypes.Qingxiao, () -> {
-                                });
+
+                    /*星芒*/node(MLUnitTypes.Starlight, () -> {
                             });
+                        /*箐霄*/node(MLUnitTypes.Qingxiao, () -> {
                         });
+                   });
                 /*幻晶*/node(MLBlocks.PhantomCrystal, () -> {
                     /*光降*/node(MLBlocks.LightDescends, () -> {
                         /*破军*/node(MLBlocks.BreakingArmy, () -> {
