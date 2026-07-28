@@ -1145,8 +1145,8 @@ public class MLUnitTypes {
             drag = 0.06f;
             accel = 0.08f;
             hitSize = 36;
-            health = 220;
-            armor = 2;
+            health = 1200;
+            armor = 6;
             itemCapacity = 0;
             mineSpeed = 10f;
             mineTier = 3;
@@ -1187,7 +1187,7 @@ public class MLUnitTypes {
                 bullet = new LaserBulletType(50f) {{
                     healPercent = 5f;
                     width = 32;
-                    length = width * 5;
+                    length = width * 4;
                     colors = new Color[]{Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF")};
                     smokeEffect = Fx.none;
                 }};
@@ -1195,8 +1195,8 @@ public class MLUnitTypes {
                 new Weapon("magic-SpinningSpear1") {{
                     reload = 15f;
                     recoil = 0f;
-                    x = 8;
-                    y = 12;
+                    x = 10;
+                    y = 16;
                     shootY = 0f;
                     mirror = true;
                     rotate = true;
@@ -1204,8 +1204,8 @@ public class MLUnitTypes {
                     inaccuracy = 0f;
                     ejectEffect = Fx.casing2;
                     layerOffset = 0.001f;
-                    bullet = new BasicBulletType(12, 30) {{
-                        lifetime = 15;
+                    bullet = new BasicBulletType(12, 15) {{
+                        lifetime = 20;
                         width = 12;
                         height = 24;
                         trailLength = 6;
