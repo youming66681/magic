@@ -172,11 +172,24 @@ public class MLTechTree {
                     });
                 });
                 /*终端核心*/node(MLBlocks.TerminalCore, () -> {
+                    nodeProduce(MLItems.mysticSteel, () -> {
+                        nodeProduce(MLItems.wingedMetal, () -> {
+                        });
+                           nodeProduce(MLItems.fluorescentFeatherStone, () -> {
+
+                           });
+                               nodeProduce(MLItems.phantomLuminousAlloy, () -> {
+
+                                        });
+                                });
+                            };
                     /*幻钢焚烧机*/node(MLBlocks.PhantomSteelIncinerator, () -> {
                         /*玄钢混制机*/node(MLBlocks.XuansteelMixer, () -> {
                             /*翼精金属合成器*/node(MLBlocks.WingEssenceMetalSynthesizer, () -> {
                             });
                             /*荧羽石反应器*/node(MLBlocks.LuminFeatherStoneReactor, () -> {
+                            });
+                            /*幻荧合金组合器*/node(MLBlocks.PhantomGlowAlloyCombiner, () -> {
                             });
                         });
                     });
