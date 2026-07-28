@@ -170,6 +170,9 @@ public class MLTechTree {
                         });
                     });
                 });
+                /*终端核心*/node(MLBlocks.TerminalCore, () -> {
+
+                });
             });
             /*降落区*/node(MLSectorPresets.LandingZone, Seq.with(new SectorComplete(SectorPresets.planetaryTerminal)), () -> {
             });

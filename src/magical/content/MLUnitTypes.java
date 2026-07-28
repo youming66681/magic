@@ -1191,7 +1191,7 @@ public class MLUnitTypes {
                     colors = new Color[]{Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF")};
                     smokeEffect = Fx.none;
                 }};
-        }};
+        }},
                 new Weapon("magic-SpinningSpear1") {{
                     reload = 15f;
                     recoil = 0f;
