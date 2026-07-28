@@ -121,7 +121,7 @@ public class MLFx {
 
             Draw.color(Pal.gray);
             Angles.randLenVectors(e.id + 2, 12, 26f * e.finpow(), (x, y) -> {
-                Fill.square(e.x + x, e.y + y, 1.5f * e.foutpow(), Mathf.randomSeed((long) (e.id + x + y), 360f)
+                Fill.square(e.x + x, e.y + y, 1.5f * e.foutpow(), Mathf.randomSeed((long)(e.id + x + y), 360f)
                 );
             });
 
@@ -134,43 +134,76 @@ public class MLFx {
 
             Draw.reset();
         });
-        smallTeleport = new Effect(60f, 96f, e -> {
+        smallEnergyBlast = new Effect(30f, e -> {
+            float fin = e.finpow();
+            float fout = e.foutpow();
+            Color core = Color.valueOf("FEEBB3FF");
+            Color glow = Color.valueOf("FFD37FFF");
+            Draw.color(glow);
+            Lines.stroke(2f * fout);
+            Lines.circle(
+                    e.x,
+                    e.y,
+                    8f + 24f * fin
+            );
+            Draw.color(core);
+            Lines.stroke(1.5f * fout);
+            Lines.circle(e.x, e.y, 4f + 14f * fin);
+            Draw.color(Color.white, core, fin);
+            Fill.circle(e.x, e.y, 6f * fout
+            );
+            Draw.color(core);
+            Angles.randLenVectors(e.id, 8, 4f + 18f * fin, (x, y) -> {Fill.circle(e.x + x, e.y + y, 2f * fout);
+                    }
+            );
+            Draw.color(Color.white);
+            Lines.stroke(1f * fout);
+            Lines.line(e.x - 18f * fout, e.y, e.x + 18f * fout, e.y);
+            Lines.line(e.x, e.y - 18f * fout, e.x, e.y + 18f * fout);
+        });
+        smallTeleport = new Effect(60.0F, 96.0F, (e) -> {
             float fin = e.fin();
             float fout = e.fout();
-            float radius = 32f;
+            float radius = 32.0F;
             Draw.color(Color.valueOf("FEEBB3FF"), Color.white, fin);
-            Lines.stroke(3f * fout);
+            Lines.stroke(3.0F * fout);
             Lines.circle(e.x, e.y, radius * fin);
             Draw.color(Color.valueOf("FEEBB3AA"));
-            Lines.stroke(2f * fout);
-            Lines.circle(e.x, e.y, radius * 0.7f + radius * 0.3f * fin);
+            Lines.stroke(2.0F * fout);
+            Lines.circle(e.x, e.y, radius * 0.7F + radius * 0.3F * fin);
             Draw.color(Color.valueOf("FEEBB3FF"));
-            for (int i = 0; i < 3; i++) {
-                float angle = e.rotation + i * 120f - fin * 360f;
-                float x1 = e.x + Angles.trnsx(angle, radius * 0.35f);
-                float y1 = e.y + Angles.trnsy(angle, radius * 0.35f);
+
+            for(int i = 0; i < 3; ++i) {
+                float angle = e.rotation + (float)i * 120.0F - fin * 360.0F;
+                float x1 = e.x + Angles.trnsx(angle, radius * 0.35F);
+                float y1 = e.y + Angles.trnsy(angle, radius * 0.35F);
                 float x2 = e.x + Angles.trnsx(angle, radius);
                 float y2 = e.y + Angles.trnsy(angle, radius);
                 Lines.line(x1, y1, x2, y2);
             }
+
             Draw.color(Color.valueOf("FEEBB3FF"));
-            Angles.randLenVectors(e.id, 48, radius, (x, y) -> {
-                float scale = Mathf.sin(fin * Mathf.pi);
-                Drawf.tri(e.x + x * scale, e.y + y * scale, 3f * fout, 12f * fout, Mathf.angle(x, y) + fin * 360f);
+            Angles.randLenVectors((long)e.id, 48, radius, (x, y) -> {
+                float scale = Mathf.sin(fin * (float)Math.PI);
+                Drawf.tri(e.x + x * scale, e.y + y * scale, 3.0F * fout, 12.0F * fout, Mathf.angle(x, y) + fin * 360.0F);
             });
             Draw.color(Color.white);
-            Fill.circle(e.x, e.y, 10f * fout);
+            Fill.circle(e.x, e.y, 10.0F * fout);
             Draw.color(Color.valueOf("FEEBB3FF"));
-            Fill.circle(e.x, e.y, 6f * fout);
+            Fill.circle(e.x, e.y, 6.0F * fout);
             Draw.color(Color.valueOf("FEEBB3FF"));
-            for (int i = 0; i < 8; i++) {
-                float angle = i * 45f + fin * 720f;
-                float length = 20f + 30f * Mathf.sin(fin * Mathf.pi);
-                Drawf.tri(e.x, e.y, 2f * fout, length * fout, angle);
+
+            for(int i = 0; i < 8; ++i) {
+                float angle = (float)i * 45.0F + fin * 720.0F;
+                float length = 20.0F + 30.0F * Mathf.sin(fin * (float)Math.PI);
+                Drawf.tri(e.x, e.y, 2.0F * fout, length * fout, angle);
             }
-            Drawf.light(e.x, e.y, 96f, Color.valueOf("FEEBB3FF"), fout);
+
+            Drawf.light(e.x, e.y, 96.0F, Color.valueOf("FEEBB3FF"), fout);
         });
     }
+
+
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
 
