@@ -1052,7 +1052,7 @@ public class MLUnitTypes {
             armor = 8;
             faceTarget = false;
             weapons.add(new Weapon("magic-Dawn0") {{
-                reload = 60f;
+                reload = 50f;
                 recoil = 3f;
                 x = 0;
                 y = 0;
@@ -1064,7 +1064,7 @@ public class MLUnitTypes {
                 ejectEffect = Fx.casing4;
                 layerOffset = 0.001f;
                 shootSound = MLSounds.plasmadrop;
-                bullet = new BasicBulletType(12, 50) {{
+                bullet = new BasicBulletType(12, 100) {{
                     sprite = "magic-十字星";
                     spin = 3;
                     lifetime = 25;
@@ -1078,7 +1078,7 @@ public class MLUnitTypes {
                     hitEffect = despawnEffect = MLFx.smallEnergyBlast;
                     hitSound = MLSounds.plasmaboom;
                     fragBullets = 3;
-                    fragBullet = new BasicBulletType(6, 25) {{
+                    fragBullet = new BasicBulletType(6, 50) {{
                         lifetime = 12;
                         width = 8;
                         height = 16;
