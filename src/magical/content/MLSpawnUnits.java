@@ -2,6 +2,7 @@ package magical.content;
 
 import arc.Events;
 import arc.graphics.Color;
+import arc.Core;
 import arc.struct.ObjectMap;
 import arc.util.Log;
 import arc.util.Time;
