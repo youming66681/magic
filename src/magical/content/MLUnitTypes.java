@@ -1173,7 +1173,8 @@ public class MLUnitTypes {
                             45f
                     )
             );
-            weapons.add(new Weapon("magic-SpinningSpear0") {{
+            weapons.add(
+                    new Weapon("magic-SpinningSpear0") {{
                 shootY = 0f;
                 rotate = false;
                 mirror = false;
@@ -1190,7 +1191,30 @@ public class MLUnitTypes {
                     colors = new Color[]{Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF")};
                     smokeEffect = Fx.none;
                 }};
-            }});
+        }};
+                new Weapon("magic-SpinningSpear1") {{
+                    reload = 15f;
+                    recoil = 0f;
+                    x = 8;
+                    y = 12;
+                    shootY = 0f;
+                    mirror = true;
+                    rotate = true;
+                    rotateSpeed = 6f;
+                    inaccuracy = 0f;
+                    ejectEffect = Fx.casing2;
+                    layerOffset = 0.001f;
+                    bullet = new BasicBulletType(12, 30) {{
+                        lifetime = 15;
+                        width = 12;
+                        height = 24;
+                        trailLength = 6;
+                        trailWidth = 3f;
+                        trailColor = Color.valueOf("FEEBB3FF");
+                        frontColor = Color.valueOf("FEEBB3FF");
+                        backColor = Color.valueOf("FEEBB3FF");
+                    }};
+                }});
         }};
         //星舰
         //小型
