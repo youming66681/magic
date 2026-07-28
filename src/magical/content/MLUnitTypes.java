@@ -672,7 +672,9 @@ public class MLUnitTypes {
                 constructor = UnitTypes.flare.constructor;
                 flying = true;
                 circleTarget = true;
+                circleTargetRadius = 90;
                 faceTarget = true;
+                omniMovement = false;
                 lowAltitude = true;
                 rotateSpeed = 6.75f;
                 speed = 4.5f;
@@ -1153,6 +1155,7 @@ public class MLUnitTypes {
             itemCapacity = 100;
             buildRange = 270;
             buildSpeed = 3f;
+            range = 240;
             abilities.add(
                     new ForceFieldAbility(
                             90f,     // radius
@@ -1195,7 +1198,7 @@ public class MLUnitTypes {
                 new Weapon("magic-SpinningSpear1") {{
                     reload = 15f;
                     recoil = 0f;
-                    x = 10;
+                    x = 8;
                     y = 16;
                     shootY = 0f;
                     mirror = true;
