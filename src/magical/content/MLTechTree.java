@@ -172,7 +172,9 @@ public class MLTechTree {
                     });
                 });
                 /*终端核心*/node(MLBlocks.TerminalCore, () -> {
+                    /*幻钢焚烧机*/node(MLBlocks.PhantomSteelIncinerator, () -> {
 
+                    });
                 });
             });
             /*降落区*/node(MLSectorPresets.LandingZone, Seq.with(new SectorComplete(SectorPresets.planetaryTerminal)), () -> {

@@ -146,7 +146,7 @@ public class MLBlocks {
             starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
             Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, StarshipMaterialConstructor, StarshipMaterialDeconstructor,
             //高端科技
-            TerminalCore, WingEssenceMetalSynthesizer;
+            TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator;
 
     public static void load() {
 
@@ -354,6 +354,25 @@ public class MLBlocks {
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawFlame());
 
             consumeItems(ItemStack.with(MLItems.wingedStone, 1, Items.plastanium, 1));
+            consumePower(3f);
+        }};
+        //幻钢焚烧机
+        PhantomSteelIncinerator = new GenericCrafter("PhantomSteelIncinerator") {{
+            requirements(Category.crafting, ItemStack.with(new Object[]{MLItems.acrylic, 30, Items.silicon, 25, MLItems.arrayChip, 10}));
+
+            updateEffect = Fx.freezing;
+            outputLiquid = new ItemStack(MLLiquids.PhantomSteelSolution, 0.5f);
+            craftTime = 60f;
+            health = 400;
+            size = 2;
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = true;
+            itemCapacity = 20;
+            liquidCapacity = 40;
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
+
+            consumeItems(ItemStack.with(MLItems.phantomSteel, 2));
             consumePower(3f);
         }};
         //factor
