@@ -146,7 +146,7 @@ public class MLBlocks {
             starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
             Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, StarshipMaterialConstructor, StarshipMaterialDeconstructor,
             //高端科技
-            TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator;
+            TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer;
 
     public static void load() {
 
@@ -374,6 +374,25 @@ public class MLBlocks {
 
             consumeItems(ItemStack.with(MLItems.phantomSteel, 2));
             consumePower(3f);
+        }};
+        //玄钢混制机
+        XuansteelMixer = new GenericCrafter("XuansteelMixer") {{
+            requirements(Category.crafting, ItemStack.with(new Object[]{Items.silicon, 80, MLItems.mysticCrystal, 30, MLItems.phantomTitaniumSteel, 35, MLItems.acrylic, 40, MLItems.arrayChip, 15}));
+
+            hasItems = true;
+            liquidCapacity = 60f;
+            itemCapacity = 20;
+            craftTime = 150f;
+            outputItem = new ItemStack(MLItems.mysticSteel, 1);
+            size = 3;
+            health = 600;
+            hasPower = hasLiquids = true;
+            updateEffect = Fx.hitEmpSpark;
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(MLLiquids.PhantomSteelSolution), new DrawDefault(), new DrawFlame());
+
+            consumeLiquid(MLLiquids.PhantomSteelSolution, 0.15f);
+            consumePower(2f);
+            consumeItem(MLItems.mysticCrystal, 1);
         }};
         //factor
         //炮
