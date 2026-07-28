@@ -33,6 +33,7 @@ public class MLSpawnUnits {
                 // 立即移除原始单位，避免它短暂出现
                 unit.remove();
                 // 延迟后重新创建单位
+                Core.camera.shake(5f, 0.5f);//强度，时间
                 Time.run(delay * 35f, () -> {
                     Unit newUnit = type.create(state.rules.waveTeam);
                     newUnit.set(x, y);
@@ -46,6 +47,7 @@ public class MLSpawnUnits {
                     UnitType type = unit.type;
                     MLFx.smallTeleport.at(x, y);
                     unit.remove();
+                    Core.camera.shake(5f, 0.5f);
                     Time.run(delay * 35f, () -> {
                         Unit newUnit = type.create(state.rules.waveTeam);
                         newUnit.set(x, y);
