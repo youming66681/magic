@@ -59,7 +59,7 @@ public class MLUnitTypes {
     //二级
     ExpelDarkness, ChasingLight, Dawn,
     //核心机
-    Popular,
+    Popular,SpinningSpear,
     //星舰
     //小型
     Pioneer, Starlight, Qingxiao;
@@ -1130,6 +1130,63 @@ public class MLUnitTypes {
                     healPercent = 2.5f;
                     width = 16;
                     length = width * 8;
+                    colors = new Color[]{Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF")};
+                    smokeEffect = Fx.none;
+                }};
+            }});
+        }};
+        //旋戈
+        SpinningSpear = new UnitType("SpinningSpear") {{
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            lowAltitude = true;
+            rotateSpeed = 10f;
+            speed = 5f;
+            drag = 0.06f;
+            accel = 0.08f;
+            hitSize = 36;
+            health = 220;
+            armor = 2;
+            itemCapacity = 0;
+            mineSpeed = 10f;
+            mineTier = 3;
+            itemCapacity = 100;
+            buildRange = 270;
+            buildSpeed = 3f;
+            abilities.add(
+                    new ForceFieldAbility(
+                            90f,     // radius
+                            0.6f,     // regen
+                            600f,    // max
+                            320f,     // cooldown
+                            4,        // sides
+                            0f        // rotation
+                    )
+            );
+            abilities.add(
+                    new ForceFieldAbility(
+                            90f,
+                            0.6f,
+                            600f,
+                            320f,
+                            4,
+                            45f
+                    )
+            );
+            weapons.add(new Weapon("magic-SpinningSpear0") {{
+                shootY = 0f;
+                rotate = false;
+                mirror = false;
+                reload = 15;
+                x = 0;
+                y = 0;
+                shootSound = MLSounds.laser;
+                ejectEffect = Fx.none;
+                layerOffset = 0.001f;
+                bullet = new LaserBulletType(50f) {{
+                    healPercent = 5f;
+                    width = 32;
+                    length = width * 5;
                     colors = new Color[]{Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF")};
                     smokeEffect = Fx.none;
                 }};

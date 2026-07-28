@@ -181,7 +181,7 @@ public class MLBlocks {
         TerminalCore = new CoreBlock("TerminalCore") {{
             requirements(Category.effect, ItemStack.with(new Object[]{MLItems.wingedStone, 6000, Items.silicon, 6000, MLItems.acrylic, 6000, MLItems.arrayChip, 1500}));
 
-            unitType = MLUnitTypes.Popular;
+            unitType = MLUnitTypes.SpinningSpear;
             health = 12000;
             itemCapacity = 18000;
             armor = 12;
