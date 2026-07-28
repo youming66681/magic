@@ -409,7 +409,7 @@ public class MLBlocks {
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawFlame());
 
             consumePower(10f);
-            consumeItem(Items.thorium, 2, Items.silicon, 1);
+            consumeItem(ItemStack.with(Items.thorium, 2, Items.silicon, 1));
         }};
         //factor
         //炮
