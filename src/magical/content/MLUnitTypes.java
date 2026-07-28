@@ -1202,7 +1202,7 @@ public class MLUnitTypes {
                     y = 16;
                     shootY = 0f;
                     mirror = true;
-                    rotate = true;
+                    rotate = false;
                     rotateSpeed = 6f;
                     inaccuracy = 0f;
                     ejectEffect = Fx.casing2;
