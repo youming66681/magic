@@ -62,12 +62,13 @@ public final class MLUi{
 
         Table cont = new Table().top();
         cont.left().defaults().left().growX();
+
         Runnable rebuild = () -> {
             rot.clearChildren();
             if (owner.hasDoubleOutput) {
                 for (int i = 0; i < 4; i++) {
-                    var button = new ImageButton();
                     int ii = i;
+                    var button = new ImageButton();
                     button.table(img -> img.image(Icon.right).color(Color.white).size(40).pad(10f));
                     button.changed(() -> build.configure(new int[]{ii, build.craftPlanIndex()}));
                     button.update(() -> button.setChecked(build.rotation == ii));
@@ -77,15 +78,11 @@ public final class MLUi{
             }
 
             cont.clearChildren();
-
             int columns = 4;
 
             for (int i = 0; i < owner.craftPlans.size; i++) {
-
                 MultiCrafter.CraftPlan plan = owner.craftPlans.get(i);
-
                 ImageButton button = new ImageButton(Styles.clearNoneTogglei);
-
                 TextureRegion icon = Icon.cancel.getRegion();
 
                 if (plan.outputItems.length > 0) {
@@ -93,26 +90,23 @@ public final class MLUi{
                 } else if (plan.outputLiquids.length > 0) {
                     icon = plan.outputLiquids[0].liquid.uiIcon;
                 }
-
                 button.image(icon).size(40);
 
                 int index = i;
-
-                button.changed(() ->
-                        build.configure(new int[]{build.rotation, index})
-                );
-
-                button.update(() -> {
-                    button.setChecked(build.craftPlan == plan);
-                });
+                button.changed(() -> build.configure(new int[]{build.rotation, index}));
+                button.update(() -> button.setChecked(build.craftPlan == plan));
 
                 cont.add(button).size(60).pad(3);
-
                 if ((i + 1) % columns == 0) {
                     cont.row();
                 }
             }
         };
+
+        rebuild.run();
+        table.clear();
+        table.add(rot).row();
+        table.add(cont).row();
     }
 
     public static void buildRecipeBars(MultiCrafter owner, MultiCrafter.MultiCrafterBuild build, Table table){
