@@ -144,7 +144,9 @@ public class MLBlocks {
             BasicManufacturingPlant,
             //进阶科技
             starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
-            Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, StarshipMaterialConstructor, StarshipMaterialDeconstructor;
+            Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, StarshipMaterialConstructor, StarshipMaterialDeconstructor,
+            //高端科技
+            TerminalCore;
 
     public static void load() {
 
@@ -173,6 +175,19 @@ public class MLBlocks {
             size = 4;
 
             unitCapModifier = 24;
+
+        }};
+        //终端核心
+        TerminalCore = new CoreBlock("TerminalCore") {{
+            requirements(Category.effect, ItemStack.with(new Object[]{MLItems.wingedStone, 6000, Items.silicon, 6000, MLItems.acrylic, 6000, MLItems.arrayChip, 1500}));
+
+            unitType = MLUnitTypes.Popular;
+            health = 12000;
+            itemCapacity = 18000;
+            armor = 12;
+            size = 6;
+
+            unitCapModifier = 36;
 
         }};
         //强强
@@ -259,7 +274,13 @@ public class MLBlocks {
                         consumePower(15f);
                         consumeItems(ItemStack.with(MLItems.phantomSteel, 1, MLItems.phantomTitaniumSteel, 1, MLItems.mysticCrystal, 1, Items.silicon, 3));
                         outputItems = ItemStack.with(MLItems.logicChip, 1);
-                    }}
+                    }},
+            new CraftPlan(){{
+                craftTime = 60f;
+                consumePower(20f);
+                consumeItems(ItemStack.with(MLItems.wingedStone, 1, MLItems.acrylic, 1, Items.silicon, 6));
+                outputItems = ItemStack.with(MLItems.arrayChip, 1);
+            }}
             );
         }};
         //翼石冲压机
