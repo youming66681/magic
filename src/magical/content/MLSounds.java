@@ -32,58 +32,61 @@ public class MLSounds {
     public static Sound loopTech;
 
     public static void load() {
-        explosionAfflict = loadSound("explosionAfflict.ogg");
-        explosionCleroi = loadSound("explosionCleroi.ogg");
-        shootSublimate = loadSound("shootSublimate.ogg");
-        shootForeshadow = loadSound("shootForeshadow.ogg");
-        shootAlt = loadSound("shootAlt.ogg");
-        loopSmelter = loadSound("loopSmelter.ogg");
-        shootArtillery = loadSound("shootArtillery.ogg");
-        explosion = loadSound("explosion.ogg");
-        shootArtillerySmall = loadSound("shootArtillerySmall.ogg");
-        missile = loadSound("missile.ogg");
-        plasmadrop = loadSound("plasmadrop.ogg");
-        laser = loadSound("laser.ogg");
-        missileLaunch = loadSound("missileLaunch.ogg");
-        lasercharge2 = loadSound("lasercharge2.ogg");
-        shootFuse = loadSound("shootFuse.ogg");
-        plasmaboom = loadSound("plasmaboom.ogg");
-        pew = loadSound("pew.ogg");
-        pao = loadSound("pao.ogg");
-        beam = loadSound("beam.ogg");
-        JG = loadSound("JG.ogg");
-        spark = loadSound("spark.ogg");
-        loopTech = loadSound("loopTech.ogg");
-
+        if(Vars.headless)return;
+        explosionAfflict    = loadSoundSafe("explosionAfflict.ogg");
+        explosionCleroi     = loadSoundSafe("explosionCleroi.ogg");
+        shootSublimate      = loadSoundSafe("shootSublimate.ogg");
+        shootForeshadow     = loadSoundSafe("shootForeshadow.ogg");
+        shootAlt            = loadSoundSafe("shootAlt.ogg");
+        loopSmelter         = loadSoundSafe("loopSmelter.ogg");
+        shootArtillery      = loadSoundSafe("shootArtillery.ogg");
+        explosion           = loadSoundSafe("explosion.ogg");
+        shootArtillerySmall = loadSoundSafe("shootArtillerySmall.ogg");
+        missile             = loadSoundSafe("missile.ogg");
+        plasmadrop          = loadSoundSafe("plasmadrop.ogg");
+        laser               = loadSoundSafe("laser.ogg");
+        missileLaunch       = loadSoundSafe("missileLaunch.ogg");
+        lasercharge2        = loadSoundSafe("lasercharge2.ogg");
+        shootFuse           = loadSoundSafe("shootFuse.ogg");
+        plasmaboom          = loadSoundSafe("plasmaboom.ogg");
+        pew                 = loadSoundSafe("pew.ogg");
+        pao                 = loadSoundSafe("pao.ogg");
+        beam                = loadSoundSafe("beam.ogg");
+        JG                  = loadSoundSafe("JG.ogg");
+        spark               = loadSoundSafe("spark.ogg");
+        loopTech            = loadSoundSafe("loopTech.ogg");
     }
-
-    private static Sound loadSound(String name) {
-        return new Sound(ML.root.child("sounds").child(name));
+    private static Sound loadSoundSafe(String name) {
+        try {
+            return new Sound(ML.root.child("sounds").child(name));
+        } catch (Exception e) {
+            arc.util.Log.warn("Failed to load custom sound: @", name);
+            return new Sound(); // 静音
+        }
     }
-
     static {
         ML = Vars.mods.getMod(magic.class);
-        explosionAfflict = new Sound();
-        explosionCleroi = new Sound();
-        shootSublimate = new Sound();
-        shootForeshadow = new Sound();
-        shootAlt = new Sound();
-        loopSmelter = new Sound();
-        shootArtillery = new Sound();
-        explosion = new Sound();
+        explosionAfflict    = new Sound();
+        explosionCleroi     = new Sound();
+        shootSublimate      = new Sound();
+        shootForeshadow     = new Sound();
+        shootAlt            = new Sound();
+        loopSmelter         = new Sound();
+        shootArtillery      = new Sound();
+        explosion           = new Sound();
         shootArtillerySmall = new Sound();
-        missile = new Sound();
-        plasmadrop = new Sound();
-        laser = new Sound();
-        missileLaunch = new Sound();
-        lasercharge2 = new Sound();
-        shootFuse = new Sound();
-        plasmaboom = new Sound();
-        pew = new Sound();
-        pao = new Sound();
-        beam = new Sound();
-        JG = new Sound();
-        spark = new Sound();
-        loopTech = new Sound();
+        missile             = new Sound();
+        plasmadrop          = new Sound();
+        laser               = new Sound();
+        missileLaunch       = new Sound();
+        lasercharge2        = new Sound();
+        shootFuse           = new Sound();
+        plasmaboom          = new Sound();
+        pew                 = new Sound();
+        pao                 = new Sound();
+        beam                = new Sound();
+        JG                  = new Sound();
+        spark               = new Sound();
+        loopTech            = new Sound();
     }
 }
