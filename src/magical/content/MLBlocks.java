@@ -436,7 +436,7 @@ public class MLBlocks {
             craftTime = 120f;
             size = 3;
             hasPower = true;
-            drawer = new DrawMulti(drawer = new DrawMulti(
+            drawer = new DrawMulti(
                     new DrawRegion("-Z1"){{
                         rotateSpeed = 3f;
                         rotation = 0f;
