@@ -146,7 +146,7 @@ public class MLBlocks {
             starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
             Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, StarshipMaterialConstructor, StarshipMaterialDeconstructor,
             //高端科技
-            TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner;
+            TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver;
 
     public static void load() {
 
@@ -446,7 +446,6 @@ public class MLBlocks {
                         rotation = 0f;
                     }},
             new DrawDefault());
-            envEnabled |= Env.space;
 
             ambientSound = MLSounds.loopTech;
             ambientSoundVolume = 0.02f;
