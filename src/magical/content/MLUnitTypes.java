@@ -1387,7 +1387,7 @@ public class MLUnitTypes {
                         shootSound = MLSounds.plasmadrop;
                         shake = 5f;
                         ignoreRotation = true;
-                        bullet = new BasicBulletType(12, 50) {{
+                        bullet = new BasicBulletType(12, 80) {{
                             damage = 180f;
                             splashDamage = 120f;
                             splashDamageRadius = 48f;
