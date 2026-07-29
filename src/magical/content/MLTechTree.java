@@ -185,7 +185,8 @@ public class MLTechTree {
                     /*幻钢焚烧机*/node(MLBlocks.PhantomSteelIncinerator, () -> {
                         /*大型相织布编织器*/node(MLBlocks.LargePhaseWeaver, () -> {
                                 });
-
+                        /*大型巨浪合金冶炼厂*/node(MLBlocks.LargeSurgeSmelter, () -> {
+                                });
                         /*玄钢混制机*/node(MLBlocks.XuansteelMixer, () -> {
                             /*翼精金属合成器*/node(MLBlocks.WingEssenceMetalSynthesizer, () -> {
                             });
