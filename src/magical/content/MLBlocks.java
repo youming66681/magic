@@ -146,7 +146,8 @@ public class MLBlocks {
             starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
             Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, StarshipMaterialConstructor, StarshipMaterialDeconstructor,
             //高端科技
-            TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver;
+            TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
+            LargeSurgeSmelter;
 
     public static void load() {
 
@@ -453,6 +454,20 @@ public class MLBlocks {
             consumeItems(ItemStack.with(Items.thorium, 4, Items.sand, 10));
             consumePower(10f);
             itemCapacity = 30;
+        }};
+        //大型巨浪合金冶炼厂
+        LargeSurgeSmelter = new GenericCrafter("LargeSurgeSmelter") {{
+            requirements(Category.crafting, ItemStack.with(new Object[]{Items.silicon, 80, Items.lead, 80, Items.thorium, 70}));
+            craftEffect = Fx.smeltsmoke;
+            outputItem = new ItemStack(Items.surgeAlloy, 2);
+            craftTime = 80f;
+            size = 4;
+            hasPower = true;
+            itemCapacity = 20;
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
+
+            consumePower(8f);
+            consumeItems(ItemStack.with(Items.copper, 3, Items.lead, 4, Items.titanium, 2, Items.silicon, 3));
         }};
         //factor
         //炮
