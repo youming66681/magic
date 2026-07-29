@@ -431,7 +431,7 @@ public class MLBlocks {
         }};
         //大型相织布编织器
         LargePhaseWeaver = new GenericCrafter("LargePhaseWeaver"){{
-            requirements(Category.crafting, ItemStack.with(new Object[]{Items.silicon, 130, Items.lead, 120, Items.thorium, 75}));
+            requirements(Category.crafting, ItemStack.with(new Object[]{Items.silicon, 150, Items.lead, 160, Items.thorium, 110, MLItems.arrayChip, 15}));
             craftEffect = Fx.smeltsmoke;
             outputItem = new ItemStack(Items.phaseFabric, 2);
             craftTime = 120f;
@@ -457,7 +457,7 @@ public class MLBlocks {
         }};
         //大型巨浪合金冶炼厂
         LargeSurgeSmelter = new GenericCrafter("LargeSurgeSmelter") {{
-            requirements(Category.crafting, ItemStack.with(new Object[]{Items.silicon, 80, Items.lead, 80, Items.thorium, 70}));
+            requirements(Category.crafting, ItemStack.with(new Object[]{Items.silicon, 120, Items.lead, 120, Items.thorium, 100, MLItems.arrayChip, 20}));
             craftEffect = Fx.smeltsmoke;
             outputItem = new ItemStack(Items.surgeAlloy, 2);
             craftTime = 80f;
