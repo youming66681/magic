@@ -69,20 +69,19 @@ public class AdaptiveWall extends Wall {
             sync();
         }
 
-        private void merge(AdaptiveWallBuild other){
-
+        private void merge(AdaptiveWallBuild other) {
+            if (linked.size() + other.linked.size() > 10) {
+                return;
+            }
             float mergedMax = totalMax + other.totalMax;
             float mergedHealth = totalHealth + other.totalHealth;
-
-            for(AdaptiveWallBuild build : other.linked){
-                if(!linked.contains(build)){
+            for (AdaptiveWallBuild build : other.linked) {
+                if (!linked.contains(build)) {
                     linked.add(build);
                 }
             }
-
             totalHealth = mergedHealth;
             totalMax = mergedMax;
-
             sync();
         }
 
