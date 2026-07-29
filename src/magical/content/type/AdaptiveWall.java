@@ -70,7 +70,7 @@ public class AdaptiveWall extends Wall {
         }
 
         private void merge(AdaptiveWallBuild other) {
-            if (linked.size() + other.linked.size() > 10) {
+            if (linked.size + other.linked.size > 10) {
                 return;
             }
             float mergedMax = totalMax + other.totalMax;
