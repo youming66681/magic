@@ -428,6 +428,33 @@ public class MLBlocks {
             consumePower(6f);
             consumeItems(ItemStack.with(MLItems.mysticSteel, 1, MLItems.fluorescentFeatherStone, 1, MLItems.wingedMetal, 1));
         }};
+        //大型相织布编织器
+        LargePhaseWeaver = new GenericCrafter("LargePhaseWeaver"){{
+            requirements(Category.crafting, ItemStack.with(new Object[]{Items.silicon, 130, Items.lead, 120, Items.thorium, 75}));
+            craftEffect = Fx.smeltsmoke;
+            outputItem = new ItemStack(Items.phaseFabric, 2);
+            craftTime = 120f;
+            size = 3;
+            hasPower = true;
+            drawer = new DrawMulti(drawer = new DrawMulti(
+                    new DrawRegion("-Z1"){{
+                        rotateSpeed = 3f;
+                        rotation = 0f;
+                    }},
+                    new DrawRegion("-Z2"){{
+                        rotateSpeed = -3f;
+                        rotation = 0f;
+                    }},
+            new DrawDefault());
+            envEnabled |= Env.space;
+
+            ambientSound = MLSounds.loopTech;
+            ambientSoundVolume = 0.02f;
+
+            consumeItems(ItemStack.with(Items.thorium, 4, Items.sand, 10));
+            consumePower(10f);
+            itemCapacity = 30;
+        }};
         //factor
         //炮
         //电戈
