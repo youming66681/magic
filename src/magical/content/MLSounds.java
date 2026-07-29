@@ -61,7 +61,7 @@ public class MLSounds {
             return new Sound(ML.root.child("sounds").child(name));
         } catch (Exception e) {
             arc.util.Log.warn("Failed to load custom sound: @", name);
-            return new Sound();
+            return new Sound(); // 静音
         }
     }
     static {
