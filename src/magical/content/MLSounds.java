@@ -33,36 +33,37 @@ public class MLSounds {
 
     public static void load() {
         if (Vars.headless) return;
-        explosionAfflict = loadSoundSafe("explosionAfflict.ogg", Sounds.none);
-        explosionCleroi = loadSoundSafe("explosionCleroi.ogg", Sounds.none);
-        shootSublimate = loadSoundSafe("shootSublimate.ogg", Sounds.none);
-        shootForeshadow = loadSoundSafe("shootForeshadow.ogg", Sounds.none);
-        shootAlt = loadSoundSafe("shootAlt.ogg", Sounds.none);
-        loopSmelter = loadSoundSafe("loopSmelter.ogg", Sounds.none);
-        shootArtillery = loadSoundSafe("shootArtillery.ogg", Sounds.none);
-        explosion = loadSoundSafe("explosion.ogg", Sounds.none);
-        shootArtillerySmall = loadSoundSafe("shootArtillerySmall.ogg", Sounds.none);
-        missile = loadSoundSafe("missile.ogg", Sounds.none);
-        plasmadrop = loadSoundSafe("plasmadrop.ogg", Sounds.none);
-        laser = loadSoundSafe("laser.ogg", Sounds.none);
-        missileLaunch = loadSoundSafe("missileLaunch.ogg", Sounds.none);
-        lasercharge2 = loadSoundSafe("lasercharge2.ogg", Sounds.none);
-        shootFuse = loadSoundSafe("shootFuse.ogg", Sounds.none);
-        plasmaboom = loadSoundSafe("plasmaboom.ogg", Sounds.none);
-        pew = loadSoundSafe("pew.ogg", Sounds.none);
-        pao = loadSoundSafe("pao.ogg", Sounds.none);
-        beam = loadSoundSafe("beam.ogg", Sounds.none);
-        JG = loadSoundSafe("JG.ogg", Sounds.none);
-        spark = loadSoundSafe("spark.ogg", Sounds.none);
-        loopTech = loadSoundSafe("loopTech.ogg", Sounds.none);
+
+        explosionAfflict = loadSoundSafe("explosionAfflict.ogg");
+        explosionCleroi = loadSoundSafe("explosionCleroi.ogg");
+        shootSublimate = loadSoundSafe("shootSublimate.ogg");
+        shootForeshadow = loadSoundSafe("shootForeshadow.ogg");
+        shootAlt = loadSoundSafe("shootAlt.ogg");
+        loopSmelter = loadSoundSafe("loopSmelter.ogg");
+        shootArtillery = loadSoundSafe("shootArtillery.ogg");
+        explosion = loadSoundSafe("explosion.ogg");
+        shootArtillerySmall = loadSoundSafe("shootArtillerySmall.ogg");
+        missile = loadSoundSafe("missile.ogg");
+        plasmadrop = loadSoundSafe("plasmadrop.ogg");
+        laser = loadSoundSafe("laser.ogg");
+        missileLaunch = loadSoundSafe("missileLaunch.ogg");
+        lasercharge2 = loadSoundSafe("lasercharge2.ogg");
+        shootFuse = loadSoundSafe("shootFuse.ogg");
+        plasmaboom = loadSoundSafe("plasmaboom.ogg");
+        pew = loadSoundSafe("pew.ogg");
+        pao = loadSoundSafe("pao.ogg");
+        beam = loadSoundSafe("beam.ogg");
+        JG = loadSoundSafe("JG.ogg");
+        spark = loadSoundSafe("spark.ogg");
+        loopTech = loadSoundSafe("loopTech.ogg");
     }
-    // 添加这个私有辅助方法
-    private static Sound loadSoundSafe(String name, Sound fallback) {
+
+    private static Sound loadSoundSafe(String name) {
         try {
             return new Sound(ML.root.child("sounds").child(name));
-        } catch (Exception e) {
-            // 声音加载失败，使用安全回退
-            return fallback;
+        } catch (Throwable e) {
+            Log.warn("Failed to load custom sound: @", name, e);
+            return new Sound();   // 使用空音效避免崩溃
         }
     }
     static {
