@@ -1308,7 +1308,7 @@ public class MLBlocks {
         //钻头
         //物流溜溜溜
         phantomSteelConveyor = new Conveyor("phantomSteelConveyor"){{
-            requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.phantomSteel, 1, Items.graphite, 2}));
+            requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.phantomSteel, 1, Items.graphite, 1}));
             health = 150;
             speed = 0.12f;
             displayedSpeed = 17f;
