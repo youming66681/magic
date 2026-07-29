@@ -29,6 +29,7 @@ public class MLSounds {
     public static Sound beam;
     public static Sound JG;
     public static Sound spark;
+    public static Sound loopTech;
 
     public static void load() {
         explosionAfflict = loadSound("explosionAfflict.ogg");
@@ -52,6 +53,8 @@ public class MLSounds {
         beam = loadSound("beam.ogg");
         JG = loadSound("JG.ogg");
         spark = loadSound("spark.ogg");
+        loopTech = loadSound("loopTech.ogg");
+
     }
 
     private static Sound loadSound(String name) {
@@ -81,5 +84,6 @@ public class MLSounds {
         beam = new Sound();
         JG = new Sound();
         spark = new Sound();
+        loopTech = new Sound();
     }
 }
