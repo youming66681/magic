@@ -464,7 +464,7 @@ public class MLBlocks {
             size = 4;
             hasPower = true;
             itemCapacity = 20;
-            drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawFlame());
 
             consumePower(8f);
             consumeItems(ItemStack.with(Items.copper, 3, Items.lead, 4, Items.titanium, 2, Items.silicon, 3));
