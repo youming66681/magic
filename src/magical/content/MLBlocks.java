@@ -1374,7 +1374,7 @@ public class MLBlocks {
         //电磁裂变炉
         ElectromagneticFissionReactor = new ConsumeGenerator("ElectromagneticFissionReactor"){{
             requirements(Category.power, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 50, MLItems.acrylic, 60, Items.silicon, 80, MLItems.logicChip, 20 }));
-            powerProduction = 20f;
+            powerProduction = 30f;
             itemDuration = 120f;
             size = 4;
 
