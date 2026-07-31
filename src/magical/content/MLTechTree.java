@@ -182,6 +182,8 @@ public class MLTechTree {
 
                                         });
                                 });
+                    /*弹雨*/node(MLBlocks.BulletsRain, () -> {
+                            });
                     /*幻钢焚烧机*/node(MLBlocks.PhantomSteelIncinerator, () -> {
                         /*大型相织布编织器*/node(MLBlocks.LargePhaseWeaver, () -> {
                                 });

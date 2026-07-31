@@ -1245,7 +1245,7 @@ public class MLBlocks {
         BulletsRain = new ItemTurret("BulletsRain"){{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedMetal, 100, Items.surgeAlloy, 140, MLItems.phantomTitaniumSteel, 120, MLItems.mysticSteel, 80, MLItems.arrayChip, 40,}));
             ammo(
-                    Items.graphite, new BasicBulletType(12f, 50){{
+                    MLItems.phantomSteel, new BasicBulletType(12f, 60){{
                         hitSize = 12f;
                         width = 14f;
                         height = 28f;
@@ -1259,10 +1259,31 @@ public class MLBlocks {
                         homingPower = 0.08f;
                         homingDelay = 2f;
                         hitEffect = despawnEffect = Fx.hitBulletColor;
-                        hitColor = backColor = trailColor = Color.valueOf("b2c6d2");
-                        frontColor = Color.valueOf("b2c6d2");
+                        hitColor = backColor = trailColor = Color.valueOf("97B5EDFF");
+                        frontColor = Color.valueOf("97B5EDFF");
                         buildingDamageMultiplier = 0.1f;
-                    }}
+                    }},
+                Items.thorium, new BasicBulletType(12f, 90){{
+                hitSize = 12f;
+                width = 14f;
+                height = 28f;
+                shootEffect = Fx.shootSmall;
+                ammoMultiplier = 1;
+                reloadMultiplier = 1f;
+                lifetime = 30f;
+                trailLength = 4;
+                trailWidth = 3f;
+                homingRange = 360f;
+                homingPower = 0.08f;
+                homingDelay = 2f;
+                pierce = true;
+                pierceBuilding = true;
+                pierceCap = 2;
+                hitEffect = despawnEffect = Fx.hitBulletColor;
+                hitColor = backColor = trailColor = Color.valueOf("F9A3C7FF");
+                frontColor = Color.valueOf("CB8EBFFF");
+                buildingDamageMultiplier = 0.1f;
+            }}
             );
             reload = 8f;
             ammoUseEffect = Fx.casing2Double;
@@ -1280,7 +1301,7 @@ public class MLBlocks {
                 shots = 2;
                 shotDelay = 0f;
                 barrels = new float[]{
-                        0f, 16f, 0f
+                        0f, 0f, 0f
                 };
             }};
             health = 2400;
