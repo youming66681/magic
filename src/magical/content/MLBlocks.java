@@ -1255,7 +1255,7 @@ public class MLBlocks {
                         lifetime = 30f;
                         trailLength = 4;
                         trailWidth = 3f;
-                        weaveRandom = false;
+                        weaveRandom = true;
                         weaveScale = 16f;
                         weaveMag = 4f;
                         hitEffect = despawnEffect = Fx.hitBulletColor;
@@ -1274,8 +1274,14 @@ public class MLBlocks {
             maxAmmo = 80;
             size = 4;
             shootSound = MLSounds.shootArtillerySap;
-            shoot = new ShootPattern(){{
+            shots = 8;
+            shotDelay = 4f;
+            shoot = new ShootBarrel() {{
                 shots = 2;
+                shotDelay = 0f;
+                barrels = new float[]{
+                        0f, 16f, 0f
+                };
             }};
             health = 2400;
             armor = 6;
