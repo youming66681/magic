@@ -147,7 +147,7 @@ public class MLBlocks {
             Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, StarshipMaterialConstructor, StarshipMaterialDeconstructor,
             //高端科技
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
-            LargeSurgeSmelter;
+            LargeSurgeSmelter, BulletsRain;
 
     public static void load() {
 
@@ -1240,6 +1240,74 @@ public class MLBlocks {
                     }}
             );
             }};
+        //弹雨
+        BulletsRain = new ItemTurret("BulletsRain"){{
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedMetal, 100, Items.surgeAlloy, 140, MLItems.phantomTitaniumSteel, 120, MLItems.mysticSteel, 80, MLItems.arrayChip, 40,}));
+            ammo(
+                    Items.graphite, new BasicBulletType(8f, 30){{
+                        hitSize = 2f;
+                        width = 16f;
+                        height = 24f;
+                        shootEffect = Fx.shootSmall;
+                        ammoMultiplier = 1;
+                        reloadMultiplier = 1.5f;
+                        knockback = 0.5f;
+                        lifetime = 25f;
+                        trailLength = 6;
+                        trailWidth = 3f;
+
+                        hitEffect = despawnEffect = Fx.hitBulletColor;
+                        hitColor = backColor = trailColor = Color.valueOf("b2c6d2");
+                        frontColor = Color.valueOf("b2c6d2");
+                        buildingDamageMultiplier = 0.1f;
+                    }},
+            );
+            reload = 8f;
+            ammoUseEffect = Fx.casing2Double;
+            range = 360f;
+            inaccuracy = 0f;
+            recoil = 2f;
+            shake = 2f;
+            size = 4;
+            shootSound = MLSounds.shootArtillerySap;
+
+            health = 2400;
+            armor = 6;
+            coolant = consumeCoolant(0.6f);
+            drawer = new DrawMulti(
+                    new DrawTurret(){{
+                        parts.add(
+                                new ShapePart(){{
+                                    y = 20f;
+                                    color = Color.valueOf("FEEBB3FF");
+                                    stroke = 0f;
+                                    strokeTo = 1f;
+                                    circle = true;
+                                    hollow = true;
+                                    radius = 0f;
+                                    radiusTo = 16f;
+                                    layer = 110f;
+                                }}
+                                new HaloPart(){{
+                                    sides = 3;
+                                    shapes = 3;
+                                    y = 20f;
+                                    color = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                    tri = true;
+                                    radius = 0f;
+                                    radiusTo = 8f;
+                                    triLength = 0f;
+                                    triLengthTo = 16f;
+                                    haloRadius = 0f;
+                                    haloRadiusTo = 16f;
+                                    haloRotateSpeed = 2f;
+                                }}
+                        );
+                    }}
+            );
+        }};
+        }};
         //turret
         //！？强强？！
         int whm = 4;
@@ -1272,7 +1340,7 @@ public class MLBlocks {
         }};
         wingWall = new Wall("wingWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.wingedStone, 6}));
-            health = 240 * whm;
+            health = 260 * whm;
             lightningChance = 0.32f;
             lightningDamage = 32;
             lightningLength = 16;
@@ -1280,7 +1348,7 @@ public class MLBlocks {
         }};
         LargeWingWall = new Wall("LargeWingWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.wingedStone, 6 * whm}));
-            health = 240 * whm * 4;
+            health = 260 * whm * 4;
             size = 2;
             lightningChance = 0.32f;
             lightningDamage = 32;

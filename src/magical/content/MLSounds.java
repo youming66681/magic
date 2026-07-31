@@ -31,6 +31,7 @@ public class MLSounds {
     public static Sound JG;
     public static Sound spark;
     public static Sound loopTech;
+    public static Sound shootArtillerySap;
 
     public static void load() {
         if (Vars.headless) return;
@@ -57,6 +58,7 @@ public class MLSounds {
         JG = loadSoundSafe("JG.ogg");
         spark = loadSoundSafe("spark.ogg");
         loopTech = loadSoundSafe("loopTech.ogg");
+        shootArtillerySap = loadSoundSafe("shootArtillerySap.ogg");
     }
 
     private static Sound loadSoundSafe(String name) {
@@ -91,5 +93,6 @@ public class MLSounds {
         JG                  = new Sound();
         spark               = new Sound();
         loopTech            = new Sound();
+        shootArtillerySap   = new Sound();
     }
 }
