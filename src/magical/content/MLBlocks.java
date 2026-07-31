@@ -1266,7 +1266,7 @@ public class MLBlocks {
             );
             reload = 8f;
             ammoUseEffect = Fx.casing2Double;
-            coolantMultiplier = 0.98;
+            coolantMultiplier = 0.98f;
             rotateSpeed = 4;
             range = 360f;
             inaccuracy = 40f;
