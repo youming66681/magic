@@ -1258,6 +1258,9 @@ public class MLBlocks {
                         weaveRandom = true;
                         weaveScale = 16f;
                         weaveMag = 4f;
+                        homingRange = 360f;
+                        homingPower = 0.08f;
+                        homingDelay = 2f;
                         hitEffect = despawnEffect = Fx.hitBulletColor;
                         hitColor = backColor = trailColor = Color.valueOf("b2c6d2");
                         frontColor = Color.valueOf("b2c6d2");
@@ -1274,8 +1277,6 @@ public class MLBlocks {
             maxAmmo = 80;
             size = 4;
             shootSound = MLSounds.shootArtillerySap;
-            shots = 8;
-            shotDelay = 4f;
             shoot = new ShootBarrel() {{
                 shots = 2;
                 shotDelay = 0f;
