@@ -1260,7 +1260,7 @@ public class MLBlocks {
                         hitColor = backColor = trailColor = Color.valueOf("b2c6d2");
                         frontColor = Color.valueOf("b2c6d2");
                         buildingDamageMultiplier = 0.1f;
-                    }},
+                    }}
             );
             reload = 8f;
             ammoUseEffect = Fx.casing2Double;
@@ -1287,7 +1287,7 @@ public class MLBlocks {
                                     radius = 0f;
                                     radiusTo = 16f;
                                     layer = 110f;
-                                }}
+                                }},
                                 new HaloPart(){{
                                     sides = 3;
                                     shapes = 3;
