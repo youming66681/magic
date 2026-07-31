@@ -1247,17 +1247,14 @@ public class MLBlocks {
             ammo(
                     Items.graphite, new BasicBulletType(12f, 50){{
                         hitSize = 12f;
-                        width = 12f;
-                        height = 24f;
+                        width = 14f;
+                        height = 28f;
                         shootEffect = Fx.shootSmall;
                         ammoMultiplier = 1;
                         reloadMultiplier = 1f;
                         lifetime = 30f;
                         trailLength = 4;
                         trailWidth = 3f;
-                        weaveRandom = true;
-                        weaveScale = 16f;
-                        weaveMag = 4f;
                         homingRange = 360f;
                         homingPower = 0.08f;
                         homingDelay = 2f;
@@ -1271,7 +1268,7 @@ public class MLBlocks {
             ammoUseEffect = Fx.casing2Double;
             rotateSpeed = 4;
             range = 360f;
-            inaccuracy = 0f;
+            inaccuracy = 40f;
             recoil = 2f;
             shake = 2f;
             ammoPerShot = 2;
