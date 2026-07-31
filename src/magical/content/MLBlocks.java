@@ -133,7 +133,6 @@ import mindustry.world.consumers.ConsumePower;
 import mindustry.world.blocks.payloads.Constructor;
 import mindustry.world.blocks.payloads.PayloadDeconstructor;
 import mindustry.entities.part.ShapePart;
-import mindustry.entities.part.PartProgress;
 
 public class MLBlocks {
 
