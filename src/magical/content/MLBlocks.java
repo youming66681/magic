@@ -1258,6 +1258,7 @@ public class MLBlocks {
                         homingRange = 360f;
                         homingPower = 0.08f;
                         homingDelay = 2f;
+                        knockback = 1;
                         hitEffect = despawnEffect = Fx.hitBulletColor;
                         hitColor = backColor = trailColor = Color.valueOf("97B5EDFF");
                         frontColor = Color.valueOf("97B5EDFF");
@@ -1276,6 +1277,7 @@ public class MLBlocks {
                 homingRange = 360f;
                 homingPower = 0.08f;
                 homingDelay = 2f;
+                knockback = 2;
                 pierce = true;
                 pierceBuilding = true;
                 pierceCap = 2;
