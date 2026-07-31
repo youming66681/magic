@@ -1264,7 +1264,7 @@ public class MLBlocks {
                         frontColor = Color.valueOf("97B5EDFF");
                         buildingDamageMultiplier = 0.1f;
                     }},
-                Items.thorium, new BasicBulletType(12f, 90){{
+                Items.thorium, new BasicBulletType(12f, 120){{
                 hitSize = 12f;
                 width = 14f;
                 height = 28f;
