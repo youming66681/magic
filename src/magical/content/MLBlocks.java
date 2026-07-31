@@ -1245,18 +1245,19 @@ public class MLBlocks {
         BulletsRain = new ItemTurret("BulletsRain"){{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedMetal, 100, Items.surgeAlloy, 140, MLItems.phantomTitaniumSteel, 120, MLItems.mysticSteel, 80, MLItems.arrayChip, 40,}));
             ammo(
-                    Items.graphite, new BasicBulletType(8f, 30){{
-                        hitSize = 2f;
-                        width = 16f;
+                    Items.graphite, new BasicBulletType(12f, 50){{
+                        hitSize = 12f;
+                        width = 12f;
                         height = 24f;
                         shootEffect = Fx.shootSmall;
                         ammoMultiplier = 1;
-                        reloadMultiplier = 1.5f;
-                        knockback = 0.5f;
-                        lifetime = 25f;
-                        trailLength = 6;
+                        reloadMultiplier = 1f;
+                        lifetime = 30f;
+                        trailLength = 4;
                         trailWidth = 3f;
-
+                        weaveRandom = false;
+                        weaveScale = 16f;
+                        weaveMag = 4f;
                         hitEffect = despawnEffect = Fx.hitBulletColor;
                         hitColor = backColor = trailColor = Color.valueOf("b2c6d2");
                         frontColor = Color.valueOf("b2c6d2");
@@ -1269,9 +1270,13 @@ public class MLBlocks {
             inaccuracy = 0f;
             recoil = 2f;
             shake = 2f;
+            ammoPerShot = 2;
+            maxAmmo = 80;
             size = 4;
             shootSound = MLSounds.shootArtillerySap;
-
+            shoot = new ShootPattern(){{
+                shots = 2;
+            }};
             health = 2400;
             armor = 6;
             coolant = consumeCoolant(0.6f);
@@ -1282,11 +1287,11 @@ public class MLBlocks {
                                     y = 20f;
                                     color = Color.valueOf("FEEBB3FF");
                                     stroke = 0f;
-                                    strokeTo = 1f;
+                                    strokeTo = 2f;
                                     circle = true;
                                     hollow = true;
                                     radius = 0f;
-                                    radiusTo = 16f;
+                                    radiusTo = 8f;
                                     layer = 110f;
                                 }},
                                 new HaloPart(){{
@@ -1297,11 +1302,11 @@ public class MLBlocks {
                                     colorTo = Color.valueOf("FEEBB3FF");
                                     tri = true;
                                     radius = 0f;
-                                    radiusTo = 8f;
+                                    radiusTo = 6f;
                                     triLength = 0f;
-                                    triLengthTo = 16f;
+                                    triLengthTo = 12f;
                                     haloRadius = 0f;
-                                    haloRadiusTo = 16f;
+                                    haloRadiusTo = 8f;
                                     haloRotateSpeed = 2f;
                                 }}
                         );
