@@ -183,6 +183,8 @@ public class MLTechTree {
                                         });
                                 });
                     /*弹雨*/node(MLBlocks.BulletsRain, () -> {
+                        /*曙光*/node(MLBlocks.DawN, () -> {
+                                });
                         /*罗灵*/node(MLBlocks.LuoLing, () -> {
                     /*星辰*/node(MLBlocks.Stars, () -> {
                                 /*沧龙*/node(MLBlocks.Mosasaurus, () -> {

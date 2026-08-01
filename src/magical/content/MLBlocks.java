@@ -2068,7 +2068,7 @@ public class MLBlocks {
                             colorTo = Color.valueOf("CB8EBFFF");
                             cone = 50f;
                         }};
-                    }}
+                    }},
                     Items.surgeAlloy, new BasicBulletType(16f, 300f){{
                         lifetime = 35f;
                         width = 24f;
