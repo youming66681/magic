@@ -1582,6 +1582,7 @@ public class MLBlocks {
                                     y = 0f;
                                     moveX = 0f;
                                     moveY = -16f;
+                                    layerOffset = -0.001;
                                 }}
                                 );
                             }}
