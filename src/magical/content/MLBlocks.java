@@ -149,7 +149,7 @@ public class MLBlocks {
             Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, StarshipMaterialConstructor, StarshipMaterialDeconstructor,
             //高端科技
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
-            LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus;
+            LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus, DawN;
 
     public static void load() {
 
@@ -1917,7 +1917,7 @@ public class MLBlocks {
         Mosasaurus = new PowerTurret("Mosasaurus"){{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedMetal, 210, Items.surgeAlloy, 180, MLItems.fluorescentFeatherStone, 160, MLItems.mysticSteel, 160, Items.silicon, 405, Items.plastanium, 240, MLItems.phantomLuminousAlloy, 130, MLItems.arrayChip, 50}));
             shootType = new BasicBulletType(32f, 140f){{
-                lifetime = 20f;
+                lifetime = 22.5f;
                 width = 16f;
                 height = 24f;
                 hitSize = 28f;
@@ -1970,7 +1970,7 @@ public class MLBlocks {
                     colorTo = Color.valueOf("FEEBB3FF");
                 }};
             }};
-            range = 640f;
+            range = 720f;
             recoil = 10f;
             reload = 600f;
             shake = 15f;
@@ -2036,6 +2036,157 @@ public class MLBlocks {
                         );
                     }}
             );
+        }};
+        //曙光
+        DawN = new ItemTurret("DawN"){{
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomLuminousAlloy, 180, MLItems.mysticSteel, 240, MLItems.wingedMetal, 180, Items.silicon, 240, MLItems.fluorescentFeatherStone, 120, Items.surgeAlloy, 140, MLItems.arrayChip, 50,}));
+            ammo(
+                    Items.thorium, new BasicBulletType(16f, 240f){{
+                        lifetime = 35f;
+                        width = 24f;
+                        height = 48f;
+                        ammoMultiplier = 1f;
+                        reloadMultiplier = 1f;
+                        knockback = 5f;
+                        pierce = true;
+                        pierceBuilding = true;
+                        pierceCap = 3;
+                        frontColor = Color.valueOf("CB8EBFFF");
+                        backColor = Color.valueOf("F9A3C7FF");
+                        trailLength = 8;
+                        trailWidth = 6f;
+                        trailColor = Color.valueOf("F9A3C7FF");
+                        buildingDamageMultiplier = 0.1f;
+                        shootEffect = new ParticleEffect(){{
+                            particles = 12;
+                            sizeFrom = 4f;
+                            sizeTo = 0f;
+                            length = 50f;
+                            baseLength = 0f;
+                            lifetime = 20f;
+                            colorFrom = Color.valueOf("CB8EBFFF");
+                            colorTo = Color.valueOf("CB8EBFFF");
+                            cone = 50f;
+                        }};
+                    }}
+                    Items.surgeAlloy, new BasicBulletType(16f, 300f){{
+                        lifetime = 35f;
+                        width = 24f;
+                        height = 48f;
+                        ammoMultiplier = 1f;
+                        reloadMultiplier = 1f;
+                        knockback = 5f;
+                        pierce = true;
+                        pierceBuilding = true;
+                        pierceCap = 2;
+                        frontColor = Color.valueOf("FEEBB3FF");
+                        backColor = Color.valueOf("FEEBB3FF");
+                        trailLength = 8;
+                        trailWidth = 6f;
+                        lightningDamage = 50;
+                        lightning = 5 ;
+                        lightningLength = 25;
+                        trailColor = Color.valueOf("FEEBB3FF");
+                        buildingDamageMultiplier = 0.1f;
+                        shootEffect = new ParticleEffect(){{
+                            particles = 12;
+                            sizeFrom = 4f;
+                            sizeTo = 0f;
+                            length = 50f;
+                            baseLength = 0f;
+                            lifetime = 20f;
+                            colorFrom = Color.valueOf("FEEBB3FF");
+                            colorTo = Color.valueOf("FEEBB3FF");
+                            cone = 50f;
+                        }};
+                    }});
+            reload = 8f;
+            ammoUseEffect = Fx.casing4;
+            range = 560f;
+            inaccuracy = 0f;
+            recoil = 2f;
+            maxAmmo = 100;
+            cooldownTime = 120;
+            coolantMultiplier = 0.97;
+            shoot = new ShootAlternate(){{
+                barrels = 2;
+                spread = 16f;
+            }};
+            shake = 5f;
+            recoils = 2;
+            size = 5;
+            shootSound = MLSounds.shootBig;
+            canOverdrive = false;
+            rotateSpeed = 5;
+            coolant = consumeCoolant(0.6f);
+
+            drawer = new DrawTurret(){{
+                parts.add(
+                        new RegionPart("-管l"){{
+                            under = true;
+                            recoilIndex = 0;
+                            moveY = -5f;
+                            progress = PartProgress.recoil;
+                            heatProgress = PartProgress.recoil;
+                        }},
+                        new RegionPart("-管r"){{
+                            under = true;
+                            recoilIndex = 1;
+                            moveY = -5f;
+                            progress = PartProgress.recoil;
+                            heatProgress = PartProgress.recoil;
+                        }},
+                        new HaloPart(){{
+                            y = -16f;
+                            sides = 3;
+                            shapes = 4;
+                            color = Color.valueOf("FEEBB3FF");
+                            colorTo = Color.valueOf("FEEBB3FF");
+                            tri = true;
+                            radius = 0f;
+                            radiusTo = 10f;
+                            triLength = 0f;
+                            triLengthTo = 10f;
+                            haloRadius = 0f;
+                            haloRadiusTo = 8f;
+                            haloRotateSpeed = 2f;
+                        }},
+                        new HaloPart(){{
+                            y = -16f;
+                            sides = 4;
+                            shapes = 1;
+                            rotateSpeed = 1f;
+                            color = Color.valueOf("FEEBB3FF");
+                            colorTo = Color.valueOf("FEEBB3FF");
+                            tri = false;
+                            hollow = true;
+                            stroke = 0f;
+                            strokeTo = 1f;
+                            radius = 0f;
+                            radiusTo = 4f;
+                            haloRadius = 0f;
+                        }},
+                        new HaloPart(){{
+                            y = -16f;
+                            sides = 4;
+                            shapes = 1;
+                            rotateSpeed = -1f;
+                            color = Color.valueOf("FEEBB3FF");
+                            colorTo = Color.valueOf("FEEBB3FF");
+                            tri = false;
+                            hollow = true;
+                            stroke = 0f;
+                            strokeTo = 1f;
+                            radius = 0f;
+                            radiusTo = 8f;
+                            haloRadius = 0f;
+                        }}
+                );
+            }};
+
+            health = 6400;
+            armor = 12;
+            consumePower(20f);
         }};
         //turret
         //！？强强？！
