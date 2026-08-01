@@ -1371,12 +1371,7 @@ public class MLBlocks {
                         backColor = Color.valueOf("FEEBB3FF");
                         hitSound = MLSounds.plasmaboom;
                         ammoMultiplier = 1f;
-                        hitEffect = new WrapEffect(
-                                Fx.dynamicSpikes,
-                                Color.valueOf("FEEBB3FF")
-                        ){{
-                            rotation = 24f;
-                        }};
+                        hitEffect = MLFx.smallEnergyBlast;
                     }};
                     chargeEffect = new MultiEffect(
                             new WaveEffect() {{
@@ -1648,7 +1643,7 @@ public class MLBlocks {
             //燃能发电机
         fuelPoweredGenerator = new ConsumeGenerator("fuelPoweredGenerator"){{
             requirements(Category.power, ItemStack.with(new Object[]{MLItems.phantomSteel, 60, Items.graphite, 30}));
-            powerProduction = 5f;
+            powerProduction = 4f;
             itemDuration = 150f;
             size = 2;
 

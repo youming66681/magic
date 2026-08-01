@@ -1064,7 +1064,7 @@ public class MLUnitTypes {
                 ejectEffect = Fx.casing4;
                 layerOffset = 0.001f;
                 shootSound = MLSounds.plasmadrop;
-                bullet = new BasicBulletType(12, 100) {{
+                bullet = new BasicBulletType(12, 120) {{
                     sprite = "magic-十字星";
                     spin = 3;
                     lifetime = 25;
@@ -1075,6 +1075,8 @@ public class MLUnitTypes {
                     trailColor = Color.valueOf("FEEBB3FF");
                     frontColor = Color.valueOf("FEEBB3FF");
                     backColor = Color.valueOf("FEEBB3FF");
+                    splashDamage = 80f;
+                    splashDamageRadius = 24f;
                     hitEffect = despawnEffect = MLFx.smallEnergyBlast;
                     hitSound = MLSounds.plasmaboom;
                     fragBullets = 3;
