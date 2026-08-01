@@ -273,13 +273,13 @@ public class MLBlocks {
             hasPower = true;
             craftPlans = Seq.with(
                     new CraftPlan(){{
-                        craftTime = 30f;
-                        consumePower(15f);
+                        craftTime = 60f;
+                        consumePower(10f);
                         consumeItems(ItemStack.with(MLItems.phantomSteel, 1, MLItems.phantomTitaniumSteel, 1, MLItems.mysticCrystal, 1, Items.silicon, 3));
                         outputItems = ItemStack.with(MLItems.logicChip, 1);
                     }},
             new CraftPlan(){{
-                craftTime = 60f;
+                craftTime = 120f;
                 consumePower(20f);
                 consumeItems(ItemStack.with(MLItems.wingedStone, 1, MLItems.acrylic, 1, Items.silicon, 6));
                 outputItems = ItemStack.with(MLItems.arrayChip, 1);
@@ -1934,6 +1934,7 @@ public class MLBlocks {
                 smokeEffect = Fx.smokeCloud;
                 trailChance = 1f;
                 trailInterval = 20f;
+                buildingDamageMultiplier = 0.1f;
                 hitEffect = new MultiEffect(
                         new WaveEffect(){{
                             lifetime = 30f;
