@@ -1350,7 +1350,7 @@ public class MLBlocks {
                         width = 16f;
                         height = 32f;
                         lifetime = 40f;
-                        splashDamage = 750f;
+                        splashDamage = 1000f;
                         splashDamageRadius = 100f;
                         trailLength = 9;
                         trailWidth = 3f;
@@ -1576,6 +1576,13 @@ public class MLBlocks {
                                             haloRotateSpeed = 2.5f;
                                             layer = 110f;
                                         }}
+                                new RegionPart("-front") {{
+                                    mirror = false;
+                                    x = 0f;
+                                    y = 0f;
+                                    moveX = -16f;
+                                    moveY = 0f;
+                                }}
                                 );
                             }}
                     );
