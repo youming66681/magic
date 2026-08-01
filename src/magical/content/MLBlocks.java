@@ -2107,7 +2107,7 @@ public class MLBlocks {
             recoil = 2f;
             maxAmmo = 100;
             cooldownTime = 120;
-            coolantMultiplier = 0.97;
+            coolantMultiplier = 0.97f;
             shoot = new ShootAlternate(){{
                 barrels = 2;
                 spread = 16f;
@@ -2120,8 +2120,9 @@ public class MLBlocks {
             rotateSpeed = 5;
             coolant = consumeCoolant(0.6f);
 
-            drawer = new DrawTurret(){{
-                parts.add(
+            drawer = new DrawMulti(
+                    new DrawTurret() {{
+                        parts.add(
                         new RegionPart("-管l"){{
                             under = true;
                             recoilIndex = 0;
@@ -2181,8 +2182,9 @@ public class MLBlocks {
                             radiusTo = 8f;
                             haloRadius = 0f;
                         }}
-                );
-            }};
+                        );
+                    }}
+            );
 
             health = 6400;
             armor = 12;
