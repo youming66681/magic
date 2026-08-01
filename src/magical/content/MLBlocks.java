@@ -2004,37 +2004,33 @@ public class MLBlocks {
             drawer = new DrawMulti(
                     new DrawTurret() {{
                         parts.add(
-                                new HaloPart() {{
-                                    sides = 4;
-                                    shapes = 1;
-                                    y = 16f;
+                                new HaloPart(){{
+                                    sides = 3;
+                                    shapes = 4;
                                     color = Color.valueOf("FEEBB3FF");
                                     colorTo = Color.valueOf("FEEBB3FF");
-                                    tri = false;
-                                    hollow = true;
-                                    stroke = 0f;
-                                    strokeTo = 1f;
+                                    tri = true;
                                     radius = 0f;
-                                    radiusTo = 4f;
+                                    radiusTo = 16f;
+                                    triLength = 0f;
+                                    triLengthTo = 16f;
                                     haloRadius = 0f;
-                                    haloRotateSpeed = 2f;
-                                    layer = 110f;
+                                    haloRadiusTo = 26f;
+                                    haloRotateSpeed = 1f;
                                 }},
-                                new HaloPart() {{
-                                    sides = 4;
+                                new HaloPart(){{
+                                    sides = 8;
                                     shapes = 1;
-                                    y = 16f;
+                                    rotateSpeed = -2.5f;
                                     color = Color.valueOf("FEEBB3FF");
                                     colorTo = Color.valueOf("FEEBB3FF");
                                     tri = false;
                                     hollow = true;
                                     stroke = 0f;
-                                    strokeTo = 1f;
+                                    strokeTo = 2f;
                                     radius = 0f;
-                                    radiusTo = 4f;
+                                    radiusTo = 25f;
                                     haloRadius = 0f;
-                                    haloRotateSpeed = -2f;
-                                    layer = 110f;
                                 }}
                         );
                     }}
