@@ -149,7 +149,7 @@ public class MLBlocks {
             Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, StarshipMaterialConstructor, StarshipMaterialDeconstructor,
             //高端科技
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
-            LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing;
+            LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus;
 
     public static void load() {
 
@@ -1533,7 +1533,7 @@ public class MLBlocks {
                     range = 480f;
                     recoil = 7.5f;
                     recoilTime = 90f;
-                    reload = 600f;
+                    reload = 300f;
                     shake = 25f;
                     shootEffect = Fx.none;
                     smokeEffect = Fx.smeltsmoke;
@@ -1874,6 +1874,133 @@ public class MLBlocks {
             coolantMultiplier = 0.98f;
             coolant = consumeCoolant(0.4f);
             consumePower(30f);
+            drawer = new DrawMulti(
+                    new DrawTurret() {{
+                        parts.add(
+                                new HaloPart() {{
+                                    sides = 4;
+                                    shapes = 1;
+                                    y = 16f;
+                                    color = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                    tri = false;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1f;
+                                    radius = 0f;
+                                    radiusTo = 4f;
+                                    haloRadius = 0f;
+                                    haloRotateSpeed = 2f;
+                                    layer = 110f;
+                                }},
+                                new HaloPart() {{
+                                    sides = 4;
+                                    shapes = 1;
+                                    y = 16f;
+                                    color = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                    tri = false;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1f;
+                                    radius = 0f;
+                                    radiusTo = 4f;
+                                    haloRadius = 0f;
+                                    haloRotateSpeed = -2f;
+                                    layer = 110f;
+                                }}
+                        );
+                    }}
+            );
+        }};
+        //沧龙
+        Mosasaurus = new PowerTurret("Mosasaurus"){{
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedMetal, 210, Items.surgeAlloy, 180, MLItems.fluorescentFeatherStone, 160, MLItems.mysticSteel, 160, Items.silicon, 405, Items.plastanium, 240, MLItems.phantomLuminousAlloy, 130, MLItems.arrayChip, 50}));
+            shootType = new BasicBulletType(32f, 140f){{
+                lifetime = 35f;
+                width = 16f;
+                height = 24f;
+                hitSize = 28f;
+                splashDamageRadius = 80f;
+                splashDamage = 160f;
+                frontColor = Color.valueOf("FEEBB3FF");
+                backColor = Color.valueOf("FEEBB3FF");
+                trailLength = 10;
+                trailWidth = 6f;
+                trailColor = Color.valueOf("FEEBB3FF");
+                ammoMultiplier = 1f;
+                hitSound = MLSounds.plasmaboom;
+                despawnEffect = Fx.none;
+                smokeEffect = Fx.smokeCloud;
+                trailChance = 1f;
+                trailInterval = 20f;
+                hitEffect = new MultiEffect(
+                        new WaveEffect(){{
+                            lifetime = 30f;
+                            sizeFrom = 0f;
+                            sizeTo = 100f;
+                            strokeFrom = 0f;
+                            strokeTo = 5f;
+                            colorFrom = Color.valueOf("FEEBB3FF");
+                            colorTo = Color.valueOf("FEEBB3FF");
+                        }},
+                        new ParticleEffect(){{
+                            particles = 5;
+                            sizeFrom = 10f;
+                            sizeTo = 0f;
+                            length = 80f;
+                            baseLength = 4f;
+                            interp = Interp.pow10Out;
+                            sizeInterp = Interp.pow10In;
+                            lifetime = 30f;
+                            colorFrom = Color.valueOf("FEEBB3FF");
+                            colorTo = Color.valueOf("FEEBB3FF");
+                        }}
+                );
+
+                trailEffect = new ParticleEffect(){{
+                    particles = 10;
+                    length = 10f;
+                    baseLength = 16f;
+                    lifetime = 10f;
+                    sizeFrom = 4f;
+                    sizeTo = 0f;
+                    colorFrom = Color.valueOf("FEEBB3FF");
+                    colorTo = Color.valueOf("FEEBB3FF");
+                }};
+            }};
+            range = 640f;
+            recoil = 10f;
+            reload = 600f;
+            shake = 15f;
+            size = 5;
+            inaccuracy = 10;
+            recoilTime = 150;
+            armor = 12;
+            health = 6400;
+            rotateSpeed = 5;
+            shootSound = MLSounds.laser;
+            canOverdrive = false;
+            coolantMultiplier = 0.97f;
+            coolant = consumeCoolant(0.4f);
+            consumePower(120f);
+            shoot = new ShootBarrel(){{
+                shots = 100;
+                shotDelay = 1.5f;
+
+                barrels = new float[]{
+                        2f, 0f, 0f,
+                        -2f, 0f, 0f,
+                        4f, 0f, 0f,
+                        -4f, 0f, 0f,
+                        6f, 0f, 0f,
+                        -6f, 0f, 0f,
+                        8f, 0f, 0f,
+                        -8f, 0f, 0f,
+                        10f, 0f, 0f,
+                        -10f, 0f, 0f
+                };
+            }};
             drawer = new DrawMulti(
                     new DrawTurret() {{
                         parts.add(
