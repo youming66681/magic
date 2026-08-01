@@ -1361,18 +1361,21 @@ public class MLBlocks {
                     hitSoundVolume = 10;
                     intervalBullets = 20;
                     bulletInterval = 4f;
-                    intervalBullet = new BasicBulletType(0f, 50) {{
+                    intervalBullet = new BasicBulletType(0f, 80) {{
                         width = 0f;
                         height = 0f;
                         lifetime = 5f;
-                        splashDamage = 140f;
-                        splashDamageRadius = 20f;
+                        splashDamage = 120f;
+                        splashDamageRadius = 24f;
                         frontColor = Color.valueOf("FEEBB3FF");
                         backColor = Color.valueOf("FEEBB3FF");
                         hitSound = MLSounds.plasmaboom;
                         ammoMultiplier = 1f;
-                        hitEffect = new WrapEffect(Fx.dynamicSpikes, Color.valueOf("FEEBB3FF")) {{
-                            rotation = 20f;
+                        hitEffect = new WrapEffect(
+                                Fx.dynamicSpikes,
+                                Color.valueOf("FEEBB3FF")
+                        ){{
+                            rotation = 24f;
                         }};
                     }};
                     chargeEffect = new MultiEffect(
