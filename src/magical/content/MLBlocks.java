@@ -1245,7 +1245,7 @@ public class MLBlocks {
         BulletsRain = new ItemTurret("BulletsRain"){{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedMetal, 100, Items.surgeAlloy, 140, MLItems.phantomTitaniumSteel, 120, MLItems.mysticSteel, 80, MLItems.arrayChip, 40,}));
             ammo(
-                    MLItems.phantomSteel, new BasicBulletType(12f, 60){{
+                    MLItems.phantomSteel, new BasicBulletType(12f, 70){{
                         hitSize = 12f;
                         width = 14f;
                         height = 28f;
@@ -1264,7 +1264,7 @@ public class MLBlocks {
                         frontColor = Color.valueOf("97B5EDFF");
                         buildingDamageMultiplier = 0.1f;
                     }},
-                Items.thorium, new BasicBulletType(12f, 120){{
+                Items.thorium, new BasicBulletType(12f, 140){{
                 hitSize = 12f;
                 width = 14f;
                 height = 28f;
@@ -1346,11 +1346,11 @@ public class MLBlocks {
         //星辰
         Stars = new PowerTurret("Stars"){{
                 requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedMetal, 110, Items.surgeAlloy, 90, MLItems.fluorescentFeatherStone, 90, MLItems.mysticSteel, 75, MLItems.phantomLuminousAlloy, 60, MLItems.arrayChip, 50,}));
-                shootType = new BasicBulletType(12f, 250f) {{
+                shootType = new BasicBulletType(12f, 600f) {{
                         width = 16f;
                         height = 32f;
                         lifetime = 40f;
-                        splashDamage = 1000f;
+                        splashDamage = 1400f;
                         splashDamageRadius = 100f;
                         trailLength = 9;
                         trailWidth = 3f;
@@ -1509,13 +1509,13 @@ public class MLBlocks {
                             cone = 0f;
                         }};
                         splashDamageRadius = 24f;
-                        splashDamage = 100f;
+                        splashDamage = 250f;
                         fragBullets = 1;
-                        fragBullet = new BasicBulletType(8f, 60) {{
+                        fragBullet = new BasicBulletType(8f, 140) {{
                             width = 0f;
                             height = 0f;
                             lifetime = 8f;
-                            splashDamage = 140f;
+                            splashDamage = 260f;
                             splashDamageRadius = 24f;
                             frontColor = Color.valueOf("FEEBB3FF");
                             backColor = Color.valueOf("FEEBB3FF");
@@ -1580,8 +1580,8 @@ public class MLBlocks {
                                     mirror = false;
                                     x = 0f;
                                     y = 0f;
-                                    moveX = -16f;
-                                    moveY = 0f;
+                                    moveX = 0f;
+                                    moveY = -16f;
                                 }}
                                 );
                             }}
