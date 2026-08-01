@@ -1447,11 +1447,12 @@ public class MLBlocks {
                             }}
                     );
                     hitEffect = new MultiEffect(
-                        new WrapEffect(){{
-                        effect = Fx.dynamicSpikes;
-                        color = Color.valueOf("FEEBB3FF");
-                        rotation = 100f;
-                         }},
+                            new WrapEffect(
+                                    Fx.dynamicSpikes,
+                                    Color.valueOf("FEEBB3FF")
+                            ){{
+                                rotation = 16f;
+                            }};
                             new ParticleEffect() {{
                                 particles = 1;
                                 baseLength = 1f;
