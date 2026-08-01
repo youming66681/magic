@@ -1452,7 +1452,7 @@ public class MLBlocks {
                                     Color.valueOf("FEEBB3FF")
                             ){{
                                 rotation = 100f;
-                            }};
+                            }},
                             new ParticleEffect() {{
                                 particles = 1;
                                 baseLength = 1f;
