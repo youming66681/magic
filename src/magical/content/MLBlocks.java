@@ -1917,7 +1917,7 @@ public class MLBlocks {
         Mosasaurus = new PowerTurret("Mosasaurus"){{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedMetal, 210, Items.surgeAlloy, 180, MLItems.fluorescentFeatherStone, 160, MLItems.mysticSteel, 160, Items.silicon, 405, Items.plastanium, 240, MLItems.phantomLuminousAlloy, 130, MLItems.arrayChip, 50}));
             shootType = new BasicBulletType(32f, 140f){{
-                lifetime = 35f;
+                lifetime = 20f;
                 width = 16f;
                 height = 24f;
                 hitSize = 28f;
