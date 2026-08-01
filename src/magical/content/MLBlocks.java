@@ -1447,7 +1447,7 @@ public class MLBlocks {
                             }}
                     );
                     hitEffect = new MultiEffect(
-                        WrapEffect(){{
+                        new WrapEffect(){{
                         effect = Fx.dynamicSpikes;
                         color = Color.valueOf("FEEBB3FF");
                         rotation = 100f;
