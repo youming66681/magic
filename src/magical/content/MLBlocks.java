@@ -1245,7 +1245,7 @@ public class MLBlocks {
         BulletsRain = new ItemTurret("BulletsRain"){{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedMetal, 100, Items.surgeAlloy, 140, MLItems.phantomTitaniumSteel, 120, MLItems.mysticSteel, 80, MLItems.arrayChip, 40,}));
             ammo(
-                    MLItems.phantomSteel, new BasicBulletType(12f, 70){{
+                    MLItems.phantomSteel, new BasicBulletType(12f, 60){{
                         hitSize = 12f;
                         width = 14f;
                         height = 28f;
@@ -1264,7 +1264,7 @@ public class MLBlocks {
                         frontColor = Color.valueOf("97B5EDFF");
                         buildingDamageMultiplier = 0.1f;
                     }},
-                Items.thorium, new BasicBulletType(12f, 140){{
+                Items.thorium, new BasicBulletType(12f, 120){{
                 hitSize = 12f;
                 width = 14f;
                 height = 28f;
@@ -1359,6 +1359,7 @@ public class MLBlocks {
                         backColor = Color.valueOf("FEEBB3FF");
                         hitSound = MLSounds.largeCannon;
                         hitSoundVolume = 10;
+                        buildingDamageMultiplier = 0.1f;
                         intervalBullets = 10;
                         bulletInterval = 4f;
                         intervalBullet = new BasicBulletType(0f, 80) {{
@@ -1372,6 +1373,7 @@ public class MLBlocks {
                             hitSound = MLSounds.plasmaboom;
                             ammoMultiplier = 1f;
                             hitEffect = MLFx.smallEnergyBlast;
+                            buildingDamageMultiplier = 0.1f;
                         }};
                         chargeEffect = new MultiEffect(
                                 new WaveEffect() {{
@@ -1510,11 +1512,12 @@ public class MLBlocks {
                         }};
                         splashDamageRadius = 24f;
                         splashDamage = 250f;
-                        fragBullets = 1;
+                        buildingDamageMultiplier = 0.1f;
+                        fragBullets = 2;
                         fragBullet = new BasicBulletType(8f, 140) {{
                             width = 0f;
                             height = 0f;
-                            lifetime = 8f;
+                            lifetime = 16f;
                             splashDamage = 260f;
                             splashDamageRadius = 24f;
                             frontColor = Color.valueOf("FEEBB3FF");
@@ -1522,6 +1525,7 @@ public class MLBlocks {
                             hitSound = MLSounds.plasmaboom;
                             ammoMultiplier = 1f;
                             hitEffect = MLFx.smallEnergyBlast;
+                            buildingDamageMultiplier = 0.1f;
                         }};
                     }};
                 }};
