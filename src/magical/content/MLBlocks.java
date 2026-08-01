@@ -1512,7 +1512,6 @@ public class MLBlocks {
                         splashDamage = 100f;
                     }};
                 }};
-                    }};
                     range = 480f;
                     recoil = 7.5f;
                     recoilTime = 90f;
