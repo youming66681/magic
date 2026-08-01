@@ -1840,7 +1840,6 @@ public class MLBlocks {
                     lightningSpacing = 24f;
                     lightningLength = 4;
                     lightningDelay = 0.8f;
-                    lightningLengthRand = 6f;
                     lightningAngleRand = 6f;
                     lightningDamage = 8f;
                     damage = 80f;
@@ -1869,10 +1868,7 @@ public class MLBlocks {
             health = 3600;
             rotateSpeed = 4;
             shootSound = MLSounds.malignShoot;
-            shoot = new ShootHelix() {{
-                mag = 3;
-                scl = 3;
-            }};
+            shoot = new ShootHelix(3,3)
             canOverdrive = false;
             coolantMultiplier = 0.98f;
             coolant = consumeCoolant(0.4f);
