@@ -1447,19 +1447,13 @@ public class MLBlocks {
                             }}
                     );
                     hitEffect = new MultiEffect(
-                            new WrapEffect(
-                                    Fx.dynamicSpikes,
-                                    Color.valueOf("FEEBB3FF")
-                            ){{
-                                rotation = 100f;
-                            }},
                             new ParticleEffect() {{
                                 particles = 1;
                                 baseLength = 1f;
                                 length = 0f;
                                 lifetime = 40f;
                                 spin = 5f;
-                                region = Core.atlas.find("magic-十字星");
+                                region = "magic-十字星";
                                 sizeFrom = 100f;
                                 sizeTo = 0f;
                                 colorFrom = Color.valueOf("FEEBB3FF");
