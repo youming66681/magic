@@ -1861,7 +1861,7 @@ public class MLBlocks {
             }};
             range = 400f;
             recoil = 4f;
-            reload = 15f;
+            reload = 20f;
             shake = 15f;
             size = 4;
             armor = 6;
