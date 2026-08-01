@@ -1575,7 +1575,7 @@ public class MLBlocks {
                                             haloRadius = 0f;
                                             haloRotateSpeed = 2.5f;
                                             layer = 110f;
-                                        }}
+                                        }},
                                 new RegionPart("-front") {{
                                     mirror = false;
                                     x = 0f;
