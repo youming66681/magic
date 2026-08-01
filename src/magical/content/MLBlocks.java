@@ -1346,10 +1346,10 @@ public class MLBlocks {
         //星辰
         Stars = new PowerTurret("Stars"){{
                 requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedMetal, 110, Items.surgeAlloy, 90, MLItems.fluorescentFeatherStone, 90, MLItems.mysticSteel, 75, MLItems.phantomLuminousAlloy, 60, MLItems.arrayChip, 50,}));
-                shootType = new BasicBulletType(8f, 250f) {{
+                shootType = new BasicBulletType(12f, 250f) {{
                         width = 32f;
                         height = 32f;
-                        lifetime = 80f;
+                        lifetime = 40f;
                         splashDamage = 750f;
                         splashDamageRadius = 100f;
                         trailLength = 10;
@@ -1476,7 +1476,7 @@ public class MLBlocks {
                         height = 0f;
                         ammoMultiplier = 1f;
                         speed = 100f;
-                        lifetime = 1f;
+                        lifetime = 1.25f;
                         frontColor = Color.valueOf("FEEBB3FF");
                         backColor = Color.valueOf("FEEBB3FF");
                         trailSpacing = 9f;
