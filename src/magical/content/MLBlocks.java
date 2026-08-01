@@ -1480,7 +1480,7 @@ public class MLBlocks {
                         frontColor = Color.valueOf("FEEBB3FF");
                         backColor = Color.valueOf("FEEBB3FF");
                         trailSpacing = 9f;
-                        hitSound = Sounds.plasmaboom;
+                        hitSound = MLSounds.plasmaboom;
                         despawnEffect = Fx.none;
                         hitEffect = new ParticleEffect(){{
                             particles = 1;
