@@ -1347,19 +1347,19 @@ public class MLBlocks {
         Stars = new PowerTurret("Stars"){{
                 requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedMetal, 110, Items.surgeAlloy, 90, MLItems.fluorescentFeatherStone, 90, MLItems.mysticSteel, 75, MLItems.phantomLuminousAlloy, 60, MLItems.arrayChip, 50,}));
                 shootType = new BasicBulletType(12f, 250f) {{
-                        width = 32f;
+                        width = 16f;
                         height = 32f;
                         lifetime = 40f;
                         splashDamage = 750f;
                         splashDamageRadius = 100f;
-                        trailLength = 10;
-                        trailWidth = 5f;
+                        trailLength = 9;
+                        trailWidth = 3f;
                         trailColor = Color.valueOf("FEEBB3FF");
                         frontColor = Color.valueOf("FEEBB3FF");
                         backColor = Color.valueOf("FEEBB3FF");
                         hitSound = MLSounds.largeCannon;
                         hitSoundVolume = 10;
-                        intervalBullets = 20;
+                        intervalBullets = 10;
                         bulletInterval = 4f;
                         intervalBullet = new BasicBulletType(0f, 80) {{
                             width = 0f;
@@ -1510,6 +1510,19 @@ public class MLBlocks {
                         }};
                         splashDamageRadius = 24f;
                         splashDamage = 100f;
+                        fragBullets = 1;
+                        fragBullet = new BasicBulletType(8f, 60) {{
+                            width = 0f;
+                            height = 0f;
+                            lifetime = 8f;
+                            splashDamage = 140f;
+                            splashDamageRadius = 24f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            hitSound = MLSounds.plasmaboom;
+                            ammoMultiplier = 1f;
+                            hitEffect = MLFx.smallEnergyBlast;
+                        }};
                     }};
                 }};
                     range = 480f;
