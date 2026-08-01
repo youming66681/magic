@@ -133,6 +133,7 @@ import mindustry.world.consumers.ConsumePower;
 import mindustry.world.blocks.payloads.Constructor;
 import mindustry.world.blocks.payloads.PayloadDeconstructor;
 import mindustry.entities.part.ShapePart;
+import mindustry.entities.pattern.ShootHelix;
 
 public class MLBlocks {
 
