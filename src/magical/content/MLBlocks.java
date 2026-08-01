@@ -148,7 +148,7 @@ public class MLBlocks {
             Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, StarshipMaterialConstructor, StarshipMaterialDeconstructor,
             //高端科技
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
-            LargeSurgeSmelter, BulletsRain, Stars, SeekingSky;
+            LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing;
 
     public static void load() {
 
@@ -1624,6 +1624,7 @@ public class MLBlocks {
                         lightningColor = Color.valueOf("9C88C3FF");
                         status = StatusEffects.shocked;
                         statusDuration = 600f;
+                        buildingDamageMultiplier = 0.1f;
                         trailEffect = new ParticleEffect(){{
                             particles = 3;
                             sizeFrom = 3f;
@@ -1666,6 +1667,7 @@ public class MLBlocks {
                         lightningColor = Color.valueOf("FEEBB3FF");
                         status = StatusEffects.shocked;
                         statusDuration = 600f;
+                        buildingDamageMultiplier = 0.1f;
                         trailEffect = new ParticleEffect(){{
                             particles = 3;
                             sizeFrom = 3f;
@@ -1683,7 +1685,6 @@ public class MLBlocks {
                     MLItems.fluorescentFeatherStone, new MissileBulletType(16f, 180){{
                         splashDamageRadius = 64f;
                         splashDamage = 180f;
-                        knockback = 10f;
                         lifetime = 60f;
                         homingPower = 1f;
                         homingDelay = 9f;
@@ -1710,6 +1711,7 @@ public class MLBlocks {
                             );
                         });
                         hitSound = MLSounds.plasmaboom;
+                        buildingDamageMultiplier = 0.1f;
                         trailEffect = new ParticleEffect(){{
                             particles = 3;
                             sizeFrom = 3f;
@@ -1770,35 +1772,149 @@ public class MLBlocks {
                               mirror = false;
                               x = 0f;
                               y = 0f;
-                              moveX = 4f;
-                              moveY = 4f;
+                              moveX = 6f;
+                              moveY = 6f;
                           }},
                         new RegionPart("-2") {{
                             mirror = false;
                             x = 0f;
                             y = 0f;
-                            moveX = -4f;
-                            moveY = -4f;
+                            moveX = -6f;
+                            moveY = -6f;
                         }},
                         new RegionPart("-3") {{
                             mirror = false;
                             x = 0f;
                             y = 0f;
-                            moveX = -4f;
-                            moveY = 4f;
+                            moveX = -6f;
+                            moveY = 6f;
                         }},
                         new RegionPart("-4") {{
                             mirror = false;
                             x = 0f;
                             y = 0f;
-                            moveX = 4f;
-                            moveY = -4f;
+                            moveX = 6f;
+                            moveY = -6f;
                         }});
             }};
 
             health = 3200;
             armor = 8;
             consumePower(20f);
+        }};
+        //罗灵
+        LuoLing = new PowerTurret("LuoLing"){{
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedMetal, 125, Items.surgeAlloy, 100, MLItems.fluorescentFeatherStone, 100, MLItems.mysticSteel, 100, Items.silicon, 150, MLItems.arrayChip, 40,}));
+            shootType = new BasicBulletType(8f,40){{
+                sprite = "magic-十字星";
+                spin = 2f;
+                frontColor = Color.valueOf("FEEBB3FF");
+                backColor = Color.valueOf("FEEBB3FF");
+                trailLength = 5;
+                trailWidth = 5f;
+                trailColor = Color.valueOf("FEEBB3FF");
+                width = 32f;
+                height = 32f;
+                lifetime = 50f;
+                ammoMultiplier = 1f;
+                homingRange = 160f;
+                homingPower = 0.2f;
+                shootEffect = new ParticleEffect(){{
+                    particles = 12;
+                    sizeFrom = 6f;
+                    sizeTo = 0f;
+                    length = 12f;
+                    baseLength = 0f;
+                    lifetime = 9f;
+                    colorFrom = Color.valueOf("FEEBB3FF");
+                    colorTo = Color.valueOf("FEEBB3FF");
+                    cone = 30f;
+                }};
+                fragBullets = 1;
+                fragSpread = 0f;
+                fragVelocityMin = 0f;
+                fragRandomSpread = 0f;
+                fragBullet = new LaserBulletType(){{
+                    lifetime = 30f;
+                    lightningColor = Color.valueOf("FEEBB3FF");
+                    lightningSpacing = 24f;
+                    lightningLength = 4;
+                    lightningDelay = 0.8f;
+                    lightningLengthRand = 6f;
+                    lightningAngleRand = 6f;
+                    lightningDamage = 8f;
+                    damage = 80f;
+                    colors = new Color[]{
+                            Color.valueOf("FEEBB3FF"),
+                            Color.valueOf("FEEBB3FF"),
+                            Color.valueOf("FEEBB3FF")
+                    };
+                    width = 32f;
+                    length = 168f;
+                    fragBullets = 1;
+                    fragBullet = new LightningBulletType(){{
+                        damage = 8f;
+                        lightning = 5;
+                        lightningLength = 10;
+                        lightningLengthRand = 15;
+                    }};
+                }};
+            }};
+            range = 400f;
+            recoil = 4f;
+            reload = 15f;
+            shake = 15f;
+            size = 4;
+            armor = 6;
+            health = 3600;
+            rotateSpeed = 4;
+            shootSound = MLSounds.malignShoot;
+            shoot = new ShootHelix() {{
+                mag = 3;
+                scl = 3;
+            }};
+            canOverdrive = false;
+            coolantMultiplier = 0.98f;
+            coolant = consumeCoolant(0.4f);
+            consumePower(30f);
+            drawer = new DrawMulti(
+                    new DrawTurret() {{
+                        parts.add(
+                                new HaloPart() {{
+                                    sides = 4;
+                                    shapes = 1;
+                                    y = 16f;
+                                    color = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                    tri = false;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1f;
+                                    radius = 0f;
+                                    radiusTo = 4f;
+                                    haloRadius = 0f;
+                                    haloRotateSpeed = 2f;
+                                    layer = 110f;
+                                }},
+                                new HaloPart() {{
+                                    sides = 4;
+                                    shapes = 1;
+                                    y = 16f;
+                                    color = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                    tri = false;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1f;
+                                    radius = 0f;
+                                    radiusTo = 4f;
+                                    haloRadius = 0f;
+                                    haloRotateSpeed = -2f;
+                                    layer = 110f;
+                                }}
+                        );
+                    }}
+            );
         }};
         //turret
         //！？强强？！
