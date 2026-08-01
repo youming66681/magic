@@ -148,7 +148,7 @@ public class MLBlocks {
             Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, StarshipMaterialConstructor, StarshipMaterialDeconstructor,
             //高端科技
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
-            LargeSurgeSmelter, BulletsRain, Stars;
+            LargeSurgeSmelter, BulletsRain, Stars, SeekingSky;
 
     public static void load() {
 
@@ -1345,7 +1345,7 @@ public class MLBlocks {
         }};
         //星辰
         Stars = new PowerTurret("Stars"){{
-                requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedMetal, 110, Items.surgeAlloy, 90, MLItems.fluorescentFeatherStone, 90, MLItems.mysticSteel, 75, MLItems.phantomLuminousAlloy, 60, MLItems.arrayChip, 50,}));
+                requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedMetal, 110, Items.surgeAlloy, 90, MLItems.fluorescentFeatherStone, 90, MLItems.mysticSteel, 150, MLItems.phantomLuminousAlloy, 60, MLItems.arrayChip, 50,}));
                 shootType = new BasicBulletType(12f, 600f) {{
                         width = 16f;
                         height = 32f;
@@ -1592,6 +1592,214 @@ public class MLBlocks {
                             }}
                     );
             }};
+        //寻天
+        SeekingSky = new ItemTurret("SeekingSky"){{
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedStone, 160, MLItems.mysticSteel, 120, MLItems.wingedMetal, 80, Items.silicon, 240, MLItems.fluorescentFeatherStone, 100, Items.surgeAlloy, 140, MLItems.arrayChip, 40,}));
+            ammo(
+                    MLItems.wingedStone, new MissileBulletType(16f, 120){{
+                        splashDamageRadius = 32f;
+                        splashDamage = 120f;
+                        lifetime = 60f;
+                        homingPower = 1f;
+                        homingDelay = 9f;
+                        homingRange = 960f;
+                        sprite = "magic-大导弹";
+                        width = 16f;
+                        height = 32f;
+                        hitShake = 16f;
+                        ammoMultiplier = 1f;
+                        frontColor = Color.valueOf("9C88C3FF");
+                        backColor = Color.valueOf("9C88C3FF");
+                        trailColor = Color.valueOf("9C88C3FF");
+                        trailLength = 12;
+                        trailWidth = 4f;
+                        trailChance = 0.09f;
+                        trailRotation = true;
+                        smokeEffect = Fx.shootSmallFlame;
+                        hitEffect = Fx.flakExplosionBig;
+                        hitSound = MLSounds.spark;
+                        lightningDamage = 30f;
+                        lightning = 3;
+                        lightningLength = 15;
+                        lightningColor = Color.valueOf("9C88C3FF");
+                        status = StatusEffects.shocked;
+                        statusDuration = 600f;
+                        trailEffect = new ParticleEffect(){{
+                            particles = 3;
+                            sizeFrom = 3f;
+                            sizeTo = 0f;
+                            lifetime = 60f;
+                            interp = Interp.pow10Out;
+                            sizeInterp = Interp.pow3In;
+                            length = 24f;
+                            baseLength = 0f;
+                            colorFrom = Color.valueOf("9C88C3FF");
+                            colorTo = Color.valueOf("9C88C3FF");
+                            cone = 30f;
+                        }};
+                    }},
+                    Items.surgeAlloy, new MissileBulletType(16f, 150){{
+                        splashDamageRadius = 32f;
+                        splashDamage = 150f;
+                        lifetime = 60f;
+                        homingPower = 1f;
+                        homingDelay = 9f;
+                        homingRange = 960f;
+                        sprite = "magic-大导弹";
+                        width = 16f;
+                        height = 32f;
+                        hitShake = 16f;
+                        ammoMultiplier = 1f;
+                        frontColor = Color.valueOf("FEEBB3FF");
+                        backColor = Color.valueOf("FEEBB3FF");
+                        trailColor = Color.valueOf("FEEBB3FF");
+                        trailLength = 12;
+                        trailWidth = 4f;
+                        trailChance = 0.09f;
+                        trailRotation = true;
+                        smokeEffect = Fx.shootSmallFlame;
+                        hitEffect = Fx.flakExplosionBig;
+                        hitSound = MLSounds.spark;
+                        lightningDamage = 40f;
+                        lightning = 4;
+                        lightningLength = 20;
+                        lightningColor = Color.valueOf("FEEBB3FF");
+                        status = StatusEffects.shocked;
+                        statusDuration = 600f;
+                        trailEffect = new ParticleEffect(){{
+                            particles = 3;
+                            sizeFrom = 3f;
+                            sizeTo = 0f;
+                            lifetime = 60f;
+                            interp = Interp.pow10Out;
+                            sizeInterp = Interp.pow3In;
+                            length = 24f;
+                            baseLength = 0f;
+                            colorFrom = Color.valueOf("FEEBB3FF");
+                            colorTo = Color.valueOf("FEEBB3FF");
+                            cone = 30f;
+                        }};
+                    }},
+                    MLItems.fluorescentFeatherStone, new MissileBulletType(16f, 180){{
+                        splashDamageRadius = 64f;
+                        splashDamage = 180f;
+                        knockback = 10f;
+                        lifetime = 60f;
+                        homingPower = 1f;
+                        homingDelay = 9f;
+                        homingRange = 960f;
+                        sprite = "magic-大导弹";
+                        width = 16f;
+                        height = 32f;
+                        hitShake = 16f;
+                        ammoMultiplier = 1f;
+                        frontColor = Color.valueOf("CCCEDBFF");
+                        backColor = Color.valueOf("CCCEDBFF");
+                        trailColor = Color.valueOf("CCCEDBFF");
+                        trailLength = 12;
+                        trailWidth = 4f;
+                        trailChance = 0.09f;
+                        trailRotation = true;
+                        smokeEffect = Fx.shootSmallFlame;
+                        hitEffect = new Effect(40f,e -> {
+                            Fx.dynamicSpikes.at(
+                                    e.x,
+                                    e.y,
+                                    e.rotation + 64f,
+                                    Color.valueOf("CCCEDBFF")
+                            );
+                        });
+                        hitSound = MLSounds.plasmaboom;
+                        trailEffect = new ParticleEffect(){{
+                            particles = 3;
+                            sizeFrom = 3f;
+                            sizeTo = 0f;
+                            lifetime = 60f;
+                            interp = Interp.pow10Out;
+                            sizeInterp = Interp.pow3In;
+                            length = 24f;
+                            baseLength = 0f;
+                            colorFrom = Color.valueOf("CCCEDBFF");
+                            colorTo = Color.valueOf("CCCEDBFF");
+                            cone = 30f;
+                        }};
+                    }}
+            );
+            reload = 600f;
+            recoilTime = 0;
+            ammoUseEffect =  new ParticleEffect() {{
+                particles = 32;
+                sizeFrom = 8f;
+                sizeTo = 0f;
+                length = 120f;
+                lifetime = 60f;
+                lightOpacity = 0f;
+                colorFrom = Color.white;
+                colorTo = Color.white;
+            }};
+            range = 960f;
+            inaccuracy = 0f;
+            recoil = 0f;
+            customShadow = false;
+            maxAmmo = 80;
+            cooldownTime = 120;
+            solid = false;
+            underBullets = true;
+            shoot = new ShootBarrel() {{
+                shots = 8;
+                shotDelay = 30f;
+                barrels = new float[]{
+                        8f, 8f, 0f,
+                        -8f, 8f, 0f,
+                        -8f, -8f, 0f,
+                        8f, -8f, 0f
+                };
+            }};
+            shake = 8f;
+            size = 4;
+            shootCone = 360f;
+            shootSound = MLSounds.missileLarge;
+            canOverdrive = false;
+            hasPower = true;
+            rotateSpeed = 0;
+            ammoPerShot = 8;
+            shootY = 0;
+
+            drawer = new DrawTurret(){{
+                parts.add(new RegionPart("-1") {{
+                              mirror = false;
+                              x = 0f;
+                              y = 0f;
+                              moveX = 4f;
+                              moveY = 4f;
+                          }},
+                        new RegionPart("-2") {{
+                            mirror = false;
+                            x = 0f;
+                            y = 0f;
+                            moveX = -4f;
+                            moveY = -4f;
+                        }},
+                        new RegionPart("-3") {{
+                            mirror = false;
+                            x = 0f;
+                            y = 0f;
+                            moveX = -4f;
+                            moveY = 4f;
+                        }},
+                        new RegionPart("-4") {{
+                            mirror = false;
+                            x = 0f;
+                            y = 0f;
+                            moveX = 4f;
+                            moveY = -4f;
+                        }});
+            }};
+
+            health = 3200;
+            armor = 8;
+            consumePower(20f);
+        }};
         //turret
         //！？强强？！
         int whm = 4;
