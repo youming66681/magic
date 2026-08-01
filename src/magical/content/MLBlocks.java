@@ -1868,7 +1868,7 @@ public class MLBlocks {
             health = 3600;
             rotateSpeed = 4;
             shootSound = MLSounds.malignShoot;
-            shoot = new ShootHelix(3,3)
+            shoot = new ShootHelix(3,3);
             canOverdrive = false;
             coolantMultiplier = 0.98f;
             coolant = consumeCoolant(0.4f);
