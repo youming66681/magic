@@ -1350,8 +1350,8 @@ public class MLBlocks {
                     width = 32f;
                     height = 32f;
                     lifetime = 80f;
-                    splashDamage = 700f;
-                    splashDamageRadius = 40f;
+                    splashDamage = 750f;
+                    splashDamageRadius = 100f;
                     trailLength = 10;
                     trailWidth = 5f;
                     trailColor = Color.valueOf("FEEBB3FF");
