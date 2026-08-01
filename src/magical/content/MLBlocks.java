@@ -1347,127 +1347,128 @@ public class MLBlocks {
         Stars = new PowerTurret("Stars"){{
                 requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedMetal, 110, Items.surgeAlloy, 90, MLItems.fluorescentFeatherStone, 90, MLItems.mysticSteel, 75, MLItems.phantomLuminousAlloy, 60, MLItems.arrayChip, 50,}));
                 shootType = new BasicBulletType(8f, 250f) {{
-                    width = 32f;
-                    height = 32f;
-                    lifetime = 80f;
-                    splashDamage = 750f;
-                    splashDamageRadius = 100f;
-                    trailLength = 10;
-                    trailWidth = 5f;
-                    trailColor = Color.valueOf("FEEBB3FF");
-                    frontColor = Color.valueOf("FEEBB3FF");
-                    backColor = Color.valueOf("FEEBB3FF");
-                    hitSound = MLSounds.largeCannon;
-                    hitSoundVolume = 10;
-                    intervalBullets = 20;
-                    bulletInterval = 4f;
-                    intervalBullet = new BasicBulletType(0f, 80) {{
-                        width = 0f;
-                        height = 0f;
-                        lifetime = 5f;
-                        splashDamage = 120f;
-                        splashDamageRadius = 24f;
+                        width = 32f;
+                        height = 32f;
+                        lifetime = 80f;
+                        splashDamage = 750f;
+                        splashDamageRadius = 100f;
+                        trailLength = 10;
+                        trailWidth = 5f;
+                        trailColor = Color.valueOf("FEEBB3FF");
                         frontColor = Color.valueOf("FEEBB3FF");
                         backColor = Color.valueOf("FEEBB3FF");
-                        hitSound = MLSounds.plasmaboom;
-                        ammoMultiplier = 1f;
-                        hitEffect = MLFx.smallEnergyBlast;
-                    }};
-                    chargeEffect = new MultiEffect(
-                            new WaveEffect() {{
-                                lifetime = 100f;
-                                sizeFrom = 60f;
-                                sizeTo = 0f;
-                                strokeFrom = 0f;
-                                strokeTo = 3f;
-                                colorFrom = Color.valueOf("FEEBB3FF");
-                                colorTo = Color.valueOf("FEEBB3FF");
-                            }},
-                            new ParticleEffect() {{
-                                particles = 15;
-                                baseLength = 20f;
-                                length = -20f;
-                                lifetime = 100f;
-                                line = true;
-                                lenFrom = 15f;
-                                lenTo = 0f;
-                                strokeFrom = 1f;
-                                strokeTo = 1f;
-                                colorFrom = Color.valueOf("FEEBB3FF");
-                                colorTo = Color.valueOf("FEEBB3FF");
-                                cone = 360f;
-                            }},
-                            new WaveEffect() {{
-                                lifetime = 100f;
-                                sizeFrom = 80f;
-                                sizeTo = 0f;
-                                strokeFrom = 0f;
-                                strokeTo = 4f;
-                                colorFrom = Color.valueOf("FEEBB3FF");
-                                colorTo = Color.valueOf("FEEBB3FF");
-                            }},
-                            new ParticleEffect() {{
-                                particles = 20;
-                                baseLength = 25f;
-                                length = -25f;
-                                lifetime = 100f;
-                                line = true;
-                                lenFrom = 30f;
-                                lenTo = 0f;
-                                strokeFrom = 2f;
-                                strokeTo = 2f;
-                                colorFrom = Color.valueOf("FEEBB3FF");
-                                colorTo = Color.valueOf("FEEBB3FF");
-                                cone = 360f;
-                            }},
-                            new WaveEffect() {{
-                                lifetime = 100f;
-                                sizeFrom = 100f;
-                                sizeTo = 0f;
-                                strokeFrom = 0f;
-                                strokeTo = 5f;
-                                colorFrom = Color.valueOf("FEEBB3FF");
-                                colorTo = Color.valueOf("FEEBB3FF");
-                            }},
-                            new ParticleEffect() {{
-                                particles = 40;
-                                baseLength = 30f;
-                                length = -30f;
-                                lifetime = 100f;
-                                line = true;
-                                lenFrom = 60f;
-                                lenTo = 0f;
-                                strokeFrom = 3f;
-                                strokeTo = 3f;
-                                colorFrom = Color.valueOf("FEEBB3FF");
-                                colorTo = Color.valueOf("FEEBB3FF");
-                                cone = 360f;
-                            }}
-                    );
-                    hitEffect = new MultiEffect(
-                            new ParticleEffect() {{
-                                particles = 1;
-                                baseLength = 1f;
-                                length = 0f;
-                                lifetime = 40f;
-                                spin = 5f;
-                                region = "magic-十字星";
-                                sizeFrom = 100f;
-                                sizeTo = 0f;
-                                colorFrom = Color.valueOf("FEEBB3FF");
-                                colorTo = Color.valueOf("FEEBB3FF");
-                            }}
-                    );
-                    shootEffect = new ParticleEffect() {{
-                        particles = 20;
-                        sizeFrom = 5f;
-                        sizeTo = 0f;
-                        length = 50f;
-                        baseLength = 0f;
-                        lifetime = 60f;
-                        colorFrom = Color.valueOf("FEEBB3FF");
-                        colorTo = Color.valueOf("FEEBB3FF");
-                        cone = 50f;
+                        hitSound = MLSounds.largeCannon;
+                        hitSoundVolume = 10;
+                        intervalBullets = 20;
+                        bulletInterval = 4f;
+                        intervalBullet = new BasicBulletType(0f, 80) {{
+                            width = 0f;
+                            height = 0f;
+                            lifetime = 5f;
+                            splashDamage = 120f;
+                            splashDamageRadius = 24f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            hitSound = MLSounds.plasmaboom;
+                            ammoMultiplier = 1f;
+                            hitEffect = MLFx.smallEnergyBlast;
+                        }};
+                        chargeEffect = new MultiEffect(
+                                new WaveEffect() {{
+                                    lifetime = 100f;
+                                    sizeFrom = 60f;
+                                    sizeTo = 0f;
+                                    strokeFrom = 0f;
+                                    strokeTo = 3f;
+                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                }},
+                                new ParticleEffect() {{
+                                    particles = 15;
+                                    baseLength = 20f;
+                                    length = -20f;
+                                    lifetime = 100f;
+                                    line = true;
+                                    lenFrom = 15f;
+                                    lenTo = 0f;
+                                    strokeFrom = 1f;
+                                    strokeTo = 1f;
+                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                    cone = 360f;
+                                }},
+                                new WaveEffect() {{
+                                    lifetime = 100f;
+                                    sizeFrom = 80f;
+                                    sizeTo = 0f;
+                                    strokeFrom = 0f;
+                                    strokeTo = 4f;
+                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                }},
+                                new ParticleEffect() {{
+                                    particles = 20;
+                                    baseLength = 25f;
+                                    length = -25f;
+                                    lifetime = 100f;
+                                    line = true;
+                                    lenFrom = 30f;
+                                    lenTo = 0f;
+                                    strokeFrom = 2f;
+                                    strokeTo = 2f;
+                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                    cone = 360f;
+                                }},
+                                new WaveEffect() {{
+                                    lifetime = 100f;
+                                    sizeFrom = 100f;
+                                    sizeTo = 0f;
+                                    strokeFrom = 0f;
+                                    strokeTo = 5f;
+                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                }},
+                                new ParticleEffect() {{
+                                    particles = 40;
+                                    baseLength = 30f;
+                                    length = -30f;
+                                    lifetime = 100f;
+                                    line = true;
+                                    lenFrom = 60f;
+                                    lenTo = 0f;
+                                    strokeFrom = 3f;
+                                    strokeTo = 3f;
+                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                    cone = 360f;
+                                }}
+                        );
+                        hitEffect = new MultiEffect(
+                                new ParticleEffect() {{
+                                    particles = 1;
+                                    baseLength = 1f;
+                                    length = 0f;
+                                    lifetime = 40f;
+                                    spin = 5f;
+                                    region = "magic-十字星";
+                                    sizeFrom = 240f;
+                                    sizeTo = 0f;
+                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                }}
+                        );
+                        shootEffect = new ParticleEffect() {{
+                            particles = 20;
+                            sizeFrom = 5f;
+                            sizeTo = 0f;
+                            length = 50f;
+                            baseLength = 0f;
+                            lifetime = 60f;
+                            colorFrom = Color.valueOf("FEEBB3FF");
+                            colorTo = Color.valueOf("FEEBB3FF");
+                            cone = 50f;
+                        }};
                     }};
                     range = 480f;
                     recoil = 7.5f;
@@ -1523,7 +1524,6 @@ public class MLBlocks {
                                 );
                             }}
                     );
-                }};
             }};
         //turret
         //！？强强？！
