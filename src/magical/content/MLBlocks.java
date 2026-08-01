@@ -1345,190 +1345,191 @@ public class MLBlocks {
         }};
         //星辰
         Stars = new PowerTurret("Stars"){{
-            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedMetal, 110, Items.surgeAlloy, 90, MLItems.fluorescentFeatherStone, 90, MLItems.mysticSteel, 75, MLItems.phantomLuminousAlloy, 60, MLItems.arrayChip,50,}));
-            shootType = new BasicBulletType(8f, 250f){{
-                width = 32f;
-                height = 32f;
-                lifetime = 80f;
-                splashDamage = 700f;
-                splashDamageRadius = 40f;
-                trailLength = 10;
-                trailWidth = 5f;
-                trailColor = Color.valueOf("FEEBB3FF");
-                frontColor = Color.valueOf("FEEBB3FF");
-                backColor = Color.valueOf("FEEBB3FF");
-                hitSound = MLSounds.largeCannon;
-                hitSoundVolume = 10;
-                intervalBullets = 20;
-                bulletInterval = 4f;
-                intervalBullet = new BasicBulletType(0f, 50){{
-                    width = 0f;
-                    height = 0f;
-                    lifetime = 5f;
-                    splashDamage = 140f;
-                    splashDamageRadius = 20f;
+                requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedMetal, 110, Items.surgeAlloy, 90, MLItems.fluorescentFeatherStone, 90, MLItems.mysticSteel, 75, MLItems.phantomLuminousAlloy, 60, MLItems.arrayChip, 50,}));
+                shootType = new BasicBulletType(8f, 250f) {{
+                    width = 32f;
+                    height = 32f;
+                    lifetime = 80f;
+                    splashDamage = 700f;
+                    splashDamageRadius = 40f;
+                    trailLength = 10;
+                    trailWidth = 5f;
+                    trailColor = Color.valueOf("FEEBB3FF");
                     frontColor = Color.valueOf("FEEBB3FF");
                     backColor = Color.valueOf("FEEBB3FF");
-                    hitSound = Sounds.plasmaboom;
-                    ammoMultiplier = 1f;
-                    hitEffect = new WrapEffect(Fx.dynamicSpikes, Color.valueOf("FEEBB3FF")){{
-                        rotation = 20f;
+                    hitSound = MLSounds.largeCannon;
+                    hitSoundVolume = 10;
+                    intervalBullets = 20;
+                    bulletInterval = 4f;
+                    intervalBullet = new BasicBulletType(0f, 50) {{
+                        width = 0f;
+                        height = 0f;
+                        lifetime = 5f;
+                        splashDamage = 140f;
+                        splashDamageRadius = 20f;
+                        frontColor = Color.valueOf("FEEBB3FF");
+                        backColor = Color.valueOf("FEEBB3FF");
+                        hitSound = Sounds.plasmaboom;
+                        ammoMultiplier = 1f;
+                        hitEffect = new WrapEffect(Fx.dynamicSpikes, Color.valueOf("FEEBB3FF")) {{
+                            rotation = 20f;
+                        }};
                     }};
+                    chargeEffect = new MultiEffect(
+                            new WaveEffect() {{
+                                lifetime = 100f;
+                                sizeFrom = 60f;
+                                sizeTo = 0f;
+                                strokeFrom = 0f;
+                                strokeTo = 3f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }},
+                            new ParticleEffect() {{
+                                particles = 15;
+                                baseLength = 20f;
+                                length = -20f;
+                                lifetime = 100f;
+                                line = true;
+                                lenFrom = 15f;
+                                lenTo = 0f;
+                                strokeFrom = 1f;
+                                strokeTo = 1f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                                cone = 360f;
+                            }},
+                            new WaveEffect() {{
+                                lifetime = 100f;
+                                sizeFrom = 80f;
+                                sizeTo = 0f;
+                                strokeFrom = 0f;
+                                strokeTo = 4f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }},
+                            new ParticleEffect() {{
+                                particles = 20;
+                                baseLength = 25f;
+                                length = -25f;
+                                lifetime = 100f;
+                                line = true;
+                                lenFrom = 30f;
+                                lenTo = 0f;
+                                strokeFrom = 2f;
+                                strokeTo = 2f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                                cone = 360f;
+                            }},
+                            new WaveEffect() {{
+                                lifetime = 100f;
+                                sizeFrom = 100f;
+                                sizeTo = 0f;
+                                strokeFrom = 0f;
+                                strokeTo = 5f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }},
+                            new ParticleEffect() {{
+                                particles = 40;
+                                baseLength = 30f;
+                                length = -30f;
+                                lifetime = 100f;
+                                line = true;
+                                lenFrom = 60f;
+                                lenTo = 0f;
+                                strokeFrom = 3f;
+                                strokeTo = 3f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                                cone = 360f;
+                            }}
+                    );
+                    hitEffect = new MultiEffect(
+                            new WrapEffect(Fx.dynamicSpikes, Color.valueOf("FEEBB3FF")) {{
+                                rotation = 100f;
+                            }},
+                            new ParticleEffect() {{
+                                particles = 1;
+                                baseLength = 1f;
+                                length = 0f;
+                                lifetime = 40f;
+                                spin = 5f;
+                                region = Core.atlas.find("magic-十字星");
+                                sizeFrom = 100f;
+                                sizeTo = 0f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }}
+                    );
+                    shootEffect = new ParticleEffect() {{
+                        particles = 20;
+                        sizeFrom = 5f;
+                        sizeTo = 0f;
+                        length = 50f;
+                        baseLength = 0f;
+                        lifetime = 60f;
+                        colorFrom = Color.valueOf("FEEBB3FF");
+                        colorTo = Color.valueOf("FEEBB3FF");
+                        cone = 50f;
+                    }};
+                    range = 480f;
+                    recoil = 7.5f;
+                    recoilTime = 90f;
+                    reload = 600f;
+                    shake = 25f;
+                    shootEffect = Fx.none;
+                    smokeEffect = Fx.smeltsmoke;
+                    size = 5;
+                    armor = 12;
+                    health = 3600;
+                    rotateSpeed = 5;
+                    shootSound = MLSounds.laserblast;
+                    chargeSound = MLSounds.lasercharge;
+                    shoot = new ShootPattern() {{
+                        firstShotDelay = 100f;
+                    }};
+                    moveWhileCharging = false;
+                    canOverdrive = false;
+                    coolantMultiplier = 0.97f;
+                    coolant = consumeCoolant(0.5f);
+                    consumePower(36f);
+                    drawer = new DrawMulti(
+                            new DrawTurret() {{
+                                parts.add(
+                                        new ShapePart() {{
+                                            y = 24f;
+                                            color = Color.valueOf("FEEBB3FF");
+                                            stroke = 0f;
+                                            strokeTo = 2f;
+                                            circle = true;
+                                            hollow = true;
+                                            radius = 0f;
+                                            radiusTo = 10f;
+                                            layer = 110f;
+                                        }},
+                                        new HaloPart() {{
+                                            sides = 4;
+                                            shapes = 1;
+                                            y = 24f;
+                                            color = Color.valueOf("FEEBB3FF");
+                                            colorTo = Color.valueOf("FEEBB3FF");
+                                            tri = false;
+                                            hollow = true;
+                                            stroke = 0f;
+                                            strokeTo = 1f;
+                                            radius = 0f;
+                                            radiusTo = 10f;
+                                            haloRadius = 0f;
+                                            haloRotateSpeed = 2.5f;
+                                            layer = 110f;
+                                        }}
+                                );
+                            }}
+                    );
                 }};
-                chargeEffect = new MultiEffect(
-                        new WaveEffect(){{
-                            lifetime = 100f;
-                            sizeFrom = 60f;
-                            sizeTo = 0f;
-                            strokeFrom = 0f;
-                            strokeTo = 3f;
-                            colorFrom = Color.valueOf("FEEBB3FF");
-                            colorTo = Color.valueOf("FEEBB3FF");
-                        }},
-                        new ParticleEffect(){{
-                            particles = 15;
-                            baseLength = 20f;
-                            length = -20f;
-                            lifetime = 100f;
-                            line = true;
-                            lenFrom = 15f;
-                            lenTo = 0f;
-                            strokeFrom = 1f;
-                            strokeTo = 1f;
-                            colorFrom = Color.valueOf("FEEBB3FF");
-                            colorTo = Color.valueOf("FEEBB3FF");
-                            cone = 360f;
-                        }},
-                        new WaveEffect(){{
-                            lifetime = 100f;
-                            sizeFrom = 80f;
-                            sizeTo = 0f;
-                            strokeFrom = 0f;
-                            strokeTo = 4f;
-                            colorFrom = Color.valueOf("FEEBB3FF");
-                            colorTo = Color.valueOf("FEEBB3FF");
-                        }},
-                        new ParticleEffect(){{
-                            particles = 20;
-                            baseLength = 25f;
-                            length = -25f;
-                            lifetime = 100f;
-                            line = true;
-                            lenFrom = 30f;
-                            lenTo = 0f;
-                            strokeFrom = 2f;
-                            strokeTo = 2f;
-                            colorFrom = Color.valueOf("FEEBB3FF");
-                            colorTo = Color.valueOf("FEEBB3FF");
-                            cone = 360f;
-                        }},
-                        new WaveEffect(){{
-                            lifetime = 100f;
-                            sizeFrom = 100f;
-                            sizeTo = 0f;
-                            strokeFrom = 0f;
-                            strokeTo = 5f;
-                            colorFrom = Color.valueOf("FEEBB3FF");
-                            colorTo = Color.valueOf("FEEBB3FF");
-                        }},
-                        new ParticleEffect(){{
-                            particles = 40;
-                            baseLength = 30f;
-                            length = -30f;
-                            lifetime = 100f;
-                            line = true;
-                            lenFrom = 60f;
-                            lenTo = 0f;
-                            strokeFrom = 3f;
-                            strokeTo = 3f;
-                            colorFrom = Color.valueOf("FEEBB3FF");
-                            colorTo = Color.valueOf("FEEBB3FF");
-                            cone = 360f;
-                        }}
-                );
-                hitEffect = new MultiEffect(
-                        new WrapEffect(Fx.dynamicSpikes, Color.valueOf("FEEBB3FF")){{
-                    rotation = 100f;
-                }},
-                new ParticleEffect(){{
-                    particles = 1;
-                    baseLength = 1f;
-                    length = 0f;
-                    lifetime = 40f;
-                    spin = 5f;
-                    region = Core.atlas.find("magic-十字星");
-                    sizeFrom = 100f;
-                    sizeTo = 0f;
-                    colorFrom = Color.valueOf("FEEBB3FF");
-                    colorTo = Color.valueOf("FEEBB3FF");
-                }}
-                );
-                shootEffect = new ParticleEffect(){{
-                    particles = 20;
-                    sizeFrom = 5f;
-                    sizeTo = 0f;
-                    length = 50f;
-                    baseLength = 0f;
-                    lifetime = 60f;
-                    colorFrom = Color.valueOf("FEEBB3FF");
-                    colorTo = Color.valueOf("FEEBB3FF");
-                    cone = 50f;
-                }};
-            range = 480f;
-            recoil = 7.5f;
-            recoilTime = 90f;
-            reload = 600f;
-            shake = 25f;
-            shootEffect = Fx.none;
-            smokeEffect = Fx.smeltsmoke;
-            size = 5;
-            armor = 12;
-            health = 3600;
-            rotateSpeed = 5;
-            shootSound = MLSounds.laserblast;
-            chargeSound = MLSounds.lasercharge;
-            shoot = new ShootPattern(){{
-                firstShotDelay = 100f;
             }};
-            moveWhileCharging = false;
-            canOverdrive = false;
-            coolantMultiplier = 0.97f;
-            coolant = consumeCoolant(0.5f);
-            consumePower(36f);
-            drawer = new DrawMulti(
-                    new DrawTurret(){{
-                        parts.add(
-                                new ShapePart(){{
-                                    y = 24f;
-                                    color = Color.valueOf("FEEBB3FF");
-                                    stroke = 0f;
-                                    strokeTo = 2f;
-                                    circle = true;
-                                    hollow = true;
-                                    radius = 0f;
-                                    radiusTo = 10f;
-                                    layer = 110f;
-                                }},
-                                new HaloPart() {{
-                                    sides = 4;
-                                    shapes = 1;
-                                    y = 24f;
-                                    color = Color.valueOf("FEEBB3FF");
-                                    colorTo = Color.valueOf("FEEBB3FF");
-                                    tri = false;
-                                    hollow = true;
-                                    stroke = 0f;
-                                    strokeTo = 1f;
-                                    radius = 0f;
-                                    radiusTo = 10f;
-                                    haloRadius = 0f;
-                                    haloRotateSpeed = 2.5f;
-                                    layer = 110f;
-                                }}
-                        );
-                    }}
-            );
-        }};
         //turret
         //！？强强？！
         int whm = 4;
