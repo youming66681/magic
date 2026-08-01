@@ -1451,7 +1451,7 @@ public class MLBlocks {
                                     Fx.dynamicSpikes,
                                     Color.valueOf("FEEBB3FF")
                             ){{
-                                rotation = 16f;
+                                rotation = 100f;
                             }};
                             new ParticleEffect() {{
                                 particles = 1;
