@@ -1369,7 +1369,7 @@ public class MLBlocks {
                         splashDamageRadius = 20f;
                         frontColor = Color.valueOf("FEEBB3FF");
                         backColor = Color.valueOf("FEEBB3FF");
-                        hitSound = Sounds.plasmaboom;
+                        hitSound = MLSounds.plasmaboom;
                         ammoMultiplier = 1f;
                         hitEffect = new WrapEffect(Fx.dynamicSpikes, Color.valueOf("FEEBB3FF")) {{
                             rotation = 20f;
@@ -1447,9 +1447,11 @@ public class MLBlocks {
                             }}
                     );
                     hitEffect = new MultiEffect(
-                            new WrapEffect(Fx.dynamicSpikes, Color.valueOf("FEEBB3FF")) {{
-                                rotation = 100f;
-                            }},
+                        WrapEffect(){{
+                        effect = Fx.dynamicSpikes;
+                        color = Color.valueOf("FEEBB3FF");
+                        rotation = 100f;
+                         }};
                             new ParticleEffect() {{
                                 particles = 1;
                                 baseLength = 1f;
