@@ -2120,9 +2120,8 @@ public class MLBlocks {
             rotateSpeed = 5;
             coolant = consumeCoolant(0.6f);
 
-            drawer = new DrawMulti(
-                    new DrawTurret() {{
-                        parts.add(
+            drawer = new DrawTurret(){{
+                parts.add(
                         new RegionPart("-管l"){{
                             under = true;
                             recoilIndex = 0;
@@ -2166,7 +2165,9 @@ public class MLBlocks {
                             radius = 0f;
                             radiusTo = 4f;
                             haloRadius = 0f;
-                        }},
+                        }}
+                );
+                parts.add(
                         new HaloPart(){{
                             y = -16f;
                             sides = 4;
@@ -2182,9 +2183,8 @@ public class MLBlocks {
                             radiusTo = 8f;
                             haloRadius = 0f;
                         }}
-                        );
-                    }}
-            );
+                );
+            }};
 
             health = 6400;
             armor = 12;
