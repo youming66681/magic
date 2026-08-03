@@ -140,10 +140,13 @@ public class FlexAssembler extends UnitAssembler {
             checkTier();
         }
 
-        // 客户端 UI，服务端不会执行
+        // 客户端 UI，空指针已彻底消除
         @Override
         public void buildConfiguration(Table table) {
             if (Vars.headless) return;
+
+            // 捕获当前选定计划为 final 变量，防止异步 null
+            final AssemblerUnitPlan current = chosenPlan;
 
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
@@ -154,9 +157,9 @@ public class FlexAssembler extends UnitAssembler {
 
             if (available.isEmpty()) {
                 table.label(() -> Core.bundle.get("flexassembler.no-plans")).pad(10);
-                if (chosenPlan != null) {
+                if (current != null) {
                     table.row();
-                    table.label(() -> Core.bundle.format("flexassembler.tier-low", chosenPlan.unit.localizedName, tierRequired.get(chosenPlan)))
+                    table.label(() -> Core.bundle.format("flexassembler.tier-low", current.unit.localizedName, tierRequired.getOrDefault(current, 0)))
                             .color(Pal.remove).padTop(4).row();
                     table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN))
                             .size(120f, 40f).padTop(8).row();
@@ -164,13 +167,13 @@ public class FlexAssembler extends UnitAssembler {
                 return;
             }
 
-            boolean chosenAvailable = chosenPlan != null && available.contains(chosenPlan);
+            boolean chosenAvailable = current != null && available.contains(current);
 
-            if (!chosenAvailable && chosenPlan != null) {
-                table.label(() -> Core.bundle.format("flexassembler.tier-low", chosenPlan.unit.localizedName, tierRequired.get(chosenPlan)))
+            if (!chosenAvailable && current != null) {
+                table.label(() -> Core.bundle.format("flexassembler.tier-low", current.unit.localizedName, tierRequired.getOrDefault(current, 0)))
                         .padBottom(4).color(Pal.remove).row();
-            } else if (chosenPlan != null) {
-                table.label(() -> Core.bundle.format("flexassembler.producing", chosenPlan.unit.localizedName))
+            } else if (current != null) {
+                table.label(() -> Core.bundle.format("flexassembler.producing", current.unit.localizedName))
                         .padBottom(4).row();
             } else {
                 table.label(() -> Core.bundle.get("flexassembler.select-unit")).padBottom(4).color(Color.gray).row();
@@ -181,7 +184,7 @@ public class FlexAssembler extends UnitAssembler {
             for (int i = 0; i < available.size; i++) {
                 if (i % cols == 0 && i != 0) grid.row();
                 AssemblerUnitPlan plan = available.get(i);
-                boolean isChosen = Objects.equals(chosenPlan, plan);
+                boolean isChosen = Objects.equals(current, plan);
 
                 Button btn = new Button(Tex.button);
                 btn.table(inner -> {
@@ -190,7 +193,6 @@ public class FlexAssembler extends UnitAssembler {
                     inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
                 }).pad(8);
 
-                // 使用索引作为配置，更安全
                 final int index = plans.indexOf(plan);
                 btn.clicked(() -> configure(index));
                 grid.add(btn).size(80f, 80f).pad(4f);
@@ -199,14 +201,13 @@ public class FlexAssembler extends UnitAssembler {
             ScrollPane pane = new ScrollPane(grid);
             table.add(pane).grow().maxHeight(400f).row();
 
-            if (chosenPlan != null) {
+            if (current != null) {
                 table.row();
                 table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN))
                         .size(120f, 40f).padTop(8).row();
             }
         }
 
-        // 配置：使用索引，未选择时返回 -1
         @Override
         public Object config() {
             int index = plans.indexOf(chosenPlan);
@@ -228,16 +229,14 @@ public class FlexAssembler extends UnitAssembler {
                     selected = true;
                     syncArea(plan);
                 } else {
-                    // 无效索引，重置为未选择
                     selected = false;
                     chosenPlan = null;
                     syncArea(getDefaultPlan());
                 }
             }
-            super.configure(value);   // 触发网络同步和 UI 更新
+            super.configure(value);
         }
 
-        // 核心：计划永不为空
         @Override
         public AssemblerUnitPlan plan() {
             if (selected && chosenPlan != null) return chosenPlan;
