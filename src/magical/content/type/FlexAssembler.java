@@ -124,6 +124,7 @@ public class FlexAssembler extends UnitAssembler {
             if (!selected) {
                 AssemblerUnitPlan defaultPlan = getDefaultPlan();
                 if (defaultPlan != null) syncArea(defaultPlan);
+                else areaSize = FlexAssembler.this.areaSize;
             }
         }
 
@@ -141,7 +142,7 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void buildConfiguration(Table table) {
-            // 只获取当前 t ier 可用的配方
+            // 只获取当前 tier 可用的配方
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
@@ -230,7 +231,7 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public Object config() {
-            return (selected && chosenPlan != null) ? chosenPlan.unit.id : null;
+            return (chosenPlan != null) ? chosenPlan.unit.id : null; // 不再依赖 selected，更安全
         }
 
         @Override
@@ -238,14 +239,29 @@ public class FlexAssembler extends UnitAssembler {
             if (value instanceof Integer) {
                 UnitType type = content.getByID(ContentType.unit, (Integer) value);
                 if (type != null) {
+                    AssemblerUnitPlan found = null;
                     for (AssemblerUnitPlan p : plans) {
                         if (p.unit == type) {
-                            chosenPlan = p;
-                            selected = true;
-                            syncArea(p);
+                            found = p;
                             break;
                         }
                     }
+                    if (found != null) {
+                        chosenPlan = found;
+                        selected = true;
+                        syncArea(found);
+                    } else {
+                        // 配方无效，重置为未选择
+                        selected = false;
+                        chosenPlan = null;
+                        AssemblerUnitPlan def = getDefaultPlan();
+                        syncArea(def);
+                    }
+                } else {
+                    selected = false;
+                    chosenPlan = null;
+                    AssemblerUnitPlan def = getDefaultPlan();
+                    syncArea(def);
                 }
             } else if (value == null) {
                 selected = false;
@@ -259,7 +275,10 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public AssemblerUnitPlan plan() {
             if (selected && chosenPlan != null) return chosenPlan;
-            return getDefaultPlan() != null ? getDefaultPlan() : super.plan();
+            AssemblerUnitPlan def = getDefaultPlan();
+            if (def != null) return def;
+            if (!plans.isEmpty()) return plans.first();
+            return super.plan();
         }
 
         @Override
@@ -279,7 +298,7 @@ public class FlexAssembler extends UnitAssembler {
         public void write(Writes write) {
             super.write(write);
             write.bool(selected);
-            if (selected && chosenPlan != null) write.i(chosenPlan.unit.id);
+            if (chosenPlan != null) write.i(chosenPlan.unit.id);
             write.i(areaSize);
         }
 
@@ -291,16 +310,24 @@ public class FlexAssembler extends UnitAssembler {
                 int id = read.i();
                 UnitType type = content.getByID(ContentType.unit, id);
                 if (type != null) {
+                    AssemblerUnitPlan found = null;
                     for (AssemblerUnitPlan p : plans) {
                         if (p.unit == type) {
-                            chosenPlan = p;
+                            found = p;
                             break;
                         }
                     }
+                    chosenPlan = found;
+                    if (found == null) selected = false;
+                } else {
+                    selected = false;
                 }
-                if (chosenPlan == null) selected = false;
             }
             areaSize = read.i();
+            if (!selected) {
+                chosenPlan = null;
+                AssemblerUnitPlan def = getDefaultPlan();
+                if (def != null) syncArea(def);
+            }
         }
     }
-}

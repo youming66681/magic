@@ -86,7 +86,7 @@ public class MLTechTree {
                     });
             });
             /*幻钢压缩机*/node(MLBlocks.phantomSteelCompressor, () -> {
-                /*幻钢电压机*/node(MLBlocks.phantomSteelVoltageMachine, () -> {
+                /*幻钢电压机*/node(MLBlocks.phantomSteelVoltageMachine, Seq.with(new SectorComplete(MLSectorPresets.LandingZone)), () -> {
                     /*幻钛钢熔炼机*/node(MLBlocks.phantomTitaniumSteelCompressor, () -> {
                     });
                         /*玄晶混制机*/node(MLBlocks.xuanCrystalManufacturingMachine, () -> {

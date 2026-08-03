@@ -2187,6 +2187,7 @@ public class MLBlocks {
             }};
 
             health = 6400;
+            hasPower = false;
             armor = 12;
         }};
         //turret
