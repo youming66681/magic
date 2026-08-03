@@ -140,7 +140,7 @@ public class FlexAssembler extends UnitAssembler {
             checkTier();
         }
 
-        // 客户端UI，服务端不会执行
+        // 客户端 UI，服务端不会执行
         @Override
         public void buildConfiguration(Table table) {
             if (Vars.headless) return;
@@ -158,9 +158,8 @@ public class FlexAssembler extends UnitAssembler {
                     table.row();
                     table.label(() -> Core.bundle.format("flexassembler.tier-low", chosenPlan.unit.localizedName, tierRequired.get(chosenPlan)))
                             .color(Pal.remove).padTop(4).row();
-                    table.button(Core.bundle.get("flexassembler.deselect"), () -> {
-                        configure(NO_PLAN);
-                    }).size(120f, 40f).padTop(8).row();
+                    table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN))
+                            .size(120f, 40f).padTop(8).row();
                 }
                 return;
             }
@@ -191,10 +190,9 @@ public class FlexAssembler extends UnitAssembler {
                     inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
                 }).pad(8);
 
-                btn.clicked(() -> {
-                    int index = plans.indexOf(plan);
-                    configure(index);
-                });
+                // 使用索引作为配置，更安全
+                final int index = plans.indexOf(plan);
+                btn.clicked(() -> configure(index));
                 grid.add(btn).size(80f, 80f).pad(4f);
             }
 
@@ -208,7 +206,7 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
-        // 配置：使用索引而非单位ID，更安全
+        // 配置：使用索引，未选择时返回 -1
         @Override
         public Object config() {
             int index = plans.indexOf(chosenPlan);
@@ -230,24 +228,16 @@ public class FlexAssembler extends UnitAssembler {
                     selected = true;
                     syncArea(plan);
                 } else {
-                    // 无效索引，重置
+                    // 无效索引，重置为未选择
                     selected = false;
                     chosenPlan = null;
                     syncArea(getDefaultPlan());
                 }
             }
-            super.configure(value);
-            // 客户端刷新UI（仅在客户端）
-            if (!Vars.headless && Vars.ui != null) {
-                // 延迟一帧重建面板以确保配置已应用
-                Time.run(1f, () -> {
-                    if (Vars.ui.build() != null && Vars.ui.build() == this) {
-                        Vars.ui.build().buildConfiguration(Vars.ui.build().table);
-                    }
-                });
-            }
+            super.configure(value);   // 触发网络同步和 UI 更新
         }
 
+        // 核心：计划永不为空
         @Override
         public AssemblerUnitPlan plan() {
             if (selected && chosenPlan != null) return chosenPlan;
