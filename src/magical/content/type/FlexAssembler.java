@@ -140,14 +140,12 @@ public class FlexAssembler extends UnitAssembler {
             checkTier();
         }
 
-        // 客户端 UI，空指针已彻底消除
+        // 客户端 UI，彻底防止空指针
         @Override
         public void buildConfiguration(Table table) {
             if (Vars.headless) return;
 
-            // 捕获当前选定计划为 final 变量，防止异步 null
-            final AssemblerUnitPlan current = chosenPlan;
-
+            final AssemblerUnitPlan current = chosenPlan; // 防止异步 null
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
