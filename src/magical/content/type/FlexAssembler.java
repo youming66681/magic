@@ -246,11 +246,22 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void updateTile() {
+            // 处理模块等级变化（仅重置进度）
+            if (lastTier != currentTier) {
+                progress = 0f;
+                lastTier = currentTier;
+            }
+
+            // 确保面积与当前计划同步
             AssemblerUnitPlan currentPlan = plan();
             if (currentPlan != null) {
                 areaSize = planAreaMap.getOrDefault(currentPlan, areaSize);
             }
+
+            // 让原版处理剩下的生产逻辑（无人机、载荷、生产）但可能会改变面积，所以我们备份
+            int prevArea = areaSize;
             super.updateTile();
+            areaSize = prevArea;   // 强行恢复我们的面积
         }
 
         @Override
