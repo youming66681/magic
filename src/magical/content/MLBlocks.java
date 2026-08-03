@@ -705,7 +705,7 @@ public class MLBlocks {
                         trailWidth  = 5;
                         trailColor  = Color.valueOf("E3E3E3");
                         homingDelay = 3f;
-                        homingRange = 2400f;
+                        homingRange = 360f;
                         width  = 32f;
                         height = 64f;
                         hitShake = 1f;
@@ -730,7 +730,7 @@ public class MLBlocks {
                 trailWidth  = 5;
                 trailColor  = Color.valueOf("97B5EDFF");
                 homingDelay = 2f;
-                homingRange = 2400f;
+                homingRange = 360f;
                 width  = 32f;
                 height = 64f;
                 hitShake = 1f;
@@ -755,7 +755,7 @@ public class MLBlocks {
                 trailWidth  = 5;
                 trailColor  = Color.valueOf("46649AFF");
                 homingDelay = 1f;
-                homingRange = 2400f;
+                homingRange = 360f;
                 width  = 32f;
                 height = 64f;
                 hitShake = 1f;
@@ -1603,7 +1603,7 @@ public class MLBlocks {
                         lifetime = 60f;
                         homingPower = 1f;
                         homingDelay = 9f;
-                        homingRange = 960f;
+                        homingRange = 480f;
                         sprite = "magic-大导弹";
                         width = 16f;
                         height = 32f;
@@ -1646,7 +1646,7 @@ public class MLBlocks {
                         lifetime = 60f;
                         homingPower = 1f;
                         homingDelay = 9f;
-                        homingRange = 960f;
+                        homingRange = 480f;
                         sprite = "magic-大导弹";
                         width = 16f;
                         height = 32f;
@@ -1689,7 +1689,7 @@ public class MLBlocks {
                         lifetime = 60f;
                         homingPower = 1f;
                         homingDelay = 9f;
-                        homingRange = 960f;
+                        homingRange = 480f;
                         sprite = "magic-大导弹";
                         width = 16f;
                         height = 32f;
@@ -2188,7 +2188,6 @@ public class MLBlocks {
 
             health = 6400;
             armor = 12;
-            consumePower(20f);
         }};
         //turret
         //！？强强？！
