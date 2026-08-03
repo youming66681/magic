@@ -1,4 +1,4 @@
-package magical.content;
+package magical.content.type;
 
 import arc.Core;
 import arc.graphics.*;
@@ -18,6 +18,7 @@ import mindustry.type.PayloadStack;
 import mindustry.ui.*;
 import mindustry.world.*;
 import mindustry.world.blocks.units.*;
+import mindustry.world.blocks.units.UnitAssemblerModule.UnitAssemblerModuleBuild; // ✅ 关键导入
 import mindustry.world.meta.*;
 
 import java.util.*;
@@ -31,7 +32,6 @@ public class FlexAssembler extends UnitAssembler {
 
     public FlexAssembler(String name) {
         super(name);
-        configurable = true;
     }
 
     public void addPlan(String label, UnitType output, float time, int customArea, int requiredTier, PayloadStack... requirements) {
@@ -135,11 +135,10 @@ public class FlexAssembler extends UnitAssembler {
             checkTier();
         }
 
-        // UI 界面（仅客户端调用，无服务端影响）
+        // UI 界面（仅客户端调用）
         @Override
         public void buildConfiguration(Table table) {
-            // 安全措施：若非客户端环境则直接返回（但 buildConfiguration 本身只会在客户端调用）
-            if (Vars.headless) return;
+            if (Vars.headless) return; // 服务端安全
 
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
@@ -155,14 +154,7 @@ public class FlexAssembler extends UnitAssembler {
                     table.label(() -> Core.bundle.format("flexassembler.tier-low", chosenPlan.unit.localizedName, tierRequired.get(chosenPlan)))
                             .color(Pal.remove).padTop(4).row();
                     table.button(Core.bundle.get("flexassembler.deselect"), () -> {
-                        selected = false;
-                        chosenPlan = null;
-                        AssemblerUnitPlan def = getDefaultPlan();
-                        if (def != null) syncArea(def);
-                        else areaSize = FlexAssembler.this.areaSize;
                         configure(null);
-                        table.clear();
-                        buildConfiguration(table);
                     }).size(120f, 40f).padTop(8).row();
                 }
                 return;
@@ -194,10 +186,7 @@ public class FlexAssembler extends UnitAssembler {
                     inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
                 }).pad(8);
 
-                btn.clicked(() -> {
-                    // 只调用 configure，不手动重建 UI，让游戏自动刷新配置面板
-                    configure(plan.unit.id);
-                });
+                btn.clicked(() -> configure(plan.unit.id));
                 grid.add(btn).size(80f, 80f).pad(4f);
             }
 
@@ -206,9 +195,8 @@ public class FlexAssembler extends UnitAssembler {
 
             if (chosenPlan != null) {
                 table.row();
-                table.button(Core.bundle.get("flexassembler.deselect"), () -> {
-                    configure(null);
-                }).size(120f, 40f).padTop(8).row();
+                table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(null))
+                        .size(120f, 40f).padTop(8).row();
             }
         }
 
@@ -234,7 +222,6 @@ public class FlexAssembler extends UnitAssembler {
                         selected = true;
                         syncArea(found);
                     } else {
-                        // 配方无效，重置
                         selected = false;
                         chosenPlan = null;
                         syncArea(getDefaultPlan());
@@ -249,7 +236,6 @@ public class FlexAssembler extends UnitAssembler {
                 chosenPlan = null;
                 syncArea(getDefaultPlan());
             }
-            // 必须调用父类方法触发网络同步
             super.configure(value);
         }
 
@@ -262,7 +248,6 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void updateTile() {
-            // 同步面积并调用原版更新
             AssemblerUnitPlan current = plan();
             if (current != null) syncArea(current);
             super.updateTile();
