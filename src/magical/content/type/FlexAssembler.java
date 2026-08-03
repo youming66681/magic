@@ -30,6 +30,9 @@ public class FlexAssembler extends UnitAssembler {
     public Map<AssemblerUnitPlan, Integer> planAreaMap = new HashMap<>();
     public Map<AssemblerUnitPlan, Integer> tierRequired = new HashMap<>();
 
+    // 用于表示“未选择”的特殊配置值
+    public static final int NO_PLAN = -1;
+
     public FlexAssembler(String name) {
         super(name);
         configurable = true;
@@ -155,7 +158,8 @@ public class FlexAssembler extends UnitAssembler {
                     table.label(() -> Core.bundle.format("flexassembler.tier-low", chosenPlan.unit.localizedName, tierRequired.get(chosenPlan)))
                             .color(Pal.remove).padTop(4).row();
                     table.button(Core.bundle.get("flexassembler.deselect"), () -> {
-                        configure(null);
+                        // 发送取消选择配置
+                        configure(NO_PLAN);
                     }).size(120f, 40f).padTop(8).row();
                 }
                 return;
@@ -187,7 +191,7 @@ public class FlexAssembler extends UnitAssembler {
                     inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
                 }).pad(8);
 
-                btn.clicked(() -> configure(plan.unit.id));
+                btn.clicked(() -> configure(plan.unit.id)); // 选择配方
                 grid.add(btn).size(80f, 80f).pad(4f);
             }
 
@@ -196,48 +200,62 @@ public class FlexAssembler extends UnitAssembler {
 
             if (chosenPlan != null) {
                 table.row();
-                table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(null))
+                table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN))
                         .size(120f, 40f).padTop(8).row();
             }
         }
 
+        //  config 永远返回整数，避免 null 同步问题
         @Override
         public Object config() {
-            return chosenPlan != null ? chosenPlan.unit.id : null;
+            if (selected && chosenPlan != null) {
+                return chosenPlan.unit.id;
+            }
+            return NO_PLAN; // 显式表示未选择
         }
 
         @Override
         public void configure(@Nullable Object value) {
             if (value instanceof Integer) {
-                UnitType type = content.getByID(ContentType.unit, (Integer) value);
-                if (type != null) {
-                    AssemblerUnitPlan found = null;
-                    for (AssemblerUnitPlan p : plans) {
-                        if (p.unit == type) {
-                            found = p;
-                            break;
+                int id = (Integer) value;
+                if (id == NO_PLAN) {
+                    // 取消选择
+                    selected = false;
+                    chosenPlan = null;
+                    syncArea(getDefaultPlan());
+                } else {
+                    UnitType type = content.getByID(ContentType.unit, id);
+                    if (type != null) {
+                        AssemblerUnitPlan found = null;
+                        for (AssemblerUnitPlan p : plans) {
+                            if (p.unit == type) {
+                                found = p;
+                                break;
+                            }
                         }
-                    }
-                    if (found != null) {
-                        chosenPlan = found;
-                        selected = true;
-                        syncArea(found);
+                        if (found != null) {
+                            chosenPlan = found;
+                            selected = true;
+                            syncArea(found);
+                        } else {
+                            // 无效配方，重置
+                            selected = false;
+                            chosenPlan = null;
+                            syncArea(getDefaultPlan());
+                        }
                     } else {
                         selected = false;
                         chosenPlan = null;
                         syncArea(getDefaultPlan());
                     }
-                } else {
-                    selected = false;
-                    chosenPlan = null;
-                    syncArea(getDefaultPlan());
                 }
             } else if (value == null) {
+                // 虽然我们不再传入 null，但保留兼容
                 selected = false;
                 chosenPlan = null;
                 syncArea(getDefaultPlan());
             }
-            super.configure(value);
+            super.configure(value); // 触发网络同步
         }
 
         @Override
@@ -264,7 +282,11 @@ public class FlexAssembler extends UnitAssembler {
         public void write(Writes write) {
             super.write(write);
             write.bool(selected);
-            if (chosenPlan != null) write.i(chosenPlan.unit.id);
+            if (selected && chosenPlan != null) {
+                write.i(chosenPlan.unit.id);
+            } else {
+                write.i(NO_PLAN); // 写入占位符，确保 read 能正确读取
+            }
             write.i(areaSize);
         }
 
@@ -272,8 +294,8 @@ public class FlexAssembler extends UnitAssembler {
         public void read(Reads read, byte revision) {
             super.read(read, revision);
             selected = read.bool();
-            if (selected) {
-                int id = read.i();
+            int id = read.i();
+            if (selected && id != NO_PLAN) {
                 UnitType type = content.getByID(ContentType.unit, id);
                 if (type != null) {
                     AssemblerUnitPlan found = null;
@@ -288,10 +310,12 @@ public class FlexAssembler extends UnitAssembler {
                 } else {
                     selected = false;
                 }
+            } else {
+                selected = false;
+                chosenPlan = null;
             }
             areaSize = read.i();
             if (!selected) {
-                chosenPlan = null;
                 syncArea(getDefaultPlan());
             }
         }
