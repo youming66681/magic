@@ -1,4 +1,4 @@
-package magical.content.type;
+package magical.content;
 
 import arc.Core;
 import arc.graphics.*;
@@ -18,7 +18,7 @@ import mindustry.type.PayloadStack;
 import mindustry.ui.*;
 import mindustry.world.*;
 import mindustry.world.blocks.units.*;
-import mindustry.world.blocks.units.UnitAssemblerModule.UnitAssemblerModuleBuild; // ✅ 关键导入
+import mindustry.world.blocks.units.UnitAssemblerModule.UnitAssemblerModuleBuild;
 import mindustry.world.meta.*;
 
 import java.util.*;
@@ -32,6 +32,7 @@ public class FlexAssembler extends UnitAssembler {
 
     public FlexAssembler(String name) {
         super(name);
+        configurable = true;
     }
 
     public void addPlan(String label, UnitType output, float time, int customArea, int requiredTier, PayloadStack... requirements) {
