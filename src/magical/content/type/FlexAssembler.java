@@ -122,7 +122,7 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void created() {
             super.created();
-            if (!selected) {
+            if (!selected && chosenPlan == null) {
                 AssemblerUnitPlan defaultPlan = getDefaultPlan();
                 if (defaultPlan != null) syncArea(defaultPlan);
             }
@@ -140,6 +140,7 @@ public class FlexAssembler extends UnitAssembler {
             checkTier();
         }
 
+        // 客户端UI，服务端不会执行
         @Override
         public void buildConfiguration(Table table) {
             if (Vars.headless) return;
@@ -157,8 +158,9 @@ public class FlexAssembler extends UnitAssembler {
                     table.row();
                     table.label(() -> Core.bundle.format("flexassembler.tier-low", chosenPlan.unit.localizedName, tierRequired.get(chosenPlan)))
                             .color(Pal.remove).padTop(4).row();
-                    table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN))
-                            .size(120f, 40f).padTop(8).row();
+                    table.button(Core.bundle.get("flexassembler.deselect"), () -> {
+                        configure(NO_PLAN);
+                    }).size(120f, 40f).padTop(8).row();
                 }
                 return;
             }
@@ -189,7 +191,10 @@ public class FlexAssembler extends UnitAssembler {
                     inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
                 }).pad(8);
 
-                btn.clicked(() -> configure(plan.unit.id));
+                btn.clicked(() -> {
+                    int index = plans.indexOf(plan);
+                    configure(index);
+                });
                 grid.add(btn).size(80f, 80f).pad(4f);
             }
 
@@ -203,9 +208,11 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
+        // 配置：使用索引而非单位ID，更安全
         @Override
         public Object config() {
-            return (selected && chosenPlan != null) ? chosenPlan.unit.id : NO_PLAN;
+            int index = plans.indexOf(chosenPlan);
+            return index >= 0 ? index : NO_PLAN;
         }
 
         @Override
@@ -216,36 +223,36 @@ public class FlexAssembler extends UnitAssembler {
                 AssemblerUnitPlan defaultPlan = getDefaultPlan();
                 if (defaultPlan != null) syncArea(defaultPlan);
             } else if (value instanceof Integer) {
-                UnitType type = content.getByID(ContentType.unit, (Integer) value);
-                if (type != null) {
-                    AssemblerUnitPlan found = null;
-                    for (AssemblerUnitPlan p : plans) {
-                        if (p.unit == type) {
-                            found = p;
-                            break;
-                        }
-                    }
-                    if (found != null) {
-                        chosenPlan = found;
-                        selected = true;
-                        syncArea(found);
-                    } else {
-                        selected = false;
-                        chosenPlan = null;
-                        syncArea(getDefaultPlan());
-                    }
+                int index = (Integer) value;
+                if (index >= 0 && index < plans.size) {
+                    AssemblerUnitPlan plan = plans.get(index);
+                    chosenPlan = plan;
+                    selected = true;
+                    syncArea(plan);
+                } else {
+                    // 无效索引，重置
+                    selected = false;
+                    chosenPlan = null;
+                    syncArea(getDefaultPlan());
                 }
             }
             super.configure(value);
+            // 客户端刷新UI（仅在客户端）
+            if (!Vars.headless && Vars.ui != null) {
+                // 延迟一帧重建面板以确保配置已应用
+                Time.run(1f, () -> {
+                    if (Vars.ui.build() != null && Vars.ui.build() == this) {
+                        Vars.ui.build().buildConfiguration(Vars.ui.build().table);
+                    }
+                });
+            }
         }
 
         @Override
         public AssemblerUnitPlan plan() {
             if (selected && chosenPlan != null) return chosenPlan;
             AssemblerUnitPlan def = getDefaultPlan();
-            if (def != null) return def;
-            if (!plans.isEmpty()) return plans.first();
-            return super.plan();
+            return def != null ? def : (plans.isEmpty() ? super.plan() : plans.first());
         }
 
         @Override
@@ -265,11 +272,8 @@ public class FlexAssembler extends UnitAssembler {
         public void write(Writes write) {
             super.write(write);
             write.bool(selected);
-            if (selected && chosenPlan != null) {
-                write.i(chosenPlan.unit.id);
-            } else {
-                write.i(NO_PLAN);
-            }
+            int index = plans.indexOf(chosenPlan);
+            write.i(index >= 0 ? index : NO_PLAN);
             write.i(areaSize);
         }
 
@@ -277,22 +281,9 @@ public class FlexAssembler extends UnitAssembler {
         public void read(Reads read, byte revision) {
             super.read(read, revision);
             selected = read.bool();
-            int id = read.i();
-            if (selected && id != NO_PLAN) {
-                UnitType type = content.getByID(ContentType.unit, id);
-                if (type != null) {
-                    AssemblerUnitPlan found = null;
-                    for (AssemblerUnitPlan p : plans) {
-                        if (p.unit == type) {
-                            found = p;
-                            break;
-                        }
-                    }
-                    chosenPlan = found;
-                    if (found == null) selected = false;
-                } else {
-                    selected = false;
-                }
+            int index = read.i();
+            if (selected && index >= 0 && index < plans.size) {
+                chosenPlan = plans.get(index);
             } else {
                 selected = false;
                 chosenPlan = null;
