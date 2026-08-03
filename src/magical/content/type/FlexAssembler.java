@@ -103,6 +103,7 @@ public class FlexAssembler extends UnitAssembler {
         private static final int NO_PLAN = -1;
         public boolean selected = false;
         public AssemblerUnitPlan chosenPlan;
+        private int savedUnitId = NO_PLAN;   // 持久化单位ID，防止索引失效
 
         private void syncArea(AssemblerUnitPlan plan) {
             if (plan != null) {
@@ -122,10 +123,31 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void created() {
             super.created();
-            if (!selected && chosenPlan == null) {
+            if (savedUnitId != NO_PLAN) {
+                // 从ID恢复计划
+                UnitType type = content.getByID(ContentType.unit, savedUnitId);
+                if (type != null) {
+                    AssemblerUnitPlan plan = findPlanByUnit(type);
+                    if (plan != null) {
+                        chosenPlan = plan;
+                        selected = true;
+                        syncArea(plan);
+                        return;
+                    }
+                }
+            }
+            // 否则使用默认计划
+            if (!selected) {
                 AssemblerUnitPlan defaultPlan = getDefaultPlan();
                 if (defaultPlan != null) syncArea(defaultPlan);
             }
+        }
+
+        private AssemblerUnitPlan findPlanByUnit(UnitType unit) {
+            for (AssemblerUnitPlan p : plans) {
+                if (p.unit == unit) return p;
+            }
+            return null;
         }
 
         @Override
@@ -145,7 +167,7 @@ public class FlexAssembler extends UnitAssembler {
         public void buildConfiguration(Table table) {
             if (Vars.headless) return;
 
-            final AssemblerUnitPlan current = chosenPlan; // 防止异步 null
+            final AssemblerUnitPlan current = chosenPlan;
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
@@ -159,8 +181,12 @@ public class FlexAssembler extends UnitAssembler {
                     table.row();
                     table.label(() -> Core.bundle.format("flexassembler.tier-low", current.unit.localizedName, tierRequired.getOrDefault(current, 0)))
                             .color(Pal.remove).padTop(4).row();
-                    table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN))
-                            .size(120f, 40f).padTop(8).row();
+                    table.button(Core.bundle.get("flexassembler.deselect"), () -> {
+                        savedUnitId = NO_PLAN;
+                        chosenPlan = null;
+                        selected = false;
+                        configure(NO_PLAN);
+                    }).size(120f, 40f).padTop(8).row();
                 }
                 return;
             }
@@ -191,8 +217,8 @@ public class FlexAssembler extends UnitAssembler {
                     inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
                 }).pad(8);
 
-                final int index = plans.indexOf(plan);
-                btn.clicked(() -> configure(index));
+                final int unitId = plan.unit.id;
+                btn.clicked(() -> configure(unitId)); // 使用单位ID
                 grid.add(btn).size(80f, 80f).pad(4f);
             }
 
@@ -201,15 +227,18 @@ public class FlexAssembler extends UnitAssembler {
 
             if (current != null) {
                 table.row();
-                table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN))
-                        .size(120f, 40f).padTop(8).row();
+                table.button(Core.bundle.get("flexassembler.deselect"), () -> {
+                    savedUnitId = NO_PLAN;
+                    chosenPlan = null;
+                    selected = false;
+                    configure(NO_PLAN);
+                }).size(120f, 40f).padTop(8).row();
             }
         }
 
         @Override
         public Object config() {
-            int index = plans.indexOf(chosenPlan);
-            return index >= 0 ? index : NO_PLAN;
+            return selected ? savedUnitId : NO_PLAN;
         }
 
         @Override
@@ -217,19 +246,22 @@ public class FlexAssembler extends UnitAssembler {
             if (value == null || (value instanceof Integer && (Integer)value == NO_PLAN)) {
                 selected = false;
                 chosenPlan = null;
+                savedUnitId = NO_PLAN;
                 AssemblerUnitPlan defaultPlan = getDefaultPlan();
                 if (defaultPlan != null) syncArea(defaultPlan);
             } else if (value instanceof Integer) {
-                int index = (Integer) value;
-                if (index >= 0 && index < plans.size) {
-                    AssemblerUnitPlan plan = plans.get(index);
-                    chosenPlan = plan;
-                    selected = true;
-                    syncArea(plan);
-                } else {
-                    selected = false;
-                    chosenPlan = null;
-                    syncArea(getDefaultPlan());
+                int id = (Integer) value;
+                UnitType type = content.getByID(ContentType.unit, id);
+                if (type != null) {
+                    AssemblerUnitPlan plan = findPlanByUnit(type);
+                    if (plan != null) {
+                        chosenPlan = plan;
+                        selected = true;
+                        savedUnitId = id;
+                        syncArea(plan);
+                    } else {
+                        Log.warn("FlexAssembler: Unit type @ found but no matching plan", type);
+                    }
                 }
             }
             super.configure(value);
@@ -237,7 +269,22 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public AssemblerUnitPlan plan() {
-            if (selected && chosenPlan != null) return chosenPlan;
+            if (selected && chosenPlan != null) {
+                return chosenPlan;
+            }
+            // 尝试从ID恢复
+            if (selected && savedUnitId != NO_PLAN && chosenPlan == null) {
+                UnitType type = content.getByID(ContentType.unit, savedUnitId);
+                if (type != null) {
+                    AssemblerUnitPlan plan = findPlanByUnit(type);
+                    if (plan != null) {
+                        chosenPlan = plan;
+                        syncArea(plan);
+                        return plan;
+                    }
+                }
+            }
+            // 最后才回退默认
             AssemblerUnitPlan def = getDefaultPlan();
             return def != null ? def : (plans.isEmpty() ? super.plan() : plans.first());
         }
@@ -259,8 +306,7 @@ public class FlexAssembler extends UnitAssembler {
         public void write(Writes write) {
             super.write(write);
             write.bool(selected);
-            int index = plans.indexOf(chosenPlan);
-            write.i(index >= 0 ? index : NO_PLAN);
+            write.i(savedUnitId);
             write.i(areaSize);
         }
 
@@ -268,14 +314,22 @@ public class FlexAssembler extends UnitAssembler {
         public void read(Reads read, byte revision) {
             super.read(read, revision);
             selected = read.bool();
-            int index = read.i();
-            if (selected && index >= 0 && index < plans.size) {
-                chosenPlan = plans.get(index);
-            } else {
-                selected = false;
-                chosenPlan = null;
-            }
+            savedUnitId = read.i();
             areaSize = read.i();
+            if (selected && savedUnitId != NO_PLAN) {
+                UnitType type = content.getByID(ContentType.unit, savedUnitId);
+                if (type != null) {
+                    AssemblerUnitPlan plan = findPlanByUnit(type);
+                    chosenPlan = plan;
+                    if (plan != null) syncArea(plan);
+                    else selected = false; // 计划不存在，但保留ID？不清除，以防之后计划被添加
+                } else {
+                    selected = false;
+                }
+            } else {
+                chosenPlan = null;
+                selected = false;
+            }
             if (!selected) {
                 syncArea(getDefaultPlan());
             }
