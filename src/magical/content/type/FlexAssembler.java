@@ -18,14 +18,11 @@ import mindustry.type.PayloadStack;
 import mindustry.ui.*;
 import mindustry.world.*;
 import mindustry.world.blocks.units.*;
-import mindustry.world.blocks.units.UnitAssemblerModule.UnitAssemblerModuleBuild;
 import mindustry.world.meta.*;
 
 import java.util.*;
 
 import static mindustry.Vars.*;
-
-//by youming
 
 public class FlexAssembler extends UnitAssembler {
 
@@ -108,14 +105,12 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
-        // 获取当前等级下默认可用的第一个配方（绝不返回 null）
         private AssemblerUnitPlan getDefaultPlan() {
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
                     return plan;
                 }
             }
-            // 如果 plans 为空，返回 null （此时应避免调用 plan() 的后续逻辑）
             return plans.isEmpty() ? null : plans.first();
         }
 
@@ -140,9 +135,12 @@ public class FlexAssembler extends UnitAssembler {
             checkTier();
         }
 
+        // UI 界面（仅客户端调用，无服务端影响）
         @Override
         public void buildConfiguration(Table table) {
-            // 收集当前 tier 下可用的配方
+            // 安全措施：若非客户端环境则直接返回（但 buildConfiguration 本身只会在客户端调用）
+            if (Vars.headless) return;
+
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
@@ -150,7 +148,6 @@ public class FlexAssembler extends UnitAssembler {
                 }
             }
 
-            // 若无可用配方
             if (available.isEmpty()) {
                 table.label(() -> Core.bundle.get("flexassembler.no-plans")).pad(10);
                 if (chosenPlan != null) {
@@ -171,10 +168,8 @@ public class FlexAssembler extends UnitAssembler {
                 return;
             }
 
-            // 检查已选配方是否可用
             boolean chosenAvailable = chosenPlan != null && available.contains(chosenPlan);
 
-            // 标题行
             if (!chosenAvailable && chosenPlan != null) {
                 table.label(() -> Core.bundle.format("flexassembler.tier-low", chosenPlan.unit.localizedName, tierRequired.get(chosenPlan)))
                         .padBottom(4).color(Pal.remove).row();
@@ -185,7 +180,6 @@ public class FlexAssembler extends UnitAssembler {
                 table.label(() -> Core.bundle.get("flexassembler.select-unit")).padBottom(4).color(Color.gray).row();
             }
 
-            // 构建图标网格
             Table grid = new Table();
             int cols = 4;
             for (int i = 0; i < available.size; i++) {
@@ -201,12 +195,8 @@ public class FlexAssembler extends UnitAssembler {
                 }).pad(8);
 
                 btn.clicked(() -> {
-                    chosenPlan = plan;
-                    selected = true;
-                    syncArea(plan);
+                    // 只调用 configure，不手动重建 UI，让游戏自动刷新配置面板
                     configure(plan.unit.id);
-                    table.clear();
-                    buildConfiguration(table);
                 });
                 grid.add(btn).size(80f, 80f).pad(4f);
             }
@@ -217,19 +207,11 @@ public class FlexAssembler extends UnitAssembler {
             if (chosenPlan != null) {
                 table.row();
                 table.button(Core.bundle.get("flexassembler.deselect"), () -> {
-                    selected = false;
-                    chosenPlan = null;
-                    AssemblerUnitPlan def = getDefaultPlan();
-                    if (def != null) syncArea(def);
-                    else areaSize = FlexAssembler.this.areaSize;
                     configure(null);
-                    table.clear();
-                    buildConfiguration(table);
                 }).size(120f, 40f).padTop(8).row();
             }
         }
 
-        // 配置序列化
         @Override
         public Object config() {
             return chosenPlan != null ? chosenPlan.unit.id : null;
@@ -252,7 +234,7 @@ public class FlexAssembler extends UnitAssembler {
                         selected = true;
                         syncArea(found);
                     } else {
-                        // 配方已失效（模组更新？），重置为未选择
+                        // 配方无效，重置
                         selected = false;
                         chosenPlan = null;
                         syncArea(getDefaultPlan());
@@ -267,25 +249,23 @@ public class FlexAssembler extends UnitAssembler {
                 chosenPlan = null;
                 syncArea(getDefaultPlan());
             }
-            super.configure(value);   // 必须调用，触发网络同步
+            // 必须调用父类方法触发网络同步
+            super.configure(value);
         }
 
-        // 核心：生产计划（保证永不返回 null）
         @Override
         public AssemblerUnitPlan plan() {
             if (selected && chosenPlan != null) return chosenPlan;
             AssemblerUnitPlan def = getDefaultPlan();
-            if (def != null) return def;
-            return super.plan();
+            return def != null ? def : (plans.isEmpty() ? super.plan() : plans.first());
         }
 
         @Override
         public void updateTile() {
+            // 同步面积并调用原版更新
             AssemblerUnitPlan current = plan();
-            if (current != null) {
-                syncArea(current);
-            }
-            super.updateTile();   // 原版逻辑，现已基于正确的 areaSize
+            if (current != null) syncArea(current);
+            super.updateTile();
         }
 
         @Override
