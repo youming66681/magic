@@ -100,12 +100,24 @@ public class FlexAssembler extends UnitAssembler {
         private static final int NO_PLAN = -1;
         private int lockedIndex = NO_PLAN;
         private int customArea = 0;
+        private AssemblerUnitPlan curPlan;
 
         private AssemblerUnitPlan getLockedPlan() {
             if (lockedIndex >= 0 && lockedIndex < plans.size) {
                 return plans.get(lockedIndex);
             }
             return null;
+        }
+
+        private void setPlan(int index) {
+            if (index >= 0 && index < plans.size) {
+                lockedIndex = index;
+                curPlan = plans.get(index);
+            } else {
+                lockedIndex = NO_PLAN;
+                curPlan = null;
+            }
+            syncArea();
         }
 
         private void syncArea() {
@@ -120,7 +132,7 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void created() {
             super.created();
-            syncArea();
+            setPlan(lockedIndex);
         }
 
         @Override
@@ -162,9 +174,7 @@ public class FlexAssembler extends UnitAssembler {
                     t.add(plan.unit.localizedName).color(selected ? Pal.accent : Color.white);
                 });
                 button.clicked(() -> {
-                    lockedIndex = index;
                     configure(index);
-                    syncArea();
                 });
                 grid.add(button).size(90, 90).pad(4);
                 count++;
@@ -176,9 +186,7 @@ public class FlexAssembler extends UnitAssembler {
         }
 
         private void unlock() {
-            lockedIndex = NO_PLAN;
             configure(NO_PLAN);
-            syncArea();
         }
 
         @Override
@@ -189,22 +197,15 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void configure(@Nullable Object value) {
             if (!(value instanceof Integer)) return;
-            int val = (Integer) value;
-            if (val == NO_PLAN) {
-                lockedIndex = NO_PLAN;
-            } else if (val >= 0 && val < plans.size) {
-                lockedIndex = val;
-            }
-            syncArea();
+            setPlan((Integer) value);
         }
 
         @Override
         public AssemblerUnitPlan plan() {
-            AssemblerUnitPlan plan = getLockedPlan();
-            if (plan != null) {
-                return plan;
+            if (curPlan != null) {
+                return curPlan;
             }
-            return plans.isEmpty() ? super.plan() : plans.get(0);
+            return getLockedPlan();
         }
 
         @Override
@@ -247,6 +248,7 @@ public class FlexAssembler extends UnitAssembler {
                 lockedIndex = NO_PLAN;
                 customArea = areaSize;
             }
+            setPlan(lockedIndex);
         }
     }
 }
