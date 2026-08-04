@@ -10,8 +10,10 @@ import arc.struct.*;
 import arc.util.*;
 import arc.util.io.*;
 import mindustry.*;
+import mindustry.ai.types.AssemblerAI;
 import mindustry.content.*;
 import mindustry.ctype.*;
+import mindustry.entities.Units;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
@@ -24,9 +26,9 @@ import mindustry.world.meta.*;
 
 import java.util.*;
 
-import static mindustry.Vars.*;
-
 //by youming
+
+import static mindustry.Vars.*;
 
 public class FlexAssembler extends UnitAssembler {
 
