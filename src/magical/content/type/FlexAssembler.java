@@ -98,27 +98,24 @@ public class FlexAssembler extends UnitAssembler {
 
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         private static final int NO_PLAN = -1;
-        private int lockedIndex = NO_PLAN;          // 用户选择的计划索引
-        private AssemblerUnitPlan lockedPlan;       // 对应的计划对象
-        private int lockedUnitId = NO_PLAN;         // 对应的单位ID (备用)
-        private void refreshLocked() {
+        private int lockedIndex = NO_PLAN;   // 用户锁定的计划索引
+        // 根据索引获取锁定计划
+        private AssemblerUnitPlan getLockedPlan() {
             if (lockedIndex >= 0 && lockedIndex < plans.size) {
-                lockedPlan = plans.get(lockedIndex);
-                lockedUnitId = lockedPlan.unit.id;
-            } else {
-                lockedPlan = null;
-                lockedUnitId = NO_PLAN;
+                return plans.get(lockedIndex);
             }
+            return null;
         }
+        // 同步装配区域大小
         private void syncArea() {
-            if (lockedPlan != null) {
-                areaSize = planAreaMap.getOrDefault(lockedPlan, areaSize);
+            AssemblerUnitPlan plan = getLockedPlan();
+            if (plan != null) {
+                areaSize = planAreaMap.getOrDefault(plan, areaSize);
             }
         }
         @Override
         public void created() {
             super.created();
-            refreshLocked();
             syncArea();
         }
         @Override
@@ -130,11 +127,13 @@ public class FlexAssembler extends UnitAssembler {
             }
             checkTier();
         }
+        // ---------- 客户端 UI ----------
         @Override
         public void buildConfiguration(Table table) {
             if (Core.app.isHeadless()) return;
-            AssemblerUnitPlan current = getChosenPlan();
+            AssemblerUnitPlan current = getLockedPlan();
             boolean locked = current != null;
+            // 筛选当前模块等级下可用的配方
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
@@ -147,11 +146,7 @@ public class FlexAssembler extends UnitAssembler {
                     table.row();
                     table.label(() -> Core.bundle.format("flexassembler.tier-low", current.unit.localizedName, tierRequired.getOrDefault(current, 0)))
                             .color(Pal.remove).padTop(4).row();
-                    table.button(Core.bundle.get("flexassembler.deselect"), () -> {
-                        selectedIndex = NO_PLAN;
-                        configure(NO_PLAN);
-                        syncArea();
-                    });
+                    table.button(Core.bundle.get("flexassembler.deselect"), () -> unlock());
                 }
                 return;
             }
@@ -167,89 +162,80 @@ public class FlexAssembler extends UnitAssembler {
                 if (i % cols == 0 && i != 0) grid.row();
                 AssemblerUnitPlan plan = available.get(i);
                 boolean isChosen = locked && current == plan;
-                int indexInPlans = plans.indexOf(plan);
+                int planIndex = plans.indexOf(plan);   // 全局索引
                 Button btn = new Button(Tex.button);
                 btn.table(inner -> {
                     inner.image(plan.unit.uiIcon).size(30f).padBottom(4f);
                     inner.row();
                     inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
                 }).pad(8);
-                btn.clicked(() -> {
-                    selectedIndex = indexInPlans;
-                    configure(selectedIndex);
-                    syncArea();
-                });
+                btn.clicked(() -> lock(planIndex));
                 grid.add(btn).size(80f, 80f).pad(4f);
             }
             ScrollPane pane = new ScrollPane(grid);
             table.add(pane).grow().maxHeight(400f).row();
             if (locked) {
                 table.row();
-                table.button(Core.bundle.get("flexassembler.deselect"), () -> {
-                    selectedIndex = NO_PLAN;
-                    configure(NO_PLAN);
-                    syncArea();
-                });
+                table.button(Core.bundle.get("flexassembler.deselect"), () -> unlock());
             }
         }
+        // 锁定某个配方
         private void lock(int index) {
             if (index >= 0 && index < plans.size) {
                 lockedIndex = index;
-                refreshLocked();
                 configure(lockedIndex);
                 syncArea();
             }
         }
+        // 取消锁定
         private void unlock() {
             lockedIndex = NO_PLAN;
-            refreshLocked();
             configure(NO_PLAN);
             syncArea();
         }
+        // ---------- 配置序列化 ----------
         @Override
         public Object config() {
             return lockedIndex;
         }
         @Override
         public void configure(@Nullable Object value) {
-            // 此方法现在只用于服务端和客户端同步，不允许外部修改锁
-            if (lockedIndex != NO_PLAN) {
-                // 锁存在，忽略所有传入值，只强制发回正确值
-                super.configure(lockedIndex);
-                return;
-            }
-            // 锁不存在时，接受正确的选择
             if (value instanceof Integer) {
                 int val = (Integer) value;
+                // 仅允许以下情况修改 lockedIndex：
+                // 1. 手动取消 (val == NO_PLAN)
+                // 2. 当前未锁定且 val 有效
                 if (val == NO_PLAN) {
                     lockedIndex = NO_PLAN;
-                } else if (val >= 0 && val < plans.size) {
+                } else if (lockedIndex == NO_PLAN && val >= 0 && val < plans.size) {
                     lockedIndex = val;
+                }
+                // 其他任何情况（例如原版试图自动切换）均被忽略，并强制发回当前锁定值
+                else {
+                    super.configure(lockedIndex);
+                    return;
                 }
             }
             super.configure(value);
-            refreshLocked();
             syncArea();
         }
+        // ---------- 生产核心 ----------
         @Override
         public AssemblerUnitPlan plan() {
-            if (lockedPlan != null) return lockedPlan;
-            return plans.isEmpty() ? super.plan() : plans.get(0);
+            AssemblerUnitPlan locked = getLockedPlan();
+            return locked != null ? locked : (plans.isEmpty() ? super.plan() : plans.get(0));
         }
         @Override
         public boolean shouldConsume() {
-            if (lockedPlan == null) return false;
-            int reqTier = tierRequired.getOrDefault(lockedPlan, 0);
+            AssemblerUnitPlan locked = getLockedPlan();
+            if (locked == null) return false;
+            int reqTier = tierRequired.getOrDefault(locked, 0);
             if (reqTier > currentTier) return false;
             return super.shouldConsume();
         }
         @Override
         public void updateTile() {
             syncArea();
-            AssemblerUnitPlan currentSuperPlan = super.plan();
-            if (lockedPlan != null && currentSuperPlan != lockedPlan) {
-                configure(lockedIndex);
-            }
             super.updateTile();
         }
         @Override
@@ -268,7 +254,6 @@ public class FlexAssembler extends UnitAssembler {
             super.read(read, revision);
             lockedIndex = read.i();
             areaSize = read.i();
-            refreshLocked();
         }
     }
 }
