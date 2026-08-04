@@ -101,19 +101,17 @@ public class FlexAssembler extends UnitAssembler {
 
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         private static final int NO_PLAN = -1;
-        private int selectedIndex = NO_PLAN;   // 唯一的选择标识
+        private int selectedIndex = NO_PLAN;   // 唯一选择标识，除非手动取消，否则永久保留
 
-        private void syncArea(int index) {
-            if (index >= 0 && index < plans.size) {
-                AssemblerUnitPlan plan = plans.get(index);
-                areaSize = planAreaMap.getOrDefault(plan, areaSize);
+        // 获取当前计划（绝不修改 selectedIndex）
+        private AssemblerUnitPlan currentPlan() {
+            if (selectedIndex >= 0 && selectedIndex < plans.size) {
+                return plans.get(selectedIndex);
             }
-        }
-
-        private AssemblerUnitPlan getDefaultPlan() {
-            for (int i = 0; i < plans.size; i++) {
-                if (tierRequired.getOrDefault(plans.get(i), 0) <= currentTier) {
-                    return plans.get(i);
+            // 回退到默认计划（但不清除选择）
+            for (AssemblerUnitPlan plan : plans) {
+                if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
+                    return plan;
                 }
             }
             return plans.isEmpty() ? null : plans.first();
@@ -122,14 +120,10 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void created() {
             super.created();
-            if (selectedIndex < 0 || selectedIndex >= plans.size) {
-                // 没有有效选择，使用默认
-                AssemblerUnitPlan def = getDefaultPlan();
-                if (def != null) {
-                    areaSize = planAreaMap.getOrDefault(def, areaSize);
-                }
-            } else {
-                syncArea(selectedIndex);
+            // 只设置初始面积，不改变选择
+            AssemblerUnitPlan plan = currentPlan();
+            if (plan != null) {
+                areaSize = planAreaMap.getOrDefault(plan, areaSize);
             }
         }
 
@@ -145,12 +139,11 @@ public class FlexAssembler extends UnitAssembler {
             checkTier();
         }
 
-        // 客户端 UI（完全保留原功能）
+        // 客户端 UI，完全保留所有功能
         @Override
         public void buildConfiguration(Table table) {
             if (Vars.headless) return;
 
-            // 当前选择的计划，用于显示
             final AssemblerUnitPlan current = (selectedIndex >= 0 && selectedIndex < plans.size) ? plans.get(selectedIndex) : null;
 
             Seq<AssemblerUnitPlan> available = new Seq<>();
@@ -190,7 +183,7 @@ public class FlexAssembler extends UnitAssembler {
                 if (i % cols == 0 && i != 0) grid.row();
                 AssemblerUnitPlan plan = available.get(i);
                 boolean isChosen = Objects.equals(current, plan);
-                int indexInPlans = plans.indexOf(plan);   // 使用全局索引
+                int indexInPlans = plans.indexOf(plan);
 
                 Button btn = new Button(Tex.button);
                 btn.table(inner -> {
@@ -220,48 +213,45 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void configure(@Nullable Object value) {
-            if (value == null || (value instanceof Integer && (Integer)value == NO_PLAN)) {
-                selectedIndex = NO_PLAN;
-                AssemblerUnitPlan def = getDefaultPlan();
-                if (def != null) syncArea(plans.indexOf(def));
-            } else if (value instanceof Integer) {
-                int index = (Integer) value;
-                if (index >= 0 && index < plans.size) {
-                    selectedIndex = index;
-                    syncArea(index);
+            if (value == null) return;   // 忽略空值
+
+            if (value instanceof Integer) {
+                int val = (Integer) value;
+                if (val == NO_PLAN) {
+                    // 手动取消选择
+                    selectedIndex = NO_PLAN;
+                } else if (val >= 0 && val < plans.size) {
+                    // 选择新配方
+                    selectedIndex = val;
                 }
-                // 无效索引则忽略，保持原选择
+                // 无效索引不做任何操作，保持原选择
             }
             super.configure(value);
+
+            // 立即更新面积（客户端和服务端都需要）
+            if (selectedIndex >= 0 && selectedIndex < plans.size) {
+                areaSize = planAreaMap.getOrDefault(plans.get(selectedIndex), areaSize);
+            } else {
+                AssemblerUnitPlan def = currentPlan();
+                if (def != null) areaSize = planAreaMap.getOrDefault(def, areaSize);
+            }
         }
 
         @Override
         public AssemblerUnitPlan plan() {
-            if (selectedIndex >= 0 && selectedIndex < plans.size) {
-                return plans.get(selectedIndex);
-            }
-            AssemblerUnitPlan def = getDefaultPlan();
-            return def != null ? def : (plans.isEmpty() ? super.plan() : plans.first());
+            return currentPlan();   // 返回当前计划，即使 selectedIndex 无效也不修改它
         }
 
         @Override
         public void updateTile() {
-            // 处理模块等级变化（仅重置进度）
-            if (lastTier != currentTier) {
-                progress = 0f;
-                lastTier = currentTier;
+            // 先确保面积正确
+            AssemblerUnitPlan cur = currentPlan();
+            if (cur != null) {
+                areaSize = planAreaMap.getOrDefault(cur, areaSize);
             }
 
-            // 确保面积与当前计划同步
-            AssemblerUnitPlan currentPlan = plan();
-            if (currentPlan != null) {
-                areaSize = planAreaMap.getOrDefault(currentPlan, areaSize);
-            }
-
-            // 让原版处理剩下的生产逻辑（无人机、载荷、生产）但可能会改变面积，所以我们备份
-            int prevArea = areaSize;
+            // 调用原版逻辑（可能会读取 areaSize 和 plan()）
             super.updateTile();
-            areaSize = prevArea;   // 强行恢复我们的面积
         }
 
         @Override
@@ -282,13 +272,6 @@ public class FlexAssembler extends UnitAssembler {
             super.read(read, revision);
             selectedIndex = read.i();
             areaSize = read.i();
-            if (selectedIndex < 0 || selectedIndex >= plans.size) {
-                selectedIndex = NO_PLAN;
-                AssemblerUnitPlan def = getDefaultPlan();
-                if (def != null) syncArea(plans.indexOf(def));
-            } else {
-                syncArea(selectedIndex);
-            }
         }
     }
 }
