@@ -26,8 +26,6 @@ import mindustry.world.meta.*;
 
 import java.util.*;
 
-//by youming
-
 import static mindustry.Vars.*;
 
 public class FlexAssembler extends UnitAssembler {
@@ -263,6 +261,37 @@ public class FlexAssembler extends UnitAssembler {
             }
 
             super.updateTile();
+        }
+
+        @Override
+        public void spawned() {
+            AssemblerUnitPlan locked = getLockedPlan();
+            if (locked == null) return;
+
+            Vec2 spawn = getUnitSpawn();
+            consume();
+
+            Unit unit = locked.unit.create(team);
+            if (unit.isCommandable() && commandPos != null) {
+                unit.command().commandPosition(commandPos);
+            }
+            unit.set(spawn.x + Mathf.range(0.001f), spawn.y + Mathf.range(0.001f));
+            unit.rotation = rotdeg();
+            Building targetBuild = unit.buildOn();
+            var payload = new UnitPayload(unit);
+            if (targetBuild != null && targetBuild.team == team && targetBuild.acceptPayload(targetBuild, payload)) {
+                targetBuild.handlePayload(targetBuild, payload);
+            } else if (!net.client()) {
+                unit.add();
+                Units.notifyUnitSpawn(unit);
+            }
+
+            createSound.at(spawn.x, spawn.y, 1f + Mathf.range(0.06f), createSoundVolume);
+            progress = 0f;
+            Fx.unitAssemble.at(spawn.x, spawn.y, rotdeg() - 90f, locked.unit);
+            blocks.clear();
+
+            Events.fire(new UnitCreateEvent(unit, this));
         }
 
         @Override
