@@ -103,19 +103,16 @@ public class FlexAssembler extends UnitAssembler {
         private static final int NO_PLAN = -1;
         private int lockedIndex = NO_PLAN;     // 唯一的选择标识，永不自动变化
 
-        // 获取当前应使用的计划（锁定优先，否则返回废弃计划，但生产被停止）
         private AssemblerUnitPlan activePlan() {
             if (lockedIndex >= 0 && lockedIndex < plans.size) {
                 return plans.get(lockedIndex);
             }
-            // 未锁定时返回一个安全占位计划（绝不等于null），但shouldConsume会阻止生产
             return plans.isEmpty() ? super.plan() : plans.get(0);
         }
 
         @Override
         public void created() {
             super.created();
-            // 如果存档中有锁定，同步面积
             if (lockedIndex >= 0 && lockedIndex < plans.size) {
                 areaSize = planAreaMap.getOrDefault(plans.get(lockedIndex), areaSize);
             }
@@ -133,7 +130,6 @@ public class FlexAssembler extends UnitAssembler {
             checkTier();
         }
 
-        // 客户端 UI（只显示可用配方，但允许点击任意配方进行锁定）
         @Override
         public void buildConfiguration(Table table) {
             if (Vars.headless) return;
@@ -197,19 +193,17 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
-        // 锁定并选择（客户端调用）
         private void lockAndSelect(int index) {
             if (index >= 0 && index < plans.size) {
                 lockedIndex = index;
-                configure(index);          // 同步到服务端
+                configure(index);
                 syncArea();
             }
         }
 
-        // 取消选择（客户端调用）
         private void unlockAndClear() {
             lockedIndex = NO_PLAN;
-            configure(NO_PLAN);            // 发送解锁指令
+            configure(NO_PLAN);
             syncArea();
         }
 
@@ -221,7 +215,7 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public Object config() {
-            return lockedIndex;   // 返回锁定的索引，-1 表示未锁定
+            return lockedIndex;
         }
 
         @Override
@@ -229,15 +223,12 @@ public class FlexAssembler extends UnitAssembler {
             if (value instanceof Integer) {
                 int val = (Integer) value;
                 if (val == NO_PLAN) {
-                    // 只有我们自己调用 unlockAndClear 才会传入 NO_PLAN，此时清除锁
                     lockedIndex = NO_PLAN;
                 } else if (val >= 0 && val < plans.size) {
-                    // 锁定该索引
                     lockedIndex = val;
                 }
-                // 其他任何值都完全忽略，锁不会被改变
             }
-            super.configure(value);   // 触发网络同步
+            super.configure(value);
         }
 
         @Override
@@ -247,21 +238,18 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public boolean shouldConsume() {
-            // 未选择任何计划时禁止消耗
             if (lockedIndex == NO_PLAN) return false;
             if (lockedIndex >= 0 && lockedIndex < plans.size) {
                 int reqTier = tierRequired.getOrDefault(plans.get(lockedIndex), 0);
-                if (reqTier > currentTier) return false;   // 模块不足，暂停
+                if (reqTier > currentTier) return false;
             }
             return super.shouldConsume();
         }
 
         @Override
         public void updateTile() {
-            // 确保面积与锁定的计划同步
             syncArea();
             super.updateTile();
-            // 原版 updateTile 可能会修改某些东西，但我们再次强制面积同步
             syncArea();
         }
 
@@ -283,8 +271,7 @@ public class FlexAssembler extends UnitAssembler {
             super.read(read, revision);
             lockedIndex = read.i();
             areaSize = read.i();
-            // 若锁定的索引失效（计划被删除），则解锁
-            if (lockedIndex >= plans.size() || lockedIndex < 0) {
+            if (lockedIndex >= plans.size || lockedIndex < 0) {
                 lockedIndex = NO_PLAN;
             }
         }
