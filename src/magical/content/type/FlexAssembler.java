@@ -11,6 +11,7 @@ import arc.util.*;
 import arc.util.io.*;
 import mindustry.content.*;
 import mindustry.ctype.*;
+import mindustry.game.EventType.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
@@ -43,6 +44,7 @@ public class FlexAssembler extends UnitAssembler {
         planAreaMap.put(plan, customArea);
     }
 
+    // 完整的 stats 展示
     @Override
     public void setStats() {
         super.setStats();
@@ -98,7 +100,7 @@ public class FlexAssembler extends UnitAssembler {
 
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         private static final int NO_SELECTION = -1;
-        private int selectedUnitId = NO_SELECTION;
+        private int selectedUnitId = NO_SELECTION;   // 锁定单位ID
 
         private AssemblerUnitPlan getLockedPlan() {
             if (selectedUnitId != NO_SELECTION) {
@@ -130,6 +132,7 @@ public class FlexAssembler extends UnitAssembler {
             checkTier();
         }
 
+        // ---------- 客户端 UI ----------
         @Override
         public void buildConfiguration(Table table) {
             if (Core.app.isHeadless()) return;
@@ -191,18 +194,21 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
+        // 用户选择计划
         private void selectPlan(AssemblerUnitPlan plan) {
             selectedUnitId = plan.unit.id;
-            configure(selectedUnitId);
+            configure(selectedUnitId);          // 发起配置
             syncArea(plan);
         }
 
+        // 用户取消选择
         private void clearSelection() {
             selectedUnitId = NO_SELECTION;
             configure(NO_SELECTION);
             syncArea(null);
         }
 
+        // ---------- 配置与防覆盖 ----------
         @Override
         public Object config() {
             return selectedUnitId;
@@ -213,18 +219,28 @@ public class FlexAssembler extends UnitAssembler {
             if (value instanceof Integer) {
                 int id = (Integer) value;
                 if (id == NO_SELECTION) {
+                    // 手动取消
                     selectedUnitId = NO_SELECTION;
+                    super.configure(NO_SELECTION);
                 } else if (id == selectedUnitId) {
+                    // 与当前锁定相同，可能是客户端确认，直接通过
+                    super.configure(id);
                 } else if (selectedUnitId == NO_SELECTION) {
-                    for (AssemblerUnitPlan p : plans) if (p.unit.id == id) { selectedUnitId = id; break; }
+                    // 未锁定时，接受有效ID
+                    selectedUnitId = id;
+                    super.configure(id);
                 } else {
+                    // 已锁定但外部试图修改 → 拒绝写入，并强制重新发送锁定ID
+                    // 这样服务端最终会回退到我们的锁定值
+                    super.configure(selectedUnitId);
                 }
+            } else {
+                super.configure(value);
             }
-            super.configure(value);
             syncArea(getLockedPlan());
         }
 
-        // ---------- 生产核心 ----------
+        // ---------- 生产控制 ----------
         @Override
         public AssemblerUnitPlan plan() {
             AssemblerUnitPlan locked = getLockedPlan();
@@ -244,7 +260,7 @@ public class FlexAssembler extends UnitAssembler {
         public void updateTile() {
             AssemblerUnitPlan locked = getLockedPlan();
             if (locked != null) syncArea(locked);
-            super.updateTile();
+            super.updateTile();        // 让原版处理无人机、载荷、绘制等
         }
 
         @Override
@@ -253,6 +269,7 @@ public class FlexAssembler extends UnitAssembler {
             return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
         }
 
+        // ---------- 存档与加载 ----------
         @Override
         public void write(Writes write) {
             super.write(write);
@@ -265,6 +282,7 @@ public class FlexAssembler extends UnitAssembler {
             super.read(read, revision);
             selectedUnitId = read.i();
             areaSize = read.i();
+            // 无需重置锁，即使ID暂时无效，保留也无妨
         }
     }
 }
