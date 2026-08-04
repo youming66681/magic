@@ -98,16 +98,13 @@ public class FlexAssembler extends UnitAssembler {
 
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         private static final int NO_PLAN = -1;
-        private int selectedIndex = NO_PLAN;       // 当前选择的配方索引
-        private boolean userAction = false;        // 是否由用户点击触发
-        /** 根据 selectedIndex 获取对应计划 */
+        private int selectedIndex = NO_PLAN;       // 用户选择的配方索引
         private AssemblerUnitPlan getChosenPlan() {
             if (selectedIndex >= 0 && selectedIndex < plans.size) {
                 return plans.get(selectedIndex);
             }
             return null;
         }
-        /** 同步面积到当前选定计划 */
         private void syncArea() {
             AssemblerUnitPlan plan = getChosenPlan();
             if (plan != null) {
@@ -128,7 +125,7 @@ public class FlexAssembler extends UnitAssembler {
             }
             checkTier();
         }
-        // ---------- 客户端 UI ----------
+        // 客户端 UI（保留等级过滤、高亮、取消选择）
         @Override
         public void buildConfiguration(Table table) {
             if (Core.app.isHeadless()) return;
@@ -146,7 +143,11 @@ public class FlexAssembler extends UnitAssembler {
                     table.row();
                     table.label(() -> Core.bundle.format("flexassembler.tier-low", current.unit.localizedName, tierRequired.getOrDefault(current, 0)))
                             .color(Pal.remove).padTop(4).row();
-                    table.button(Core.bundle.get("flexassembler.deselect"), this::unlock);
+                    table.button(Core.bundle.get("flexassembler.deselect"), () -> {
+                        selectedIndex = NO_PLAN;
+                        configure(NO_PLAN);
+                        syncArea();
+                    });
                 }
                 return;
             }
@@ -169,45 +170,30 @@ public class FlexAssembler extends UnitAssembler {
                     inner.row();
                     inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
                 }).pad(8);
-                btn.clicked(() -> lockOnPlan(indexInPlans));
+                btn.clicked(() -> {
+                    selectedIndex = indexInPlans;
+                    configure(selectedIndex);
+                    syncArea();
+                });
                 grid.add(btn).size(80f, 80f).pad(4f);
             }
             ScrollPane pane = new ScrollPane(grid);
             table.add(pane).grow().maxHeight(400f).row();
             if (locked) {
                 table.row();
-                table.button(Core.bundle.get("flexassembler.deselect"), this::unlock);
+                table.button(Core.bundle.get("flexassembler.deselect"), () -> {
+                    selectedIndex = NO_PLAN;
+                    configure(NO_PLAN);
+                    syncArea();
+                });
             }
         }
-        private void lockOnPlan(int index) {
-            if (index >= 0 && index < plans.size) {
-                userAction = true;         // 标记用户操作
-                configure(index);          // 发送配置
-                selectedIndex = index;
-                syncArea();
-            }
-        }
-        private void unlock() {
-            userAction = true;
-            configure(NO_PLAN);
-            selectedIndex = NO_PLAN;
-            syncArea();
-        }
-        // ---------- 配置序列化 ----------
         @Override
         public Object config() {
             return selectedIndex;
         }
-        /** 核心保护：只有 userAction 为真时才允许修改 selectedIndex，否则一律忽略 */
         @Override
         public void configure(@Nullable Object value) {
-            if (!userAction) {
-                // 忽略所有外部调用，确保锁不被意外修改
-                super.configure(selectedIndex);   // 强制同步回正确值
-                return;
-            }
-            // 处理用户操作
-            userAction = false;
             if (value instanceof Integer) {
                 int val = (Integer) value;
                 if (val == NO_PLAN) {
@@ -219,7 +205,6 @@ public class FlexAssembler extends UnitAssembler {
             super.configure(value);
             syncArea();
         }
-        // ---------- 强制计划 ----------
         @Override
         public AssemblerUnitPlan plan() {
             AssemblerUnitPlan chosen = getChosenPlan();
@@ -235,7 +220,6 @@ public class FlexAssembler extends UnitAssembler {
         }
         @Override
         public void updateTile() {
-            // 仅负责同步面积，其余完全交给原版
             syncArea();
             super.updateTile();
         }
