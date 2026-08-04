@@ -101,57 +101,55 @@ public class FlexAssembler extends UnitAssembler {
 
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         private static final int NO_SELECTION = -1;
-        private int selectedUnitId = NO_SELECTION;   // 用户选择的单位ID，-1 表示未选择
-        /** 根据 selectedUnitId 查找对应的计划，找不到则返回第一个计划（但生产被禁用） */
-        private AssemblerUnitPlan getEffectivePlan() {
+        private int selectedUnitId = NO_SELECTION;
+
+        private AssemblerUnitPlan getLockedPlan() {
             if (selectedUnitId != NO_SELECTION) {
                 for (AssemblerUnitPlan p : plans) {
-                    if (p.unit.id == selectedUnitId) {
-                        return p;
-                    }
+                    if (p.unit.id == selectedUnitId) return p;
                 }
             }
-            // 未选择或计划丢失时，返回一个安全计划（用于UI显示等），但实际生产会被 shouldConsume 阻止
-            return plans.isEmpty() ? super.plan() : plans.get(0);
+            return null;
         }
-        /** 同步面积到当前计划 */
-        private void syncArea() {
-            AssemblerUnitPlan plan = getEffectivePlan();
-            if (plan != null) {
-                areaSize = planAreaMap.getOrDefault(plan, areaSize);
-            }
+
+        private void syncArea(AssemblerUnitPlan plan) {
+            if (plan != null) areaSize = planAreaMap.getOrDefault(plan, areaSize);
         }
+
         @Override
         public void created() {
             super.created();
-            syncArea();
+            AssemblerUnitPlan locked = getLockedPlan();
+            if (locked != null) syncArea(locked);
         }
+
         @Override
         public void onProximityUpdate() {
             super.onProximityUpdate();
             modules.clear();
             for (Building other : proximity) {
-                if (other instanceof UnitAssemblerModuleBuild mod) {
-                    modules.add(mod);
-                }
+                if (other instanceof UnitAssemblerModuleBuild mod) modules.add(mod);
             }
             checkTier();
         }
-        // 客户端UI（保留原有所有功能）
+
         @Override
         public void buildConfiguration(Table table) {
             if (Vars.headless) return;
-            final AssemblerUnitPlan current = getEffectivePlan();
-            final boolean hasSelection = selectedUnitId != NO_SELECTION;
+
+            AssemblerUnitPlan current = getLockedPlan();
+            boolean locked = current != null;
+
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
                     available.add(plan);
                 }
             }
+
             if (available.isEmpty()) {
                 table.label(() -> Core.bundle.get("flexassembler.no-plans")).pad(10);
-                if (hasSelection && current != null) {
+                if (locked) {
                     table.row();
                     table.label(() -> Core.bundle.format("flexassembler.tier-low", current.unit.localizedName, tierRequired.getOrDefault(current, 0)))
                             .color(Pal.remove).padTop(4).row();
@@ -160,51 +158,59 @@ public class FlexAssembler extends UnitAssembler {
                 }
                 return;
             }
-            if (hasSelection && current != null) {
+
+            if (locked) {
                 table.label(() -> Core.bundle.format("flexassembler.producing", current.unit.localizedName))
                         .padBottom(4).row();
             } else {
                 table.label(() -> Core.bundle.get("flexassembler.select-unit")).padBottom(4).color(Color.gray).row();
             }
+
             Table grid = new Table();
             int cols = 4;
             for (int i = 0; i < available.size; i++) {
                 if (i % cols == 0 && i != 0) grid.row();
                 AssemblerUnitPlan plan = available.get(i);
-                boolean isChosen = hasSelection && current != null && current == plan;
+                boolean isChosen = locked && current == plan;
+
                 Button btn = new Button(Tex.button);
                 btn.table(inner -> {
                     inner.image(plan.unit.uiIcon).size(30f).padBottom(4f);
                     inner.row();
                     inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
                 }).pad(8);
+
                 btn.clicked(() -> selectPlan(plan));
                 grid.add(btn).size(80f, 80f).pad(4f);
             }
+
             ScrollPane pane = new ScrollPane(grid);
             table.add(pane).grow().maxHeight(400f).row();
-            if (hasSelection) {
+
+            if (locked) {
                 table.row();
                 table.button(Core.bundle.get("flexassembler.deselect"), this::clearSelection)
                         .size(120f, 40f).padTop(8).row();
             }
         }
-        /** 选择指定计划 */
+
         private void selectPlan(AssemblerUnitPlan plan) {
             selectedUnitId = plan.unit.id;
             configure(selectedUnitId);
-            syncArea();
+            syncArea(plan);
         }
-        /** 取消选择 */
+
         private void clearSelection() {
             selectedUnitId = NO_SELECTION;
             configure(NO_SELECTION);
-            syncArea();
+            syncArea(null);
         }
+
         @Override
         public Object config() {
             return selectedUnitId;
         }
+
         @Override
         public void configure(@Nullable Object value) {
             if (value instanceof Integer) {
@@ -212,56 +218,64 @@ public class FlexAssembler extends UnitAssembler {
                 if (id == NO_SELECTION) {
                     selectedUnitId = NO_SELECTION;
                 } else {
-                    // 验证该 ID 是否存在于 plans 中，若存在则接受
-                    boolean found = false;
-                    for (AssemblerUnitPlan p : plans) {
-                        if (p.unit.id == id) {
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (found) {
-                        selectedUnitId = id;
-                    }
-                    // 如果 ID 无效，忽略此次配置，保持原选择
+                    for (AssemblerUnitPlan p : plans) if (p.unit.id == id) { selectedUnitId = id; break; }
                 }
             }
-            super.configure(value);   // 触发网络同步
-            syncArea();
+            super.configure(value);
+            syncArea(getLockedPlan());
         }
+
         @Override
         public AssemblerUnitPlan plan() {
-            return getEffectivePlan();
+            AssemblerUnitPlan locked = getLockedPlan();
+            return locked != null ? locked : (plans.isEmpty() ? super.plan() : plans.get(0));
         }
+
         @Override
         public boolean shouldConsume() {
-            // 未选择时不生产
-            if (selectedUnitId == NO_SELECTION) return false;
-            // 检查模块等级是否足够
-            AssemblerUnitPlan current = getEffectivePlan();
-            if (current != null && selectedUnitId != NO_SELECTION) {
-                int reqTier = tierRequired.getOrDefault(current, 0);
-                if (reqTier > currentTier) return false;
-            }
+            AssemblerUnitPlan locked = getLockedPlan();
+            if (locked == null) return false;
+            int reqTier = tierRequired.getOrDefault(locked, 0);
+            if (reqTier > currentTier) return false;
             return super.shouldConsume();
         }
+
         @Override
         public void updateTile() {
-            syncArea();
+            AssemblerUnitPlan locked = getLockedPlan();
+
+            if (locked != null) {
+                syncArea(locked);
+
+                if (shouldConsume() && efficiency > 0 && Units.canCreate(team, locked.unit)) {
+                    warmup = Mathf.lerpDelta(warmup, efficiency, 0.1f);
+                    float eff = (units.count(u -> ((AssemblerAI)u.controller()).inPosition()) / (float)dronesCreated);
+                    if ((progress += edelta() * state.rules.unitBuildSpeed(team) * eff / locked.time) >= 1f) {
+                        Call.assemblerUnitSpawned(tile);
+                    }
+                } else {
+                    warmup = Mathf.lerpDelta(warmup, 0f, 0.1f);
+                }
+            } else {
+                warmup = Mathf.lerpDelta(warmup, 0f, 0.1f);
+            }
+
             super.updateTile();
-            syncArea();   // 防止原版修改面积
         }
+
         @Override
         public Vec2 getUnitSpawn() {
             float len = tilesize * (areaSize + block.size) / 2f;
             return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
         }
+
         @Override
         public void write(Writes write) {
             super.write(write);
             write.i(selectedUnitId);
             write.i(areaSize);
         }
+
         @Override
         public void read(Reads read, byte revision) {
             super.read(read, revision);
