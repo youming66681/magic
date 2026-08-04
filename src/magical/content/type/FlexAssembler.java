@@ -214,14 +214,17 @@ public class FlexAssembler extends UnitAssembler {
                 int id = (Integer) value;
                 if (id == NO_SELECTION) {
                     selectedUnitId = NO_SELECTION;
-                } else {
+                } else if (id == selectedUnitId) {
+                } else if (selectedUnitId == NO_SELECTION) {
                     for (AssemblerUnitPlan p : plans) if (p.unit.id == id) { selectedUnitId = id; break; }
+                } else {
                 }
             }
             super.configure(value);
             syncArea(getLockedPlan());
         }
 
+        // ---------- 生产核心 ----------
         @Override
         public AssemblerUnitPlan plan() {
             AssemblerUnitPlan locked = getLockedPlan();
