@@ -102,7 +102,6 @@ public class FlexAssembler extends UnitAssembler {
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         public boolean selected = false;
         public AssemblerUnitPlan chosenPlan;
-        private boolean userChoice = false;  // 标记是否由用户点击触发
 
         private void syncArea(AssemblerUnitPlan plan) {
             if (plan != null) {
@@ -142,7 +141,7 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void buildConfiguration(Table table) {
-            // 只获取当前 t ier 可用的配方
+            // 只获取当前 tier 可用的配方
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
@@ -153,7 +152,7 @@ public class FlexAssembler extends UnitAssembler {
             // 如果可用配方为空，显示提示
             if (available.isEmpty()) {
                 table.label(() -> Core.bundle.get("flexassembler.no-plans")).pad(10);
-                // 但若有已选但不可用的配方，仍显示警告
+                // 但若有已选但不可用的配方，仍显示警告（判空保护）
                 if (chosenPlan != null) {
                     table.row();
                     table.label(() -> Core.bundle.format("flexassembler.tier-low", chosenPlan.unit.localizedName, tierRequired.get(chosenPlan)))
@@ -175,7 +174,7 @@ public class FlexAssembler extends UnitAssembler {
             // 检查已选配方是否在当前可用列表中
             boolean chosenAvailable = chosenPlan != null && available.contains(chosenPlan);
 
-            // 标题显示
+            // 标题显示（空指针保护）
             if (!chosenAvailable && chosenPlan != null) {
                 table.label(() -> Core.bundle.format("flexassembler.tier-low", chosenPlan.unit.localizedName, tierRequired.get(chosenPlan)))
                         .padBottom(4).color(Pal.remove).row();
@@ -204,7 +203,6 @@ public class FlexAssembler extends UnitAssembler {
                     chosenPlan = plan;
                     selected = true;
                     syncArea(plan);
-                    userChoice = true;
                     configure(plan.unit.id);
                     table.clear();
                     buildConfiguration(table);
@@ -223,7 +221,6 @@ public class FlexAssembler extends UnitAssembler {
                     AssemblerUnitPlan defaultPlan = getDefaultPlan();
                     if (defaultPlan != null) syncArea(defaultPlan);
                     else areaSize = FlexAssembler.this.areaSize;
-                    userChoice = true;
                     configure(null);
                     table.clear();
                     buildConfiguration(table);
@@ -238,39 +235,39 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void configure(@Nullable Object value) {
-            // 如果是用户点击触发的配置，直接允许
-            if (userChoice) {
-                userChoice = false;
-                if (value instanceof Integer) {
-                    UnitType type = content.getByID(ContentType.unit, (Integer) value);
-                    if (type != null) {
-                        for (AssemblerUnitPlan p : plans) {
-                            if (p.unit == type) {
-                                chosenPlan = p;
-                                selected = true;
-                                syncArea(p);
-                                break;
-                            }
+            // 保存当时的选择状态
+            boolean wasSelected = selected;
+            AssemblerUnitPlan previous = chosenPlan;
+
+            if (value instanceof Integer) {
+                UnitType type = content.getByID(ContentType.unit, (Integer) value);
+                if (type != null) {
+                    for (AssemblerUnitPlan p : plans) {
+                        if (p.unit == type) {
+                            chosenPlan = p;
+                            selected = true;
+                            syncArea(p);
+                            break;
                         }
                     }
-                } else if (value == null) {
-                    selected = false;
-                    chosenPlan = null;
-                    AssemblerUnitPlan defaultPlan = getDefaultPlan();
-                    if (defaultPlan != null) syncArea(defaultPlan);
                 }
-                super.configure(value);
+            } else if (value == null) {
+                selected = false;
+                chosenPlan = null;
+                AssemblerUnitPlan defaultPlan = getDefaultPlan();
+                if (defaultPlan != null) syncArea(defaultPlan);
+            }
+
+            // 防御：如果原本已选择，而新值试图改变计划，则忽略并强制恢复
+            if (wasSelected && previous != null && chosenPlan != previous) {
+                chosenPlan = previous;
+                selected = true;
+                syncArea(previous);
+                super.configure(previous.unit.id);   // 发送正确值覆盖服务端
                 return;
             }
 
-            // 非用户触发的配置（自动切换）：忽略并强制发回当前锁定值
-            if (selected && chosenPlan != null) {
-                // 忽略传入的 value，重新发送当前锁定的单位ID
-                super.configure(chosenPlan.unit.id);
-            } else {
-                // 未选择时，允许自动配置（例如初始加载）
-                super.configure(value);
-            }
+            super.configure(value);
         }
 
         @Override
