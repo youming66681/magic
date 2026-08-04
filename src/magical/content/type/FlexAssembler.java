@@ -98,8 +98,8 @@ public class FlexAssembler extends UnitAssembler {
 
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         private static final int NO_PLAN = -1;
-        private int lockedIndex = NO_PLAN;
-        private int customArea = 0;
+        private int lockedIndex = 0;
+        private int customArea;
         private AssemblerUnitPlan curPlan;
 
         private AssemblerUnitPlan getLockedPlan() {
@@ -110,20 +110,22 @@ public class FlexAssembler extends UnitAssembler {
         }
 
         private void setPlan(int index) {
+            if (plans.isEmpty()) {
+                curPlan = null;
+                return;
+            }
             if (index >= 0 && index < plans.size) {
                 lockedIndex = index;
-                curPlan = plans.get(index);
             } else {
-                lockedIndex = NO_PLAN;
-                curPlan = null;
+                lockedIndex = 0;
             }
+            curPlan = plans.get(lockedIndex);
             syncArea();
         }
 
         private void syncArea() {
-            AssemblerUnitPlan plan = getLockedPlan();
-            if (plan != null) {
-                customArea = planAreaMap.getOrDefault(plan, areaSize);
+            if (curPlan != null) {
+                customArea = planAreaMap.getOrDefault(curPlan, areaSize);
             } else {
                 customArea = areaSize;
             }
@@ -150,72 +152,113 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void buildConfiguration(Table table) {
             if (Core.app.isHeadless()) return;
-            AssemblerUnitPlan current = getLockedPlan();
-            if (current != null) {
-                table.label(() -> Core.bundle.format("flexassembler.producing", current.unit.localizedName)).row();
-            } else {
-                table.label(() -> Core.bundle.get("flexassembler.select-unit")).row();
-            }
-            Table grid = new Table();
-            int cols = 4;
+
+            AssemblerUnitPlan current = plan();
+
+            table.label(() ->
+                    Core.bundle.format(
+                            "flexassembler.current",
+                            current.unit.localizedName
+                    )
+            ).row();
+
+            Table cont = new Table();
+
             int count = 0;
+
             for (AssemblerUnitPlan plan : plans) {
-                int tier = tierRequired.getOrDefault(plan, 0);
-                if (tier > currentTier) continue;
+
                 int index = plans.indexOf(plan);
-                boolean selected = current == plan;
-                if (count % cols == 0) {
-                    grid.row();
+
+                boolean selected = curPlan == plan;
+
+                if (count % 4 == 0) {
+                    cont.row();
                 }
-                Button button = new Button(Tex.button);
-                button.table(t -> {
-                    t.image(plan.unit.uiIcon).size(36).padBottom(4);
+
+                Button b = new Button(Tex.button);
+
+                b.table(t -> {
+                    t.image(plan.unit.uiIcon).size(36);
                     t.row();
-                    t.add(plan.unit.localizedName).color(selected ? Pal.accent : Color.white);
+                    t.add(plan.unit.localizedName)
+                            .color(selected ? Pal.accent : Color.white);
                 });
-                button.clicked(() -> {
+
+                b.clicked(() -> {
                     configure(index);
                 });
-                grid.add(button).size(90, 90).pad(4);
+
+                cont.add(b)
+                        .size(90, 90)
+                        .pad(4);
+
                 count++;
             }
-            table.add(new ScrollPane(grid)).grow().maxHeight(400).row();
-            if (current != null) {
-                table.button(Core.bundle.get("flexassembler.deselect"), this::unlock);
-            }
-        }
 
-        private void unlock() {
-            configure(NO_PLAN);
+            table.add(new ScrollPane(cont))
+                    .grow()
+                    .row();
         }
 
         @Override
         public Object config() {
-            return Integer.valueOf(lockedIndex);
+            return lockedIndex;
         }
 
         @Override
         public void configure(@Nullable Object value) {
-            if (!(value instanceof Integer)) return;
-            setPlan((Integer) value);
+
+            if (!(value instanceof Integer)) {
+                return;
+            }
+
+            int index = (Integer) value;
+
+            setPlan(index);
         }
+
 
         @Override
         public AssemblerUnitPlan plan() {
+
             if (curPlan != null) {
                 return curPlan;
             }
-            return getLockedPlan();
+
+            if (lockedIndex >= 0 && lockedIndex < plans.size) {
+                curPlan = plans.get(lockedIndex);
+                return curPlan;
+            }
+
+            if (!plans.isEmpty()) {
+                curPlan = plans.get(0);
+                lockedIndex = 0;
+                return curPlan;
+            }
+
+            return super.plan();
         }
+
 
         @Override
         public boolean shouldConsume() {
-            AssemblerUnitPlan plan = getLockedPlan();
-            if (plan == null) return false;
+
+            AssemblerUnitPlan plan = plan();
+
+            if (plan == null) {
+                return false;
+            }
+
             int tier = tierRequired.getOrDefault(plan, 0);
-            if (tier > currentTier) return false;
+
+            if (tier > currentTier) {
+                return false;
+            }
+
             return super.shouldConsume();
         }
+
 
         @Override
         public void updateTile() {
@@ -223,31 +266,38 @@ public class FlexAssembler extends UnitAssembler {
             super.updateTile();
         }
 
+
         @Override
         public Vec2 getUnitSpawn() {
-            float len = tilesize * (customArea + block.size) / 2f;
-            return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
+
+            float len =
+                    tilesize * (customArea + block.size) / 2f;
+
+            return Tmp.v4.set(
+                    x + Geometry.d4x(rotation) * len,
+                    y + Geometry.d4y(rotation) * len
+            );
         }
+
 
         @Override
         public void write(Writes write) {
+
             super.write(write);
-            write.i(1);
+
             write.i(lockedIndex);
             write.i(customArea);
         }
 
+
         @Override
         public void read(Reads read, byte revision) {
+
             super.read(read, revision);
-            int ver = read.i();
-            if (ver >= 1) {
-                lockedIndex = read.i();
-                customArea = read.i();
-            } else {
-                lockedIndex = NO_PLAN;
-                customArea = areaSize;
-            }
+
+            lockedIndex = read.i();
+            customArea = read.i();
+
             setPlan(lockedIndex);
         }
     }
