@@ -100,54 +100,59 @@ public class FlexAssembler extends UnitAssembler {
         private static final int NO_PLAN = -1;
         private int lockedIndex = NO_PLAN;
         private int customArea = 0;
-        private AssemblerUnitPlan getLockedPlan(){
-            if(lockedIndex >= 0 && lockedIndex < plans.size){
+
+        private AssemblerUnitPlan getLockedPlan() {
+            if (lockedIndex >= 0 && lockedIndex < plans.size) {
                 return plans.get(lockedIndex);
             }
             return null;
         }
-        private void syncArea(){
+
+        private void syncArea() {
             AssemblerUnitPlan plan = getLockedPlan();
-            if(plan != null){
+            if (plan != null) {
                 customArea = planAreaMap.getOrDefault(plan, areaSize);
-            }else{
+            } else {
                 customArea = areaSize;
             }
         }
+
         @Override
-        public void created(){
+        public void created() {
             super.created();
             syncArea();
         }
+
         @Override
-        public void onProximityUpdate(){
+        public void onProximityUpdate() {
             super.onProximityUpdate();
             modules.clear();
-            for(Building other : proximity){
-                if(other instanceof UnitAssemblerModuleBuild mod){
+            for (Building other : proximity) {
+                if (other instanceof UnitAssemblerModuleBuild mod) {
                     modules.add(mod);
                 }
             }
             checkTier();
         }
+
         @Override
-        public void buildConfiguration(Table table){
-            if(Core.app.isHeadless()) return;
+        public void buildConfiguration(Table table) {
+            if (Core.app.isHeadless()) return;
             AssemblerUnitPlan current = getLockedPlan();
-            if(current != null){
+            if (current != null) {
                 table.label(() -> Core.bundle.format("flexassembler.producing", current.unit.localizedName)).row();
-            }else{
+            } else {
                 table.label(() -> Core.bundle.get("flexassembler.select-unit")).row();
             }
             Table grid = new Table();
             int cols = 4;
             int count = 0;
-            for(AssemblerUnitPlan plan : plans){
-                int tier = tierRequired.getOrDefault(plan,0);
-                if(tier > currentTier) continue;
+            for (AssemblerUnitPlan plan : plans) {
+                int tier = tierRequired.getOrDefault(plan, 0);
+                if (tier > currentTier) continue;
                 int index = plans.indexOf(plan);
                 boolean selected = current == plan;
-                if(count % cols == 0){
+                if (count % cols == 0) {
                     grid.row();
                 }
                 Button button = new Button(Tex.button);
@@ -161,77 +166,87 @@ public class FlexAssembler extends UnitAssembler {
                     configure(index);
                     syncArea();
                 });
-                grid.add(button).size(90,90).pad(4);
+                grid.add(button).size(90, 90).pad(4);
                 count++;
             }
             table.add(new ScrollPane(grid)).grow().maxHeight(400).row();
-            if(current != null){
+            if (current != null) {
                 table.button(Core.bundle.get("flexassembler.deselect"), this::unlock);
             }
         }
-        private void unlock(){
+
+        private void unlock() {
             lockedIndex = NO_PLAN;
             configure(NO_PLAN);
             syncArea();
         }
+
         @Override
-        public Object config(){
+        public Object config() {
             return Integer.valueOf(lockedIndex);
         }
+
         @Override
-        public void configure(@Nullable Object value){
-            if(!(value instanceof Integer)) return;
-            int val = (Integer)value;
-            if(val == NO_PLAN){
+        public void configure(@Nullable Object value) {
+            if (!(value instanceof Integer)) return;
+            int val = (Integer) value;
+            if (val == NO_PLAN) {
                 lockedIndex = NO_PLAN;
-            }else if(val >= 0 && val < plans.size){
+            } else if (val >= 0 && val < plans.size) {
                 lockedIndex = val;
             }
             syncArea();
         }
+
         @Override
-        public AssemblerUnitPlan plan(){
+        public AssemblerUnitPlan plan() {
             AssemblerUnitPlan plan = getLockedPlan();
-            if(plan != null){
+            if (plan != null) {
                 return plan;
             }
             return plans.isEmpty() ? super.plan() : plans.get(0);
         }
+
         @Override
-        public boolean shouldConsume(){
+        public boolean shouldConsume() {
             AssemblerUnitPlan plan = getLockedPlan();
-            if(plan == null) return false;
-            int tier = tierRequired.getOrDefault(plan,0);
-            if(tier > currentTier) return false;
+            if (plan == null) return false;
+            int tier = tierRequired.getOrDefault(plan, 0);
+            if (tier > currentTier) return false;
             return super.shouldConsume();
         }
+
         @Override
-        public void updateTile(){
+        public void updateTile() {
             syncArea();
             super.updateTile();
         }
+
         @Override
-        public Vec2 getUnitSpawn(){
+        public Vec2 getUnitSpawn() {
             float len = tilesize * (customArea + block.size) / 2f;
-            return Tmp.v4.set(x + Geometry.d4x(rotation) * len,y + Geometry.d4y(rotation) * len);
+            return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
         }
+
         @Override
-        public void write(Writes write){
+        public void write(Writes write) {
             super.write(write);
             write.i(1);
             write.i(lockedIndex);
             write.i(customArea);
         }
+
         @Override
-        public void read(Reads read, byte revision){
+        public void read(Reads read, byte revision) {
             super.read(read, revision);
             int ver = read.i();
-            if(ver >= 1){
+            if (ver >= 1) {
                 lockedIndex = read.i();
                 customArea = read.i();
-            }else{
+            } else {
                 lockedIndex = NO_PLAN;
                 customArea = areaSize;
             }
         }
     }
+}
