@@ -26,8 +26,6 @@ import java.util.*;
 
 import static mindustry.Vars.*;
 
-//by youming
-
 public class FlexAssembler extends UnitAssembler {
 
     public Map<AssemblerUnitPlan, Integer> planAreaMap = new HashMap<>();
@@ -101,8 +99,8 @@ public class FlexAssembler extends UnitAssembler {
 
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         private static final int NO_PLAN = -1;
-        private int selectedIndex = NO_PLAN;   // 当前配置索引（可能被意外重置）
-        private int lockedIndex = NO_PLAN;     // 持久锁定索引（永远跟随用户手动选择）
+        private int selectedIndex = NO_PLAN;   // 当前配置索引（可能被原版修改）
+        private int lockedIndex = NO_PLAN;     // 用户锁定索引（服务端/客户端同步）
 
         private void syncArea(AssemblerUnitPlan plan) {
             if (plan != null) {
@@ -110,17 +108,13 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
-        // 获取应当使用的计划，绝不修改任何索引
         private AssemblerUnitPlan effectivePlan() {
-            // 优先使用 lockedIndex
             if (lockedIndex >= 0 && lockedIndex < plans.size) {
                 return plans.get(lockedIndex);
             }
-            // 否则回退 selectedIndex（如果 valid）
             if (selectedIndex >= 0 && selectedIndex < plans.size) {
                 return plans.get(selectedIndex);
             }
-            // 默认计划（不清除锁）
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
                     return plan;
@@ -148,7 +142,7 @@ public class FlexAssembler extends UnitAssembler {
             checkTier();
         }
 
-        // 客户端 UI
+        // 客户端 UI（保留全部原有功能）
         @Override
         public void buildConfiguration(Table table) {
             if (Vars.headless) return;
@@ -215,21 +209,20 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
-        // 手动锁定选择
+        // 锁定选择（客户端调用，同时服务端设置 lockedIndex 通过 configure）
         private void lockAndSelect(int index) {
             if (index >= 0 && index < plans.size) {
                 lockedIndex = index;
                 selectedIndex = index;
-                configure(index);
+                configure(index);   // 服务端收到后也会锁定
                 syncArea(plans.get(index));
             }
         }
 
-        // 手动取消选择
         private void unlockAndClear() {
             lockedIndex = NO_PLAN;
             selectedIndex = NO_PLAN;
-            configure(NO_PLAN);
+            configure(NO_PLAN);     // 服务端收到后也会清除锁
             AssemblerUnitPlan def = effectivePlan();
             if (def != null) syncArea(def);
         }
@@ -244,17 +237,16 @@ public class FlexAssembler extends UnitAssembler {
             if (value instanceof Integer) {
                 int val = (Integer) value;
                 if (val == NO_PLAN) {
-                    // 仅当 lockedIndex 也为 NO_PLAN 时才清空
+                    // 唯一取消锁的情况：lockedIndex 也是 NO_PLAN 时
                     if (lockedIndex == NO_PLAN) {
                         selectedIndex = NO_PLAN;
                     }
-                    // 如果 lockedIndex 有效，则忽略 NO_PLAN 请求
                 } else if (val >= 0 && val < plans.size) {
-                    // 如果与 lockedIndex 相同，无需操作；否则只更新 selectedIndex
+                    // 收到有效索引时，服务端和客户端都锁定
+                    lockedIndex = val;
                     selectedIndex = val;
-                    // 如果 lockedIndex 有效且不同，仍保留 lockedIndex，但 selectedIndex 会临时改变？
                 }
-                // 任何其他值忽略
+                // 其他值（无效索引）一律忽略，保持原锁
             }
             super.configure(value);
         }
@@ -264,25 +256,24 @@ public class FlexAssembler extends UnitAssembler {
             return effectivePlan();
         }
 
-        // 每帧恢复锁定
         @Override
         public void updateTile() {
-            // 如果 lockedIndex 有效，确保 selectedIndex 也是 lockedIndex，并强制同步面积
-            if (lockedIndex >= 0 && lockedIndex < plans.size) {
-                if (selectedIndex != lockedIndex) {
-                    selectedIndex = lockedIndex;
-                }
-                AssemblerUnitPlan p = plans.get(lockedIndex);
-                if (p != null) syncArea(p);
+            // 强制恢复锁，以防原版逻辑修改了 selectedIndex
+            if (lockedIndex != NO_PLAN) {
+                selectedIndex = lockedIndex;
             }
-
-            // 执行原版逻辑（可能会试图修改 selectedIndex，但 locked 会保护）
+            AssemblerUnitPlan cur = effectivePlan();
+            if (cur != null) {
+                areaSize = planAreaMap.getOrDefault(cur, areaSize);
+            }
+            // 执行原版逻辑（可能会试图调用 configure，但我们的 configure 会防御）
             super.updateTile();
-
-            // 再次强制同步面积和计划（防止原版内部修改）
-            if (lockedIndex >= 0 && lockedIndex < plans.size) {
-                AssemblerUnitPlan p = plans.get(lockedIndex);
-                if (p != null) areaSize = planAreaMap.getOrDefault(p, areaSize);
+            // 再次恢复，确保面积和计划绝对正确
+            if (lockedIndex != NO_PLAN) {
+                selectedIndex = lockedIndex;
+                if (lockedIndex >= 0 && lockedIndex < plans.size) {
+                    areaSize = planAreaMap.getOrDefault(plans.get(lockedIndex), areaSize);
+                }
             }
         }
 
@@ -296,7 +287,7 @@ public class FlexAssembler extends UnitAssembler {
         public void write(Writes write) {
             super.write(write);
             write.i(lockedIndex);
-            write.i(selectedIndex);   // 保存两个，便于诊断
+            write.i(selectedIndex);
             write.i(areaSize);
         }
 
@@ -306,7 +297,10 @@ public class FlexAssembler extends UnitAssembler {
             lockedIndex = read.i();
             selectedIndex = read.i();
             areaSize = read.i();
-            // 无论读到什么，lockedIndex 都保持不变
+            // 若 lockedIndex 越界，则重置为未锁定
+            if (lockedIndex != NO_PLAN && (lockedIndex < 0 || lockedIndex >= plans.size)) {
+                lockedIndex = NO_PLAN;
+            }
         }
     }
 }
