@@ -26,8 +26,6 @@ import java.util.*;
 
 import static mindustry.Vars.*;
 
-//by youming
-
 public class FlexAssembler extends UnitAssembler {
 
     public Map<AssemblerUnitPlan, Integer> planAreaMap = new HashMap<>();
@@ -100,31 +98,27 @@ public class FlexAssembler extends UnitAssembler {
     }
 
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
-        public boolean selected = false;
-        public AssemblerUnitPlan chosenPlan;
+        private static final int NO_PLAN = -1;
+        private int selectedIndex = NO_PLAN;   // 锁定索引
 
-        private void syncArea(AssemblerUnitPlan plan) {
+        private AssemblerUnitPlan getPlan() {
+            if (selectedIndex >= 0 && selectedIndex < plans.size) {
+                return plans.get(selectedIndex);
+            }
+            return null;
+        }
+
+        private void syncArea() {
+            AssemblerUnitPlan plan = getPlan();
             if (plan != null) {
                 areaSize = planAreaMap.getOrDefault(plan, areaSize);
             }
         }
 
-        private AssemblerUnitPlan getDefaultPlan() {
-            for (AssemblerUnitPlan plan : plans) {
-                if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
-                    return plan;
-                }
-            }
-            return plans.isEmpty() ? null : plans.first();
-        }
-
         @Override
         public void created() {
             super.created();
-            if (!selected) {
-                AssemblerUnitPlan defaultPlan = getDefaultPlan();
-                if (defaultPlan != null) syncArea(defaultPlan);
-            }
+            syncArea();
         }
 
         @Override
@@ -141,7 +135,8 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void buildConfiguration(Table table) {
-            if (Core.app.isHeadless()) return;  // 服务端安全
+            // 服务端安全
+            if (Core.app.isHeadless()) return;
 
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
@@ -150,33 +145,22 @@ public class FlexAssembler extends UnitAssembler {
                 }
             }
 
+            // 标题显示
             if (available.isEmpty()) {
                 table.label(() -> Core.bundle.get("flexassembler.no-plans")).pad(10);
-                if (chosenPlan != null) {
+                if (getPlan() != null) {
                     table.row();
-                    table.label(() -> Core.bundle.format("flexassembler.tier-low", chosenPlan.unit.localizedName, tierRequired.get(chosenPlan)))
-                            .color(Pal.remove).padTop(4).row();
-                    table.button(Core.bundle.get("flexassembler.deselect"), () -> {
-                        selected = false;
-                        chosenPlan = null;
-                        AssemblerUnitPlan defaultPlan = getDefaultPlan();
-                        if (defaultPlan != null) syncArea(defaultPlan);
-                        else areaSize = FlexAssembler.this.areaSize;
-                        configure(null);
-                        table.clear();
-                        buildConfiguration(table);
-                    }).size(120f, 40f).padTop(8).row();
+                    table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN))
+                            .size(120f, 40f).padTop(8).row();
                 }
                 return;
             }
 
-            boolean chosenAvailable = chosenPlan != null && available.contains(chosenPlan);
+            AssemblerUnitPlan current = getPlan();
+            boolean locked = current != null;
 
-            if (!chosenAvailable && chosenPlan != null) {
-                table.label(() -> Core.bundle.format("flexassembler.tier-low", chosenPlan.unit.localizedName, tierRequired.get(chosenPlan)))
-                        .padBottom(4).color(Pal.remove).row();
-            } else if (chosenPlan != null) {
-                table.label(() -> Core.bundle.format("flexassembler.producing", chosenPlan.unit.localizedName))
+            if (locked) {
+                table.label(() -> Core.bundle.format("flexassembler.producing", current.unit.localizedName))
                         .padBottom(4).row();
             } else {
                 table.label(() -> Core.bundle.get("flexassembler.select-unit")).padBottom(4).color(Color.gray).row();
@@ -187,7 +171,8 @@ public class FlexAssembler extends UnitAssembler {
             for (int i = 0; i < available.size; i++) {
                 if (i % cols == 0 && i != 0) grid.row();
                 AssemblerUnitPlan plan = available.get(i);
-                boolean isChosen = Objects.equals(chosenPlan, plan);
+                boolean isChosen = locked && current == plan;
+                int indexInPlans = plans.indexOf(plan);
 
                 Button btn = new Button(Tex.button);
                 btn.table(inner -> {
@@ -196,73 +181,56 @@ public class FlexAssembler extends UnitAssembler {
                     inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
                 }).pad(8);
 
-                btn.clicked(() -> {
-                    chosenPlan = plan;
-                    selected = true;
-                    syncArea(plan);
-                    configure(plan.unit.id);
-                    table.clear();
-                    buildConfiguration(table);
-                });
+                btn.clicked(() -> configure(indexInPlans));  // 直接发送配置
                 grid.add(btn).size(80f, 80f).pad(4f);
             }
 
             ScrollPane pane = new ScrollPane(grid);
             table.add(pane).grow().maxHeight(400f).row();
 
-            if (chosenPlan != null) {
+            if (locked) {
                 table.row();
-                table.button(Core.bundle.get("flexassembler.deselect"), () -> {
-                    selected = false;
-                    chosenPlan = null;
-                    AssemblerUnitPlan defaultPlan = getDefaultPlan();
-                    if (defaultPlan != null) syncArea(defaultPlan);
-                    else areaSize = FlexAssembler.this.areaSize;
-                    configure(null);
-                    table.clear();
-                    buildConfiguration(table);
-                }).size(120f, 40f).padTop(8).row();
+                table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN))
+                        .size(120f, 40f).padTop(8).row();
             }
         }
 
         @Override
         public Object config() {
-            return (selected && chosenPlan != null) ? chosenPlan.unit.id : null;
+            return selectedIndex;   // 永远返回整数，无 null
         }
 
         @Override
         public void configure(@Nullable Object value) {
             if (value instanceof Integer) {
-                UnitType type = content.getByID(ContentType.unit, (Integer) value);
-                if (type != null) {
-                    for (AssemblerUnitPlan p : plans) {
-                        if (p.unit == type) {
-                            chosenPlan = p;
-                            selected = true;
-                            syncArea(p);
-                            break;
-                        }
-                    }
+                int idx = (Integer) value;
+                if (idx == NO_PLAN || (idx >= 0 && idx < plans.size)) {
+                    selectedIndex = idx;
+                    syncArea();
                 }
-            } else if (value == null) {
-                selected = false;
-                chosenPlan = null;
-                AssemblerUnitPlan defaultPlan = getDefaultPlan();
-                if (defaultPlan != null) syncArea(defaultPlan);
+                // 任何无效索引都被忽略，不会修改状态
             }
             super.configure(value);
         }
 
         @Override
         public AssemblerUnitPlan plan() {
-            if (selected && chosenPlan != null) return chosenPlan;
-            return getDefaultPlan() != null ? getDefaultPlan() : super.plan();
+            AssemblerUnitPlan chosen = getPlan();
+            return chosen != null ? chosen : (plans.isEmpty() ? super.plan() : plans.get(0));
+        }
+
+        @Override
+        public boolean shouldConsume() {
+            AssemblerUnitPlan chosen = getPlan();
+            if (chosen == null) return false;
+            int reqTier = tierRequired.getOrDefault(chosen, 0);
+            if (reqTier > currentTier) return false;
+            return super.shouldConsume();
         }
 
         @Override
         public void updateTile() {
-            AssemblerUnitPlan currentPlan = plan();
-            if (currentPlan != null) syncArea(currentPlan);
+            syncArea();
             super.updateTile();
         }
 
@@ -275,28 +243,14 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void write(Writes write) {
             super.write(write);
-            write.bool(selected);
-            if (selected && chosenPlan != null) write.i(chosenPlan.unit.id);
+            write.i(selectedIndex);
             write.i(areaSize);
         }
 
         @Override
         public void read(Reads read, byte revision) {
             super.read(read, revision);
-            selected = read.bool();
-            if (selected) {
-                int id = read.i();
-                UnitType type = content.getByID(ContentType.unit, id);
-                if (type != null) {
-                    for (AssemblerUnitPlan p : plans) {
-                        if (p.unit == type) {
-                            chosenPlan = p;
-                            break;
-                        }
-                    }
-                }
-                if (chosenPlan == null) selected = false;
-            }
+            selectedIndex = read.i();
             areaSize = read.i();
         }
     }
