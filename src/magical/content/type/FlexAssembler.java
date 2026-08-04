@@ -1,7 +1,6 @@
 package magical.content;
 
 import arc.Core;
-import arc.Events;
 import arc.graphics.*;
 import arc.math.*;
 import arc.math.geom.*;
@@ -10,12 +9,8 @@ import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
 import arc.util.io.*;
-import mindustry.*;
-import mindustry.ai.types.AssemblerAI;
 import mindustry.content.*;
 import mindustry.ctype.*;
-import mindustry.entities.Units;
-import mindustry.game.EventType.UnitCreateEvent;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
@@ -102,12 +97,14 @@ public class FlexAssembler extends UnitAssembler {
     }
 
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
-        private static final int NO_PLAN = -1;
-        private int lockedIndex = NO_PLAN;        // 用户锁定的 plan 索引
+        private static final int NO_SELECTION = -1;
+        private int selectedUnitId = NO_SELECTION;
 
         private AssemblerUnitPlan getLockedPlan() {
-            if (lockedIndex >= 0 && lockedIndex < plans.size) {
-                return plans.get(lockedIndex);
+            if (selectedUnitId != NO_SELECTION) {
+                for (AssemblerUnitPlan p : plans) {
+                    if (p.unit.id == selectedUnitId) return p;
+                }
             }
             return null;
         }
@@ -133,7 +130,7 @@ public class FlexAssembler extends UnitAssembler {
             checkTier();
         }
 
-        // ---------- 客户端 UI ----------
+        // ---------- UI ----------
         @Override
         public void buildConfiguration(Table table) {
             if (Core.app.isHeadless()) return;
@@ -173,7 +170,6 @@ public class FlexAssembler extends UnitAssembler {
                 if (i % cols == 0 && i != 0) grid.row();
                 AssemblerUnitPlan plan = available.get(i);
                 boolean isChosen = locked && current == plan;
-                int indexInPlans = plans.indexOf(plan);
 
                 Button btn = new Button(Tex.button);
                 btn.table(inner -> {
@@ -182,7 +178,7 @@ public class FlexAssembler extends UnitAssembler {
                     inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
                 }).pad(8);
 
-                btn.clicked(() -> lockAndSelect(indexInPlans));
+                btn.clicked(() -> selectPlan(plan));
                 grid.add(btn).size(80f, 80f).pad(4f);
             }
 
@@ -196,48 +192,51 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
-        private void lockAndSelect(int index) {
-            if (index >= 0 && index < plans.size) {
-                lockedIndex = index;
-                configure(lockedIndex);
-                AssemblerUnitPlan plan = getLockedPlan();
-                syncArea(plan);
-            }
+        private void selectPlan(AssemblerUnitPlan plan) {
+            selectedUnitId = plan.unit.id;
+            configure(selectedUnitId);
+            syncArea(plan);
         }
 
         private void clearSelection() {
-            lockedIndex = NO_PLAN;
-            configure(NO_PLAN);
+            selectedUnitId = NO_SELECTION;
+            configure(NO_SELECTION);
             syncArea(null);
         }
 
-        // ---------- 配置序列化 ----------
+        // ---------- 配置保护 ----------
         @Override
         public Object config() {
-            return lockedIndex;
+            return selectedUnitId;
         }
 
         @Override
         public void configure(@Nullable Object value) {
             if (value instanceof Integer) {
-                int val = (Integer) value;
-                if (val == NO_PLAN) {
-                    lockedIndex = NO_PLAN;
-                } else if (val >= 0 && val < plans.size) {
-                    lockedIndex = val;
+                int id = (Integer) value;
+                if (id == NO_SELECTION) {
+                    selectedUnitId = NO_SELECTION;
+                } else if (id == selectedUnitId) {
+                    // 相同，无需操作
+                } else if (selectedUnitId == NO_SELECTION) {
+                    // 首次选择
+                    for (AssemblerUnitPlan p : plans) if (p.unit.id == id) { selectedUnitId = id; break; }
+                } else {
+                    // 外部试图覆盖，忽略并立刻发回锁定值
+                    super.configure(selectedUnitId);
+                    syncArea(getLockedPlan());
+                    return;
                 }
-                // 其他任意值忽略
             }
             super.configure(value);
-            AssemblerUnitPlan plan = getLockedPlan();
-            syncArea(plan);
+            syncArea(getLockedPlan());
         }
 
-        // ---------- 计划锁定 ----------
+        // ---------- 强制计划 ----------
         @Override
         public AssemblerUnitPlan plan() {
             AssemblerUnitPlan locked = getLockedPlan();
-            return locked != null ? locked : (plans.isEmpty() ? super.plan() : plans.first());
+            return locked != null ? locked : (plans.isEmpty() ? super.plan() : plans.get(0));
         }
 
         @Override
@@ -249,33 +248,31 @@ public class FlexAssembler extends UnitAssembler {
             return super.shouldConsume();
         }
 
-        // ---------- 完全接管生产逻辑，不使用原版自动计划 ----------
+        // ---------- 完全接管生产逻辑 ----------
         @Override
         public void updateTile() {
-            // 处理模块等级变化（只重置进度，不改变计划）
+            // 模块等级变化时重置进度
             if (lastTier != currentTier) {
                 progress = 0f;
                 lastTier = currentTier;
             }
 
             // 面积同步
-            AssemblerUnitPlan active = getLockedPlan();
-            syncArea(active);
+            syncArea(getLockedPlan());
 
-            // 基本检查：是否允许更新
+            // 检查是否允许运行
             if (!allowUpdate()) {
                 progress = 0f;
                 units.each(Unit::kill);
                 units.clear();
             }
 
-            // 电力状态
+            // 电力与无人机（复制自原版逻辑）
             float powerStatus = !enabled ? 0f : power == null ? 1f : power.status;
             powerWarmup = Mathf.lerpDelta(powerStatus, powerStatus > 0.0001f ? 1f : 0f, 0.1f);
             droneWarmup = Mathf.lerpDelta(droneWarmup, units.size < dronesCreated ? powerStatus : 0f, 0.1f);
             totalDroneProgress += droneWarmup * delta();
 
-            // 无人机建造
             if (units.size < dronesCreated && enabled &&
                     (droneProgress += delta() * state.rules.unitBuildSpeed(team) * powerStatus / droneConstructTime) >= 1f) {
                 if (!net.client()) {
@@ -293,11 +290,11 @@ public class FlexAssembler extends UnitAssembler {
                 droneProgress = 0f;
             }
 
-            // 无人机位置计算
+            // 无人机位置（使用当前面积）
             Vec2 spawn = getUnitSpawn();
             for (int i = 0; i < units.size; i++) {
                 var unit = units.get(i);
-                var ai = (AssemblerAI) unit.controller();
+                var ai = (mindustry.ai.types.AssemblerAI)unit.controller();
                 ai.targetPos.trns(i * 90f + 45f, areaSize / 2f * Mathf.sqrt2 * tilesize).add(spawn);
                 ai.targetAngle = i * 90f + 45f + 180f;
             }
@@ -305,13 +302,14 @@ public class FlexAssembler extends UnitAssembler {
             // 占用检测
             wasOccupied = checkSolid(spawn, false);
             boolean visualOccupied = checkSolid(spawn, true);
-            float eff = (units.count(u -> ((AssemblerAI) u.controller()).inPosition()) / (float) dronesCreated);
+            float eff = (units.count(u -> ((mindustry.ai.types.AssemblerAI)u.controller()).inPosition()) / (float) dronesCreated);
 
             sameTypeWarmup = Mathf.lerpDelta(sameTypeWarmup, wasOccupied && !visualOccupied ? 0f : 1f, 0.1f);
             invalidWarmup = Mathf.lerpDelta(invalidWarmup, visualOccupied ? 1f : 0f, 0.1f);
 
-            // 生产核心：只使用锁定的计划
-            if (active != null && shouldConsume() && efficiency > 0 && Units.canCreate(team, active.unit)) {
+            // ---- 生产目标单位（使用锁定计划） ----
+            AssemblerUnitPlan active = getLockedPlan();
+            if (active != null && shouldConsume() && efficiency > 0 && mindustry.entities.Units.canCreate(team, active.unit)) {
                 warmup = Mathf.lerpDelta(warmup, efficiency, 0.1f);
                 if ((progress += edelta() * state.rules.unitBuildSpeed(team) * eff / active.time) >= 1f) {
                     Call.assemblerUnitSpawned(tile);
@@ -321,7 +319,7 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
 
-        // 重写 spawned，确保生成的是锁定的单位
+        // 重写 spawned，生成锁定单位
         public void spawned() {
             AssemblerUnitPlan active = getLockedPlan();
             if (active == null) return;
@@ -330,19 +328,13 @@ public class FlexAssembler extends UnitAssembler {
             consume();
 
             Unit unit = active.unit.create(team);
-            // unit.fell = true;  // 如果版本不支持，注释掉
             if (unit.isCommandable() && commandPos != null) {
                 unit.command().commandPosition(commandPos);
             }
             unit.set(spawn.x + Mathf.range(0.001f), spawn.y + Mathf.range(0.001f));
             unit.rotation = rotdeg();
-            Building targetBuild = unit.buildOn();
-            var payload = new UnitPayload(unit);
-            if (targetBuild != null && targetBuild.team == team && targetBuild.acceptPayload(targetBuild, payload)) {
-                targetBuild.handlePayload(targetBuild, payload);
-            } else if (!net.client()) {
+            if (!net.client()) {
                 unit.add();
-                Units.notifyUnitSpawn(unit);
             }
 
             createSound.at(spawn.x, spawn.y, 1f + Mathf.range(0.06f), createSoundVolume);
@@ -350,8 +342,6 @@ public class FlexAssembler extends UnitAssembler {
             progress = 0f;
             Fx.unitAssemble.at(spawn.x, spawn.y, rotdeg() - 90f, active.unit);
             blocks.clear();
-
-            Events.fire(new UnitCreateEvent(unit, this));
         }
 
         @Override
@@ -363,14 +353,14 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void write(Writes write) {
             super.write(write);
-            write.i(lockedIndex);
+            write.i(selectedUnitId);
             write.i(areaSize);
         }
 
         @Override
         public void read(Reads read, byte revision) {
             super.read(read, revision);
-            lockedIndex = read.i();
+            selectedUnitId = read.i();
             areaSize = read.i();
         }
     }
