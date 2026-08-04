@@ -101,11 +101,13 @@ public class FlexAssembler extends UnitAssembler {
         private static final int NO_PLAN = -1;
         public boolean selected = false;
         public AssemblerUnitPlan chosenPlan;
+
         private void syncArea(AssemblerUnitPlan plan) {
             if (plan != null) {
                 areaSize = planAreaMap.getOrDefault(plan, areaSize);
             }
         }
+
         private AssemblerUnitPlan getDefaultPlan() {
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
@@ -114,12 +116,14 @@ public class FlexAssembler extends UnitAssembler {
             }
             return plans.isEmpty() ? null : plans.first();
         }
+
         // 安全设置计划，保证 selected 同步
         private void setPlan(AssemblerUnitPlan plan) {
             chosenPlan = plan;
             selected = plan != null;
             syncArea(plan);
         }
+
         @Override
         public void created() {
             super.created();
@@ -128,6 +132,7 @@ public class FlexAssembler extends UnitAssembler {
                 if (defaultPlan != null) syncArea(defaultPlan);
             }
         }
+
         @Override
         public void onProximityUpdate() {
             super.onProximityUpdate();
@@ -139,6 +144,7 @@ public class FlexAssembler extends UnitAssembler {
             }
             checkTier();
         }
+
         // 客户端 UI，空指针已彻底消除
         @Override
         public void buildConfiguration(Table table) {
@@ -200,12 +206,15 @@ public class FlexAssembler extends UnitAssembler {
                         .size(120f, 40f).padTop(8).row();
             }
         }
+
         @Override
         public Object config() {
             int index = plans.indexOf(chosenPlan);
             return (selected && chosenPlan != null) ? index : NO_PLAN;
         }
+
         private boolean forceSync = false; // 防止递归
+
         @Override
         public void configure(@Nullable Object value) {
             if (forceSync) {
@@ -214,7 +223,7 @@ public class FlexAssembler extends UnitAssembler {
                 super.configure(value);
                 return;
             }
-            if (value == null || (value instanceof Integer && (Integer)value == NO_PLAN)) {
+            if (value == null || (value instanceof Integer && (Integer) value == NO_PLAN)) {
                 // 取消选择：允许
                 setPlan(null);
                 super.configure(NO_PLAN);
@@ -245,23 +254,27 @@ public class FlexAssembler extends UnitAssembler {
             // 其他无效值直接忽略
             super.configure(value);
         }
+
         @Override
         public AssemblerUnitPlan plan() {
             if (selected && chosenPlan != null) return chosenPlan;
             AssemblerUnitPlan def = getDefaultPlan();
             return def != null ? def : (plans.isEmpty() ? super.plan() : plans.first());
         }
+
         @Override
         public void updateTile() {
             AssemblerUnitPlan currentPlan = plan();
             if (currentPlan != null) syncArea(currentPlan);
             super.updateTile();
         }
+
         @Override
         public Vec2 getUnitSpawn() {
             float len = tilesize * (areaSize + block.size) / 2f;
             return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
         }
+
         @Override
         public void write(Writes write) {
             super.write(write);
@@ -270,6 +283,7 @@ public class FlexAssembler extends UnitAssembler {
             write.i(index >= 0 ? index : NO_PLAN);
             write.i(areaSize);
         }
+
         @Override
         public void read(Reads read, byte revision) {
             super.read(read, revision);
@@ -287,3 +301,4 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
     }
+}
