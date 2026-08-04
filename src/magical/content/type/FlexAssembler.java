@@ -141,7 +141,10 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void buildConfiguration(Table table) {
-            // 只获取当前 tier 可用的配方
+            // 服务端安全保护：如果运行在无头环境，直接返回
+            if (Core.app.isHeadless()) return;
+
+            // 只获取当前 tie r 可用的配方
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
@@ -152,7 +155,7 @@ public class FlexAssembler extends UnitAssembler {
             // 如果可用配方为空，显示提示
             if (available.isEmpty()) {
                 table.label(() -> Core.bundle.get("flexassembler.no-plans")).pad(10);
-                // 但若有已选但不可用的配方，仍显示警告（判空保护）
+                // 但若有已选但不可用的配方，仍显示警告（确保 chosenPlan 非空）
                 if (chosenPlan != null) {
                     table.row();
                     table.label(() -> Core.bundle.format("flexassembler.tier-low", chosenPlan.unit.localizedName, tierRequired.get(chosenPlan)))
@@ -174,7 +177,7 @@ public class FlexAssembler extends UnitAssembler {
             // 检查已选配方是否在当前可用列表中
             boolean chosenAvailable = chosenPlan != null && available.contains(chosenPlan);
 
-            // 标题显示（空指针保护）
+            // 标题显示
             if (!chosenAvailable && chosenPlan != null) {
                 table.label(() -> Core.bundle.format("flexassembler.tier-low", chosenPlan.unit.localizedName, tierRequired.get(chosenPlan)))
                         .padBottom(4).color(Pal.remove).row();
@@ -235,10 +238,6 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void configure(@Nullable Object value) {
-            // 保存当时的选择状态
-            boolean wasSelected = selected;
-            AssemblerUnitPlan previous = chosenPlan;
-
             if (value instanceof Integer) {
                 UnitType type = content.getByID(ContentType.unit, (Integer) value);
                 if (type != null) {
@@ -257,16 +256,6 @@ public class FlexAssembler extends UnitAssembler {
                 AssemblerUnitPlan defaultPlan = getDefaultPlan();
                 if (defaultPlan != null) syncArea(defaultPlan);
             }
-
-            // 防御：如果原本已选择，而新值试图改变计划，则忽略并强制恢复
-            if (wasSelected && previous != null && chosenPlan != previous) {
-                chosenPlan = previous;
-                selected = true;
-                syncArea(previous);
-                super.configure(previous.unit.id);   // 发送正确值覆盖服务端
-                return;
-            }
-
             super.configure(value);
         }
 
