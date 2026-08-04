@@ -98,22 +98,27 @@ public class FlexAssembler extends UnitAssembler {
 
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         private static final int NO_PLAN = -1;
-        private int selectedIndex = NO_PLAN;       // 用户选择的配方索引
-        private AssemblerUnitPlan getChosenPlan() {
-            if (selectedIndex >= 0 && selectedIndex < plans.size) {
-                return plans.get(selectedIndex);
+        private int lockedIndex = NO_PLAN;          // 用户选择的计划索引
+        private AssemblerUnitPlan lockedPlan;       // 对应的计划对象
+        private int lockedUnitId = NO_PLAN;         // 对应的单位ID (备用)
+        private void refreshLocked() {
+            if (lockedIndex >= 0 && lockedIndex < plans.size) {
+                lockedPlan = plans.get(lockedIndex);
+                lockedUnitId = lockedPlan.unit.id;
+            } else {
+                lockedPlan = null;
+                lockedUnitId = NO_PLAN;
             }
-            return null;
         }
         private void syncArea() {
-            AssemblerUnitPlan plan = getChosenPlan();
-            if (plan != null) {
-                areaSize = planAreaMap.getOrDefault(plan, areaSize);
+            if (lockedPlan != null) {
+                areaSize = planAreaMap.getOrDefault(lockedPlan, areaSize);
             }
         }
         @Override
         public void created() {
             super.created();
+            refreshLocked();
             syncArea();
         }
         @Override
@@ -125,7 +130,6 @@ public class FlexAssembler extends UnitAssembler {
             }
             checkTier();
         }
-        // 客户端 UI（保留等级过滤、高亮、取消选择）
         @Override
         public void buildConfiguration(Table table) {
             if (Core.app.isHeadless()) return;
@@ -188,39 +192,64 @@ public class FlexAssembler extends UnitAssembler {
                 });
             }
         }
+        private void lock(int index) {
+            if (index >= 0 && index < plans.size) {
+                lockedIndex = index;
+                refreshLocked();
+                configure(lockedIndex);
+                syncArea();
+            }
+        }
+        private void unlock() {
+            lockedIndex = NO_PLAN;
+            refreshLocked();
+            configure(NO_PLAN);
+            syncArea();
+        }
         @Override
         public Object config() {
-            return selectedIndex;
+            return lockedIndex;
         }
         @Override
         public void configure(@Nullable Object value) {
+            // 此方法现在只用于服务端和客户端同步，不允许外部修改锁
+            if (lockedIndex != NO_PLAN) {
+                // 锁存在，忽略所有传入值，只强制发回正确值
+                super.configure(lockedIndex);
+                return;
+            }
+            // 锁不存在时，接受正确的选择
             if (value instanceof Integer) {
                 int val = (Integer) value;
                 if (val == NO_PLAN) {
-                    selectedIndex = NO_PLAN;
+                    lockedIndex = NO_PLAN;
                 } else if (val >= 0 && val < plans.size) {
-                    selectedIndex = val;
+                    lockedIndex = val;
                 }
             }
             super.configure(value);
+            refreshLocked();
             syncArea();
         }
         @Override
         public AssemblerUnitPlan plan() {
-            AssemblerUnitPlan chosen = getChosenPlan();
-            return chosen != null ? chosen : (plans.isEmpty() ? super.plan() : plans.get(0));
+            if (lockedPlan != null) return lockedPlan;
+            return plans.isEmpty() ? super.plan() : plans.get(0);
         }
         @Override
         public boolean shouldConsume() {
-            AssemblerUnitPlan chosen = getChosenPlan();
-            if (chosen == null) return false;
-            int reqTier = tierRequired.getOrDefault(chosen, 0);
+            if (lockedPlan == null) return false;
+            int reqTier = tierRequired.getOrDefault(lockedPlan, 0);
             if (reqTier > currentTier) return false;
             return super.shouldConsume();
         }
         @Override
         public void updateTile() {
             syncArea();
+            AssemblerUnitPlan currentSuperPlan = super.plan();
+            if (lockedPlan != null && currentSuperPlan != lockedPlan) {
+                configure(lockedIndex);
+            }
             super.updateTile();
         }
         @Override
@@ -231,14 +260,15 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void write(Writes write) {
             super.write(write);
-            write.i(selectedIndex);
+            write.i(lockedIndex);
             write.i(areaSize);
         }
         @Override
         public void read(Reads read, byte revision) {
             super.read(read, revision);
-            selectedIndex = read.i();
+            lockedIndex = read.i();
             areaSize = read.i();
+            refreshLocked();
         }
     }
 }
