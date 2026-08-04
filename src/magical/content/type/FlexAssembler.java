@@ -132,7 +132,7 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void buildConfiguration(Table table) {
-            if (Vars.headless) return;
+            if (Core.app.isHeadless()) return;
 
             AssemblerUnitPlan current = getLockedPlan();
             boolean locked = current != null;
