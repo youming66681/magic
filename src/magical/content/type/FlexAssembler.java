@@ -1,7 +1,6 @@
 package magical.content;
 
 import arc.Core;
-import arc.Events;
 import arc.graphics.*;
 import arc.math.*;
 import arc.math.geom.*;
@@ -10,12 +9,8 @@ import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
 import arc.util.io.*;
-import mindustry.*;
-import mindustry.ai.types.AssemblerAI;
 import mindustry.content.*;
 import mindustry.ctype.*;
-import mindustry.entities.Units;
-import mindustry.game.EventType.UnitCreateEvent;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.type.*;
@@ -103,7 +98,7 @@ public class FlexAssembler extends UnitAssembler {
 
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         private static final int NO_SELECTION = -1;
-        private int selectedUnitId = NO_SELECTION;   // 锁定的单位ID
+        private int selectedUnitId = NO_SELECTION;
 
         private AssemblerUnitPlan getLockedPlan() {
             if (selectedUnitId != NO_SELECTION) {
@@ -245,56 +240,8 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void updateTile() {
             AssemblerUnitPlan locked = getLockedPlan();
-
-            if (locked != null) {
-                syncArea(locked);
-
-                if (shouldConsume() && efficiency > 0 && Units.canCreate(team, locked.unit)) {
-                    warmup = Mathf.lerpDelta(warmup, efficiency, 0.1f);
-                    float eff = (units.count(u -> ((AssemblerAI)u.controller()).inPosition()) / (float)dronesCreated);
-                    if ((progress += edelta() * state.rules.unitBuildSpeed(team) * eff / locked.time) >= 1f) {
-                        Call.assemblerUnitSpawned(tile);  // 触发 spawned()
-                    }
-                } else {
-                    warmup = Mathf.lerpDelta(warmup, 0f, 0.1f);
-                }
-            } else {
-                warmup = Mathf.lerpDelta(warmup, 0f, 0.1f);
-            }
-
+            if (locked != null) syncArea(locked);
             super.updateTile();
-        }
-
-        public void spawned() {
-            AssemblerUnitPlan locked = getLockedPlan();
-            if (locked == null) return;
-
-            Vec2 spawn = getUnitSpawn();
-            consume();
-
-            Unit unit = locked.unit.create(team);
-            unit.fell = true;
-            if (unit.isCommandable() && commandPos != null) {
-                unit.command().commandPosition(commandPos);
-            }
-            unit.set(spawn.x + Mathf.range(0.001f), spawn.y + Mathf.range(0.001f));
-            unit.rotation = rotdeg();
-            Building targetBuild = unit.buildOn();
-            UnitPayload payload = new UnitPayload(unit);
-            if (targetBuild != null && targetBuild.team == team && targetBuild.acceptPayload(targetBuild, payload)) {
-                targetBuild.handlePayload(targetBuild, payload);
-            } else if (!net.client()) {
-                unit.add();
-                Units.notifyUnitSpawn(unit);
-            }
-
-            createSound.at(spawn.x, spawn.y, 1f + Mathf.range(0.06f), createSoundVolume);
-
-            progress = 0f;
-            Fx.unitAssemble.at(spawn.x, spawn.y, rotdeg() - 90f, locked.unit);
-            blocks.clear();
-
-            Events.fire(new UnitCreateEvent(unit, this));
         }
 
         @Override
