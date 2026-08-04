@@ -131,7 +131,6 @@ public class FlexAssembler extends UnitAssembler {
             }
             checkTier();
         }
-        // ---------- UI (保留所有原有功能) ----------
         @Override
         public void buildConfiguration(Table table) {
             if (Core.app.isHeadless()) return;
@@ -193,7 +192,6 @@ public class FlexAssembler extends UnitAssembler {
             configure(NO_SELECTION);
             syncArea();
         }
-        // ---------- 配置保护 (strong) ----------
         @Override
         public Object config() {
             return lockedUnitId;
@@ -221,7 +219,6 @@ public class FlexAssembler extends UnitAssembler {
             super.configure(value);
             syncArea();
         }
-        // ---------- 强制返回锁定计划 ----------
         @Override
         public AssemblerUnitPlan plan() {
             AssemblerUnitPlan locked = getLockedPlan();
@@ -235,7 +232,6 @@ public class FlexAssembler extends UnitAssembler {
             if (reqTier > currentTier) return false;
             return super.shouldConsume();
         }
-        // ---------- 每帧强制同步 ----------
         @Override
         public void updateTile() {
             // 1. 如果被锁定，强制确认 plan 确为锁定单位
