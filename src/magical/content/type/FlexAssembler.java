@@ -118,11 +118,14 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void created(){
             super.created();
-            if(chosenPlan==null&&!plans.isEmpty()){
-                chosenPlan=getDefaultPlan();
+            if(!plans.isEmpty()){
+                if(chosenPlan==null){
+                    chosenPlan=getDefaultPlan();
+                }
                 selectedIndex=plans.indexOf(chosenPlan);
+                currentPlan=chosenPlan;
+                syncArea(chosenPlan);
             }
-            syncArea(chosenPlan);
         }
         @Override
         public void onProximityUpdate(){
@@ -141,8 +144,6 @@ public class FlexAssembler extends UnitAssembler {
             AssemblerUnitPlan current=plan();
             if(current!=null){
                 table.label(()->Core.bundle.format("flexassembler.producing",current.unit.localizedName)).row();
-            }else{
-                table.label(()->Core.bundle.get("flexassembler.select-unit")).row();
             }
             Table grid=new Table();
             int cols=4;
@@ -179,25 +180,30 @@ public class FlexAssembler extends UnitAssembler {
             if(index<0||index>=plans.size)return;
             selectedIndex=index;
             chosenPlan=plans.get(index);
+            currentPlan=chosenPlan;
             selected=true;
             syncArea(chosenPlan);
             super.configure(index);
-            Log.info("选择方案: @",value);
         }
         @Override
         public AssemblerUnitPlan plan(){
-            if(selectedIndex>=0&&selectedIndex<plans.size){
-                return plans.get(selectedIndex);
-            }
             if(chosenPlan!=null){
                 return chosenPlan;
             }
-            return getDefaultPlan();
+            if(selectedIndex>=0&&selectedIndex<plans.size){
+                chosenPlan=plans.get(selectedIndex);
+                currentPlan=chosenPlan;
+                return chosenPlan;
+            }
+            chosenPlan=getDefaultPlan();
+            currentPlan=chosenPlan;
+            return chosenPlan;
         }
         @Override
         public void updateTile(){
             AssemblerUnitPlan current=plan();
             if(current!=null){
+                currentPlan=current;
                 syncArea(current);
             }
             super.updateTile();
@@ -226,6 +232,7 @@ public class FlexAssembler extends UnitAssembler {
                 chosenPlan=getDefaultPlan();
                 selectedIndex=plans.indexOf(chosenPlan);
             }
+            currentPlan=chosenPlan;
             syncArea(chosenPlan);
         }
     }
