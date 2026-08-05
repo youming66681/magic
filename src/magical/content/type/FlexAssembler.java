@@ -97,33 +97,28 @@ public class FlexAssembler extends UnitAssembler {
         });
     }
 
-    public class FlexAssemblerBuild extends UnitAssemblerBuild {
+public class FlexAssemblerBuild extends UnitAssemblerBuild {
         private static final int NO_PLAN = -1;
-        private int lockedIndex = NO_PLAN;          // 用户选择的配方索引（-1 表示未选择）
-        private AssemblerUnitPlan lockedPlan;       // 对应的计划（用于快速访问）
-
-        // 根据索引更新 lockedPlan
-        private void updateLockedPlan() {
+        private int lockedIndex = NO_PLAN;   // 用户选择的计划索引，-1 表示未选择
+        // 根据 lockedIndex 获取对应的计划对象
+        private AssemblerUnitPlan getChosenPlan() {
             if (lockedIndex >= 0 && lockedIndex < plans.size) {
-                lockedPlan = plans.get(lockedIndex);
-            } else {
-                lockedPlan = null;
+                return plans.get(lockedIndex);
             }
+            return null;
         }
-
+        // 同步装配区域大小
         private void syncArea() {
-            if (lockedPlan != null) {
-                areaSize = planAreaMap.getOrDefault(lockedPlan, areaSize);
+            AssemblerUnitPlan plan = getChosenPlan();
+            if (plan != null) {
+                areaSize = planAreaMap.getOrDefault(plan, areaSize);
             }
         }
-
         @Override
         public void created() {
             super.created();
-            updateLockedPlan();
             syncArea();
         }
-
         @Override
         public void onProximityUpdate() {
             super.onProximityUpdate();
@@ -135,23 +130,18 @@ public class FlexAssembler extends UnitAssembler {
             }
             checkTier();
         }
-
-        // ---------- 客户端 UI（保留所有功能） ----------
+        // 客户端 UI（保留等级过滤、高亮、取消选择）
         @Override
         public void buildConfiguration(Table table) {
             if (Vars.headless) return;
-
-            updateLockedPlan();
-            AssemblerUnitPlan current = lockedPlan;
+            AssemblerUnitPlan current = getChosenPlan();
             boolean locked = current != null;
-
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
                     available.add(plan);
                 }
             }
-
             if (available.isEmpty()) {
                 table.label(() -> Core.bundle.get("flexassembler.no-plans")).pad(10);
                 if (locked) {
@@ -162,99 +152,89 @@ public class FlexAssembler extends UnitAssembler {
                 }
                 return;
             }
-
             if (locked) {
                 table.label(() -> Core.bundle.format("flexassembler.producing", current.unit.localizedName))
                         .padBottom(4).row();
             } else {
                 table.label(() -> Core.bundle.get("flexassembler.select-unit")).padBottom(4).color(Color.gray).row();
             }
-
             Table grid = new Table();
             int cols = 4;
             for (int i = 0; i < available.size; i++) {
                 if (i % cols == 0 && i != 0) grid.row();
                 AssemblerUnitPlan plan = available.get(i);
                 boolean isChosen = locked && current == plan;
-                int index = plans.indexOf(plan);
-
+                int planIndex = plans.indexOf(plan);
                 Button btn = new Button(Tex.button);
                 btn.table(inner -> {
                     inner.image(plan.unit.uiIcon).size(30f).padBottom(4f);
                     inner.row();
                     inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
                 }).pad(8);
-
-                btn.clicked(() -> configure(index));
+                btn.clicked(() -> configure(planIndex));   // 直接发送配置
                 grid.add(btn).size(80f, 80f).pad(4f);
             }
-
             ScrollPane pane = new ScrollPane(grid);
             table.add(pane).grow().maxHeight(400f).row();
-
             if (locked) {
                 table.row();
                 table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN));
             }
         }
-
-        // ---------- 配置序列化 ----------
+        // 配置（直接存储索引，调用父类同步）
         @Override
         public Object config() {
             return lockedIndex;
         }
-
         @Override
         public void configure(@Nullable Object value) {
             if (value instanceof Integer) {
                 int idx = (Integer) value;
                 if (idx == NO_PLAN || (idx >= 0 && idx < plans.size)) {
                     lockedIndex = idx;
-                    updateLockedPlan();
                     syncArea();
                 }
             }
-            super.configure(value);   // 直接调用父类同步，无额外操作
+            super.configure(value);   // 必须调用以触发网络同步
         }
-
-        // ---------- 强制锁定计划 ----------
+        // 核心：永远返回用户锁定的计划，否则返回默认
         @Override
         public AssemblerUnitPlan plan() {
-            if (lockedPlan != null) return lockedPlan;
-            // 未锁定时使用原版默认
+            AssemblerUnitPlan chosen = getChosenPlan();
+            if (chosen != null) return chosen;
+            // 未选择时，返回默认计划（随模块等级变化）
             return super.plan();
         }
-
         @Override
         public boolean shouldConsume() {
-            if (lockedPlan != null) {
-                int reqTier = tierRequired.getOrDefault(lockedPlan, 0);
+            AssemblerUnitPlan chosen = getChosenPlan();
+            if (chosen != null) {
+                int reqTier = tierRequired.getOrDefault(chosen, 0);
                 if (reqTier > currentTier) return false;
             }
             return super.shouldConsume();
         }
-
-        // ⚠️ 不再重写 updateTile，完全依赖原版生产逻辑，但 plan() 已锁定
-
+        @Override
+        public void updateTile() {
+            syncArea();
+            super.updateTile();   // 原版生产逻辑会调用我们的 plan()
+        }
         @Override
         public Vec2 getUnitSpawn() {
             float len = tilesize * (areaSize + block.size) / 2f;
             return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
         }
-
         @Override
         public void write(Writes write) {
             super.write(write);
             write.i(lockedIndex);
             write.i(areaSize);
         }
-
         @Override
         public void read(Reads read, byte revision) {
             super.read(read, revision);
             lockedIndex = read.i();
             areaSize = read.i();
-            updateLockedPlan();
         }
     }
 }
