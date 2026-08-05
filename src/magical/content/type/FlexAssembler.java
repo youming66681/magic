@@ -101,7 +101,7 @@ public class FlexAssembler extends UnitAssembler {
         private static final int NO_PLAN=-1;
         public boolean selected=false;
         public AssemblerUnitPlan chosenPlan;
-        private int selectedIndex=0;
+        public AssemblerUnitPlan lockedPlan;
         private void syncArea(AssemblerUnitPlan plan){
             if(plan!=null){
                 areaSize=planAreaMap.getOrDefault(plan,areaSize);
@@ -118,13 +118,11 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void created(){
             super.created();
-            if(!plans.isEmpty()){
-                if(chosenPlan==null){
-                    chosenPlan=getDefaultPlan();
-                }
-                selectedIndex=plans.indexOf(chosenPlan);
-                syncArea(chosenPlan);
+            if(lockedPlan==null){
+                lockedPlan=getDefaultPlan();
             }
+            chosenPlan=lockedPlan;
+            syncArea(lockedPlan);
         }
         @Override
         public void onProximityUpdate(){
@@ -140,19 +138,12 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void buildConfiguration(Table table){
             if(Vars.headless)return;
-            AssemblerUnitPlan current=plan();
-            if(current!=null){
-                table.label(()->Core.bundle.format("flexassembler.producing",current.unit.localizedName)).row();
-            }
             Table grid=new Table();
-            int cols=4;
             int count=0;
             for(AssemblerUnitPlan plan:plans){
                 if(tierRequired.getOrDefault(plan,0)>currentTier)continue;
-                if(count%cols==0){
-                    grid.row();
-                }
-                boolean checked=current==plan;
+                if(count%4==0)grid.row();
+                boolean checked=plan==lockedPlan;
                 Button button=new Button(Tex.button);
                 button.table(t->{
                     t.image(plan.unit.uiIcon).size(36);
@@ -167,41 +158,38 @@ public class FlexAssembler extends UnitAssembler {
                 count++;
             }
             table.add(new ScrollPane(grid)).grow().maxHeight(400).row();
+            if(lockedPlan!=null){
+                table.label(()->Core.bundle.format("flexassembler.producing",lockedPlan.unit.localizedName)).row();
+            }
         }
         @Override
         public Object config(){
-            return selectedIndex;
+            if(lockedPlan==null)return NO_PLAN;
+            return plans.indexOf(lockedPlan);
         }
         @Override
         public void configure(@Nullable Object value){
             if(!(value instanceof Integer))return;
             int index=(Integer)value;
             if(index<0||index>=plans.size)return;
-            selectedIndex=index;
-            chosenPlan=plans.get(index);
+            lockedPlan=plans.get(index);
+            chosenPlan=lockedPlan;
             selected=true;
-            syncArea(chosenPlan);
-            super.configure(index);
+            syncArea(lockedPlan);
         }
         @Override
         public AssemblerUnitPlan plan(){
-            if(chosenPlan!=null){
-                return chosenPlan;
-            }
-
-            if(selectedIndex>=0&&selectedIndex<plans.size){
-                chosenPlan=plans.get(selectedIndex);
-                return chosenPlan;
-            }
-
-            chosenPlan=getDefaultPlan();
-            return chosenPlan;
+            if(lockedPlan!=null)return lockedPlan;
+            if(chosenPlan!=null)return chosenPlan;
+            lockedPlan=getDefaultPlan();
+            chosenPlan=lockedPlan;
+            return lockedPlan;
         }
         @Override
         public void updateTile(){
-            AssemblerUnitPlan current=plan();
-            if(current!=null){
-                syncArea(current);
+            AssemblerUnitPlan p=plan();
+            if(p!=null){
+                syncArea(p);
             }
             super.updateTile();
         }
@@ -213,26 +201,24 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void write(Writes write){
             super.write(write);
-            write.i(selectedIndex);
-            write.bool(selected);
+            write.i(lockedPlan==null?NO_PLAN:plans.indexOf(lockedPlan));
             write.i(areaSize);
         }
         @Override
         public void read(Reads read,byte revision){
             super.read(read,revision);
-
-            selectedIndex=read.i();
-            selected=read.bool();
-            areaSize=read.i();
-
-            if(selectedIndex>=0&&selectedIndex<plans.size){
-                chosenPlan=plans.get(selectedIndex);
+            int index=read.i();
+            if(index>=0&&index<plans.size){
+                lockedPlan=plans.get(index);
+                chosenPlan=lockedPlan;
+                selected=true;
             }else{
-                chosenPlan=getDefaultPlan();
-                selectedIndex=plans.indexOf(chosenPlan);
+                lockedPlan=getDefaultPlan();
+                chosenPlan=lockedPlan;
+                selected=false;
             }
-
-            syncArea(chosenPlan);
+            areaSize=read.i();
+            syncArea(lockedPlan);
         }
     }
 }
