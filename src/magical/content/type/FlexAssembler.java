@@ -97,220 +97,144 @@ public class FlexAssembler extends UnitAssembler {
         });
     }
 
-    public class FlexAssemblerBuild extends UnitAssemblerBuild {
-        private static final int NO_PLAN = -1;
-        public boolean selected = false;
+    public class FlexAssemblerBuild extends UnitAssemblerBuild{
+        private static final int NO_PLAN=-1;
+        public boolean selected=false;
         public AssemblerUnitPlan chosenPlan;
-
-        // 防止强制同步时的递归
-        private transient boolean forceSyncing = false;
-
-        private void syncArea(AssemblerUnitPlan plan) {
-            if (plan != null) {
-                areaSize = planAreaMap.getOrDefault(plan, areaSize);
+        private void syncArea(AssemblerUnitPlan plan){
+            if(plan!=null){
+                areaSize=planAreaMap.getOrDefault(plan,areaSize);
             }
         }
-
-        private AssemblerUnitPlan getDefaultPlan() {
-            for (AssemblerUnitPlan plan : plans) {
-                if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
+        private AssemblerUnitPlan getDefaultPlan(){
+            for(AssemblerUnitPlan plan:plans){
+                if(tierRequired.getOrDefault(plan,0)<=currentTier){
                     return plan;
                 }
             }
-            return plans.isEmpty() ? null : plans.first();
+            return plans.isEmpty()?null:plans.first();
         }
-
         @Override
-        public void created() {
+        public void created(){
             super.created();
-            if (!selected && chosenPlan == null) {
-                AssemblerUnitPlan defaultPlan = getDefaultPlan();
-                if (defaultPlan != null) syncArea(defaultPlan);
+            if(chosenPlan==null){
+                chosenPlan=getDefaultPlan();
             }
+            syncArea(chosenPlan);
         }
-
         @Override
-        public void onProximityUpdate() {
+        public void onProximityUpdate(){
             super.onProximityUpdate();
             modules.clear();
-            for (Building other : proximity) {
-                if (other instanceof UnitAssemblerModuleBuild mod) {
+            for(Building other:proximity){
+                if(other instanceof UnitAssemblerModuleBuild mod){
                     modules.add(mod);
                 }
             }
             checkTier();
         }
-
-        // 客户端 UI，空指针已彻底消除
         @Override
-        public void buildConfiguration(Table table) {
-            if (Vars.headless) return;
-
-            final AssemblerUnitPlan current = chosenPlan;
-
-            Seq<AssemblerUnitPlan> available = new Seq<>();
-            for (AssemblerUnitPlan plan : plans) {
-                if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
-                    available.add(plan);
-                }
+        public void buildConfiguration(Table table){
+            if(Vars.headless)return;
+            AssemblerUnitPlan current=chosenPlan;
+            if(current!=null){
+                table.label(()->Core.bundle.format("flexassembler.producing",current.unit.localizedName)).row();
+            }else{
+                table.label(()->Core.bundle.get("flexassembler.select-unit")).row();
             }
-
-            if (available.isEmpty()) {
-                table.label(() -> Core.bundle.get("flexassembler.no-plans")).pad(10);
-                if (current != null) {
-                    table.row();
-                    table.label(() -> Core.bundle.format("flexassembler.tier-low", current.unit.localizedName, tierRequired.getOrDefault(current, 0)))
-                            .color(Pal.remove).padTop(4).row();
-                    table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN))
-                            .size(120f, 40f).padTop(8).row();
-                }
-                return;
-            }
-
-            boolean chosenAvailable = current != null && available.contains(current);
-
-            if (!chosenAvailable && current != null) {
-                table.label(() -> Core.bundle.format("flexassembler.tier-low", current.unit.localizedName, tierRequired.getOrDefault(current, 0)))
-                        .padBottom(4).color(Pal.remove).row();
-            } else if (current != null) {
-                table.label(() -> Core.bundle.format("flexassembler.producing", current.unit.localizedName))
-                        .padBottom(4).row();
-            } else {
-                table.label(() -> Core.bundle.get("flexassembler.select-unit")).padBottom(4).color(Color.gray).row();
-            }
-
-            Table grid = new Table();
-            int cols = 4;
-            for (int i = 0; i < available.size; i++) {
-                if (i % cols == 0 && i != 0) grid.row();
-                AssemblerUnitPlan plan = available.get(i);
-                boolean isChosen = Objects.equals(current, plan);
-
-                Button btn = new Button(Tex.button);
-                btn.table(inner -> {
-                    inner.image(plan.unit.uiIcon).size(30f).padBottom(4f);
-                    inner.row();
-                    inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
-                }).pad(8);
-
-                final int index = plans.indexOf(plan);
-                btn.clicked(() -> {
-                    // 手动选择：更新本地状态，然后同步
-                    chosenPlan = plan;
-                    selected = true;
-                    syncArea(plan);
-                    configure(index);
+            Table grid=new Table();
+            int cols=4;
+            int count=0;
+            for(AssemblerUnitPlan plan:plans){
+                if(tierRequired.getOrDefault(plan,0)>currentTier)continue;
+                if(count%cols==0)grid.row();
+                boolean checked=current==plan;
+                Button button=new Button(Tex.button);
+                button.table(t->{
+                    t.image(plan.unit.uiIcon).size(36);
+                    t.row();
+                    t.add(plan.unit.localizedName).color(checked?Pal.accent:Color.white);
                 });
-                grid.add(btn).size(80f, 80f).pad(4f);
+                int index=plans.indexOf(plan);
+                button.clicked(()->configure(index));
+                grid.add(button).size(90,90).pad(4);
+                count++;
             }
-
-            ScrollPane pane = new ScrollPane(grid);
-            table.add(pane).grow().maxHeight(400f).row();
-
-            if (current != null) {
-                table.row();
-                table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN))
-                        .size(120f, 40f).padTop(8).row();
-            }
+            table.add(new ScrollPane(grid)).grow().maxHeight(400).row();
+            table.button(Core.bundle.get("flexassembler.deselect"),()->{
+                chosenPlan=getDefaultPlan();
+                selected=false;
+                syncArea(chosenPlan);
+            }).size(120,40);
         }
-
         @Override
-        public Object config() {
-            int index = plans.indexOf(chosenPlan);
-            return (selected && chosenPlan != null) ? index : NO_PLAN;
-        }
-
-        @Override
-        public void configure(@Nullable Object value) {
-            // 如果是强制同步的回调（我们自己调用的），直接执行父类逻辑
-            if (forceSyncing) {
-                super.configure(value);
-                return;
+        public Object config(){
+            if(chosenPlan==null){
+                return 0;
             }
-
-            if (value == null || (value instanceof Integer && (Integer)value == NO_PLAN)) {
-                // 取消选择：总是允许
-                selected = false;
-                chosenPlan = null;
-                AssemblerUnitPlan defaultPlan = getDefaultPlan();
-                if (defaultPlan != null) syncArea(defaultPlan);
-                super.configure(NO_PLAN);
-                return;
-            }
-
-            if (value instanceof Integer) {
-                int index = (Integer) value;
-                if (index >= 0 && index < plans.size) {
-                    AssemblerUnitPlan plan = plans.get(index);
-
-                    if (selected && chosenPlan != null) {
-                        if (chosenPlan == plan) {
-                            // 与当前锁定计划相同 —— 例如服务器回显，直接接受
-                            super.configure(value);
-                        } else {
-                            // 🔥 服务器试图更改我们的选择 → 拒绝，并强制同步正确计划
-                            int currentIndex = plans.indexOf(chosenPlan);
-                            forceSyncing = true;          // 防止递归
-                            super.configure(currentIndex); // 覆盖服务器的错误值
-                            forceSyncing = false;
-                        }
-                    } else {
-                        // 首次选择（无现有锁定）：接受并设置
-                        chosenPlan = plan;
-                        selected = true;
-                        syncArea(plan);
-                        super.configure(value);
-                    }
-                } else {
-                    // 无效索引，忽略
-                }
-            }
+            return plans.indexOf(chosenPlan);
         }
-
         @Override
-        public AssemblerUnitPlan plan() {
-            if (selected && chosenPlan != null) return chosenPlan;
-            AssemblerUnitPlan def = getDefaultPlan();
-            return def != null ? def : (plans.isEmpty() ? super.plan() : plans.first());
+        public void configure(@Nullable Object value){
+            if(!(value instanceof Integer))return;
+            int index=(Integer)value;
+            if(index<0||index>=plans.size)return;
+            chosenPlan=plans.get(index);
+            selected=true;
+            syncArea(chosenPlan);
+            super.configure(index);
         }
-
         @Override
-        public void updateTile() {
-            AssemblerUnitPlan currentPlan = plan();
-            if (currentPlan != null) syncArea(currentPlan);
+        public AssemblerUnitPlan plan(){
+            if(chosenPlan!=null){
+                return chosenPlan;
+            }
+            chosenPlan=getDefaultPlan();
+            if(chosenPlan!=null){
+                return chosenPlan;
+            }
+            return plans.isEmpty()?null:plans.first();
+        }
+        @Override
+        public boolean shouldConsume(){
+            AssemblerUnitPlan plan=plan();
+            if(plan==null)return false;
+            if(tierRequired.getOrDefault(plan,0)>currentTier)return false;
+            return super.shouldConsume();
+        }
+        @Override
+        public void updateTile(){
+            AssemblerUnitPlan current=plan();
+            if(current!=null){
+                syncArea(current);
+            }
             super.updateTile();
         }
-
         @Override
-        public Vec2 getUnitSpawn() {
-            float len = tilesize * (areaSize + block.size) / 2f;
-            return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
+        public Vec2 getUnitSpawn(){
+            float len=tilesize*(areaSize+block.size)/2f;
+            return Tmp.v4.set(x+Geometry.d4x(rotation)*len,y+Geometry.d4y(rotation)*len);
         }
-
         @Override
-        public void write(Writes write) {
+        public void write(Writes write){
             super.write(write);
             write.bool(selected);
-            int index = plans.indexOf(chosenPlan);
-            write.i(index >= 0 ? index : NO_PLAN);
+            int index=plans.indexOf(chosenPlan);
+            write.i(index<0?0:index);
             write.i(areaSize);
         }
-
         @Override
-        public void read(Reads read, byte revision) {
-            super.read(read, revision);
-            selected = read.bool();
-            int index = read.i();
-            if (selected && index >= 0 && index < plans.size) {
-                chosenPlan = plans.get(index);
-            } else {
-                selected = false;
-                chosenPlan = null;
+        public void read(Reads read,byte revision){
+            super.read(read,revision);
+            selected=read.bool();
+            int index=read.i();
+            if(index>=0&&index<plans.size){
+                chosenPlan=plans.get(index);
+            }else{
+                chosenPlan=getDefaultPlan();
             }
-            areaSize = read.i();
-            if (!selected) {
-                syncArea(getDefaultPlan());
-            }
+            areaSize=read.i();
+            syncArea(chosenPlan);
         }
     }
 }
