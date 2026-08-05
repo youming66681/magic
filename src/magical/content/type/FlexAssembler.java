@@ -1,4 +1,5 @@
 package magical.content;
+
 import arc.Core;
 import arc.graphics.*;
 import arc.math.*;
@@ -20,15 +21,21 @@ import mindustry.world.*;
 import mindustry.world.blocks.units.*;
 import mindustry.world.blocks.units.UnitAssemblerModule.UnitAssemblerModuleBuild;
 import mindustry.world.meta.*;
+
 import java.util.*;
+
 import static mindustry.Vars.*;
+
 public class FlexAssembler extends UnitAssembler {
+
     public Map<AssemblerUnitPlan, Integer> planAreaMap = new HashMap<>();
     public Map<AssemblerUnitPlan, Integer> tierRequired = new HashMap<>();
+
     public FlexAssembler(String name) {
         super(name);
         configurable = true;
     }
+
     public void addPlan(String label, UnitType output, float time, int customArea, int requiredTier, PayloadStack... requirements) {
         Seq<PayloadStack> reqSeq = new Seq<>(requirements);
         AssemblerUnitPlan plan = new AssemblerUnitPlan(output, time, reqSeq);
@@ -36,6 +43,7 @@ public class FlexAssembler extends UnitAssembler {
         tierRequired.put(plan, requiredTier);
         planAreaMap.put(plan, customArea);
     }
+
     @Override
     public void setStats() {
         super.setStats();
@@ -88,27 +96,31 @@ public class FlexAssembler extends UnitAssembler {
             }
         });
     }
+
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         private static final int NO_PLAN = -1;
-        private int lockedIndex = NO_PLAN;          // 用户选择的配方索引
-        private transient boolean manualUpdate = false; // 防止递归配置
-        private AssemblerUnitPlan getLockedPlan() {
+        private int lockedIndex = NO_PLAN;
+
+        private AssemblerUnitPlan getChosenPlan() {
             if (lockedIndex >= 0 && lockedIndex < plans.size) {
                 return plans.get(lockedIndex);
             }
             return null;
         }
+
         private void syncArea() {
-            AssemblerUnitPlan plan = getLockedPlan();
+            AssemblerUnitPlan plan = getChosenPlan();
             if (plan != null) {
                 areaSize = planAreaMap.getOrDefault(plan, areaSize);
             }
         }
+
         @Override
         public void created() {
             super.created();
             syncArea();
         }
+
         @Override
         public void onProximityUpdate() {
             super.onProximityUpdate();
@@ -120,18 +132,21 @@ public class FlexAssembler extends UnitAssembler {
             }
             checkTier();
         }
-        // ========== 客户端 UI ==========
+
         @Override
         public void buildConfiguration(Table table) {
             if (Vars.headless) return;
-            AssemblerUnitPlan current = getLockedPlan();
+
+            AssemblerUnitPlan current = getChosenPlan();
             boolean locked = current != null;
+
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
                     available.add(plan);
                 }
             }
+
             if (available.isEmpty()) {
                 table.label(() -> Core.bundle.get("flexassembler.no-plans")).pad(10);
                 if (locked) {
@@ -142,104 +157,95 @@ public class FlexAssembler extends UnitAssembler {
                 }
                 return;
             }
+
             if (locked) {
                 table.label(() -> Core.bundle.format("flexassembler.producing", current.unit.localizedName))
                         .padBottom(4).row();
             } else {
                 table.label(() -> Core.bundle.get("flexassembler.select-unit")).padBottom(4).color(Color.gray).row();
             }
+
             Table grid = new Table();
             int cols = 4;
             for (int i = 0; i < available.size; i++) {
                 if (i % cols == 0 && i != 0) grid.row();
                 AssemblerUnitPlan plan = available.get(i);
                 boolean isChosen = locked && current == plan;
-                int index = plans.indexOf(plan);
+                int planIndex = plans.indexOf(plan);
+
                 Button btn = new Button(Tex.button);
                 btn.table(inner -> {
                     inner.image(plan.unit.uiIcon).size(30f).padBottom(4f);
                     inner.row();
                     inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
                 }).pad(8);
-                btn.clicked(() -> {
-                    // 手动操作：设置标志并发送配置
-                    manualUpdate = true;
-                    configure(index);
-                });
+
+                btn.clicked(() -> configure(planIndex));   // 直接发送配置
                 grid.add(btn).size(80f, 80f).pad(4f);
             }
+
             ScrollPane pane = new ScrollPane(grid);
             table.add(pane).grow().maxHeight(400f).row();
+
             if (locked) {
                 table.row();
-                table.button(Core.bundle.get("flexassembler.deselect"), () -> {
-                    manualUpdate = true;
-                    configure(NO_PLAN);
-                });
+                table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN));
             }
         }
-        // ========== 配置序列化 ==========
+
         @Override
         public Object config() {
             return lockedIndex;
         }
+
         @Override
         public void configure(@Nullable Object value) {
             if (value instanceof Integer) {
                 int idx = (Integer) value;
                 if (idx == NO_PLAN || (idx >= 0 && idx < plans.size)) {
-                    // 只有手动操作或首次加载时才接受
-                    if (manualUpdate || lockedIndex == NO_PLAN) {
-                        lockedIndex = idx;
-                        syncArea();
-                        manualUpdate = false;
-                    } else if (idx != lockedIndex) {
-                        // 服务端试图更改计划 → 忽略，并重新发送正确值（只一次）
-                        if (!manualUpdate) {
-                            manualUpdate = true; // 防止递归
-                            super.configure(lockedIndex);
-                            manualUpdate = false;
-                            return; // 跳过 super.configure(value)
-                        }
-                    }
+                    lockedIndex = idx;
+                    syncArea();
                 }
             }
             super.configure(value);
         }
-        // ========== 强制锁定计划 ==========
+
         @Override
         public AssemblerUnitPlan plan() {
-            AssemblerUnitPlan chosen = getLockedPlan();
+            AssemblerUnitPlan chosen = getChosenPlan();
             if (chosen != null) return chosen;
-            // 未锁定时使用原版默认
             return super.plan();
         }
+
         @Override
         public boolean shouldConsume() {
-            AssemblerUnitPlan chosen = getLockedPlan();
+            AssemblerUnitPlan chosen = getChosenPlan();
             if (chosen != null) {
                 int reqTier = tierRequired.getOrDefault(chosen, 0);
                 if (reqTier > currentTier) return false;
             }
             return super.shouldConsume();
         }
-        // 同步面积并调用原版逻辑
+
         @Override
         public void updateTile() {
             syncArea();
             super.updateTile();
         }
+
         @Override
         public Vec2 getUnitSpawn() {
             float len = tilesize * (areaSize + block.size) / 2f;
             return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
         }
+
         @Override
         public void write(Writes write) {
             super.write(write);
             write.i(lockedIndex);
             write.i(areaSize);
         }
+
         @Override
         public void read(Reads read, byte revision) {
             super.read(read, revision);
