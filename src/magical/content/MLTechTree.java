@@ -81,7 +81,7 @@ public class MLTechTree {
                     });
                 });
             /*曲率进化舱*/node(MLBlocks.curvatureEvolutionPod, () -> {
-                /*量子制造厂*/node(MLBlocks.quantumFactory, new SectorComplete(MLSectorPresets.LandingZone)() -> {
+                /*量子制造厂*/node(MLBlocks.quantumFactory, Seq.with(new SectorComplete(MLSectorPresets.LandingZone)), () -> {
 
                 });
                     });
