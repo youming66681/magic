@@ -88,8 +88,6 @@ public class FlexAssembler extends UnitAssembler {
             }
         });
     }
-    @Override
-    public void setStats() { /* 此处省略，请粘贴你的原版方法 */ }
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         private static final int NO_PLAN = -1;
         private int lockedIndex = NO_PLAN;          // 用户选择的配方索引
