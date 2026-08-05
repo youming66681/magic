@@ -123,7 +123,6 @@ public class FlexAssembler extends UnitAssembler {
                     chosenPlan=getDefaultPlan();
                 }
                 selectedIndex=plans.indexOf(chosenPlan);
-                currentPlan=chosenPlan;
                 syncArea(chosenPlan);
             }
         }
@@ -180,7 +179,6 @@ public class FlexAssembler extends UnitAssembler {
             if(index<0||index>=plans.size)return;
             selectedIndex=index;
             chosenPlan=plans.get(index);
-            currentPlan=chosenPlan;
             selected=true;
             syncArea(chosenPlan);
             super.configure(index);
@@ -190,20 +188,19 @@ public class FlexAssembler extends UnitAssembler {
             if(chosenPlan!=null){
                 return chosenPlan;
             }
+
             if(selectedIndex>=0&&selectedIndex<plans.size){
                 chosenPlan=plans.get(selectedIndex);
-                currentPlan=chosenPlan;
                 return chosenPlan;
             }
+
             chosenPlan=getDefaultPlan();
-            currentPlan=chosenPlan;
             return chosenPlan;
         }
         @Override
         public void updateTile(){
             AssemblerUnitPlan current=plan();
             if(current!=null){
-                currentPlan=current;
                 syncArea(current);
             }
             super.updateTile();
@@ -223,16 +220,18 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void read(Reads read,byte revision){
             super.read(read,revision);
+
             selectedIndex=read.i();
             selected=read.bool();
             areaSize=read.i();
+
             if(selectedIndex>=0&&selectedIndex<plans.size){
                 chosenPlan=plans.get(selectedIndex);
             }else{
                 chosenPlan=getDefaultPlan();
                 selectedIndex=plans.indexOf(chosenPlan);
             }
-            currentPlan=chosenPlan;
+
             syncArea(chosenPlan);
         }
     }
