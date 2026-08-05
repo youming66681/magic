@@ -30,7 +30,7 @@ public class MLTechTree {
                     nodeProduce(MLItems.mysticCrystal, () -> {
                     });
             });
-            /*幻钢传送带*/node(MLBlocks.phantomSteelConveyor, new OnSector(MLSectorPresets.LandingZone) () -> {
+            /*幻钢传送带*/node(MLBlocks.phantomSteelConveyor, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
                 /*幻钛钢传送带*/node(MLBlocks.phantomTitaniumSteelConveyor, () -> {
                         });
                       /*幻钢装卸器*/node(MLBlocks.phantomSteelUnloader, () -> {
@@ -41,7 +41,7 @@ public class MLTechTree {
 
                 });
             });
-            /*幻钢节点*/node(MLBlocks.phantomSteelPowerNode, new OnSector(MLSectorPresets.LandingZone)() -> {
+            /*幻钢节点*/node(MLBlocks.phantomSteelPowerNode, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
                 /*燃能发电机*/node(MLBlocks.fuelPoweredGenerator, () -> {
                         });
                 /*幻钛钢节点*/node(MLBlocks.phantomTitaniumSteelPowerNode, () -> {
@@ -50,15 +50,15 @@ public class MLTechTree {
                     });
             /*幻钢钻*/node(MLBlocks.phantomSteelDrill, () -> {
                     });
-            /*电戈*/node(MLBlocks.electroge, new OnSector(MLSectorPresets.LandingZone) () -> {
+            /*电戈*/node(MLBlocks.electroge, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
                 /*裂光*/node(MLBlocks.Birefringence, Seq.with(new SectorComplete(MLSectorPresets.LandingZone)), () -> {
                         });
             });
-       /*激沅*/node(MLBlocks.excitedYuan, new OnSector(MLSectorPresets.LandingZone) () -> {
+       /*激沅*/node(MLBlocks.excitedYuan, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
             /*流冲*/node(MLBlocks.fluvialErosion, Seq.with(new SectorComplete(MLSectorPresets.LandingZone)), ()-> {
                 });
             });
-            /*基础制造厂*/node(MLBlocks.BasicManufacturingPlant, new OnSector(MLSectorPresets.LandingZone) () -> {
+            /*基础制造厂*/node(MLBlocks.BasicManufacturingPlant, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
                 /*微雨*/node(MLUnitTypes.drizzle, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant), new SectorComplete(MLSectorPresets.LandingZone)), () -> {
                     /*细雨*/node(MLUnitTypes.Drizzle, Seq.with(new Objectives.Research(MLBlocks.curvatureEvolutionPod), new SectorComplete(MLSectorPresets.LandingZone)), () -> {
                         /*透雨*/node(MLUnitTypes.drizzlingRain, Seq.with(new Objectives.Research(MLBlocks.quantumFactory), new SectorComplete(MLSectorPresets.LandingZone)), () -> {
@@ -86,7 +86,7 @@ public class MLTechTree {
                 });
                     });
             });
-            /*幻钢压缩机*/node(MLBlocks.phantomSteelCompressor, new OnSector(MLSectorPresets.LandingZone) () -> {
+            /*幻钢压缩机*/node(MLBlocks.phantomSteelCompressor, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
                 /*幻钢电压机*/node(MLBlocks.phantomSteelVoltageMachine, Seq.with(new SectorComplete(MLSectorPresets.LandingZone)), () -> {
                     /*幻钛钢熔炼机*/node(MLBlocks.phantomTitaniumSteelCompressor, () -> {
                     });
@@ -94,7 +94,7 @@ public class MLTechTree {
                              });
                        });
                     });
-            /*幻钢墙*/node(MLBlocks.phantomSteelWall, new OnSector(MLSectorPresets.LandingZone) () -> {
+            /*幻钢墙*/node(MLBlocks.phantomSteelWall, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
                 /*大幻钢墙*/node(MLBlocks.largePhantomSteelWall, () -> {
                     /*幻钛钢墙*/node(MLBlocks.phantomTitaniumSteelWall, () -> {
                         /*大幻钛钢墙*/node(MLBlocks.largePhantomTitaniumSteelWall, () -> {
