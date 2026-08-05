@@ -149,7 +149,7 @@ public class MLBlocks {
             Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, StarshipMaterialConstructor, StarshipMaterialDeconstructor,
             //高端科技
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
-            LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus, DawN;
+            LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus, DawN, MysticSteelWall, LargeMysticSteelWall, PhantomGlowWall, LargePhantomGlowWall;
 
     public static void load() {
 
@@ -2236,6 +2236,30 @@ public class MLBlocks {
             lightningDamage = 32;
             lightningLength = 16;
             lightningColor = Color.valueOf("9C88C3FF");
+        }};
+        MysticSteelWall = new Wall("MysticSteelWall"){{
+            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticSteel, 6}));
+            health = 300 * whm;
+            absorbLasers = true;
+            insulated = true;
+        }};
+        LargeMysticSteelWall = new Wall("LargeMysticSteelWall"){{
+            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.mysticSteel, 6 * whm}));
+            health = 300 * whm * 4;
+            size = 2;
+            absorbLasers = true;
+            insulated = true;
+        }};
+        PhantomGlowWall = new Wall("PhantomGlowWall"){{
+            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.phantomLuminousAlloy, 6}));
+            health = 380 * whm;
+            chanceDeflect = 20;
+        }};
+        LargePhantomGlowWall = new Wall("LargePhantomGlowWall"){{
+            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.phantomLuminousAlloy, 6 * whm}));
+            health = 380 * whm * 4;
+            size = 2;
+            chanceDeflect = 20;
         }};
         //wall
         //出来了，出来了

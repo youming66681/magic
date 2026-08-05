@@ -1215,6 +1215,8 @@ public class MLUnitTypes {
                         height = 24;
                         trailLength = 6;
                         trailWidth = 3f;
+                        homingRange = 120f;
+                        homingPower = 0.04f;
                         trailColor = Color.valueOf("FEEBB3FF");
                         frontColor = Color.valueOf("FEEBB3FF");
                         backColor = Color.valueOf("FEEBB3FF");
