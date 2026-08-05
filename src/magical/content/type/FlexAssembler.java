@@ -101,6 +101,7 @@ public class FlexAssembler extends UnitAssembler {
         private static final int NO_PLAN=-1;
         public boolean selected=false;
         public AssemblerUnitPlan chosenPlan;
+        private int selectedIndex=0;
         private void syncArea(AssemblerUnitPlan plan){
             if(plan!=null){
                 areaSize=planAreaMap.getOrDefault(plan,areaSize);
@@ -117,8 +118,9 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void created(){
             super.created();
-            if(chosenPlan==null){
+            if(chosenPlan==null&&!plans.isEmpty()){
                 chosenPlan=getDefaultPlan();
+                selectedIndex=plans.indexOf(chosenPlan);
             }
             syncArea(chosenPlan);
         }
@@ -136,7 +138,7 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void buildConfiguration(Table table){
             if(Vars.headless)return;
-            AssemblerUnitPlan current=chosenPlan;
+            AssemblerUnitPlan current=plan();
             if(current!=null){
                 table.label(()->Core.bundle.format("flexassembler.producing",current.unit.localizedName)).row();
             }else{
@@ -147,7 +149,9 @@ public class FlexAssembler extends UnitAssembler {
             int count=0;
             for(AssemblerUnitPlan plan:plans){
                 if(tierRequired.getOrDefault(plan,0)>currentTier)continue;
-                if(count%cols==0)grid.row();
+                if(count%cols==0){
+                    grid.row();
+                }
                 boolean checked=current==plan;
                 Button button=new Button(Tex.button);
                 button.table(t->{
@@ -156,29 +160,24 @@ public class FlexAssembler extends UnitAssembler {
                     t.add(plan.unit.localizedName).color(checked?Pal.accent:Color.white);
                 });
                 int index=plans.indexOf(plan);
-                button.clicked(()->configure(index));
+                button.clicked(()->{
+                    configure(index);
+                });
                 grid.add(button).size(90,90).pad(4);
                 count++;
             }
             table.add(new ScrollPane(grid)).grow().maxHeight(400).row();
-            table.button(Core.bundle.get("flexassembler.deselect"),()->{
-                chosenPlan=getDefaultPlan();
-                selected=false;
-                syncArea(chosenPlan);
-            }).size(120,40);
         }
         @Override
         public Object config(){
-            if(chosenPlan==null){
-                return 0;
-            }
-            return plans.indexOf(chosenPlan);
+            return selectedIndex;
         }
         @Override
         public void configure(@Nullable Object value){
             if(!(value instanceof Integer))return;
             int index=(Integer)value;
             if(index<0||index>=plans.size)return;
+            selectedIndex=index;
             chosenPlan=plans.get(index);
             selected=true;
             syncArea(chosenPlan);
@@ -186,21 +185,13 @@ public class FlexAssembler extends UnitAssembler {
         }
         @Override
         public AssemblerUnitPlan plan(){
+            if(selectedIndex>=0&&selectedIndex<plans.size){
+                return plans.get(selectedIndex);
+            }
             if(chosenPlan!=null){
                 return chosenPlan;
             }
-            chosenPlan=getDefaultPlan();
-            if(chosenPlan!=null){
-                return chosenPlan;
-            }
-            return plans.isEmpty()?null:plans.first();
-        }
-        @Override
-        public boolean shouldConsume(){
-            AssemblerUnitPlan plan=plan();
-            if(plan==null)return false;
-            if(tierRequired.getOrDefault(plan,0)>currentTier)return false;
-            return super.shouldConsume();
+            return getDefaultPlan();
         }
         @Override
         public void updateTile(){
@@ -218,22 +209,22 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void write(Writes write){
             super.write(write);
+            write.i(selectedIndex);
             write.bool(selected);
-            int index=plans.indexOf(chosenPlan);
-            write.i(index<0?0:index);
             write.i(areaSize);
         }
         @Override
         public void read(Reads read,byte revision){
             super.read(read,revision);
+            selectedIndex=read.i();
             selected=read.bool();
-            int index=read.i();
-            if(index>=0&&index<plans.size){
-                chosenPlan=plans.get(index);
+            areaSize=read.i();
+            if(selectedIndex>=0&&selectedIndex<plans.size){
+                chosenPlan=plans.get(selectedIndex);
             }else{
                 chosenPlan=getDefaultPlan();
+                selectedIndex=plans.indexOf(chosenPlan);
             }
-            areaSize=read.i();
             syncArea(chosenPlan);
         }
     }
