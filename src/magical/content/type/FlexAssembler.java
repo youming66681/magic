@@ -102,6 +102,9 @@ public class FlexAssembler extends UnitAssembler {
         public boolean selected = false;
         public AssemblerUnitPlan chosenPlan;
 
+        // 标志：玩家手动点击图标设置为 true，在 configure 处理完后自动重置
+        private transient boolean manualSelection = false;
+
         private void syncArea(AssemblerUnitPlan plan) {
             if (plan != null) {
                 areaSize = planAreaMap.getOrDefault(plan, areaSize);
@@ -115,13 +118,6 @@ public class FlexAssembler extends UnitAssembler {
                 }
             }
             return plans.isEmpty() ? null : plans.first();
-        }
-
-        // 安全设置计划，保证 selected 同步
-        private void setPlan(AssemblerUnitPlan plan) {
-            chosenPlan = plan;
-            selected = plan != null;
-            syncArea(plan);
         }
 
         @Override
@@ -145,29 +141,34 @@ public class FlexAssembler extends UnitAssembler {
             checkTier();
         }
 
-        // 客户端 UI，空指针已彻底消除
+        // 客户端 UI（保留空指针防护、等级过滤、高亮）
         @Override
         public void buildConfiguration(Table table) {
             if (Vars.headless) return;
+
             final AssemblerUnitPlan current = chosenPlan;
+
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
                     available.add(plan);
                 }
             }
+
             if (available.isEmpty()) {
                 table.label(() -> Core.bundle.get("flexassembler.no-plans")).pad(10);
                 if (current != null) {
                     table.row();
                     table.label(() -> Core.bundle.format("flexassembler.tier-low", current.unit.localizedName, tierRequired.getOrDefault(current, 0)))
                             .color(Pal.remove).padTop(4).row();
-                    table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN))
+                    table.button(Core.bundle.get("flexassembler.deselect"), () -> manualSelect(NO_PLAN))
                             .size(120f, 40f).padTop(8).row();
                 }
                 return;
             }
+
             boolean chosenAvailable = current != null && available.contains(current);
+
             if (!chosenAvailable && current != null) {
                 table.label(() -> Core.bundle.format("flexassembler.tier-low", current.unit.localizedName, tierRequired.getOrDefault(current, 0)))
                         .padBottom(4).color(Pal.remove).row();
@@ -177,34 +178,40 @@ public class FlexAssembler extends UnitAssembler {
             } else {
                 table.label(() -> Core.bundle.get("flexassembler.select-unit")).padBottom(4).color(Color.gray).row();
             }
+
             Table grid = new Table();
             int cols = 4;
             for (int i = 0; i < available.size; i++) {
                 if (i % cols == 0 && i != 0) grid.row();
                 AssemblerUnitPlan plan = available.get(i);
                 boolean isChosen = Objects.equals(current, plan);
+
                 Button btn = new Button(Tex.button);
                 btn.table(inner -> {
                     inner.image(plan.unit.uiIcon).size(30f).padBottom(4f);
                     inner.row();
                     inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
                 }).pad(8);
+
                 final int index = plans.indexOf(plan);
-                btn.clicked(() -> {
-                    // 手动切换：直接设置计划并发送配置
-                    AssemblerUnitPlan p = plans.get(index);
-                    setPlan(p);
-                    configure(index);
-                });
+                btn.clicked(() -> manualSelect(index));
                 grid.add(btn).size(80f, 80f).pad(4f);
             }
+
             ScrollPane pane = new ScrollPane(grid);
             table.add(pane).grow().maxHeight(400f).row();
+
             if (current != null) {
                 table.row();
-                table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN))
+                table.button(Core.bundle.get("flexassembler.deselect"), () -> manualSelect(NO_PLAN))
                         .size(120f, 40f).padTop(8).row();
             }
+        }
+
+        /** 玩家手动操作（选择或取消），设置标志并调用 configure */
+        private void manualSelect(int index) {
+            manualSelection = true;
+            configure(index);
         }
 
         @Override
@@ -213,46 +220,46 @@ public class FlexAssembler extends UnitAssembler {
             return (selected && chosenPlan != null) ? index : NO_PLAN;
         }
 
-        private boolean forceSync = false; // 防止递归
-
         @Override
         public void configure(@Nullable Object value) {
-            if (forceSync) {
-                // 我们自己强制同步的调用，放行
-                forceSync = false;
-                super.configure(value);
-                return;
-            }
-            if (value == null || (value instanceof Integer && (Integer) value == NO_PLAN)) {
-                // 取消选择：允许
-                setPlan(null);
+            if (value == null || (value instanceof Integer && (Integer)value == NO_PLAN)) {
+                // 取消选择：总是允许
+                selected = false;
+                chosenPlan = null;
+                AssemblerUnitPlan defaultPlan = getDefaultPlan();
+                if (defaultPlan != null) syncArea(defaultPlan);
                 super.configure(NO_PLAN);
+                manualSelection = false; // 重置标志
                 return;
             }
+
             if (value instanceof Integer) {
                 int index = (Integer) value;
                 if (index >= 0 && index < plans.size) {
                     AssemblerUnitPlan plan = plans.get(index);
-                    if (selected && chosenPlan != null) {
-                        if (chosenPlan == plan) {
-                            // 与当前计划相同，接受（例如服务器同步）
-                            super.configure(value);
-                        } else {
-                            // 服务器试图自动切换 => 拒绝，并强制同步正确计划
-                            int currentIndex = plans.indexOf(chosenPlan);
-                            forceSync = true;
-                            super.configure(currentIndex);
-                        }
+
+                    if (manualSelection) {
+                        // 玩家手动操作：无条件接受
+                        chosenPlan = plan;
+                        selected = true;
+                        syncArea(plan);
+                        super.configure(index);   // 同步到服务端
+                    } else if (selected && chosenPlan != null && chosenPlan != plan) {
+                        // 已锁定，且传入不同计划（服务端自动操作） → 忽略，避免状态改变
+                        // 可以在此处不调用 super.configure，维持现有状态
                     } else {
-                        // 首次选择：接受
-                        setPlan(plan);
-                        super.configure(value);
+                        // 未锁定，或传入的计划与当前相同（例如服务端回显） → 正常接受
+                        chosenPlan = plan;
+                        selected = true;
+                        syncArea(plan);
+                        super.configure(index);
                     }
-                    return;
+                } else {
+                    // 无效索引，忽略
                 }
             }
-            // 其他无效值直接忽略
-            super.configure(value);
+
+            manualSelection = false;   // 每次 configure 调用后重置标志
         }
 
         @Override
