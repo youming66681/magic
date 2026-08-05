@@ -182,6 +182,7 @@ public class FlexAssembler extends UnitAssembler {
             selected=true;
             syncArea(chosenPlan);
             super.configure(index);
+            Log.info("选择方案: @",value);
         }
         @Override
         public AssemblerUnitPlan plan(){
