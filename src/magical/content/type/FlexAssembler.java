@@ -97,128 +97,182 @@ public class FlexAssembler extends UnitAssembler {
         });
     }
 
-    public class FlexAssemblerBuild extends UnitAssemblerBuild{
-        private static final int NO_PLAN=-1;
-        public boolean selected=false;
-        public AssemblerUnitPlan chosenPlan;
-        public AssemblerUnitPlan lockedPlan;
-        private void syncArea(AssemblerUnitPlan plan){
-            if(plan!=null){
-                areaSize=planAreaMap.getOrDefault(plan,areaSize);
+    public class FlexAssemblerBuild extends UnitAssemblerBuild {
+        private static final int NO_PLAN = -1;
+
+        private AssemblerUnitPlan lockedPlan;   // 手动锁定的计划，null 表示自动模式
+        private boolean locked = false;         // 是否处于锁定状态
+
+        // 用于标识本次 configure 是由玩家手动触发的，允许接受
+        private transient boolean manualConfig = false;
+
+        private void syncArea(AssemblerUnitPlan plan) {
+            if (plan != null) {
+                areaSize = planAreaMap.getOrDefault(plan, areaSize);
             }
         }
-        private AssemblerUnitPlan getDefaultPlan(){
-            for(AssemblerUnitPlan plan:plans){
-                if(tierRequired.getOrDefault(plan,0)<=currentTier){
-                    return plan;
-                }
-            }
-            return plans.isEmpty()?null:plans.first();
-        }
+
         @Override
-        public void created(){
+        public void created() {
             super.created();
-            if(lockedPlan==null){
-                lockedPlan=getDefaultPlan();
-            }
-            chosenPlan=lockedPlan;
-            syncArea(lockedPlan);
+            syncArea(plan());
         }
+
         @Override
-        public void onProximityUpdate(){
+        public void onProximityUpdate() {
             super.onProximityUpdate();
             modules.clear();
-            for(Building other:proximity){
-                if(other instanceof UnitAssemblerModuleBuild mod){
+            for (Building other : proximity) {
+                if (other instanceof UnitAssemblerModuleBuild mod) {
                     modules.add(mod);
                 }
             }
             checkTier();
         }
+
         @Override
-        public void buildConfiguration(Table table){
-            if(Vars.headless)return;
-            Table grid=new Table();
-            int count=0;
-            for(AssemblerUnitPlan plan:plans){
-                if(tierRequired.getOrDefault(plan,0)>currentTier)continue;
-                if(count%4==0)grid.row();
-                boolean checked=plan==lockedPlan;
-                Button button=new Button(Tex.button);
-                button.table(t->{
-                    t.image(plan.unit.uiIcon).size(36);
+        public void buildConfiguration(Table table) {
+            if (Vars.headless) return;
+
+            // 当前实际生效的计划
+            final AssemblerUnitPlan currentPlan = locked ? lockedPlan : super.plan();
+
+            // 显示当前计划（未锁定时可显示自动选择的单位）
+            if (!locked) {
+                table.label(() -> Core.bundle.get("flexassembler.auto-mode") + " " + currentPlan.unit.localizedName)
+                        .color(Color.gray).padBottom(4).row();
+            } else {
+                table.label(() -> Core.bundle.format("flexassembler.producing", currentPlan.unit.localizedName))
+                        .color(Pal.accent).padBottom(4).row();
+            }
+
+            // 构建配方网格（显示所有符合当前模块等级的配方）
+            Table grid = new Table();
+            int count = 0;
+            for (AssemblerUnitPlan plan : plans) {
+                if (tierRequired.getOrDefault(plan, 0) > currentTier) continue;
+                if (count % 4 == 0) grid.row();
+                boolean isChosen = (locked && plan == lockedPlan) || (!locked && plan == currentPlan);
+                Button btn = new Button(Tex.button);
+                btn.table(t -> {
+                    t.image(plan.unit.uiIcon).size(30f).padBottom(4f);
                     t.row();
-                    t.add(plan.unit.localizedName).color(checked?Pal.accent:Color.white);
+                    t.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
+                }).pad(8);
+                btn.clicked(() -> {
+                    // 手动锁定 – 无论之前是什么状态，现在都会锁定到这个计划
+                    lockedPlan = plan;
+                    locked = true;
+                    manualConfig = true;        // 允许本次配置
+                    configure(plans.indexOf(plan));
+                    syncArea(plan);
                 });
-                int index=plans.indexOf(plan);
-                button.clicked(()->{
-                    configure(index);
-                });
-                grid.add(button).size(90,90).pad(4);
+                grid.add(btn).size(80f, 80f).pad(4f);
                 count++;
             }
-            table.add(new ScrollPane(grid)).grow().maxHeight(400).row();
-            if(lockedPlan!=null){
-                table.label(()->Core.bundle.format("flexassembler.producing",lockedPlan.unit.localizedName)).row();
+
+            ScrollPane pane = new ScrollPane(grid);
+            table.add(pane).grow().maxHeight(400f).row();
+
+            // 如果当前已锁定，显示“取消选择”按钮
+            if (locked) {
+                table.row();
+                table.button(Core.bundle.get("flexassembler.deselect"), () -> {
+                    // 取消锁定，回到自动模式
+                    locked = false;
+                    lockedPlan = null;
+                    manualConfig = true;
+                    configure(NO_PLAN);
+                    syncArea(super.plan());
+                }).size(120f, 40f).padTop(8).row();
             }
         }
+
         @Override
-        public Object config(){
-            if(lockedPlan==null)return NO_PLAN;
-            return plans.indexOf(lockedPlan);
-        }
-        @Override
-        public void configure(@Nullable Object value){
-            if(!(value instanceof Integer))return;
-            int index=(Integer)value;
-            if(index<0||index>=plans.size)return;
-            lockedPlan=plans.get(index);
-            chosenPlan=lockedPlan;
-            selected=true;
-            syncArea(lockedPlan);
-        }
-        @Override
-        public AssemblerUnitPlan plan(){
-            if(lockedPlan!=null)return lockedPlan;
-            if(chosenPlan!=null)return chosenPlan;
-            lockedPlan=getDefaultPlan();
-            chosenPlan=lockedPlan;
-            return lockedPlan;
-        }
-        @Override
-        public void updateTile(){
-            AssemblerUnitPlan p=plan();
-            if(p!=null){
-                syncArea(p);
+        public Object config() {
+            if (locked && lockedPlan != null) {
+                return plans.indexOf(lockedPlan);
             }
-            super.updateTile();
+            return NO_PLAN;  // 未锁定返回 -1
         }
+
         @Override
-        public Vec2 getUnitSpawn(){
-            float len=tilesize*(areaSize+block.size)/2f;
-            return Tmp.v4.set(x+Geometry.d4x(rotation)*len,y+Geometry.d4y(rotation)*len);
+        public void configure(@Nullable Object value) {
+            if (value instanceof Integer) {
+                int idx = (Integer) value;
+                if (manualConfig) {
+                    // 由玩家手动触发，接受配置
+                    if (idx == NO_PLAN) {
+                        locked = false;
+                        lockedPlan = null;
+                    } else if (idx >= 0 && idx < plans.size) {
+                        lockedPlan = plans.get(idx);
+                        locked = true;
+                    }
+                    manualConfig = false;
+                } else {
+                    // 非手动触发（服务端自动同步），如果当前是锁定状态则**忽略**
+                    if (locked && idx != (lockedPlan == null ? NO_PLAN : plans.indexOf(lockedPlan))) {
+                        // 静默忽略，不调用 super.configure，避免冲突
+                        return;
+                    }
+                }
+                // 无论是否手动，都继续调用父类完成网络同步
+                super.configure(value);
+            } else {
+                super.configure(value);
+            }
         }
+
         @Override
-        public void write(Writes write){
+        public AssemblerUnitPlan plan() {
+            if (locked && lockedPlan != null) {
+                return lockedPlan;
+            }
+            // 自动模式 – 使用原版逻辑
+            return super.plan();
+        }
+
+        @Override
+        public void updateTile() {
+            float savedProgress = progress;          // 备份当前进度
+            super.updateTile();                      // 原版逻辑（可能会因为模块变化清零进度）
+            if (progress < savedProgress && savedProgress > 0f) {
+                progress = savedProgress;            // 强制恢复，实现无缝衔接
+            }
+
+            // 同步装配面积
+            syncArea(plan());
+        }
+
+        // ---------- 其他辅助方法 ----------
+        @Override
+        public Vec2 getUnitSpawn() {
+            float len = tilesize * (areaSize + block.size) / 2f;
+            return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
+        }
+
+        @Override
+        public void write(Writes write) {
             super.write(write);
-            write.i(lockedPlan==null?NO_PLAN:plans.indexOf(lockedPlan));
+            write.bool(locked);
+            write.i(lockedPlan == null ? NO_PLAN : plans.indexOf(lockedPlan));
             write.i(areaSize);
         }
+
         @Override
-        public void read(Reads read,byte revision){
-            super.read(read,revision);
-            int index=read.i();
-            if(index>=0&&index<plans.size){
-                lockedPlan=plans.get(index);
-                chosenPlan=lockedPlan;
-                selected=true;
-            }else{
-                lockedPlan=getDefaultPlan();
-                chosenPlan=lockedPlan;
-                selected=false;
+        public void read(Reads read, byte revision) {
+            super.read(read, revision);
+            locked = read.bool();
+            int index = read.i();
+            if (locked && index >= 0 && index < plans.size) {
+                lockedPlan = plans.get(index);
+            } else {
+                locked = false;
+                lockedPlan = null;
             }
-            areaSize=read.i();
-            syncArea(lockedPlan);
+            areaSize = read.i();
+            syncArea(plan());
         }
     }
 }
