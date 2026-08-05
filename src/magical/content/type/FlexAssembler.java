@@ -168,29 +168,24 @@ public class FlexAssembler extends UnitAssembler {
         }
         @Override
         public Object config() {
-            if (lockedPlan == null) return NO_PLAN;
-            return plans.indexOf(lockedPlan);
+            return lockedPlan == null ? NO_PLAN : plans.indexOf(lockedPlan);
         }
+
         @Override
         public void configure(@Nullable Object value) {
-            if (!(value instanceof Integer)) return;
-            int index = (Integer) value;
-            if (index == NO_PLAN) {
-                // 取消锁定
-                lockedPlan = null;
-                chosenPlan = null;
-                selected = false;
-                // 重新获取默认计划以保持生产
-                AssemblerUnitPlan def = getDefaultPlan();
-                if (def != null) syncArea(def);
-            } else if (index >= 0 && index < plans.size) {
-                // 锁定新计划
-                lockedPlan = plans.get(index);
-                chosenPlan = lockedPlan;
-                selected = true;
-                syncArea(lockedPlan);
+            if (value instanceof Integer) {
+                int index = (Integer) value;
+                if (index >= 0 && index < plans.size) {
+                    lockedPlan = plans.get(index);
+                    chosenPlan = lockedPlan;
+                    selected = true;
+                } else if (index == NO_PLAN) {
+                    lockedPlan = getDefaultPlan();
+                    chosenPlan = lockedPlan;
+                    selected = false;
+                }
             }
-            super.configure(config());
+            super.configure(value);
         }
         @Override
         public AssemblerUnitPlan plan() {
