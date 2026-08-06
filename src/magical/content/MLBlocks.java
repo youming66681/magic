@@ -2288,7 +2288,7 @@ public class MLBlocks {
             hardnessDrillMultiplier = 0.9f;
             squareSprite = false;
             size = 5;
-            drawMineItem = false
+            drawMineItem = false;
             drawRim = true;
             tier = 10;
             updateEffect = MLFx.energyMine;
