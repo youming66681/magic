@@ -1589,6 +1589,20 @@ public class MLBlocks {
                                     moveX = 0f;
                                     moveY = -16f;
                                     layerOffset = -0.001f;
+                                }},
+                                new RegionPart("-l") {{
+                                    mirror = false;
+                                    x = 0f;
+                                    y = 0f;
+                                    moveX = 0f;
+                                    moveY = 4f;
+                                }},
+                                new RegionPart("-r") {{
+                                    mirror = false;
+                                    x = 0f;
+                                    y = 0f;
+                                    moveX = 0f;
+                                    moveY = 4f;
                                 }}
                                 );
                             }}
