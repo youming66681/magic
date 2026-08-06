@@ -2290,8 +2290,8 @@ public class MLBlocks {
             size = 5;
             drawRim = true;
             tier = 10;
-            updateEffect = Fx.energyMine;
-            drillEffect = Fx.energyMine;
+            updateEffect = MLFx.energyMine;
+            drillEffect = MLFx.energyMine;
             rotateSpeed = 2.5f;
             itemCapacity = 100;
             health = 1000;
