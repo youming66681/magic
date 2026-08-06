@@ -2286,6 +2286,7 @@ public class MLBlocks {
             requirements(Category.production, ItemStack.with(new Object[]{MLItems.phantomLuminousAlloy, 40, MLItems.mysticSteel, 100, MLItems.wingedMetal, 50, Items.silicon, 150, MLItems.fluorescentFeatherStone, 60, MLItems.arrayChip, 25}));
             drillTime = 150;
             hardnessDrillMultiplier = 0.9f;
+            squareSprite = false;
             size = 5;
             drawRim = true;
             tier = 10;
