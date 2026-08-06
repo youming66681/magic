@@ -2285,7 +2285,6 @@ public class MLBlocks {
         FluorescentFeatherDrill  = new Drill("FluorescentFeatherDrill"){{
             requirements(Category.production, ItemStack.with(new Object[]{MLItems.phantomLuminousAlloy, 40, MLItems.mysticSteel, 100, MLItems.wingedMetal, 50, Items.silicon, 150, MLItems.fluorescentFeatherStone, 60, MLItems.arrayChip, 25}));
             drillTime = 150;
-            warmupSpeed = 0.95f;
             hardnessDrillMultiplier = 0.9f;
             size = 5;
             drawRim = true;

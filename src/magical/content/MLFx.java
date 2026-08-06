@@ -213,7 +213,6 @@ public class MLFx {
             Fill.circle(e.x,e.y,4f * fout);
             Angles.randLenVectors(e.id, 12 ,18f * fin,(x,y)->{Fill.circle(e.x + x, e.y + y, 2f * fout);
             });
-            Drawf.tri(e.x, e.y, 4f * fout, 20f * fin, 90f);
         });
     }
     public static Effect Slash(Color colorSlash, float len, float width){
