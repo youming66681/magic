@@ -149,7 +149,8 @@ public class MLBlocks {
             Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, StarshipMaterialConstructor, StarshipMaterialDeconstructor,
             //高端科技
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
-            LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus, DawN, MysticSteelWall, LargeMysticSteelWall, PhantomGlowWall, LargePhantomGlowWall;
+            LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus, DawN, MysticSteelWall, LargeMysticSteelWall, PhantomGlowWall, LargePhantomGlowWall,
+            FluorescentFeatherDrill;
 
     public static void load() {
 
@@ -2263,6 +2264,7 @@ public class MLBlocks {
         }};
         //wall
         //出来了，出来了
+        //幻钢钻头
         phantomSteelDrill  = new Drill("phantomSteelDrill"){{
             requirements(Category.production, ItemStack.with(new Object[]{MLItems.phantomSteel, 60,Items.graphite, 30}));
             drillTime = 220;
@@ -2278,6 +2280,25 @@ public class MLBlocks {
             liquidBoostIntensity = 1.4f;
 
             consumeLiquid(Liquids.water, 0.2f).boost();
+        }};
+        //荧羽钻头
+        FluorescentFeatherDrill  = new Drill("FluorescentFeatherDrill"){{
+            requirements(Category.production, ItemStack.with(new Object[]{MLItems.phantomLuminousAlloy, 40, MLItems.mysticSteel, 100, MLItems.wingedMetal, 50, Items.silicon, 150, MLItems.fluorescentFeatherStone, 60, MLItems.arrayChip, 25}));
+            drillTime = 150;
+            warmupSpeed = 0.95f;
+            hardnessDrillMultiplier = 0.9f;
+            size = 5;
+            drawRim = true;
+            tier = 10;
+            updateEffect = Fx.energyMine;
+            drillEffect = Fx.energyMine;
+            rotateSpeed = 2.5f;
+            itemCapacity = 100;
+            health = 1000;
+
+            liquidBoostIntensity = 2.5f;
+
+            consumeLiquid(Liquids.cryofluid, 0.25f).boost();
         }};
         //钻头
         //物流溜溜溜

@@ -26,6 +26,7 @@ public class MLFx {
     public static Effect Explosion3;
     public static Effect smallEnergyBlast;
     public static Effect smallTeleport;
+    public static Effect energyMine;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -121,7 +122,7 @@ public class MLFx {
 
             Draw.color(Pal.gray);
             Angles.randLenVectors(e.id + 2, 12, 26f * e.finpow(), (x, y) -> {
-                Fill.square(e.x + x, e.y + y, 1.5f * e.foutpow(), Mathf.randomSeed((long)(e.id + x + y), 360f)
+                Fill.square(e.x + x, e.y + y, 1.5f * e.foutpow(), Mathf.randomSeed((long) (e.id + x + y), 360f)
                 );
             });
 
@@ -153,7 +154,8 @@ public class MLFx {
             Fill.circle(e.x, e.y, 6f * fout
             );
             Draw.color(core);
-            Angles.randLenVectors(e.id, 8, 4f + 18f * fin, (x, y) -> {Fill.circle(e.x + x, e.y + y, 2f * fout);
+            Angles.randLenVectors(e.id, 8, 4f + 18f * fin, (x, y) -> {
+                        Fill.circle(e.x + x, e.y + y, 2f * fout);
                     }
             );
             Draw.color(Color.white);
@@ -173,8 +175,8 @@ public class MLFx {
             Lines.circle(e.x, e.y, radius * 0.7F + radius * 0.3F * fin);
             Draw.color(Color.valueOf("FEEBB3FF"));
 
-            for(int i = 0; i < 3; ++i) {
-                float angle = e.rotation + (float)i * 120.0F - fin * 360.0F;
+            for (int i = 0; i < 3; ++i) {
+                float angle = e.rotation + (float) i * 120.0F - fin * 360.0F;
                 float x1 = e.x + Angles.trnsx(angle, radius * 0.35F);
                 float y1 = e.y + Angles.trnsy(angle, radius * 0.35F);
                 float x2 = e.x + Angles.trnsx(angle, radius);
@@ -183,8 +185,8 @@ public class MLFx {
             }
 
             Draw.color(Color.valueOf("FEEBB3FF"));
-            Angles.randLenVectors((long)e.id, 48, radius, (x, y) -> {
-                float scale = Mathf.sin(fin * (float)Math.PI);
+            Angles.randLenVectors((long) e.id, 48, radius, (x, y) -> {
+                float scale = Mathf.sin(fin * (float) Math.PI);
                 Drawf.tri(e.x + x * scale, e.y + y * scale, 3.0F * fout, 12.0F * fout, Mathf.angle(x, y) + fin * 360.0F);
             });
             Draw.color(Color.white);
@@ -193,17 +195,29 @@ public class MLFx {
             Fill.circle(e.x, e.y, 6.0F * fout);
             Draw.color(Color.valueOf("FEEBB3FF"));
 
-            for(int i = 0; i < 8; ++i) {
-                float angle = (float)i * 45.0F + fin * 720.0F;
-                float length = 20.0F + 30.0F * Mathf.sin(fin * (float)Math.PI);
+            for (int i = 0; i < 8; ++i) {
+                float angle = (float) i * 45.0F + fin * 720.0F;
+                float length = 20.0F + 30.0F * Mathf.sin(fin * (float) Math.PI);
                 Drawf.tri(e.x, e.y, 2.0F * fout, length * fout, angle);
             }
 
             Drawf.light(e.x, e.y, 96.0F, Color.valueOf("FEEBB3FF"), fout);
         });
+        energyMine = new Effect(60f, e -> {
+            float fin = e.finpow();
+            float fout = e.foutpow();
+            float rot = e.rotation;
+            Draw.color(Color.valueOf("FEEBB3FF"));
+            Drawf.circles(e.x, e.y, 6f + fin * 18f, 2f * fout, Color.valueOf("FEEBB3FF"));
+            Fill.circle(e.x, e.y, 4f * fout);
+            Angles.randLenVectors(e.id, 12, 18f * fin, (x, y) -> {
+                Fill.circle(e.x + x, e.y + y, 2f * fout);
+            });
+            Drawf.tri(e.x, e.y, 4f * fout, 20f * fin, 90f
+            );
+            Draw.color();
+        });
     }
-
-
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
 
