@@ -150,7 +150,7 @@ public class MLBlocks {
             //高端科技
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
             LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus, DawN, MysticSteelWall, LargeMysticSteelWall, PhantomGlowWall, LargePhantomGlowWall,
-            FluorescentFeatherDrill;
+            FluorescentFeatherDrill, XuansteelConveyor;
 
     public static void load() {
 
@@ -2314,6 +2314,7 @@ public class MLBlocks {
             liquidBoostIntensity = 2.5f;
 
             consumeLiquid(Liquids.cryofluid, 0.25f).boost();
+            consumePower(10f);
         }};
         //钻头
         //物流溜溜溜
@@ -2345,6 +2346,12 @@ public class MLBlocks {
             requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.phantomSteel, 60, Items.titanium, 60, Items.silicon,60}));
             speed = 1;
             group = BlockGroup.transportation;
+        }};
+        XuansteelConveyor = new StackConveyor("XuansteelConveyor"){{
+            requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.mysticSteel, 1, Items.plastanium, 1, Items.silicon,1}));
+            health = 125;
+            speed = 0.1f;
+            itemCapacity = 30;
         }};
         //Conveyor
         //电死你
