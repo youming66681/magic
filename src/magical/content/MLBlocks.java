@@ -134,6 +134,7 @@ import mindustry.world.blocks.payloads.Constructor;
 import mindustry.world.blocks.payloads.PayloadDeconstructor;
 import mindustry.entities.part.ShapePart;
 import mindustry.entities.pattern.ShootHelix;
+import mindustry.world.blocks.distribution.*;
 
 public class MLBlocks {
 
