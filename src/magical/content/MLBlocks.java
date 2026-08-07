@@ -1596,7 +1596,7 @@ public class MLBlocks {
                                     y = 0f;
                                     moveX = 0f;
                                     moveY = 4f;
-                                }},
+                                }}),
                                 parts.add(
                                 new RegionPart("-r") {{
                                     mirror = false;
@@ -1605,7 +1605,6 @@ public class MLBlocks {
                                     moveX = 0f;
                                     moveY = 4f;
                                 }});
-                                );
                             }}
                     );
             }};
