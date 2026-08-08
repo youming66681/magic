@@ -15,11 +15,10 @@ public class MLSectorPresets{
             alwaysUnlocked = true;
             captureWave = 10;
             difficulty = 1;
+        }},
+        DeepSecludedJungle = new SectorPreset("DeepSecludedJungle", cecilia, 5){{
+            difficulty = 3;
+            captureWave = 45;
         }};
-
-       /* planetaryTerminal = new SectorPreset("planetaryTerminal", serpulo, 93){{
-            difficulty = 10;
-            captureWave = 78;
-        }};*/
     }
 }

@@ -73,7 +73,7 @@ public class MLTechTree {
                         });
                     });
                         });
-                /*静水*/node(MLUnitTypes.StillWater, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant)), () -> {
+                /*静水*/node(MLUnitTypes.StillWater, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant), new SectorComplete(MLSectorPresets.DeepSecludedJungle)), () -> {
                     /*涟漪*/node(MLUnitTypes.ripple, Seq.with(new Objectives.Research(MLBlocks.curvatureEvolutionPod)), () -> {
                         /*湍流*/node(MLUnitTypes.Turbulence, Seq.with(new Objectives.Research(MLBlocks.quantumFactory)), () -> {
 
@@ -99,7 +99,7 @@ public class MLTechTree {
                     /*幻钛钢墙*/node(MLBlocks.phantomTitaniumSteelWall, () -> {
                         /*大幻钛钢墙*/node(MLBlocks.largePhantomTitaniumSteelWall, () -> {
                         });
-                            /*联合墙*/node(MLBlocks.adaptiveWall, () -> {
+                            /*联合墙*/node(MLBlocks.adaptiveWall, Seq.with(new SectorComplete(MLSectorPresets.DeepSecludedJungle)), () -> {
                                 /*大联合墙*/node(MLBlocks.largeAdaptiveWall, () -> {
                             });
                         });
@@ -231,6 +231,9 @@ public class MLTechTree {
                 });
             });
             /*降落区*/node(MLSectorPresets.LandingZone, Seq.with(new SectorComplete(SectorPresets.planetaryTerminal)), () -> {
+                /*深幽丛林*/node(MLSectorPresets.DeepSecludedJungle, Seq.with(new SectorComplete(MLSectorPresets.LandingZone)), () -> {
+
+                });
             });
                  });
 
