@@ -7,7 +7,7 @@ import static mindustry.content.Planets.*;
 
 public class MLSectorPresets{
     public static SectorPreset
-            LandingZone;
+            LandingZone, DeepSecludedJungle;
 
     public static void load(){
 
