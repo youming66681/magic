@@ -17,7 +17,7 @@ public class MLSectorPresets{
             difficulty = 1;
         }};
 
-        DeepSecludedJungle = new SectorPreset("DeepSecludedJungle", cecilia, 5){{
+        DeepSecludedJungle = new SectorPreset("DeepSecludedJungle", MLPlanets.cecilia, 5){{
             difficulty = 3;
             captureWave = 45;
         }};
