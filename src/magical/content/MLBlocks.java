@@ -151,7 +151,7 @@ public class MLBlocks {
             //高端科技
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
             LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus, DawN, MysticSteelWall, LargeMysticSteelWall, PhantomGlowWall, LargePhantomGlowWall,
-            FluorescentFeatherDrill, XuansteelConveyor;
+            FluorescentFeatherDrill, XuansteelConveyor, GlowFeatherBridge, GlowingFeatherConveyor;
 
     public static void load() {
 
@@ -2353,6 +2353,21 @@ public class MLBlocks {
             health = 125;
             speed = 0.1f;
             itemCapacity = 30;
+        }};
+        GlowFeatherBridge = new BufferedItemBridge("GlowFeatherBridge"){{
+            requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.fluorescentFeatherStone, 5, MLItems.logicChip, 5}));
+            fadeIn = moveArrows = false;
+            range = 24;
+            health = 240;
+            hasPower = true;
+            transportTime = 1;
+            consumePower(1f);
+        }};
+        GlowingFeatherConveyor = new Conveyor("GlowingFeatherConveyor"){{
+            requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.acrylic, 1, MLItems.fluorescentFeatherStone, 1}));
+            health = 300;
+            speed = 1f;
+            displayedSpeed = 100f;
         }};
         //Conveyor
         //电死你

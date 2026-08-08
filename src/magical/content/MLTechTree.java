@@ -184,6 +184,10 @@ public class MLTechTree {
                                         });
                                 });
                     /*玄钢传送带*/node(MLBlocks.XuansteelConveyor, () -> {
+                        /*荧羽传送带*/node(MLBlocks.GlowingFeatherConveyor, () -> {
+                                });
+                        /*荧羽桥*/node(MLBlocks.GlowFeatherBridge, () -> {
+                        });
                     });
                     /*荧羽钻头*/node(MLBlocks.FluorescentFeatherDrill, () -> {
                             });
