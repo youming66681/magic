@@ -2501,7 +2501,7 @@ public class MLBlocks {
                         lifetime = 120f;
                         colorFrom = Color.valueOf("FEEBB3FF");
                         colorTo = Color.valueOf("FEEBB3FF");
-                    }},
+                    }}
             );
 
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault());
