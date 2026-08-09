@@ -7,7 +7,6 @@ import arc.math.*;
 import arc.struct.*;
 import arc.util.*;
 import arc.util.io.*;
-import mindustry.annotations.Annotations.*;
 import mindustry.content.*;
 import mindustry.entities.*;
 import mindustry.gen.*;
@@ -16,6 +15,7 @@ import mindustry.logic.*;
 import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.world.*;
+import mindustry.world.blocks.heat.*;
 import mindustry.world.blocks.power.*;
 import mindustry.world.meta.*;
 
@@ -40,8 +40,8 @@ public class PhantomReactor extends PowerGenerator {
     public Liquid fuelLiquid = MLLiquids.PhantomSteelSolution;
     public Liquid coolantLiquid = Liquids.water;
 
-    public @Load("@-top") TextureRegion topRegion;
-    public @Load("@-lights") TextureRegion lightsRegion;
+    public TextureRegion topRegion;
+    public TextureRegion lightsRegion;
 
     public PhantomReactor(String name) {
         super(name);
@@ -66,30 +66,28 @@ public class PhantomReactor extends PowerGenerator {
     @Override
     public void setStats() {
         super.setStats();
+
         stats.remove(Stat.input);
 
-        // 输入：固体燃料 + 液体燃料
         stats.add(Stat.input, table -> {
             table.row();
-            // 固体燃料
             table.table(Tex.pane, t -> {
                 t.left().defaults().left();
                 t.add(Core.bundle.format("stat.input")).left().growX().row();
-                StatValues.stack(new ItemStack(fuelItem, 1)).display(t);
+                t.add(new ItemImage(fuelItem.uiIcon, 1)).padRight(5);
+                t.add(fuelItem.localizedName).left();
             }).growX().pad(5).row();
-            // 液体燃料
             table.table(Tex.pane, t -> {
-                StatValues.liquid(fuelLiquid, 0.5f * 60f, true).display(t);
+                t.add(StatValues.liquid(fuelLiquid, 0.5f * 60f, true).display(t)).pad(5).row();
             }).growX().pad(5).row();
         });
 
-        // 冷却液：水
-        stats.add(Stat.coolant, table -> {
+        stats.add(Stat.input, table -> {
             table.row();
             table.table(Tex.pane, t -> {
                 t.left().defaults().left();
                 t.add(Core.bundle.format("stat.coolant")).left().growX().row();
-                StatValues.liquid(coolantLiquid, coolantPower * 60f, true).display(t);
+                t.add(StatValues.liquid(coolantLiquid, coolantPower * 60f, true).display(t)).pad(5).row();
             }).growX().pad(5).row();
         });
 
@@ -104,7 +102,7 @@ public class PhantomReactor extends PowerGenerator {
         addBar("heat", (PhantomReactorBuild entity) -> new Bar("bar.heat", Pal.lightOrange, () -> entity.heat));
     }
 
-    public class PhantomReactorBuild extends GeneratorBuild {
+    public class PhantomReactorBuild extends GeneratorBuild implements HeatBlock {
         public float heat;
         public float heatProgress;
         public float flash;
@@ -121,9 +119,11 @@ public class PhantomReactor extends PowerGenerator {
 
             if (fuel > 0 && hasFuelLiquid && enabled) {
                 heat += fullness * heating * Math.min(delta(), 4f);
+
                 if (timer(timerFuel, itemDuration / timeScale)) {
                     consume();
                 }
+
                 liquids.remove(fuelLiquid, Math.min(liquids.get(fuelLiquid), 0.5f * delta()));
             } else {
                 productionEfficiency = 0f;
@@ -135,7 +135,7 @@ public class PhantomReactor extends PowerGenerator {
                 heat -= maxUsed * coolantPower;
                 liquids.remove(coolantLiquid, maxUsed);
             } else if (!hasCoolant && heat > 0.1f) {
-                heat += heating * 5f * Math.min(delta(), 4f); // 缺水加速升温
+                heat += heating * 5f * Math.min(delta(), 4f);
             }
 
             if (heat > smokeThreshold) {
@@ -150,47 +150,69 @@ public class PhantomReactor extends PowerGenerator {
             heatProgress = heatOutput > 0f ? Mathf.approachDelta(heatProgress, heat * heatOutput * (enabled ? 1f : 0f), 0.01f * delta()) : 0f;
 
             if (heat >= 0.999f) {
-                Events.fire(Trigger.thoriumReactorOverheat);
                 kill();
+                explodeEffect.at(x, y);
+                explodeSound.at(x, y);
             }
         }
 
-        @Override public float heatFrac() { return heatProgress / heatOutput; }
-        @Override public float heat() { return heatProgress; }
-        @Override public double sense(LAccess sensor) {
+        @Override
+        public float heatFrac() { return heatProgress / heatOutput; }
+        @Override
+        public float heat() { return heatProgress; }
+
+        @Override
+        public double sense(LAccess sensor) {
             if (sensor == LAccess.heat) return heat;
             return super.sense(sensor);
         }
-        @Override public boolean shouldExplode() {
+
+        @Override
+        public boolean shouldExplode() {
             return super.shouldExplode() && (items.get(fuelItem) >= 5 || heat >= 0.5f);
         }
 
-        @Override public void drawLight() {
+        @Override
+        public void drawLight() {
             float fract = productionEfficiency;
             smoothLight = Mathf.lerpDelta(smoothLight, fract, 0.08f);
             Drawf.light(x, y, (90f + Mathf.absin(5, 5f)) * smoothLight, Tmp.c1.set(lightColor).lerp(Color.scarlet, heat), 0.6f * smoothLight);
         }
 
-        @Override public void draw() {
+        @Override
+        public void draw() {
             super.draw();
+
             Draw.color(coolColor, hotColor, heat);
             Fill.rect(x, y, size * tilesize, size * tilesize);
 
+            // 如果有自定义贴图，可以绘制；否则只显示颜色填充
             if (topRegion != null) {
                 Draw.color(liquids.current().color);
                 Draw.alpha(liquids.currentAmount() / liquidCapacity);
                 Draw.rect(topRegion, x, y);
             }
+
             if (heat > flashThreshold && lightsRegion != null) {
                 flash += (1f + ((heat - flashThreshold) / (1f - flashThreshold)) * 5.4f) * Time.delta;
                 Draw.color(Color.red, Color.yellow, Mathf.absin(flash, 9f, 1f));
                 Draw.alpha(0.3f);
                 Draw.rect(lightsRegion, x, y);
             }
+
             Draw.reset();
         }
 
-        @Override public void write(Writes write) { super.write(write); write.f(heat); }
-        @Override public void read(Reads read, byte revision) { super.read(read, revision); heat = read.f(); }
+        @Override
+        public void write(Writes write) {
+            super.write(write);
+            write.f(heat);
+        }
+
+        @Override
+        public void read(Reads read, byte revision) {
+            super.read(read, revision);
+            heat = read.f();
+        }
     }
 }

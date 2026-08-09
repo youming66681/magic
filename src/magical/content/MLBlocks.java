@@ -2446,7 +2446,6 @@ public class MLBlocks {
 
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault());
 
-            buildType = LumifeatherReactorBuild::new;
         }};
         //power
         //单位
