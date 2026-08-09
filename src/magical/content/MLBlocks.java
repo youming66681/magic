@@ -2434,7 +2434,7 @@ public class MLBlocks {
             heating = 0.04f;
 
             consumeItem(MLItems.fluorescentFeatherStone, 2);
-            fuelLiquid(MLLiquids.PhantomSteelSolution, 0.5f);
+            consumeLiquid(MLLiquids.PhantomSteelSolution, 0.5f);
             consumeLiquid(Liquids.water, 1).update(false);
 
                 explosionShake = 25;
@@ -2502,11 +2502,6 @@ public class MLBlocks {
                         colorFrom = Color.valueOf("FEEBB3FF");
                         colorTo = Color.valueOf("FEEBB3FF");
                     }},
-                    new WrapEffect(){{
-                        effect = dynamicSpikes;
-                        color = Color.valueOf("FEEBB3FF");
-                        rotation = 360f;
-                    }}
             );
 
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault());

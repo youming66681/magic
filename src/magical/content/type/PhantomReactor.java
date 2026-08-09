@@ -72,13 +72,13 @@ public class PhantomReactor extends PowerGenerator {
             table.table(Tex.pane, t -> {
                 t.left().defaults().left();
                 t.add(Core.bundle.format("stat.input")).left().growX().row();
-                t.add(StatValues.stack(new ItemStack(fuelItem, consumeItem))).pad(5).row();
-                StatValues.liquid(fuelLiquid, fuelLiquid, true).display(t);
+                t.add(StatValues.stack(new ItemStack(fuelItem, 2))).pad(5).row();
+                StatValues.liquid(fuelLiquid, fuelLiquidAmount * 60f, true).display(t);
             }).growX().pad(5).row();
             table.table(Tex.pane, t -> {
                 t.left().defaults().left();
                 t.add(Core.bundle.format("stat.coolant")).left().growX().row();
-                StatValues.liquid(coolantLiquid, coolantLiquid, true).display(t);
+                StatValues.liquid(coolantLiquid, coolantAmount * 60f, true).display(t);
             }).growX().pad(5).row();
         });
         if (hasItems) {
