@@ -1356,7 +1356,7 @@ public class MLBlocks {
                 shootType = new BasicBulletType(12f, 600f) {{
                         width = 16f;
                         height = 32f;
-                        lifetime = 40f;
+                        lifetime = 80f;
                         splashDamage = 1400f;
                         splashDamageRadius = 100f;
                         trailLength = 9;
@@ -1367,7 +1367,7 @@ public class MLBlocks {
                         hitSound = MLSounds.largeCannon;
                         hitSoundVolume = 10;
                         buildingDamageMultiplier = 0.1f;
-                        intervalBullets = 10;
+                        intervalBullets = 20;
                         bulletInterval = 4f;
                         intervalBullet = new BasicBulletType(0f, 80) {{
                             width = 0f;
