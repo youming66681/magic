@@ -12,6 +12,7 @@ import mindustry.content.*;
 import mindustry.entities.*;
 import mindustry.gen.*;
 import mindustry.graphics.*;
+import mindustry.logic.*;
 import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.world.*;
@@ -64,31 +65,31 @@ public class PhantomReactor extends PowerGenerator {
 
     @Override
     public void setStats() {
-        super.setStats();              // 保留电力、生命等标准统计
-
-        // 移除默认的输入统计，自己定制
+        super.setStats();
         stats.remove(Stat.input);
 
+        // 输入：固体燃料 + 液体燃料
         stats.add(Stat.input, table -> {
             table.row();
-            // 物品
+            // 固体燃料
             table.table(Tex.pane, t -> {
                 t.left().defaults().left();
                 t.add(Core.bundle.format("stat.input")).left().growX().row();
-                t.add(StatValues.stack(new ItemStack(fuelItem, 1))).pad(5).row();
+                StatValues.stack(new ItemStack(fuelItem, 1)).display(t);
             }).growX().pad(5).row();
-            // 液体
+            // 液体燃料
             table.table(Tex.pane, t -> {
-                t.add(StatValues.liquid(fuelLiquid, 0.5f * 60f, true)).pad(5).row();
+                StatValues.liquid(fuelLiquid, 0.5f * 60f, true).display(t);
             }).growX().pad(5).row();
         });
 
+        // 冷却液：水
         stats.add(Stat.coolant, table -> {
             table.row();
             table.table(Tex.pane, t -> {
                 t.left().defaults().left();
                 t.add(Core.bundle.format("stat.coolant")).left().growX().row();
-                t.add(StatValues.liquid(coolantLiquid, coolantPower * 60f, true)).pad(5).row();
+                StatValues.liquid(coolantLiquid, coolantPower * 60f, true).display(t);
             }).growX().pad(5).row();
         });
 
@@ -120,11 +121,9 @@ public class PhantomReactor extends PowerGenerator {
 
             if (fuel > 0 && hasFuelLiquid && enabled) {
                 heat += fullness * heating * Math.min(delta(), 4f);
-
                 if (timer(timerFuel, itemDuration / timeScale)) {
                     consume();
                 }
-
                 liquids.remove(fuelLiquid, Math.min(liquids.get(fuelLiquid), 0.5f * delta()));
             } else {
                 productionEfficiency = 0f;
@@ -136,7 +135,7 @@ public class PhantomReactor extends PowerGenerator {
                 heat -= maxUsed * coolantPower;
                 liquids.remove(coolantLiquid, maxUsed);
             } else if (!hasCoolant && heat > 0.1f) {
-                heat += heating * 5f * Math.min(delta(), 4f);
+                heat += heating * 5f * Math.min(delta(), 4f); // 缺水加速升温
             }
 
             if (heat > smokeThreshold) {

@@ -2425,7 +2425,7 @@ public class MLBlocks {
 
         }};
         //荧羽反应堆
-        LumifeatherReactor = new ExplosiveGenerator("LumifeatherReactor"){{
+        LumifeatherReactor = new PhantomReactor("LumifeatherReactor"){{
             requirements(Category.power, ItemStack.with(new Object[]{MLItems.mysticSteel, 160, MLItems.fluorescentFeatherStone, 120, MLItems.wingedMetal, 120, Items.silicon, 300, MLItems.arrayChip, 50 }));
             size = 5;
             health = 2500;
