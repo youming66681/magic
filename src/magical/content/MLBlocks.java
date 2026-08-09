@@ -2431,7 +2431,9 @@ public class MLBlocks {
             health = 2500;
             itemDuration = 600f;
             powerProduction = 500f;
-            heating = 0.04f;
+            heating = 0.025f;
+
+            squareSprite = false;
 
             consumeItem(MLItems.fluorescentFeatherStone, 2);
             consumeLiquid(MLLiquids.PhantomSteelSolution, 0.5f);
@@ -2440,7 +2442,7 @@ public class MLBlocks {
                 explosionShake = 25;
                 explosionShakeDuration = 180f;
                 explosionDamage = 5000;
-                explosionRadius = 25;
+                explosionRadius = 50;
                 explodeSound = MLSounds.largeCannon;
                 explodeEffect = new MultiEffect(
                     new WaveEffect(){{

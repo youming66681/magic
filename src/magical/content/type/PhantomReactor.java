@@ -128,7 +128,7 @@ public class PhantomReactor extends PowerGenerator {
                 heat -= maxUsed * coolantPower;
                 liquids.remove(coolantLiquid, maxUsed);
             } else if (!hasCoolant && heat > 0.1f) {
-                heat += heating * 2f * Math.min(delta(), 4f);
+                heat += heating * 1f * Math.min(delta(), 4f);
             }
 
             if (heat > smokeThreshold) {
