@@ -241,29 +241,8 @@ public class MLTechTree {
 
                 });
             });
-            nodeProduce(Items.copper, () -> {
-                nodeProduce(Items.lead, () -> {
-                    nodeProduce(Items.graphite, () -> {
-                        nodeProduce(Items.silicon, () -> {
-                            nodeProduce(Items.titanium, () -> {
-                                nodeProduce(Items.plastanium, () -> {
-                                    nodeProduce(Items.thorium, () -> {
-                                        nodeProduce(Items.phaseFabric, () -> {
-                                            nodeProduce(Items.surgeAlloy, () -> {});
-                                        });
-                                    });
-                                });
-                            });
-                        });
-                    });
-                });
-                nodeProduce(Liquids.water, () -> {
-                    nodeProduce(Liquids.cryofluid, () -> {});
-                    nodeProduce(Liquids.slag, () -> {});
-                    nodeProduce(Liquids.oil, () -> {});
-                });
-            });
                  });
+        node(Planets.serpulo.techTree);
         MLPlanets.cecilia.techTree = root;
     }
 }
