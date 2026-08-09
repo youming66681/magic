@@ -2425,7 +2425,7 @@ public class MLBlocks {
 
         }};
         //荧羽反应堆
-        LumifeatherReactor = new NuclearReactor("LumifeatherReactor"){{
+        LumifeatherReactor = new LumifeatherReactor("LumifeatherReactor"){{
             requirements(Category.power, ItemStack.with(new Object[]{MLItems.mysticSteel, 160, MLItems.fluorescentFeatherStone, 120, MLItems.wingedMetal, 120, Items.silicon, 300, MLItems.arrayChip, 50 }));
             size = 5;
             health = 2500;
@@ -2546,17 +2546,4 @@ public class MLBlocks {
         }};
          //unit
     }
-    //AAA
-    public class LumifeatherReactorBuild extends NuclearReactorBuild{
-        @Override
-        public void updateTile(){
-            super.updateTile();
-            if(efficiency > 0f && liquids.get(Liquids.water) <= 0.001f){
-                Fx.massiveExplosion.at(x,y);
-                Damage.damage(x, y, 25 * tilesize, 5000f);
-                kill();
-            }
-        }
-    }
-    //AAA
 }
