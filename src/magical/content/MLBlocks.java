@@ -151,7 +151,7 @@ public class MLBlocks {
             //高端科技
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
             LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus, DawN, MysticSteelWall, LargeMysticSteelWall, PhantomGlowWall, LargePhantomGlowWall,
-            FluorescentFeatherDrill, XuansteelConveyor, GlowFeatherBridge, GlowingFeatherConveyor;
+            FluorescentFeatherDrill, XuansteelConveyor, GlowFeatherBridge, GlowingFeatherConveyor, LumifeatherReactor;
 
     public static void load() {
 
@@ -2420,6 +2420,26 @@ public class MLBlocks {
 
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawLiquidTile(Liquids.water), new DrawDefault());
 
+        }};
+        //荧羽反应堆
+        LumifeatherReactor = new NuclearReactor("LumifeatherReactor"){{
+            requirements(Category.power, ItemStack.with(new Object[]{MLItems.mysticSteel, 160, MLItems.fluorescentFeatherStone, 120, MLItems.wingedMetal, 120, Items.silicon, 300, MLItems.arrayChip, 50 }));
+            size = 5;
+            health = 2500;
+            itemDuration = 600f;
+            powerProduction = 500f;
+            heating = 0.04f;
+
+            consumeItem(MLItems.fluorescentFeatherStone, 2);
+            consumeLiquid(MLLiquids.PhantomSteelSolution, heating / coolantPower).update(false);
+
+                explosionShake = 25;
+                explosionShakeDuration = 180f;
+                explosionDamage = 5000;
+                explosionRadius = 25;
+                explodeSound = Sounds.largeCannon;
+                explodeEffect = MLFx.hugeEnergyExplosion;
+            }};
         }};
         //power
         //单位

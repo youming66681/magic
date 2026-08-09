@@ -183,6 +183,9 @@ public class MLTechTree {
 
                                         });
                                 });
+                    /*荧羽反应堆*/node(MLBlocks.LumifeatherReactor, () -> {
+
+                            });
                     /*玄钢传送带*/node(MLBlocks.XuansteelConveyor, () -> {
                         /*荧羽传送带*/node(MLBlocks.GlowingFeatherConveyor, () -> {
                                 });

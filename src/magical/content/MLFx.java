@@ -27,6 +27,7 @@ public class MLFx {
     public static Effect smallEnergyBlast;
     public static Effect smallTeleport;
     public static Effect energyMine;
+    public static Effect hugeEnergyExplosion,
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -212,6 +213,32 @@ public class MLFx {
             Lines.circle(e.x,e.y,6f + fin * 18f);
             Fill.circle(e.x,e.y,4f * fout);
             Angles.randLenVectors(e.id, 12 ,18f * fin,(x,y)->{Fill.circle(e.x + x, e.y + y, 2f * fout);
+            });
+        });
+        hugeEnergyExplosion = new Effect(120f,e -> {
+            float fin = e.fin();
+            float fout = e.fout();
+            Draw.color(Color.valueOf("FEEBB3FF"));
+            Lines.stroke(3f * fout);
+            Lines.circle(e.x,e.y,50f * fin);
+            Lines.stroke(1.5f * fout);
+            Lines.circle(e.x,e.y,35f * fin);
+            Fill.circle(e.x,e.y,8f * fout);
+            Angles.randLenVectors(e.id,40,50f * fin,(x,y)->{
+                Fill.circle(
+                        e.x + x,
+                        e.y + y,
+                        2.5f * fout
+                );
+            });
+            Angles.randLenVectors(e.id,12,50f * fin,(x,y)->{
+                Drawf.tri(
+                        e.x + x,
+                        e.y + y,
+                        5f * fout,
+                        15f * fout,
+                        Mathf.angle(x,y)
+                );
             });
         });
     }
