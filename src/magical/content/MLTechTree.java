@@ -16,7 +16,7 @@ import magical.content.MLPlanets;
 
 public class MLTechTree {
     public static void load() {
-        ceciliaRoot.children.add(Planets.serpulo.techTree);
+        root.children.add(Planets.serpulo.techTree);
         TechNode root = nodeRoot("cecilia", MLBlocks.baseCore, () -> {
            //基础科技
             nodeProduce(MLItems.phantomSteel, () -> {
