@@ -2442,17 +2442,8 @@ public class MLBlocks {
                 explosionRadius = 25;
                 explodeSound = Sounds.largeCannon;
                 explodeEffect = MLFx.hugeEnergyExplosion;
-            public static class LumifeatherReactorBuild extends NuclearReactor.NuclearReactorBuild{
-                @Override
-                public void updateTile(){
-                    super.updateTile();
-                    if(efficiency > 0f && liquids.get(Liquids.water) <= 0.001f){
-                        Fx.massiveExplosion.at(x,y);
-                        Damage.damage(x, y, block.explosionRadius * tilesize, block.explosionDamage);
-                        kill();
-                    }
-                }
-            }
+
+            buildType = LumifeatherReactorBuild::new;
         }};
         //power
         //单位
@@ -2553,5 +2544,16 @@ public class MLBlocks {
             deconstructSpeed = 5f;
         }};
          //unit
+    }
+    public static class LumifeatherReactorBuild extends NuclearReactor.NuclearReactorBuild{
+        @Override
+        public void updateTile(){
+            super.updateTile();
+            if(efficiency > 0f && liquids.get(Liquids.water) <= 0.001f){
+                Fx.massiveExplosion.at(x,y);
+                Damage.damage(x, y, block.explosionRadius * tilesize, block.explosionDamage);
+                kill();
+            }
+        }
     }
 }

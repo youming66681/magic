@@ -27,7 +27,7 @@ public class MLFx {
     public static Effect smallEnergyBlast;
     public static Effect smallTeleport;
     public static Effect energyMine;
-    public static Effect hugeEnergyExplosion,
+    public static Effect hugeEnergyExplosion;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
