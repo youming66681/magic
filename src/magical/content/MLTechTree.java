@@ -16,7 +16,7 @@ import magical.content.MLPlanets;
 
 public class MLTechTree {
     public static void load() {
-        //MLPlanets.cecilia.techTree = Planets.serpulo.techTree;
+        MLPlanets.cecilia.techTree = Planets.serpulo.techTree;
 
         TechNode root = nodeRoot("cecilia", MLBlocks.baseCore, () -> {
            //基础科技
@@ -239,6 +239,6 @@ public class MLTechTree {
                 });
             });
                  });
-
+        MLPlanets.cecilia.techTree = root;
     }
 }
