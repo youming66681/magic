@@ -2506,7 +2506,7 @@ public class MLBlocks {
                         effect = dynamicSpikes;
                         color = Color.valueOf("FEEBB3FF");
                         rotation = 360f;
-                    }},
+                    }}
             );
 
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault());
