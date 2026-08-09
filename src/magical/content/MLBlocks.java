@@ -135,6 +135,8 @@ import mindustry.world.blocks.payloads.PayloadDeconstructor;
 import mindustry.entities.part.ShapePart;
 import mindustry.entities.pattern.ShootHelix;
 import mindustry.world.blocks.distribution.*;
+import mindustry.world.blocks.power.NuclearReactor;
+import mindustry.entities.Damage;
 
 public class MLBlocks {
 
@@ -2431,7 +2433,8 @@ public class MLBlocks {
             heating = 0.04f;
 
             consumeItem(MLItems.fluorescentFeatherStone, 2);
-            consumeLiquid(MLLiquids.PhantomSteelSolution, heating / coolantPower).update(false);
+            consumeLiquid(MLLiquids.PhantomSteelSolution, 0.5f);
+            consumeLiquid(Liquids.water, 1).update(false);
 
                 explosionShake = 25;
                 explosionShakeDuration = 180f;
@@ -2439,7 +2442,17 @@ public class MLBlocks {
                 explosionRadius = 25;
                 explodeSound = Sounds.largeCannon;
                 explodeEffect = MLFx.hugeEnergyExplosion;
-            }};
+            public static class LumifeatherReactorBuild extends NuclearReactor.NuclearReactorBuild{
+                @Override
+                public void updateTile(){
+                    super.updateTile();
+                    if(efficiency > 0f && liquids.get(Liquids.water) <= 0.001f){
+                        Fx.massiveExplosion.at(x,y);
+                        Damage.damage(x, y, block.explosionRadius * tilesize, block.explosionDamage);
+                        kill();
+                    }
+                }
+            }
         }};
         //power
         //单位
