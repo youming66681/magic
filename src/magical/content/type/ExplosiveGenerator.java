@@ -27,19 +27,12 @@ public class PhantomReactor extends PowerGenerator {
     public Color coolColor = new Color(1, 1, 1, 0f);
     public Color hotColor = Color.valueOf("ff9575a3");
 
-    /** 每消耗 1 个燃料的持续时间（tick） */
     public float itemDuration = 120f;
-    /** 每帧热量增加系数 */
     public float heating = 0.01f;
-    /** 最大热输出（用于进度条） */
     public float heatOutput = 15f;
-    /** 无燃料时的自然冷却时间 */
     public float ambientCooldownTime = 60f * 20f;
-    /** 冒烟阈值 */
     public float smokeThreshold = 0.3f;
-    /** 闪烁阈值 */
     public float flashThreshold = 0.46f;
-    /** 每单位冷却液移除的热量 */
     public float coolantPower = 0.5f;
 
     public Item fuelItem = MLItems.fluorescentFeatherStone;
@@ -52,7 +45,7 @@ public class PhantomReactor extends PowerGenerator {
     public PhantomReactor(String name) {
         super(name);
         itemCapacity = 30;
-        liquidCapacity = 100;
+        liquidCapacity = 60;
         hasItems = true;
         hasLiquids = true;
         rebuildable = false;
@@ -71,12 +64,37 @@ public class PhantomReactor extends PowerGenerator {
 
     @Override
     public void setStats() {
-        super.setStats();
+        super.setStats();              // 保留电力、生命等标准统计
+
+        // 移除默认的输入统计，自己定制
+        stats.remove(Stat.input);
+
+        stats.add(Stat.input, table -> {
+            table.row();
+            // 物品
+            table.table(Tex.pane, t -> {
+                t.left().defaults().left();
+                t.add(Core.bundle.format("stat.input")).left().growX().row();
+                t.add(StatValues.stack(new ItemStack(fuelItem, 1))).pad(5).row();
+            }).growX().pad(5).row();
+            // 液体
+            table.table(Tex.pane, t -> {
+                t.add(StatValues.liquid(fuelLiquid, 0.5f * 60f, true)).pad(5).row();
+            }).growX().pad(5).row();
+        });
+
+        stats.add(Stat.coolant, table -> {
+            table.row();
+            table.table(Tex.pane, t -> {
+                t.left().defaults().left();
+                t.add(Core.bundle.format("stat.coolant")).left().growX().row();
+                t.add(StatValues.liquid(coolantLiquid, coolantPower * 60f, true)).pad(5).row();
+            }).growX().pad(5).row();
+        });
+
         if (hasItems) {
             stats.add(Stat.productionTime, itemDuration / 60f, StatUnit.seconds);
         }
-        // 冷却液统计
-        stats.add(Stat.coolant, StatValues.liquid(coolantLiquid, coolantPower * 60f, true));
     }
 
     @Override
@@ -93,43 +111,34 @@ public class PhantomReactor extends PowerGenerator {
 
         @Override
         public void updateTile() {
-            // 1. 检查固体燃料（荧羽石）
             int fuel = items.get(fuelItem);
             float fullness = (float) fuel / itemCapacity;
             productionEfficiency = fullness;
 
-            // 2. 检查液体燃料（幻钢溶液）和冷却水
-            boolean hasFuelLiquid = liquids.get(fuelLiquid) >= 0.5f;   // 至少 0.5 单位才能工作
-            boolean hasCoolant = liquids.get(coolantLiquid) >= 0.01f; // 只要有水就算有冷却
+            boolean hasFuelLiquid = liquids.get(fuelLiquid) >= 0.5f;
+            boolean hasCoolant = liquids.get(coolantLiquid) >= 0.01f;
 
             if (fuel > 0 && hasFuelLiquid && enabled) {
-                // 正常产热
                 heat += fullness * heating * Math.min(delta(), 4f);
 
-                // 消耗固体燃料（按时间）
                 if (timer(timerFuel, itemDuration / timeScale)) {
-                    consume(); // 消耗物品
+                    consume();
                 }
 
-                // 消耗液体燃料（每帧消耗一点）
                 liquids.remove(fuelLiquid, Math.min(liquids.get(fuelLiquid), 0.5f * delta()));
             } else {
-                // 无燃料或中断 → 自然冷却
                 productionEfficiency = 0f;
                 heat = Math.max(0f, heat - Time.delta / ambientCooldownTime);
             }
 
-            // 3. 冷却机制：有水时正常冷却，无水时热量暴增
             if (hasCoolant && heat > 0) {
                 float maxUsed = Math.min(liquids.get(coolantLiquid), heat / coolantPower);
                 heat -= maxUsed * coolantPower;
                 liquids.remove(coolantLiquid, maxUsed);
             } else if (!hasCoolant && heat > 0.1f) {
-                // 缺水惩罚：热量加速上升（5 倍速率）
                 heat += heating * 5f * Math.min(delta(), 4f);
             }
 
-            // 冒烟效果
             if (heat > smokeThreshold) {
                 float smoke = 1.0f + (heat - smokeThreshold) / (1f - smokeThreshold);
                 if (Mathf.chance(smoke / 20.0 * delta())) {
@@ -141,40 +150,30 @@ public class PhantomReactor extends PowerGenerator {
             heat = Mathf.clamp(heat);
             heatProgress = heatOutput > 0f ? Mathf.approachDelta(heatProgress, heat * heatOutput * (enabled ? 1f : 0f), 0.01f * delta()) : 0f;
 
-            // 过热爆炸
             if (heat >= 0.999f) {
                 Events.fire(Trigger.thoriumReactorOverheat);
                 kill();
             }
         }
 
-        @Override
-        public float heatFrac() { return heatProgress / heatOutput; }
-        @Override
-        public float heat() { return heatProgress; }
-
-        @Override
-        public double sense(LAccess sensor) {
+        @Override public float heatFrac() { return heatProgress / heatOutput; }
+        @Override public float heat() { return heatProgress; }
+        @Override public double sense(LAccess sensor) {
             if (sensor == LAccess.heat) return heat;
             return super.sense(sensor);
         }
-
-        @Override
-        public boolean shouldExplode() {
+        @Override public boolean shouldExplode() {
             return super.shouldExplode() && (items.get(fuelItem) >= 5 || heat >= 0.5f);
         }
 
-        @Override
-        public void drawLight() {
+        @Override public void drawLight() {
             float fract = productionEfficiency;
             smoothLight = Mathf.lerpDelta(smoothLight, fract, 0.08f);
             Drawf.light(x, y, (90f + Mathf.absin(5, 5f)) * smoothLight, Tmp.c1.set(lightColor).lerp(Color.scarlet, heat), 0.6f * smoothLight);
         }
 
-        @Override
-        public void draw() {
+        @Override public void draw() {
             super.draw();
-
             Draw.color(coolColor, hotColor, heat);
             Fill.rect(x, y, size * tilesize, size * tilesize);
 
@@ -183,27 +182,16 @@ public class PhantomReactor extends PowerGenerator {
                 Draw.alpha(liquids.currentAmount() / liquidCapacity);
                 Draw.rect(topRegion, x, y);
             }
-
             if (heat > flashThreshold && lightsRegion != null) {
                 flash += (1f + ((heat - flashThreshold) / (1f - flashThreshold)) * 5.4f) * Time.delta;
                 Draw.color(Color.red, Color.yellow, Mathf.absin(flash, 9f, 1f));
                 Draw.alpha(0.3f);
                 Draw.rect(lightsRegion, x, y);
             }
-
             Draw.reset();
         }
 
-        @Override
-        public void write(Writes write) {
-            super.write(write);
-            write.f(heat);
-        }
-
-        @Override
-        public void read(Reads read, byte revision) {
-            super.read(read, revision);
-            heat = read.f();
-        }
+        @Override public void write(Writes write) { super.write(write); write.f(heat); }
+        @Override public void read(Reads read, byte revision) { super.read(read, revision); heat = read.f(); }
     }
 }
