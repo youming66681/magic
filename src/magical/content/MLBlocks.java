@@ -2441,7 +2441,7 @@ public class MLBlocks {
                 explosionShakeDuration = 180f;
                 explosionDamage = 5000;
                 explosionRadius = 25;
-                explodeSound = Sounds.largeCannon;
+                explodeSound = MLSounds.largeCannon;
                 explodeEffect = MLFx.hugeEnergyExplosion;
 
             buildType = LumifeatherReactorBuild::new;
