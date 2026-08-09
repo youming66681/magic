@@ -8,6 +8,7 @@ import mindustry.game.Objectives;
 import mindustry.content.SectorPresets;
 import mindustry.game.Objectives.SectorComplete;
 import mindustry.game.Objectives.OnSector;
+import mindustry.content.TechTree.TechNode;
 
 import magical.content.MLItems;
 import magical.content.MLBlocks;

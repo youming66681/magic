@@ -370,7 +370,7 @@ public class MLBlocks {
             requirements(Category.crafting, ItemStack.with(new Object[]{MLItems.acrylic, 30, Items.silicon, 25, MLItems.arrayChip, 10}));
 
             updateEffect = Fx.freezing;
-            outputLiquid = new LiquidStack(MLLiquids.PhantomSteelSolution, 0.5f);
+            outputLiquid = new LiquidStack(MLLiquids.PhantomSteelSolution, 0.4f);
             craftTime = 60f;
             health = 400;
             size = 2;
