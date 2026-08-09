@@ -136,6 +136,7 @@ import mindustry.entities.part.ShapePart;
 import mindustry.entities.pattern.ShootHelix;
 import mindustry.world.blocks.distribution.*;
 import mindustry.world.blocks.power.NuclearReactor;
+import mindustry.world.blocks.power.NuclearReactor.NuclearReactorBuild;
 import mindustry.entities.Damage;
 
 public class MLBlocks {
@@ -2545,15 +2546,17 @@ public class MLBlocks {
         }};
          //unit
     }
-    public static class LumifeatherReactorBuild extends NuclearReactor.NuclearReactorBuild{
+    //AAA
+    public class LumifeatherReactorBuild extends NuclearReactorBuild{
         @Override
         public void updateTile(){
             super.updateTile();
             if(efficiency > 0f && liquids.get(Liquids.water) <= 0.001f){
                 Fx.massiveExplosion.at(x,y);
-                Damage.damage(x, y, block.explosionRadius * tilesize, block.explosionDamage);
+                Damage.damage(x, y, 25 * tilesize, 5000f);
                 kill();
             }
         }
     }
+    //AAA
 }
