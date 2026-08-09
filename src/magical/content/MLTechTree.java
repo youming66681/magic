@@ -8,9 +8,9 @@ import mindustry.game.Objectives;
 import mindustry.content.SectorPresets;
 import mindustry.game.Objectives.SectorComplete;
 import mindustry.game.Objectives.OnSector;
-import static mindustry.content.Items;
-import static mindustry.content.Blocks;
-import static mindustry.content.Liquids;
+import mindustry.content.Items;
+import mindustry.content.Blocks;
+import mindustry.content.Liquids;
 
 import magical.content.MLItems;
 import magical.content.MLBlocks;
