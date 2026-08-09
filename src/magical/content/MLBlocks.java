@@ -2508,7 +2508,7 @@ public class MLBlocks {
 
             drawer = new DrawMulti(new DrawRegion("-bottom"),
                 new DrawLiquidRegion(){{
-                drawLiquid = Liquids.cryofluid;
+                drawLiquid = Liquids.water;
                 suffix = "-liquid";
             }}, new DrawDefault());
 
