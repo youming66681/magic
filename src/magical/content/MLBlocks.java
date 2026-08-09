@@ -2506,7 +2506,11 @@ public class MLBlocks {
                     }}
             );
 
-            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault());
+            drawer = new DrawMulti(new DrawRegion("-bottom"),
+                new DrawLiquidRegion(){{
+                drawLiquid = Liquids.cryofluid;
+                suffix = "-liquid";
+            }}, new DrawDefault());
 
         }};
         //power
