@@ -210,11 +210,13 @@ public class MLFx {
             float rot = e.rotation;
             Draw.color(Color.valueOf("FEEBB3FF"));
             Lines.stroke(2f * fout);
-            Lines.circle(e.x,e.y,6f + fin * 18f);
-            Fill.circle(e.x,e.y,4f * fout);
-            Angles.randLenVectors(e.id, 12 ,18f * fin,(x,y)->{Fill.circle(e.x + x, e.y + y, 2f * fout);
+            Lines.circle(e.x, e.y, 6f + fin * 18f);
+            Fill.circle(e.x, e.y, 4f * fout);
+            Angles.randLenVectors(e.id, 12, 18f * fin, (x, y) -> {
+                Fill.circle(e.x + x, e.y + y, 2f * fout);
             });
         });
+    }
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
 

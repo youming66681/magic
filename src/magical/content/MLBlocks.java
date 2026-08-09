@@ -2442,7 +2442,72 @@ public class MLBlocks {
                 explosionDamage = 5000;
                 explosionRadius = 25;
                 explodeSound = MLSounds.largeCannon;
-                explodeEffect = MLFx.hugeEnergyExplosion;
+                explodeEffect = new MultiEffect(
+                    new WaveEffect(){{
+                        lifetime = 60f;
+                        sizeFrom = 0f;
+                        sizeTo = 640f;
+                        strokeFrom = 0f;
+                        strokeTo = 16f;
+                        colorFrom = Color.valueOf("8AA3F4FF");
+                        colorTo = Color.valueOf("8AA3F4FF");
+                    }},
+                    new ParticleEffect(){{
+                        particles = 50;
+                        sizeFrom = 50f;
+                        sizeTo = 0f;
+                        length = 480f;
+                        baseLength = 0f;
+                        interp = Interp.pow10Out;
+                        sizeInterp = Interp.pow10In;
+                        lifetime = 180f;
+                        colorFrom = Color.valueOf("8AA3F4FF");
+                        colorTo = Color.valueOf("8AA3F4FF");
+                    }},
+                    new ParticleEffect(){{
+                        particles = 100;
+                        line = true;
+                        strokeFrom = 8f;
+                        strokeTo = 0f;
+                        interp = Interp.pow5Out;
+                        sizeInterp = Interp.pow5In;
+                        lenFrom = 100f;
+                        lenTo = 0f;
+                        length = 480f;
+                        baseLength = 0f;
+                        lifetime = 180f;
+                        colorFrom = Color.valueOf("8AA3F4FF");
+                        colorTo = Color.valueOf("8AA3F4FF");
+                    }},
+                    new ParticleEffect(){{
+                        particles = 1;
+                        sizeFrom = 0f;
+                        sizeTo = 320f;
+                        sizeInterp = Interp.pow5Out;
+                        length = 0f;
+                        baseLength = 0f;
+                        lifetime = 60f;
+                        colorFrom = Color.valueOf("8AA3F4FF");
+                        colorTo = Color.valueOf("8AA3F4FF");
+                    }},
+                    new ParticleEffect(){{
+                        particles = 1;
+                        sizeFrom = 320f;
+                        sizeTo = 0f;
+                        sizeInterp = Interp.pow10In;
+                        length = 0f;
+                        baseLength = 0f;
+                        startDelay = 60f;
+                        lifetime = 120f;
+                        colorFrom = Color.valueOf("8AA3F4FF");
+                        colorTo = Color.valueOf("8AA3F4FF");
+                    }},
+                    new WrapEffect(){{
+                        effect = dynamicSpikes;
+                        color = Color.valueOf("8AA3F4FF");
+                        rotation = 360f;
+                    }},
+            );
 
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault());
 
