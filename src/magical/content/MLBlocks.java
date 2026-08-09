@@ -2449,8 +2449,8 @@ public class MLBlocks {
                         sizeTo = 640f;
                         strokeFrom = 0f;
                         strokeTo = 16f;
-                        colorFrom = Color.valueOf("8AA3F4FF");
-                        colorTo = Color.valueOf("8AA3F4FF");
+                        colorFrom = Color.valueOf("FEEBB3FF");
+                        colorTo = Color.valueOf("FEEBB3FF");
                     }},
                     new ParticleEffect(){{
                         particles = 50;
@@ -2461,8 +2461,8 @@ public class MLBlocks {
                         interp = Interp.pow10Out;
                         sizeInterp = Interp.pow10In;
                         lifetime = 180f;
-                        colorFrom = Color.valueOf("8AA3F4FF");
-                        colorTo = Color.valueOf("8AA3F4FF");
+                        colorFrom = Color.valueOf("FEEBB3FF");
+                        colorTo = Color.valueOf("FEEBB3FF");
                     }},
                     new ParticleEffect(){{
                         particles = 100;
@@ -2476,8 +2476,8 @@ public class MLBlocks {
                         length = 480f;
                         baseLength = 0f;
                         lifetime = 180f;
-                        colorFrom = Color.valueOf("8AA3F4FF");
-                        colorTo = Color.valueOf("8AA3F4FF");
+                        colorFrom = Color.valueOf("FEEBB3FF");
+                        colorTo = Color.valueOf("FEEBB3FF");
                     }},
                     new ParticleEffect(){{
                         particles = 1;
@@ -2487,8 +2487,8 @@ public class MLBlocks {
                         length = 0f;
                         baseLength = 0f;
                         lifetime = 60f;
-                        colorFrom = Color.valueOf("8AA3F4FF");
-                        colorTo = Color.valueOf("8AA3F4FF");
+                        colorFrom = Color.valueOf("FEEBB3FF");
+                        colorTo = Color.valueOf("FEEBB3FF");
                     }},
                     new ParticleEffect(){{
                         particles = 1;
@@ -2499,12 +2499,12 @@ public class MLBlocks {
                         baseLength = 0f;
                         startDelay = 60f;
                         lifetime = 120f;
-                        colorFrom = Color.valueOf("8AA3F4FF");
-                        colorTo = Color.valueOf("8AA3F4FF");
+                        colorFrom = Color.valueOf("FEEBB3FF");
+                        colorTo = Color.valueOf("FEEBB3FF");
                     }},
                     new WrapEffect(){{
                         effect = dynamicSpikes;
-                        color = Color.valueOf("8AA3F4FF");
+                        color = Color.valueOf("FEEBB3FF");
                         rotation = 360f;
                     }},
             );
