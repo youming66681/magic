@@ -66,31 +66,23 @@ public class PhantomReactor extends PowerGenerator {
     @Override
     public void setStats() {
         super.setStats();
-
         stats.remove(Stat.input);
-
         stats.add(Stat.input, table -> {
             table.row();
             table.table(Tex.pane, t -> {
                 t.left().defaults().left();
                 t.add(Core.bundle.format("stat.input")).left().growX().row();
-                t.add(new ItemImage(fuelItem.uiIcon, 1)).padRight(5);
-                t.add(fuelItem.localizedName).left();
+                t.add(StatValues.stack(new ItemStack(fuelItem, 1))).pad(5).row();
             }).growX().pad(5).row();
             table.table(Tex.pane, t -> {
-                t.add(StatValues.liquid(fuelLiquid, 0.5f * 60f, true).display(t)).pad(5).row();
+                StatValues.liquid(fuelLiquid, 0.5f * 60f, true).display(t);
             }).growX().pad(5).row();
-        });
-
-        stats.add(Stat.input, table -> {
-            table.row();
             table.table(Tex.pane, t -> {
                 t.left().defaults().left();
                 t.add(Core.bundle.format("stat.coolant")).left().growX().row();
-                t.add(StatValues.liquid(coolantLiquid, coolantPower * 60f, true).display(t)).pad(5).row();
+                StatValues.liquid(coolantLiquid, coolantPower * 60f, true).display(t);
             }).growX().pad(5).row();
         });
-
         if (hasItems) {
             stats.add(Stat.productionTime, itemDuration / 60f, StatUnit.seconds);
         }
