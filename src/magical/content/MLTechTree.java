@@ -8,9 +8,6 @@ import mindustry.game.Objectives;
 import mindustry.content.SectorPresets;
 import mindustry.game.Objectives.SectorComplete;
 import mindustry.game.Objectives.OnSector;
-import mindustry.content.Items;
-import mindustry.content.Blocks;
-import mindustry.content.Liquids;
 
 import magical.content.MLItems;
 import magical.content.MLBlocks;
@@ -242,7 +239,6 @@ public class MLTechTree {
                 });
             });
                  });
-        root.children.add(Planets.serpulo.techTree);
         MLPlanets.cecilia.techTree = root;
     }
 }
