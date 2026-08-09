@@ -14,13 +14,10 @@ import mindustry.world.meta.*;
 import static mindustry.Vars.*;
 
 public class ExplosiveGenerator extends ConsumeGenerator {
-    public Item fuelItem = MLItems.荧羽石;
-    public Liquid coolantLiquid = MLLiquids.幻钢溶液;
+    public Item fuelItem = MLItems.fluorescentFeatherStone;
+    public Liquid coolantLiquid = MLLiquids.PhantomSteelSolution;
     public Liquid waterLiquid = Liquids.water;
-    public float explosionRadius = 4 * 8f;
-    public float explosionDamage = 100f;
     public Effect explodeEffect = Fx.explosion;
-
     public ExplosiveGenerator(String name) {
         super(name);
         hasItems = true;
@@ -33,21 +30,49 @@ public class ExplosiveGenerator extends ConsumeGenerator {
 
     @Override
     public void init() {
+        consume(new ConsumeItem(items -> fuelItem, itemAmount));
+        consume(new ConsumeLiquid(coolantLiquid, coolantAmount));
+        consume(new ConsumeCoolant(waterCoolantAmount, maxHeatEfficiency));
+
         super.init();
-        consumeItem(fuelItem, itemAmount);
-        consumeLiquid(coolantLiquid, coolantAmount);
-        consumeLiquid(waterLiquid, waterAmount);
     }
+    @Override
+    public void setStats() {
+        super.setStats();
 
+        stats.remove(Stat.input);
+        stats.remove(Stat.coolant);
+
+        stats.add(Stat.input, table -> {
+            table.row();
+            table.table(Tex.pane, t -> {
+                t.left().defaults().left();
+                t.add(Core.bundle.format("stat.input")).left();
+                t.row();
+                t.add(StatValues.stack(new ItemStack(fuelItem, Math.round(itemAmount))));
+                t.row();
+                t.add(StatValues.liquid(coolantLiquid, coolantAmount * 60f, true));
+            }).growX().pad(5).row();
+        });
+
+        stats.add(Stat.coolant, table -> {
+            table.row();
+            table.table(Tex.pane, t -> {
+                t.left().defaults().left();
+                t.add(Core.bundle.format("stat.coolant")).left();
+                t.row();
+                t.add(StatValues.liquid(waterLiquid, waterCoolantAmount * 60f, true));
+            }).growX().pad(5).row();
+        });
+    }
     public class ExplosiveGeneratorBuild extends ConsumeGeneratorBuild {
-
         @Override
         public void updateTile() {
             super.updateTile();
             if (!enabled || net.client()) return;
-            boolean canRun = consItem.efficiency(this) > 0.001f && consLiquids(coolantLiquid).efficiency(this) > 0.001f;
-            boolean waterLacking = liquids.get(waterLiquid) < waterAmount * efficiencyScale();
-            if (canRun && waterLacking) {
+            boolean hasItem = items.has(fuelItem, itemAmount);
+            boolean hasCoolant = liquids.get(coolantLiquid) > 0.001f;
+            if (hasItem && hasCoolant && liquids.get(waterLiquid) < 0.001f) {
                 explode();
             }
         }
@@ -56,15 +81,6 @@ public class ExplosiveGenerator extends ConsumeGenerator {
             kill();
             explodeEffect.at(x, y);
             Damage.damage(team, x, y, explosionRadius, explosionDamage, false);
-        }
-
-        private ConsumeLiquid consLiquids(Liquid liquid) {
-            for (Consume c : consumers) {
-                if (c instanceof ConsumeLiquid cl && cl.liquid == liquid) {
-                    return cl;
-                }
-            }
-            return null;
         }
     }
 }
