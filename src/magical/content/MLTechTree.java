@@ -238,7 +238,8 @@ public class MLTechTree {
                 });
             });
                  });
-        //MLPlanets.cecilia.techTree = root;
-        MLPlanets.cecilia.techTree = Planets.serpulo.techTree;
+
+        MLPlanets.cecilia.techTree = root;
+        MLPlanets.cecilia.techTree = copyTree(Planets.serpulo.techTree, null);
     }
 }
