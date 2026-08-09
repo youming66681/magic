@@ -8,6 +8,9 @@ import mindustry.game.Objectives;
 import mindustry.content.SectorPresets;
 import mindustry.game.Objectives.SectorComplete;
 import mindustry.game.Objectives.OnSector;
+import static mindustry.content.Items;
+import static mindustry.content.Blocks;
+import static mindustry.content.Liquids;
 
 import magical.content.MLItems;
 import magical.content.MLBlocks;
@@ -238,15 +241,15 @@ public class MLTechTree {
 
                 });
             });
-            nodeProduce(copper, () -> {
-                nodeProduce(lead, () -> {
-                    nodeProduce(graphite, () -> {
-                        nodeProduce(silicon, () -> {
-                            nodeProduce(titanium, () -> {
-                                nodeProduce(thorium, () -> {
-                                    nodeProduce(plastanium, () -> {
-                                        nodeProduce(phaseFabric, () -> {
-                                            nodeProduce(surgeAlloy, () -> {});
+            nodeProduce(Items.copper, () -> {
+                nodeProduce(Items.lead, () -> {
+                    nodeProduce(Items.graphite, () -> {
+                        nodeProduce(Items.silicon, () -> {
+                            nodeProduce(Items.titanium, () -> {
+                                nodeProduce(Items.plastanium, () -> {
+                                    nodeProduce(Items.thorium, () -> {
+                                        nodeProduce(Items.phaseFabric, () -> {
+                                            nodeProduce(Items.surgeAlloy, () -> {});
                                         });
                                     });
                                 });
@@ -254,10 +257,10 @@ public class MLTechTree {
                         });
                     });
                 });
-                nodeProduce(water, () -> {
-                    nodeProduce(oil, () -> {});
-                    nodeProduce(slag, () -> {});
-                    nodeProduce(cryofluid, () -> {});
+                nodeProduce(Liquids.water, () -> {
+                    nodeProduce(Liquids.cryofluid, () -> {});
+                    nodeProduce(Liquids.slag, () -> {});
+                    nodeProduce(Liquids.oil, () -> {});
                 });
             });
                  });
