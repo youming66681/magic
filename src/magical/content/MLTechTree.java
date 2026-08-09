@@ -8,7 +8,6 @@ import mindustry.game.Objectives;
 import mindustry.content.SectorPresets;
 import mindustry.game.Objectives.SectorComplete;
 import mindustry.game.Objectives.OnSector;
-import mindustry.content.TechTree.TechNode;
 
 import magical.content.MLItems;
 import magical.content.MLBlocks;
@@ -17,7 +16,7 @@ import magical.content.MLPlanets;
 
 public class MLTechTree {
     public static void load() {
-
+        ceciliaRoot.children.add(Planets.serpulo.techTree);
         TechNode root = nodeRoot("cecilia", MLBlocks.baseCore, () -> {
            //基础科技
             nodeProduce(MLItems.phantomSteel, () -> {
@@ -241,6 +240,6 @@ public class MLTechTree {
                  });
 
         MLPlanets.cecilia.techTree = root;
-        MLPlanets.cecilia.techTree = copyTree(Planets.serpulo.techTree, null);
+        MLPlanets.cecilia.techTree = Planets.serpulo.techTree;
     }
 }
