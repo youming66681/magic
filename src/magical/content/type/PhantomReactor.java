@@ -72,15 +72,13 @@ public class PhantomReactor extends PowerGenerator {
             table.table(Tex.pane, t -> {
                 t.left().defaults().left();
                 t.add(Core.bundle.format("stat.input")).left().growX().row();
-                t.add(StatValues.stack(new ItemStack(fuelItem, 1))).pad(5).row();
-            }).growX().pad(5).row();
-            table.table(Tex.pane, t -> {
-                StatValues.liquid(fuelLiquid, 0.5f * 60f, true).display(t);
+                t.add(StatValues.stack(new ItemStack(fuelItem, consumeItem))).pad(5).row();
+                StatValues.liquid(fuelLiquid, fuelLiquid, true).display(t);
             }).growX().pad(5).row();
             table.table(Tex.pane, t -> {
                 t.left().defaults().left();
                 t.add(Core.bundle.format("stat.coolant")).left().growX().row();
-                StatValues.liquid(coolantLiquid, coolantPower * 60f, true).display(t);
+                StatValues.liquid(coolantLiquid, coolantLiquid, true).display(t);
             }).growX().pad(5).row();
         });
         if (hasItems) {
@@ -127,7 +125,7 @@ public class PhantomReactor extends PowerGenerator {
                 heat -= maxUsed * coolantPower;
                 liquids.remove(coolantLiquid, maxUsed);
             } else if (!hasCoolant && heat > 0.1f) {
-                heat += heating * 5f * Math.min(delta(), 4f);
+                heat += heating * 2f * Math.min(delta(), 4f);
             }
 
             if (heat > smokeThreshold) {
@@ -178,7 +176,6 @@ public class PhantomReactor extends PowerGenerator {
             Draw.color(coolColor, hotColor, heat);
             Fill.rect(x, y, size * tilesize, size * tilesize);
 
-            // 如果有自定义贴图，可以绘制；否则只显示颜色填充
             if (topRegion != null) {
                 Draw.color(liquids.current().color);
                 Draw.alpha(liquids.currentAmount() / liquidCapacity);

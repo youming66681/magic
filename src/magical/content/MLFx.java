@@ -215,33 +215,6 @@ public class MLFx {
             Angles.randLenVectors(e.id, 12 ,18f * fin,(x,y)->{Fill.circle(e.x + x, e.y + y, 2f * fout);
             });
         });
-        hugeEnergyExplosion = new Effect(120f,e -> {
-            float fin = e.fin();
-            float fout = e.fout();
-            Draw.color(Color.valueOf("FEEBB3FF"));
-            Lines.stroke(3f * fout);
-            Lines.circle(e.x,e.y,50f * fin);
-            Lines.stroke(1.5f * fout);
-            Lines.circle(e.x,e.y,35f * fin);
-            Fill.circle(e.x,e.y,8f * fout);
-            Angles.randLenVectors(e.id,40,50f * fin,(x,y)->{
-                Fill.circle(
-                        e.x + x,
-                        e.y + y,
-                        2.5f * fout
-                );
-            });
-            Angles.randLenVectors(e.id,12,50f * fin,(x,y)->{
-                Drawf.tri(
-                        e.x + x,
-                        e.y + y,
-                        5f * fout,
-                        15f * fout,
-                        Mathf.angle(x,y)
-                );
-            });
-        });
-    }
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
 
