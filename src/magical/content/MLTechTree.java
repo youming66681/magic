@@ -22,7 +22,7 @@ public class MLTechTree {
     public static TechNode context = null;
     public static void load() {
         MLPlanets.cecilia.techTree = Planets.serpulo.techTree;
-        addToNode(Blocks.interplanetaryAccelerator, () -> node(MLBlocks.baseCore));
+        /*基座核心*/node(MLBlocks.baseCore, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
            //基础科技
             nodeProduce(MLItems.phantomSteel, () -> {
                 nodeProduce(MLLiquids.PhantomSteelSolution, () -> {
@@ -249,6 +249,8 @@ public class MLTechTree {
 
                 });
             });
-                 //});
+                 });
+        root.children.add(Planets.serpulo.techTree);
+        MLPlanets.cecilia.techTree = root;
     }
 }
