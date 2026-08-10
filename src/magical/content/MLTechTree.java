@@ -246,6 +246,5 @@ public class MLTechTree {
             });
                  });
         root.children.add(Planets.serpulo.techTree);
-        MLPlanets.cecilia.techTree = root;
     }
 }
