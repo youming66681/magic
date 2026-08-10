@@ -2625,7 +2625,7 @@ public class MLBlocks {
         }};
         //太虚构装核心
         PretendingCore = new FlexAssembler("PretendingCore"){{
-            requirements(Category.units, ItemStack.with(new Object[]{MLItems.acrylic, 450, Items.wingedStone, 450, Items.silicon, 900, MLItems.arrayChip, 180,}));
+            requirements(Category.units, ItemStack.with(new Object[]{MLItems.acrylic, 450, MLItems.wingedStone, 450, Items.silicon, 900, MLItems.arrayChip, 180,}));
             size = 9;
 
             droneType = MLUnitTypes.Pioneer;
@@ -2647,7 +2647,7 @@ public class MLBlocks {
         }};
         //通用装配升级厂
         GeneralAssemblyUpgrade = new UnitAssemblerModule("GeneralAssemblyUpgrade"){{
-            requirements(Category.units, ItemStack.with(new Object[]{MLItems.wingedMetal, 250, Items.fluorescentFeatherStone, 250, Items.silicon, 500, MLItems.arrayChip, 150,}));
+            requirements(Category.units, ItemStack.with(new Object[]{MLItems.wingedMetal, 250, MLItems.fluorescentFeatherStone, 250, Items.silicon, 500, MLItems.arrayChip, 150,}));
             consumePower(10f);
 
             size = 5;
