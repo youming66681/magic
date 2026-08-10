@@ -105,15 +105,15 @@ public class PhantomReactor extends PowerGenerator {
         public void updateTile(){
             int fuel = items.get(fuelItem);
             boolean hasFuel = fuel > 0;
-            boolean hasFuelLiquid = liquids.get(fuelLiquid) >= fuelLiquidAmount;
-            boolean hasCoolant = liquids.get(coolantLiquid) >= 0.01f;
+            boolean hasFuelLiquid = liquids.get(fuelLiquid) > 0f;
+            boolean hasCoolant = liquids.get(coolantLiquid) > 0.01f;
             if(hasFuel && hasFuelLiquid && enabled){
                 productionEfficiency = 1f;
                 heat += heating * Math.min(delta(),4f);
                 if(timer(timerFuel,itemDuration / timeScale)){
                     consume();
                 }
-                liquids.remove(fuelLiquid,Math.min(liquids.get(fuelLiquid),fuelLiquidAmount * delta()));
+                liquids.remove(fuelLiquid,fuelLiquidAmount * delta());
             }else{
                 productionEfficiency = 0f;
                 heat = Math.max(0f,heat - Time.delta / ambientCooldownTime);
