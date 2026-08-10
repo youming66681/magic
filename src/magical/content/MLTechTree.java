@@ -34,7 +34,7 @@ public class MLTechTree {
                     nodeProduce(MLItems.mysticCrystal, () -> {
                     });
             });
-            /*幻钢传送带*/node(MLBlocks.phantomSteelConveyor, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
+            /*幻钢传送带*/addToNode(MLBlocks.phantomSteelConveyor, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
                 /*幻钢液体桥*/node(MLBlocks.PhantomSteelLiquidBridge, () -> {
                         });
                 /*幻钛钢传送带*/node(MLBlocks.phantomTitaniumSteelConveyor, () -> {
@@ -47,7 +47,7 @@ public class MLTechTree {
 
                 });
             });
-            /*幻钢节点*/node(MLBlocks.phantomSteelPowerNode, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
+            /*幻钢节点*/addToNode(MLBlocks.phantomSteelPowerNode, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
                 /*燃能发电机*/node(MLBlocks.fuelPoweredGenerator, () -> {
                         });
                 /*幻钛钢节点*/node(MLBlocks.phantomTitaniumSteelPowerNode, () -> {
@@ -56,15 +56,15 @@ public class MLTechTree {
                     });
             /*幻钢钻*/node(MLBlocks.phantomSteelDrill, () -> {
                     });
-            /*电戈*/node(MLBlocks.electroge, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
+            /*电戈*/addToNode(MLBlocks.electroge, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
                 /*裂光*/node(MLBlocks.Birefringence, Seq.with(new SectorComplete(MLSectorPresets.LandingZone)), () -> {
                         });
             });
-       /*激沅*/node(MLBlocks.excitedYuan, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
+       /*激沅*/addToNode(MLBlocks.excitedYuan, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
             /*流冲*/node(MLBlocks.fluvialErosion, Seq.with(new SectorComplete(MLSectorPresets.LandingZone)), ()-> {
                 });
             });
-            /*基础制造厂*/node(MLBlocks.BasicManufacturingPlant, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
+            /*addToNode*/node(MLBlocks.BasicManufacturingPlant, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
                 /*微雨*/node(MLUnitTypes.drizzle, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant), new SectorComplete(MLSectorPresets.LandingZone)), () -> {
                     /*细雨*/node(MLUnitTypes.Drizzle, Seq.with(new Objectives.Research(MLBlocks.curvatureEvolutionPod), new SectorComplete(MLSectorPresets.LandingZone)), () -> {
                         /*透雨*/node(MLUnitTypes.drizzlingRain, Seq.with(new Objectives.Research(MLBlocks.quantumFactory), new SectorComplete(MLSectorPresets.LandingZone)), () -> {
@@ -92,7 +92,7 @@ public class MLTechTree {
                 });
                     });
             });
-            /*幻钢压缩机*/node(MLBlocks.phantomSteelCompressor, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
+            /*幻钢压缩机*/addToNode(MLBlocks.phantomSteelCompressor, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
                 /*幻钢电压机*/node(MLBlocks.phantomSteelVoltageMachine, Seq.with(new SectorComplete(MLSectorPresets.LandingZone)), () -> {
                     /*幻钛钢熔炼机*/node(MLBlocks.phantomTitaniumSteelCompressor, () -> {
                     });
@@ -100,7 +100,7 @@ public class MLTechTree {
                              });
                        });
                     });
-            /*幻钢墙*/node(MLBlocks.phantomSteelWall, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
+            /*幻钢墙*/addToNode(MLBlocks.phantomSteelWall, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
                 /*大幻钢墙*/node(MLBlocks.largePhantomSteelWall, () -> {
                     /*幻钛钢墙*/node(MLBlocks.phantomTitaniumSteelWall, () -> {
                         /*大幻钛钢墙*/node(MLBlocks.largePhantomTitaniumSteelWall, () -> {
@@ -113,21 +113,21 @@ public class MLTechTree {
                 });
             });
             //进阶科技
-            /*基站核心*/node(MLBlocks.baseStationCore, () -> {
+            /*基站核心*/addToNode(MLBlocks.baseStationCore, () -> {
                 nodeProduce(MLItems.wingedStone, () -> {
                   nodeProduce(MLItems.acrylic, () -> {
                     nodeProduce(MLItems.arrayChip, () -> {
                     });
                 });
             });
-                /*大塑钢*/node(MLBlocks.LargePlastaniumCompressor, () -> {
+                /*大塑钢*/addToNode(MLBlocks.LargePlastaniumCompressor, () -> {
                         });
-                /*翼石冲压机*/node(MLBlocks.WingStonePunchingMachine, () -> {
+                /*翼石冲压机*/addToNode(MLBlocks.WingStonePunchingMachine, () -> {
                     /*钢化玻璃强化器*/node(MLBlocks.metaglassBooster, () -> {
 
                     });
                 });
-                /*星港造舰中心*/node(MLBlocks.starHarborShipbuildingCenter, () -> {
+                /*星港造舰中心*/addToNode(MLBlocks.starHarborShipbuildingCenter, () -> {
 
                     /*构造器*/node(MLBlocks.Constructor, () -> {
 
@@ -141,7 +141,7 @@ public class MLTechTree {
                         /*箐霄*/node(MLUnitTypes.Qingxiao, () -> {
                         });
                    });
-                /*幻晶*/node(MLBlocks.PhantomCrystal, () -> {
+                /*幻晶*/addToNode(MLBlocks.PhantomCrystal, () -> {
                     /*光降*/node(MLBlocks.LightDescends, () -> {
                         /*破军*/node(MLBlocks.BreakingArmy, () -> {
 
@@ -150,35 +150,35 @@ public class MLTechTree {
                         /*星云*/node(MLBlocks.Nebula, () -> {
                         });
                     });
-            /*翼石墙*/node(MLBlocks.wingWall, () -> {
+            /*翼石墙*/addToNode(MLBlocks.wingWall, () -> {
                 /*大翼石墙*/node(MLBlocks.LargeWingWall, () -> {
                    });
                 });
-                /*电磁裂变炉*/node(MLBlocks.ElectromagneticFissionReactor, () -> {
+                /*电磁裂变炉*/addToNode(MLBlocks.ElectromagneticFissionReactor, () -> {
 
                 });
-                /*兵戈*/node(MLUnitTypes.war, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant)), () -> {
+                /*兵戈*/addToNode(MLUnitTypes.war, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant)), () -> {
                     /*烽火*/node(MLUnitTypes.BeaconFire, Seq.with(new Objectives.Research(MLBlocks.curvatureEvolutionPod)), () -> {
                         /*战乱*/node(MLUnitTypes.War, Seq.with(new Objectives.Research(MLBlocks.quantumFactory)), () -> {
 
                         });
                     });
                 });
-                /*流火*/node(MLUnitTypes.BlazingFire, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant)), () -> {
+                /*流火*/addToNode(MLUnitTypes.BlazingFire, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant)), () -> {
                     /*荧辉*/node(MLUnitTypes.glow, Seq.with(new Objectives.Research(MLBlocks.curvatureEvolutionPod)), () -> {
                         /*激耀*/node(MLUnitTypes.blazing, Seq.with(new Objectives.Research(MLBlocks.quantumFactory)), () -> {
 
                         });
                     });
                 });
-                /*驱暗*/node(MLUnitTypes.ExpelDarkness, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant)), () -> {
+                /*驱暗*/addToNode(MLUnitTypes.ExpelDarkness, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant)), () -> {
                     /*逐光*/node(MLUnitTypes.ChasingLight, Seq.with(new Objectives.Research(MLBlocks.curvatureEvolutionPod)), () -> {
                         /*启明*/node(MLUnitTypes.Dawn, Seq.with(new Objectives.Research(MLBlocks.quantumFactory)), () -> {
 
                         });
                     });
                 });
-                /*终端核心*/node(MLBlocks.TerminalCore, () -> {
+                /*终端核心*/addToNode(MLBlocks.TerminalCore, () -> {
                     nodeProduce(MLItems.mysticSteel, () -> {
                         nodeProduce(MLItems.wingedMetal, () -> {
                         });
@@ -189,18 +189,18 @@ public class MLTechTree {
 
                                         });
                                 });
-                    /*荧羽反应堆*/node(MLBlocks.LumifeatherReactor, () -> {
+                    /*荧羽反应堆*/addToNode(MLBlocks.LumifeatherReactor, () -> {
 
                             });
-                    /*玄钢传送带*/node(MLBlocks.XuansteelConveyor, () -> {
+                    /*玄钢传送带*/addToNode(MLBlocks.XuansteelConveyor, () -> {
                         /*荧羽传送带*/node(MLBlocks.GlowingFeatherConveyor, () -> {
                                 });
                         /*荧羽桥*/node(MLBlocks.GlowFeatherBridge, () -> {
                         });
                     });
-                    /*荧羽钻头*/node(MLBlocks.FluorescentFeatherDrill, () -> {
+                    /*荧羽钻头*/addToNode(MLBlocks.FluorescentFeatherDrill, () -> {
                             });
-                    /*弹雨*/node(MLBlocks.BulletsRain, () -> {
+                    /*弹雨*/addToNode(MLBlocks.BulletsRain, () -> {
                         /*曙光*/node(MLBlocks.DawN, () -> {
                                 });
                         /*罗灵*/node(MLBlocks.LuoLing, () -> {
@@ -213,7 +213,7 @@ public class MLTechTree {
                         /*寻天*/node(MLBlocks.SeekingSky, () -> {
                         });
                     });
-                    /*幻钢焚烧机*/node(MLBlocks.PhantomSteelIncinerator, () -> {
+                    /*幻钢焚烧机*/addToNode(MLBlocks.PhantomSteelIncinerator, () -> {
                         /*大型相织布编织器*/node(MLBlocks.LargePhaseWeaver, () -> {
                                 });
                         /*大型巨浪合金冶炼厂*/node(MLBlocks.LargeSurgeSmelter, () -> {
@@ -227,7 +227,7 @@ public class MLTechTree {
                             });
                         });
                     });
-                    /*玄钢墙*/node(MLBlocks.MysticSteelWall, () -> {
+                    /*玄钢墙*/addToNode(MLBlocks.MysticSteelWall, () -> {
                         /*幻荧墙*/node(MLBlocks.PhantomGlowWall, () -> {
                             /*大幻荧墙*/node(MLBlocks.LargePhantomGlowWall, () -> {
 
@@ -237,14 +237,14 @@ public class MLTechTree {
 
                         });
                     });
-                    /*太虚构装核心*/node(MLBlocks.PretendingCore, () -> {
+                    /*太虚构装核心*/addToNode(MLBlocks.PretendingCore, () -> {
                         /*通用装配升级厂*/node(MLBlocks.GeneralAssemblyUpgrade, () -> {
 
                         });
                     });
                 });
             });
-            /*降落区*/node(MLSectorPresets.LandingZone, Seq.with(new SectorComplete(SectorPresets.planetaryTerminal)), () -> {
+            /*降落区*/addToNode(MLSectorPresets.LandingZone, Seq.with(new SectorComplete(SectorPresets.planetaryTerminal)), () -> {
                 /*深幽丛林*/node(MLSectorPresets.DeepSecludedJungle, Seq.with(new SectorComplete(MLSectorPresets.LandingZone)), () -> {
 
                 });
