@@ -40,7 +40,7 @@ public class PhantomReactor extends PowerGenerator {
     public Liquid fuelLiquid = MLLiquids.PhantomSteelSolution;
     public Liquid coolantLiquid = Liquids.water;
 
-    public float fuelLiquidAmount = 1f;
+    public float fuelLiquidAmount = 0.5f;
     public float coolantAmount = 1f;
 
     public TextureRegion topRegion;
