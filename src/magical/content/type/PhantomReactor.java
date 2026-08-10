@@ -104,6 +104,7 @@ public class PhantomReactor extends PowerGenerator {
         @Override
         public void updateTile(){
             int fuel = items.get(fuelItem);
+            Log.info("效率:@ 液体:@ 发电:@",productionEfficiency,liquids.get(fuelLiquid),power.status);
             boolean hasFuel = fuel > 0;
             boolean hasFuelLiquid = liquids.get(fuelLiquid) > 0f;
             boolean hasCoolant = liquids.get(coolantLiquid) > 0.01f;
