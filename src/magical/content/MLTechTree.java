@@ -16,6 +16,7 @@ import magical.content.MLPlanets;
 
 public class MLTechTree {
     public static void load() {
+        MLPlanets.cecilia.techTree = Planets.serpulo.techTree;
         TechNode root = nodeRoot("cecilia", MLBlocks.baseCore, () -> {
            //基础科技
             nodeProduce(MLItems.phantomSteel, () -> {
@@ -231,6 +232,11 @@ public class MLTechTree {
 
                         });
                     });
+                    /*太虚构装核心*/node(MLBlocks.PretendingCore, () -> {
+                        /*通用装配升级厂*/node(MLBlocks.GeneralAssemblyUpgrade, () -> {
+
+                        });
+                    });
                 });
             });
             /*降落区*/node(MLSectorPresets.LandingZone, Seq.with(new SectorComplete(SectorPresets.planetaryTerminal)), () -> {
@@ -241,6 +247,5 @@ public class MLTechTree {
                  });
         root.children.add(Planets.serpulo.techTree);
         MLPlanets.cecilia.techTree = root;
-        //MLPlanets.cecilia.techTree = Planets.serpulo.techTree;
     }
 }

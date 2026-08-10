@@ -140,6 +140,7 @@ import mindustry.world.blocks.power.NuclearReactor.NuclearReactorBuild;
 import mindustry.entities.Damage;
 import mindustry.world.draw.DrawLiquidRegion;
 import mindustry.world.blocks.liquid.LiquidBridge;
+import mindustry.world.blocks.units.UnitAssemblerModule;
 
 public class MLBlocks {
 
@@ -156,7 +157,7 @@ public class MLBlocks {
             //高端科技
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
             LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus, DawN, MysticSteelWall, LargeMysticSteelWall, PhantomGlowWall, LargePhantomGlowWall,
-            FluorescentFeatherDrill, XuansteelConveyor, GlowFeatherBridge, GlowingFeatherConveyor, LumifeatherReactor;
+            FluorescentFeatherDrill, XuansteelConveyor, GlowFeatherBridge, GlowingFeatherConveyor, LumifeatherReactor, PretendingCore, GeneralAssemblyUpgrade;
 
     public static void load() {
 
@@ -2582,6 +2583,7 @@ public class MLBlocks {
 
             droneType = MLUnitTypes.Pioneer;
             dronesCreated = 4;
+            health = 6300;
             // 配方：(等级标签, 输出单位, 时间(秒), 范围(格), 需要模块数, 载荷需求...)
             addPlan("T1", MLUnitTypes.Starlight, 1200f, 11, 0,
                     new PayloadStack(MLBlocks.largePhantomSteelWall, 8),
@@ -2620,6 +2622,36 @@ public class MLBlocks {
             consumePower(5f);
             size = 5;
             deconstructSpeed = 5f;
+        }};
+        //太虚构装核心
+        PretendingCore = new FlexAssembler("PretendingCore"){{
+            requirements(Category.units, ItemStack.with(new Object[]{MLItems.acrylic, 450, Items.wingedStone, 450, Items.silicon, 900, MLItems.arrayChip, 180,}));
+            size = 9;
+
+            droneType = MLUnitTypes.Pioneer;
+            health = 8100;
+            dronesCreated = 4;
+            // 配方：(等级标签, 输出单位, 时间(秒), 范围(格), 需要模块数, 载荷需求...)
+            addPlan("T1", MLUnitTypes.Starlight, 1200f, 11, 0,
+                    new PayloadStack(MLBlocks.largePhantomSteelWall, 8),
+                    new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 8),
+                    new PayloadStack(Blocks.repairPoint, 8),
+                    new PayloadStack(Blocks.forceProjector, 4));
+            addPlan("T2", MLUnitTypes.Qingxiao, 1500f, 11, 1,
+                    new PayloadStack(MLBlocks.largePhantomSteelWall, 8),
+                    new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 8),
+                    new PayloadStack(Blocks.lancer, 4),
+                    new PayloadStack(Blocks.forceProjector, 2));
+
+            consumePower(15f);
+        }};
+        //通用装配升级厂
+        GeneralAssemblyUpgrade = new UnitAssemblerModule("GeneralAssemblyUpgrade"){{
+            requirements(Category.units, ItemStack.with(new Object[]{MLItems.wingedMetal, 250, Items.fluorescentFeatherStone, 250, Items.silicon, 500, MLItems.arrayChip, 150,}));
+            consumePower(10f);
+
+            size = 5;
+            health = 2500;
         }};
          //unit
     }
