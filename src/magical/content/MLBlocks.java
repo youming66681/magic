@@ -2447,8 +2447,7 @@ public class MLBlocks {
             squareSprite = false;
 
             consumeItem(MLItems.fluorescentFeatherStone, 2);
-            consumeLiquid(MLLiquids.PhantomSteelSolution, 0.5f);
-            consumeLiquid(Liquids.water, 1);
+            consumeLiquids(LiquidStack.with(MLLiquids.PhantomSteelSolution, 0.5f,Liquids.water, 1));
 
                 explosionShake = 25;
                 explosionShakeDuration = 180f;
@@ -2650,7 +2649,7 @@ public class MLBlocks {
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.wingedMetal, 250, MLItems.fluorescentFeatherStone, 250, Items.silicon, 500, MLItems.arrayChip, 150,}));
             consumePower(10f);
 
-            size = 5;
+            size = 3;
             health = 2500;
         }};
          //unit
