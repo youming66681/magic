@@ -22,7 +22,7 @@ public class MLTechTree {
     public static TechNode context = null;
     public static void load() {
         MLPlanets.cecilia.techTree = Planets.serpulo.techTree;
-        /*基座核心*/node(MLBlocks.baseCore, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
+        TechNode root = nodeRoot("cecilia", MLBlocks.baseCore, () -> {
            //基础科技
             nodeProduce(MLItems.phantomSteel, () -> {
                 nodeProduce(MLLiquids.PhantomSteelSolution, () -> {
