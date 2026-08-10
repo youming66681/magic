@@ -139,6 +139,7 @@ import mindustry.world.blocks.power.NuclearReactor;
 import mindustry.world.blocks.power.NuclearReactor.NuclearReactorBuild;
 import mindustry.entities.Damage;
 import mindustry.world.draw.DrawLiquidRegion;
+import mindustry.world.blocks.liquid.LiquidBridge;
 
 public class MLBlocks {
 
