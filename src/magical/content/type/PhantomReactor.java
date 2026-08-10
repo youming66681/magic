@@ -40,6 +40,7 @@ public class PhantomReactor extends PowerGenerator {
     public Liquid fuelLiquid = MLLiquids.PhantomSteelSolution;
     public Liquid coolantLiquid = Liquids.water;
 
+    public float fuelLiquidAmount = 0.5f;
     public float coolantAmount = 1f;
 
     public TextureRegion topRegion;
@@ -101,59 +102,50 @@ public class PhantomReactor extends PowerGenerator {
         public float smoothLight;
 
         @Override
-        public void updateTile(){
+        public void updateTile() {
             int fuel = items.get(fuelItem);
-            boolean hasFuel = fuel > 0;
-            boolean hasFuelLiquid = liquids.get(fuelLiquid) > 0f;
-            boolean hasCoolant = liquids.get(coolantLiquid) > 0.01f;
+            float fullness = (float) fuel / itemCapacity;
+            productionEfficiency = fullness;
 
-            if(hasFuel && hasFuelLiquid && enabled){
-                productionEfficiency = 1f;
-                heat += heating * Math.min(delta(),4f);
+            boolean hasFuelLiquid = liquids.get(fuelLiquid) >= 0.5f;
+            boolean hasCoolant = liquids.get(coolantLiquid) >= 0.01f;
 
-                if(timer(timerFuel,itemDuration / timeScale)){
+            if (fuel > 0 && hasFuelLiquid && enabled) {
+                heat += fullness * heating * Math.min(delta(), 4f);
+
+                if (timer(timerFuel, itemDuration / timeScale)) {
                     consume();
                 }
 
-                liquids.remove(fuelLiquid,fuelLiquidAmount * delta());
-
-            }else{
+                liquids.remove(fuelLiquid, Math.min(liquids.get(fuelLiquid), 0.5f * delta()));
+            } else {
                 productionEfficiency = 0f;
-                heat = Math.max(0f,heat - Time.delta / ambientCooldownTime);
+                heat = Math.max(0f, heat - Time.delta / ambientCooldownTime);
             }
 
-            if(hasCoolant && heat > 0){
-                float maxUsed = Math.min(liquids.get(coolantLiquid),heat / coolantPower);
+            if (hasCoolant && heat > 0) {
+                float maxUsed = Math.min(liquids.get(coolantLiquid), heat / coolantPower);
                 heat -= maxUsed * coolantPower;
-                liquids.remove(coolantLiquid,maxUsed);
-            }else if(!hasCoolant && heat > 0.1f){
-                heat += heating * 0.5f * Math.min(delta(),4f);
+                liquids.remove(coolantLiquid, maxUsed);
+            } else if (!hasCoolant && heat > 0.1f) {
+                heat += heating * 0.5f * Math.min(delta(), 4f);
             }
 
-            if(heat > smokeThreshold){
-                float smoke = 1f + (heat - smokeThreshold) / (1f - smokeThreshold);
-                if(Mathf.chance(smoke / 20f * delta())){
-                    Fx.reactorsmoke.at(
-                            x + Mathf.range(size * tilesize / 2f),
-                            y + Mathf.range(size * tilesize / 2f)
-                    );
+            if (heat > smokeThreshold) {
+                float smoke = 1.0f + (heat - smokeThreshold) / (1f - smokeThreshold);
+                if (Mathf.chance(smoke / 20.0 * delta())) {
+                    Fx.reactorsmoke.at(x + Mathf.range(size * tilesize / 2f),
+                            y + Mathf.range(size * tilesize / 2f));
                 }
             }
 
             heat = Mathf.clamp(heat);
+            heatProgress = heatOutput > 0f ? Mathf.approachDelta(heatProgress, heat * heatOutput * (enabled ? 1f : 0f), 0.01f * delta()) : 0f;
 
-            heatProgress = heatOutput > 0f ?
-                    Mathf.approachDelta(
-                            heatProgress,
-                            heat * heatOutput * (enabled ? 1f : 0f),
-                            0.01f * delta()
-                    )
-                    : 0f;
-
-            if(heat >= 0.999f){
+            if (heat >= 0.999f) {
                 kill();
-                explodeEffect.at(x,y);
-                explodeSound.at(x,y);
+                explodeEffect.at(x, y);
+                explodeSound.at(x, y);
             }
         }
 
