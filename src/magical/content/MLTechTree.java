@@ -19,8 +19,8 @@ import magical.content.MLUnitTypes;
 import magical.content.MLPlanets;
 
 public class MLTechTree {
+    public static TechNode context = null;
     public static void load() {
-        public static TechNode context = null;
         //MLPlanets.cecilia.techTree = Planets.serpulo.techTree;
         TechNode root = nodeRoot("cecilia", MLBlocks.baseCore, () -> {
            //基础科技
