@@ -151,7 +151,7 @@ public class MLBlocks {
             BasicManufacturingPlant,
             //进阶科技
             starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
-            Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, StarshipMaterialConstructor, StarshipMaterialDeconstructor,
+            Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, Constructor, Deconstructor,
             //高端科技
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
             LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus, DawN, MysticSteelWall, LargeMysticSteelWall, PhantomGlowWall, LargePhantomGlowWall,
@@ -2588,7 +2588,7 @@ public class MLBlocks {
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);
         }};
-        StarshipMaterialConstructor = new Constructor("StarshipMaterialConstructor"){{
+        Constructor = new Constructor("Constructor"){{
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 120, Items.graphite, 90, Items.silicon, 70, MLItems.logicChip, 25}));
             hasPower = true;
             buildSpeed = 1f;
@@ -2605,7 +2605,7 @@ public class MLBlocks {
                     Blocks.lancer
             );
         }};
-        StarshipMaterialDeconstructor = new PayloadDeconstructor("StarshipMaterialDeconstructor"){{
+        Deconstructor = new PayloadDeconstructor("Deconstructor"){{
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomSteel, 120, Items.graphite, 90, Items.silicon, 70, MLItems.logicChip, 25}));
             itemCapacity = 250;
             consumePower(5f);

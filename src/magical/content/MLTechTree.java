@@ -121,9 +121,9 @@ public class MLTechTree {
                 });
                 /*星港造舰中心*/node(MLBlocks.starHarborShipbuildingCenter, () -> {
 
-                    /*星舰材料构造器*/node(MLBlocks.StarshipMaterialConstructor, () -> {
+                    /*构造器*/node(MLBlocks.Constructor, () -> {
 
-                                /*星舰材料解构器*/node(MLBlocks.StarshipMaterialDeconstructor, () -> {
+                                /*解构器*/node(MLBlocks.Deconstructor, () -> {
 
                                 });
                             });
