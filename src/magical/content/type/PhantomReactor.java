@@ -40,6 +40,9 @@ public class PhantomReactor extends PowerGenerator {
     public Liquid fuelLiquid = MLLiquids.PhantomSteelSolution;
     public Liquid coolantLiquid = Liquids.water;
 
+    public float fuelLiquidAmount = fuelLiquid;
+    public float coolantAmount = coolantLiquid;
+
     public TextureRegion topRegion;
     public TextureRegion lightsRegion;
 
@@ -73,12 +76,12 @@ public class PhantomReactor extends PowerGenerator {
                 t.left().defaults().left();
                 t.add(Core.bundle.format("stat.input")).left().growX().row();
                 t.add(StatValues.stack(new ItemStack(fuelItem, 1))).pad(5).row();
-                StatValues.liquid(fuelLiquid, fuelLiquid * 60f, true).display(t);
+                StatValues.liquid(fuelLiquid, fuelLiquidAmount * 60f, true).display(t);
             }).growX().pad(5).row();
             table.table(Tex.pane, t -> {
                 t.left().defaults().left();
                 t.add(Core.bundle.format("stat.coolant")).left().growX().row();
-                StatValues.liquid(coolantLiquid, coolantLiquid * 60f, true).display(t);
+                StatValues.liquid(coolantLiquid, coolantAmount * 60f, true).display(t);
             }).growX().pad(5).row();
         });
         if (hasItems) {
