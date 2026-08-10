@@ -107,35 +107,26 @@ public class PhantomReactor extends PowerGenerator {
             boolean hasFuel = fuel > 0;
             boolean hasFuelLiquid = liquids.get(fuelLiquid) >= fuelLiquidAmount;
             boolean hasCoolant = liquids.get(coolantLiquid) >= 0.01f;
-            if(hasFuel && hasFuelLiquid && enabled){
+            if (hasFuel && hasFuelLiquid && enabled) {
                 productionEfficiency = 1f;
                 heat += heating * Math.min(delta(), 4f);
-                if(timer(timerFuel, itemDuration / timeScale)){
+                if (timer(timerFuel, itemDuration / timeScale)) {
                     consume();
                 }
                 liquids.remove(fuelLiquid, Math.min(liquids.get(fuelLiquid), fuelLiquidAmount * delta()));
-            }else{
+            } else {
                 productionEfficiency = 0f;
                 heat = Math.max(0f, heat - Time.delta / ambientCooldownTime);
             }
-            if(hasCoolant && heat > 0){
+            if (hasCoolant && heat > 0) {
                 float maxUsed = Math.min(liquids.get(coolantLiquid), heat / coolantPower);
                 heat -= maxUsed * coolantPower;
                 liquids.remove(coolantLiquid, maxUsed);
-            }else if(!hasCoolant && heat > 0.1f){
+            } else if (!hasCoolant && heat > 0.1f) {
                 heat += heating * Math.min(delta(), 4f);
             }
             heat = Mathf.clamp(heat);
             heatProgress = heatOutput > 0f ? Mathf.approachDelta(heatProgress, heat * heatOutput * (enabled ? 1f : 0f), 0.01f * delta()) : 0f;
-            if(heat >= 0.999f){
-                kill();
-                explodeEffect.at(x, y);
-                explodeSound.at(x, y);
-            }
-
-            heat = Mathf.clamp(heat);
-            heatProgress = heatOutput > 0f ? Mathf.approachDelta(heatProgress, heat * heatOutput * (enabled ? 1f : 0f), 0.01f * delta()) : 0f;
-
             if (heat >= 0.999f) {
                 kill();
                 explodeEffect.at(x, y);
