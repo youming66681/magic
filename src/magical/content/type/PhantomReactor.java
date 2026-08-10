@@ -102,31 +102,44 @@ public class PhantomReactor extends PowerGenerator {
         public float smoothLight;
 
         @Override
-        public void updateTile() {
+        public void updateTile(){
             int fuel = items.get(fuelItem);
             boolean hasFuel = fuel > 0;
             boolean hasFuelLiquid = liquids.get(fuelLiquid) >= fuelLiquidAmount;
             boolean hasCoolant = liquids.get(coolantLiquid) >= 0.01f;
-            if (hasFuel && hasFuelLiquid && enabled) {
+            if(hasFuel && hasFuelLiquid && enabled){
                 productionEfficiency = 1f;
-                heat += heating * Math.min(delta(), 4f);
-                if (timer(timerFuel, itemDuration / timeScale)) {
+                warmup = 1f;
+                heat += heating * Math.min(delta(),4f);
+                if(timer(timerFuel,itemDuration / timeScale)){
                     consume();
                 }
-                liquids.remove(fuelLiquid, Math.min(liquids.get(fuelLiquid), fuelLiquidAmount * delta()));
-            } else {
+                liquids.remove(fuelLiquid,Math.min(liquids.get(fuelLiquid),fuelLiquidAmount * delta()));
+            }else{
                 productionEfficiency = 0f;
-                heat = Math.max(0f, heat - Time.delta / ambientCooldownTime);
+                warmup = 0f;
+                heat = Math.max(0f,heat - Time.delta / ambientCooldownTime);
             }
+
             if (hasCoolant && heat > 0) {
                 float maxUsed = Math.min(liquids.get(coolantLiquid), heat / coolantPower);
                 heat -= maxUsed * coolantPower;
                 liquids.remove(coolantLiquid, maxUsed);
             } else if (!hasCoolant && heat > 0.1f) {
-                heat += heating * Math.min(delta(), 4f);
+                heat += heating * 0.5f * Math.min(delta(), 4f);
             }
+
+            if (heat > smokeThreshold) {
+                float smoke = 1.0f + (heat - smokeThreshold) / (1f - smokeThreshold);
+                if (Mathf.chance(smoke / 20.0 * delta())) {
+                    Fx.reactorsmoke.at(x + Mathf.range(size * tilesize / 2f),
+                            y + Mathf.range(size * tilesize / 2f));
+                }
+            }
+
             heat = Mathf.clamp(heat);
             heatProgress = heatOutput > 0f ? Mathf.approachDelta(heatProgress, heat * heatOutput * (enabled ? 1f : 0f), 0.01f * delta()) : 0f;
+
             if (heat >= 0.999f) {
                 kill();
                 explodeEffect.at(x, y);
