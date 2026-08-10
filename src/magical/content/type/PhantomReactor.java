@@ -109,7 +109,6 @@ public class PhantomReactor extends PowerGenerator {
             boolean hasCoolant = liquids.get(coolantLiquid) >= 0.01f;
             if(hasFuel && hasFuelLiquid && enabled){
                 productionEfficiency = 1f;
-                warmup = 1f;
                 heat += heating * Math.min(delta(),4f);
                 if(timer(timerFuel,itemDuration / timeScale)){
                     consume();
@@ -117,7 +116,6 @@ public class PhantomReactor extends PowerGenerator {
                 liquids.remove(fuelLiquid,Math.min(liquids.get(fuelLiquid),fuelLiquidAmount * delta()));
             }else{
                 productionEfficiency = 0f;
-                warmup = 0f;
                 heat = Math.max(0f,heat - Time.delta / ambientCooldownTime);
             }
 
