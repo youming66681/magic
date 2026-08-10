@@ -29,6 +29,8 @@ public class MLTechTree {
                     });
             });
             /*幻钢传送带*/node(MLBlocks.phantomSteelConveyor, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
+                /*幻钢液体桥*/node(MLBlocks.PhantomSteelLiquidBridge, () -> {
+                        });
                 /*幻钛钢传送带*/node(MLBlocks.phantomTitaniumSteelConveyor, () -> {
                         });
                       /*幻钢装卸器*/node(MLBlocks.phantomSteelUnloader, () -> {

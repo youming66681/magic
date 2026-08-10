@@ -148,7 +148,7 @@ public class MLBlocks {
             fluvialErosion, adaptiveWall, largeAdaptiveWall, Birefringence, phantomSteelDrill, phantomSteelConveyor, phantomSteelBridge, phantomSteeljunction,
             phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode, excitedYuan, fuelPoweredGenerator, phantomTitaniumSteelConveyor,
             phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod, quantumFactory, chipMachine,
-            BasicManufacturingPlant,
+            BasicManufacturingPlant, PhantomSteelLiquidBridge,
             //进阶科技
             starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
             Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, Constructor, Deconstructor,
@@ -2372,6 +2372,14 @@ public class MLBlocks {
             health = 300;
             speed = 1f;
             displayedSpeed = 100f;
+        }};
+        PhantomSteelLiquidBridge = new LiquidBridge("PhantomSteelLiquidBridge"){{
+            requirements(Category.liquid, ItemStack.with(new Object[]{Items.phantomSteel, 10, Items.metaglass, 15}));
+            floating = true;
+            fadeIn = moveArrows = false;
+            range = 8;
+            hasPower = false;
+            liquidCapacity = 200f;
         }};
         //Conveyor
         //电死你
