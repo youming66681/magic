@@ -2447,7 +2447,7 @@ public class MLBlocks {
             squareSprite = false;
 
             consumeItem(MLItems.fluorescentFeatherStone, 2);
-            consumeLiquids(LiquidStack.with(MLLiquids.PhantomSteelSolution, 0.5f,Liquids.water, 1));
+            consumeLiquids(LiquidStack.with(MLLiquids.PhantomSteelSolution, 0.25f,Liquids.water, 1));
 
                 explosionShake = 25;
                 explosionShakeDuration = 180f;
