@@ -2375,7 +2375,7 @@ public class MLBlocks {
             displayedSpeed = 100f;
         }};
         PhantomSteelLiquidBridge = new LiquidBridge("PhantomSteelLiquidBridge"){{
-            requirements(Category.liquid, ItemStack.with(new Object[]{Items.phantomSteel, 10, Items.metaglass, 15}));
+            requirements(Category.liquid, ItemStack.with(new Object[]{MLItems.phantomSteel, 10, Items.metaglass, 15}));
             floating = true;
             fadeIn = moveArrows = false;
             range = 8;
