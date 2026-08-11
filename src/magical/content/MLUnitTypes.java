@@ -262,7 +262,7 @@ public class MLUnitTypes {
             faceTarget = false;
             crushDamage = 4;
             weapons.add(new Weapon("magic-HeavyRain0") {{
-                reload = 240f;
+                reload = 150f;
                 recoil = 2.5f;
                 x = 0;
                 y = 0;
@@ -275,18 +275,18 @@ public class MLUnitTypes {
                 shootSound = MLSounds.shootFuse;
                 shoot = new ShootBarrel() {{
                     shots = 10;
-                    shotDelay = 2f;
+                    shotDelay = 2.5f;
                     barrels = new float[]{
-                            12f, 16f, 0f,
-                            -12f, 16f, 0f
+                            12f, 24f, 0f,
+                            -12f, 24f, 0f
                     };
                 }};
-                bullet = new BasicBulletType(16, 120) {{
+                bullet = new BasicBulletType(16, 200) {{
                     lifetime = 20;
                     width = 16;
                     height = 32;
                     splashDamageRadius = 32;
-                    splashDamage = 80;
+                    splashDamage = 100;
                     hitEffect = despawnEffect = MLFx.Explosion3;
                     hitSound = MLSounds.explosion;
                 }};

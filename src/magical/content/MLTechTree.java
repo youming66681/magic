@@ -239,7 +239,9 @@ public class MLTechTree {
                     });
                     /*太虚构装核心*/node(MLBlocks.PretendingCore, () -> {
                         /*冷雨*/node(MLUnitTypes.ColdRain, () -> {
+                            /*暴雨*/node(MLUnitTypes.HeavyRain, () -> {
 
+                            });
                                 });
                         /*通用装配升级厂*/node(MLBlocks.GeneralAssemblyUpgrade, () -> {
 
