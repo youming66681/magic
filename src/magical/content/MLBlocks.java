@@ -2612,7 +2612,8 @@ public class MLBlocks {
                     MLBlocks.Nebula,
                     Blocks.repairPoint,
                     Blocks.forceProjector,
-                    Blocks.lancer
+                    Blocks.lancer,
+                    MLBlocks.excitedYuan
             );
         }};
         Deconstructor = new PayloadDeconstructor("Deconstructor"){{
@@ -2631,16 +2632,10 @@ public class MLBlocks {
             health = 8100;
             dronesCreated = 4;
             // 配方：(等级标签, 输出单位, 时间(秒), 范围(格), 需要模块数, 载荷需求...)
-            addPlan("T1", MLUnitTypes.Starlight, 1200f, 11, 0,
-                    new PayloadStack(MLBlocks.largePhantomSteelWall, 8),
-                    new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 8),
-                    new PayloadStack(Blocks.repairPoint, 8),
-                    new PayloadStack(Blocks.forceProjector, 4));
-            addPlan("T2", MLUnitTypes.Qingxiao, 1500f, 11, 1,
-                    new PayloadStack(MLBlocks.largePhantomSteelWall, 8),
-                    new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 8),
-                    new PayloadStack(Blocks.lancer, 4),
-                    new PayloadStack(Blocks.forceProjector, 2));
+            addPlan("T1", MLUnitTypes.ColdRain, 1800f, 9, 0,
+                    new PayloadStack(MLBlocks.largePhantomSteelWall, 6),
+                    new PayloadStack(MLUnitTypes.drizzle, 3),
+                    new PayloadStack(MLBlocks.excitedYuan, 3));
 
             consumePower(15f);
         }};

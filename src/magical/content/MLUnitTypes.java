@@ -233,8 +233,8 @@ public class MLUnitTypes {
                     shots = 2;
                     shotDelay = 0f;
                     barrels = new float[]{
-                            6f, 12f, 0f,
-                            -6f, 12f, 0f
+                            8f, 12f, 0f,
+                            -8f, 12f, 0f
                     };
                 }};
                 bullet = new BasicBulletType(10, 180) {{
