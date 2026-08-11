@@ -2641,7 +2641,7 @@ public class MLBlocks {
                     new PayloadStack(MLUnitTypes.drizzle, 3),
                     new PayloadStack(MLUnitTypes.Drizzle, 3));
 
-            consumePower(15f);
+            consumePower(20f);
         }};
         //通用装配升级厂
         GeneralAssemblyUpgrade = new UnitAssemblerModule("GeneralAssemblyUpgrade"){{
