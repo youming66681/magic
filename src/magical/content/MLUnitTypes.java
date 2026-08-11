@@ -79,8 +79,6 @@ public class MLUnitTypes {
 
             health = 600;
             armor = 1;
-            drag = 0.02f;
-            accel = 0.12f;
             itemCapacity = 10;
             faceTarget = false;
             weapons.add(new Weapon("magic-drizzle1") {{
@@ -121,8 +119,6 @@ public class MLUnitTypes {
             hitSize = 28f;
             health = 1200;
             armor = 2;
-            drag = 0.04f;
-            accel = 0.1f;
             itemCapacity = 20;
             faceTarget = false;
             weapons.add(new Weapon("magic-Drizzle1") {{
@@ -181,8 +177,6 @@ public class MLUnitTypes {
                 hitSize = 36f;
                 health = 2400;
                 armor = 4;
-                drag = 0.06f;
-                accel = 0.08f;
                 itemCapacity = 40;
                 faceTarget = false;
                 crushDamage = 1;
@@ -210,6 +204,50 @@ public class MLUnitTypes {
                     }};
                 }});
             }};
+            //t4
+        ColdRain = new UnitType("ColdRain") {{
+            constructor = UnitTypes.stell.constructor;
+            omniMovement = false;
+            rotateMoveFirst = false;
+            squareShape = true;
+            rotateSpeed = 4f;
+            speed = 2.5f;
+            hitSize = 50f;
+            health = 12000;
+            armor = 12;
+            faceTarget = false;
+            crushDamage = 2;
+            weapons.add(new Weapon("magic-ColdRain0") {{
+                reload = 120f;
+                recoil = 4;
+                x = 0;
+                y = 0;
+                mirror = false;
+                rotate = true;
+                rotateSpeed = 4f;
+                inaccuracy = 0f;
+                ejectEffect = Fx.casing4;
+                layerOffset = 0.001f;
+                shootSound = MLSounds.mediumCannon;
+                shoot = new ShootBarrel() {{
+                    shots = 2;
+                    shotDelay = 0f;
+                    barrels = new float[]{
+                            4f, 8f, 0f,
+                            -4f, 8f, 0f
+                    };
+                }};
+                bullet = new BasicBulletType(10, 180) {{
+                    lifetime = 16;
+                    width = 16;
+                    height = 32;
+                    splashDamageRadius = 32;
+                    splashDamage = 120;
+                    hitEffect = despawnEffect = MLFx.Explosion3;
+                    hitSound = MLSounds.explosion;
+                }};
+            }});
+        }};
             //二级
         //t1
         war = new UnitType("war") {{
