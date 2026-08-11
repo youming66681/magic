@@ -45,7 +45,7 @@ public class MLUnitTypes {
     public static UnitType
     //陆
     //一级
-    drizzle, Drizzle, drizzlingRain,ColdRain,
+    drizzle, Drizzle, drizzlingRain, ColdRain, HeavyRain,
     //二级
     war, BeaconFire, War,
     //空
@@ -243,6 +243,50 @@ public class MLUnitTypes {
                     height = 32;
                     splashDamageRadius = 32;
                     splashDamage = 120;
+                    hitEffect = despawnEffect = MLFx.Explosion3;
+                    hitSound = MLSounds.explosion;
+                }};
+            }});
+        }};
+        //t5
+        HeavyRain = new UnitType("HeavyRain") {{
+            constructor = UnitTypes.stell.constructor;
+            omniMovement = false;
+            rotateMoveFirst = false;
+            squareShape = true;
+            rotateSpeed = 2.5f;
+            speed = 1f;
+            hitSize = 64f;
+            health = 28000;
+            armor = 18;
+            faceTarget = false;
+            crushDamage = 4;
+            weapons.add(new Weapon("magic-HeavyRain0") {{
+                reload = 240f;
+                recoil = 2.5f;
+                x = 0;
+                y = 0;
+                mirror = false;
+                rotate = true;
+                rotateSpeed = 2.5f;
+                inaccuracy = 0f;
+                ejectEffect = Fx.casing3Double;
+                layerOffset = 0.001f;
+                shootSound = MLSounds.shootFuse;
+                shoot = new ShootBarrel() {{
+                    shots = 10;
+                    shotDelay = 2f;
+                    barrels = new float[]{
+                            12f, 16f, 0f,
+                            -12f, 16f, 0f
+                    };
+                }};
+                bullet = new BasicBulletType(16, 120) {{
+                    lifetime = 20;
+                    width = 16;
+                    height = 32;
+                    splashDamageRadius = 32;
+                    splashDamage = 80;
                     hitEffect = despawnEffect = MLFx.Explosion3;
                     hitSound = MLSounds.explosion;
                 }};
