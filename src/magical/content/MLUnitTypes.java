@@ -45,7 +45,7 @@ public class MLUnitTypes {
     public static UnitType
     //陆
     //一级
-    drizzle, Drizzle, drizzlingRain,
+    drizzle, Drizzle, drizzlingRain,ColdRain,
     //二级
     war, BeaconFire, War,
     //空
