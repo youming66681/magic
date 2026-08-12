@@ -1275,7 +1275,7 @@ public class MLUnitTypes {
                             heatProgress = PartProgress.recoil;
                             recoilIndex = 1;
                             progress = PartProgress.recoil;
-                            moveY = -4;
+                            moveY = -4 ;
                         }});
                 recoils = 2;
                 bullet = new BasicBulletType(16, 120) {{
