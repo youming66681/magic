@@ -50,7 +50,7 @@ public class MLUnitTypes {
     war, BeaconFire, War,
     //空
     //一级
-    Breeze, SlantingWind, Gale, Storm,
+    Breeze, SlantingWind, Gale, Storm, Hurricane
     //二级
     BlazingFire, glow, blazing,
     //海
@@ -697,6 +697,139 @@ public class MLUnitTypes {
                             }};
                         }};
                     }});
+        }};
+        //t5
+        Hurricane = new UnitType("Hurricane") {{
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            lowAltitude = true;
+            faceTarget = false;
+            rotateSpeed = 5f;
+            speed = 2f;
+            drag = 0.04f;
+            accel = 0.1f;
+            hitSize = 56;
+            health = 26000;
+            armor = 16;
+            itemCapacity = 0;
+            engineOffset = 28;
+            engineSize = 14f;
+            range = 240;
+            weapons.add(
+                    new Weapon("magic-Hurricane"){{
+                        x = 24f;
+                        y = 8f;
+                        mirror = true;
+                        reload = 2.5f;
+                        shootSound = MLSounds.JG;
+                        inaccuracy = 2.5f;
+                        recoil = 5f;
+                        rotate = true;
+                        rotateSpeed = 5f;
+                        shoot = new ShootAlternate(){{
+                            barrels = 2;
+                            spread = 2f;
+                        }};
+                        bullet = new BasicBulletType(){{
+                            damage = 50f;
+                            pierceCap = 2;
+                            pierceBuilding = true;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            width = 8f;
+                            height = 16f;
+                            trailLength = 2;
+                            trailWidth = 3f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            pierce = true;
+                            speed = 16f;
+                            lifetime = 15f;
+                            hitEffect = new WaveEffect(){{
+                                lifetime = 8f;
+                                sizeFrom = 0f;
+                                sizeTo = 12f;
+                                strokeFrom = 1f;
+                                strokeTo = 0f;
+                                colorFrom = Color.valueOf("FFFFFF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                            despawnEffect = new WaveEffect(){{
+                                lifetime = 8f;
+                                sizeFrom = 0f;
+                                sizeTo = 12f;
+                                strokeFrom = 1f;
+                                strokeTo = 0f;
+                                colorFrom = Color.valueOf("FFFFFF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                        }};
+                        shootEffect = new WaveEffect(){{
+                            lifetime = 8f;
+                            sizeFrom = 0f;
+                            sizeTo = 4f;
+                            strokeFrom = 1f;
+                            strokeTo = 0f;
+                            colorFrom = Color.valueOf("FFFFFF");
+                            colorTo = Color.valueOf("FEEBB3FF");
+                        }};
+                    }};
+            new Weapon("magic-Hurricane"){{
+                x = 16f;
+                y = -8f;
+                mirror = true;
+                reload = 2.5f;
+                shootSound = MLSounds.JG;
+                inaccuracy = 2.5f;
+                recoil = 5f;
+                rotate = true;
+                rotateSpeed = 5f;
+                shoot = new ShootAlternate(){{
+                    barrels = 2;
+                    spread = 2f;
+                }};
+                bullet = new BasicBulletType(){{
+                    damage = 50f;
+                    pierceCap = 2;
+                    pierceBuilding = true;
+                    frontColor = Color.valueOf("FEEBB3FF");
+                    backColor = Color.valueOf("FEEBB3FF");
+                    width = 8f;
+                    height = 16f;
+                    trailLength = 2;
+                    trailWidth = 3f;
+                    trailColor = Color.valueOf("FEEBB3FF");
+                    pierce = true;
+                    speed = 16f;
+                    lifetime = 15f;
+                    hitEffect = new WaveEffect(){{
+                        lifetime = 8f;
+                        sizeFrom = 0f;
+                        sizeTo = 12f;
+                        strokeFrom = 1f;
+                        strokeTo = 0f;
+                        colorFrom = Color.valueOf("FFFFFF");
+                        colorTo = Color.valueOf("FEEBB3FF");
+                    }};
+                    despawnEffect = new WaveEffect(){{
+                        lifetime = 8f;
+                        sizeFrom = 0f;
+                        sizeTo = 12f;
+                        strokeFrom = 1f;
+                        strokeTo = 0f;
+                        colorFrom = Color.valueOf("FFFFFF");
+                        colorTo = Color.valueOf("FEEBB3FF");
+                    }};
+                }};
+                shootEffect = new WaveEffect(){{
+                    lifetime = 8f;
+                    sizeFrom = 0f;
+                    sizeTo = 4f;
+                    strokeFrom = 1f;
+                    strokeTo = 0f;
+                    colorFrom = Color.valueOf("FFFFFF");
+                    colorTo = Color.valueOf("FEEBB3FF");
+                }};
+            }});
         }};
         //二级
         //t1
