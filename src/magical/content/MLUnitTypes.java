@@ -620,7 +620,7 @@ public class MLUnitTypes {
             targetFlags = new BlockFlag[]{BlockFlag.core};
             weapons.add(
                     new Weapon("Storm1"){{
-                        reload = 60f;
+                        reload = 30f;
                         recoil = 2f;
                         x = -10f;
                         y = -8f;
@@ -655,7 +655,7 @@ public class MLUnitTypes {
                         }};
                     }},
                     new Weapon("Storm0"){{
-                        reload = 30f;
+                        reload = 15f;
                         x = 6f;
                         y = 8f;
                         rotate = true;
