@@ -50,7 +50,7 @@ public class MLUnitTypes {
     war, BeaconFire, War,
     //空
     //一级
-    Breeze, SlantingWind, Gale, Storm, Hurricane
+    Breeze, SlantingWind, Gale, Storm, Hurricane,
     //二级
     BlazingFire, glow, blazing,
     //海
@@ -772,7 +772,7 @@ public class MLUnitTypes {
                             colorFrom = Color.valueOf("FFFFFF");
                             colorTo = Color.valueOf("FEEBB3FF");
                         }};
-                    }};
+                    }},
             new Weapon("magic-Hurricane"){{
                 x = 16f;
                 y = -8f;
