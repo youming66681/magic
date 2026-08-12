@@ -2612,7 +2612,7 @@ public class MLBlocks {
                     MLBlocks.Nebula,
                     Blocks.repairPoint,
                     Blocks.forceProjector,
-                    Blocks.lancer,
+                    Blocks.lancer
             );
         }};
         Deconstructor = new PayloadDeconstructor("Deconstructor"){{
