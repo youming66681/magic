@@ -2642,7 +2642,7 @@ public class MLBlocks {
                     new PayloadStack(MLUnitTypes.Drizzle, 3));
             addPlan("T1", MLUnitTypes.Storm, 1800f, 9, 0,
                     new PayloadStack(MLBlocks.largePhantomSteelWall, 6),
-                    new PayloadStack(MLUnitTypes.Breeze, 3),
+                    new PayloadStack(MLUnitTypes.Breeze, 3);
 
             consumePower(20f);
         }};
