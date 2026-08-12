@@ -244,7 +244,9 @@ public class MLTechTree {
                             });
                                 });
                         /*暴风*/node(MLUnitTypes.Storm, () -> {
+                            /*飓风*/node(MLUnitTypes.Hurricane, () -> {
 
+                            });
                                 });
                         /*通用装配升级厂*/node(MLBlocks.GeneralAssemblyUpgrade, () -> {
 
