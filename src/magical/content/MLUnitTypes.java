@@ -717,7 +717,7 @@ public class MLUnitTypes {
             range = 240;
             weapons.add(
                     new Weapon("magic-Hurricane0"){{
-                        x = 24f;
+                        x = 16f;
                         y = 8f;
                         mirror = true;
                         reload = 5f;
@@ -765,8 +765,8 @@ public class MLUnitTypes {
                         }};
                     }},
             new Weapon("magic-Hurricane0"){{
-                x = 16f;
-                y = -8f;
+                x = 12f;
+                y = -12f;
                 mirror = true;
                 reload = 2.5f;
                 shootSound = MLSounds.JG;
