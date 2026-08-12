@@ -763,15 +763,6 @@ public class MLUnitTypes {
                                 colorTo = Color.valueOf("FEEBB3FF");
                             }};
                         }};
-                        shootEffect = new WaveEffect(){{
-                            lifetime = 8f;
-                            sizeFrom = 0f;
-                            sizeTo = 4f;
-                            strokeFrom = 1f;
-                            strokeTo = 0f;
-                            colorFrom = Color.valueOf("FFFFFF");
-                            colorTo = Color.valueOf("FEEBB3FF");
-                        }};
                     }},
             new Weapon("magic-Hurricane"){{
                 x = 16f;
@@ -819,15 +810,6 @@ public class MLUnitTypes {
                         colorFrom = Color.valueOf("FFFFFF");
                         colorTo = Color.valueOf("FEEBB3FF");
                     }};
-                }};
-                shootEffect = new WaveEffect(){{
-                    lifetime = 8f;
-                    sizeFrom = 0f;
-                    sizeTo = 4f;
-                    strokeFrom = 1f;
-                    strokeTo = 0f;
-                    colorFrom = Color.valueOf("FFFFFF");
-                    colorTo = Color.valueOf("FEEBB3FF");
                 }};
             }});
         }};
