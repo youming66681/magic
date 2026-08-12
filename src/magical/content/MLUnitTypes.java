@@ -1248,7 +1248,7 @@ public class MLUnitTypes {
                 reload = 60f;
                 recoil = 3f;
                 x = 0;
-                y = -16;
+                y = -12;
                 shootY = 24f;
                 mirror = false;
                 rotate = true;
