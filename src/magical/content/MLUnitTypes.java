@@ -423,7 +423,7 @@ public class MLUnitTypes {
                     whenShooting = true;
                     radius = 24f;
                     width = 6f;
-                    max = 100f;
+                    max = 1000f;
                     regen = 1f;
                     cooldown = 180f;
                     angle = 120f;
@@ -599,6 +599,108 @@ public class MLUnitTypes {
                     hitSound = MLSounds.explosion;
                 }};
             }});
+        }};
+        //t4
+        SlantingWind = new UnitType("SlantingWind") {{
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            lowAltitude = true;
+            faceTarget = false;
+            rotateSpeed = 4f;
+            speed = 2.4f;
+            drag = 0.04f;
+            accel = 0.1f;
+            hitSize = 48;
+            health = 10000;
+            armor = 10;
+            itemCapacity = 0;
+            engineOffset = 16;
+            engineSize = 8f;
+            range = 280;
+            targetFlags = new BlockFlag[]{BlockFlag.core};
+            weapons.add(
+                    new Weapon("Storm1"){{
+                        reload = 60f;
+                        recoil = 2f;
+                        x = -10f;
+                        y = -8f;
+                        rotate = true;
+                        mirror = true;
+                        rotateSpeed = 2f;
+                        inaccuracy = 0f;
+                        ejectEffect = Fx.smeltsmoke;
+                        shootSound = MLSounds.shootFuse;
+                        alternate = true;
+                        bullet = new PointBulletType(){{
+                            hitEffect = Fx.none;
+                            despawnEffect = Fx.none;
+                            damage = 150f;
+                            frontColor = Color.valueOf("97B5EDFF");
+                            backColor = Color.valueOf("97B5EDFF");
+                            trailSpacing = 9f;
+                            trailEffect = new ParticleEffect(){{
+                                particles = 1;
+                                baseLength = 0f;
+                                lifetime = 30f;
+                                line = true;
+                                randLength = false;
+                                lenFrom = 9f;
+                                lenTo = 0f;
+                                strokeFrom = 6f;
+                                strokeTo = 0f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                                cone = 0f;
+                            }};
+                            width = 0f;
+                            height = 0f;
+                            speed = 16f;
+                            lifetime = 15f;
+                        }};
+                    }},
+                    new Weapon("Storm0"){{
+                        reload = 30f;
+                        x = 6f;
+                        y = 8f;
+                        rotate = true;
+                        rotateSpeed = 4f;
+                        mirror = true;
+                        alternate = true;
+                        inaccuracy = 0f;
+                        shootSound = MLSounds.laser;
+                        shake = 2f;
+                        bullet = new BasicBulletType(){{
+                            damage = 70f;
+                            splashDamage = 60f;
+                            splashDamageRadius = 20f;
+                            speed = 8f
+                            lifetime = 35f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FFFFFF");
+                            trailLength = 6;
+                            trailWidth = 3f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            hitSound = Sounds.plasmaboom;
+                            shootEffect = new ParticleEffect(){{
+                                particles = 3;
+                                sizeFrom = 2f;
+                                sizeTo = 0f;
+                                length = 20f;
+                                baseLength = 0f;
+                                lifetime = 20f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FFFFFF");
+                                cone = 180f;
+                            }};
+                            width = 16f;
+                            height = 32f;
+                            hitEffect = new WrapEffect(
+                                    MLFx.dynamicSpikes,
+                                    Color.valueOf("FEEBB3FF"),
+                                    20f
+                            );
+                        }};
+                    }});
         }};
         //二级
         //t1
