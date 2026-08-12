@@ -731,7 +731,7 @@ public class MLUnitTypes {
                             spread = 2f;
                         }};
                         bullet = new BasicBulletType(){{
-                            damage = 50f;
+                            damage = 25f;
                             pierceCap = 2;
                             pierceBuilding = true;
                             frontColor = Color.valueOf("FEEBB3FF");
@@ -779,7 +779,7 @@ public class MLUnitTypes {
                     spread = 2f;
                 }};
                 bullet = new BasicBulletType(){{
-                    damage = 50f;
+                    damage = 25f;
                     pierceCap = 2;
                     pierceBuilding = true;
                     frontColor = Color.valueOf("FEEBB3FF");
