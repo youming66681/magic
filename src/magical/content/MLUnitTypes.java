@@ -55,7 +55,7 @@ public class MLUnitTypes {
     BlazingFire, glow, blazing,
     //海
     //一级
-    StillWater, ripple, Turbulence,
+    StillWater, ripple, Turbulence, TerrifyingWaves,
     //二级
     ExpelDarkness, ChasingLight, Dawn,
     //核心机
@@ -135,10 +135,6 @@ public class MLUnitTypes {
                 ejectEffect = Fx.casing2;
                 layerOffset = 0.001f;
                 shootSound = MLSounds.shootArtillerySmall;
-                shoot = new ShootAlternate() {{
-                    barrels = 2;
-                    spread = 2;
-                }};
                 parts.addAll(
                         new RegionPart("-l") {{
                             mirror = false;
@@ -739,7 +735,7 @@ public class MLUnitTypes {
                             width = 8f;
                             height = 16f;
                             trailLength = 2;
-                            trailWidth = 3f;
+                            trailWidth = 2f;
                             trailColor = Color.valueOf("FEEBB3FF");
                             pierce = true;
                             speed = 16f;
@@ -787,7 +783,7 @@ public class MLUnitTypes {
                     width = 8f;
                     height = 16f;
                     trailLength = 2;
-                    trailWidth = 3f;
+                    trailWidth = 2f;
                     trailColor = Color.valueOf("FEEBB3FF");
                     pierce = true;
                     speed = 16f;
@@ -1232,6 +1228,64 @@ public class MLUnitTypes {
                     hitEffect = despawnEffect = MLFx.Explosion3;
                     hitSound = MLSounds.explosion;
                     trailColor = Color.white;
+                    trailLength = 6;
+                    trailWidth = 4;
+                }};
+            }});
+        }};
+        //t4
+        TerrifyingWaves = new UnitType("TerrifyingWaves") {{
+            constructor = UnitTypes.risso.constructor;
+            speed = 0.8f;
+            rotateSpeed = 4;
+            waveTrailX = 0;
+            waveTrailY = -24;
+            hitSize = 48;
+            health = 14000;
+            armor = 14;
+            faceTarget = false;
+            weapons.add(new Weapon("magic-TerrifyingWaves0") {{
+                reload = 120f;
+                recoil = 3f;
+                x = 0;
+                y = -24;
+                shootY = 8f;
+                mirror = false;
+                rotate = true;
+                rotateSpeed = 2f;
+                inaccuracy = 4f;
+                ejectEffect = Fx.casing4;
+                layerOffset = 0.001f;
+                shootSound = MLSounds.mediumCannon;
+                shoot = new ShootAlternate(){{
+                    barrels = 2;
+                    spread = 4f;
+                    shotDelay = 15f;
+                }};
+                parts.addAll(
+                        new RegionPart("-l") {{
+                            mirror = false;
+                            heatProgress = PartProgress.recoil;
+                            recoilIndex = 0;
+                            progress = PartProgress.recoil;
+                            moveY = -4;
+                        }},
+                        new RegionPart("-r") {{
+                            mirror = false;
+                            heatProgress = PartProgress.recoil;
+                            recoilIndex = 1;
+                            progress = PartProgress.recoil;
+                            moveY = -4;
+                        }});
+                recoils = 2;
+                bullet = new BasicBulletType(16, 120) {{
+                    lifetime = 20;
+                    width = 16;
+                    height = 32;
+                    splashDamageRadius = 48;
+                    splashDamage = 180;
+                    hitEffect = despawnEffect = MLFx.Explosion4;
+                    hitSound = MLSounds.explosion;
                     trailLength = 6;
                     trailWidth = 4;
                 }};

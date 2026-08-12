@@ -2647,6 +2647,9 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 6),
                     new PayloadStack(MLUnitTypes.Breeze, 3),
                     new PayloadStack(MLUnitTypes.SlantingWind, 3));
+            addPlan("T1", MLUnitTypes.TerrifyingWaves, 1800f, 9, 0,
+                    new PayloadStack(MLBlocks.largePhantomSteelWall, 6),
+                    new PayloadStack(MLUnitTypes.StillWater, 3));
 
             consumePower(20f);
         }};

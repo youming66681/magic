@@ -28,6 +28,7 @@ public class MLFx {
     public static Effect smallTeleport;
     public static Effect energyMine;
     public static Effect hugeEnergyExplosion;
+    public static Effect Explosion4;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -214,6 +215,35 @@ public class MLFx {
             Fill.circle(e.x, e.y, 4f * fout);
             Angles.randLenVectors(e.id, 12, 18f * fin, (x, y) -> {
                 Fill.circle(e.x + x, e.y + y, 2f * fout);
+            });
+        });
+        Explosion4 = new Effect(45f, e -> {
+            float fin = e.finpow();
+            float fout = e.foutpow();
+            float radius = 48f * fin;
+            Draw.color(Color.valueOf("ff9b42"));
+            Lines.stroke(4f * fout);
+            Lines.circle(e.x, e.y, radius);
+            Draw.color(Color.valueOf("ff9b42"));
+            Lines.stroke(2f * fout);
+            Lines.circle(e.x, e.y, radius * 0.72f);
+            Draw.color(Color.valueOf("ff9b42"));
+            Fill.circle(e.x, e.y, 8f * fout);
+            Draw.color(Color.valueOf("ff9b42"));
+            Angles.randLenVectors(e.id, 28, radius, (x, y) -> {
+                float len = Mathf.len(x, y);
+                if(len > 0.001f){Fill.circle(e.x + x, e.y + y, 3f * fout);
+                }
+            });
+            Draw.color(Color.valueOf("ff9b42"));
+            Angles.randLenVectors(e.id + 1, 16, radius * 0.8f, (x, y) -> {Lines.line(e.x, e.y, e.x + x, e.y + y);
+            });
+            Draw.color(Color.valueOf("ff9b42"));
+            Lines.stroke(1.5f * fout);
+            Angles.randLenVectors(e.id + 2, 12, radius * 0.95f, (x, y) -> {
+                float angle = Angles.angle(x, y);
+                float len = 8f * fout;
+                Lines.lineAngle(e.x + x, e.y + y, angle, len);
             });
         });
     }
