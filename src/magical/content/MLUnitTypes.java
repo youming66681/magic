@@ -1245,11 +1245,11 @@ public class MLUnitTypes {
             armor = 14;
             faceTarget = false;
             weapons.add(new Weapon("magic-TerrifyingWaves0") {{
-                reload = 120f;
+                reload = 60f;
                 recoil = 3f;
                 x = 0;
-                y = -24;
-                shootY = 8f;
+                y = -16;
+                shootY = 24f;
                 mirror = false;
                 rotate = true;
                 rotateSpeed = 2f;
