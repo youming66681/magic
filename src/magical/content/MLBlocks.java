@@ -2645,7 +2645,7 @@ public class MLBlocks {
             addPlan("T2", MLUnitTypes.Hurricane, 4800f, 13, 0,
                     new PayloadStack(MLBlocks.largePhantomSteelWall, 6),
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 6),
-                    new PayloadStack(MLUnitTypes.Breeze, 3));
+                    new PayloadStack(MLUnitTypes.Breeze, 3),
                     new PayloadStack(MLUnitTypes.SlantingWind, 3));
 
             consumePower(20f);
