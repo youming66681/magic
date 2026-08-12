@@ -50,7 +50,7 @@ public class MLUnitTypes {
     war, BeaconFire, War,
     //空
     //一级
-    Breeze, SlantingWind, Gale, SlantingWind,
+    Breeze, SlantingWind, Gale, Storm,
     //二级
     BlazingFire, glow, blazing,
     //海
@@ -601,7 +601,7 @@ public class MLUnitTypes {
             }});
         }};
         //t4
-        SlantingWind = new UnitType("SlantingWind") {{
+        Storm = new UnitType("Storm") {{
             constructor = UnitTypes.flare.constructor;
             flying = true;
             lowAltitude = true;
@@ -635,8 +635,6 @@ public class MLUnitTypes {
                             hitEffect = Fx.none;
                             despawnEffect = Fx.none;
                             damage = 150f;
-                            frontColor = Color.valueOf("97B5EDFF");
-                            backColor = Color.valueOf("97B5EDFF");
                             trailSpacing = 9f;
                             trailEffect = new ParticleEffect(){{
                                 particles = 1;
@@ -652,8 +650,6 @@ public class MLUnitTypes {
                                 colorTo = Color.valueOf("FEEBB3FF");
                                 cone = 0f;
                             }};
-                            width = 0f;
-                            height = 0f;
                             speed = 16f;
                             lifetime = 15f;
                         }};
@@ -680,7 +676,7 @@ public class MLUnitTypes {
                             trailLength = 6;
                             trailWidth = 3f;
                             trailColor = Color.valueOf("FEEBB3FF");
-                            hitSound = Sounds.plasmaboom;
+                            hitSound = MLSounds.plasmaboom;
                             shootEffect = new ParticleEffect(){{
                                 particles = 3;
                                 sizeFrom = 2f;
@@ -694,11 +690,11 @@ public class MLUnitTypes {
                             }};
                             width = 16f;
                             height = 32f;
-                            hitEffect = new WrapEffect(
-                                    MLFx.dynamicSpikes,
-                                    Color.valueOf("FEEBB3FF"),
-                                    20f
-                            );
+                            hitEffect = new WrapEffect(){{
+                                effect = Fx.dynamicSpikes;
+                                color = Color.valueOf("FEEBB3FF");
+                                rotation = 20f;
+                            }};
                         }};
                     }});
         }};
