@@ -50,7 +50,7 @@ public class MLUnitTypes {
     war, BeaconFire, War,
     //空
     //一级
-    Breeze, SlantingWind, Gale,
+    Breeze, SlantingWind, Gale, SlantingWind,
     //二级
     BlazingFire, glow, blazing,
     //海
@@ -673,7 +673,7 @@ public class MLUnitTypes {
                             damage = 70f;
                             splashDamage = 60f;
                             splashDamageRadius = 20f;
-                            speed = 8f
+                            speed = 8f;
                             lifetime = 35f;
                             frontColor = Color.valueOf("FEEBB3FF");
                             backColor = Color.valueOf("FFFFFF");
