@@ -716,11 +716,11 @@ public class MLUnitTypes {
             engineSize = 14f;
             range = 240;
             weapons.add(
-                    new Weapon("magic-Hurricane"){{
+                    new Weapon("magic-Hurricane0"){{
                         x = 24f;
                         y = 8f;
                         mirror = true;
-                        reload = 2.5f;
+                        reload = 5f;
                         shootSound = MLSounds.JG;
                         inaccuracy = 2.5f;
                         recoil = 5f;
@@ -764,13 +764,13 @@ public class MLUnitTypes {
                             }};
                         }};
                     }},
-            new Weapon("magic-Hurricane"){{
+            new Weapon("magic-Hurricane0"){{
                 x = 16f;
                 y = -8f;
                 mirror = true;
                 reload = 2.5f;
                 shootSound = MLSounds.JG;
-                inaccuracy = 2.5f;
+                inaccuracy = 5f;
                 recoil = 5f;
                 rotate = true;
                 rotateSpeed = 5f;
