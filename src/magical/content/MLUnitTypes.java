@@ -1387,7 +1387,7 @@ public class MLUnitTypes {
                             trailWidth = 6f;
                             trailColor = Color.valueOf("FEEBB3FF");
                             ammoMultiplier = 1f;
-                            hitSound = Sounds.plasmaboom;
+                            hitSound = MLSounds.plasmaboom;
                             hitEffect = despawnEffect = new MultiEffect(
                                     new WaveEffect(){{
                                         lifetime = 30f;
