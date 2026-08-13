@@ -47,7 +47,7 @@ public class MLUnitTypes {
     //一级
     drizzle, Drizzle, drizzlingRain, ColdRain, HeavyRain,
     //二级
-    war, BeaconFire, War, CrusadeAgainst,
+    war, BeaconFire, War, CrusadeAgainst, ImperialArmy,
     //空
     //一级
     Breeze, SlantingWind, Gale, Storm, Hurricane,
@@ -411,10 +411,6 @@ public class MLUnitTypes {
                 mechSideSway = 0.3f;
                 drownTimeMultiplier = 3;
                 range = 256;
-                immunities.addAll(
-                        StatusEffects.burning,
-                        StatusEffects.melting
-                );
                 abilities.add(new ShieldArcAbility(){{
                     whenShooting = true;
                     radius = 24f;
@@ -483,7 +479,7 @@ public class MLUnitTypes {
                 radius = 32f;
                 width = 8f;
                 max = 4000f;
-                regen = 4f;
+                regen = 2f;
                 cooldown = 120f;
                 angle = 120f;
                 angleOffset = 0f;
@@ -597,6 +593,76 @@ public class MLUnitTypes {
                     height = 24f;
                     speed = 16f;
                     lifetime = 18f;
+                }};
+            }});
+        }};
+        //t5
+        ImperialArmy = new UnitType("ImperialArmy") {{
+            constructor = MechUnit::create;
+            canDrown = true;
+            rotateSpeed = 1f;
+            speed = 0.4f;
+            hitSize = 64f;
+            health = 36000;
+            armor = 24;
+            baseRotateSpeed = 1f;
+            mechStepParticles = true;
+            mechFrontSway = 0.5f;
+            mechSideSway = 0.5f;
+            drownTimeMultiplier = 5;
+            range = 360;
+            abilities.add(new ShieldArcAbility(){{
+                whenShooting = true;
+                radius = 40f;
+                width = 10f;
+                max = 10000f;
+                regen = 5f;
+                cooldown = 360f;
+                angle = 150f;
+                angleOffset = 0f;
+            }});
+            weapons.add(
+            new Weapon("magic-ImperialArmy0"){{
+                reload = 5f;
+                shake = 5f;
+                recoil = 10f;
+                x = 27f;
+                rotate = false;
+                top = false;
+                inaccuracy = 0f;
+                shootSound = MLSounds.shootBig;
+                alternate = true;
+                ejectEffect = Fx.casing4;
+                shootY = 24f;
+                shootX = 6f;
+                bullet = new BasicBulletType(){{
+                    damage = 150f;
+                    pierce = true;
+                    pierceBuilding = true;
+                    pierceCap = 3;
+                    speed = 16f;
+                    lifetime = 22.5f;
+                    hitSound = MLSounds.lasercharge2;
+                    shootEffect = Fx.shootBig;
+                    smokeEffect = Fx.shootBigSmoke;
+                    trailLength = 4;
+                    trailWidth = 6f;
+                    trailColor = Color.valueOf("FEEBB3FF");
+                    backColor = Color.valueOf("FEEBB3FF");
+                    frontColor = Color.valueOf("FEEBB3FF");
+                    width = 16f;
+                    height = 32f;
+                    trailChance = 0.75f;
+                    trailInterval = 20f;
+                    trailEffect = new WaveEffect(){{
+                        lifetime = 15f;
+                        sizeFrom = 0f;
+                        sizeTo = 24f;
+                        strokeFrom = 0f;
+                        strokeTo = 3f;
+                        colorFrom = Color.valueOf("FEEBB3FF");
+                        colorTo = Color.valueOf("FEEBB3FF");
+                    }};
                 }};
             }});
         }};
