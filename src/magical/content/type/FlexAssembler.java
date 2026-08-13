@@ -189,20 +189,49 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public AssemblerUnitPlan plan() {
-            if (lockedPlan != null) return lockedPlan;
-            if (chosenPlan != null) return chosenPlan;
-            lockedPlan = getDefaultPlan();
-            chosenPlan = lockedPlan;
-            return lockedPlan;
+            if (lockedPlan != null) {
+                int reqTier = tierRequired.getOrDefault(lockedPlan, 0);
+                if (reqTier <= currentTier) {
+                    return lockedPlan;
+                }
+                AssemblerUnitPlan def = getDefaultPlan();
+                return def != null ? def : super.plan();
+            }
+            return getDefaultPlan() != null ? getDefaultPlan() : super.plan();
+        }
+
+        @Override
+        public boolean shouldConsume() {
+            if (lockedPlan != null) {
+                int reqTier = tierRequired.getOrDefault(lockedPlan, 0);
+                if (reqTier > currentTier) {
+                    return false;   // 手动选择但等级不足，暂停生产
+                }
+            }
+            return super.shouldConsume();
         }
 
         @Override
         public void updateTile() {
-            AssemblerUnitPlan p = plan();
-            if (p != null) {
-                syncArea(p);
+            AssemblerUnitPlan effective = plan();
+            if (effective != null) {
+                syncArea(effective);
             }
             super.updateTile();
+            if (effective != null) {
+                syncArea(effective);
+            }
+        }
+
+        @Override
+        public void drawSelect() {
+            if (lockedPlan != null) {
+                float fulls = areaSize * tilesize / 2f;
+                Vec2 spawn = getUnitSpawn();
+                Drawf.dashRect(Pal.accent, Tmp.r1.set(spawn.x - fulls, spawn.y - fulls, fulls * 2f, fulls * 2f));
+            } else {
+                super.drawSelect();
+            }
         }
 
         @Override

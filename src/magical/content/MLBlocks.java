@@ -2660,7 +2660,7 @@ public class MLBlocks {
             addPlan("T1", MLUnitTypes.CrusadeAgainst, 3000f, 9, 0,
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 6),
                     new PayloadStack(MLUnitTypes.war, 3));
-            addPlan("T2", MLUnitTypes.ImperialArmy, 4800f, 13, 1,
+            addPlan("T2", MLUnitTypes.ImperialArmy, 7200f, 13, 1,
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 6),
                     new PayloadStack(MLBlocks.LargeWingWall, 6),
                     new PayloadStack(MLUnitTypes.war, 3),
