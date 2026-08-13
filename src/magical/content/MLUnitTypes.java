@@ -470,18 +470,14 @@ public class MLUnitTypes {
             rotateSpeed = 1.6f;
             speed = 0.6f;
             hitSize = 40f;
-            health = 3600;
-            armor = 12;
+            health = 18000;
+            armor = 18;
             baseRotateSpeed = 1.6f;
             mechStepParticles = true;
             mechFrontSway = 0.4f;
             mechSideSway = 0.4f;
             drownTimeMultiplier = 4;
             range = 288;
-            immunities.addAll(
-                    StatusEffects.burning,
-                    StatusEffects.melting
-            );
             abilities.add(new ShieldArcAbility(){{
                 whenShooting = true;
                 radius = 32f;

@@ -2656,6 +2656,10 @@ public class MLBlocks {
                     new PayloadStack(MLUnitTypes.StillWater, 3),
                     new PayloadStack(MLUnitTypes.ripple, 3));
 
+            addPlan("T1", MLUnitTypes.CrusadeAgainst, 3000f, 9, 0,
+                    new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 6),
+                    new PayloadStack(MLUnitTypes.war, 3));
+
             consumePower(20f);
         }};
         //通用装配升级厂
