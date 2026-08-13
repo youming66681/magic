@@ -47,7 +47,7 @@ public class MLUnitTypes {
     //一级
     drizzle, Drizzle, drizzlingRain, ColdRain, HeavyRain,
     //二级
-    war, BeaconFire, War,
+    war, BeaconFire, War, CrusadeAgainst,
     //空
     //一级
     Breeze, SlantingWind, Gale, Storm, Hurricane,
@@ -463,6 +463,147 @@ public class MLUnitTypes {
                             }};
                 }});
             }};
+         //t4
+        CrusadeAgainst = new UnitType("CrusadeAgainst") {{
+            constructor = MechUnit::create;
+            canDrown = true;
+            rotateSpeed = 1.6f;
+            speed = 0.6f;
+            hitSize = 40f;
+            health = 3600;
+            armor = 12;
+            baseRotateSpeed = 1.6f;
+            mechStepParticles = true;
+            mechFrontSway = 0.4f;
+            mechSideSway = 0.4f;
+            drownTimeMultiplier = 4;
+            range = 288;
+            immunities.addAll(
+                    StatusEffects.burning,
+                    StatusEffects.melting
+            );
+            abilities.add(new ShieldArcAbility(){{
+                whenShooting = true;
+                radius = 32f;
+                width = 8f;
+                max = 4000f;
+                regen = 4f;
+                cooldown = 120f;
+                angle = 120f;
+                angleOffset = 0f;
+            }});
+            weapons.add(
+                    new Weapon("magic-CrusadeAgainst0"){{
+                        reload = 90f;
+                        shake = 4f;
+                        recoil = 4f;
+                        x = 16f;
+                        rotate = false;
+                        top = false;
+                        inaccuracy = 0f;
+                        shootSound = MLSounds.laser;
+                        alternate = true;
+                        ejectEffect = Fx.none;
+                        shootY = 8f;
+                        shootX = 0f;
+                        bullet = new LaserBulletType(){{
+                            damage = 160f;
+                            smokeEffect = Fx.bigShockwave;
+                            lightningSpacing = 8f;
+                            lightningLength = 4;
+                            lightningDelay = 0.8f;
+                            lightningLengthRand = 4;
+                            lightningAngleRand = 4f;
+                            lightningDamage = 20f;
+                            colors = new Color[]{
+                                    Color.valueOf("FEEBB3FF"),
+                                    Color.valueOf("FEEBB3FF"),
+                                    Color.valueOf("FEEBB3FF")
+                            };
+                            width = 16f;
+                            height = 192;
+                        }};
+                    }};
+            new Weapon("magic-CrusadeAgainst1"){{
+                reload = 60f;
+                shake = 2f;
+                recoil = 2f;
+                x = 12f;
+                rotate = false;
+                top = false;
+                inaccuracy = 2f;
+                shootSound = MLSounds.pao;
+                alternate = true;
+                ejectEffect = Fx.casing3;
+                shootCone = 10f;
+                cooldownTime = 40f;
+                shootY = 4f;
+                shootX = 0f;
+                shoot = new ShootAlternate(){{
+                    shots = 8;
+                    shotDelay = 2f;
+                    barrels = 1;
+                    spread = 0f;
+                }};
+                bullet = new BasicBulletType(){{
+                    damage = 40f;
+                    pierce = true;
+                    pierceBuilding = true;
+                    pierceCap = 2;
+                    speed = 8f;
+                    lifetime = 30f;
+                    shootEffect = Fx.none;
+                    trailLength = 4;
+                    trailWidth = 2f;
+                    trailColor = Color.valueOf("FEEBB3FF");
+                    backColor = Color.valueOf("FEEBB3FF");
+                    frontColor = Color.valueOf("FEEBB3FF");
+                    width = 8f;
+                    height = 24f;
+                }};
+            }};
+            new Weapon("讨伐2"){{
+                mirror = true;
+                x = 6f;
+                y = 0f;
+                reload = 120f;
+                shootCone = 40f;
+                shoot = new ShootAlternate(){{
+                    shots = 12;
+                    shotDelay = 3f;
+                    barrels = 1;
+                    spread = 0f;
+                }};
+                shootSound = MLSounds.missile;
+                rotate = true;
+                rotateSpeed = 4f;
+                inaccuracy = 0f;
+                controllable = false;
+                autoTarget = true;
+                alternate = false;
+                bullet = new MissileBulletType(){{
+                    damage = 40f;
+                    splashDamageRadius = 16f;
+                    splashDamage = 40f;
+                    homingRange = 120f;
+                    homingPower = 0.2f;
+                    homingDelay = 2f;
+                    hitEffect = Fx.flakExplosion;
+                    despawnEffect = Fx.flakExplosion;
+                    sprite = "magic-导弹";
+                    trailLength = 2;
+                    trailWidth = 1f;
+                    trailEffect = Fx.none;
+                    trailColor = Color.valueOf("FFFFFFFF");
+                    backColor = Color.valueOf("FF5B5BFF");
+                    frontColor = Color.valueOf("E3E3E3FF");
+                    width = 8f;
+                    height = 24f;
+                    speed = 16f;
+                    lifetime = 18f;
+                }};
+            }});
+        }};
         //幻境空军
         //一级
         //t1
@@ -1476,7 +1617,7 @@ public class MLUnitTypes {
                         mirror = true;
                         rotateSpeed = 4f;
                         rotate = true;
-                        x = 8f;
+                        x = 10f;
                         y = -24f;
                         inaccuracy = 0f;
                         alternate = false;
