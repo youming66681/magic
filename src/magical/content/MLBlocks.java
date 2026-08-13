@@ -2609,7 +2609,7 @@ public class MLBlocks {
             filter = Seq.with(
                     MLBlocks.largePhantomSteelWall,
                     MLBlocks.largePhantomTitaniumSteelWall,
-                    MLBlocks.LargeWingWall
+                    MLBlocks.LargeWingWall,
                     Blocks.repairPoint,
                     Blocks.forceProjector,
                     Blocks.lancer
