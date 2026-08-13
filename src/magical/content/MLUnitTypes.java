@@ -517,7 +517,7 @@ public class MLUnitTypes {
                                     Color.valueOf("FEEBB3FF")
                             };
                             width = 16f;
-                            height = 192;
+                            length = 192;
                         }};
                     }},
             new Weapon("magic-CrusadeAgainst1"){{
