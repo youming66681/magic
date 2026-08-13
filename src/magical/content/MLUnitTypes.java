@@ -1424,8 +1424,9 @@ public class MLUnitTypes {
                                 colorFrom = Color.valueOf("FEEBB3FF");
                                 colorTo = Color.valueOf("FEEBB3FF");
                             }};
-                        }});
-                    }};
+                        }};
+                    }});
+        }};
         //二级
         //t1
         ExpelDarkness = new UnitType("ExpelDarkness") {{
