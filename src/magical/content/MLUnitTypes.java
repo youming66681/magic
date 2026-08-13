@@ -55,7 +55,7 @@ public class MLUnitTypes {
     BlazingFire, glow, blazing,
     //海
     //一级
-    StillWater, ripple, Turbulence, TerrifyingWaves,
+    StillWater, ripple, Turbulence, TerrifyingWaves, SeaSuffering,
     //二级
     ExpelDarkness, ChasingLight, Dawn,
     //核心机
@@ -1127,7 +1127,7 @@ public class MLUnitTypes {
         StillWater = new UnitType("StillWater") {{
             constructor = UnitTypes.risso.constructor;
             speed = 1.4f;
-            rotateSpeed = 7;
+            rotateSpeed = 6;
             waveTrailX = 0;
             waveTrailY = -6;
             hitSize = 18;
@@ -1162,7 +1162,7 @@ public class MLUnitTypes {
         ripple = new UnitType("ripple") {{
             constructor = UnitTypes.risso.constructor;
             speed = 1.2f;
-            rotateSpeed = 6;
+            rotateSpeed = 5;
             waveTrailX = 0;
             waveTrailY = -8;
             hitSize = 24;
@@ -1197,7 +1197,7 @@ public class MLUnitTypes {
         Turbulence = new UnitType("Turbulence") {{
             constructor = UnitTypes.risso.constructor;
             speed = 1f;
-            rotateSpeed = 5;
+            rotateSpeed = 4;
             waveTrailX = 0;
             waveTrailY = -8;
             hitSize = 28;
@@ -1237,14 +1237,15 @@ public class MLUnitTypes {
         TerrifyingWaves = new UnitType("TerrifyingWaves") {{
             constructor = UnitTypes.risso.constructor;
             speed = 0.8f;
-            rotateSpeed = 4;
+            rotateSpeed = 3;
             waveTrailX = 0;
             waveTrailY = -24;
             hitSize = 48;
             health = 14000;
             armor = 14;
             faceTarget = false;
-            weapons.add(new Weapon("magic-TerrifyingWaves0") {{
+            weapons.add(
+                new Weapon("magic-TerrifyingWaves0") {{
                 reload = 60f;
                 recoil = 3f;
                 x = 0;
@@ -1294,7 +1295,7 @@ public class MLUnitTypes {
                 reload = 10f;
                 recoil = 2.5f;
                 x = 12;
-                y = 8;
+                y = 4;
                 mirror = true;
                 rotate = true;
                 rotateSpeed = 5f;
@@ -1312,7 +1313,7 @@ public class MLUnitTypes {
             new Weapon("magic-TerrifyingWaves1") {{
                 reload = 10f;
                 recoil = 2.5f;
-                x = 6;
+                x = 10;
                 y = 14;
                 mirror = true;
                 rotate = true;
@@ -1348,6 +1349,83 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        //t5
+        SeaSuffering = new UnitType("SeaSuffering") {{
+            constructor = UnitTypes.risso.constructor;
+            speed = 0.6f;
+            rotateSpeed = 2;
+            waveTrailX = 0;
+            waveTrailY = -48;
+            hitSize = 72;
+            health = 30000;
+            armor = 15;
+            faceTarget = false;
+            weapons.add(
+                    new Weapon("magic-SeaSuffering0"){{
+                        reload = 25f;
+                        x = 12f;
+                        y = 24f;
+                        rotate = true;
+                        rotateSpeed = 5f;
+                        mirror = true;
+                        alternate = true;
+                        inaccuracy = 5f;
+                        shootSound = MLSounds.laser;
+                        shake = 2.5f;
+                        bullet = new BasicBulletType(){{
+                            damage = 110f;
+                            lifetime = 45f;
+                            speed = 8f;
+                            width = 16f;
+                            height = 24f;
+                            hitSize = 24f;
+                            splashDamageRadius = 48f;
+                            splashDamage = 90f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            trailLength = 10;
+                            trailWidth = 6f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            ammoMultiplier = 1f;
+                            hitSound = Sounds.plasmaboom;
+                            hitEffect = despawnEffect = new MultiEffect(
+                                    new WaveEffect(){{
+                                        lifetime = 30f;
+                                        sizeFrom = 0f;
+                                        sizeTo = 80f;
+                                        strokeFrom = 0f;
+                                        strokeTo = 5f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect(){{
+                                        particles = 10;
+                                        sizeFrom = 10f;
+                                        sizeTo = 0f;
+                                        length = 50f;
+                                        baseLength = 0f;
+                                        lifetime = 30f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                        interp = Interp.pow10Out;
+                                        sizeInterp = Interp.pow10In;
+                                    }}
+                            );
+                            smokeEffect = Fx.smokeCloud;
+                            trailChance = 1f;
+                            trailInterval = 20f;
+                            trailEffect = new ParticleEffect(){{
+                                particles = 10;
+                                length = 10f;
+                                baseLength = 16f;
+                                lifetime = 10f;
+                                sizeFrom = 4f;
+                                sizeTo = 0f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                        }});
+                    }};
         //二级
         //t1
         ExpelDarkness = new UnitType("ExpelDarkness") {{
