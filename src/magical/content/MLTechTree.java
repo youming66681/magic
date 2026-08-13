@@ -72,7 +72,7 @@ public class MLTechTree {
                         });
                     });
                         });
-                /*微风*/node(MLUnitTypes.Breeze, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant)), () -> {
+                /*微风*/node(MLUnitTypes.Breeze, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant)), new SectorComplete(MLSectorPresets.FrozenWinterValley)) ,() -> {
                     /*斜风*/node(MLUnitTypes.SlantingWind, Seq.with(new Objectives.Research(MLBlocks.curvatureEvolutionPod)), () -> {
                         /*狂风*/node(MLUnitTypes.Gale, Seq.with(new Objectives.Research(MLBlocks.quantumFactory)), () -> {
 
@@ -266,7 +266,9 @@ public class MLTechTree {
             });
             /*降落区*/node(MLSectorPresets.LandingZone, Seq.with(new SectorComplete(SectorPresets.planetaryTerminal)), () -> {
                 /*深幽丛林*/node(MLSectorPresets.DeepSecludedJungle, Seq.with(new SectorComplete(MLSectorPresets.LandingZone)), () -> {
+                    /*凛冬冰谷*/node(MLSectorPresets.FrozenWinterValley, Seq.with(new SectorComplete(MLSectorPresets.DeepSecludedJungle)), () -> {
 
+                    });
                 });
             });
                  });

@@ -37,6 +37,7 @@ public class MLSpawnUnits {
                 Time.run(delay * 35f, () -> {
                     Unit newUnit = type.create(state.rules.waveTeam);
                     newUnit.set(x, y);
+                    MLSounds.shootRipple.at(x, y, 2f)
                     newUnit.add();
                 });
             }
@@ -50,6 +51,7 @@ public class MLSpawnUnits {
                     Time.run(delay * 35f, () -> {
                         Unit newUnit = type.create(state.rules.waveTeam);
                         newUnit.set(x, y);
+                        MLSounds.shootRipple.at(x, y, 2f)
                         newUnit.add();
                     });
                 }

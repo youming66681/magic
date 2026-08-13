@@ -7,7 +7,7 @@ import static mindustry.content.Planets.*;
 
 public class MLSectorPresets{
     public static SectorPreset
-            LandingZone, DeepSecludedJungle;
+            LandingZone, DeepSecludedJungle, FrozenWinterValley;
 
     public static void load(){
 
@@ -19,6 +19,11 @@ public class MLSectorPresets{
 
         DeepSecludedJungle = new SectorPreset("DeepSecludedJungle", MLPlanets.cecilia, 5){{
             difficulty = 3;
+            captureWave = 45;
+        }};
+
+        FrozenWinterValley = new SectorPreset("FrozenWinterValley", MLPlanets.cecilia, 10){{
+            difficulty = 5;
             captureWave = 45;
         }};
     }
