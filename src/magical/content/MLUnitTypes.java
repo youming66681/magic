@@ -1359,6 +1359,7 @@ public class MLUnitTypes {
             hitSize = 72;
             health = 30000;
             armor = 15;
+            range = 360f;
             faceTarget = false;
             weapons.add(
                     new Weapon("magic-SeaSuffering0"){{
@@ -1424,6 +1425,39 @@ public class MLUnitTypes {
                                 colorFrom = Color.valueOf("FEEBB3FF");
                                 colorTo = Color.valueOf("FEEBB3FF");
                             }};
+                        }};
+                    }},
+                    new Weapon("magic-SeaSuffering1"){{
+                        reload = 150f;
+                        x = 24f;
+                        y = 8f;
+                        rotate = true;
+                        rotateSpeed = 5f;
+                        mirror = true;
+                        alternate = true;
+                        inaccuracy = 0f;
+                        shootSound = MLSounds.laserblast;
+                        chargeSound = MLSounds.lasercharge;
+                        shoot = new ShootPattern(){{
+                            firstShotDelay = 80f;
+                        }};
+                        shake = 10f;
+                        shootY = 4f;
+                        bullet = new LaserBulletType(){{
+                            length = 360f;
+                            width = 48f;
+                            damage = 250f;
+                            lifetime = 60f;
+                            ammoMultiplier = 1f;
+                            colors = new Color[]{
+                                    Color.valueOf("958F60FF"),
+                                    Color.valueOf("C8BA8FFF"),
+                                    Color.valueOf("FFFFFFFF")
+                            };
+                            despawnEffect = Fx.none;
+                            hitEffect = Fx.none;
+                            smokeEffect = Fx.bigShockwave;
+                            chargeEffect = Fx.greenLaserCharge;
                         }};
                     }});
         }};
