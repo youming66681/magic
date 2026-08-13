@@ -72,7 +72,7 @@ public class MLTechTree {
                         });
                     });
                         });
-                /*微风*/node(MLUnitTypes.Breeze, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant)), new SectorComplete(MLSectorPresets.FrozenWinterValley)) ,() -> {
+                /*微风*/node(MLUnitTypes.Breeze, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant), new SectorComplete(MLSectorPresets.FrozenWinterValley)), () -> {
                     /*斜风*/node(MLUnitTypes.SlantingWind, Seq.with(new Objectives.Research(MLBlocks.curvatureEvolutionPod)), () -> {
                         /*狂风*/node(MLUnitTypes.Gale, Seq.with(new Objectives.Research(MLBlocks.quantumFactory)), () -> {
 
