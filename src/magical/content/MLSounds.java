@@ -39,6 +39,7 @@ public class MLSounds {
     public static Sound malignShoot;
     public static Sound shootBig;
     public static Sound mediumCannon;
+    public static Sound shoot;
 
     public static void load() {
         if (Vars.headless) return;
@@ -73,6 +74,7 @@ public class MLSounds {
         malignShoot = loadSoundSafe("malignShoot.ogg");
         shootBig = loadSoundSafe("shootBig.ogg");
         mediumCannon = loadSoundSafe("mediumCannon.ogg");
+        shoot = loadSoundSafe("mediumCannon.ogg");
     }
 
     private static Sound loadSoundSafe(String name) {
@@ -115,5 +117,6 @@ public class MLSounds {
         malignShoot         = new Sound();
         shootBig            = new Sound();
         mediumCannon        = new Sound();
+        shoot               = new Sound();
     }
 }

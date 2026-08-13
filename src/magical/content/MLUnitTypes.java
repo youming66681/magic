@@ -1459,6 +1459,39 @@ public class MLUnitTypes {
                             smokeEffect = Fx.bigShockwave;
                             chargeEffect = Fx.greenLaserCharge;
                         }};
+                    }},
+                    new Weapon("magic-SeaSuffering2"){{
+                        autoTarget = true;
+                        controllable = false;
+                        shoot = new ShootBarrel(){{
+                            shots = 2;
+                            shotDelay = 0f;
+                            barrels = new float[][]{
+                                    3f, 2f, 0f,
+                                    -3f, 2f, 0f
+                            };
+                        }};
+                        reload = 2f;
+                        ejectEffect = Fx.casing2Double;
+                        mirror = true;
+                        rotateSpeed = 4f;
+                        rotate = true;
+                        x = 8f;
+                        y = -24f;
+                        inaccuracy = 0f;
+                        alternate = false;
+                        shootSound = MLSounds.shoot;
+                        bullet = new FlakBulletType(){{
+                            collidesAir = true;
+                            collidesGround = false;
+                            hitEffect = Fx.none;
+                            despawnEffect = Fx.none;
+                            damage = 8f;
+                            speed = 16f;
+                            lifetime = 22.5f;
+                            width = 4f;
+                            height = 8f;
+                        }};
                     }});
         }};
         //二级
