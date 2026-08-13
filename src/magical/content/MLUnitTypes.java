@@ -1466,7 +1466,7 @@ public class MLUnitTypes {
                         shoot = new ShootBarrel(){{
                             shots = 2;
                             shotDelay = 0f;
-                            barrels = new float[][]{
+                            barrels = new float[]{
                                     3f, 2f, 0f,
                                     -3f, 2f, 0f
                             };
