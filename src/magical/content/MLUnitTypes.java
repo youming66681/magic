@@ -1298,7 +1298,7 @@ public class MLUnitTypes {
                 y = 4;
                 mirror = true;
                 rotate = true;
-                rotateSpeed = 5f;
+                rotateSpeed = 4f;
                 inaccuracy = 0f;
                 ejectEffect = Fx.casing1;
                 layerOffset = 0.001f;
@@ -1317,7 +1317,7 @@ public class MLUnitTypes {
                 y = 14;
                 mirror = true;
                 rotate = true;
-                rotateSpeed = 5f;
+                rotateSpeed = 4f;
                 inaccuracy = 0f;
                 ejectEffect = Fx.casing1;
                 layerOffset = 0.001f;
@@ -1336,7 +1336,7 @@ public class MLUnitTypes {
                 y = -18;
                 mirror = true;
                 rotate = true;
-                rotateSpeed = 5f;
+                rotateSpeed = 4f;
                 inaccuracy = 0f;
                 ejectEffect = Fx.casing1;
                 layerOffset = 0.001f;
@@ -1367,7 +1367,7 @@ public class MLUnitTypes {
                         x = 12f;
                         y = 24f;
                         rotate = true;
-                        rotateSpeed = 5f;
+                        rotateSpeed = 2.5f;
                         mirror = true;
                         alternate = true;
                         inaccuracy = 5f;
@@ -1429,10 +1429,10 @@ public class MLUnitTypes {
                     }},
                     new Weapon("magic-SeaSuffering1"){{
                         reload = 150f;
-                        x = 24f;
-                        y = 8f;
+                        x = 16f;
+                        y = 0f;
                         rotate = true;
-                        rotateSpeed = 5f;
+                        rotateSpeed = 2.5f;
                         mirror = true;
                         alternate = true;
                         inaccuracy = 0f;
