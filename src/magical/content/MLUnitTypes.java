@@ -519,7 +519,7 @@ public class MLUnitTypes {
                             width = 16f;
                             height = 192;
                         }};
-                    }};
+                    }},
             new Weapon("magic-CrusadeAgainst1"){{
                 reload = 60f;
                 shake = 2f;
@@ -557,8 +557,8 @@ public class MLUnitTypes {
                     width = 8f;
                     height = 24f;
                 }};
-            }};
-            new Weapon("讨伐2"){{
+            }},
+            new Weapon("magic-CrusadeAgainst2"){{
                 mirror = true;
                 x = 6f;
                 y = 0f;
