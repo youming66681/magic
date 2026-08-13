@@ -1293,47 +1293,47 @@ public class MLUnitTypes {
             new Weapon("magic-TerrifyingWaves1") {{
                 reload = 10f;
                 recoil = 2.5f;
-                x = 8;
-                y = 8;
-                mirror = false;
-                rotate = true;
-                rotateSpeed = 5f;
-                inaccuracy = 0f;
-                ejectEffect = Fx.casing1;
-                layerOffset = 0.001f;
-                shootSound = MLSounds.pew;
-                bullet = new BasicBulletType(8, 10) {{
-                    lifetime = 30;
-                    width = 8;
-                    height = 16;
-                    hitEffect = despawnEffect = Fx.hitBulletColor;
-                }};
-            }},
-            new Weapon("magic-TerrifyingWaves1") {{
-                reload = 10f;
-                recoil = 2.5f;
-                x = 4;
-                y = 16;
-                mirror = false;
-                rotate = true;
-                rotateSpeed = 5f;
-                inaccuracy = 0f;
-                ejectEffect = Fx.casing1;
-                layerOffset = 0.001f;
-                shootSound = MLSounds.pew;
-                bullet = new BasicBulletType(8, 10) {{
-                    lifetime = 30;
-                    width = 8;
-                    height = 16;
-                    hitEffect = despawnEffect = Fx.hitBulletColor;
-                }};
-            }},
-            new Weapon("magic-TerrifyingWaves1") {{
-                reload = 10f;
-                recoil = 2.5f;
                 x = 12;
-                y = -16;
-                mirror = false;
+                y = 8;
+                mirror = true;
+                rotate = true;
+                rotateSpeed = 5f;
+                inaccuracy = 0f;
+                ejectEffect = Fx.casing1;
+                layerOffset = 0.001f;
+                shootSound = MLSounds.pew;
+                bullet = new BasicBulletType(8, 10) {{
+                    lifetime = 30;
+                    width = 8;
+                    height = 16;
+                    hitEffect = despawnEffect = Fx.hitBulletColor;
+                }};
+            }},
+            new Weapon("magic-TerrifyingWaves1") {{
+                reload = 10f;
+                recoil = 2.5f;
+                x = 6;
+                y = 14;
+                mirror = true;
+                rotate = true;
+                rotateSpeed = 5f;
+                inaccuracy = 0f;
+                ejectEffect = Fx.casing1;
+                layerOffset = 0.001f;
+                shootSound = MLSounds.pew;
+                bullet = new BasicBulletType(8, 10) {{
+                    lifetime = 30;
+                    width = 8;
+                    height = 16;
+                    hitEffect = despawnEffect = Fx.hitBulletColor;
+                }};
+            }},
+            new Weapon("magic-TerrifyingWaves1") {{
+                reload = 10f;
+                recoil = 2.5f;
+                x = 14;
+                y = -18;
+                mirror = true;
                 rotate = true;
                 rotateSpeed = 5f;
                 inaccuracy = 0f;
