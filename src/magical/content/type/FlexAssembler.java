@@ -100,7 +100,6 @@ public class FlexAssembler extends UnitAssembler {
 
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         private static final int NO_PLAN = -1;
-
         private int lockedIndex = NO_PLAN;
         private AssemblerUnitPlan lockedPlan;
 
@@ -108,36 +107,25 @@ public class FlexAssembler extends UnitAssembler {
         private final Seq<UnitAssemblerModuleBuild> localModules = new Seq<>();
 
         private void updateLockedPlan() {
-            if (lockedIndex >= 0 && lockedIndex < plans.size) {
-                lockedPlan = plans.get(lockedIndex);
-            } else {
-                lockedPlan = null;
-            }
+            if (lockedIndex >= 0 && lockedIndex < plans.size) lockedPlan = plans.get(lockedIndex);
+            else lockedPlan = null;
         }
 
         private void syncArea() {
-            if (lockedPlan != null) {
-                areaSize = planAreaMap.getOrDefault(lockedPlan, areaSize);
-            }
+            if (lockedPlan != null) areaSize = planAreaMap.getOrDefault(lockedPlan, areaSize);
         }
 
         private void rescanModules() {
             localModules.clear();
             for (Building other : proximity) {
-                if (other instanceof UnitAssemblerModuleBuild mod) {
-                    localModules.add(mod);
-                }
+                if (other instanceof UnitAssemblerModuleBuild mod) localModules.add(mod);
             }
-            // 按模块等级排序，计算连续等级（与原版 checkTier 相同逻辑）
             localModules.sort(b -> b.tier());
             int max = 0;
             for (int i = 0; i < localModules.size; i++) {
                 var mod = localModules.get(i);
-                if (mod.tier() == max || mod.tier() == max + 1) {
-                    max = mod.tier();
-                } else {
-                    break;
-                }
+                if (mod.tier() == max || mod.tier() == max + 1) max = mod.tier();
+                else break;
             }
             localModuleTier = max;
         }
@@ -157,50 +145,30 @@ public class FlexAssembler extends UnitAssembler {
             syncArea();
         }
 
-        @Override
-        public void updateModules(UnitAssemblerModuleBuild build) {
-        }
+        @Override public void updateModules(UnitAssemblerModuleBuild build) {}
+        @Override public void removeModule(UnitAssemblerModuleBuild build) {}
+        @Override public void checkTier() {}
 
-        @Override
-        public void removeModule(UnitAssemblerModuleBuild build) {
-        }
-
-        @Override
-        public void checkTier() {
-        }
-
-        // ---------- 客户端 UI（保留原有全部功能） ----------
         @Override
         public void buildConfiguration(Table table) {
             if (Vars.headless) return;
-
             updateLockedPlan();
             AssemblerUnitPlan current = lockedPlan;
             boolean locked = current != null;
 
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
-                if (tierRequired.getOrDefault(plan, 0) <= localModuleTier) {
-                    available.add(plan);
-                }
+                if (tierRequired.getOrDefault(plan, 0) <= localModuleTier) available.add(plan);
             }
 
             if (available.isEmpty()) {
                 table.label(() -> Core.bundle.get("flexassembler.no-plans")).pad(10);
-                if (locked) {
-                    table.row();
-                    table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN));
-                }
+                if (locked) table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN));
                 return;
             }
 
-            if (locked) {
-                table.label(() -> Core.bundle.format("flexassembler.producing", current.unit.localizedName))
-                        .padBottom(4).row();
-            } else {
-                table.label(() -> Core.bundle.get("flexassembler.select-unit"))
-                        .padBottom(4).color(Color.gray).row();
-            }
+            if (locked) table.label(() -> Core.bundle.format("flexassembler.producing", current.unit.localizedName)).padBottom(4).row();
+            else table.label(() -> Core.bundle.get("flexassembler.select-unit")).padBottom(4).color(Color.gray).row();
 
             Table grid = new Table();
             int cols = 4;
@@ -228,10 +196,7 @@ public class FlexAssembler extends UnitAssembler {
             table.add(pane).grow().maxHeight(400f).row();
         }
 
-        @Override
-        public Object config() {
-            return lockedIndex;
-        }
+        @Override public Object config() { return lockedIndex; }
 
         @Override
         public void configure(@Nullable Object value) {
@@ -246,18 +211,13 @@ public class FlexAssembler extends UnitAssembler {
             super.configure(value);
         }
 
-        // ---------- 强制返回锁定计划 ----------
-        @Override
-        public AssemblerUnitPlan plan() {
+        @Override public AssemblerUnitPlan plan() {
             if (lockedPlan != null) return lockedPlan;
             return super.plan();
         }
 
-        @Override
-        public boolean shouldConsume() {
-            if (lockedPlan != null && tierRequired.getOrDefault(lockedPlan, 0) > localModuleTier) {
-                return false;
-            }
+        @Override public boolean shouldConsume() {
+            if (lockedPlan != null && tierRequired.getOrDefault(lockedPlan, 0) > localModuleTier) return false;
             return super.shouldConsume();
         }
 
@@ -265,27 +225,14 @@ public class FlexAssembler extends UnitAssembler {
         public void updateTile() {
             if (!readUnits.isEmpty()) {
                 units.clear();
-                readUnits.each(i -> {
-                    var unit = Groups.unit.getByID(i);
-                    if (unit != null) units.add(unit);
-                });
+                readUnits.each(i -> { var u = Groups.unit.getByID(i); if (u != null) units.add(u); });
                 readUnits.clear();
             }
-
             if (units.size < dronesCreated && whenSyncedUnits.size > 0) {
-                whenSyncedUnits.each(id -> {
-                    var unit = Groups.unit.getByID(id);
-                    if (unit != null) units.addUnique(unit);
-                });
+                whenSyncedUnits.each(id -> { var u = Groups.unit.getByID(id); if (u != null) units.addUnique(u); });
             }
-
             units.removeAll(u -> !u.isAdded() || u.dead || !(u.controller() instanceof mindustry.ai.types.AssemblerAI));
-
-            if (!allowUpdate()) {
-                progress = 0f;
-                units.each(Unit::kill);
-                units.clear();
-            }
+            if (!allowUpdate()) { progress = 0f; units.each(Unit::kill); units.clear(); }
 
             float powerStatus = !enabled ? 0f : power == null ? 1f : power.status;
             powerWarmup = Mathf.lerpDelta(powerStatus, powerStatus > 0.0001f ? 1f : 0f, 0.1f);
@@ -296,22 +243,14 @@ public class FlexAssembler extends UnitAssembler {
                 if (!net.client()) {
                     var unit = droneType.create(team);
                     if (unit instanceof BuildingTetherc bt) bt.building(this);
-                    unit.set(x, y);
-                    unit.rotation = 90f;
-                    unit.add();
-                    units.add(unit);
+                    unit.set(x, y); unit.rotation = 90f; unit.add(); units.add(unit);
                     Call.assemblerDroneSpawned(tile, unit.id);
                 }
             }
-
             if (units.size >= dronesCreated) droneProgress = 0f;
 
             Vec2 spawn = getUnitSpawn();
-            if (moveInPayload() && !wasOccupied) {
-                yeetPayload(payload);
-                payload = null;
-            }
-
+            if (moveInPayload() && !wasOccupied) { yeetPayload(payload); payload = null; }
             for (int i = 0; i < units.size; i++) {
                 var unit = units.get(i);
                 var ai = (mindustry.ai.types.AssemblerAI) unit.controller();
@@ -322,16 +261,15 @@ public class FlexAssembler extends UnitAssembler {
             wasOccupied = checkSolid(spawn, false);
             boolean visualOccupied = checkSolid(spawn, true);
             float eff = (units.count(u -> ((mindustry.ai.types.AssemblerAI) u.controller()).inPosition()) / (float) dronesCreated);
-
             sameTypeWarmup = Mathf.lerpDelta(sameTypeWarmup, wasOccupied && !visualOccupied ? 0f : 1f, 0.1f);
             invalidWarmup = Mathf.lerpDelta(invalidWarmup, visualOccupied ? 1f : 0f, 0.1f);
 
             AssemblerUnitPlan activePlan = plan();
             if (lockedPlan != null && tierRequired.getOrDefault(lockedPlan, 0) > localModuleTier) {
-                activePlan = null;   // 等级不足，视为无计划
+                activePlan = null;
             }
 
-            if (!wasOccupied && activePlan != null && efficiency > 0 && Units.canCreate(team, activePlan.unit)) {
+            if (!wasOccupied && activePlan != null && efficiency > 0) {
                 warmup = Mathf.lerpDelta(warmup, efficiency, 0.1f);
                 if ((progress += edelta() * state.rules.unitBuildSpeed(team) * eff / activePlan.time) >= 1f) {
                     Call.assemblerUnitSpawned(tile);
@@ -346,46 +284,34 @@ public class FlexAssembler extends UnitAssembler {
             if (plan == null) return;
             Vec2 spawn = getUnitSpawn();
             consume();
-            var unit = plan.unit.create(team);
+
+            Unit unit = plan.unit.create(team);
             if (unit.isCommandable() && commandPos != null) unit.command().commandPosition(commandPos);
             unit.set(spawn.x + Mathf.range(0.001f), spawn.y + Mathf.range(0.001f));
             unit.rotation = rotdeg();
-            Building targetBuild = unit.buildOn();
-            var payload = new UnitPayload(unit);
-            if (targetBuild != null && targetBuild.team == team && targetBuild.acceptPayload(targetBuild, payload)) {
-                targetBuild.handlePayload(targetBuild, payload);
-            } else if (!net.client()) {
+            if (!net.client()) {
                 unit.add();
-                Units.notifyUnitSpawn(unit);
             }
             createSound.at(spawn.x, spawn.y, 1f + Mathf.range(0.06f), createSoundVolume);
             progress = 0f;
             Fx.unitAssemble.at(spawn.x, spawn.y, rotdeg() - 90f, plan.unit);
             blocks.clear();
-            Events.fire(new UnitCreateEvent(unit, this));
         }
 
-        @Override
-        public void draw() {
-            syncArea();
-            super.draw();
-        }
+        @Override public void draw() { syncArea(); super.draw(); }
 
-        @Override
-        public Vec2 getUnitSpawn() {
+        @Override public Vec2 getUnitSpawn() {
             float len = tilesize * (areaSize + block.size) / 2f;
             return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
         }
 
-        @Override
-        public void write(Writes write) {
+        @Override public void write(Writes write) {
             super.write(write);
             write.i(lockedIndex);
             write.i(areaSize);
         }
 
-        @Override
-        public void read(Reads read, byte revision) {
+        @Override public void read(Reads read, byte revision) {
             super.read(read, revision);
             lockedIndex = read.i();
             areaSize = read.i();
