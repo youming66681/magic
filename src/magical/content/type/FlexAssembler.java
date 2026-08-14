@@ -100,13 +100,11 @@ public class FlexAssembler extends UnitAssembler {
 
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         private static final int NO_PLAN = -1;
+
         private int lockedIndex = NO_PLAN;
         private AssemblerUnitPlan lockedPlan;
 
         public int myAreaSize = FlexAssembler.this.areaSize;
-
-        private int localModuleTier = 0;
-        private final Seq<UnitAssemblerModuleBuild> localModules = new Seq<>();
 
         private void updateLockedPlan() {
             if (lockedIndex >= 0 && lockedIndex < plans.size) {
@@ -117,29 +115,10 @@ public class FlexAssembler extends UnitAssembler {
         }
 
         private void syncArea() {
-            if (lockedPlan != null) {
-                myAreaSize = planAreaMap.getOrDefault(lockedPlan, FlexAssembler.this.areaSize);
+            AssemblerUnitPlan effective = plan();
+            if (effective != null) {
+                myAreaSize = planAreaMap.getOrDefault(effective, FlexAssembler.this.areaSize);
             }
-        }
-
-        private void rescanModules() {
-            localModules.clear();
-            for (Building other : proximity) {
-                if (other instanceof UnitAssemblerModuleBuild mod) {
-                    localModules.add(mod);
-                }
-            }
-            localModules.sort(b -> b.tier());
-            int max = 0;
-            for (int i = 0; i < localModules.size; i++) {
-                var mod = localModules.get(i);
-                if (mod.tier() == max || mod.tier() == max + 1) {
-                    max = mod.tier();
-                } else {
-                    break;
-                }
-            }
-            localModuleTier = max;
         }
 
         @Override
@@ -147,19 +126,13 @@ public class FlexAssembler extends UnitAssembler {
             super.created();
             updateLockedPlan();
             syncArea();
-            rescanModules();
         }
 
         @Override
         public void onProximityUpdate() {
             super.onProximityUpdate();
-            rescanModules();
             syncArea();
         }
-
-        @Override public void updateModules(UnitAssemblerModuleBuild build) {}
-        @Override public void removeModule(UnitAssemblerModuleBuild build) {}
-        @Override public void checkTier() {}
 
         @Override
         public boolean moduleFits(Block other, float ox, float oy, int rotation) {
@@ -180,13 +153,14 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void buildConfiguration(Table table) {
             if (Vars.headless) return;
+
             updateLockedPlan();
             AssemblerUnitPlan current = lockedPlan;
             boolean locked = current != null;
 
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
-                if (tierRequired.getOrDefault(plan, 0) <= localModuleTier) {
+                if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
                     available.add(plan);
                 }
             }
@@ -235,7 +209,9 @@ public class FlexAssembler extends UnitAssembler {
         }
 
         @Override
-        public Object config() { return lockedIndex; }
+        public Object config() {
+            return lockedIndex;
+        }
 
         @Override
         public void configure(@Nullable Object value) {
@@ -252,13 +228,18 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public AssemblerUnitPlan plan() {
-            if (lockedPlan != null) return lockedPlan;
+            if (lockedPlan != null) {
+                int reqTier = tierRequired.getOrDefault(lockedPlan, 0);
+                if (reqTier <= currentTier) {
+                    return lockedPlan;
+                }
+            }
             return super.plan();
         }
 
         @Override
         public boolean shouldConsume() {
-            if (lockedPlan != null && tierRequired.getOrDefault(lockedPlan, 0) > localModuleTier) {
+            if (lockedPlan != null && tierRequired.getOrDefault(lockedPlan, 0) > currentTier) {
                 return false;
             }
             return super.shouldConsume();
@@ -266,59 +247,95 @@ public class FlexAssembler extends UnitAssembler {
 
         @Override
         public void updateTile() {
-            if (!readUnits.isEmpty()) {
-                units.clear();
-                readUnits.each(i -> { var u = Groups.unit.getByID(i); if (u != null) units.add(u); });
-                readUnits.clear();
-            }
-            if (units.size < dronesCreated && whenSyncedUnits.size > 0) {
-                whenSyncedUnits.each(id -> { var u = Groups.unit.getByID(id); if (u != null) units.addUnique(u); });
-            }
-            units.removeAll(u -> !u.isAdded() || u.dead || !(u.controller() instanceof mindustry.ai.types.AssemblerAI));
-            if (!allowUpdate()) { progress = 0f; units.each(Unit::kill); units.clear(); }
+            syncArea();
+            super.updateTile();
+            syncArea();
+        }
 
-            float powerStatus = !enabled ? 0f : power == null ? 1f : power.status;
-            powerWarmup = Mathf.lerpDelta(powerStatus, powerStatus > 0.0001f ? 1f : 0f, 0.1f);
-            droneWarmup = Mathf.lerpDelta(droneWarmup, units.size < dronesCreated ? powerStatus : 0f, 0.1f);
-            totalDroneProgress += droneWarmup * delta();
+        @Override
+        public void draw() {
+            Draw.rect(region, x, y);
 
-            if (units.size < dronesCreated && enabled && (droneProgress += delta() * state.rules.unitBuildSpeed(team) * powerStatus / droneConstructTime) >= 1f) {
-                if (!net.client()) {
-                    var unit = droneType.create(team);
-                    if (unit instanceof BuildingTetherc bt) bt.building(this);
-                    unit.set(x, y); unit.rotation = 90f; unit.add(); units.add(unit);
-                    Call.assemblerDroneSpawned(tile, unit.id);
+            for (int i = 0; i < 4; i++) {
+                if (blends(i) && i != rotation) {
+                    Draw.rect(inRegion, x, y, (i * 90) - 180);
                 }
             }
-            if (units.size >= dronesCreated) droneProgress = 0f;
+
+            Draw.rect(rotation >= 2 ? sideRegion2 : sideRegion1, x, y, rotdeg());
+
+            Draw.z(Layer.blockOver);
+            payRotation = rotdeg();
+            drawPayload();
+            Draw.z(Layer.blockOver + 0.1f);
+            Draw.rect(topRegion, x, y);
+
+            if (isPayload()) return;
+
+            if (droneWarmup > 0.001f) {
+                Draw.draw(Layer.blockOver + 0.2f, () -> {
+                    Drawf.construct(this, droneType.fullIcon, Pal.accent, 0f, droneProgress, droneWarmup, totalDroneProgress, 14f);
+                });
+            }
 
             Vec2 spawn = getUnitSpawn();
-            if (moveInPayload() && !wasOccupied) { yeetPayload(payload); payload = null; }
-            for (int i = 0; i < units.size; i++) {
-                var unit = units.get(i);
-                var ai = (mindustry.ai.types.AssemblerAI) unit.controller();
-                ai.targetPos.trns(i * 90f + 45f, myAreaSize / 2f * Mathf.sqrt2 * tilesize).add(spawn);
-                ai.targetAngle = i * 90f + 45f + 180f;
+            float sx = spawn.x, sy = spawn.y;
+            AssemblerUnitPlan plan = plan();
+
+            Draw.draw(Layer.blockBuilding, () -> {
+                Draw.color(Pal.accent, warmup);
+                Shaders.blockbuild.region = plan.unit.fullIcon;
+                Shaders.blockbuild.time = Time.time;
+                Shaders.blockbuild.alpha = warmup;
+                Shaders.blockbuild.progress = Mathf.clamp(progress + 0.05f);
+                Draw.rect(plan.unit.fullIcon, sx, sy, rotdeg() - 90f);
+                Draw.flush();
+                Draw.color();
+                Shaders.blockbuild.alpha = 1f;
+            });
+
+            Draw.reset();
+            Draw.z(Layer.buildBeam);
+
+            Draw.mixcol(Tmp.c1.set(Pal.accent).lerp(Pal.remove, invalidWarmup), 1f);
+            Draw.alpha(Math.min(powerWarmup, sameTypeWarmup));
+            Draw.rect(plan.unit.fullIcon, spawn.x, spawn.y, rotdeg() - 90f);
+
+            Draw.alpha(Math.min(1f - invalidWarmup, warmup));
+            for (var unit : units) {
+                if (!((AssemblerAI) unit.controller()).inPosition()) continue;
+                float px = unit.x + Angles.trnsx(unit.rotation, unit.type.buildBeamOffset);
+                float py = unit.y + Angles.trnsy(unit.rotation, unit.type.buildBeamOffset);
+                Drawf.buildBeam(px, py, spawn.x, spawn.y, plan.unit.hitSize / 2f);
             }
 
-            wasOccupied = checkSolid(spawn, false);
-            boolean visualOccupied = checkSolid(spawn, true);
-            float eff = (units.count(u -> ((mindustry.ai.types.AssemblerAI) u.controller()).inPosition()) / (float) dronesCreated);
-            sameTypeWarmup = Mathf.lerpDelta(sameTypeWarmup, wasOccupied && !visualOccupied ? 0f : 1f, 0.1f);
-            invalidWarmup = Mathf.lerpDelta(invalidWarmup, visualOccupied ? 1f : 0f, 0.1f);
+            Fill.square(spawn.x, spawn.y, plan.unit.hitSize / 2f);
+            Draw.reset();
+            Draw.z(Layer.buildBeam);
 
-            AssemblerUnitPlan activePlan = plan();
-            if (lockedPlan != null && tierRequired.getOrDefault(lockedPlan, 0) > localModuleTier) {
-                activePlan = null;
+            float fulls = myAreaSize * tilesize / 2f;   // ← 使用 myAreaSize
+            Lines.stroke(2f, Pal.accent);
+            Draw.alpha(powerWarmup);
+            Drawf.dashRectBasic(spawn.x - fulls, spawn.y - fulls, fulls * 2f, fulls * 2f);
+
+            Draw.reset();
+
+            float outSize = plan.unit.hitSize + 9f;
+            if (invalidWarmup > 0) {
+                Lines.stroke(2f, Tmp.c3.set(Pal.accent).lerp(Pal.remove, invalidWarmup).a(invalidWarmup));
+                Drawf.dashSquareBasic(spawn.x, spawn.y, outSize);
             }
+            Draw.reset();
+        }
 
-            if (!wasOccupied && activePlan != null && efficiency > 0) {
-                warmup = Mathf.lerpDelta(warmup, efficiency, 0.1f);
-                if ((progress += edelta() * state.rules.unitBuildSpeed(team) * eff / activePlan.time) >= 1f) {
-                    Call.assemblerUnitSpawned(tile);
-                }
+        @Override
+        public void drawSelect() {
+            if (lockedPlan != null) {
+                float fulls = myAreaSize * tilesize / 2f;
+                Vec2 spawn = getUnitSpawn();
+                Drawf.dashRect(Pal.accent, Tmp.r1.set(spawn.x - fulls, spawn.y - fulls, fulls * 2f, fulls * 2f));
             } else {
-                warmup = Mathf.lerpDelta(warmup, 0f, 0.1f);
+                super.drawSelect();
             }
         }
 
@@ -332,28 +349,13 @@ public class FlexAssembler extends UnitAssembler {
             if (unit.isCommandable() && commandPos != null) unit.command().commandPosition(commandPos);
             unit.set(spawn.x + Mathf.range(0.001f), spawn.y + Mathf.range(0.001f));
             unit.rotation = rotdeg();
-            if (!net.client()) unit.add();
+            if (!net.client()) {
+                unit.add();
+            }
             createSound.at(spawn.x, spawn.y, 1f + Mathf.range(0.06f), createSoundVolume);
             progress = 0f;
             Fx.unitAssemble.at(spawn.x, spawn.y, rotdeg() - 90f, plan.unit);
             blocks.clear();
-        }
-
-        @Override
-        public void draw() {
-            syncArea();
-            super.draw();
-        }
-
-        @Override
-        public void drawSelect() {
-            if (lockedPlan != null) {
-                float fulls = myAreaSize * tilesize / 2f;
-                Vec2 spawn = getUnitSpawn();
-                Drawf.dashRect(Pal.accent, Tmp.r1.set(spawn.x - fulls, spawn.y - fulls, fulls * 2f, fulls * 2f));
-            } else {
-                super.drawSelect();
-            }
         }
 
         @Override
