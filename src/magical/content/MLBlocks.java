@@ -1725,14 +1725,7 @@ public class MLBlocks {
                         trailChance = 0.09f;
                         trailRotation = true;
                         smokeEffect = Fx.shootSmallFlame;
-                        hitEffect = new Effect(40f,e -> {
-                            Fx.dynamicSpikes.at(
-                                    e.x,
-                                    e.y,
-                                    e.rotation + 64f,
-                                    Color.valueOf("CCCEDBFF")
-                            );
-                        });
+                        hitEffect = MLFx.EnergyExplosion;
                         hitSound = MLSounds.plasmaboom;
                         buildingDamageMultiplier = 0.1f;
                         trailEffect = new ParticleEffect(){{
