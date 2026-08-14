@@ -2267,20 +2267,20 @@ public class MLUnitTypes {
                             shots = 3;
                             shotDelay = 20f;
                             barrels = new float[]{
-                                    8f, 16f, 0f,
-                                    0f, 16f, 0f
-                                    -8f, 16f, 0f
+                                    0f, 32f, 0f,
+                                    8f, 32f, 0f
+                                    -8f, 32f, 0f
                             };
                         }};
                         bullet = new BasicBulletType(){{
-                            damage = 340f;
-                            lifetime = 20f;
+                            damage = 500f;
+                            lifetime = 25f;
                             speed = 16f;
                             width = 24f;
                             height = 48f;
                             hitSize = 24f;
                             splashDamageRadius = 48f;
-                            splashDamage = 660f;
+                            splashDamage = 1000f;
                             frontColor = Color.valueOf("FEEBB3FF");
                             backColor = Color.valueOf("FEEBB3FF");
                             trailLength = 9;
