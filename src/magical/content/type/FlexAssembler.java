@@ -109,18 +109,14 @@ public class FlexAssembler extends UnitAssembler {
         }
         private AssemblerUnitPlan getDefaultPlan() {
             for (AssemblerUnitPlan plan : plans) {
-                if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
-                    return plan;
-                }
+                if (tierRequired.getOrDefault(plan, 0) <= currentTier) return plan;
             }
             return plans.isEmpty() ? null : plans.first();
         }
         @Override
         public void created() {
             super.created();
-            if (lockedPlan == null) {
-                lockedPlan = getDefaultPlan();
-            }
+            if (lockedPlan == null) lockedPlan = getDefaultPlan();
             chosenPlan = lockedPlan;
             syncArea(lockedPlan);
         }
@@ -129,11 +125,10 @@ public class FlexAssembler extends UnitAssembler {
             super.onProximityUpdate();
             modules.clear();
             for (Building other : proximity) {
-                if (other instanceof UnitAssemblerModuleBuild mod) {
-                    modules.add(mod);
-                }
+                if (other instanceof UnitAssemblerModuleBuild mod) modules.add(mod);
             }
             checkTier();
+            syncArea(lockedPlan != null && tierRequired.getOrDefault(lockedPlan, 0) <= currentTier ? lockedPlan : getDefaultPlan());
         }
         @Override
         public void buildConfiguration(Table table) {
@@ -161,11 +156,6 @@ public class FlexAssembler extends UnitAssembler {
             }
         }
         @Override
-        public Object config() {
-            if (lockedPlan == null) return NO_PLAN;
-            return plans.indexOf(lockedPlan);
-        }
-        @Override
         public void configure(@Nullable Object value) {
             if (!(value instanceof Integer)) return;
             int index = (Integer) value;
@@ -174,50 +164,31 @@ public class FlexAssembler extends UnitAssembler {
             chosenPlan = lockedPlan;
             selected = true;
             syncArea(lockedPlan);
-            super.configure(value);   // 必须同步到服务端
+            super.configure(value);
         }
         @Override
         public AssemblerUnitPlan plan() {
-            if (lockedPlan != null) {
-                int reqTier = tierRequired.getOrDefault(lockedPlan, 0);
-                if (reqTier <= currentTier) return lockedPlan;
-                AssemblerUnitPlan def = getDefaultPlan();
-                return def != null ? def : super.plan();
+            if (lockedPlan != null && tierRequired.getOrDefault(lockedPlan, 0) <= currentTier) {
+                return lockedPlan;
             }
             return getDefaultPlan() != null ? getDefaultPlan() : super.plan();
         }
         @Override
         public boolean shouldConsume() {
-            if (lockedPlan != null && tierRequired.getOrDefault(lockedPlan, 0) > currentTier) {
-                return false;
-            }
+            if (lockedPlan != null && tierRequired.getOrDefault(lockedPlan, 0) > currentTier) return false;
             return super.shouldConsume();
         }
         @Override
         public void updateTile() {
             AssemblerUnitPlan effective = plan();
-            if (effective != null) {
-                syncArea(effective);
-            }
+            syncArea(effective);
             super.updateTile();
-            if (effective != null) {
-                syncArea(effective);
-            }
+            syncArea(effective);
         }
         @Override
         public void draw() {
             syncArea(plan());
             super.draw();
-        }
-        @Override
-        public void drawSelect() {
-            if (lockedPlan != null) {
-                float fulls = areaSize * tilesize / 2f;
-                Vec2 spawn = getUnitSpawn();
-                Drawf.dashRect(Pal.accent, Tmp.r1.set(spawn.x - fulls, spawn.y - fulls, fulls * 2f, fulls * 2f));
-            } else {
-                super.drawSelect();
-            }
         }
         @Override
         public Vec2 getUnitSpawn() {
