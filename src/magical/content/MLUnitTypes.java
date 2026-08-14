@@ -1271,8 +1271,8 @@ public class MLUnitTypes {
                                 splashDamageRadius = 24f;
                                 splashDamage = 160f;
                                 makeFire = true;
-                                incendAmount = 4;
-                                incendSpread = 8f;
+                                incendAmount = 3;
+                                incendSpread = 6f;
                                 incendChance = 0.5f;
                                 hitEffect = new MultiEffect(
                                         new WaveEffect() {{
@@ -1389,7 +1389,87 @@ public class MLUnitTypes {
                                     Color.white
                             };
                         }};
-                    }});
+                    }},
+            new Weapon("magic-Ember1") {{
+                x = 0f;
+                y = 0f;
+                reload = 300f;
+                mirror = false;
+                alternate = false;
+                shootSound = MLSounds.missileLaunch;
+                shoot = new ShootBarrel() {{
+                    shots = 4;
+                    shotDelay = 0f;
+                    barrels = new float[]{
+                            10f, -4f, 0f,
+                            -10f,-4f, 0f,
+                            12f, -3f, 0f,
+                            -12f,-3f, 0f
+                    };
+                }};
+                inaccuracy = 0f;
+                bullet = new MissileBulletType(8f, 120f) {{
+                    hitSound = MLSounds.plasmaboom;
+                    shrinkY = 0f;
+                    homingRange = 400f;
+                    homingPower = 0.04f;
+                    homingDelay = 4f;
+                    splashDamageRadius = 48f;
+                    splashDamage = 180f;
+                    makeFire = true;
+                    incendAmount = 4;
+                    incendSpread = 8f;
+                    incendChance = 0.5f;
+                    hitEffect = new MultiEffect(
+                            new WaveEffect() {{
+                                lifetime = 25f;
+                                sizeFrom = 0f;
+                                sizeTo = 64f;
+                                strokeFrom = 0f;
+                                strokeTo = 4f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }},
+                            new ParticleEffect() {{
+                                particles = 16;
+                                sizeFrom = 2f;
+                                sizeTo = 0f;
+                                length = 48f;
+                                baseLength = 48f;
+                                lifetime = 30f;
+                                interp = Interp.pow10Out;
+                                sizeInterp = Interp.pow10In;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }},
+                            new ParticleEffect() {{
+                                particles = 16;
+                                line = true;
+                                strokeFrom = 4f;
+                                strokeTo = 0f;
+                                lenFrom = 4f;
+                                lenTo = 0f;
+                                length = 48f;
+                                baseLength = 48f;
+                                lifetime = 30f;
+                                interp = Interp.pow5Out;
+                                sizeInterp = Interp.pow5In;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }}
+                    );
+                    despawnEffect = Fx.none;
+                    trailLength = 8;
+                    trailWidth = 3f;
+                    trailColor = Color.valueOf("FEEBB3FF");
+                    frontColor = Color.valueOf("FEEBB3FF");
+                    backColor = Color.valueOf("FEEBB3FF");
+                    width = 16f;
+                    height = 32f;
+                    lifetime = 50f;
+                    sprite = "magic-大导弹";
+                }};
+            }});
         }};
         //幻境海军
         //一级
