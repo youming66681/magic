@@ -52,7 +52,7 @@ public class MLUnitTypes {
     //一级
     Breeze, SlantingWind, Gale, Storm, Hurricane,
     //二级
-    BlazingFire, glow, blazing,
+    BlazingFire, glow, blazing, Ember,
     //海
     //一级
     StillWater, ripple, Turbulence, TerrifyingWaves, SeaSuffering,
@@ -360,7 +360,8 @@ public class MLUnitTypes {
                 angle = 180f;
                 angleOffset = 0f;
             }});
-            weapons.add(new Weapon("magic-BeaconFire0"){{
+            weapons.add(
+                    new Weapon("magic-BeaconFire0"){{
                 reload = 180f;
                 mirror = true;
                 shootY = 6f;
@@ -1323,6 +1324,71 @@ public class MLUnitTypes {
                                 sprite = "magic-大导弹";
                             }};
                         }});
+        }};
+        //t4
+        Ember = new UnitType("Ember") {{
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            circleTarget = true;
+            circleTargetRadius = 160;
+            faceTarget = true;
+            omniMovement = false;
+            lowAltitude = true;
+            rotateSpeed = 4f;
+            speed = 4f;
+            drag = 0.04f;
+            accel = 0.08f;
+            hitSize = 56;
+            health = 16000;
+            armor = 16;
+            engineOffset = 32;
+            engineSize = 12f;
+            range = 400;
+            abilities.add(new ShieldArcAbility() {{
+                whenShooting = true;
+                radius = 32f;
+                width = 8f;
+                max = 4000f;
+                regen = 2f;
+                cooldown = 240f;
+                angle = 150f;
+                angleOffset = 0f;
+            }});
+            targetFlags = new BlockFlag[]{
+                    BlockFlag.turret
+            };
+            weapons.add(
+                    new Weapon("magic-Ember0"){{
+                        reload = 180f;
+                        mirror = true;
+                        shootY = 8f;
+                        x = 18f;
+                        y = 0f;
+                        rotate = false;
+                        recoil = 0f;
+                        continuous = true;
+                        alternate = false;
+                        shootSound = MLSounds.beam;
+                        bullet = new ContinuousLaserBulletType(200f){{
+                            length = 160f;
+                            width = 16f;
+                            incendChance = 4f;
+                            incendSpread = 8f;
+                            incendAmount = 2;
+                            hitEffect = Fx.none;
+                            statusDuration = 60f;
+                            lifetime = 180f;
+                            shake = 4f;
+                            despawnEffect = Fx.smokeCloud;
+                            smokeEffect = Fx.smeltsmoke;
+                            collidesTeam = true;
+                            colors = new Color[]{
+                                    Color.valueOf("D86E56FF"),
+                                    Color.valueOf("FFA05CFF"),
+                                    Color.white
+                            };
+                        }};
+                    }});
         }};
         //幻境海军
         //一级
