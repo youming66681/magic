@@ -1486,9 +1486,9 @@ public class MLUnitTypes {
             speed = 2.5f;
             drag = 0.025f;
             accel = 0.05f;
-            hitSize = 56;
-            health = 16000;
-            armor = 16;
+            hitSize = 72;
+            health = 32000;
+            armor = 20;
             engineOffset = 24;
             engineSize = 12f;
             targetFlags = new BlockFlag[]{
