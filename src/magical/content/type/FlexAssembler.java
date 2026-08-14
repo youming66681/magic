@@ -102,13 +102,11 @@ public class FlexAssembler extends UnitAssembler {
         public boolean selected = false;
         public AssemblerUnitPlan chosenPlan;
         public AssemblerUnitPlan lockedPlan;
-
         private void syncArea(AssemblerUnitPlan plan) {
             if (plan != null) {
                 areaSize = planAreaMap.getOrDefault(plan, areaSize);
             }
         }
-
         private AssemblerUnitPlan getDefaultPlan() {
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
@@ -117,7 +115,6 @@ public class FlexAssembler extends UnitAssembler {
             }
             return plans.isEmpty() ? null : plans.first();
         }
-
         @Override
         public void created() {
             super.created();
@@ -127,7 +124,6 @@ public class FlexAssembler extends UnitAssembler {
             chosenPlan = lockedPlan;
             syncArea(lockedPlan);
         }
-
         @Override
         public void onProximityUpdate() {
             super.onProximityUpdate();
@@ -139,7 +135,6 @@ public class FlexAssembler extends UnitAssembler {
             }
             checkTier();
         }
-
         @Override
         public void buildConfiguration(Table table) {
             if (Vars.headless) return;
@@ -165,13 +160,11 @@ public class FlexAssembler extends UnitAssembler {
                 table.label(() -> Core.bundle.format("flexassembler.producing", lockedPlan.unit.localizedName)).row();
             }
         }
-
         @Override
         public Object config() {
             if (lockedPlan == null) return NO_PLAN;
             return plans.indexOf(lockedPlan);
         }
-
         @Override
         public void configure(@Nullable Object value) {
             if (!(value instanceof Integer)) return;
@@ -181,9 +174,8 @@ public class FlexAssembler extends UnitAssembler {
             chosenPlan = lockedPlan;
             selected = true;
             syncArea(lockedPlan);
-            super.configure(value);   // 必须调用，同步到服务端
+            super.configure(value);   // 必须同步到服务端
         }
-
         @Override
         public AssemblerUnitPlan plan() {
             if (lockedPlan != null) {
@@ -194,7 +186,6 @@ public class FlexAssembler extends UnitAssembler {
             }
             return getDefaultPlan() != null ? getDefaultPlan() : super.plan();
         }
-
         @Override
         public boolean shouldConsume() {
             if (lockedPlan != null && tierRequired.getOrDefault(lockedPlan, 0) > currentTier) {
@@ -202,7 +193,6 @@ public class FlexAssembler extends UnitAssembler {
             }
             return super.shouldConsume();
         }
-
         @Override
         public void updateTile() {
             AssemblerUnitPlan effective = plan();
@@ -214,7 +204,11 @@ public class FlexAssembler extends UnitAssembler {
                 syncArea(effective);
             }
         }
-
+        @Override
+        public void draw() {
+            syncArea(plan());
+            super.draw();
+        }
         @Override
         public void drawSelect() {
             if (lockedPlan != null) {
@@ -225,20 +219,17 @@ public class FlexAssembler extends UnitAssembler {
                 super.drawSelect();
             }
         }
-
         @Override
         public Vec2 getUnitSpawn() {
             float len = tilesize * (areaSize + block.size) / 2f;
             return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
         }
-
         @Override
         public void write(Writes write) {
             super.write(write);
             write.i(lockedPlan == null ? NO_PLAN : plans.indexOf(lockedPlan));
             write.i(areaSize);
         }
-
         @Override
         public void read(Reads read, byte revision) {
             super.read(read, revision);
