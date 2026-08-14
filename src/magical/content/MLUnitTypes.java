@@ -2159,7 +2159,7 @@ public class MLUnitTypes {
                             }};
                         }};
                     }},
-            new Weapon("magic-ChasingLight0") {{
+            new Weapon("magic-FlowingSun0") {{
                 reload = 45f;
                 recoil = 4f;
                 x = 8;
