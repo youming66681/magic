@@ -27,7 +27,7 @@ public class MLFx {
     public static Effect smallEnergyBlast;
     public static Effect smallTeleport;
     public static Effect energyMine;
-    public static Effect hugeEnergyExplosion;
+    public static Effect EnergyExplosion;
     public static Effect Explosion4;
 
     public static final Rand rand = new Rand();
@@ -244,6 +244,27 @@ public class MLFx {
                 float angle = Angles.angle(x, y);
                 float len = 8f * fout;
                 Lines.lineAngle(e.x + x, e.y + y, angle, len);
+            });
+        });
+        EnergyExplosion = new Effect(45f, e -> {
+            float fin = e.finpow();
+            float fout = e.foutpow();
+            float radius = 48f * fin;
+            Draw.color(Color.valueOf("FEEBB3FF"));
+            Lines.stroke(4f * fout);
+            Lines.circle(e.x, e.y, radius);
+            Draw.color(Color.valueOf("97B5EDFF"));
+            Lines.stroke(2f * fout);
+            Lines.circle(e.x, e.y, radius * 0.72f);
+            Fill.circle(e.x, e.y, 8f * fout);
+            Angles.randLenVectors(e.id, 24, radius, (x, y) -> {
+                float len = Mathf.len(x, y);
+                float scale = 3f * fout;
+                Fill.circle(e.x + x, e.y + y, scale);
+            });
+            Angles.randLenVectors(e.id + 1, 12, 48f * fin, (x, y) -> {
+                float angle = Mathf.angle(x, y);
+                Drawf.tri(e.x + x, e.y + y, 5f * fout, 18f * fout, angle);
             });
         });
     }

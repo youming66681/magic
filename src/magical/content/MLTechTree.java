@@ -249,17 +249,20 @@ public class MLTechTree {
                             });
                                 });
                         /*暴风*/node(MLUnitTypes.Storm, () -> {
+                            /*烬燃*/node(MLUnitTypes.Ember, () -> {
+                                /*烬燃*/node(MLUnitTypes.BlazingSplendor, () -> {
+
+                                });
+                            });
                             /*飓风*/node(MLUnitTypes.Hurricane, () -> {
 
                             });
                                 });
                         /*骇浪*/node(MLUnitTypes.TerrifyingWaves, () -> {
-                            /*苦海*/node(MLUnitTypes.SeaSuffering, () -> {
+                            /*流阳*/node(MLUnitTypes.FlowingSun, () -> {
 
-                            });
-                                });
-                        /*烬燃*/node(MLUnitTypes.Ember, () -> {
-                            /*烬燃*/node(MLUnitTypes.BlazingSplendor, () -> {
+                                    });
+                            /*苦海*/node(MLUnitTypes.SeaSuffering, () -> {
 
                             });
                                 });
