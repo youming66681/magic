@@ -1537,7 +1537,7 @@ public class MLUnitTypes {
                                 backColor = Color.valueOf("958F60FF");
                                 splashDamageRadius = 48;
                                 splashDamage = 350;
-                                incendAmount = 2.5;
+                                incendAmount = 2.5f;
                                 incendSpread = 5;
                                 incendChance = 0.25f;
                                 spin = 2.5f;
