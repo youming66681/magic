@@ -17,12 +17,12 @@ public class MLSectorPresets{
             difficulty = 1;
         }};
 
-        DeepSecludedJungle = new SectorPreset("DeepSecludedJungle", MLPlanets.cecilia, 5){{
+        DeepSecludedJungle = new SectorPreset("DeepSecludedJungle", MLPlanets.cecilia, 10){{
             difficulty = 3;
             captureWave = 45;
         }};
 
-        FrozenWinterValley = new SectorPreset("FrozenWinterValley", MLPlanets.cecilia, 10){{
+        FrozenWinterValley = new SectorPreset("FrozenWinterValley", MLPlanets.cecilia, 5){{
             difficulty = 5;
             captureWave = 45;
         }};
