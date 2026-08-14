@@ -2267,8 +2267,8 @@ public class MLUnitTypes {
                             shots = 3;
                             shotDelay = 20f;
                             barrels = new float[]{
-                                    0f, 32f, 0f,
                                     8f, 32f, 0f,
+                                    0f, 32f, 0f,
                                     -8f, 32f, 0f
                             };
                         }};
