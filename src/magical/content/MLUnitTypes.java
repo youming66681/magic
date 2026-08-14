@@ -1361,17 +1361,18 @@ public class MLUnitTypes {
                     new Weapon("magic-Ember0"){{
                         reload = 180f;
                         mirror = true;
-                        shootY = 8f;
-                        x = 18f;
+                        shootY = 16f;
+                        shootX = 4f;
+                        x = 9f;
                         y = 0f;
                         rotate = false;
                         recoil = 0f;
                         continuous = true;
                         alternate = false;
                         shootSound = MLSounds.beam;
-                        bullet = new ContinuousLaserBulletType(200f){{
+                        bullet = new ContinuousLaserBulletType(80f){{
                             length = 160f;
-                            width = 16f;
+                            width = 8f;
                             incendChance = 4f;
                             incendSpread = 8f;
                             incendAmount = 2;
