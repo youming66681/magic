@@ -1370,6 +1370,7 @@ public class MLUnitTypes {
                         continuous = true;
                         alternate = false;
                         shootSound = MLSounds.beam;
+                        layerOffset = -0.001f;
                         bullet = new ContinuousLaserBulletType(80f){{
                             length = 160f;
                             width = 8f;
