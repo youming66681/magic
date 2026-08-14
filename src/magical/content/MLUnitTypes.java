@@ -2160,20 +2160,20 @@ public class MLUnitTypes {
                         }};
                     }},
             new Weapon("magic-ChasingLight0") {{
-                reload = 60f;
+                reload = 45f;
                 recoil = 4f;
                 x = 8;
                 y = 16;
                 shootY = 0f;
-                mirror = false;
+                mirror = true;
                 rotate = true;
                 rotateSpeed = 5f;
                 inaccuracy = 0f;
                 ejectEffect = Fx.casing2;
                 layerOffset = 0.001f;
                 shootSound = MLSounds.shootFuse;
-                bullet = new BasicBulletType(10, 80) {{
-                    lifetime = 20;
+                bullet = new BasicBulletType(12, 80) {{
+                    lifetime = 24;
                     width = 12;
                     height = 24;
                     trailLength = 6;
