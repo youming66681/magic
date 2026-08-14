@@ -1528,7 +1528,7 @@ public class MLUnitTypes {
                             fragBullet = new BasicBulletType(4, 40, "magic-十字星"){{
                                 ignoreRotation = true;
                                 collidesAir = false;
-                                collides = fasle;
+                                collides = false;
                                 width = 48;
                                 height = 48;
                                 lifetime = 30;
