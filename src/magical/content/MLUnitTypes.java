@@ -2228,7 +2228,7 @@ public class MLUnitTypes {
                     )
             );
             weapons.add(
-                    new Weapon("magic-FlowingSun0"){{
+                    new Weapon("magic-SplendidBrilliant0"){{
                         reload = 120f;
                         x = 0f;
                         y = -12f;
