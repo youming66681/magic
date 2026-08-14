@@ -52,7 +52,7 @@ public class MLUnitTypes {
     //一级
     Breeze, SlantingWind, Gale, Storm, Hurricane,
     //二级
-    BlazingFire, glow, blazing, Ember,
+    BlazingFire, glow, blazing, Ember, BlazingSplendor,
     //海
     //一级
     StillWater, ripple, Turbulence, TerrifyingWaves, SeaSuffering,
@@ -770,7 +770,8 @@ public class MLUnitTypes {
             engineOffset = 14;
             engineSize = 6f;
             targetFlags = new BlockFlag[]{BlockFlag.factory};
-            weapons.add(new Weapon("magic-Gale1") {{
+            weapons.add(
+                    new Weapon("magic-Gale1") {{
                 rotate = false;
                 mirror = false;
                 reload = 60;
@@ -1402,10 +1403,10 @@ public class MLUnitTypes {
                     shots = 4;
                     shotDelay = 0f;
                     barrels = new float[]{
-                            10f, -4f, 0f,
-                            -10f,-4f, 0f,
-                            12f, -3f, 0f,
-                            -12f,-3f, 0f
+                            8f, 0f, 0f,
+                            -8f, 0f, 0f,
+                            16f, -4f, 0f,
+                            -16f,-4f, 0f
                     };
                 }};
                 inaccuracy = 0f;
@@ -1471,6 +1472,80 @@ public class MLUnitTypes {
                     sprite = "magic-大导弹";
                 }};
             }});
+        }};
+        //t5
+        BlazingSplendor = new UnitType("BlazingSplendor") {{
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            circleTarget = true;
+            circleTargetRadius = 200;
+            faceTarget = true;
+            omniMovement = false;
+            lowAltitude = true;
+            rotateSpeed = 2.5f;
+            speed = 2.5f;
+            drag = 0.04f;
+            accel = 0.08f;
+            hitSize = 56;
+            health = 16000;
+            armor = 16;
+            engineOffset = 32;
+            engineSize = 12f;
+            targetFlags = new BlockFlag[]{
+                    BlockFlag.generator,
+                    BlockFlag.reactor,
+                    BlockFlag.battery
+            };
+            weapons.add(
+                    new Weapon("magic-Gale1") {{
+                        rotate = false;
+                        mirror = false;
+                        reload = 120;
+                        x = 0;
+                        y = 0;
+                        shootSound = MLSounds.plasmadrop;
+                        ejectEffect = Fx.casing1;
+                        layerOffset = 0.001f;
+                        bullet = new BasicBulletType(0, 80, "magic-十字星") {{
+                            ignoreRotation = true;
+                            collidesAir = false;
+                            maxRange = 16;
+                            width = 96;
+                            height = 96;
+                            lifetime = 60;
+                            frontColor = Color.valueOf("C8BA8FFF");
+                            backColor = Color.valueOf("958F60FF");
+                            splashDamageRadius = 48;
+                            splashDamage = 220;
+                            incendAmount = 5;
+                            incendSpread = 10;
+                            incendChance = 0.5f;
+                            spin = 2f;
+                            makeFire = true;
+                            hitEffect = despawnEffect = MLFx.Explosion4;
+                            hitSound = MLSounds.explosion;
+                            fragBullets = 5;
+                            fragBullet = new BasicBulletType(4, 40, "magic-十字星"){{
+                                ignoreRotation = true;
+                                collidesAir = false;
+                                collides = fasle;
+                                width = 48;
+                                height = 48;
+                                lifetime = 30;
+                                frontColor = Color.valueOf("C8BA8FFF");
+                                backColor = Color.valueOf("958F60FF");
+                                splashDamageRadius = 32;
+                                splashDamage = 220;
+                                incendAmount = 5;
+                                incendSpread = 10;
+                                incendChance = 0.5f;
+                                spin = 2f;
+                                makeFire = true;
+                                hitEffect = despawnEffect = MLFx.Explosion3;
+                                hitSound = MLSounds.explosion;
+                            }};
+                        }};
+                    }});
         }};
         //幻境海军
         //一级

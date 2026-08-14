@@ -259,7 +259,9 @@ public class MLTechTree {
                             });
                                 });
                         /*烬燃*/node(MLUnitTypes.Ember, () -> {
+                            /*烬燃*/node(MLUnitTypes.BlazingSplendor, () -> {
 
+                            });
                                 });
                         /*通用装配升级厂*/node(MLBlocks.GeneralAssemblyUpgrade, () -> {
 
@@ -275,8 +277,8 @@ public class MLTechTree {
                 });
             });
                  });
-        //root.children.add(Planets.serpulo.techTree);
+        root.children.add(Planets.serpulo.techTree);
         MLPlanets.cecilia.techTree = root;
-        Planets.serpulo.techTree.children.addAll(root.children);
+        //Planets.serpulo.techTree.children.addAll(root.children);
     }
 }
