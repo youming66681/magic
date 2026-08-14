@@ -2158,7 +2158,7 @@ public class MLUnitTypes {
                                 colorTo = Color.valueOf("FEEBB3FF");
                             }};
                         }};
-                    }};
+                    }},
             new Weapon("magic-ChasingLight0") {{
                 reload = 60f;
                 recoil = 4f;
