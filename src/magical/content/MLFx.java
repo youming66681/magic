@@ -253,7 +253,7 @@ public class MLFx {
             Draw.color(Color.valueOf("FEEBB3FF"));
             Lines.stroke(4f * fout);
             Lines.circle(e.x, e.y, radius);
-            Draw.color(Color.valueOf("97B5EDFF"));
+            Draw.color(Color.valueOf("FEEBB3FF"));
             Lines.stroke(2f * fout);
             Lines.circle(e.x, e.y, radius * 0.72f);
             Fill.circle(e.x, e.y, 8f * fout);

@@ -2223,7 +2223,7 @@ public class MLUnitTypes {
                             2.5f,     // regen
                             10000f,    // max
                             600f,     // cooldown
-                            5,        // sides
+                            6,        // sides
                             0f        // rotation
                     )
             );
