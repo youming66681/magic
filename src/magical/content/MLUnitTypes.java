@@ -2095,7 +2095,7 @@ public class MLUnitTypes {
             range = 320;
             weapons.add(
                     new Weapon("magic-FlowingSun0"){{
-                        reload = 120f;
+                        reload = 90f;
                         x = 0f;
                         y = -8f;
                         rotate = true;
@@ -2159,8 +2159,8 @@ public class MLUnitTypes {
                             }};
                         }};
                     }},
-            new Weapon("magic-FlowingSun0") {{
-                reload = 45f;
+            new Weapon("magic-FlowingSun1") {{
+                reload = 30f;
                 recoil = 4f;
                 x = 8;
                 y = 16;
@@ -2191,7 +2191,7 @@ public class MLUnitTypes {
                         hitSound = MLSounds.laser;
                         lifetime = 32f;
                         width = 24f;
-                        length = 96f;
+                        length = 128f;
                         Color.valueOf("FEEBB3FF");
                         collidesTeam = true;
                         hitEffect = Fx.none;
