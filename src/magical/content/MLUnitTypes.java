@@ -1510,7 +1510,7 @@ public class MLUnitTypes {
                             ignoreRotation = true;
                             collidesAir = false;
                             collides = false;
-                            maxRange = 16;
+                            maxRange = 40;
                             width = 96;
                             height = 96;
                             lifetime = 45;
