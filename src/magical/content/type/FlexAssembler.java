@@ -103,29 +103,41 @@ public class FlexAssembler extends UnitAssembler {
         private int lockedIndex = NO_PLAN;
         private AssemblerUnitPlan lockedPlan;
 
+        public int myAreaSize = FlexAssembler.this.areaSize;
+
         private int localModuleTier = 0;
         private final Seq<UnitAssemblerModuleBuild> localModules = new Seq<>();
 
         private void updateLockedPlan() {
-            if (lockedIndex >= 0 && lockedIndex < plans.size) lockedPlan = plans.get(lockedIndex);
-            else lockedPlan = null;
+            if (lockedIndex >= 0 && lockedIndex < plans.size) {
+                lockedPlan = plans.get(lockedIndex);
+            } else {
+                lockedPlan = null;
+            }
         }
 
         private void syncArea() {
-            if (lockedPlan != null) areaSize = planAreaMap.getOrDefault(lockedPlan, areaSize);
+            if (lockedPlan != null) {
+                myAreaSize = planAreaMap.getOrDefault(lockedPlan, FlexAssembler.this.areaSize);
+            }
         }
 
         private void rescanModules() {
             localModules.clear();
             for (Building other : proximity) {
-                if (other instanceof UnitAssemblerModuleBuild mod) localModules.add(mod);
+                if (other instanceof UnitAssemblerModuleBuild mod) {
+                    localModules.add(mod);
+                }
             }
             localModules.sort(b -> b.tier());
             int max = 0;
             for (int i = 0; i < localModules.size; i++) {
                 var mod = localModules.get(i);
-                if (mod.tier() == max || mod.tier() == max + 1) max = mod.tier();
-                else break;
+                if (mod.tier() == max || mod.tier() == max + 1) {
+                    max = mod.tier();
+                } else {
+                    break;
+                }
             }
             localModuleTier = max;
         }
@@ -150,6 +162,22 @@ public class FlexAssembler extends UnitAssembler {
         @Override public void checkTier() {}
 
         @Override
+        public boolean moduleFits(Block other, float ox, float oy, int rotation) {
+            float dx = ox + Geometry.d4x(rotation) * (other.size / 2f + 0.5f) * tilesize;
+            float dy = oy + Geometry.d4y(rotation) * (other.size / 2f + 0.5f) * tilesize;
+            Vec2 spawn = getUnitSpawn();
+            if (Tile.relativeTo(ox, oy, spawn.x, spawn.y) != rotation) return false;
+            float dst = Math.max(Math.abs(dx - spawn.x), Math.abs(dy - spawn.y));
+            return Mathf.equal(dst, tilesize * myAreaSize / 2f - tilesize / 2f);
+        }
+
+        @Override
+        public Vec2 getUnitSpawn() {
+            float len = tilesize * (myAreaSize + block.size) / 2f;
+            return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
+        }
+
+        @Override
         public void buildConfiguration(Table table) {
             if (Vars.headless) return;
             updateLockedPlan();
@@ -158,17 +186,27 @@ public class FlexAssembler extends UnitAssembler {
 
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
-                if (tierRequired.getOrDefault(plan, 0) <= localModuleTier) available.add(plan);
+                if (tierRequired.getOrDefault(plan, 0) <= localModuleTier) {
+                    available.add(plan);
+                }
             }
 
             if (available.isEmpty()) {
                 table.label(() -> Core.bundle.get("flexassembler.no-plans")).pad(10);
-                if (locked) table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN));
+                if (locked) {
+                    table.row();
+                    table.button(Core.bundle.get("flexassembler.deselect"), () -> configure(NO_PLAN));
+                }
                 return;
             }
 
-            if (locked) table.label(() -> Core.bundle.format("flexassembler.producing", current.unit.localizedName)).padBottom(4).row();
-            else table.label(() -> Core.bundle.get("flexassembler.select-unit")).padBottom(4).color(Color.gray).row();
+            if (locked) {
+                table.label(() -> Core.bundle.format("flexassembler.producing", current.unit.localizedName))
+                        .padBottom(4).row();
+            } else {
+                table.label(() -> Core.bundle.get("flexassembler.select-unit"))
+                        .padBottom(4).color(Color.gray).row();
+            }
 
             Table grid = new Table();
             int cols = 4;
@@ -196,7 +234,8 @@ public class FlexAssembler extends UnitAssembler {
             table.add(pane).grow().maxHeight(400f).row();
         }
 
-        @Override public Object config() { return lockedIndex; }
+        @Override
+        public Object config() { return lockedIndex; }
 
         @Override
         public void configure(@Nullable Object value) {
@@ -211,13 +250,17 @@ public class FlexAssembler extends UnitAssembler {
             super.configure(value);
         }
 
-        @Override public AssemblerUnitPlan plan() {
+        @Override
+        public AssemblerUnitPlan plan() {
             if (lockedPlan != null) return lockedPlan;
             return super.plan();
         }
 
-        @Override public boolean shouldConsume() {
-            if (lockedPlan != null && tierRequired.getOrDefault(lockedPlan, 0) > localModuleTier) return false;
+        @Override
+        public boolean shouldConsume() {
+            if (lockedPlan != null && tierRequired.getOrDefault(lockedPlan, 0) > localModuleTier) {
+                return false;
+            }
             return super.shouldConsume();
         }
 
@@ -254,7 +297,7 @@ public class FlexAssembler extends UnitAssembler {
             for (int i = 0; i < units.size; i++) {
                 var unit = units.get(i);
                 var ai = (mindustry.ai.types.AssemblerAI) unit.controller();
-                ai.targetPos.trns(i * 90f + 45f, areaSize / 2f * Mathf.sqrt2 * tilesize).add(spawn);
+                ai.targetPos.trns(i * 90f + 45f, myAreaSize / 2f * Mathf.sqrt2 * tilesize).add(spawn);
                 ai.targetAngle = i * 90f + 45f + 180f;
             }
 
@@ -289,32 +332,42 @@ public class FlexAssembler extends UnitAssembler {
             if (unit.isCommandable() && commandPos != null) unit.command().commandPosition(commandPos);
             unit.set(spawn.x + Mathf.range(0.001f), spawn.y + Mathf.range(0.001f));
             unit.rotation = rotdeg();
-            if (!net.client()) {
-                unit.add();
-            }
+            if (!net.client()) unit.add();
             createSound.at(spawn.x, spawn.y, 1f + Mathf.range(0.06f), createSoundVolume);
             progress = 0f;
             Fx.unitAssemble.at(spawn.x, spawn.y, rotdeg() - 90f, plan.unit);
             blocks.clear();
         }
 
-        @Override public void draw() { syncArea(); super.draw(); }
-
-        @Override public Vec2 getUnitSpawn() {
-            float len = tilesize * (areaSize + block.size) / 2f;
-            return Tmp.v4.set(x + Geometry.d4x(rotation) * len, y + Geometry.d4y(rotation) * len);
+        @Override
+        public void draw() {
+            syncArea();
+            super.draw();
         }
 
-        @Override public void write(Writes write) {
+        @Override
+        public void drawSelect() {
+            if (lockedPlan != null) {
+                float fulls = myAreaSize * tilesize / 2f;
+                Vec2 spawn = getUnitSpawn();
+                Drawf.dashRect(Pal.accent, Tmp.r1.set(spawn.x - fulls, spawn.y - fulls, fulls * 2f, fulls * 2f));
+            } else {
+                super.drawSelect();
+            }
+        }
+
+        @Override
+        public void write(Writes write) {
             super.write(write);
             write.i(lockedIndex);
-            write.i(areaSize);
+            write.i(myAreaSize);
         }
 
-        @Override public void read(Reads read, byte revision) {
+        @Override
+        public void read(Reads read, byte revision) {
             super.read(read, revision);
             lockedIndex = read.i();
-            areaSize = read.i();
+            myAreaSize = read.i();
             updateLockedPlan();
             syncArea();
         }
