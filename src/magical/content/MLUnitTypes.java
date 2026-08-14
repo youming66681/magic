@@ -57,7 +57,7 @@ public class MLUnitTypes {
     //一级
     StillWater, ripple, Turbulence, TerrifyingWaves, SeaSuffering,
     //二级
-    ExpelDarkness, ChasingLight, Dawn, FlowingSun,
+    ExpelDarkness, ChasingLight, Dawn, FlowingSun, SplendidBrilliant,
     //核心机
     Popular,SpinningSpear,
     //星舰
@@ -2100,7 +2100,7 @@ public class MLUnitTypes {
                         y = -8f;
                         rotate = true;
                         rotateSpeed = 4f;
-                        mirror = true;
+                        mirror = false;
                         alternate = true;
                         inaccuracy = 0f;
                         shootSound = MLSounds.laser;
@@ -2204,6 +2204,105 @@ public class MLUnitTypes {
                     }};
                 }};
             }});
+        }};
+        //t5
+        SplendidBrilliant = new UnitType("SplendidBrilliant") {{
+            constructor = UnitTypes.risso.constructor;
+            speed = 0.8f;
+            rotateSpeed = 2;
+            waveTrailX = 0;
+            waveTrailY = -40;
+            hitSize = 81;
+            health = 40000;
+            armor = 28;
+            faceTarget = false;
+            range = 400;
+            abilities.add(
+                    new ForceFieldAbility(
+                            150f,     // radius
+                            2.5f,     // regen
+                            10000f,    // max
+                            600f,     // cooldown
+                            5,        // sides
+                            0f        // rotation
+                    )
+            );
+            weapons.add(
+                    new Weapon("magic-FlowingSun0"){{
+                        reload = 120f;
+                        x = 0f;
+                        y = -12f;
+                        rotate = true;
+                        rotateSpeed = 2.5f;
+                        mirror = false;
+                        alternate = true;
+                        inaccuracy = 0f;
+                        shootSound = MLSounds.explosionAfflict;
+                        shake = 10f;
+                        parts.addAll(
+                                new RegionPart("-l") {{
+                                    mirror = false;
+                                    heatProgress = PartProgress.recoil;
+                                    recoilIndex = 0;
+                                    progress = PartProgress.recoil;
+                                    moveY = -4;
+                                }},
+                                new RegionPart("-m") {{
+                                    mirror = false;
+                                    heatProgress = PartProgress.recoil;
+                                    recoilIndex = 1;
+                                    progress = PartProgress.recoil;
+                                    moveY = -4;
+                                }},
+                                new RegionPart("-r") {{
+                                    mirror = false;
+                                    heatProgress = PartProgress.recoil;
+                                    recoilIndex = 2;
+                                    progress = PartProgress.recoil;
+                                    moveY = -4;
+                                }}
+                        );
+                        recoils = 3;
+                        shoot = new ShootBarrel() {{
+                            shots = 3;
+                            shotDelay = 20f;
+                            barrels = new float[]{
+                                    8f, 16f, 0f,
+                                    0f, 16f, 0f
+                                    -8f, 16f, 0f
+                            };
+                        }};
+                        bullet = new BasicBulletType(){{
+                            damage = 340f;
+                            lifetime = 20f;
+                            speed = 16f;
+                            width = 24f;
+                            height = 48f;
+                            hitSize = 24f;
+                            splashDamageRadius = 48f;
+                            splashDamage = 660f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            trailLength = 9;
+                            trailWidth = 3f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            hitSound = MLSounds.explosionCleroi;
+                            hitEffect = despawnEffect = MLFx.EnergyExplosion;
+                            smokeEffect = Fx.smokeCloud;
+                            trailChance = 1f;
+                            trailInterval = 20f;
+                            trailEffect = new ParticleEffect(){{
+                                particles = 10;
+                                length = 15f;
+                                baseLength = 0f;
+                                lifetime = 10;
+                                sizeFrom = 5f;
+                                sizeTo = 0f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                        }};
+                    }});
         }};
         //核心机
         //风行

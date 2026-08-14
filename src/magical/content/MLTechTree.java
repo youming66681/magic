@@ -260,7 +260,9 @@ public class MLTechTree {
                                 });
                         /*骇浪*/node(MLUnitTypes.TerrifyingWaves, () -> {
                             /*流阳*/node(MLUnitTypes.FlowingSun, () -> {
+                                /*华璨*/node(MLUnitTypes.SplendidBrilliant, () -> {
 
+                                });
                                     });
                             /*苦海*/node(MLUnitTypes.SeaSuffering, () -> {
 
