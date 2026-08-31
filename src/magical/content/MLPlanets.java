@@ -67,10 +67,19 @@ public class MLPlanets {
             landCloudColor = Pal.spore.cpy().a(0.5f);
              ruleSetter = rules -> {
                  rules.hideBannedBlocks = true;
+
                  for(Block block : Vars.content.blocks()){
-                     String type = block.getClass().getSimpleName();
-                     if(type.equals("LaunchPad") || type.equals("LandingPad")){
-                         rules.bannedBlocks.add(block);
+                     Class<?> type = block.getClass();
+
+                     while(type != null){
+                         String name = type.getSimpleName();
+
+                         if(name.equals("LaunchPad") || name.equals("LandingPad")){
+                             rules.bannedBlocks.add(block);
+                             break;
+                         }
+
+                         type = type.getSuperclass();
                      }
                  }
              };
