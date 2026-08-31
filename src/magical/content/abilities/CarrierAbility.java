@@ -62,6 +62,9 @@ public class CarrierAbility extends Ability {
 
         Unit enemy = Units.closestEnemy(unit.team, unit.x, unit.y, engageRange, u -> u.isValid() && !u.dead);
         if (enemy != null && storedDrones > 0) {
+            if(droneType == null){
+                return;
+            }
             Unit drone = droneType.create(unit.team);
             drone.set(unit.x, unit.y);
             drone.controller(new CarrierDroneAI(drone, unit, this));
