@@ -2808,7 +2808,6 @@ public class MLUnitTypes {
         FlyingSwallow = new UnitType("FlyingSwallow") {{
             constructor = UnitTypes.flare.constructor;
             flying = true;
-            controller = u -> new CarrierDroneAI();
             lowAltitude = true;
             speed = 5f;
             rotateSpeed = 2.5f;
@@ -2825,6 +2824,7 @@ public class MLUnitTypes {
             armor = 5f;
             accel = 0.07f;
             drag = 0.03f;
+            trailLength = 5;
             weapons.add(
                     new Weapon("magic-FlyingSwallow0") {{
                         x = 0f;
