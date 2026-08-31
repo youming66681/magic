@@ -1,5 +1,6 @@
 package magical.content;
 
+import arc.math.geom.Vec2;
 import mindustry.ai.types.FlyingAI;
 import mindustry.entities.Units;
 import mindustry.gen.Unit;
@@ -7,7 +8,8 @@ import mindustry.gen.Unit;
 public class CarrierDroneAI extends FlyingAI {
     public Unit mother;
     public CarrierAbility ability;
-    public Unit attackTarget;   // 自定义攻击目标
+
+    public CarrierDroneAI() {}
 
     public CarrierDroneAI(Unit drone, Unit mother, CarrierAbility ability) {
         this.unit = drone;
@@ -22,21 +24,14 @@ public class CarrierDroneAI extends FlyingAI {
             return;
         }
 
-        if (attackTarget == null || attackTarget.dead || !attackTarget.isAdded() || attackTarget.team() == unit.team ||
-                !attackTarget.within(mother, ability.engageRange)) {
-            attackTarget = Units.closestEnemy(unit.team, mother.x, mother.y, ability.engageRange,
-                    u -> u.isValid() && u.team() != unit.team && !u.dead);
-        }
+        Unit enemy = Units.closestEnemy(unit.team, mother.x, mother.y, ability.engageRange,
+                u -> u.isValid() && !u.dead);
 
-        if (attackTarget != null) {
-            unit.moveAt(attackTarget.x, attackTarget.y);
-            unit.aim(attackTarget);
-            if (unit.canShoot() && unit.within(attackTarget, unit.range())) {
-                unit.shoot();
-            }
+        if (enemy != null) {
+            target = enemy;
+            super.updateUnit();
         } else {
-            unit.moveAt(mother.x, mother.y);
-            unit.aim(mother);
+            unit.moveAt(new Vec2(mother.x, mother.y));
             if (unit.within(mother, ability.reclaimDistance)) {
                 ability.reclaimDrone(unit);
                 unit.remove();

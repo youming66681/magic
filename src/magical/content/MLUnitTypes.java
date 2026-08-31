@@ -2813,7 +2813,7 @@ public class MLUnitTypes {
             speed = 5f;
             rotateSpeed = 2.5f;
             hitSize = 16;
-            health = 500;
+            health = 1000;
             logicControllable = false;
             playerControllable = false;
             allowedInPayloads = false;
@@ -2822,7 +2822,7 @@ public class MLUnitTypes {
             faceTarget = true;
             rotateMoveFirst = true;
             omniMovement = true;
-            armor = 2f;
+            armor = 5f;
             accel = 0.07f;
             drag = 0.03f;
             weapons.add(
@@ -2840,7 +2840,7 @@ public class MLUnitTypes {
                             spread = 2f;
                         }};
                         bullet = new BasicBulletType() {{
-                            damage = 50f;
+                            damage = 100f;
                             pierceCap = 2;
                             pierceBuilding = true;
                             frontColor = Color.valueOf("FEEBB3FF");
@@ -2881,12 +2881,12 @@ public class MLUnitTypes {
                 lowAltitude = true;
                 rotateMoveFirst = true;
                 omniMovement = true;
-                rotateSpeed = 2f;
-                health = 40000f;
-                armor = 20f;
-                hitSize = 72f;
-                range = 600f;
-                speed = 2.4f;
+                rotateSpeed = 1f;
+                health = 25000f;
+                armor = 15f;
+                hitSize = 82f;
+                range = 480f;
+                speed = 2.5f;
                 accel = 0.07f;
                 drag = 0.03f;
                 abilities.add(
@@ -2925,7 +2925,7 @@ public class MLUnitTypes {
                 }});
                 abilities.add(new CarrierAbility(
                         FlyingSwallow,      // 舰载机类型
-                        25,                 // 最大舰载机数
+                        10,                 // 最大舰载机数
                         480f,              // 索敌范围（世界单位）
                         60f               // 生成舰载机的间隔（帧）
 
