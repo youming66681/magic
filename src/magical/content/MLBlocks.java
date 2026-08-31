@@ -2592,7 +2592,7 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 10),
                     new PayloadStack(MLBlocks.LargeWingWall, 10),
                     new PayloadStack(Blocks.salvo, 6),
-                    new PayloadStack(Blocks.LightDescends, 2));
+                    new PayloadStack(MLBlocks.LightDescends, 2));
 
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);
