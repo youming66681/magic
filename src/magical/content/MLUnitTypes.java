@@ -62,7 +62,9 @@ public class MLUnitTypes {
     Popular,SpinningSpear,
     //星舰
     //小型
-    Pioneer, Starlight, Qingxiao;
+    Pioneer, Starlight, Qingxiao,
+    //大型
+    BrokenEdge;
 
     public static void load(){
         //幻境陆军
@@ -2639,6 +2641,168 @@ public class MLUnitTypes {
                     length = 240f;
                 }};
             }});
+        }};
+        //大型
+        BrokenEdge = new UnitType("BrokenEdge"){{
+            flying = true;
+            faceTarget = true;
+            lowAltitude = true;
+            rotateMoveFirst = true;
+            omniMovement = true;
+            rotateSpeed = 2f;
+            health = 40000f;
+            armor = 20f;
+            hitSize = 72f;
+            range = 600f;
+            speed = 2.4f;
+            accel = 0.07f;
+            drag = 0.03f;
+            weapons.add(
+                    new Weapon("magic-BrokenEdge0"){{
+                        x = 20f;
+                        y = 0f;
+                        mirror = true;
+                        reload = 3f;
+                        shootSound = MLSounds.JG;
+                        inaccuracy = 0f;
+                        recoil = 2.5f;
+                        rotate = true;
+                        rotateSpeed = 5f;
+                        shoot = new ShootAlternate(){{
+                            barrels = 2;
+                            spread = 2f;
+                        }};
+                        bullet = new BasicBulletType(){{
+                            damage = 50f;
+                            pierceCap = 2;
+                            pierceBuilding = true;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            width = 8f;
+                            height = 16f;
+                            trailLength = 2;
+                            trailWidth = 2f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            pierce = true;
+                            speed = 16f;
+                            lifetime = 37.5f;
+                            hitEffect = new WaveEffect(){{
+                                lifetime = 8f;
+                                sizeFrom = 0f;
+                                sizeTo = 12f;
+                                strokeFrom = 1f;
+                                strokeTo = 0f;
+                                colorFrom = Color.white;
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                            despawnEffect = new WaveEffect(){{
+                                lifetime = 8f;
+                                sizeFrom = 0f;
+                                sizeTo = 12f;
+                                strokeFrom = 1f;
+                                strokeTo = 0f;
+                                colorFrom = Color.white;
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                        }};
+                    }}
+            );
+
+            weapons.add(
+                    new Weapon("magic-BrokenEdge1"){{
+                        mirror = true;
+                        x = 0f;
+                        y = 0f;
+                        reload = 240f;
+                        shoot = new ShootBarrel(){{
+                            barrels = new float[]{
+                                    24f, 8f, 5f,
+                                    -24f, 8f, -5f,
+                                    24f, 8f, 10f,
+                                    -24f, 8f, -10f
+                            };
+                            shots = 20;
+                            shotDelay = 2f;
+                        }};
+                        shootSound = MLSounds.missile;
+                        rotate = false;
+                        controllable = false;
+                        autoTarget = true;
+                        bullet = new MissileBulletType(){{
+                            height = 32f;
+                            width = 16f;
+                            sprite = "幻境-大导弹";
+                            pierceBuilding = true;
+                            speed = 16f;
+                            drag = -0.02f;
+                            lifetime = 37.5f;
+                            homingDelay = 15f;
+                            homingPower = 0.9f;
+                            homingRange = 240f;
+                            damage = 120f;
+                            splashDamageRadius = 36f;
+                            splashDamage = 120f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            trailLength = 9;
+                            trailWidth = 3f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            trailRotation = true;
+                            trailEffect = new ParticleEffect(){{
+                                particles = 10;
+                                sizeFrom = 15f;
+                                sizeTo = 0f;
+                                lifetime = 10f;
+                                length = 5f;
+                                baseLength = 0f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                                cone = 30f;
+                            }};
+                            hitSound = MLSounds.plasmaboom;
+                            despawnEffect = Fx.none;
+                            hitShake = 8f;
+                            hitEffect = new MultiEffect(
+                                    new WaveEffect(){{
+                                        lifetime = 20f;
+                                        sizeFrom = 0f;
+                                        sizeTo = 36f;
+                                        strokeFrom = 0f;
+                                        strokeTo = 3f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect(){{
+                                        particles = 9;
+                                        sizeFrom = 3f;
+                                        sizeTo = 0f;
+                                        length = 36f;
+                                        baseLength = 36f;
+                                        lifetime = 30f;
+                                        interp = Interp.pow10Out;
+                                        sizeInterp = Interp.pow10In;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect(){{
+                                        particles = 9;
+                                        line = true;
+                                        strokeFrom = 3f;
+                                        strokeTo = 0f;
+                                        lenFrom = 6f;
+                                        lenTo = 0f;
+                                        length = 36f;
+                                        baseLength = 36f;
+                                        lifetime = 30f;
+                                        interp = Interp.pow5Out;
+                                        sizeInterp = Interp.pow5In;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }}
+                            );
+                        }};
+                    }}
+            );
         }};
     }
 }

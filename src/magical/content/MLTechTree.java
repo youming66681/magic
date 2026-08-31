@@ -270,6 +270,9 @@ public class MLTechTree {
                             });
                                 });
                         /*通用装配升级厂*/node(MLBlocks.GeneralAssemblyUpgrade, () -> {
+                            /*破锋*/node(MLUnitTypes.BrokenEdge, () -> {
+
+                                    });
                             /*高级通用装配升级厂*/node(MLBlocks.AdvancedGeneralAssemblyUpgradeFactory, () -> {
 
                             });

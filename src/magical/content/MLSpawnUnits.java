@@ -55,6 +55,20 @@ public class MLSpawnUnits {
                         newUnit.add();
                     });
                 }
+            else if (unit.type == MLUnitTypes.BrokenEdge) {
+                float delay = 1f;
+                float x = unit.x + Mathf.random(-480f, 480f);
+                float y = unit.y + Mathf.random(-480f, 480f);
+                UnitType type = unit.type;
+                MLFx.middleTeleport.at(x, y);
+                unit.remove();
+                Time.run(delay * 60f, () -> {
+                    Unit newUnit = type.create(state.rules.waveTeam);
+                    newUnit.set(x, y);
+                    MLSounds.shootRipple.at(x, y, 5f);
+                    newUnit.add();
+                });
+            }
         });
     }
 }

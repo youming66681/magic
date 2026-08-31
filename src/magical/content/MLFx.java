@@ -26,6 +26,7 @@ public class MLFx {
     public static Effect Explosion3;
     public static Effect smallEnergyBlast;
     public static Effect smallTeleport;
+    public static Effect middleTeleport;
     public static Effect energyMine;
     public static Effect EnergyExplosion;
     public static Effect Explosion4;
@@ -204,6 +205,61 @@ public class MLFx {
             }
 
             Drawf.light(e.x, e.y, 96.0F, Color.valueOf("FEEBB3FF"), fout);
+        });
+        middleTeleport = new Effect(60f, e -> {
+            float fin = e.fin();
+            float fout = e.fout();
+            Color blue = Color.valueOf("FEEBB3FF");
+            Color gold = Color.valueOf("FEEBB3FF");
+
+            Draw.color(gold);
+            Lines.stroke(3f * fout);
+            Lines.circle(e.x, e.y, 6f + 34f * fin);
+
+            Draw.color(gold);
+            Lines.stroke(2f * fout);
+            Lines.circle(e.x, e.y, 12f + 28f * fin);
+
+            for(int i = 0; i < 4; i++){
+                float rot = e.rotation + i * 90f + fin * 240f;
+                float radius = 20f + 14f * fin;
+                Draw.color(gold, blue, fin);
+                Lines.stroke(2f * fout);
+                Lines.arc(e.x, e.y, radius, 0.18f, rot);
+            }
+
+            Draw.color(blue, gold, fin);
+            Fill.circle(e.x, e.y, 11f * fout);
+
+            Draw.color(Color.white, gold, fout);
+            Fill.circle(e.x, e.y, 5f * fout);
+
+            Angles.randLenVectors(e.id, 28, 40f * fin, (x, y) -> {
+                float size = Mathf.random(1.5f, 3.5f) * fout;
+                Draw.color(gold, blue, Mathf.random());
+                Fill.circle(
+                        e.x + x,
+                        e.y + y,
+                        size
+                );
+            });
+
+            Angles.randLenVectors(e.id + 1, 12, 38f * fin, (x, y) -> {
+                float angle = Mathf.angle(x, y);
+                float len = Mathf.random(8f, 20f) * fout;
+
+                Draw.color(gold, blue, fout);
+                Lines.stroke(2f * fout);
+
+                Tmp.v1.trns(angle, 20f + fin * 20f);
+
+                Lines.line(
+                        e.x + Tmp.v1.x,
+                        e.y + Tmp.v1.y,
+                        e.x + Tmp.v1.x + Mathf.cosDeg(angle) * len,
+                        e.y + Tmp.v1.y + Mathf.sinDeg(angle) * len
+                );
+            });
         });
         energyMine = new Effect(60f, e -> {
             float fin = e.finpow();
