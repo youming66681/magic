@@ -1,15 +1,16 @@
 package magical.content;
 
 import arc.Core;
+import arc.func.Func;
 import arc.scene.ui.layout.Table;
 import arc.struct.*;
 import arc.util.*;
 import mindustry.content.Fx;
 import mindustry.entities.Units;
-import mindustry.entities.abilities.*;
-import mindustry.gen.*;
+import mindustry.entities.abilities.Ability;
+import mindustry.gen.Unit;
 import mindustry.graphics.Pal;
-import mindustry.type.*;
+import mindustry.type.UnitType;
 import mindustry.ui.Bar;
 
 import static mindustry.Vars.*;
@@ -32,6 +33,23 @@ public class CarrierAbility extends Ability {
         this.spawnInterval = spawnInterval;
     }
 
+    public CarrierAbility(UnitType droneType, int maxDrones, float engageRange, float spawnInterval, UnitType motherType) {
+        this(droneType, maxDrones, engageRange, spawnInterval);
+        if (motherType != null) {
+            motherType.addBar("carrier-drones", this::createDronesBar);
+        }
+    }
+
+    private Bar createDronesBar(Unit unit) {
+        CarrierAbility ability = (CarrierAbility) unit.getAbility(CarrierAbility.class);
+        if (ability == null) return null;
+        return new Bar(
+                () -> Core.bundle.format("bar.carrier-drones") + ": " + ability.getTotalDrones() + " / " + ability.maxDrones,
+                () -> Pal.accent,
+                () -> (float) ability.getTotalDrones() / ability.maxDrones
+        );
+    }
+
     @Override
     public void update(Unit unit) {
         if (storedDrones < maxDrones) {
@@ -43,6 +61,7 @@ public class CarrierAbility extends Ability {
             }
         }
 
+        // 查找最近的敌人，若存在且库存大于0则释放一架
         Unit enemy = Units.closestEnemy(unit.team, unit.x, unit.y, engageRange, u -> u.isValid() && !u.dead);
         if (enemy != null && storedDrones > 0) {
             Unit drone = droneType.create(unit.team);
