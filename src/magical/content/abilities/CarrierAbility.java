@@ -5,7 +5,6 @@ import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Time;
 import mindustry.Vars;
-import mindustry.ctype.ContentType;
 import mindustry.content.Fx;
 import mindustry.entities.Units;
 import mindustry.entities.abilities.Ability;
@@ -14,8 +13,8 @@ import mindustry.graphics.Pal;
 import mindustry.type.UnitType;
 import mindustry.ui.Bar;
 
-public class CarrierAbility extends Ability {
-    public String droneTypeName;
+public class CarrierAbility extends Ability{
+    public UnitType droneType;
     public int maxDrones = 4;
     public float engageRange = 80f;
     public float reclaimDistance = 8f;
@@ -23,20 +22,16 @@ public class CarrierAbility extends Ability {
     private transient Seq<Unit> activeDrones = new Seq<>();
     private transient int storedDrones = 0;
     private transient float timer = 0f;
-    public CarrierAbility(UnitType droneType, int maxDrones, float engageRange, float spawnInterval) {
-        this.droneTypeName = droneType == null ? null : droneType.name;
+    public CarrierAbility(UnitType droneType, int maxDrones, float engageRange, float spawnInterval){
+        this.droneType = droneType;
         this.maxDrones = maxDrones;
         this.engageRange = engageRange;
         this.spawnInterval = spawnInterval;
     }
-    private UnitType getDroneType() {
-        if(droneTypeName == null || droneTypeName.isEmpty()) return null;
-        return (UnitType)Vars.content.getByName(ContentType.unit, droneTypeName);
-    }
-    public static Bar createDronesBar(Unit unit) {
+    public static Bar createDronesBar(Unit unit){
         CarrierAbility ability = null;
-        for(var a : unit.abilities) {
-            if(a instanceof CarrierAbility ca) {
+        for(var a : unit.abilities){
+            if(a instanceof CarrierAbility ca){
                 ability = ca;
                 break;
             }
@@ -50,11 +45,13 @@ public class CarrierAbility extends Ability {
         );
     }
     @Override
-    public void update(Unit unit) {
-        if(activeDrones == null) activeDrones = new Seq<>();
-        if(storedDrones < maxDrones) {
+    public void update(Unit unit){
+        if(activeDrones == null){
+            activeDrones = new Seq<>();
+        }
+        if(storedDrones < maxDrones){
             timer += Time.delta * Vars.state.rules.unitBuildSpeed(unit.team);
-            if(timer >= spawnInterval) {
+            if(timer >= spawnInterval){
                 timer = 0f;
                 storedDrones++;
                 Fx.producesmoke.at(unit.x, unit.y);
@@ -67,13 +64,12 @@ public class CarrierAbility extends Ability {
                 engageRange,
                 u -> u.isValid() && !u.dead
         );
-        if(enemy != null && storedDrones > 0) {
-            UnitType type = getDroneType();
-            if(type == null) {
+        if(enemy != null && storedDrones > 0){
+            if(droneType == null){
                 return;
             }
-            Unit drone = type.create(unit.team);
-            if(drone == null) {
+            Unit drone = droneType.create(unit.team);
+            if(drone == null){
                 return;
             }
             drone.set(unit.x, unit.y);
@@ -84,43 +80,44 @@ public class CarrierAbility extends Ability {
         }
         activeDrones.removeAll(d -> d == null || !d.isAdded() || d.dead);
     }
-    public void reclaimDrone(Unit drone) {
-        if(activeDrones == null) activeDrones = new Seq<>();
-        if(activeDrones.remove(drone)) {
+    public void reclaimDrone(Unit drone){
+        if(activeDrones == null){
+            activeDrones = new Seq<>();
+        }
+        if(activeDrones.remove(drone)){
             storedDrones = Math.min(storedDrones + 1, maxDrones);
         }
     }
-    public int getTotalDrones() {
+    public int getTotalDrones(){
         return storedDrones + (activeDrones == null ? 0 : activeDrones.size);
     }
-    public int getStoredDrones() {
+    public int getStoredDrones(){
         return storedDrones;
     }
-    public int getActiveDrones() {
+    public int getActiveDrones(){
         return activeDrones == null ? 0 : activeDrones.size;
     }
     @Override
-    public void death(Unit unit) {
+    public void death(Unit unit){
         if(activeDrones == null) return;
         activeDrones.each(d -> {
-            if(d != null && d.isAdded() && !d.dead) {
+            if(d != null && d.isAdded() && !d.dead){
                 d.kill();
             }
         });
         activeDrones.clear();
     }
     @Override
-    public String localized() {
+    public String localized(){
         return Core.bundle.get("ability.carrier-name");
     }
     @Override
-    public void addStats(Table t) {
+    public void addStats(Table t){
         super.addStats(t);
         t.row();
         t.add("[lightgray]" + Core.bundle.get("ability.carrier-desc") + "[]").left().row();
         t.add("[lightgray]" + Core.bundle.get("stat.maxdrones") + ":[] " + maxDrones).left().row();
         t.add("[lightgray]" + Core.bundle.get("stat.range") + ":[] " + engageRange / 8f + " tiles").left().row();
-        UnitType type = getDroneType();
-        t.add("[lightgray]" + Core.bundle.get("stat.drone") + ":[] " + (type == null ? "Unknown" : type.localizedName)).left().row();
+        t.add("[lightgray]" + Core.bundle.get("stat.drone") + ":[] " + (droneType == null ? "Unknown" : droneType.localizedName)).left().row();
     }
 }
