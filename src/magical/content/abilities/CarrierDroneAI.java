@@ -2,12 +2,12 @@ package magical.content;
 
 import mindustry.ai.types.FlyingAI;
 import mindustry.entities.Units;
-import mindustry.gen.*;
+import mindustry.gen.Unit;
 
 public class CarrierDroneAI extends FlyingAI {
     public Unit mother;
     public CarrierAbility ability;
-    public Unit attackTarget;
+    public Unit attackTarget;   // 自定义攻击目标
 
     public CarrierDroneAI(Unit drone, Unit mother, CarrierAbility ability) {
         this.unit = drone;
@@ -29,15 +29,14 @@ public class CarrierDroneAI extends FlyingAI {
         }
 
         if (attackTarget != null) {
-            unit.moveAt(attackTarget);
-            unit.lookAt(attackTarget);
+            unit.moveAt(attackTarget.x, attackTarget.y);
             unit.aim(attackTarget);
             if (unit.canShoot() && unit.within(attackTarget, unit.range())) {
-                unit.shoot(attackTarget);
+                unit.shoot();
             }
         } else {
-            unit.moveAt(mother);
-            unit.lookAt(mother);
+            unit.moveAt(mother.x, mother.y);
+            unit.aim(mother);
             if (unit.within(mother, ability.reclaimDistance)) {
                 ability.reclaimDrone(unit);
                 unit.remove();
