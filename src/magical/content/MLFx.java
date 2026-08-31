@@ -252,14 +252,15 @@ public class MLFx {
                 Draw.color(gold, blue, fout);
                 Lines.stroke(2f * fout);
 
-                Tmp.v1.trns(angle, 20f + fin * 20f);
+                float startLen = 20f + fin * 20f;
 
-                Lines.line(
-                        e.x + Tmp.v1.x,
-                        e.y + Tmp.v1.y,
-                        e.x + Tmp.v1.x + Mathf.cosDeg(angle) * len,
-                        e.y + Tmp.v1.y + Mathf.sinDeg(angle) * len
-                );
+                float startX = e.x + Mathf.cosDeg(angle) * startLen;
+                float startY = e.y + Mathf.sinDeg(angle) * startLen;
+
+                float endX = startX + Mathf.cosDeg(angle) * len;
+                float endY = startY + Mathf.sinDeg(angle) * len;
+
+                Lines.line(startX, startY, endX, endY);
             });
         });
         energyMine = new Effect(60f, e -> {
