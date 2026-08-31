@@ -84,14 +84,14 @@ public class CarrierAbility extends Ability {
         t.add("[lightgray]" + Core.bundle.get("stat.drone") + ":[] " + droneType.localizedName).left().row();
     }
     @Override
-    public void setBars {
-    carrierMother.addBar("drones", unit -> new Bar(
-    () -> Core.bundle.format("bar.carrier-drones") + ": "
-            + ((CarrierAbility)unit.getAbility(CarrierAbility.class)).getTotalDrones()
-            + " / " + ((CarrierAbility)unit.getAbility(CarrierAbility.class)).maxDrones,
-            () -> Pal.accent,
-            () -> (float)((CarrierAbility)unit.getAbility(CarrierAbility.class)).getTotalDrones()
-            / ((CarrierAbility)unit.getAbility(CarrierAbility.class)).maxDrones
+    public void setBars() {
+        carrierMother.addBar("drones", unit -> new Bar(
+                () -> Core.bundle.format("bar.carrier-drones") + ": "
+                        + ((CarrierAbility) unit.getAbility(CarrierAbility.class)).getTotalDrones()
+                        + " / " + ((CarrierAbility) unit.getAbility(CarrierAbility.class)).maxDrones,
+                () -> Pal.accent,
+                () -> (float) ((CarrierAbility) unit.getAbility(CarrierAbility.class)).getTotalDrones()
+                        / ((CarrierAbility) unit.getAbility(CarrierAbility.class)).maxDrones
+        ));
     }
-));
 }
