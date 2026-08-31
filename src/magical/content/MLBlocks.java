@@ -157,7 +157,7 @@ public class MLBlocks {
             //高端科技
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
             LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus, DawN, MysticSteelWall, LargeMysticSteelWall, PhantomGlowWall, LargePhantomGlowWall,
-            FluorescentFeatherDrill, XuansteelConveyor, GlowFeatherBridge, GlowingFeatherConveyor, LumifeatherReactor, PretendingCore, GeneralAssemblyUpgrade;
+            FluorescentFeatherDrill, XuansteelConveyor, GlowFeatherBridge, GlowingFeatherConveyor, LumifeatherReactor, PretendingCore, GeneralAssemblyUpgrade,AdvancedGeneralAssemblyUpgradeFactory;
 
     public static void load() {
 
@@ -2684,6 +2684,14 @@ public class MLBlocks {
 
             size = 3;
             health = 2500;
+        }};
+        AdvancedGeneralAssemblyUpgradeFactory = new UnitAssemblerModule("AdvancedGeneralAssemblyUpgradeFactory"){{
+            requirements(Category.units, ItemStack.with(new Object[]{MLItems.wingedMetal, 500, MLItems.fluorescentFeatherStone, 500, Items.silicon, 1000, MLItems.phantomLuminousAlloy, 250, MLItems.matrixChip, 250,}));
+            consumePower(20f);
+
+            size = 5;
+            health = 5000;
+            tier = 2;
         }};
          //unit
     }
