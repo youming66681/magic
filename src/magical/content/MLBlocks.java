@@ -2587,6 +2587,12 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 8),
                     new PayloadStack(Blocks.lancer, 4),
                     new PayloadStack(Blocks.forceProjector, 2));
+            addPlan("T2", MLUnitTypes.BrokenEdge, 6000f, 13, 0,
+                    new PayloadStack(MLBlocks.largePhantomSteelWall, 10),
+                    new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 10),
+                    new PayloadStack(MLBlocks.LargeWingWall, 10),
+                    new PayloadStack(Blocks.salvo, 6),
+                    new PayloadStack(Blocks.LightDescends, 2));
 
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);
@@ -2605,8 +2611,9 @@ public class MLBlocks {
                     MLBlocks.LargeWingWall,
                     Blocks.repairPoint,
                     Blocks.forceProjector,
-                    Blocks.lancer
-
+                    Blocks.lancer,
+                    Blocks.salvo,
+                    MLBlocks.LightDescends
             );
         }};
         Deconstructor = new PayloadDeconstructor("Deconstructor"){{
