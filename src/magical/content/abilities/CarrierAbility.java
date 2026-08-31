@@ -4,11 +4,13 @@ import arc.Core;
 import arc.scene.ui.layout.Table;
 import arc.struct.*;
 import arc.util.*;
-import mindustry.entities.*;
+import mindustry.content.Fx;
+import mindustry.entities.Units;
 import mindustry.entities.abilities.*;
 import mindustry.gen.*;
+import mindustry.graphics.Pal;
 import mindustry.type.*;
-import mindustry.Vars;
+import mindustry.ui.Bar;
 
 import static mindustry.Vars.*;
 
@@ -41,18 +43,15 @@ public class CarrierAbility extends Ability {
             }
         }
 
-        Units.nearby(unit.team, unit.x, unit.y, engageRange, enemy -> {
-            if (storedDrones > 0 && enemy.team != unit.team && enemy.isValid() && !enemy.dead) {
-                Unit drone = droneType.create(unit.team);
-                drone.set(unit.x, unit.y);
-                drone.controller(new CarrierDroneAI(drone, unit, this));
-                drone.add();
-                activeDrones.add(drone);
-                storedDrones--;
-                return true;
-            }
-            return false;
-        });
+        Unit enemy = Units.closestEnemy(unit.team, unit.x, unit.y, engageRange, u -> u.isValid() && !u.dead);
+        if (enemy != null && storedDrones > 0) {
+            Unit drone = droneType.create(unit.team);
+            drone.set(unit.x, unit.y);
+            drone.controller(new CarrierDroneAI(drone, unit, this));
+            drone.add();
+            activeDrones.add(drone);
+            storedDrones--;
+        }
 
         activeDrones.removeAll(d -> !d.isAdded() || d.dead);
     }
@@ -61,6 +60,18 @@ public class CarrierAbility extends Ability {
         if (activeDrones.remove(drone)) {
             storedDrones++;
         }
+    }
+
+    public int getTotalDrones() {
+        return storedDrones + activeDrones.size;
+    }
+
+    public int getStoredDrones() {
+        return storedDrones;
+    }
+
+    public int getActiveDrones() {
+        return activeDrones.size;
     }
 
     @Override
@@ -82,16 +93,5 @@ public class CarrierAbility extends Ability {
         t.add("[lightgray]" + Core.bundle.get("stat.maxdrones") + ":[] " + maxDrones).left().row();
         t.add("[lightgray]" + Core.bundle.get("stat.range") + ":[] " + engageRange / 8f + " tiles").left().row();
         t.add("[lightgray]" + Core.bundle.get("stat.drone") + ":[] " + droneType.localizedName).left().row();
-    }
-    @Override
-    public void setBars() {
-        carrierMother.addBar("drones", unit -> new Bar(
-                () -> Core.bundle.format("bar.carrier-drones") + ": "
-                        + ((CarrierAbility) unit.getAbility(CarrierAbility.class)).getTotalDrones()
-                        + " / " + ((CarrierAbility) unit.getAbility(CarrierAbility.class)).maxDrones,
-                () -> Pal.accent,
-                () -> (float) ((CarrierAbility) unit.getAbility(CarrierAbility.class)).getTotalDrones()
-                        / ((CarrierAbility) unit.getAbility(CarrierAbility.class)).maxDrones
-        ));
     }
 }

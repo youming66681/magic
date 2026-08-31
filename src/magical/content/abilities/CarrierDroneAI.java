@@ -1,7 +1,7 @@
 package magical.content;
 
-import mindustry.ai.types.*;
-import mindustry.entities.*;
+import mindustry.ai.types.FlyingAI;
+import mindustry.entities.Units;
 import mindustry.gen.*;
 
 public class CarrierDroneAI extends FlyingAI {
@@ -21,10 +21,10 @@ public class CarrierDroneAI extends FlyingAI {
             return;
         }
 
-        if (target == null || target.dead || !target.isAdded() || target.team == unit.team ||
+        if (target == null || target.dead || !target.isAdded() || target.team() == unit.team ||
                 !target.within(mother, ability.engageRange)) {
             target = Units.closestEnemy(unit.team, mother.x, mother.y, ability.engageRange,
-                    u -> u != null && u.isValid() && u.team != unit.team);
+                    u -> u.isValid() && u.team() != unit.team && !u.dead);
         }
 
         if (target != null) {
