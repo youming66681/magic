@@ -349,7 +349,6 @@ public class MLUnitTypes {
             mechFrontSway = 0.2f;
             mechSideSway = 0.2f;
             drownTimeMultiplier = 2;
-            range = 176;
             abilities.add(new ShieldArcAbility(){{
                 whenShooting = true;
                 radius = 12f;

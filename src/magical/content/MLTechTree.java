@@ -122,9 +122,10 @@ public class MLTechTree {
             });
                 /*大塑钢*/node(MLBlocks.LargePlastaniumCompressor, () -> {
                         });
+                /*芯片制造机*/node(MLBlocks.chipMachine, () -> {
                 /*翼石冲压机*/node(MLBlocks.WingStonePunchingMachine, () -> {
                     /*钢化玻璃强化器*/node(MLBlocks.metaglassBooster, () -> {
-
+                        });
                     });
                 });
                 /*星港造舰中心*/node(MLBlocks.starHarborShipbuildingCenter, () -> {
@@ -283,6 +284,7 @@ public class MLTechTree {
             });
                  });
         root.children.add(Planets.serpulo.techTree);
+        serpulo.children.add(Planets.cecilia.techTree);
         MLPlanets.cecilia.techTree = root;
         //Planets.serpulo.techTree.children.addAll(root.children);
     }

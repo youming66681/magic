@@ -37,6 +37,11 @@ public class MLPlanets {
 
             launchCapacityMultiplier = 0f;
             sectorSeed = 1;
+             ringColor = Color.valueOf("97B5EDFF");
+             ringRadius = 3f;
+             ringSegments = 64;
+             ringWidth = 0.9f;
+             ringRotationSpeed = 0.06f;
              tidalLock = false;
              alwaysUnlocked = true;
              clearSectorOnLose = true;
