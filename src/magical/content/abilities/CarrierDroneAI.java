@@ -7,6 +7,7 @@ import mindustry.gen.*;
 public class CarrierDroneAI extends FlyingAI {
     public Unit mother;
     public CarrierAbility ability;
+    public Unit attackTarget;
 
     public CarrierDroneAI(Unit drone, Unit mother, CarrierAbility ability) {
         this.unit = drone;
@@ -21,24 +22,26 @@ public class CarrierDroneAI extends FlyingAI {
             return;
         }
 
-        if (target == null || target.dead || !target.isAdded() || target.team() == unit.team ||
-                !target.within(mother, ability.engageRange)) {
-            target = Units.closestEnemy(unit.team, mother.x, mother.y, ability.engageRange,
+        if (attackTarget == null || attackTarget.dead || !attackTarget.isAdded() || attackTarget.team() == unit.team ||
+                !attackTarget.within(mother, ability.engageRange)) {
+            attackTarget = Units.closestEnemy(unit.team, mother.x, mother.y, ability.engageRange,
                     u -> u.isValid() && u.team() != unit.team && !u.dead);
         }
 
-        if (target != null) {
-            super.updateUnit();
+        if (attackTarget != null) {
+            unit.moveAt(attackTarget);
+            unit.lookAt(attackTarget);
+            unit.aim(attackTarget);
+            if (unit.canShoot() && unit.within(attackTarget, unit.range())) {
+                unit.shoot(attackTarget);
+            }
         } else {
-            moveTo(mother, ability.reclaimDistance);
+            unit.moveAt(mother);
+            unit.lookAt(mother);
             if (unit.within(mother, ability.reclaimDistance)) {
                 ability.reclaimDrone(unit);
                 unit.remove();
             }
         }
-    }
-
-    @Override
-    public void updateTargeting() {
     }
 }

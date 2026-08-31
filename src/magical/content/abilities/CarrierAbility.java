@@ -1,7 +1,6 @@
-package magical.content;
+package magical.content.abilities;
 
 import arc.Core;
-import arc.func.Func;
 import arc.scene.ui.layout.Table;
 import arc.struct.*;
 import arc.util.*;
@@ -33,20 +32,20 @@ public class CarrierAbility extends Ability {
         this.spawnInterval = spawnInterval;
     }
 
-    public CarrierAbility(UnitType droneType, int maxDrones, float engageRange, float spawnInterval, UnitType motherType) {
-        this(droneType, maxDrones, engageRange, spawnInterval);
-        if (motherType != null) {
-            motherType.addBar("carrier-drones", this::createDronesBar);
+    public static Bar createDronesBar(Unit unit) {
+        CarrierAbility ability = null;
+        for (var a : unit.abilities) {
+            if (a instanceof CarrierAbility ca) {
+                ability = ca;
+                break;
+            }
         }
-    }
-
-    private Bar createDronesBar(Unit unit) {
-        CarrierAbility ability = (CarrierAbility) unit.getAbility(CarrierAbility.class);
         if (ability == null) return null;
+        CarrierAbility finalAbility = ability;
         return new Bar(
-                () -> Core.bundle.format("bar.carrier-drones") + ": " + ability.getTotalDrones() + " / " + ability.maxDrones,
+                () -> Core.bundle.format("bar.carrier-drones") + ": " + finalAbility.getTotalDrones() + " / " + finalAbility.maxDrones,
                 () -> Pal.accent,
-                () -> (float) ability.getTotalDrones() / ability.maxDrones
+                () -> (float) finalAbility.getTotalDrones() / finalAbility.maxDrones
         );
     }
 
@@ -61,7 +60,6 @@ public class CarrierAbility extends Ability {
             }
         }
 
-        // 查找最近的敌人，若存在且库存大于0则释放一架
         Unit enemy = Units.closestEnemy(unit.team, unit.x, unit.y, engageRange, u -> u.isValid() && !u.dead);
         if (enemy != null && storedDrones > 0) {
             Unit drone = droneType.create(unit.team);
@@ -81,17 +79,9 @@ public class CarrierAbility extends Ability {
         }
     }
 
-    public int getTotalDrones() {
-        return storedDrones + activeDrones.size;
-    }
-
-    public int getStoredDrones() {
-        return storedDrones;
-    }
-
-    public int getActiveDrones() {
-        return activeDrones.size;
-    }
+    public int getTotalDrones() { return storedDrones + activeDrones.size; }
+    public int getStoredDrones() { return storedDrones; }
+    public int getActiveDrones() { return activeDrones.size; }
 
     @Override
     public void death(Unit unit) {
