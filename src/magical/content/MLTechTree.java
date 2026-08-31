@@ -283,9 +283,9 @@ public class MLTechTree {
                 });
             });
                  });
-        root.children.add(Planets.serpulo.techTree);
-        serpulo.children.add(Planets.cecilia.techTree);
+        root.children.addAll(Planets.serpulo.techTree.children);
         MLPlanets.cecilia.techTree = root;
+        Planets.serpulo.techTree = root;
         //Planets.serpulo.techTree.children.addAll(root.children);
     }
 }
