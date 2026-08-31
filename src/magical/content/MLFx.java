@@ -213,7 +213,7 @@ public class MLFx {
             float finpow = e.finpow();
             float foutpow = e.foutpow();
             float rot = e.rotation;
-            Color blue = Color.valueOf("97B5EDFF");
+            Color blue = Color.valueOf("FEEBB3FF");
             Color gold = Color.valueOf("FEEBB3FF");
             Color white = Color.white;
             if(e.time < 12f){
