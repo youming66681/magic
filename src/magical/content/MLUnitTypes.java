@@ -2924,7 +2924,7 @@ public class MLUnitTypes {
                     status = StatusEffects.shocked;
                 }});
                 abilities.add(new CarrierAbility(
-                        FlyingSwallow,      // 舰载机类型
+                        MLUnitTypes.FlyingSwallow,      // 舰载机类型
                         10,                 // 最大舰载机数
                         480f,              // 索敌范围（世界单位）
                         60f               // 生成舰载机的间隔（帧）
