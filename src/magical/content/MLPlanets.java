@@ -17,8 +17,7 @@ import mindustry.world.*;
 import mindustry.world.meta.*;
 import mindustry.world.blocks.environment.*;
 import mindustry.world.Block;
-import mindustry.world.blocks.storage.LaunchPad;
-import mindustry.world.blocks.storage.LandingPad;
+import mindustry.Vars;
 
 import magical.content.MLItems;
 import magical.content.MLBlocks;
@@ -69,7 +68,8 @@ public class MLPlanets {
              ruleSetter = rules -> {
                  rules.hideBannedBlocks = true;
                  for(Block block : Vars.content.blocks()){
-                     if(block instanceof LaunchPad || block instanceof LandingPad){
+                     String type = block.getClass().getSimpleName();
+                     if(type.equals("LaunchPad") || type.equals("LandingPad")){
                          rules.bannedBlocks.add(block);
                      }
                  }
