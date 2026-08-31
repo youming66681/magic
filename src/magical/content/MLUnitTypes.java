@@ -43,9 +43,9 @@ import magical.content.MLFx;
 
 public class MLUnitTypes {
     public static UnitType
-    //陆
-    //一级
-    drizzle, Drizzle, drizzlingRain, ColdRain, HeavyRain,
+            //陆
+            //一级
+            drizzle, Drizzle, drizzlingRain, ColdRain, HeavyRain,
     //二级
     war, BeaconFire, War, CrusadeAgainst, ImperialArmy,
     //空
@@ -59,14 +59,14 @@ public class MLUnitTypes {
     //二级
     ExpelDarkness, ChasingLight, Dawn, FlowingSun, SplendidBrilliant,
     //核心机
-    Popular,SpinningSpear,
+    Popular, SpinningSpear,
     //星舰
     //小型
     Pioneer, Starlight, Qingxiao,
     //大型
     BrokenEdge, FlyingSwallow, Tianshu;
 
-    public static void load(){
+    public static void load() {
         //幻境陆军
         //一级
         //t1
@@ -165,44 +165,44 @@ public class MLUnitTypes {
             }});
         }};
         //t3
-            drizzlingRain = new UnitType("drizzlingRain") {{
-                constructor = UnitTypes.stell.constructor;
-                omniMovement = false;
-                rotateMoveFirst = false;
-                squareShape = true;
-                rotateSpeed = 3f;
-                speed = 1.5f;
-                hitSize = 36f;
-                health = 2400;
-                armor = 4;
-                itemCapacity = 40;
-                faceTarget = false;
-                crushDamage = 1;
-                weapons.add(new Weapon("magic-drizzlingRain1") {{
-                    reload = 60f;
-                    recoil = 5;
-                    x = 0;
-                    y = 0;
-                    shootY = 8f;
-                    mirror = false;
-                    rotate = true;
-                    rotateSpeed = 2f;
-                    inaccuracy = 0f;
-                    ejectEffect = Fx.casing3;
-                    layerOffset = 0.001f;
-                    shootSound = MLSounds.shootArtillery;
-                    bullet = new BasicBulletType(12, 80) {{
-                        lifetime = 20;
-                        width = 12;
-                        height = 24;
-                        splashDamageRadius = 32;
-                        splashDamage = 80;
-                        hitEffect = despawnEffect = MLFx.Explosion3;
-                        hitSound = MLSounds.explosion;
-                    }};
-                }});
-            }};
-            //t4
+        drizzlingRain = new UnitType("drizzlingRain") {{
+            constructor = UnitTypes.stell.constructor;
+            omniMovement = false;
+            rotateMoveFirst = false;
+            squareShape = true;
+            rotateSpeed = 3f;
+            speed = 1.5f;
+            hitSize = 36f;
+            health = 2400;
+            armor = 4;
+            itemCapacity = 40;
+            faceTarget = false;
+            crushDamage = 1;
+            weapons.add(new Weapon("magic-drizzlingRain1") {{
+                reload = 60f;
+                recoil = 5;
+                x = 0;
+                y = 0;
+                shootY = 8f;
+                mirror = false;
+                rotate = true;
+                rotateSpeed = 2f;
+                inaccuracy = 0f;
+                ejectEffect = Fx.casing3;
+                layerOffset = 0.001f;
+                shootSound = MLSounds.shootArtillery;
+                bullet = new BasicBulletType(12, 80) {{
+                    lifetime = 20;
+                    width = 12;
+                    height = 24;
+                    splashDamageRadius = 32;
+                    splashDamage = 80;
+                    hitEffect = despawnEffect = MLFx.Explosion3;
+                    hitSound = MLSounds.explosion;
+                }};
+            }});
+        }};
+        //t4
         ColdRain = new UnitType("ColdRain") {{
             constructor = UnitTypes.stell.constructor;
             omniMovement = false;
@@ -290,7 +290,7 @@ public class MLUnitTypes {
                 }};
             }});
         }};
-            //二级
+        //二级
         //t1
         war = new UnitType("war") {{
             constructor = MechUnit::create;
@@ -306,7 +306,7 @@ public class MLUnitTypes {
             mechSideSway = 0.1f;
             drownTimeMultiplier = 1;
             range = 176;
-            weapons.add(new Weapon("magic-war0"){{
+            weapons.add(new Weapon("magic-war0") {{
                 reload = 12f;
                 shake = 1f;
                 recoil = 2.4f;
@@ -321,7 +321,7 @@ public class MLUnitTypes {
                 shootCone = 15f;
                 shootY = 4f;
                 shootX = 2f;
-                bullet = new BasicBulletType(8f, 20f){{
+                bullet = new BasicBulletType(8f, 20f) {{
                     pierce = true;
                     pierceBuilding = true;
                     pierceCap = 2;
@@ -351,7 +351,7 @@ public class MLUnitTypes {
             mechFrontSway = 0.2f;
             mechSideSway = 0.2f;
             drownTimeMultiplier = 2;
-            abilities.add(new ShieldArcAbility(){{
+            abilities.add(new ShieldArcAbility() {{
                 whenShooting = true;
                 radius = 12f;
                 width = 6f;
@@ -362,106 +362,107 @@ public class MLUnitTypes {
                 angleOffset = 0f;
             }});
             weapons.add(
-                    new Weapon("magic-BeaconFire0"){{
-                reload = 180f;
-                mirror = true;
-                shootY = 6f;
-                x = -6f;
-                y = -1f;
-                rotate = false;
-                recoil = 0f;
-                continuous = true;
-                alternate = false;
-                cooldownTime = 60f;
-                shootSound = MLSounds.beam;
-                shootX = -4f;
-                bullet = new ContinuousLaserBulletType(250f){{
-                    length = 40f;
-                    width = 2f;
-                    incendChance = 2f;
-                    incendSpread = 4f;
-                    incendAmount = 1;
-                    hitEffect = Fx.none;
-                    statusDuration = 60f;
-                    drawSize = 40f;
-                    lifetime = 180f;
-                    shake = 1f;
-                    despawnEffect = Fx.smokeCloud;
-                    smokeEffect = Fx.none;
-                    shootEffect = Fx.none;
-                    collidesTeam = true;
-                    colors = new Color[]{
-                            Color.valueOf("D86E56FF"),
-                            Color.valueOf("FFA05CFF"),
-                            Color.white
-                       };
-                    }};
-                }});
-            }};
-        //t3
-            War = new UnitType("War") {{
-                constructor = MechUnit::create;
-                canDrown = true;
-                rotateSpeed = 1.5f;
-                speed = 0.8f;
-                hitSize = 32f;
-                health = 3600;
-                armor = 12;
-                baseRotateSpeed = 1.5f;
-                mechStepParticles = true;
-                mechFrontSway = 0.3f;
-                mechSideSway = 0.3f;
-                drownTimeMultiplier = 3;
-                range = 256;
-                abilities.add(new ShieldArcAbility(){{
-                    whenShooting = true;
-                    radius = 24f;
-                    width = 6f;
-                    max = 1000f;
-                    regen = 1f;
-                    cooldown = 180f;
-                    angle = 120f;
-                    angleOffset = 0f;
-                }});
-                weapons.add(new Weapon("magic-War0"){{
-                        reload = 60f;
-                        shake = 3f;
-                        recoil = 3f;
-                        x = 12f;
+                    new Weapon("magic-BeaconFire0") {{
+                        reload = 180f;
+                        mirror = true;
+                        shootY = 6f;
+                        x = -6f;
+                        y = -1f;
                         rotate = false;
-                        top = false;
-                        inaccuracy = 6f;
-                        shootSound = MLSounds.pao;
-                        alternate = true;
-                        ejectEffect = Fx.casing4;
-                        shootCone = 15f;
+                        recoil = 0f;
+                        continuous = true;
+                        alternate = false;
                         cooldownTime = 60f;
-                        shootY = 7f;
-                        shootX = 0f;
-                        shoot = new ShootAlternate(){{
-                            shots = 9;
-                            shotDelay = 3f;
-                            barrels = 1;
-                            spread = 0f;
+                        shootSound = MLSounds.beam;
+                        shootX = -4f;
+                        bullet = new ContinuousLaserBulletType(250f) {{
+                            length = 40f;
+                            width = 2f;
+                            incendChance = 2f;
+                            incendSpread = 4f;
+                            incendAmount = 1;
+                            hitEffect = Fx.none;
+                            statusDuration = 60f;
+                            drawSize = 40f;
+                            lifetime = 180f;
+                            shake = 1f;
+                            despawnEffect = Fx.smokeCloud;
+                            smokeEffect = Fx.none;
+                            shootEffect = Fx.none;
+                            collidesTeam = true;
+                            colors = new Color[]{
+                                    Color.valueOf("D86E56FF"),
+                                    Color.valueOf("FFA05CFF"),
+                                    Color.white
+                            };
                         }};
-                        bullet = new BasicBulletType(8f, 90f){
-                            {
-                                pierce = true;
-                                pierceBuilding = true;
-                                pierceCap = 3;
-                                lifetime = 32f;
-                                shootEffect = Fx.none;
-                                trailLength = 6;
-                                trailWidth = 3f;
-                                trailColor = Color.valueOf("FEEBB3FF");
-                                backColor = Color.valueOf("FEEBB3FF");
-                                frontColor = Color.valueOf("FEEBB3FF");
-                                width = 16f;
-                                height = 32f;
-                            }};
-                }});
-            }};
-         //t4
+                    }});
+        }};
+        //t3
+        War = new UnitType("War") {{
+            constructor = MechUnit::create;
+            canDrown = true;
+            rotateSpeed = 1.5f;
+            speed = 0.8f;
+            hitSize = 32f;
+            health = 3600;
+            armor = 12;
+            baseRotateSpeed = 1.5f;
+            mechStepParticles = true;
+            mechFrontSway = 0.3f;
+            mechSideSway = 0.3f;
+            drownTimeMultiplier = 3;
+            range = 256;
+            abilities.add(new ShieldArcAbility() {{
+                whenShooting = true;
+                radius = 24f;
+                width = 6f;
+                max = 1000f;
+                regen = 1f;
+                cooldown = 180f;
+                angle = 120f;
+                angleOffset = 0f;
+            }});
+            weapons.add(new Weapon("magic-War0") {{
+                reload = 60f;
+                shake = 3f;
+                recoil = 3f;
+                x = 12f;
+                rotate = false;
+                top = false;
+                inaccuracy = 6f;
+                shootSound = MLSounds.pao;
+                alternate = true;
+                ejectEffect = Fx.casing4;
+                shootCone = 15f;
+                cooldownTime = 60f;
+                shootY = 7f;
+                shootX = 0f;
+                shoot = new ShootAlternate() {{
+                    shots = 9;
+                    shotDelay = 3f;
+                    barrels = 1;
+                    spread = 0f;
+                }};
+                bullet = new BasicBulletType(8f, 90f) {
+                    {
+                        pierce = true;
+                        pierceBuilding = true;
+                        pierceCap = 3;
+                        lifetime = 32f;
+                        shootEffect = Fx.none;
+                        trailLength = 6;
+                        trailWidth = 3f;
+                        trailColor = Color.valueOf("FEEBB3FF");
+                        backColor = Color.valueOf("FEEBB3FF");
+                        frontColor = Color.valueOf("FEEBB3FF");
+                        width = 16f;
+                        height = 32f;
+                    }
+                };
+            }});
+        }};
+        //t4
         CrusadeAgainst = new UnitType("CrusadeAgainst") {{
             constructor = MechUnit::create;
             canDrown = true;
@@ -476,7 +477,7 @@ public class MLUnitTypes {
             mechSideSway = 0.4f;
             drownTimeMultiplier = 4;
             range = 288;
-            abilities.add(new ShieldArcAbility(){{
+            abilities.add(new ShieldArcAbility() {{
                 whenShooting = true;
                 radius = 32f;
                 width = 8f;
@@ -487,7 +488,7 @@ public class MLUnitTypes {
                 angleOffset = 0f;
             }});
             weapons.add(
-                    new Weapon("magic-CrusadeAgainst0"){{
+                    new Weapon("magic-CrusadeAgainst0") {{
                         reload = 90f;
                         shake = 4f;
                         recoil = 4f;
@@ -500,7 +501,7 @@ public class MLUnitTypes {
                         ejectEffect = Fx.none;
                         shootY = 8f;
                         shootX = 0f;
-                        bullet = new LaserBulletType(){{
+                        bullet = new LaserBulletType() {{
                             damage = 160f;
                             smokeEffect = Fx.bigShockwave;
                             lightningSpacing = 8f;
@@ -518,85 +519,85 @@ public class MLUnitTypes {
                             length = 192;
                         }};
                     }},
-            new Weapon("magic-CrusadeAgainst1"){{
-                reload = 60f;
-                shake = 2f;
-                recoil = 2f;
-                x = 12f;
-                rotate = false;
-                top = false;
-                inaccuracy = 2f;
-                shootSound = MLSounds.pao;
-                alternate = true;
-                ejectEffect = Fx.casing3;
-                shootCone = 10f;
-                cooldownTime = 40f;
-                shootY = 4f;
-                shootX = 0f;
-                shoot = new ShootAlternate(){{
-                    shots = 8;
-                    shotDelay = 2f;
-                    barrels = 1;
-                    spread = 0f;
-                }};
-                bullet = new BasicBulletType(){{
-                    damage = 40f;
-                    pierce = true;
-                    pierceBuilding = true;
-                    pierceCap = 2;
-                    speed = 8f;
-                    lifetime = 30f;
-                    shootEffect = Fx.none;
-                    trailLength = 4;
-                    trailWidth = 2f;
-                    trailColor = Color.valueOf("FEEBB3FF");
-                    backColor = Color.valueOf("FEEBB3FF");
-                    frontColor = Color.valueOf("FEEBB3FF");
-                    width = 8f;
-                    height = 24f;
-                }};
-            }},
-            new Weapon("magic-CrusadeAgainst2"){{
-                mirror = true;
-                x = 6f;
-                y = 0f;
-                reload = 120f;
-                shootCone = 40f;
-                shoot = new ShootAlternate(){{
-                    shots = 12;
-                    shotDelay = 3f;
-                    barrels = 1;
-                    spread = 0f;
-                }};
-                shootSound = MLSounds.missile;
-                rotate = true;
-                rotateSpeed = 4f;
-                inaccuracy = 0f;
-                controllable = false;
-                autoTarget = true;
-                alternate = false;
-                bullet = new MissileBulletType(){{
-                    damage = 40f;
-                    splashDamageRadius = 16f;
-                    splashDamage = 40f;
-                    homingRange = 120f;
-                    homingPower = 0.2f;
-                    homingDelay = 2f;
-                    hitEffect = Fx.flakExplosion;
-                    despawnEffect = Fx.flakExplosion;
-                    sprite = "magic-导弹";
-                    trailLength = 2;
-                    trailWidth = 1f;
-                    trailEffect = Fx.none;
-                    trailColor = Color.valueOf("FFFFFFFF");
-                    backColor = Color.valueOf("FF5B5BFF");
-                    frontColor = Color.valueOf("E3E3E3FF");
-                    width = 8f;
-                    height = 24f;
-                    speed = 16f;
-                    lifetime = 18f;
-                }};
-            }});
+                    new Weapon("magic-CrusadeAgainst1") {{
+                        reload = 60f;
+                        shake = 2f;
+                        recoil = 2f;
+                        x = 12f;
+                        rotate = false;
+                        top = false;
+                        inaccuracy = 2f;
+                        shootSound = MLSounds.pao;
+                        alternate = true;
+                        ejectEffect = Fx.casing3;
+                        shootCone = 10f;
+                        cooldownTime = 40f;
+                        shootY = 4f;
+                        shootX = 0f;
+                        shoot = new ShootAlternate() {{
+                            shots = 8;
+                            shotDelay = 2f;
+                            barrels = 1;
+                            spread = 0f;
+                        }};
+                        bullet = new BasicBulletType() {{
+                            damage = 40f;
+                            pierce = true;
+                            pierceBuilding = true;
+                            pierceCap = 2;
+                            speed = 8f;
+                            lifetime = 30f;
+                            shootEffect = Fx.none;
+                            trailLength = 4;
+                            trailWidth = 2f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            width = 8f;
+                            height = 24f;
+                        }};
+                    }},
+                    new Weapon("magic-CrusadeAgainst2") {{
+                        mirror = true;
+                        x = 6f;
+                        y = 0f;
+                        reload = 120f;
+                        shootCone = 40f;
+                        shoot = new ShootAlternate() {{
+                            shots = 12;
+                            shotDelay = 3f;
+                            barrels = 1;
+                            spread = 0f;
+                        }};
+                        shootSound = MLSounds.missile;
+                        rotate = true;
+                        rotateSpeed = 4f;
+                        inaccuracy = 0f;
+                        controllable = false;
+                        autoTarget = true;
+                        alternate = false;
+                        bullet = new MissileBulletType() {{
+                            damage = 40f;
+                            splashDamageRadius = 16f;
+                            splashDamage = 40f;
+                            homingRange = 120f;
+                            homingPower = 0.2f;
+                            homingDelay = 2f;
+                            hitEffect = Fx.flakExplosion;
+                            despawnEffect = Fx.flakExplosion;
+                            sprite = "magic-导弹";
+                            trailLength = 2;
+                            trailWidth = 1f;
+                            trailEffect = Fx.none;
+                            trailColor = Color.valueOf("FFFFFFFF");
+                            backColor = Color.valueOf("FF5B5BFF");
+                            frontColor = Color.valueOf("E3E3E3FF");
+                            width = 8f;
+                            height = 24f;
+                            speed = 16f;
+                            lifetime = 18f;
+                        }};
+                    }});
         }};
         //t5
         ImperialArmy = new UnitType("ImperialArmy") {{
@@ -613,7 +614,7 @@ public class MLUnitTypes {
             mechSideSway = 0.5f;
             drownTimeMultiplier = 5;
             range = 360;
-            abilities.add(new ShieldArcAbility(){{
+            abilities.add(new ShieldArcAbility() {{
                 whenShooting = true;
                 radius = 40f;
                 width = 10f;
@@ -624,49 +625,49 @@ public class MLUnitTypes {
                 angleOffset = 0f;
             }});
             weapons.add(
-            new Weapon("magic-ImperialArmy0"){{
-                reload = 5f;
-                shake = 5f;
-                recoil = 10f;
-                x = 27f;
-                rotate = false;
-                top = false;
-                inaccuracy = 0f;
-                shootSound = MLSounds.shootBig;
-                alternate = true;
-                ejectEffect = Fx.casing4;
-                shootY = 24f;
-                shootX = 6f;
-                bullet = new BasicBulletType(){{
-                    damage = 150f;
-                    pierce = true;
-                    pierceBuilding = true;
-                    pierceCap = 3;
-                    speed = 16f;
-                    lifetime = 22.5f;
-                    hitSound = MLSounds.lasercharge2;
-                    shootEffect = Fx.shootBig;
-                    smokeEffect = Fx.shootBigSmoke;
-                    trailLength = 4;
-                    trailWidth = 6f;
-                    trailColor = Color.valueOf("FEEBB3FF");
-                    backColor = Color.valueOf("FEEBB3FF");
-                    frontColor = Color.valueOf("FEEBB3FF");
-                    width = 16f;
-                    height = 32f;
-                    trailChance = 0.75f;
-                    trailInterval = 20f;
-                    trailEffect = new WaveEffect(){{
-                        lifetime = 15f;
-                        sizeFrom = 0f;
-                        sizeTo = 24f;
-                        strokeFrom = 0f;
-                        strokeTo = 3f;
-                        colorFrom = Color.valueOf("FEEBB3FF");
-                        colorTo = Color.valueOf("FEEBB3FF");
-                    }};
-                }};
-            }});
+                    new Weapon("magic-ImperialArmy0") {{
+                        reload = 5f;
+                        shake = 5f;
+                        recoil = 10f;
+                        x = 27f;
+                        rotate = false;
+                        top = false;
+                        inaccuracy = 0f;
+                        shootSound = MLSounds.shootBig;
+                        alternate = true;
+                        ejectEffect = Fx.casing4;
+                        shootY = 24f;
+                        shootX = 6f;
+                        bullet = new BasicBulletType() {{
+                            damage = 150f;
+                            pierce = true;
+                            pierceBuilding = true;
+                            pierceCap = 3;
+                            speed = 16f;
+                            lifetime = 22.5f;
+                            hitSound = MLSounds.lasercharge2;
+                            shootEffect = Fx.shootBig;
+                            smokeEffect = Fx.shootBigSmoke;
+                            trailLength = 4;
+                            trailWidth = 6f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            width = 16f;
+                            height = 32f;
+                            trailChance = 0.75f;
+                            trailInterval = 20f;
+                            trailEffect = new WaveEffect() {{
+                                lifetime = 15f;
+                                sizeFrom = 0f;
+                                sizeTo = 24f;
+                                strokeFrom = 0f;
+                                strokeTo = 3f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                        }};
+                    }});
         }};
         //幻境空军
         //一级
@@ -773,34 +774,34 @@ public class MLUnitTypes {
             targetFlags = new BlockFlag[]{BlockFlag.factory};
             weapons.add(
                     new Weapon("magic-Gale1") {{
-                rotate = false;
-                mirror = false;
-                reload = 60;
-                x = 0;
-                y = 0;
-                shootSound = MLSounds.plasmadrop;
-                ejectEffect = Fx.casing1;
-                layerOffset = 0.001f;
-                bullet = new BasicBulletType(0, 10, "large-bomb") {{
-                    ignoreRotation = true;
-                    collidesAir = false;
-                    maxRange = 10;
-                    width = 24;
-                    height = 24;
-                    lifetime = 30;
-                    frontColor = Color.valueOf("C8BA8FFF");
-                    backColor = Color.valueOf("958F60FF");
-                    splashDamageRadius = 32;
-                    splashDamage = 100;
-                    incendAmount = 1;
-                    incendSpread = 10;
-                    incendChance = 0.05f;
-                    spin = 1.5f;
-                    makeFire = true;
-                    hitEffect = despawnEffect = MLFx.Explosion3;
-                    hitSound = MLSounds.explosion;
-                }};
-            }});
+                        rotate = false;
+                        mirror = false;
+                        reload = 60;
+                        x = 0;
+                        y = 0;
+                        shootSound = MLSounds.plasmadrop;
+                        ejectEffect = Fx.casing1;
+                        layerOffset = 0.001f;
+                        bullet = new BasicBulletType(0, 10, "large-bomb") {{
+                            ignoreRotation = true;
+                            collidesAir = false;
+                            maxRange = 10;
+                            width = 24;
+                            height = 24;
+                            lifetime = 30;
+                            frontColor = Color.valueOf("C8BA8FFF");
+                            backColor = Color.valueOf("958F60FF");
+                            splashDamageRadius = 32;
+                            splashDamage = 100;
+                            incendAmount = 1;
+                            incendSpread = 10;
+                            incendChance = 0.05f;
+                            spin = 1.5f;
+                            makeFire = true;
+                            hitEffect = despawnEffect = MLFx.Explosion3;
+                            hitSound = MLSounds.explosion;
+                        }};
+                    }});
         }};
         //t4
         Storm = new UnitType("Storm") {{
@@ -821,7 +822,7 @@ public class MLUnitTypes {
             range = 280;
             targetFlags = new BlockFlag[]{BlockFlag.core};
             weapons.add(
-                    new Weapon("magic-Storm1"){{
+                    new Weapon("magic-Storm1") {{
                         reload = 30f;
                         recoil = 2f;
                         x = -10f;
@@ -833,12 +834,12 @@ public class MLUnitTypes {
                         ejectEffect = Fx.smeltsmoke;
                         shootSound = MLSounds.shootFuse;
                         alternate = true;
-                        bullet = new PointBulletType(){{
+                        bullet = new PointBulletType() {{
                             hitEffect = Fx.none;
                             despawnEffect = Fx.none;
                             damage = 150f;
                             trailSpacing = 9f;
-                            trailEffect = new ParticleEffect(){{
+                            trailEffect = new ParticleEffect() {{
                                 particles = 1;
                                 baseLength = 0f;
                                 lifetime = 30f;
@@ -856,7 +857,7 @@ public class MLUnitTypes {
                             lifetime = 15f;
                         }};
                     }},
-                    new Weapon("magic-Storm0"){{
+                    new Weapon("magic-Storm0") {{
                         reload = 15f;
                         x = 6f;
                         y = 8f;
@@ -867,7 +868,7 @@ public class MLUnitTypes {
                         inaccuracy = 0f;
                         shootSound = MLSounds.laser;
                         shake = 2f;
-                        bullet = new BasicBulletType(){{
+                        bullet = new BasicBulletType() {{
                             damage = 70f;
                             splashDamage = 60f;
                             splashDamageRadius = 20f;
@@ -879,7 +880,7 @@ public class MLUnitTypes {
                             trailWidth = 3f;
                             trailColor = Color.valueOf("FEEBB3FF");
                             hitSound = MLSounds.plasmaboom;
-                            shootEffect = new ParticleEffect(){{
+                            shootEffect = new ParticleEffect() {{
                                 particles = 3;
                                 sizeFrom = 2f;
                                 sizeTo = 0f;
@@ -892,7 +893,7 @@ public class MLUnitTypes {
                             }};
                             width = 16f;
                             height = 32f;
-                            hitEffect = new WrapEffect(){{
+                            hitEffect = new WrapEffect() {{
                                 effect = Fx.dynamicSpikes;
                                 color = Color.valueOf("FEEBB3FF");
                                 rotation = 20f;
@@ -918,7 +919,7 @@ public class MLUnitTypes {
             engineSize = 14f;
             range = 240;
             weapons.add(
-                    new Weapon("magic-Hurricane0"){{
+                    new Weapon("magic-Hurricane0") {{
                         x = 16f;
                         y = 8f;
                         mirror = true;
@@ -928,11 +929,11 @@ public class MLUnitTypes {
                         recoil = 5f;
                         rotate = true;
                         rotateSpeed = 5f;
-                        shoot = new ShootAlternate(){{
+                        shoot = new ShootAlternate() {{
                             barrels = 2;
                             spread = 2f;
                         }};
-                        bullet = new BasicBulletType(){{
+                        bullet = new BasicBulletType() {{
                             damage = 25f;
                             pierceCap = 2;
                             pierceBuilding = true;
@@ -946,7 +947,7 @@ public class MLUnitTypes {
                             pierce = true;
                             speed = 16f;
                             lifetime = 15f;
-                            hitEffect = new WaveEffect(){{
+                            hitEffect = new WaveEffect() {{
                                 lifetime = 8f;
                                 sizeFrom = 0f;
                                 sizeTo = 12f;
@@ -955,7 +956,7 @@ public class MLUnitTypes {
                                 colorFrom = Color.valueOf("FFFFFF");
                                 colorTo = Color.valueOf("FEEBB3FF");
                             }};
-                            despawnEffect = new WaveEffect(){{
+                            despawnEffect = new WaveEffect() {{
                                 lifetime = 8f;
                                 sizeFrom = 0f;
                                 sizeTo = 12f;
@@ -966,54 +967,54 @@ public class MLUnitTypes {
                             }};
                         }};
                     }},
-            new Weapon("magic-Hurricane0"){{
-                x = 12f;
-                y = -12f;
-                mirror = true;
-                reload = 2.5f;
-                shootSound = MLSounds.JG;
-                inaccuracy = 5f;
-                recoil = 5f;
-                rotate = true;
-                rotateSpeed = 5f;
-                shoot = new ShootAlternate(){{
-                    barrels = 2;
-                    spread = 2f;
-                }};
-                bullet = new BasicBulletType(){{
-                    damage = 25f;
-                    pierceCap = 2;
-                    pierceBuilding = true;
-                    frontColor = Color.valueOf("FEEBB3FF");
-                    backColor = Color.valueOf("FEEBB3FF");
-                    width = 8f;
-                    height = 16f;
-                    trailLength = 2;
-                    trailWidth = 2f;
-                    trailColor = Color.valueOf("FEEBB3FF");
-                    pierce = true;
-                    speed = 16f;
-                    lifetime = 15f;
-                    hitEffect = new WaveEffect(){{
-                        lifetime = 8f;
-                        sizeFrom = 0f;
-                        sizeTo = 12f;
-                        strokeFrom = 1f;
-                        strokeTo = 0f;
-                        colorFrom = Color.valueOf("FFFFFF");
-                        colorTo = Color.valueOf("FEEBB3FF");
-                    }};
-                    despawnEffect = new WaveEffect(){{
-                        lifetime = 8f;
-                        sizeFrom = 0f;
-                        sizeTo = 12f;
-                        strokeFrom = 1f;
-                        strokeTo = 0f;
-                        colorFrom = Color.valueOf("FFFFFF");
-                        colorTo = Color.valueOf("FEEBB3FF");
-                    }};
-                }};
-            }});
+                    new Weapon("magic-Hurricane0") {{
+                        x = 12f;
+                        y = -12f;
+                        mirror = true;
+                        reload = 2.5f;
+                        shootSound = MLSounds.JG;
+                        inaccuracy = 5f;
+                        recoil = 5f;
+                        rotate = true;
+                        rotateSpeed = 5f;
+                        shoot = new ShootAlternate() {{
+                            barrels = 2;
+                            spread = 2f;
+                        }};
+                        bullet = new BasicBulletType() {{
+                            damage = 25f;
+                            pierceCap = 2;
+                            pierceBuilding = true;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            width = 8f;
+                            height = 16f;
+                            trailLength = 2;
+                            trailWidth = 2f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            pierce = true;
+                            speed = 16f;
+                            lifetime = 15f;
+                            hitEffect = new WaveEffect() {{
+                                lifetime = 8f;
+                                sizeFrom = 0f;
+                                sizeTo = 12f;
+                                strokeFrom = 1f;
+                                strokeTo = 0f;
+                                colorFrom = Color.valueOf("FFFFFF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                            despawnEffect = new WaveEffect() {{
+                                lifetime = 8f;
+                                sizeFrom = 0f;
+                                sizeTo = 12f;
+                                strokeFrom = 1f;
+                                strokeTo = 0f;
+                                colorFrom = Color.valueOf("FFFFFF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                        }};
+                    }});
         }};
         //二级
         //t1
@@ -1039,7 +1040,7 @@ public class MLUnitTypes {
                 mirror = false;
                 rotate = true;
                 shootSound = MLSounds.explosion;
-                bullet = new BasicBulletType(0f, 160f){{
+                bullet = new BasicBulletType(0f, 160f) {{
                     instantDisappear = true;
                     killShooter = true;
                     shootEffect = Fx.none;
@@ -1058,7 +1059,7 @@ public class MLUnitTypes {
                     buildingDamageMultiplier = 1.1f;
                     absorbable = false;
                     hitEffect = new MultiEffect(
-                            new WaveEffect(){{
+                            new WaveEffect() {{
                                 lifetime = 15f;
                                 sizeFrom = 0f;
                                 sizeTo = 64f;
@@ -1067,7 +1068,7 @@ public class MLUnitTypes {
                                 colorFrom = Color.valueOf("FEEBB3FF");
                                 colorTo = Color.valueOf("FEEBB3FF");
                             }},
-                            new ParticleEffect(){{
+                            new ParticleEffect() {{
                                 particles = 12;
                                 sizeFrom = 4f;
                                 sizeTo = 0f;
@@ -1079,7 +1080,7 @@ public class MLUnitTypes {
                                 colorFrom = Color.valueOf("FEEBB3FF");
                                 colorTo = Color.valueOf("FEEBB3FF");
                             }},
-                            new ParticleEffect(){{
+                            new ParticleEffect() {{
                                 particles = 12;
                                 line = true;
                                 strokeFrom = 3f;
@@ -1132,7 +1133,7 @@ public class MLUnitTypes {
                 shootSound = MLSounds.missile;
                 shake = 2f;
                 ignoreRotation = true;
-                bullet = new BasicBulletType(8f, 50f){{
+                bullet = new BasicBulletType(8f, 50f) {{
                     speed = 8f;
                     lifetime = 28f;
                     width = 16f;
@@ -1152,7 +1153,7 @@ public class MLUnitTypes {
                     hitEffect = new WrapEffect(
                             Fx.dynamicSpikes,
                             Color.valueOf("FEEBB3FF")
-                    ){{
+                    ) {{
                         rotation = 16f;
                     }};
                     status = StatusEffects.slow;
@@ -1166,166 +1167,166 @@ public class MLUnitTypes {
         }};
         //t3
         blazing = new UnitType("blazing") {{
-                constructor = UnitTypes.flare.constructor;
-                flying = true;
-                circleTarget = true;
-                circleTargetRadius = 90;
-                faceTarget = true;
-                omniMovement = false;
-                lowAltitude = true;
-                rotateSpeed = 6.75f;
-                speed = 4.5f;
-                drag = 0.03f;
-                accel = 0.08f;
-                hitSize = 28;
-                health = 2880;
-                armor = 8;
-                engineOffset = 16;
-                engineSize = 8f;
-                range = 320;
-                trailLength = 9;
-                abilities.add(new ShieldArcAbility() {{
-                    whenShooting = true;
-                    radius = 24f;
-                    width = 6f;
-                    max = 1500f;
-                    regen = 1.5f;
-                    cooldown = 300f;
-                    angle = 150f;
-                    angleOffset = 0f;
-                }});
-                targetFlags = new BlockFlag[]{
-                        BlockFlag.generator,
-                        BlockFlag.reactor,
-                        BlockFlag.battery
-                };
-                weapons.add(
-                        new Weapon("magic-blazing0") {{
-                            x = -6f;
-                            y = 0f;
-                            mirror = true;
-                            reload = 6f;
-                            rotate = false;
-                            recoil = 3f;
-                            inaccuracy = 3f;
-                            shootSound = MLSounds.JG;
-                            bullet = new BasicBulletType(16f, 30f) {{
-                                width = 8f;
-                                height = 16f;
-                                lifetime = 16f;
-                                pierce = true;
-                                pierceBuilding = true;
-                                pierceCap = 3;
-                                splashDamageRadius = 8f;
-                                splashDamage = 20f;
-                                frontColor = Color.valueOf("FEEBB3FF");
-                                backColor = Color.valueOf("FEEBB3FF");
-                                trailLength = 4;
-                                trailWidth = 2f;
-                                trailColor = Color.valueOf("FEEBB3FF");
-                                ammoMultiplier = 1f;
-                                makeFire = true;
-                                incendAmount = 1;
-                                incendSpread = 2f;
-                                incendChance = 0.125f;
-                                hitEffect = new WaveEffect() {{
-                                    lifetime = 8f;
-                                    sizeFrom = 0f;
-                                    sizeTo = 8f;
-                                    strokeFrom = 0f;
-                                    strokeTo = 1f;
-                                    colorFrom = Color.white;
-                                    colorTo = Color.valueOf("FEEBB3FF");
-                                }};
-                                despawnEffect = new WaveEffect() {{
-                                    lifetime = 8f;
-                                    sizeFrom = 0f;
-                                    sizeTo = 8f;
-                                    strokeFrom = 0f;
-                                    strokeTo = 1f;
-                                    colorFrom = Color.white;
-                                    colorTo = Color.valueOf("FEEBB3FF");
-                                }};
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            circleTarget = true;
+            circleTargetRadius = 90;
+            faceTarget = true;
+            omniMovement = false;
+            lowAltitude = true;
+            rotateSpeed = 6.75f;
+            speed = 4.5f;
+            drag = 0.03f;
+            accel = 0.08f;
+            hitSize = 28;
+            health = 2880;
+            armor = 8;
+            engineOffset = 16;
+            engineSize = 8f;
+            range = 320;
+            trailLength = 9;
+            abilities.add(new ShieldArcAbility() {{
+                whenShooting = true;
+                radius = 24f;
+                width = 6f;
+                max = 1500f;
+                regen = 1.5f;
+                cooldown = 300f;
+                angle = 150f;
+                angleOffset = 0f;
+            }});
+            targetFlags = new BlockFlag[]{
+                    BlockFlag.generator,
+                    BlockFlag.reactor,
+                    BlockFlag.battery
+            };
+            weapons.add(
+                    new Weapon("magic-blazing0") {{
+                        x = -6f;
+                        y = 0f;
+                        mirror = true;
+                        reload = 6f;
+                        rotate = false;
+                        recoil = 3f;
+                        inaccuracy = 3f;
+                        shootSound = MLSounds.JG;
+                        bullet = new BasicBulletType(16f, 30f) {{
+                            width = 8f;
+                            height = 16f;
+                            lifetime = 16f;
+                            pierce = true;
+                            pierceBuilding = true;
+                            pierceCap = 3;
+                            splashDamageRadius = 8f;
+                            splashDamage = 20f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            trailLength = 4;
+                            trailWidth = 2f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            ammoMultiplier = 1f;
+                            makeFire = true;
+                            incendAmount = 1;
+                            incendSpread = 2f;
+                            incendChance = 0.125f;
+                            hitEffect = new WaveEffect() {{
+                                lifetime = 8f;
+                                sizeFrom = 0f;
+                                sizeTo = 8f;
+                                strokeFrom = 0f;
+                                strokeTo = 1f;
+                                colorFrom = Color.white;
+                                colorTo = Color.valueOf("FEEBB3FF");
                             }};
-                        }},
-                        new Weapon("magic-blazing1") {{
-                            x = 0f;
-                            y = 0f;
-                            reload = 300f;
-                            mirror = false;
-                            alternate = false;
-                            shootSound = MLSounds.missile;
-                            shoot = new ShootBarrel() {{
-                                shots = 2;
-                                shotDelay = 0f;
-                                barrels = new float[]{
-                                        10f, 0f, 0f,
-                                        -10f, 0f, 0f
-                                };
+                            despawnEffect = new WaveEffect() {{
+                                lifetime = 8f;
+                                sizeFrom = 0f;
+                                sizeTo = 8f;
+                                strokeFrom = 0f;
+                                strokeTo = 1f;
+                                colorFrom = Color.white;
+                                colorTo = Color.valueOf("FEEBB3FF");
                             }};
-                            inaccuracy = 0f;
-                            shootCone = 180f;
-                            bullet = new MissileBulletType(8f, 80f) {{
-                                hitSound = MLSounds.plasmaboom;
-                                shrinkY = 0f;
-                                homingRange = 180f;
-                                homingPower = 0.06f;
-                                splashDamageRadius = 24f;
-                                splashDamage = 160f;
-                                makeFire = true;
-                                incendAmount = 3;
-                                incendSpread = 6f;
-                                incendChance = 0.5f;
-                                hitEffect = new MultiEffect(
-                                        new WaveEffect() {{
-                                            lifetime = 25f;
-                                            sizeFrom = 0f;
-                                            sizeTo = 48f;
-                                            strokeFrom = 0f;
-                                            strokeTo = 2f;
-                                            colorFrom = Color.valueOf("FEEBB3FF");
-                                            colorTo = Color.valueOf("FEEBB3FF");
-                                        }},
-                                        new ParticleEffect() {{
-                                            particles = 8;
-                                            sizeFrom = 2f;
-                                            sizeTo = 0f;
-                                            length = 24f;
-                                            baseLength = 24f;
-                                            lifetime = 30f;
-                                            interp = Interp.pow10Out;
-                                            sizeInterp = Interp.pow10In;
-                                            colorFrom = Color.valueOf("FEEBB3FF");
-                                            colorTo = Color.valueOf("FEEBB3FF");
-                                        }},
-                                        new ParticleEffect() {{
-                                            particles = 8;
-                                            line = true;
-                                            strokeFrom = 2f;
-                                            strokeTo = 0f;
-                                            lenFrom = 4f;
-                                            lenTo = 0f;
-                                            length = 24f;
-                                            baseLength = 24f;
-                                            lifetime = 30f;
-                                            interp = Interp.pow5Out;
-                                            sizeInterp = Interp.pow5In;
-                                            colorFrom = Color.valueOf("FEEBB3FF");
-                                            colorTo = Color.valueOf("FEEBB3FF");
-                                        }}
-                                );
-                                despawnEffect = Fx.none;
-                                trailLength = 8;
-                                trailWidth = 4f;
-                                trailColor = Color.valueOf("FEEBB3FF");
-                                frontColor = Color.valueOf("FEEBB3FF");
-                                backColor = Color.valueOf("FEEBB3FF");
-                                width = 16f;
-                                height = 32f;
-                                lifetime = 40f;
-                                sprite = "magic-大导弹";
-                            }};
-                        }});
+                        }};
+                    }},
+                    new Weapon("magic-blazing1") {{
+                        x = 0f;
+                        y = 0f;
+                        reload = 300f;
+                        mirror = false;
+                        alternate = false;
+                        shootSound = MLSounds.missile;
+                        shoot = new ShootBarrel() {{
+                            shots = 2;
+                            shotDelay = 0f;
+                            barrels = new float[]{
+                                    10f, 0f, 0f,
+                                    -10f, 0f, 0f
+                            };
+                        }};
+                        inaccuracy = 0f;
+                        shootCone = 180f;
+                        bullet = new MissileBulletType(8f, 80f) {{
+                            hitSound = MLSounds.plasmaboom;
+                            shrinkY = 0f;
+                            homingRange = 180f;
+                            homingPower = 0.06f;
+                            splashDamageRadius = 24f;
+                            splashDamage = 160f;
+                            makeFire = true;
+                            incendAmount = 3;
+                            incendSpread = 6f;
+                            incendChance = 0.5f;
+                            hitEffect = new MultiEffect(
+                                    new WaveEffect() {{
+                                        lifetime = 25f;
+                                        sizeFrom = 0f;
+                                        sizeTo = 48f;
+                                        strokeFrom = 0f;
+                                        strokeTo = 2f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect() {{
+                                        particles = 8;
+                                        sizeFrom = 2f;
+                                        sizeTo = 0f;
+                                        length = 24f;
+                                        baseLength = 24f;
+                                        lifetime = 30f;
+                                        interp = Interp.pow10Out;
+                                        sizeInterp = Interp.pow10In;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect() {{
+                                        particles = 8;
+                                        line = true;
+                                        strokeFrom = 2f;
+                                        strokeTo = 0f;
+                                        lenFrom = 4f;
+                                        lenTo = 0f;
+                                        length = 24f;
+                                        baseLength = 24f;
+                                        lifetime = 30f;
+                                        interp = Interp.pow5Out;
+                                        sizeInterp = Interp.pow5In;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }}
+                            );
+                            despawnEffect = Fx.none;
+                            trailLength = 8;
+                            trailWidth = 4f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            width = 16f;
+                            height = 32f;
+                            lifetime = 40f;
+                            sprite = "magic-大导弹";
+                        }};
+                    }});
         }};
         //t4
         Ember = new UnitType("Ember") {{
@@ -1360,7 +1361,7 @@ public class MLUnitTypes {
                     BlockFlag.turret
             };
             weapons.add(
-                    new Weapon("magic-Ember0"){{
+                    new Weapon("magic-Ember0") {{
                         reload = 180f;
                         mirror = true;
                         shootY = 16f;
@@ -1373,7 +1374,7 @@ public class MLUnitTypes {
                         alternate = false;
                         shootSound = MLSounds.beam;
                         layerOffset = -0.001f;
-                        bullet = new ContinuousLaserBulletType(80f){{
+                        bullet = new ContinuousLaserBulletType(80f) {{
                             length = 160f;
                             width = 8f;
                             incendChance = 4f;
@@ -1393,86 +1394,86 @@ public class MLUnitTypes {
                             };
                         }};
                     }},
-            new Weapon("magic-Ember1") {{
-                x = 0f;
-                y = 0f;
-                reload = 300f;
-                mirror = false;
-                alternate = false;
-                shootSound = MLSounds.missileLaunch;
-                shoot = new ShootBarrel() {{
-                    shots = 4;
-                    shotDelay = 0f;
-                    barrels = new float[]{
-                            8f, 0f, 0f,
-                            -8f, 0f, 0f,
-                            16f, -4f, 0f,
-                            -16f,-4f, 0f
-                    };
-                }};
-                inaccuracy = 0f;
-                bullet = new MissileBulletType(8f, 120f) {{
-                    hitSound = MLSounds.plasmaboom;
-                    shrinkY = 0f;
-                    homingRange = 400f;
-                    homingPower = 0.04f;
-                    homingDelay = 4f;
-                    splashDamageRadius = 48f;
-                    splashDamage = 180f;
-                    makeFire = true;
-                    incendAmount = 4;
-                    incendSpread = 8f;
-                    incendChance = 0.5f;
-                    hitEffect = new MultiEffect(
-                            new WaveEffect() {{
-                                lifetime = 25f;
-                                sizeFrom = 0f;
-                                sizeTo = 64f;
-                                strokeFrom = 0f;
-                                strokeTo = 4f;
-                                colorFrom = Color.valueOf("FEEBB3FF");
-                                colorTo = Color.valueOf("FEEBB3FF");
-                            }},
-                            new ParticleEffect() {{
-                                particles = 16;
-                                sizeFrom = 2f;
-                                sizeTo = 0f;
-                                length = 48f;
-                                baseLength = 48f;
-                                lifetime = 30f;
-                                interp = Interp.pow10Out;
-                                sizeInterp = Interp.pow10In;
-                                colorFrom = Color.valueOf("FEEBB3FF");
-                                colorTo = Color.valueOf("FEEBB3FF");
-                            }},
-                            new ParticleEffect() {{
-                                particles = 16;
-                                line = true;
-                                strokeFrom = 4f;
-                                strokeTo = 0f;
-                                lenFrom = 4f;
-                                lenTo = 0f;
-                                length = 48f;
-                                baseLength = 48f;
-                                lifetime = 30f;
-                                interp = Interp.pow5Out;
-                                sizeInterp = Interp.pow5In;
-                                colorFrom = Color.valueOf("FEEBB3FF");
-                                colorTo = Color.valueOf("FEEBB3FF");
-                            }}
-                    );
-                    despawnEffect = Fx.none;
-                    trailLength = 8;
-                    trailWidth = 3f;
-                    trailColor = Color.valueOf("FEEBB3FF");
-                    frontColor = Color.valueOf("FEEBB3FF");
-                    backColor = Color.valueOf("FEEBB3FF");
-                    width = 16f;
-                    height = 32f;
-                    lifetime = 50f;
-                    sprite = "magic-大导弹";
-                }};
-            }});
+                    new Weapon("magic-Ember1") {{
+                        x = 0f;
+                        y = 0f;
+                        reload = 300f;
+                        mirror = false;
+                        alternate = false;
+                        shootSound = MLSounds.missileLaunch;
+                        shoot = new ShootBarrel() {{
+                            shots = 4;
+                            shotDelay = 0f;
+                            barrels = new float[]{
+                                    8f, 0f, 0f,
+                                    -8f, 0f, 0f,
+                                    16f, -4f, 0f,
+                                    -16f, -4f, 0f
+                            };
+                        }};
+                        inaccuracy = 0f;
+                        bullet = new MissileBulletType(8f, 120f) {{
+                            hitSound = MLSounds.plasmaboom;
+                            shrinkY = 0f;
+                            homingRange = 400f;
+                            homingPower = 0.04f;
+                            homingDelay = 4f;
+                            splashDamageRadius = 48f;
+                            splashDamage = 180f;
+                            makeFire = true;
+                            incendAmount = 4;
+                            incendSpread = 8f;
+                            incendChance = 0.5f;
+                            hitEffect = new MultiEffect(
+                                    new WaveEffect() {{
+                                        lifetime = 25f;
+                                        sizeFrom = 0f;
+                                        sizeTo = 64f;
+                                        strokeFrom = 0f;
+                                        strokeTo = 4f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect() {{
+                                        particles = 16;
+                                        sizeFrom = 2f;
+                                        sizeTo = 0f;
+                                        length = 48f;
+                                        baseLength = 48f;
+                                        lifetime = 30f;
+                                        interp = Interp.pow10Out;
+                                        sizeInterp = Interp.pow10In;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect() {{
+                                        particles = 16;
+                                        line = true;
+                                        strokeFrom = 4f;
+                                        strokeTo = 0f;
+                                        lenFrom = 4f;
+                                        lenTo = 0f;
+                                        length = 48f;
+                                        baseLength = 48f;
+                                        lifetime = 30f;
+                                        interp = Interp.pow5Out;
+                                        sizeInterp = Interp.pow5In;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }}
+                            );
+                            despawnEffect = Fx.none;
+                            trailLength = 8;
+                            trailWidth = 3f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            width = 16f;
+                            height = 32f;
+                            lifetime = 50f;
+                            sprite = "magic-大导弹";
+                        }};
+                    }});
         }};
         //t5
         BlazingSplendor = new UnitType("BlazingSplendor") {{
@@ -1527,7 +1528,7 @@ public class MLUnitTypes {
                             hitEffect = despawnEffect = MLFx.Explosion4;
                             hitSound = MLSounds.explosion;
                             fragBullets = 10;
-                            fragBullet = new BasicBulletType(4, 150, "magic-十字星"){{
+                            fragBullet = new BasicBulletType(4, 150, "magic-十字星") {{
                                 ignoreRotation = true;
                                 collidesAir = false;
                                 collides = false;
@@ -1673,109 +1674,109 @@ public class MLUnitTypes {
             armor = 14;
             faceTarget = false;
             weapons.add(
-                new Weapon("magic-TerrifyingWaves0") {{
-                reload = 60f;
-                recoil = 3f;
-                x = 0;
-                y = -12;
-                shootY = 24f;
-                mirror = false;
-                rotate = true;
-                rotateSpeed = 2f;
-                inaccuracy = 4f;
-                ejectEffect = Fx.casing4;
-                layerOffset = 0.001f;
-                shootSound = MLSounds.mediumCannon;
-                shoot = new ShootAlternate(){{
-                    barrels = 2;
-                    spread = 4f;
-                    shotDelay = 15f;
-                }};
-                parts.addAll(
-                        new RegionPart("-l") {{
-                            mirror = false;
-                            heatProgress = PartProgress.recoil;
-                            recoilIndex = 0;
-                            progress = PartProgress.recoil;
-                            moveY = -4;
-                        }},
-                        new RegionPart("-r") {{
-                            mirror = false;
-                            heatProgress = PartProgress.recoil;
-                            recoilIndex = 1;
-                            progress = PartProgress.recoil;
-                            moveY = -4 ;
-                        }});
-                recoils = 2;
-                bullet = new BasicBulletType(16, 120) {{
-                    lifetime = 20;
-                    width = 16;
-                    height = 32;
-                    splashDamageRadius = 48;
-                    splashDamage = 180;
-                    hitEffect = despawnEffect = MLFx.Explosion4;
-                    hitSound = MLSounds.explosion;
-                    trailLength = 6;
-                    trailWidth = 4;
-                }};
-            }},
-            new Weapon("magic-TerrifyingWaves1") {{
-                reload = 10f;
-                recoil = 2.5f;
-                x = 12;
-                y = 4;
-                mirror = true;
-                rotate = true;
-                rotateSpeed = 4f;
-                inaccuracy = 0f;
-                ejectEffect = Fx.casing1;
-                layerOffset = 0.001f;
-                shootSound = MLSounds.pew;
-                bullet = new BasicBulletType(8, 10) {{
-                    lifetime = 30;
-                    width = 8;
-                    height = 16;
-                    hitEffect = despawnEffect = Fx.hitBulletColor;
-                }};
-            }},
-            new Weapon("magic-TerrifyingWaves1") {{
-                reload = 10f;
-                recoil = 2.5f;
-                x = 10;
-                y = 14;
-                mirror = true;
-                rotate = true;
-                rotateSpeed = 4f;
-                inaccuracy = 0f;
-                ejectEffect = Fx.casing1;
-                layerOffset = 0.001f;
-                shootSound = MLSounds.pew;
-                bullet = new BasicBulletType(8, 10) {{
-                    lifetime = 30;
-                    width = 8;
-                    height = 16;
-                    hitEffect = despawnEffect = Fx.hitBulletColor;
-                }};
-            }},
-            new Weapon("magic-TerrifyingWaves1") {{
-                reload = 10f;
-                recoil = 2.5f;
-                x = 14;
-                y = -18;
-                mirror = true;
-                rotate = true;
-                rotateSpeed = 4f;
-                inaccuracy = 0f;
-                ejectEffect = Fx.casing1;
-                layerOffset = 0.001f;
-                shootSound = MLSounds.pew;
-                bullet = new BasicBulletType(8, 10) {{
-                    lifetime = 30;
-                    width = 8;
-                    height = 16;
-                    hitEffect = despawnEffect = Fx.hitBulletColor;
-                }};
-            }});
+                    new Weapon("magic-TerrifyingWaves0") {{
+                        reload = 60f;
+                        recoil = 3f;
+                        x = 0;
+                        y = -12;
+                        shootY = 24f;
+                        mirror = false;
+                        rotate = true;
+                        rotateSpeed = 2f;
+                        inaccuracy = 4f;
+                        ejectEffect = Fx.casing4;
+                        layerOffset = 0.001f;
+                        shootSound = MLSounds.mediumCannon;
+                        shoot = new ShootAlternate() {{
+                            barrels = 2;
+                            spread = 4f;
+                            shotDelay = 15f;
+                        }};
+                        parts.addAll(
+                                new RegionPart("-l") {{
+                                    mirror = false;
+                                    heatProgress = PartProgress.recoil;
+                                    recoilIndex = 0;
+                                    progress = PartProgress.recoil;
+                                    moveY = -4;
+                                }},
+                                new RegionPart("-r") {{
+                                    mirror = false;
+                                    heatProgress = PartProgress.recoil;
+                                    recoilIndex = 1;
+                                    progress = PartProgress.recoil;
+                                    moveY = -4;
+                                }});
+                        recoils = 2;
+                        bullet = new BasicBulletType(16, 120) {{
+                            lifetime = 20;
+                            width = 16;
+                            height = 32;
+                            splashDamageRadius = 48;
+                            splashDamage = 180;
+                            hitEffect = despawnEffect = MLFx.Explosion4;
+                            hitSound = MLSounds.explosion;
+                            trailLength = 6;
+                            trailWidth = 4;
+                        }};
+                    }},
+                    new Weapon("magic-TerrifyingWaves1") {{
+                        reload = 10f;
+                        recoil = 2.5f;
+                        x = 12;
+                        y = 4;
+                        mirror = true;
+                        rotate = true;
+                        rotateSpeed = 4f;
+                        inaccuracy = 0f;
+                        ejectEffect = Fx.casing1;
+                        layerOffset = 0.001f;
+                        shootSound = MLSounds.pew;
+                        bullet = new BasicBulletType(8, 10) {{
+                            lifetime = 30;
+                            width = 8;
+                            height = 16;
+                            hitEffect = despawnEffect = Fx.hitBulletColor;
+                        }};
+                    }},
+                    new Weapon("magic-TerrifyingWaves1") {{
+                        reload = 10f;
+                        recoil = 2.5f;
+                        x = 10;
+                        y = 14;
+                        mirror = true;
+                        rotate = true;
+                        rotateSpeed = 4f;
+                        inaccuracy = 0f;
+                        ejectEffect = Fx.casing1;
+                        layerOffset = 0.001f;
+                        shootSound = MLSounds.pew;
+                        bullet = new BasicBulletType(8, 10) {{
+                            lifetime = 30;
+                            width = 8;
+                            height = 16;
+                            hitEffect = despawnEffect = Fx.hitBulletColor;
+                        }};
+                    }},
+                    new Weapon("magic-TerrifyingWaves1") {{
+                        reload = 10f;
+                        recoil = 2.5f;
+                        x = 14;
+                        y = -18;
+                        mirror = true;
+                        rotate = true;
+                        rotateSpeed = 4f;
+                        inaccuracy = 0f;
+                        ejectEffect = Fx.casing1;
+                        layerOffset = 0.001f;
+                        shootSound = MLSounds.pew;
+                        bullet = new BasicBulletType(8, 10) {{
+                            lifetime = 30;
+                            width = 8;
+                            height = 16;
+                            hitEffect = despawnEffect = Fx.hitBulletColor;
+                        }};
+                    }});
         }};
         //t5
         SeaSuffering = new UnitType("SeaSuffering") {{
@@ -1790,7 +1791,7 @@ public class MLUnitTypes {
             range = 360f;
             faceTarget = false;
             weapons.add(
-                    new Weapon("magic-SeaSuffering0"){{
+                    new Weapon("magic-SeaSuffering0") {{
                         reload = 25f;
                         x = 12f;
                         y = 24f;
@@ -1801,7 +1802,7 @@ public class MLUnitTypes {
                         inaccuracy = 5f;
                         shootSound = MLSounds.laser;
                         shake = 2.5f;
-                        bullet = new BasicBulletType(){{
+                        bullet = new BasicBulletType() {{
                             damage = 110f;
                             lifetime = 45f;
                             speed = 8f;
@@ -1818,7 +1819,7 @@ public class MLUnitTypes {
                             ammoMultiplier = 1f;
                             hitSound = MLSounds.plasmaboom;
                             hitEffect = despawnEffect = new MultiEffect(
-                                    new WaveEffect(){{
+                                    new WaveEffect() {{
                                         lifetime = 30f;
                                         sizeFrom = 0f;
                                         sizeTo = 80f;
@@ -1827,7 +1828,7 @@ public class MLUnitTypes {
                                         colorFrom = Color.valueOf("FEEBB3FF");
                                         colorTo = Color.valueOf("FEEBB3FF");
                                     }},
-                                    new ParticleEffect(){{
+                                    new ParticleEffect() {{
                                         particles = 10;
                                         sizeFrom = 10f;
                                         sizeTo = 0f;
@@ -1843,7 +1844,7 @@ public class MLUnitTypes {
                             smokeEffect = Fx.smokeCloud;
                             trailChance = 1f;
                             trailInterval = 20f;
-                            trailEffect = new ParticleEffect(){{
+                            trailEffect = new ParticleEffect() {{
                                 particles = 10;
                                 length = 10f;
                                 baseLength = 16f;
@@ -1855,7 +1856,7 @@ public class MLUnitTypes {
                             }};
                         }};
                     }},
-                    new Weapon("magic-SeaSuffering1"){{
+                    new Weapon("magic-SeaSuffering1") {{
                         reload = 150f;
                         x = 16f;
                         y = 0f;
@@ -1866,12 +1867,12 @@ public class MLUnitTypes {
                         inaccuracy = 0f;
                         shootSound = MLSounds.laserblast;
                         chargeSound = MLSounds.lasercharge;
-                        shoot = new ShootPattern(){{
+                        shoot = new ShootPattern() {{
                             firstShotDelay = 80f;
                         }};
                         shake = 10f;
                         shootY = 4f;
-                        bullet = new LaserBulletType(){{
+                        bullet = new LaserBulletType() {{
                             length = 360f;
                             width = 48f;
                             damage = 250f;
@@ -1888,10 +1889,10 @@ public class MLUnitTypes {
                             chargeEffect = Fx.greenLaserCharge;
                         }};
                     }},
-                    new Weapon("magic-SeaSuffering2"){{
+                    new Weapon("magic-SeaSuffering2") {{
                         autoTarget = true;
                         controllable = false;
-                        shoot = new ShootBarrel(){{
+                        shoot = new ShootBarrel() {{
                             shots = 2;
                             shotDelay = 0f;
                             barrels = new float[]{
@@ -1909,7 +1910,7 @@ public class MLUnitTypes {
                         inaccuracy = 0f;
                         alternate = false;
                         shootSound = MLSounds.shoot;
-                        bullet = new FlakBulletType(){{
+                        bullet = new FlakBulletType() {{
                             collidesAir = true;
                             collidesGround = false;
                             hitEffect = Fx.none;
@@ -1976,50 +1977,50 @@ public class MLUnitTypes {
             faceTarget = false;
             weapons.add(
                     new Weapon("magic-ChasingLight0") {{
-                reload = 40f;
-                recoil = 2f;
-                x = 0;
-                y = 0;
-                shootY = 0f;
-                mirror = false;
-                rotate = true;
-                rotateSpeed = 5f;
-                inaccuracy = 0f;
-                ejectEffect = Fx.casing2;
-                layerOffset = 0.001f;
-                shootSound = MLSounds.shootFuse;
-                bullet = new BasicBulletType(10, 30) {{
-                    lifetime = 20;
-                    width = 12;
-                    height = 24;
-                    trailLength = 6;
-                    trailWidth = 3f;
-                    trailColor = Color.valueOf("FEEBB3FF");
-                    frontColor = Color.valueOf("FEEBB3FF");
-                    backColor = Color.valueOf("FEEBB3FF");
-                    hitEffect = despawnEffect = Fx.none;
-                    hitSound = MLSounds.laser;
-                    fragBullets = 1;
-                    fragSpread = 0;
-                    fragVelocityMin = 0;
-                    fragRandomSpread = 0;
-                    fragBullet = new LaserBulletType(60f){{
-                        hitSound = MLSounds.laser;
-                        lifetime = 32f;
-                        width = 24f;
-                        length = 96f;
-                        Color.valueOf("FEEBB3FF");
-                        collidesTeam = true;
-                        hitEffect = Fx.none;
-                        despawnEffect = Fx.none;
-                        colors = new Color[]{
-                                Color.valueOf("FEEBB3FF"),
-                                Color.valueOf("FEEBB3FF"),
-                                Color.valueOf("FEEBB3FF")
-                        };
-                    }};
-                }};
-            }});
+                        reload = 40f;
+                        recoil = 2f;
+                        x = 0;
+                        y = 0;
+                        shootY = 0f;
+                        mirror = false;
+                        rotate = true;
+                        rotateSpeed = 5f;
+                        inaccuracy = 0f;
+                        ejectEffect = Fx.casing2;
+                        layerOffset = 0.001f;
+                        shootSound = MLSounds.shootFuse;
+                        bullet = new BasicBulletType(10, 30) {{
+                            lifetime = 20;
+                            width = 12;
+                            height = 24;
+                            trailLength = 6;
+                            trailWidth = 3f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            hitEffect = despawnEffect = Fx.none;
+                            hitSound = MLSounds.laser;
+                            fragBullets = 1;
+                            fragSpread = 0;
+                            fragVelocityMin = 0;
+                            fragRandomSpread = 0;
+                            fragBullet = new LaserBulletType(60f) {{
+                                hitSound = MLSounds.laser;
+                                lifetime = 32f;
+                                width = 24f;
+                                length = 96f;
+                                Color.valueOf("FEEBB3FF");
+                                collidesTeam = true;
+                                hitEffect = Fx.none;
+                                despawnEffect = Fx.none;
+                                colors = new Color[]{
+                                        Color.valueOf("FEEBB3FF"),
+                                        Color.valueOf("FEEBB3FF"),
+                                        Color.valueOf("FEEBB3FF")
+                                };
+                            }};
+                        }};
+                    }});
         }};
         //t3
         Dawn = new UnitType("Dawn") {{
@@ -2033,54 +2034,54 @@ public class MLUnitTypes {
             armor = 8;
             faceTarget = false;
             weapons.add(
-            new Weapon("magic-Dawn0") {{
-                reload = 50f;
-                recoil = 3f;
-                x = 0;
-                y = 0;
-                shootY = 0f;
-                mirror = false;
-                rotate = true;
-                rotateSpeed = 5f;
-                inaccuracy = 0f;
-                ejectEffect = Fx.casing4;
-                layerOffset = 0.001f;
-                shootSound = MLSounds.plasmadrop;
-                bullet = new BasicBulletType(12, 120) {{
-                    sprite = "magic-十字星";
-                    spin = 3;
-                    lifetime = 25;
-                    width = 48;
-                    height = 48;
-                    trailLength = 6;
-                    trailWidth = 3f;
-                    trailColor = Color.valueOf("FEEBB3FF");
-                    frontColor = Color.valueOf("FEEBB3FF");
-                    backColor = Color.valueOf("FEEBB3FF");
-                    splashDamage = 80f;
-                    splashDamageRadius = 24f;
-                    hitEffect = despawnEffect = MLFx.smallEnergyBlast;
-                    hitSound = MLSounds.plasmaboom;
-                    fragBullets = 3;
-                    fragBullet = new BasicBulletType(6, 50) {{
-                        lifetime = 12;
-                        width = 8;
-                        height = 16;
-                        trailLength = 4;
-                        trailWidth = 2f;
-                        trailColor = Color.valueOf("FEEBB3FF");
-                        frontColor = Color.valueOf("FEEBB3FF");
-                        backColor = Color.valueOf("FEEBB3FF");
-                        hitEffect = despawnEffect = new WrapEffect(
-                                Fx.dynamicSpikes,
-                                Color.valueOf("FEEBB3FF")
-                        ){{
-                            rotation = 16f;
+                    new Weapon("magic-Dawn0") {{
+                        reload = 50f;
+                        recoil = 3f;
+                        x = 0;
+                        y = 0;
+                        shootY = 0f;
+                        mirror = false;
+                        rotate = true;
+                        rotateSpeed = 5f;
+                        inaccuracy = 0f;
+                        ejectEffect = Fx.casing4;
+                        layerOffset = 0.001f;
+                        shootSound = MLSounds.plasmadrop;
+                        bullet = new BasicBulletType(12, 120) {{
+                            sprite = "magic-十字星";
+                            spin = 3;
+                            lifetime = 25;
+                            width = 48;
+                            height = 48;
+                            trailLength = 6;
+                            trailWidth = 3f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            splashDamage = 80f;
+                            splashDamageRadius = 24f;
+                            hitEffect = despawnEffect = MLFx.smallEnergyBlast;
+                            hitSound = MLSounds.plasmaboom;
+                            fragBullets = 3;
+                            fragBullet = new BasicBulletType(6, 50) {{
+                                lifetime = 12;
+                                width = 8;
+                                height = 16;
+                                trailLength = 4;
+                                trailWidth = 2f;
+                                trailColor = Color.valueOf("FEEBB3FF");
+                                frontColor = Color.valueOf("FEEBB3FF");
+                                backColor = Color.valueOf("FEEBB3FF");
+                                hitEffect = despawnEffect = new WrapEffect(
+                                        Fx.dynamicSpikes,
+                                        Color.valueOf("FEEBB3FF")
+                                ) {{
+                                    rotation = 16f;
+                                }};
+                                hitSound = MLSounds.plasmaboom;
+                            }};
                         }};
-                        hitSound = MLSounds.plasmaboom;
-                    }};
-                }};
-            }});
+                    }});
         }};
         //t4
         FlowingSun = new UnitType("FlowingSun") {{
@@ -2095,7 +2096,7 @@ public class MLUnitTypes {
             faceTarget = false;
             range = 320;
             weapons.add(
-                    new Weapon("magic-FlowingSun0"){{
+                    new Weapon("magic-FlowingSun0") {{
                         reload = 90f;
                         x = 0f;
                         y = -8f;
@@ -2106,7 +2107,7 @@ public class MLUnitTypes {
                         inaccuracy = 0f;
                         shootSound = MLSounds.laser;
                         shake = 8f;
-                        bullet = new BasicBulletType(){{
+                        bullet = new BasicBulletType() {{
                             damage = 220f;
                             lifetime = 20f;
                             speed = 16f;
@@ -2123,7 +2124,7 @@ public class MLUnitTypes {
                             ammoMultiplier = 1f;
                             hitSound = MLSounds.plasmaboom;
                             hitEffect = despawnEffect = new MultiEffect(
-                                    new WaveEffect(){{
+                                    new WaveEffect() {{
                                         lifetime = 30f;
                                         sizeFrom = 0f;
                                         sizeTo = 96f;
@@ -2132,7 +2133,7 @@ public class MLUnitTypes {
                                         colorFrom = Color.valueOf("FEEBB3FF");
                                         colorTo = Color.valueOf("FEEBB3FF");
                                     }},
-                                    new ParticleEffect(){{
+                                    new ParticleEffect() {{
                                         particles = 10;
                                         sizeFrom = 10f;
                                         sizeTo = 0f;
@@ -2148,7 +2149,7 @@ public class MLUnitTypes {
                             smokeEffect = Fx.smokeCloud;
                             trailChance = 1f;
                             trailInterval = 20f;
-                            trailEffect = new ParticleEffect(){{
+                            trailEffect = new ParticleEffect() {{
                                 particles = 8;
                                 length = 8f;
                                 baseLength = 0f;
@@ -2160,51 +2161,51 @@ public class MLUnitTypes {
                             }};
                         }};
                     }},
-            new Weapon("magic-FlowingSun1") {{
-                reload = 30f;
-                recoil = 4f;
-                x = 8;
-                y = 16;
-                shootY = 0f;
-                mirror = true;
-                rotate = true;
-                rotateSpeed = 5f;
-                inaccuracy = 0f;
-                ejectEffect = Fx.casing2;
-                layerOffset = 0.001f;
-                shootSound = MLSounds.shootFuse;
-                bullet = new BasicBulletType(12, 80) {{
-                    lifetime = 24;
-                    width = 12;
-                    height = 24;
-                    trailLength = 6;
-                    trailWidth = 3f;
-                    trailColor = Color.valueOf("FEEBB3FF");
-                    frontColor = Color.valueOf("FEEBB3FF");
-                    backColor = Color.valueOf("FEEBB3FF");
-                    hitEffect = despawnEffect = Fx.none;
-                    hitSound = MLSounds.laser;
-                    fragBullets = 1;
-                    fragSpread = 0;
-                    fragVelocityMin = 0;
-                    fragRandomSpread = 0;
-                    fragBullet = new LaserBulletType(160f){{
-                        hitSound = MLSounds.laser;
-                        lifetime = 32f;
-                        width = 24f;
-                        length = 128f;
-                        Color.valueOf("FEEBB3FF");
-                        collidesTeam = true;
-                        hitEffect = Fx.none;
-                        despawnEffect = Fx.none;
-                        colors = new Color[]{
-                                Color.valueOf("FEEBB3FF"),
-                                Color.valueOf("FEEBB3FF"),
-                                Color.valueOf("FEEBB3FF")
-                        };
-                    }};
-                }};
-            }});
+                    new Weapon("magic-FlowingSun1") {{
+                        reload = 30f;
+                        recoil = 4f;
+                        x = 8;
+                        y = 16;
+                        shootY = 0f;
+                        mirror = true;
+                        rotate = true;
+                        rotateSpeed = 5f;
+                        inaccuracy = 0f;
+                        ejectEffect = Fx.casing2;
+                        layerOffset = 0.001f;
+                        shootSound = MLSounds.shootFuse;
+                        bullet = new BasicBulletType(12, 80) {{
+                            lifetime = 24;
+                            width = 12;
+                            height = 24;
+                            trailLength = 6;
+                            trailWidth = 3f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            hitEffect = despawnEffect = Fx.none;
+                            hitSound = MLSounds.laser;
+                            fragBullets = 1;
+                            fragSpread = 0;
+                            fragVelocityMin = 0;
+                            fragRandomSpread = 0;
+                            fragBullet = new LaserBulletType(160f) {{
+                                hitSound = MLSounds.laser;
+                                lifetime = 32f;
+                                width = 24f;
+                                length = 128f;
+                                Color.valueOf("FEEBB3FF");
+                                collidesTeam = true;
+                                hitEffect = Fx.none;
+                                despawnEffect = Fx.none;
+                                colors = new Color[]{
+                                        Color.valueOf("FEEBB3FF"),
+                                        Color.valueOf("FEEBB3FF"),
+                                        Color.valueOf("FEEBB3FF")
+                                };
+                            }};
+                        }};
+                    }});
         }};
         //t5
         SplendidBrilliant = new UnitType("SplendidBrilliant") {{
@@ -2229,7 +2230,7 @@ public class MLUnitTypes {
                     )
             );
             weapons.add(
-                    new Weapon("magic-SplendidBrilliant0"){{
+                    new Weapon("magic-SplendidBrilliant0") {{
                         reload = 120f;
                         x = 0f;
                         y = -12f;
@@ -2273,7 +2274,7 @@ public class MLUnitTypes {
                                     -8f, 32f, 0f
                             };
                         }};
-                        bullet = new BasicBulletType(){{
+                        bullet = new BasicBulletType() {{
                             damage = 500f;
                             lifetime = 25f;
                             speed = 16f;
@@ -2292,7 +2293,7 @@ public class MLUnitTypes {
                             smokeEffect = Fx.smokeCloud;
                             trailChance = 1f;
                             trailInterval = 20f;
-                            trailEffect = new ParticleEffect(){{
+                            trailEffect = new ParticleEffect() {{
                                 particles = 10;
                                 length = 15f;
                                 baseLength = 0f;
@@ -2385,48 +2386,48 @@ public class MLUnitTypes {
             );
             weapons.add(
                     new Weapon("magic-SpinningSpear0") {{
-                shootY = 0f;
-                rotate = false;
-                mirror = false;
-                reload = 15;
-                x = 0;
-                y = 0;
-                shootSound = MLSounds.laser;
-                ejectEffect = Fx.none;
-                layerOffset = 0.001f;
-                bullet = new LaserBulletType(50f) {{
-                    healPercent = 5f;
-                    width = 32;
-                    length = width * 4;
-                    colors = new Color[]{Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF")};
-                    smokeEffect = Fx.none;
-                }};
-        }},
-                new Weapon("magic-SpinningSpear1") {{
-                    reload = 15f;
-                    recoil = 0f;
-                    x = 8;
-                    y = 16;
-                    shootY = 0f;
-                    mirror = true;
-                    rotate = false;
-                    rotateSpeed = 6f;
-                    inaccuracy = 0f;
-                    ejectEffect = Fx.casing2;
-                    layerOffset = 0.001f;
-                    bullet = new BasicBulletType(12, 15) {{
-                        lifetime = 20;
-                        width = 12;
-                        height = 24;
-                        trailLength = 6;
-                        trailWidth = 3f;
-                        homingRange = 120f;
-                        homingPower = 0.04f;
-                        trailColor = Color.valueOf("FEEBB3FF");
-                        frontColor = Color.valueOf("FEEBB3FF");
-                        backColor = Color.valueOf("FEEBB3FF");
-                    }};
-                }});
+                        shootY = 0f;
+                        rotate = false;
+                        mirror = false;
+                        reload = 15;
+                        x = 0;
+                        y = 0;
+                        shootSound = MLSounds.laser;
+                        ejectEffect = Fx.none;
+                        layerOffset = 0.001f;
+                        bullet = new LaserBulletType(50f) {{
+                            healPercent = 5f;
+                            width = 32;
+                            length = width * 4;
+                            colors = new Color[]{Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF"), Color.valueOf("FEEBB3FF")};
+                            smokeEffect = Fx.none;
+                        }};
+                    }},
+                    new Weapon("magic-SpinningSpear1") {{
+                        reload = 15f;
+                        recoil = 0f;
+                        x = 8;
+                        y = 16;
+                        shootY = 0f;
+                        mirror = true;
+                        rotate = false;
+                        rotateSpeed = 6f;
+                        inaccuracy = 0f;
+                        ejectEffect = Fx.casing2;
+                        layerOffset = 0.001f;
+                        bullet = new BasicBulletType(12, 15) {{
+                            lifetime = 20;
+                            width = 12;
+                            height = 24;
+                            trailLength = 6;
+                            trailWidth = 3f;
+                            homingRange = 120f;
+                            homingPower = 0.04f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                        }};
+                    }});
         }};
         //星舰
         //小型
@@ -2449,7 +2450,7 @@ public class MLUnitTypes {
             createWreck = false;
             engineOffset = 5;
             engineSize = 3;
-            weapons.add(new RepairBeamWeapon("magic-repair"){{
+            weapons.add(new RepairBeamWeapon("magic-repair") {{
                 x = 0f;
                 y = 0f;
                 shootY = 0f;
@@ -2508,7 +2509,7 @@ public class MLUnitTypes {
                     5f,   // damage
                     90f,   // reload
                     240f   // range
-            ){{
+            ) {{
                 healPercent = 0.5f;
                 x = 0f;
                 y = 0f;
@@ -2519,28 +2520,28 @@ public class MLUnitTypes {
                 status = StatusEffects.shocked;
             }});
             weapons.add(
-                new RepairBeamWeapon("magic-repair0"){{
-                x = -8f;
-                y = -8f;
-                shootY = 2f;
-                mirror = true;
-                beamWidth = 1f;
-                repairSpeed = 3f;
-                bullet = new BulletType() {{
-                    maxRange = 160f;
-                }};
-            }},
-            new RepairBeamWeapon("magic-repair0"){{
-                x = 6f;
-                y = 6f;
-                shootY = 2f;
-                mirror = true;
-                beamWidth = 1f;
-                repairSpeed = 3f;
-                bullet = new BulletType() {{
-                    maxRange = 160f;
-                }};
-            }});
+                    new RepairBeamWeapon("magic-repair0") {{
+                        x = -8f;
+                        y = -8f;
+                        shootY = 2f;
+                        mirror = true;
+                        beamWidth = 1f;
+                        repairSpeed = 3f;
+                        bullet = new BulletType() {{
+                            maxRange = 160f;
+                        }};
+                    }},
+                    new RepairBeamWeapon("magic-repair0") {{
+                        x = 6f;
+                        y = 6f;
+                        shootY = 2f;
+                        mirror = true;
+                        beamWidth = 1f;
+                        repairSpeed = 3f;
+                        bullet = new BulletType() {{
+                            maxRange = 160f;
+                        }};
+                    }});
         }};
         Qingxiao = new UnitType("Qingxiao") {{
             constructor = UnitTypes.flare.constructor;
@@ -2574,7 +2575,7 @@ public class MLUnitTypes {
                     60f,   // damage
                     120f,   // reload
                     180f   // range
-            ){{
+            ) {{
                 healPercent = 0.25f;
                 x = 0f;
                 y = 0f;
@@ -2613,37 +2614,37 @@ public class MLUnitTypes {
                             despawnEffect = Fx.none;
                             spin = 6f;
                             sprite = "magic-十字星";
-                            hitEffect = new WrapEffect(){{
+                            hitEffect = new WrapEffect() {{
                                 effect = Fx.dynamicSpikes;
                                 color = Color.valueOf("FEEBB3FF");
                                 rotation = 48f;
                             }};
-                    }};
-              }},
-            new Weapon("magic-Qingxiao1") {{
-                x = -12f;
-                y = -10f;
-                reload = 15f;
-                mirror = true;
-                alternate = true;
-                inaccuracy = 0f;
-                rotate = false;
-                shootSound = MLSounds.laser;
-                bullet = new LaserBulletType(){{
-                    damage = 50f;
-                    smokeEffect = Fx.bigShockwave;
-                    colors = new Color[]{
-                            Color.valueOf("FEEBB3FF"),
-                            Color.valueOf("FEEBB3FF"),
-                            Color.valueOf("FEEBB3FF")
-                    };
-                    width = 16f;
-                    length = 240f;
-                }};
-            }});
+                        }};
+                    }},
+                    new Weapon("magic-Qingxiao1") {{
+                        x = -12f;
+                        y = -10f;
+                        reload = 15f;
+                        mirror = true;
+                        alternate = true;
+                        inaccuracy = 0f;
+                        rotate = false;
+                        shootSound = MLSounds.laser;
+                        bullet = new LaserBulletType() {{
+                            damage = 50f;
+                            smokeEffect = Fx.bigShockwave;
+                            colors = new Color[]{
+                                    Color.valueOf("FEEBB3FF"),
+                                    Color.valueOf("FEEBB3FF"),
+                                    Color.valueOf("FEEBB3FF")
+                            };
+                            width = 16f;
+                            length = 240f;
+                        }};
+                    }});
         }};
         //大型
-        BrokenEdge = new UnitType("BrokenEdge"){{
+        BrokenEdge = new UnitType("BrokenEdge") {{
             flying = true;
             faceTarget = true;
             lowAltitude = true;
@@ -2658,7 +2659,7 @@ public class MLUnitTypes {
             accel = 0.07f;
             drag = 0.03f;
             weapons.add(
-                    new Weapon("magic-BrokenEdge0"){{
+                    new Weapon("magic-BrokenEdge0") {{
                         x = 20f;
                         y = 0f;
                         mirror = true;
@@ -2668,11 +2669,11 @@ public class MLUnitTypes {
                         recoil = 2.5f;
                         rotate = true;
                         rotateSpeed = 5f;
-                        shoot = new ShootAlternate(){{
+                        shoot = new ShootAlternate() {{
                             barrels = 2;
                             spread = 2f;
                         }};
-                        bullet = new BasicBulletType(){{
+                        bullet = new BasicBulletType() {{
                             damage = 50f;
                             pierceCap = 2;
                             pierceBuilding = true;
@@ -2686,7 +2687,7 @@ public class MLUnitTypes {
                             pierce = true;
                             speed = 16f;
                             lifetime = 37.5f;
-                            hitEffect = new WaveEffect(){{
+                            hitEffect = new WaveEffect() {{
                                 lifetime = 8f;
                                 sizeFrom = 0f;
                                 sizeTo = 12f;
@@ -2695,7 +2696,7 @@ public class MLUnitTypes {
                                 colorFrom = Color.white;
                                 colorTo = Color.valueOf("FEEBB3FF");
                             }};
-                            despawnEffect = new WaveEffect(){{
+                            despawnEffect = new WaveEffect() {{
                                 lifetime = 8f;
                                 sizeFrom = 0f;
                                 sizeTo = 12f;
@@ -2709,12 +2710,12 @@ public class MLUnitTypes {
             );
 
             weapons.add(
-                    new Weapon("magic-BrokenEdge1"){{
+                    new Weapon("magic-BrokenEdge1") {{
                         mirror = true;
                         x = 0f;
                         y = 0f;
                         reload = 240f;
-                        shoot = new ShootBarrel(){{
+                        shoot = new ShootBarrel() {{
                             barrels = new float[]{
                                     24f, 8f, 5f,
                                     -24f, 8f, -5f,
@@ -2728,7 +2729,7 @@ public class MLUnitTypes {
                         rotate = false;
                         controllable = false;
                         autoTarget = true;
-                        bullet = new MissileBulletType(){{
+                        bullet = new MissileBulletType() {{
                             height = 32f;
                             width = 16f;
                             sprite = "magic-大导弹";
@@ -2748,7 +2749,7 @@ public class MLUnitTypes {
                             trailWidth = 3f;
                             trailColor = Color.valueOf("FEEBB3FF");
                             trailRotation = true;
-                            trailEffect = new ParticleEffect(){{
+                            trailEffect = new ParticleEffect() {{
                                 particles = 10;
                                 sizeFrom = 15f;
                                 sizeTo = 0f;
@@ -2763,7 +2764,7 @@ public class MLUnitTypes {
                             despawnEffect = Fx.none;
                             hitShake = 8f;
                             hitEffect = new MultiEffect(
-                                    new WaveEffect(){{
+                                    new WaveEffect() {{
                                         lifetime = 20f;
                                         sizeFrom = 0f;
                                         sizeTo = 36f;
@@ -2772,7 +2773,7 @@ public class MLUnitTypes {
                                         colorFrom = Color.valueOf("FEEBB3FF");
                                         colorTo = Color.valueOf("FEEBB3FF");
                                     }},
-                                    new ParticleEffect(){{
+                                    new ParticleEffect() {{
                                         particles = 9;
                                         sizeFrom = 3f;
                                         sizeTo = 0f;
@@ -2784,7 +2785,7 @@ public class MLUnitTypes {
                                         colorFrom = Color.valueOf("FEEBB3FF");
                                         colorTo = Color.valueOf("FEEBB3FF");
                                     }},
-                                    new ParticleEffect(){{
+                                    new ParticleEffect() {{
                                         particles = 9;
                                         line = true;
                                         strokeFrom = 3f;
@@ -2825,7 +2826,7 @@ public class MLUnitTypes {
             accel = 0.07f;
             drag = 0.03f;
             weapons.add(
-                    new Weapon("magic-FlyingSwallow0"){{
+                    new Weapon("magic-FlyingSwallow0") {{
                         x = 0f;
                         y = 0f;
                         mirror = true;
@@ -2834,11 +2835,11 @@ public class MLUnitTypes {
                         inaccuracy = 0f;
                         recoil = 0f;
                         rotate = false;
-                        shoot = new ShootAlternate(){{
+                        shoot = new ShootAlternate() {{
                             barrels = 2;
                             spread = 2f;
                         }};
-                        bullet = new BasicBulletType(){{
+                        bullet = new BasicBulletType() {{
                             damage = 50f;
                             pierceCap = 2;
                             pierceBuilding = true;
@@ -2852,7 +2853,7 @@ public class MLUnitTypes {
                             pierce = true;
                             speed = 16f;
                             lifetime = 30f;
-                            hitEffect = new WaveEffect(){{
+                            hitEffect = new WaveEffect() {{
                                 lifetime = 8f;
                                 sizeFrom = 0f;
                                 sizeTo = 12f;
@@ -2861,7 +2862,7 @@ public class MLUnitTypes {
                                 colorFrom = Color.white;
                                 colorTo = Color.valueOf("FEEBB3FF");
                             }};
-                            despawnEffect = new WaveEffect(){{
+                            despawnEffect = new WaveEffect() {{
                                 lifetime = 8f;
                                 sizeFrom = 0f;
                                 sizeTo = 12f;
@@ -2912,7 +2913,7 @@ public class MLUnitTypes {
                         120f,   // damage
                         90f,   // reload
                         360f   // range
-                ){{
+                ) {{
                     healPercent = 1f;
                     x = 0f;
                     y = 1f;
@@ -2930,7 +2931,7 @@ public class MLUnitTypes {
                 ));
 
                 weapons.add(
-                        new RepairBeamWeapon("magic-repair0"){{
+                        new RepairBeamWeapon("magic-repair0") {{
                             x = 12f;
                             y = 0f;
                             shootY = 2f;
@@ -2941,7 +2942,7 @@ public class MLUnitTypes {
                                 maxRange = 240f;
                             }};
                         }},
-                        new RepairBeamWeapon("magic-repair0"){{
+                        new RepairBeamWeapon("magic-repair0") {{
                             x = 16f;
                             y = -16f;
                             shootY = 2f;
@@ -2953,5 +2954,6 @@ public class MLUnitTypes {
                             }};
                         }});
             }};
-    }};
+        }};
+    }
 }
