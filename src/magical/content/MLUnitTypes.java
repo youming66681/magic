@@ -64,7 +64,7 @@ public class MLUnitTypes {
     //小型
     Pioneer, Starlight, Qingxiao,
     //大型
-    BrokenEdge;
+    BrokenEdge, FlyingSwallow, Tianshu;
 
     public static void load(){
         //幻境陆军
@@ -2804,5 +2804,154 @@ public class MLUnitTypes {
                     }}
             );
         }};
+        FlyingSwallow = new UnitType("FlyingSwallow") {{
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            controller = u -> new CarrierDroneAI();
+            lowAltitude = true;
+            speed = 5f;
+            rotateSpeed = 2.5f;
+            hitSize = 16;
+            health = 500;
+            logicControllable = false;
+            playerControllable = false;
+            allowedInPayloads = false;
+            engineOffset = 8;
+            engineSize = 2;
+            faceTarget = true;
+            rotateMoveFirst = true;
+            omniMovement = true;
+            armor = 2f;
+            accel = 0.07f;
+            drag = 0.03f;
+            weapons.add(
+                    new Weapon("magic-FlyingSwallow0"){{
+                        x = 0f;
+                        y = 0f;
+                        mirror = true;
+                        reload = 2.5f;
+                        shootSound = MLSounds.JG;
+                        inaccuracy = 0f;
+                        recoil = 0f;
+                        rotate = false;
+                        shoot = new ShootAlternate(){{
+                            barrels = 2;
+                            spread = 2f;
+                        }};
+                        bullet = new BasicBulletType(){{
+                            damage = 50f;
+                            pierceCap = 2;
+                            pierceBuilding = true;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            width = 8f;
+                            height = 16f;
+                            trailLength = 2;
+                            trailWidth = 2f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            pierce = true;
+                            speed = 16f;
+                            lifetime = 30f;
+                            hitEffect = new WaveEffect(){{
+                                lifetime = 8f;
+                                sizeFrom = 0f;
+                                sizeTo = 12f;
+                                strokeFrom = 1f;
+                                strokeTo = 0f;
+                                colorFrom = Color.white;
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                            despawnEffect = new WaveEffect(){{
+                                lifetime = 8f;
+                                sizeFrom = 0f;
+                                sizeTo = 12f;
+                                strokeFrom = 1f;
+                                strokeTo = 0f;
+                                colorFrom = Color.white;
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                        }};
+                    }}
+            );
+            Tianshu = new UnitType("Tianshu") {{
+                constructor = UnitTypes.flare.constructor;
+                flying = true;
+                faceTarget = true;
+                lowAltitude = true;
+                rotateMoveFirst = true;
+                omniMovement = true;
+                rotateSpeed = 2f;
+                health = 40000f;
+                armor = 20f;
+                hitSize = 72f;
+                range = 600f;
+                speed = 2.4f;
+                accel = 0.07f;
+                drag = 0.03f;
+                abilities.add(
+                        new ForceFieldAbility(
+                                240f,     // radius
+                                1f,     // regen
+                                1600f,    // max
+                                360f,     // cooldown
+                                5,        // sides
+                                45f        // rotation
+                        )
+                );
+                abilities.add(
+                        new ForceFieldAbility(
+                                240f,
+                                1f,
+                                1600f,
+                                360f,
+                                5,
+                                0f
+                        )
+                );
+                abilities.add(new EnergyFieldAbility(
+                        120f,   // damage
+                        90f,   // reload
+                        360f   // range
+                ){{
+                    healPercent = 1f;
+                    x = 0f;
+                    y = 1f;
+                    maxTargets = 25;
+                    effectRadius = 5f;
+                    damageEffect = Fx.chainLightning;
+                    shootSound = MLSounds.spark;
+                    status = StatusEffects.shocked;
+                }});
+                abilities.add(new CarrierAbility(
+                        FlyingSwallow,      // 舰载机类型
+                        25,                 // 最大舰载机数
+                        480f,              // 索敌范围（世界单位）
+                        60f                // 生成舰载机的间隔（帧）
+                ));
+
+                weapons.add(
+                        new RepairBeamWeapon("magic-repair0"){{
+                            x = 12f;
+                            y = 0f;
+                            shootY = 2f;
+                            mirror = true;
+                            beamWidth = 2.5f;
+                            repairSpeed = 5f;
+                            bullet = new BulletType() {{
+                                maxRange = 240f;
+                            }};
+                        }},
+                        new RepairBeamWeapon("magic-repair0"){{
+                            x = 16f;
+                            y = -16f;
+                            shootY = 2f;
+                            mirror = true;
+                            beamWidth = 2.5f;
+                            repairSpeed = 5f;
+                            bullet = new BulletType() {{
+                                maxRange = 240f;
+                            }};
+                        }});
+            }};
     }
 }
