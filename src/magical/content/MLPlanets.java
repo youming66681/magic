@@ -16,6 +16,9 @@ import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.meta.*;
 import mindustry.world.blocks.environment.*;
+import mindustry.world.Block;
+import mindustry.world.blocks.storage.LaunchPad;
+import mindustry.world.blocks.storage.LandingPad;
 
 import magical.content.MLItems;
 import magical.content.MLBlocks;
@@ -63,6 +66,14 @@ public class MLPlanets {
             startSector = 1;
             alwaysUnlocked = true;
             landCloudColor = Pal.spore.cpy().a(0.5f);
+             ruleSetter = rules -> {
+                 rules.hideBannedBlocks = true;
+                 for(Block block : Vars.content.blocks()){
+                     if(block instanceof LaunchPad || block instanceof LandingPad){
+                         rules.bannedBlocks.add(block);
+                     }
+                 }
+             };
         }};
     }
 }
