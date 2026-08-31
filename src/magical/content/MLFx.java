@@ -210,58 +210,75 @@ public class MLFx {
         middleTeleport = new Effect(60f, e -> {
             float fin = e.fin();
             float fout = e.fout();
-            Color blue = Color.valueOf("FEEBB3FF");
+            float finpow = e.finpow();
+            float foutpow = e.foutpow();
+            float rot = e.rotation;
+            Color blue = Color.valueOf("97B5EDFF");
             Color gold = Color.valueOf("FEEBB3FF");
-
-            Draw.color(gold);
+            Color white = Color.white;
+            if(e.time < 12f){
+                float flash = 1f - e.time / 12f;
+                Draw.color(white, gold, flash);
+                Fill.circle(e.x, e.y, 8f + 18f * flash);
+            }
+            Draw.color(blue);
             Lines.stroke(3f * fout);
-            Lines.circle(e.x, e.y, 6f + 34f * fin);
-
+            Lines.circle(e.x, e.y, 12f + 32f * fin);
             Draw.color(gold);
             Lines.stroke(2f * fout);
-            Lines.circle(e.x, e.y, 12f + 28f * fin);
-
-            for(int i = 0; i < 4; i++){
-                float rot = e.rotation + i * 90f + fin * 240f;
-                float radius = 20f + 14f * fin;
-                Draw.color(gold, blue, fin);
-                Lines.stroke(2f * fout);
-                Lines.arc(e.x, e.y, radius, 0.18f, rot);
+            Lines.circle(e.x, e.y, 8f + 24f * finpow);
+            float runeRadius = 34f * fin;
+            Draw.color(blue);
+            Lines.stroke(1.5f * fout);
+            for(int i = 0; i < 8; i++){
+                float angle = rot + i * 45f + e.time * (2f + i * 0.15f);
+                float x1 = e.x + Mathf.cosDeg(angle) * (runeRadius - 5f);
+                float y1 = e.y + Mathf.sinDeg(angle) * (runeRadius - 5f);
+                float x2 = e.x + Mathf.cosDeg(angle) * (runeRadius + 5f);
+                float y2 = e.y + Mathf.sinDeg(angle) * (runeRadius + 5f);
+                Lines.line(x1, y1, x2, y2);
             }
-
-            Draw.color(blue, gold, fin);
-            Fill.circle(e.x, e.y, 11f * fout);
-
-            Draw.color(Color.white, gold, fout);
-            Fill.circle(e.x, e.y, 5f * fout);
-
-            Angles.randLenVectors(e.id, 28, 40f * fin, (x, y) -> {
-                float size = Mathf.random(1.5f, 3.5f) * fout;
-                Draw.color(gold, blue, Mathf.random());
-                Fill.circle(
-                        e.x + x,
-                        e.y + y,
-                        size
-                );
+            Draw.color(gold);
+            for(int i = 0; i < 12; i++){
+                float angle = rot + i * 30f - e.time * 3f;
+                float radius = 20f + Mathf.sin(e.time * 0.08f + i) * 8f;
+                float px = e.x + Mathf.cosDeg(angle) * radius;
+                float py = e.y + Mathf.sinDeg(angle) * radius;
+                Fill.circle(px, py, 1.5f * fout);
+            }
+            int amount = 16;
+            for(int i = 0; i < amount; i++){
+                float angle = rot + i * (360f / amount) + e.time * 1.5f;
+                float start = 18f + fin * 10f;
+                float length = 8f + finpow * 28f;
+                float end = start + length;
+                float x1 = e.x + Mathf.cosDeg(angle) * start;
+                float y1 = e.y + Mathf.sinDeg(angle) * start;
+                float x2 = e.x + Mathf.cosDeg(angle) * end;
+                float y2 = e.y + Mathf.sinDeg(angle) * end;
+                Draw.color(i % 2 == 0 ? gold : blue);
+                Lines.stroke((i % 2 == 0 ? 2f : 1f) * fout);
+                Lines.line(x1, y1, x2, y2);
+            }
+            Angles.randLenVectors(e.id, 28, 38f * fin, (x, y) -> {
+                Draw.color(Mathf.randomSeed(e.id + (int)(x * 10f + y)) > 0.5f ? gold : blue);
+                Fill.circle(e.x + x, e.y + y, 1.2f * fout);
             });
-
-            Angles.randLenVectors(e.id + 1, 12, 38f * fin, (x, y) -> {
-                float angle = Mathf.angle(x, y);
-                float len = Mathf.random(8f, 20f) * fout;
-
-                Draw.color(gold, blue, fout);
-                Lines.stroke(2f * fout);
-
-                float startLen = 20f + fin * 20f;
-
-                float startX = e.x + Mathf.cosDeg(angle) * startLen;
-                float startY = e.y + Mathf.sinDeg(angle) * startLen;
-
-                float endX = startX + Mathf.cosDeg(angle) * len;
-                float endY = startY + Mathf.sinDeg(angle) * len;
-
-                Lines.line(startX, startY, endX, endY);
-            });
+            float coreSize = 5f + 8f * Mathf.absin(e.time, 8f, 1f);
+            Draw.color(blue);
+            Fill.circle(e.x, e.y, coreSize * fout);
+            Draw.color(white);
+            Fill.circle(e.x, e.y, coreSize * 0.45f * fout);
+            if(e.time > 42f){
+                float end = (e.time - 42f) / 18f;
+                float shrink = 1f - end;
+                Draw.color(gold);
+                Lines.stroke(3f * shrink);
+                Lines.circle(e.x, e.y, 40f * shrink);
+                Draw.color(blue);
+                Lines.stroke(1.5f * shrink);
+                Lines.circle(e.x, e.y, 28f * shrink);
+            }
         });
         energyMine = new Effect(60f, e -> {
             float fin = e.finpow();
