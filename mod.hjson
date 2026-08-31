@@ -1,5 +1,5 @@
 #the mod name as displayed in-game
-displayName: "幻境"
+displayName: "幻境/magical"
 
 #the internal name of your mod
 name: "magic"
@@ -10,7 +10,9 @@ author: "幻境模组制作团队"
 #the fully qualified main class of the mod
 main: "magical.magic"
 #the mod description as seen in the mod dialog
-description: "幻境永无止境"
+description: "幻境永无止境
+模组交流群：470748556
+密码：2023730"
 
 #the mod version
 version: 0.11
