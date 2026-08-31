@@ -2731,7 +2731,7 @@ public class MLUnitTypes {
                         bullet = new MissileBulletType(){{
                             height = 32f;
                             width = 16f;
-                            sprite = "幻境-大导弹";
+                            sprite = "magic-大导弹";
                             pierceBuilding = true;
                             speed = 16f;
                             drag = -0.02f;
