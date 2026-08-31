@@ -57,8 +57,8 @@ public class MLSpawnUnits {
                 }
             else if (unit.type == MLUnitTypes.BrokenEdge) {
                 float delay = 1f;
-                float x = unit.x + Mathf.random(-480f, 480f);
-                float y = unit.y + Mathf.random(-480f, 480f);
+                float x = unit.x + Mathf.random(-240f, 240f);
+                float y = unit.y + Mathf.random(-240f, 240f);
                 UnitType type = unit.type;
                 MLFx.middleTeleport.at(x, y);
                 unit.remove();
