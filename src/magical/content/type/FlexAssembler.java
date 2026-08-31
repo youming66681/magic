@@ -1,4 +1,5 @@
 package magical.content;
+
 import arc.Core;
 import arc.graphics.*;
 import arc.math.*;
@@ -19,7 +20,11 @@ import mindustry.world.*;
 import mindustry.world.blocks.units.*;
 import mindustry.world.meta.*;
 import java.util.*;
+import mindustry.entities.Units;
+import mindustry.world.blocks.payloads.UnitPayload;
+
 import static mindustry.Vars.*;
+
 public class FlexAssembler extends UnitAssembler {
     public Map<AssemblerUnitPlan, Integer> planAreaMap = new HashMap<>();
     public Map<AssemblerUnitPlan, Integer> tierRequired = new HashMap<>();
