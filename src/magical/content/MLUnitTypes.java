@@ -3333,7 +3333,7 @@ public class MLUnitTypes {
                                 colorTo = Color.valueOf("FEEBB3FF");
                             }};
                         }});
-                    }};
+                    }},
             weapons.add(
                     new Weapon("magic-MoonRise3"){{
                         mirror = false;
