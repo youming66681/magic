@@ -1,8 +1,10 @@
-package magical.content.abilities;
+package magical.content;
+
 import arc.scene.ui.layout.Table;
 import arc.util.Time;
 import mindustry.entities.abilities.Ability;
 import mindustry.gen.Unit;
+
 public class DamageLimitAbility extends Ability{
     public float interval;
     public float damagePercent;
