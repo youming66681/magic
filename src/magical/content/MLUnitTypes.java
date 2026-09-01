@@ -3142,7 +3142,7 @@ public class MLUnitTypes {
                     firstShotDelay = 80f;
                 }};
                 shake = 20f;
-                shootY = 4f;
+                shootY = 16f;
                 bullet = new LaserBulletType() {{
                         length = 1200f;
                         width = 60f;
