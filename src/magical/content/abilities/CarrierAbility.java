@@ -1,4 +1,5 @@
 package magical.content;
+
 import arc.Core;
 import arc.scene.ui.layout.Table;
 import arc.struct.ObjectMap;
@@ -7,11 +8,14 @@ import arc.util.Time;
 import mindustry.content.Fx;
 import mindustry.entities.Units;
 import mindustry.entities.abilities.Ability;
+import mindustry.gen.Teamc;
 import mindustry.gen.Unit;
 import mindustry.graphics.Pal;
 import mindustry.type.UnitType;
 import mindustry.ui.Bar;
+
 import static mindustry.Vars.*;
+
 public class CarrierAbility extends Ability{
     public UnitType droneType;
     public int maxDrones;
@@ -74,12 +78,13 @@ public class CarrierAbility extends Ability{
         }else{
             data.timer = 0f;
         }
-        Unit enemy = Units.closestEnemy(
+        Teamc enemy = Units.closestTarget(
                 unit.team,
                 unit.x,
                 unit.y,
                 engageRange,
-                u -> u.isValid() && !u.dead
+                u -> u != null && u.isValid() && !u.dead,
+                b -> b != null && b.isValid() && !b.dead
         );
         if(enemy != null && data.storedDrones > 0 && data.activeDrones.size < maxDrones){
             Unit drone = droneType.create(unit.team);
