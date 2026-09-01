@@ -2872,8 +2872,8 @@ public class MLUnitTypes {
                                 colorTo = Color.valueOf("FEEBB3FF");
                             }};
                         }};
-                    }}
-            );
+                    }});
+        }};
             Tianshu = new UnitType("Tianshu") {{
                 constructor = UnitTypes.flare.constructor;
                 flying = true;
