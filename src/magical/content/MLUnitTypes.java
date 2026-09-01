@@ -3127,10 +3127,10 @@ public class MLUnitTypes {
             abilities.add(new DebuffImmunityAbility(0.20f));
             abilities.add(new DamageLimitAbility(300f,0.90f));
             weapons.add(
-            new Weapon("magic-SeaSuffering1") {{
+            new Weapon("magic-MoonRise0") {{
                 reload = 150f;
                 x = 28f;
-                y = 54f;
+                y = -54f;
                 rotate = true;
                 rotateSpeed = 2f;
                 mirror = true;
