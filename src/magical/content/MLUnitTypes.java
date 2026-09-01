@@ -2811,7 +2811,7 @@ public class MLUnitTypes {
             lowAltitude = true;
             speed = 5f;
             rotateSpeed = 5f;
-            hitSize = 0;
+            hitSize = 16;
             health = 1000;
             logicControllable = false;
             playerControllable = false;
