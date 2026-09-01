@@ -64,7 +64,9 @@ public class MLUnitTypes {
     //小型
     Pioneer, Starlight, Qingxiao,
     //大型
-    BrokenEdge, FlyingSwallow, Tianshu;
+    BrokenEdge, FlyingSwallow, Tianshu,
+    //旗舰
+    Aoba;
 
     public static void load() {
         //幻境陆军
@@ -3044,7 +3046,7 @@ public class MLUnitTypes {
                             speed = 8f;
                             lifetime = 120f;
                             hitEffect = new WrapEffect(){{
-                                effect = MLFx.dynamicSpikes;
+                                effect = Fx.dynamicSpikes;
                                 color = Color.valueOf("FEEBB3FF");
                                 rotation = 24f;
                             }};
@@ -3085,7 +3087,7 @@ public class MLUnitTypes {
                             speed = 8f;
                             lifetime = 120f;
                             hitEffect = new WrapEffect(){{
-                                effect = MLFx.dynamicSpikes;
+                                effect = Fx.dynamicSpikes;
                                 color = Color.valueOf("FEEBB3FF");
                                 rotation = 24f;
                             }};
