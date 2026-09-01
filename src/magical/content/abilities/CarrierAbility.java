@@ -141,7 +141,7 @@ public class CarrierAbility extends Ability{
         super.addStats(t);
         t.row();
         t.add("[lightgray]" + Core.bundle.get("ability.carrier-desc") + "[]").left().row();
-        t.add("[lightgray]" + Core.bundle.get("stat.drones") + ":[] " + maxDrones).left().row();
+        t.add("[lightgray]" + Core.bundle.get("stat.maxdrones") + ":[] " + maxDrones).left().row();
         t.add("[lightgray]" + Core.bundle.get("stat.range") + ":[] " + engageRange / 8f + " tiles").left().row();
         t.add("[lightgray]" + Core.bundle.get("stat.drone") + ":[] " + (droneType == null ? Core.bundle.get("unit.unknown") : droneType.localizedName)).left().row();
     }

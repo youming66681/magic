@@ -2593,6 +2593,11 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.LargeWingWall, 10),
                     new PayloadStack(Blocks.salvo, 6),
                     new PayloadStack(MLBlocks.LightDescends, 2));
+            addPlan("T2", MLUnitTypes.Tianshu, 8000f, 13, 0,
+                    new PayloadStack(MLBlocks.largePhantomSteelWall, 10),
+                    new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 10),
+                    new PayloadStack(MLBlocks.LargeWingWall, 10),
+                    new PayloadStack(MLBlocks.BasicManufacturingPlant, 10),
 
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);
@@ -2613,7 +2618,8 @@ public class MLBlocks {
                     Blocks.forceProjector,
                     Blocks.lancer,
                     Blocks.salvo,
-                    MLBlocks.LightDescends
+                    MLBlocks.LightDescends,
+                    MLBlocks.BasicManufacturingPlant
             );
         }};
         Deconstructor = new PayloadDeconstructor("Deconstructor"){{
