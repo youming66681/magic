@@ -3124,6 +3124,7 @@ public class MLUnitTypes {
                     shootSound = MLSounds.spark;
                     status = StatusEffects.shocked;
                 }});
+            abilities.add(new DebuffImmunityAbility(0.20f));
             }};
     }
 }
