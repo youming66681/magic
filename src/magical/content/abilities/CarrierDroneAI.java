@@ -6,7 +6,7 @@ public class CarrierDroneAI extends FlyingAI{
     public Unit mother;
     public CarrierAbility ability;
     public CarrierDroneAI(){}
-    public CarrierDroneAI(Unit drone, Unit mother, CarrierAbility ability){
+    public CarrierDroneAI(Unit drone,Unit mother,CarrierAbility ability){
         this.unit = drone;
         this.mother = mother;
         this.ability = ability;
