@@ -2597,6 +2597,7 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.largePhantomSteelWall, 10),
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 10),
                     new PayloadStack(MLBlocks.LargeWingWall, 10),
+                    new PayloadStack(Blocks.forceProjector, 6),
                     new PayloadStack(MLBlocks.BasicManufacturingPlant, 5));
             addPlan("T2", MLUnitTypes.Aoba, 6000f, 19, 1,
                     new PayloadStack(MLBlocks.largePhantomSteelWall, 12),

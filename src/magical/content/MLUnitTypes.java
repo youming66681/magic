@@ -3125,6 +3125,7 @@ public class MLUnitTypes {
                     status = StatusEffects.shocked;
                 }});
             abilities.add(new DebuffImmunityAbility(0.20f));
+            abilities.add(new DamageLimitAbility(300f,0.90f));
             }};
     }
 }
