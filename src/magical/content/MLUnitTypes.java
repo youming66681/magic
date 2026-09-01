@@ -2810,7 +2810,7 @@ public class MLUnitTypes {
             flying = true;
             lowAltitude = true;
             speed = 5f;
-            rotateSpeed = 2.5f;
+            rotateSpeed = 5f;
             hitSize = 16;
             health = 1000;
             logicControllable = false;
@@ -2822,7 +2822,7 @@ public class MLUnitTypes {
             rotateMoveFirst = true;
             omniMovement = true;
             circleTarget = true;
-            circleTargetRadius = 270;
+            circleTargetRadius = 250;
             armor = 5f;
             accel = 0.07f;
             drag = 0.03f;
@@ -2888,7 +2888,7 @@ public class MLUnitTypes {
                 armor = 15f;
                 hitSize = 82f;
                 range = 480f;
-                speed = 2.5f;
+                speed = 1f;
                 accel = 0.07f;
                 drag = 0.03f;
                 abilities.add(

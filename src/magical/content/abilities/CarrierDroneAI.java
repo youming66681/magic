@@ -19,6 +19,10 @@ public class CarrierDroneAI extends FlyingAI{
             unit.kill();
             return;
         }
+        if(ability == null){
+            unit.kill();
+            return;
+        }
         Unit enemy = Units.closestEnemy(
                 unit.team,
                 unit.x,
@@ -29,14 +33,15 @@ public class CarrierDroneAI extends FlyingAI{
         if(enemy != null){
             target = enemy;
             super.updateUnit();
-        }else{
-            target = null;
-            moveTo(mother, 0f, 3f);
-            unit.lookAt(mother);
-            if(unit.within(mother, ability.reclaimDistance)){
-                ability.reclaimDrone(unit);
-                unit.remove();
-            }
+            return;
+        }
+        target = null;
+        moveTo(mother, 0f, 3f);
+        unit.lookAt(mother);
+        if(unit.within(mother, ability.reclaimDistance)){
+            unit.set(mother.x, mother.y);
+            ability.reclaimDrone(unit);
+            unit.remove();
         }
     }
 }

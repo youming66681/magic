@@ -18,7 +18,7 @@ public class CarrierAbility extends Ability{
     public UnitType droneType;
     public int maxDrones = 4;
     public float engageRange = 80f;
-    public float reclaimDistance = 8f;
+    public float reclaimDistance = 12f;
     public float spawnInterval = 120f;
     private transient Seq<Unit> activeDrones = new Seq<>();
     private transient int storedDrones = 0;
@@ -34,13 +34,21 @@ public class CarrierAbility extends Ability{
         if(activeDrones == null){
             activeDrones = new Seq<>();
         }
-        if(storedDrones < maxDrones){
+        activeDrones.removeAll(d -> d == null || !d.isAdded() || d.dead);
+        if(getTotalDrones() < maxDrones){
             timer += Time.delta * state.rules.unitBuildSpeed(unit.team);
             if(timer >= spawnInterval){
                 timer = 0f;
-                storedDrones++;
-                Fx.producesmoke.at(unit.x, unit.y);
+                if(getTotalDrones() < maxDrones){
+                    storedDrones++;
+                    if(storedDrones > maxDrones){
+                        storedDrones = maxDrones;
+                    }
+                    Fx.producesmoke.at(unit.x, unit.y);
+                }
             }
+        }else{
+            timer = 0f;
         }
         Unit enemy = Units.closestEnemy(
                 unit.team,
@@ -53,6 +61,9 @@ public class CarrierAbility extends Ability{
             if(droneType == null){
                 return;
             }
+            if(getTotalDrones() > maxDrones){
+                return;
+            }
             Unit drone = droneType.create(unit.team);
             if(drone == null){
                 return;
@@ -63,7 +74,6 @@ public class CarrierAbility extends Ability{
             activeDrones.add(drone);
             storedDrones--;
         }
-        activeDrones.removeAll(d -> d == null || !d.isAdded() || d.dead);
     }
     @Override
     public void displayBars(Unit unit, Table bars){
@@ -75,7 +85,7 @@ public class CarrierAbility extends Ability{
                                 maxDrones
                         ),
                         () -> Pal.accent,
-                        () -> maxDrones <= 0 ? 0f : (float)getTotalDrones() / maxDrones
+                        () -> maxDrones <= 0 ? 0f : Math.min(1f, (float)getTotalDrones() / maxDrones)
                 )
         ).row();
     }
