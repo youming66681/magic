@@ -3195,6 +3195,7 @@ public class MLUnitTypes {
                                 }});
                         recoils = 2;
                         bullet = new BasicBulletType(16, 240) {{
+                            hittable = false;
                             lifetime = 75;
                             width = 16;
                             height = 32;
@@ -3242,6 +3243,7 @@ public class MLUnitTypes {
                                 }});
                         recoils = 2;
                         bullet = new BasicBulletType(16, 240) {{
+                            hittable = false;
                             lifetime = 75;
                             width = 16;
                             height = 32;
