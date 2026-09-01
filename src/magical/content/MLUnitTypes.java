@@ -2821,6 +2821,8 @@ public class MLUnitTypes {
             faceTarget = true;
             rotateMoveFirst = true;
             omniMovement = true;
+            circleTarget = true;
+            circleTargetRadius = 270;
             armor = 5f;
             accel = 0.07f;
             drag = 0.03f;
@@ -2830,7 +2832,7 @@ public class MLUnitTypes {
                         x = 0f;
                         y = 0f;
                         mirror = true;
-                        reload = 2.5f;
+                        reload = 3f;
                         shootSound = MLSounds.JG;
                         inaccuracy = 0f;
                         recoil = 0f;
@@ -2840,7 +2842,7 @@ public class MLUnitTypes {
                             spread = 2f;
                         }};
                         bullet = new BasicBulletType() {{
-                            damage = 100f;
+                            damage = 90f;
                             pierceCap = 2;
                             pierceBuilding = true;
                             frontColor = Color.valueOf("FEEBB3FF");

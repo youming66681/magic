@@ -4,7 +4,6 @@ import arc.Core;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Time;
-import mindustry.Vars;
 import mindustry.content.Fx;
 import mindustry.entities.Units;
 import mindustry.entities.abilities.Ability;
@@ -12,6 +11,8 @@ import mindustry.gen.Unit;
 import mindustry.graphics.Pal;
 import mindustry.type.UnitType;
 import mindustry.ui.Bar;
+
+import static mindustry.Vars.*;
 
 public class CarrierAbility extends Ability{
     public UnitType droneType;
@@ -28,29 +29,13 @@ public class CarrierAbility extends Ability{
         this.engageRange = engageRange;
         this.spawnInterval = spawnInterval;
     }
-    public static Bar createDronesBar(Unit unit){
-        CarrierAbility ability = null;
-        for(var a : unit.abilities){
-            if(a instanceof CarrierAbility ca){
-                ability = ca;
-                break;
-            }
-        }
-        if(ability == null) return null;
-        CarrierAbility finalAbility = ability;
-        return new Bar(
-                () -> Core.bundle.format("bar.carrier-drones") + ": " + finalAbility.getTotalDrones() + " / " + finalAbility.maxDrones,
-                () -> Pal.accent,
-                () -> finalAbility.maxDrones <= 0 ? 0f : (float)finalAbility.getTotalDrones() / finalAbility.maxDrones
-        );
-    }
     @Override
     public void update(Unit unit){
         if(activeDrones == null){
             activeDrones = new Seq<>();
         }
         if(storedDrones < maxDrones){
-            timer += Time.delta * Vars.state.rules.unitBuildSpeed(unit.team);
+            timer += Time.delta * state.rules.unitBuildSpeed(unit.team);
             if(timer >= spawnInterval){
                 timer = 0f;
                 storedDrones++;
@@ -80,6 +65,20 @@ public class CarrierAbility extends Ability{
         }
         activeDrones.removeAll(d -> d == null || !d.isAdded() || d.dead);
     }
+    @Override
+    public void displayBars(Unit unit, Table bars){
+        bars.add(
+                new Bar(
+                        () -> Core.bundle.format(
+                                "bar.carrier-drones",
+                                getTotalDrones(),
+                                maxDrones
+                        ),
+                        () -> Pal.accent,
+                        () -> maxDrones <= 0 ? 0f : (float)getTotalDrones() / maxDrones
+                )
+        ).row();
+    }
     public void reclaimDrone(Unit drone){
         if(activeDrones == null){
             activeDrones = new Seq<>();
@@ -99,7 +98,9 @@ public class CarrierAbility extends Ability{
     }
     @Override
     public void death(Unit unit){
-        if(activeDrones == null) return;
+        if(activeDrones == null){
+            return;
+        }
         activeDrones.each(d -> {
             if(d != null && d.isAdded() && !d.dead){
                 d.kill();
