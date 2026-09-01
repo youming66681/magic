@@ -38,7 +38,6 @@ public class CarrierDroneAI extends FlyingAI{
         unit.lookAt(mother);
         if(unit.within(mother, ability.reclaimDistance)){
             ability.reclaimDrone(unit);
-            unit.set(mother.x, mother.y);
             unit.remove();
             return;
         }
