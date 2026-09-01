@@ -3126,6 +3126,40 @@ public class MLUnitTypes {
                 }});
             abilities.add(new DebuffImmunityAbility(0.20f));
             abilities.add(new DamageLimitAbility(300f,0.90f));
+            weapons.add(
+            new Weapon("magic-SeaSuffering1") {{
+                reload = 150f;
+                x = 28f;
+                y = 54f;
+                rotate = true;
+                rotateSpeed = 2f;
+                mirror = true;
+                alternate = false;
+                inaccuracy = 0f;
+                shootSound = MLSounds.laserblast;
+                chargeSound = MLSounds.lasercharge;
+                shoot = new ShootPattern() {{
+                    firstShotDelay = 80f;
+                }};
+                shake = 20f;
+                shootY = 4f;
+                bullet = new LaserBulletType() {{
+                        length = 1200f;
+                        width = 60f;
+                        damage = 600f;
+                        lifetime = 60f;
+                        colors = new Color[]{
+                                Color.valueOf("958F60FF"),
+                                Color.valueOf("C8BA8FFF"),
+                                Color.valueOf("FFFFFFFF")
+                        };
+                        despawnEffect = Fx.none;
+                        hitEffect = Fx.none;
+                        smokeEffect = Fx.bigShockwave;
+                        chargeEffect = Fx.greenLaserCharge;
+                    }};
+                }});
             }};
+        }};
     }
 }
