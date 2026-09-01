@@ -2636,6 +2636,8 @@ public class MLBlocks {
                     Blocks.salvo,
                     MLBlocks.LightDescends,
                     MLBlocks.BasicManufacturingPlant,
+                    MLBlocks.Nebula,
+                    MLBlocks.PhantomCrystal,
                     MLBlocks.BreakingArmy
             );
         }};
