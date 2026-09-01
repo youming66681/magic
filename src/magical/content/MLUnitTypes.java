@@ -3138,6 +3138,7 @@ public class MLUnitTypes {
                 inaccuracy = 0f;
                 shootSound = MLSounds.laserblast;
                 chargeSound = MLSounds.lasercharge;
+                layerOffset = 0.002f;
                 shoot = new ShootPattern() {{
                     firstShotDelay = 80f;
                 }};
@@ -3164,7 +3165,6 @@ public class MLUnitTypes {
                         recoil = 4f;
                         x = 15;
                         y = 26;
-                        shootY = 24f;
                         mirror = true;
                         rotate = true;
                         alternate = false;
@@ -3173,10 +3173,13 @@ public class MLUnitTypes {
                         ejectEffect = Fx.casing4;
                         layerOffset = 0.001f;
                         shootSound = MLSounds.mediumCannon;
-                        shoot = new ShootAlternate() {{
-                            barrels = 2;
-                            spread = 4f;
-                            shotDelay = 15f;
+                        shoot = new ShootBarrel() {{
+                            shots = 3;
+                            shotDelay = 20f;
+                            barrels = new float[]{
+                                    4f, 24, 0f,
+                                    -4f, 24f, 0f,
+                            };
                         }};
                         parts.addAll(
                                 new RegionPart("-l") {{
@@ -3212,7 +3215,6 @@ public class MLUnitTypes {
                         recoil = 4f;
                         x = 36;
                         y = -8;
-                        shootY = 24f;
                         mirror = true;
                         rotate = true;
                         alternate = false;
@@ -3221,10 +3223,13 @@ public class MLUnitTypes {
                         ejectEffect = Fx.casing4;
                         layerOffset = 0.001f;
                         shootSound = MLSounds.mediumCannon;
-                        shoot = new ShootAlternate() {{
-                            barrels = 2;
-                            spread = 4f;
-                            shotDelay = 15f;
+                        shoot = new ShootBarrel() {{
+                            shots = 3;
+                            shotDelay = 20f;
+                            barrels = new float[]{
+                                    4f, 24, 0f,
+                                    -4f, 24f, 0f,
+                            };
                         }};
                         parts.addAll(
                                 new RegionPart("-l") {{
