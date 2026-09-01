@@ -34,7 +34,7 @@ public class CarrierDroneAI extends FlyingAI{
             return;
         }
         target = null;
-        ability.reclaimDrone(unit);
+        ability.reclaimDrone(mother,unit);
         unit.remove();
     }
 }
