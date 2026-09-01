@@ -3158,7 +3158,101 @@ public class MLUnitTypes {
                         smokeEffect = Fx.bigShockwave;
                         chargeEffect = Fx.greenLaserCharge;
                     }};
-                }});
+                }},
+                    new Weapon("magic-MoonRise1") {{
+                        reload = 80f;
+                        recoil = 4f;
+                        x = 15;
+                        y = 26;
+                        shootY = 24f;
+                        mirror = true;
+                        rotate = true;
+                        alternate = false;
+                        rotateSpeed = 2f;
+                        inaccuracy = 4f;
+                        ejectEffect = Fx.casing4;
+                        layerOffset = 0.001f;
+                        shootSound = MLSounds.mediumCannon;
+                        shoot = new ShootAlternate() {{
+                            barrels = 2;
+                            spread = 4f;
+                            shotDelay = 15f;
+                        }};
+                        parts.addAll(
+                                new RegionPart("-l") {{
+                                    mirror = false;
+                                    heatProgress = PartProgress.recoil;
+                                    recoilIndex = 0;
+                                    progress = PartProgress.recoil;
+                                    moveY = -4;
+                                }},
+                                new RegionPart("-r") {{
+                                    mirror = false;
+                                    heatProgress = PartProgress.recoil;
+                                    recoilIndex = 1;
+                                    progress = PartProgress.recoil;
+                                    moveY = -4;
+                                }});
+                        recoils = 2;
+                        bullet = new BasicBulletType(16, 240) {{
+                            lifetime = 75;
+                            width = 16;
+                            height = 32;
+                            splashDamageRadius = 48;
+                            splashDamage = 360;
+                            hitEffect = despawnEffect = MLFx.Explosion4;
+                            hitSound = MLSounds.explosion;
+                            trailLength = 6;
+                            trailWidth = 4;
+                        }};
+                    }},
+                    new Weapon("magic-MoonRise1") {{
+                        reload = 80f;
+                        recoil = 4f;
+                        x = 36;
+                        y = -8;
+                        shootY = 24f;
+                        mirror = true;
+                        rotate = true;
+                        alternate = false;
+                        rotateSpeed = 2f;
+                        inaccuracy = 4f;
+                        ejectEffect = Fx.casing4;
+                        layerOffset = 0.001f;
+                        shootSound = MLSounds.mediumCannon;
+                        shoot = new ShootAlternate() {{
+                            barrels = 2;
+                            spread = 4f;
+                            shotDelay = 15f;
+                        }};
+                        parts.addAll(
+                                new RegionPart("-l") {{
+                                    mirror = false;
+                                    heatProgress = PartProgress.recoil;
+                                    recoilIndex = 0;
+                                    progress = PartProgress.recoil;
+                                    moveY = -4;
+                                }},
+                                new RegionPart("-r") {{
+                                    mirror = false;
+                                    heatProgress = PartProgress.recoil;
+                                    recoilIndex = 1;
+                                    progress = PartProgress.recoil;
+                                    moveY = -4;
+                                }});
+                        recoils = 2;
+                        bullet = new BasicBulletType(16, 240) {{
+                            lifetime = 75;
+                            width = 16;
+                            height = 32;
+                            splashDamageRadius = 48;
+                            splashDamage = 360;
+                            hitEffect = despawnEffect = MLFx.Explosion4;
+                            hitSound = MLSounds.explosion;
+                            trailLength = 6;
+                            trailWidth = 4;
+                        }};
+                    }});
             }};
     }
 }
