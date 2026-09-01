@@ -2958,5 +2958,139 @@ public class MLUnitTypes {
                             }};
                         }});
             }};
+            //旗舰
+        //T1
+        Aoba = new UnitType("Aoba"){{
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            faceTarget = true;
+            lowAltitude = true;
+            rotateMoveFirst = true;
+            omniMovement = true;
+            rotateSpeed = 3f;
+            health = 60000f;
+            armor = 60f;
+            hitSize = 96f;
+            range = 960f;
+            speed = 1.8f;
+            accel = 0.06f;
+            drag = 0.04f;
+            weapons.add(
+                    new Weapon("magic-Aoba0"){{
+                        reload = 300f;
+                        x = 0f;
+                        y = -24f;
+                        rotate = true;
+                        rotateSpeed = 1.5f;
+                        mirror = false;
+                        alternate = true;
+                        inaccuracy = 0f;
+                        shootSound = MLSounds.shootForeshadow;
+                        shake = 15f;
+                        bullet = new BasicBulletType(){{
+                            hitSize = 32f;
+                            pierce = true;
+                            pierceBuilding = true;
+                            hittable = false;
+                            reflectable = false;
+                            damage = 1500f;
+                            speed = 32f;
+                            lifetime = 30f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            sprite = "magic-透彻";
+                            trailLength = 10;
+                            trailWidth = 5f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            hitSound = MLSounds.shootFuse;
+                            width = 32f;
+                            height = 64f;
+                            hitEffect = Fx.colorSparkBig;
+                            despawnEffect = Fx.colorSparkBig;
+                        }};
+                    }},
+                    new Weapon("magic-Aoba1"){{
+                        mirror = true;
+                        x = 20f;
+                        y = -44f;
+                        reload = 90f;
+                        shoot = new ShootAlternate(){{
+                            shots = 15;
+                            shotDelay = 3f;
+                        }};
+                        shootSound = MLSounds.missile;
+                        rotate = true;
+                        rotateSpeed = 3f;
+                        inaccuracy = 30f;
+                        controllable = false;
+                        autoTarget = true;
+                        alternate = false;
+                        bullet = new MissileBulletType(){{
+                            damage = 60f;
+                            splashDamageRadius = 24f;
+                            splashDamage = 60f;
+                            homingRange = 960f;
+                            homingPower = 0.3f;
+                            homingDelay = 9f;
+                            sprite = "magic-导弹";
+                            trailLength = 6;
+                            trailWidth = 3f;
+                            trailEffect = Fx.none;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            width = 16f;
+                            height = 32f;
+                            speed = 8f;
+                            lifetime = 120f;
+                            hitEffect = new WrapEffect(){{
+                                effect = MLFx.dynamicSpikes;
+                                color = Color.valueOf("FEEBB3FF");
+                                rotation = 24f;
+                            }};
+                        }};
+                    }},
+                    new Weapon("magic-Aoba1"){{
+                        mirror = true;
+                        x = 14f;
+                        y = 16f;
+                        reload = 90f;
+                        shoot = new ShootAlternate(){{
+                            shots = 15;
+                            shotDelay = 3f;
+                        }};
+                        shootSound = MLSounds.missile;
+                        rotate = true;
+                        rotateSpeed = 3f;
+                        inaccuracy = 30f;
+                        controllable = false;
+                        autoTarget = true;
+                        alternate = false;
+                        bullet = new MissileBulletType(){{
+                            damage = 60f;
+                            splashDamageRadius = 24f;
+                            splashDamage = 60f;
+                            homingRange = 960f;
+                            homingPower = 0.3f;
+                            homingDelay = 9f;
+                            sprite = "magic-导弹";
+                            trailLength = 6;
+                            trailWidth = 3f;
+                            trailEffect = Fx.none;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            width = 16f;
+                            height = 32f;
+                            speed = 8f;
+                            lifetime = 120f;
+                            hitEffect = new WrapEffect(){{
+                                effect = MLFx.dynamicSpikes;
+                                color = Color.valueOf("FEEBB3FF");
+                                rotation = 24f;
+                            }};
+                        }};
+                    }});
+        }};
     }
 }

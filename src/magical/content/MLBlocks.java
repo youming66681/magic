@@ -2587,17 +2587,24 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 8),
                     new PayloadStack(Blocks.lancer, 4),
                     new PayloadStack(Blocks.forceProjector, 2));
-            addPlan("T2", MLUnitTypes.BrokenEdge, 6000f, 13, 0,
+            addPlan("T2", MLUnitTypes.BrokenEdge, 4500f, 13, 1,
                     new PayloadStack(MLBlocks.largePhantomSteelWall, 10),
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 10),
                     new PayloadStack(MLBlocks.LargeWingWall, 10),
-                    new PayloadStack(Blocks.salvo, 6),
+                    new PayloadStack(Blocks.salvo, 4),
                     new PayloadStack(MLBlocks.LightDescends, 2));
-            addPlan("T2", MLUnitTypes.Tianshu, 6000f, 13, 0,
+            addPlan("T2", MLUnitTypes.Tianshu, 4500f, 13, 1,
                     new PayloadStack(MLBlocks.largePhantomSteelWall, 10),
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 10),
                     new PayloadStack(MLBlocks.LargeWingWall, 10),
                     new PayloadStack(MLBlocks.BasicManufacturingPlant, 5));
+            addPlan("T3", MLUnitTypes.Aoba, 6000f, 15, 0,
+                    new PayloadStack(MLBlocks.largePhantomSteelWall, 12),
+                    new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 12),
+                    new PayloadStack(MLBlocks.LargeWingWall, 12),
+                    new PayloadStack(MLBlocks.LargePhantomGlowWall, 12),
+                    new PayloadStack(MLBlocks.BreakingArmy, 2),
+                    new PayloadStack(MLBlocks.LightDescends, 4));
 
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);
@@ -2614,12 +2621,14 @@ public class MLBlocks {
                     MLBlocks.largePhantomSteelWall,
                     MLBlocks.largePhantomTitaniumSteelWall,
                     MLBlocks.LargeWingWall,
+                    MLBlocks.LargePhantomGlowWall,
                     Blocks.repairPoint,
                     Blocks.forceProjector,
                     Blocks.lancer,
                     Blocks.salvo,
                     MLBlocks.LightDescends,
-                    MLBlocks.BasicManufacturingPlant
+                    MLBlocks.BasicManufacturingPlant,
+                    MLBlocks.BreakingArmy
             );
         }};
         Deconstructor = new PayloadDeconstructor("Deconstructor"){{
