@@ -2598,13 +2598,21 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 10),
                     new PayloadStack(MLBlocks.LargeWingWall, 10),
                     new PayloadStack(MLBlocks.BasicManufacturingPlant, 5));
-            addPlan("T3", MLUnitTypes.Aoba, 6000f, 17, 1,
+            addPlan("T2", MLUnitTypes.Aoba, 6000f, 17, 1,
                     new PayloadStack(MLBlocks.largePhantomSteelWall, 12),
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 12),
                     new PayloadStack(MLBlocks.LargeWingWall, 12),
                     new PayloadStack(MLBlocks.LargePhantomGlowWall, 12),
                     new PayloadStack(MLBlocks.BreakingArmy, 2),
                     new PayloadStack(MLBlocks.LightDescends, 4));
+            addPlan("T2", MLUnitTypes.MoonRise, 18000f, 19, 1,
+                    new PayloadStack(MLBlocks.largePhantomSteelWall, 18),
+                    new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 18),
+                    new PayloadStack(MLBlocks.LargeWingWall, 18),
+                    new PayloadStack(MLBlocks.LargePhantomGlowWall, 18),
+                    new PayloadStack(MLBlocks.PhantomCrystal, 4),
+                    new PayloadStack(MLBlocks.Nebula, 3),
+                    new PayloadStack(MLBlocks.LightDescends, 6));
 
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);

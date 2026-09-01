@@ -2736,13 +2736,13 @@ public class MLUnitTypes {
                             width = 16f;
                             sprite = "magic-导弹";
                             pierceBuilding = true;
-                            speed = 16f;
+                            speed = 12f;
                             drag = -0.02f;
-                            lifetime = 37.5f;
+                            lifetime = 50f;
                             homingDelay = 15f;
                             homingPower = 0.9f;
                             homingRange = 240f;
-                            damage = 120f;
+                            damage = 90f;
                             splashDamageRadius = 36f;
                             splashDamage = 120f;
                             frontColor = Color.valueOf("FEEBB3FF");
