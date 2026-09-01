@@ -3270,6 +3270,7 @@ public class MLUnitTypes {
                         inaccuracy = 0f;
                         shootSound = MLSounds.explosionAfflict;
                         shake = 10f;
+                        layerOffset = 0.002f;
                         parts.addAll(
                                 new RegionPart("-l") {{
                                     mirror = false;
@@ -3305,7 +3306,7 @@ public class MLUnitTypes {
                         }};
                         bullet = new BasicBulletType() {{
                             damage = 500f;
-                            lifetime = 25f;
+                            lifetime = 75f;
                             speed = 16f;
                             width = 24f;
                             height = 48f;
@@ -3322,6 +3323,7 @@ public class MLUnitTypes {
                             smokeEffect = Fx.smokeCloud;
                             trailChance = 1f;
                             trailInterval = 20f;
+                            hittable = false;
                             trailEffect = new ParticleEffect() {{
                                 particles = 10;
                                 length = 15f;
@@ -3352,7 +3354,6 @@ public class MLUnitTypes {
                         autoTarget = true;
                         alternate = false;
                         bullet = new MissileBulletType(){{
-                            hittable = false;
                             damage = 90f;
                             splashDamageRadius = 36f;
                             splashDamage = 90f;
