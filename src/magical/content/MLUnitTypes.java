@@ -66,7 +66,7 @@ public class MLUnitTypes {
     //大型
     BrokenEdge, FlyingSwallow, Tianshu,
     //旗舰
-    Aoba;
+    Aoba,MoonRise;
 
     public static void load() {
         //幻境陆军
