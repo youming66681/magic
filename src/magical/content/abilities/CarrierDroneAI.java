@@ -1,9 +1,7 @@
 package magical.content;
-
 import mindustry.ai.types.FlyingAI;
 import mindustry.entities.Units;
 import mindustry.gen.Unit;
-
 public class CarrierDroneAI extends FlyingAI{
     public Unit mother;
     public CarrierAbility ability;
@@ -39,9 +37,10 @@ public class CarrierDroneAI extends FlyingAI{
         moveTo(mother, 0f, 3f);
         unit.lookAt(mother);
         if(unit.within(mother, ability.reclaimDistance)){
-            unit.set(mother.x, mother.y);
             ability.reclaimDrone(unit);
+            unit.set(mother.x, mother.y);
             unit.remove();
+            return;
         }
     }
 }

@@ -1,5 +1,4 @@
 package magical.content;
-
 import arc.Core;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
@@ -11,9 +10,7 @@ import mindustry.gen.Unit;
 import mindustry.graphics.Pal;
 import mindustry.type.UnitType;
 import mindustry.ui.Bar;
-
 import static mindustry.Vars.*;
-
 public class CarrierAbility extends Ability{
     public UnitType droneType;
     public int maxDrones = 4;
@@ -34,7 +31,7 @@ public class CarrierAbility extends Ability{
         if(activeDrones == null){
             activeDrones = new Seq<>();
         }
-        activeDrones.removeAll(d -> d == null || !d.isAdded() || d.dead);
+        activeDrones.removeAll(d -> d == null || d.dead);
         if(getTotalDrones() < maxDrones){
             timer += Time.delta * state.rules.unitBuildSpeed(unit.team);
             if(timer >= spawnInterval){
@@ -61,7 +58,7 @@ public class CarrierAbility extends Ability{
             if(droneType == null){
                 return;
             }
-            if(getTotalDrones() > maxDrones){
+            if(getTotalDrones() >= maxDrones){
                 return;
             }
             Unit drone = droneType.create(unit.team);
@@ -117,6 +114,7 @@ public class CarrierAbility extends Ability{
             }
         });
         activeDrones.clear();
+        storedDrones = 0;
     }
     @Override
     public String localized(){
@@ -127,7 +125,9 @@ public class CarrierAbility extends Ability{
         super.addStats(t);
         t.row();
         t.add("[lightgray]" + Core.bundle.get("ability.carrier-desc") + "[]").left().row();
-        t.add("[lightgray]" + Core.bundle.get("stat.maxdrones") + ":[] " + maxDrones).left().row();
+        t.add("[lightgray]" + Core.bundle.get("stat.drones") + ":[] " + getTotalDrones() + " / " + maxDrones).left().row();
+        t.add("[lightgray]" + Core.bundle.get("stat.stored-drones") + ":[] " + getStoredDrones()).left().row();
+        t.add("[lightgray]" + Core.bundle.get("stat.active-drones") + ":[] " + getActiveDrones()).left().row();
         t.add("[lightgray]" + Core.bundle.get("stat.range") + ":[] " + engageRange / 8f + " tiles").left().row();
         t.add("[lightgray]" + Core.bundle.get("stat.drone") + ":[] " + (droneType == null ? "Unknown" : droneType.localizedName)).left().row();
     }

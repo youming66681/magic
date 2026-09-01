@@ -2822,6 +2822,7 @@ public class MLUnitTypes {
             rotateMoveFirst = true;
             omniMovement = true;
             circleTarget = true;
+            useUnitCap = false;
             circleTargetRadius = 250;
             armor = 5f;
             accel = 0.07f;
