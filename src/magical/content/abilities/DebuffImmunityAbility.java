@@ -4,6 +4,7 @@ import mindustry.Vars;
 import mindustry.entities.abilities.Ability;
 import mindustry.type.StatusEffect;
 import mindustry.type.UnitType;
+import arc.scene.ui.layout.Table;
 
 public class DebuffImmunityAbility extends Ability{
     public float threshold = 0.20f;
