@@ -2735,7 +2735,6 @@ public class MLUnitTypes {
                             height = 32f;
                             width = 16f;
                             sprite = "magic-导弹";
-                            pierceBuilding = true;
                             speed = 12f;
                             drag = -0.02f;
                             lifetime = 40f;
@@ -2744,7 +2743,7 @@ public class MLUnitTypes {
                             homingRange = 240f;
                             damage = 90f;
                             splashDamageRadius = 36f;
-                            splashDamage = 120f;
+                            splashDamage = 900f;
                             frontColor = Color.valueOf("FEEBB3FF");
                             backColor = Color.valueOf("FEEBB3FF");
                             trailLength = 9;
@@ -3033,7 +3032,7 @@ public class MLUnitTypes {
                             splashDamage = 60f;
                             homingRange = 960f;
                             homingPower = 0.3f;
-                            homingDelay = 9f;
+                            homingDelay = 6f;
                             sprite = "magic-导弹";
                             trailLength = 6;
                             trailWidth = 3f;
@@ -3074,7 +3073,7 @@ public class MLUnitTypes {
                             splashDamage = 60f;
                             homingRange = 960f;
                             homingPower = 0.3f;
-                            homingDelay = 9f;
+                            homingDelay = 6f;
                             sprite = "magic-导弹";
                             trailLength = 6;
                             trailWidth = 3f;
@@ -3174,7 +3173,7 @@ public class MLUnitTypes {
                         layerOffset = 0.001f;
                         shootSound = MLSounds.mediumCannon;
                         shoot = new ShootBarrel() {{
-                            shots = 3;
+                            shots = 2;
                             shotDelay = 20f;
                             barrels = new float[]{
                                     4f, 24, 0f,
@@ -3224,7 +3223,7 @@ public class MLUnitTypes {
                         layerOffset = 0.001f;
                         shootSound = MLSounds.mediumCannon;
                         shoot = new ShootBarrel() {{
-                            shots = 3;
+                            shots = 2;
                             shotDelay = 20f;
                             barrels = new float[]{
                                     4f, 24, 0f,
@@ -3258,6 +3257,156 @@ public class MLUnitTypes {
                             hitSound = MLSounds.explosion;
                             trailLength = 6;
                             trailWidth = 4;
+                        }};
+                    }},
+                    new Weapon("magic-MoonRise2") {{
+                        reload = 120f;
+                        x = 0f;
+                        y = -16f;
+                        rotate = true;
+                        rotateSpeed = 2.5f;
+                        mirror = false;
+                        alternate = true;
+                        inaccuracy = 0f;
+                        shootSound = MLSounds.explosionAfflict;
+                        shake = 10f;
+                        parts.addAll(
+                                new RegionPart("-l") {{
+                                    mirror = false;
+                                    heatProgress = PartProgress.recoil;
+                                    recoilIndex = 0;
+                                    progress = PartProgress.recoil;
+                                    moveY = -4;
+                                }},
+                                new RegionPart("-m") {{
+                                    mirror = false;
+                                    heatProgress = PartProgress.recoil;
+                                    recoilIndex = 1;
+                                    progress = PartProgress.recoil;
+                                    moveY = -4;
+                                }},
+                                new RegionPart("-r") {{
+                                    mirror = false;
+                                    heatProgress = PartProgress.recoil;
+                                    recoilIndex = 2;
+                                    progress = PartProgress.recoil;
+                                    moveY = -4;
+                                }}
+                        );
+                        recoils = 3;
+                        shoot = new ShootBarrel() {{
+                            shots = 3;
+                            shotDelay = 20f;
+                            barrels = new float[]{
+                                    8f, 32f, 0f,
+                                    0f, 32f, 0f,
+                                    -8f, 32f, 0f
+                            };
+                        }};
+                        bullet = new BasicBulletType() {{
+                            damage = 500f;
+                            lifetime = 25f;
+                            speed = 16f;
+                            width = 24f;
+                            height = 48f;
+                            hitSize = 24f;
+                            splashDamageRadius = 48f;
+                            splashDamage = 1000f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            trailLength = 9;
+                            trailWidth = 3f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            hitSound = MLSounds.explosionCleroi;
+                            hitEffect = despawnEffect = MLFx.EnergyExplosion;
+                            smokeEffect = Fx.smokeCloud;
+                            trailChance = 1f;
+                            trailInterval = 20f;
+                            trailEffect = new ParticleEffect() {{
+                                particles = 10;
+                                length = 15f;
+                                baseLength = 0f;
+                                lifetime = 10;
+                                sizeFrom = 5f;
+                                sizeTo = 0f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                        }};
+                    }},
+                    new Weapon("magic-MoonRise3"){{
+                        false = true;
+                        x = 0f;
+                        y = 32f;
+                        reload = 120f;
+                        shoot = new ShootAlternate(){{
+                            shots = 40;
+                            shotDelay = 2f;
+                        }};
+                        shootSound = MLSounds.missile;
+                        rotate = false;
+                        rotateSpeed = 0f;
+                        inaccuracy = 80f;
+                        controllable = false;
+                        autoTarget = true;
+                        alternate = false;
+                        bullet = new MissileBulletType(){{
+                            damage = 90f;
+                            splashDamageRadius = 36f;
+                            splashDamage = 90f;
+                            homingRange = 1200f;
+                            homingPower = 0.6f;
+                            homingDelay = 18f;
+                            sprite = "magic-导弹";
+                            trailLength = 6;
+                            trailWidth = 3f;
+                            trailEffect = Fx.none;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            width = 16f;
+                            height = 32f;
+                            speed = 12f;
+                            lifetime = 100f;
+                            hitSound = MLSounds.plasmaboom;
+                            hitEffect = new MultiEffect(
+                                    new WaveEffect() {{
+                                        lifetime = 20f;
+                                        sizeFrom = 0f;
+                                        sizeTo = 36f;
+                                        strokeFrom = 0f;
+                                        strokeTo = 3f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect() {{
+                                        particles = 9;
+                                        sizeFrom = 3f;
+                                        sizeTo = 0f;
+                                        length = 36f;
+                                        baseLength = 36f;
+                                        lifetime = 30f;
+                                        interp = Interp.pow10Out;
+                                        sizeInterp = Interp.pow10In;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect() {{
+                                        particles = 9;
+                                        line = true;
+                                        strokeFrom = 3f;
+                                        strokeTo = 0f;
+                                        lenFrom = 6f;
+                                        lenTo = 0f;
+                                        length = 36f;
+                                        baseLength = 36f;
+                                        lifetime = 30f;
+                                        interp = Interp.pow5Out;
+                                        sizeInterp = Interp.pow5In;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }}
+                            );
                         }};
                     }});
             }};
