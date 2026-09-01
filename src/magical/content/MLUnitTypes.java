@@ -2656,7 +2656,7 @@ public class MLUnitTypes {
             health = 40000f;
             armor = 40f;
             hitSize = 72f;
-            range = 600f;
+            range = 480f;
             speed = 2.4f;
             accel = 0.07f;
             drag = 0.03f;
@@ -2738,7 +2738,7 @@ public class MLUnitTypes {
                             pierceBuilding = true;
                             speed = 12f;
                             drag = -0.02f;
-                            lifetime = 50f;
+                            lifetime = 40f;
                             homingDelay = 15f;
                             homingPower = 0.9f;
                             homingRange = 240f;
@@ -3117,9 +3117,9 @@ public class MLUnitTypes {
                 ) {{
                     healPercent = 2f;
                     x = 0f;
-                    y = 16f;
+                    y = 32f;
                     maxTargets = 40;
-                    effectRadius = 8f;
+                    effectRadius = 10f;
                     damageEffect = Fx.chainLightning;
                     shootSound = MLSounds.spark;
                     status = StatusEffects.shocked;
