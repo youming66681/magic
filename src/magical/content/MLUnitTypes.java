@@ -212,7 +212,7 @@ public class MLUnitTypes {
             speed = 2.5f;
             hitSize = 50f;
             health = 12000;
-            armor = 12;
+            armor = 24;
             faceTarget = false;
             crushDamage = 2;
             weapons.add(new Weapon("magic-ColdRain0") {{
@@ -256,7 +256,7 @@ public class MLUnitTypes {
             speed = 1f;
             hitSize = 64f;
             health = 28000;
-            armor = 18;
+            armor = 36;
             faceTarget = false;
             crushDamage = 4;
             weapons.add(new Weapon("magic-HeavyRain0") {{
@@ -470,7 +470,7 @@ public class MLUnitTypes {
             speed = 0.6f;
             hitSize = 40f;
             health = 18000;
-            armor = 18;
+            armor = 36;
             baseRotateSpeed = 1.6f;
             mechStepParticles = true;
             mechFrontSway = 0.4f;
@@ -607,7 +607,7 @@ public class MLUnitTypes {
             speed = 0.4f;
             hitSize = 64f;
             health = 36000;
-            armor = 24;
+            armor = 48;
             baseRotateSpeed = 1f;
             mechStepParticles = true;
             mechFrontSway = 0.5f;
@@ -815,7 +815,7 @@ public class MLUnitTypes {
             accel = 0.1f;
             hitSize = 48;
             health = 10000;
-            armor = 10;
+            armor = 20;
             itemCapacity = 0;
             engineOffset = 16;
             engineSize = 8f;
@@ -913,7 +913,7 @@ public class MLUnitTypes {
             accel = 0.1f;
             hitSize = 56;
             health = 26000;
-            armor = 16;
+            armor = 32;
             itemCapacity = 0;
             engineOffset = 28;
             engineSize = 14f;
@@ -1343,7 +1343,7 @@ public class MLUnitTypes {
             accel = 0.08f;
             hitSize = 56;
             health = 16000;
-            armor = 16;
+            armor = 32;
             engineOffset = 32;
             engineSize = 12f;
             range = 400;
@@ -1490,7 +1490,7 @@ public class MLUnitTypes {
             accel = 0.05f;
             hitSize = 72;
             health = 32000;
-            armor = 20;
+            armor = 40;
             engineOffset = 24;
             engineSize = 12f;
             targetFlags = new BlockFlag[]{
@@ -1671,7 +1671,7 @@ public class MLUnitTypes {
             waveTrailY = -24;
             hitSize = 48;
             health = 14000;
-            armor = 14;
+            armor = 28;
             faceTarget = false;
             weapons.add(
                     new Weapon("magic-TerrifyingWaves0") {{
@@ -1787,7 +1787,7 @@ public class MLUnitTypes {
             waveTrailY = -48;
             hitSize = 72;
             health = 30000;
-            armor = 15;
+            armor = 30;
             range = 360f;
             faceTarget = false;
             weapons.add(
@@ -2092,7 +2092,7 @@ public class MLUnitTypes {
             waveTrailY = -32;
             hitSize = 56;
             health = 20000;
-            armor = 20;
+            armor = 40;
             faceTarget = false;
             range = 320;
             weapons.add(
@@ -2216,7 +2216,7 @@ public class MLUnitTypes {
             waveTrailY = -40;
             hitSize = 81;
             health = 40000;
-            armor = 28;
+            armor = 56;
             faceTarget = false;
             range = 400;
             abilities.add(
@@ -2475,7 +2475,7 @@ public class MLUnitTypes {
             accel = 0.08f;
             hitSize = 48;
             health = 8800;
-            armor = 8;
+            armor = 16;
             itemCapacity = 0;
             engineOffset = 0;
             engineSize = 0f;
@@ -2555,7 +2555,7 @@ public class MLUnitTypes {
             accel = 0.08f;
             hitSize = 48;
             health = 12000;
-            armor = 12;
+            armor = 24;
             itemCapacity = 0;
             engineOffset = 0;
             engineSize = 0f;
@@ -2652,7 +2652,7 @@ public class MLUnitTypes {
             omniMovement = true;
             rotateSpeed = 2f;
             health = 40000f;
-            armor = 20f;
+            armor = 40f;
             hitSize = 72f;
             range = 600f;
             speed = 2.4f;
@@ -2824,7 +2824,7 @@ public class MLUnitTypes {
             circleTarget = true;
             useUnitCap = false;
             circleTargetRadius = 250;
-            armor = 5f;
+            armor = 10f;
             accel = 0.07f;
             drag = 0.03f;
             trailLength = 5;
@@ -2886,7 +2886,7 @@ public class MLUnitTypes {
                 omniMovement = true;
                 rotateSpeed = 1f;
                 health = 25000f;
-                armor = 15f;
+                armor = 30f;
                 hitSize = 82f;
                 range = 480f;
                 speed = 1f;
@@ -2929,8 +2929,8 @@ public class MLUnitTypes {
                 abilities.add(new CarrierAbility(
                         MLUnitTypes.FlyingSwallow,      // 舰载机类型
                         10,                 // 最大舰载机数
-                        480f,              // 索敌范围（世界单位）
-                        60f               // 生成舰载机的间隔（帧）
+                        480f,              // 索敌范围
+                        60f               // 生成舰载机的间隔
 
                 ));
 
