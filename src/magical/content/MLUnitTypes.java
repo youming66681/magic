@@ -2727,14 +2727,14 @@ public class MLUnitTypes {
                             shots = 20;
                             shotDelay = 2f;
                         }};
-                        shootSound = MLSounds.missile;
+                        shootSound = MLSounds.missileLarge;
                         rotate = false;
                         controllable = false;
                         autoTarget = true;
                         bullet = new MissileBulletType() {{
                             height = 32f;
                             width = 16f;
-                            sprite = "magic-大导弹";
+                            sprite = "magic-导弹";
                             pierceBuilding = true;
                             speed = 16f;
                             drag = -0.02f;
@@ -3094,5 +3094,35 @@ public class MLUnitTypes {
                         }};
                     }});
         }};
+        //T2
+        MoonRise = new UnitType("MoonRise"){{
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            faceTarget = true;
+            lowAltitude = true;
+            rotateMoveFirst = true;
+            omniMovement = true;
+            rotateSpeed = 2.5f;
+            health = 180000f;
+            armor = 90f;
+            hitSize = 112f;
+            range = 1200f;
+            speed = 1.5f;
+            accel = 0.06f;
+            drag = 0.04f;
+            abilities.add(new EnergyFieldAbility(
+                    80f,   // damage
+                    60f,   // reload
+                    600f   // range
+            ) {{
+                healPercent = 2f;
+                x = 0f;
+                y = 16f;
+                maxTargets = 40;
+                effectRadius = 8f;
+                damageEffect = Fx.chainLightning;
+                shootSound = MLSounds.spark;
+                status = StatusEffects.shocked;
+            }});
     }
 }
