@@ -49,4 +49,10 @@ public class DebuffImmunityAbility extends Ability{
         }
         return hasNegative;
     }
+    @Override
+    public void addStats(Table t){
+        super.addStats(t);
+        t.add(abilityStat("threshold",(int)(threshold * 100f) + "%"));
+        t.row();
+    }
 }
