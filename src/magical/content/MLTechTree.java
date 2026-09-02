@@ -290,6 +290,9 @@ public class MLTechTree {
                         });
                     });
                     /*终焉核心*/node(MLBlocks.EndCore, () -> {
+                        /*煤幻溶机*/node(MLBlocks.CoalMeltingMachine, () -> {
+
+                                });
                         /*全域超速仪*/node(MLBlocks.GlobalOverdriveProjector, () -> {
 
                                 });

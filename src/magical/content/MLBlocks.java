@@ -162,7 +162,7 @@ public class MLBlocks {
             FluorescentFeatherDrill, XuansteelConveyor, GlowFeatherBridge, GlowingFeatherConveyor, LumifeatherReactor, PretendingCore, GeneralAssemblyUpgrade,
             RetroProjector, HologramProjector,
             //终极科技
-            EndCore, GlobalOverdriveProjector, AdvancedGeneralAssemblyUpgradeFactory;
+            EndCore, GlobalOverdriveProjector, AdvancedGeneralAssemblyUpgradeFactory, CoalMeltingMachine;
 
     public static void load() {
 
@@ -359,6 +359,12 @@ public class MLBlocks {
                 consumePower(20f);
                 consumeItems(ItemStack.with(MLItems.wingedStone, 1, MLItems.acrylic, 1, Items.silicon, 6));
                 outputItems = ItemStack.with(MLItems.arrayChip, 1);
+            }},
+            new CraftPlan(){{
+                craftTime = 180f;
+                consumePower(30f);
+                consumeItems(ItemStack.with(MLItems.fluorescentFeatherStone, 1, MLItems.mysticSteel, 1, MLItems.phantomLuminousAlloy, 1, MLItems.wingedMetal, 1, Items.silicon, 9));
+                outputItems = ItemStack.with(MLItems.matrixChip, 1);
             }}
             );
         }};
@@ -429,7 +435,7 @@ public class MLBlocks {
             size = 3;
             hasItems = true;
             hasPower = true;
-            itemCapacity = 20;
+            itemCapacity = 30;
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawFlame());
 
             consumeItems(ItemStack.with(MLItems.wingedStone, 1, Items.plastanium, 1));
@@ -460,7 +466,7 @@ public class MLBlocks {
 
             hasItems = true;
             liquidCapacity = 60f;
-            itemCapacity = 20;
+            itemCapacity = 30;
             craftTime = 150f;
             outputItem = new ItemStack(MLItems.mysticSteel, 1);
             size = 3;
@@ -478,7 +484,7 @@ public class MLBlocks {
             requirements(Category.crafting, ItemStack.with(new Object[]{Items.silicon, 50, MLItems.mysticSteel, 15, MLItems.phantomTitaniumSteel, 40, MLItems.acrylic, 20, Items.thorium, 30, MLItems.arrayChip, 15}));
 
             hasItems = true;
-            itemCapacity = 20;
+            itemCapacity = 30;
             craftTime = 90f;
             outputItem = new ItemStack(MLItems.fluorescentFeatherStone, 1);
             size = 3;
@@ -495,7 +501,7 @@ public class MLBlocks {
             requirements(Category.crafting, ItemStack.with(new Object[]{Items.silicon, 60, MLItems.mysticSteel, 45, MLItems.fluorescentFeatherStone, 30, MLItems.wingedMetal, 20, MLItems.arrayChip, 15}));
 
             hasItems = true;
-            itemCapacity = 20;
+            itemCapacity = 30;
             craftTime = 120f;
             outputItem = new ItemStack(MLItems.phantomLuminousAlloy, 1);
             size = 3;
@@ -541,11 +547,30 @@ public class MLBlocks {
             craftTime = 80f;
             size = 4;
             hasPower = true;
-            itemCapacity = 20;
+            itemCapacity = 40;
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawFlame());
 
             consumePower(8f);
             consumeItems(ItemStack.with(Items.copper, 3, Items.lead, 4, Items.titanium, 2, Items.silicon, 3));
+        }};
+        //煤幻溶机
+        CoalMeltingMachine = new GenericCrafter("CoalMeltingMachine") {{
+            requirements(Category.crafting, ItemStack.with(new Object[]{Items.silicon, 80, Items.surgeAlloy, 40, MLItems.mysticSteel, 40, MLItems.acrylic, 40, MLItems.wingedMetal, 20, MLItems.matrixChip, 20}));
+
+            hasItems = true;
+            itemCapacity = 40;
+            liquidCapacity = 160;
+            craftTime = 120f;
+            outputItem = new ItemStack(Items.crystallineCarbon, 1);
+            size = 4;
+            health = 800;
+            hasPower = true;
+            craftEffect = Fx.smeltsmoke;
+            drawer = new DrawMulti(new DrawLiquidTile(Liquids.PhantomSteelSolution), new DrawRegion("-bottom"), new DrawDefault(), new DrawFlame());
+
+            consumePower(10f);
+            consumeItems(ItemStack.with(Items.surgeAlloy, 2, Items.coal, 2));
+            consumeLiquid(MLLiquids.PhantomSteelSolution, 0.4f);
         }};
         //factor
         //炮
