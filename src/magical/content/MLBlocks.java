@@ -141,6 +141,7 @@ import mindustry.entities.Damage;
 import mindustry.world.draw.DrawLiquidRegion;
 import mindustry.world.blocks.liquid.LiquidBridge;
 import mindustry.world.blocks.units.UnitAssemblerModule;
+import mindustry.world.blocks.defense.MendProjector;
 
 public class MLBlocks {
 
