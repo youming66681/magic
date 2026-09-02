@@ -40,13 +40,9 @@ public class DebuffImmunityAbility extends Ability{
             hasNegative = true;
             if(1f - effect.healthMultiplier > threshold)return false;
         }
-        if(effect.damageMultiplier > 1f){
+        if(effect.dragMultiplier < 1f){
             hasNegative = true;
-            if(effect.damageMultiplier - 1f > threshold)return false;
-        }
-        if(effect.dragMultiplier > 1f){
-            hasNegative = true;
-            if(effect.dragMultiplier - 1f > threshold)return false;
+            if(1f - effect.dragMultiplier > threshold)return false;
         }
         return hasNegative;
     }

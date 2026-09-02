@@ -3436,7 +3436,7 @@ public class MLUnitTypes {
                 ) {{
                     healPercent = 3f;
                     x = 0f;
-                    y = 32f;
+                    y = 24f;
                     maxTargets = 60;
                     effectRadius = 12f;
                     damageEffect = Fx.chainLightning;

@@ -277,7 +277,9 @@ public class MLTechTree {
                             /*高级通用装配升级厂*/node(MLBlocks.AdvancedGeneralAssemblyUpgradeFactory, () -> {
                                 /*青叶*/node(MLUnitTypes.Aoba, () -> {
                                     /*月涌*/node(MLUnitTypes.MoonRise, () -> {
+                                        /*星空*/node(MLUnitTypes.StarrySky, () -> {
 
+                                        });
                                     });
                                 });
                             });

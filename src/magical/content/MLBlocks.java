@@ -2614,6 +2614,14 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.PhantomCrystal, 4),
                     new PayloadStack(MLBlocks.Nebula, 3),
                     new PayloadStack(MLBlocks.LightDescends, 6));
+            addPlan("T2", MLUnitTypes.StarrySky, 54000f, 27, 1,
+                    new PayloadStack(MLBlocks.largePhantomSteelWall, 24),
+                    new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 24),
+                    new PayloadStack(MLBlocks.LargeWingWall, 24),
+                    new PayloadStack(MLBlocks.LargePhantomGlowWall, 24),
+                    new PayloadStack(MLBlocks.BulletsRain, 2),
+                    new PayloadStack(MLBlocks.Nebula, 12),
+                    new PayloadStack(MLBlocks.LightDescends, 8));
 
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);
@@ -2639,6 +2647,7 @@ public class MLBlocks {
                     MLBlocks.BasicManufacturingPlant,
                     MLBlocks.Nebula,
                     MLBlocks.PhantomCrystal,
+                    MLBlocks.BulletsRain,
                     MLBlocks.BreakingArmy
             );
         }};
