@@ -587,7 +587,7 @@ public class MLBlocks {
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawFlame());
 
             consumePower(10f);
-            consumeItems(ItemStack.with(Items.phaseFabric, 2, Items.fluorescentFeatherStone, 2));
+            consumeItems(ItemStack.with(Items.phaseFabric, 2, MLItems.fluorescentFeatherStone, 2));
         }};
         //factor
         //炮
