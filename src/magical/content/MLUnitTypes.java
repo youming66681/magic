@@ -3735,10 +3735,10 @@ public class MLUnitTypes {
                             spread = 8f;
                             shotDelay = 1.5f;
                         }};
-                        shootSound = MLSounds.missile;
-                        rotate = false;
-                        rotateSpeed = 0f;
-                        inaccuracy = 80f;
+                        shootSound = MLSounds.missileLarge;
+                        rotate = true;
+                        rotateSpeed = 3f;
+                        inaccuracy = 0f;
                         controllable = false;
                         autoTarget = true;
                         alternate = false;
