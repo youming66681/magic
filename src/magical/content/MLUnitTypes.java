@@ -2743,7 +2743,7 @@ public class MLUnitTypes {
                             homingRange = 240f;
                             damage = 90f;
                             splashDamageRadius = 36f;
-                            splashDamage = 900f;
+                            splashDamage = 90f;
                             frontColor = Color.valueOf("FEEBB3FF");
                             backColor = Color.valueOf("FEEBB3FF");
                             trailLength = 9;
@@ -3359,7 +3359,7 @@ public class MLUnitTypes {
                             splashDamage = 90f;
                             homingRange = 1200f;
                             homingPower = 0.6f;
-                            homingDelay = 18f;
+                            homingDelay = 6f;
                             sprite = "magic-导弹";
                             trailLength = 6;
                             trailWidth = 3f;
@@ -3724,7 +3724,95 @@ public class MLUnitTypes {
                                 splashDamage = 500f;
                             }};
                         }};
+                    }},
+                    new Weapon("magic-StarrySky2"){{
+                        mirror = true;
+                        x = 26f;
+                        y = -78f;
+                        reload = 150f;
+                        shoot = new ShootAlternate(){{
+                            shots = 30;
+                            spread = 8f;
+                            shotDelay = 1.5f;
+                        }};
+                        shootSound = MLSounds.missile;
+                        rotate = false;
+                        rotateSpeed = 0f;
+                        inaccuracy = 80f;
+                        controllable = false;
+                        autoTarget = true;
+                        alternate = false;
+                        bullet = new MissileBulletType(){{
+                            damage = 120f;
+                            splashDamageRadius = 36f;
+                            splashDamage = 120f;
+                            homingRange = 1440f;
+                            homingPower = 0.9f;
+                            homingDelay = 9f;
+                            sprite = "magic-导弹";
+                            trailLength = 6;
+                            trailWidth = 3f;
+                            trailEffect = Fx.none;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            trailEffect = new ParticleEffect() {{
+                                particles = 10;
+                                sizeFrom = 15f;
+                                sizeTo = 0f;
+                                lifetime = 10f;
+                                length = 5f;
+                                baseLength = 0f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                                cone = 30f;
+                            }};
+                            backColor = Color.valueOf("FEEBB3FF");
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            width = 16f;
+                            height = 32f;
+                            speed = 16f;
+                            lifetime = 90f;
+                            hitSound = MLSounds.plasmaboom;
+                            hitEffect = new MultiEffect(
+                                    new WaveEffect() {{
+                                        lifetime = 20f;
+                                        sizeFrom = 0f;
+                                        sizeTo = 36f;
+                                        strokeFrom = 0f;
+                                        strokeTo = 3f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect() {{
+                                        particles = 9;
+                                        sizeFrom = 3f;
+                                        sizeTo = 0f;
+                                        length = 36f;
+                                        baseLength = 36f;
+                                        lifetime = 30f;
+                                        interp = Interp.pow10Out;
+                                        sizeInterp = Interp.pow10In;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect() {{
+                                        particles = 9;
+                                        line = true;
+                                        strokeFrom = 3f;
+                                        strokeTo = 0f;
+                                        lenFrom = 6f;
+                                        lenTo = 0f;
+                                        length = 36f;
+                                        baseLength = 36f;
+                                        lifetime = 30f;
+                                        interp = Interp.pow5Out;
+                                        sizeInterp = Interp.pow5In;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }}
+                            );
+                        }};
                     }});
+        }};
         }};
     }
 }
