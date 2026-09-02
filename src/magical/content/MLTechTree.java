@@ -291,7 +291,9 @@ public class MLTechTree {
                     });
                     /*终焉核心*/node(MLBlocks.EndCore, () -> {
                         /*煤幻溶机*/node(MLBlocks.CoalMeltingMachine, () -> {
+                            /*纳米丝织机*/node(MLBlocks.NanofiberLoom, () -> {
 
+                            });
                                 });
                         /*全域超速仪*/node(MLBlocks.GlobalOverdriveProjector, () -> {
 

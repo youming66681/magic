@@ -162,7 +162,7 @@ public class MLBlocks {
             FluorescentFeatherDrill, XuansteelConveyor, GlowFeatherBridge, GlowingFeatherConveyor, LumifeatherReactor, PretendingCore, GeneralAssemblyUpgrade,
             RetroProjector, HologramProjector,
             //终极科技
-            EndCore, GlobalOverdriveProjector, AdvancedGeneralAssemblyUpgradeFactory, CoalMeltingMachine;
+            EndCore, GlobalOverdriveProjector, AdvancedGeneralAssemblyUpgradeFactory, CoalMeltingMachine, NanofiberLoom;
 
     public static void load() {
 
@@ -571,6 +571,23 @@ public class MLBlocks {
             consumePower(10f);
             consumeItems(ItemStack.with(Items.surgeAlloy, 2, Items.coal, 2));
             consumeLiquid(MLLiquids.PhantomSteelSolution, 0.4f);
+        }};
+        //纳米丝织机
+        NanofiberLoom = new GenericCrafter("NanofiberLoom") {{
+            requirements(Category.crafting, ItemStack.with(new Object[]{Items.silicon, 80, Items.phaseFabric, 40, MLItems.mysticSteel, 40, MLItems.acrylic, 40, MLItems.wingedMetal, 20, MLItems.matrixChip, 20}));
+
+            hasItems = true;
+            itemCapacity = 40;
+            craftTime = 120f;
+            outputItem = new ItemStack(MLItems.crystallineCarbon, 1);
+            size = 4;
+            health = 800;
+            hasPower = true;
+            craftEffect = Fx.hitEmpSpark;
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawFlame());
+
+            consumePower(10f);
+            consumeItems(ItemStack.with(Items.phaseFabric, 2, Items.fluorescentFeatherStone, 2));
         }};
         //factor
         //炮
