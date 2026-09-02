@@ -2471,13 +2471,13 @@ public class MLUnitTypes {
                             layerOffset = -0.001f;
                             bullet = new ContinuousLaserBulletType(50f) {{
                                 length = 320f;
-                                width = 16f;
+                                width = 8f;
                                 incendChance = 2.5f;
                                 incendSpread = 5f;
                                 incendAmount = 1;
                                 hitEffect = Fx.none;
                                 statusDuration = 60f;
-                                lifetime = 75f;
+                                lifetime = 90f;
                                 shake = 4f;
                                 despawnEffect = Fx.smokeCloud;
                                 smokeEffect = Fx.smeltsmoke;
@@ -2490,10 +2490,10 @@ public class MLUnitTypes {
                             }};
                         }},
                         new Weapon("magic-Nightingale1") {{
-                            reload = 10f;
+                            reload = 5f;
                             recoil = 0f;
-                            x = 8;
-                            y = 16;
+                            x = 6;
+                            y = 18;
                             shootY = 0f;
                             mirror = true;
                             rotate = false;
