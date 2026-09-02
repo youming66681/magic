@@ -2432,90 +2432,91 @@ public class MLUnitTypes {
         }};
         //夜莺
         Nightingale = new UnitType("Nightingale") {{
-            constructor = UnitTypes.flare.constructor;
-            flying = true;
-            lowAltitude = true;
-            rotateSpeed = 9f;
-            speed = 6f;
-            drag = 0.06f;
-            accel = 0.08f;
-            hitSize = 40;
-            health = 2400;
-            armor = 8;
-            mineSpeed = 20f;
-            mineTier = 5;
-            itemCapacity = 200;
-            buildRange = 320;
-            buildSpeed = 5f;
-            range = 320;
-            abilities.add(
-                    new ForceFieldAbility(
-                            120f,     // radius
-                            0.9f,     // regen
-                            1800f,    // max
-                            240f,     // cooldown
-                            4,        // sides
-                            0f        // rotation
-                    ));
-            weapons.add(
-                    new Weapon("magic-Nightingale0") {{
-                        reload = 150f;
-                        mirror = true;
-                        x = 0f;
-                        y = 0f;
-                        rotate = false;
-                        recoil = 0f;
-                        continuous = true;
-                        alternate = false;
-                        shootSound = MLSounds.beam;
-                        layerOffset = -0.001f;
-                        bullet = new ContinuousLaserBulletType(50f) {{
-                            length = 320f;
-                            width = 16f;
-                            incendChance = 2.5f;
-                            incendSpread = 5f;
-                            incendAmount = 1;
-                            hitEffect = Fx.none;
-                            statusDuration = 60f;
-                            lifetime = 75f;
-                            shake = 4f;
-                            despawnEffect = Fx.smokeCloud;
-                            smokeEffect = Fx.smeltsmoke;
-                            collidesTeam = true;
-                            colors = new Color[]{
-                                    Color.valueOf("D86E56FF"),
-                                    Color.valueOf("FFA05CFF"),
-                                    Color.white
-                            };
-                        }};
-                    }},
-                    new Weapon("magic-Nightingale1") {{
-                        reload = 10f;
-                        recoil = 0f;
-                        x = 8;
-                        y = 16;
-                        shootY = 0f;
-                        mirror = true;
-                        rotate = false;
-                        rotateSpeed = 6f;
-                        inaccuracy = 0f;
-                        ejectEffect = Fx.casing3;
-                        layerOffset = 0.001f;
-                        shootSound = MLSounds.JG;
-                        bullet = new BasicBulletType(16, 25) {{
-                            lifetime = 20;
-                            width = 16;
-                            height = 32;
-                            trailLength = 6;
-                            trailWidth = 3f;
-                            homingRange = 160f;
-                            homingPower = 0.05f;
-                            homingDelay = 5f;
-                            trailColor = Color.valueOf("FEEBB3FF");
-                            frontColor = Color.valueOf("FEEBB3FF");
-                            backColor = Color.valueOf("FEEBB3FF");
-                        }};
-                    }});
+                constructor = UnitTypes.flare.constructor;
+                flying = true;
+                lowAltitude = true;
+                rotateSpeed = 9f;
+                speed = 6f;
+                drag = 0.06f;
+                accel = 0.08f;
+                hitSize = 40;
+                health = 2400;
+                armor = 8;
+                mineSpeed = 20f;
+                mineTier = 5;
+                itemCapacity = 200;
+                buildRange = 320;
+                buildSpeed = 5f;
+                range = 320;
+                abilities.add(
+                        new ForceFieldAbility(
+                                120f,     // radius
+                                0.9f,     // regen
+                                1800f,    // max
+                                240f,     // cooldown
+                                4,        // sides
+                                0f        // rotation
+                        ));
+                weapons.add(
+                        new Weapon("magic-Nightingale0") {{
+                            reload = 150f;
+                            mirror = true;
+                            x = 0f;
+                            y = 0f;
+                            rotate = false;
+                            recoil = 0f;
+                            continuous = true;
+                            alternate = false;
+                            shootSound = MLSounds.beam;
+                            layerOffset = -0.001f;
+                            bullet = new ContinuousLaserBulletType(50f) {{
+                                length = 320f;
+                                width = 16f;
+                                incendChance = 2.5f;
+                                incendSpread = 5f;
+                                incendAmount = 1;
+                                hitEffect = Fx.none;
+                                statusDuration = 60f;
+                                lifetime = 75f;
+                                shake = 4f;
+                                despawnEffect = Fx.smokeCloud;
+                                smokeEffect = Fx.smeltsmoke;
+                                collidesTeam = true;
+                                colors = new Color[]{
+                                        Color.valueOf("D86E56FF"),
+                                        Color.valueOf("FFA05CFF"),
+                                        Color.white
+                                };
+                            }};
+                        }},
+                        new Weapon("magic-Nightingale1") {{
+                            reload = 10f;
+                            recoil = 0f;
+                            x = 8;
+                            y = 16;
+                            shootY = 0f;
+                            mirror = true;
+                            rotate = false;
+                            rotateSpeed = 6f;
+                            inaccuracy = 0f;
+                            ejectEffect = Fx.casing3;
+                            layerOffset = 0.001f;
+                            shootSound = MLSounds.JG;
+                            bullet = new BasicBulletType(16, 25) {{
+                                lifetime = 20;
+                                width = 16;
+                                height = 32;
+                                trailLength = 6;
+                                trailWidth = 3f;
+                                homingRange = 160f;
+                                homingPower = 0.05f;
+                                homingDelay = 5f;
+                                trailColor = Color.valueOf("FEEBB3FF");
+                                frontColor = Color.valueOf("FEEBB3FF");
+                                backColor = Color.valueOf("FEEBB3FF");
+                            }};
+                        }});
+            }};
         //星舰
         //小型
         Pioneer = new UnitType("Pioneer") {{
