@@ -605,7 +605,7 @@ public class MLBlocks {
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawFlame());
 
             consumePower(20f);
-            consumeItems(ItemStack.with(Items.phantomLuminousAlloy, 1, MLItems.nanoEnergyThread, 1, MLItems.crystallineCarbon, 1));
+            consumeItems(ItemStack.with(MLItems.phantomLuminousAlloy, 1, MLItems.nanoEnergyThread, 1, MLItems.crystallineCarbon, 1));
         }};
         //factor
         //炮
