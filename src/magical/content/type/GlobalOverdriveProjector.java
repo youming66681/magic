@@ -17,8 +17,12 @@ public class GlobalOverdriveProjector extends OverdriveProjector{
     public GlobalOverdriveProjector(String name){
         super(name);
     }
-
     @Override
+    public void setStats(){
+        stats.timePeriod = useTime;
+        super.setStats();
+        stats.remove(mindustry.world.meta.Stat.range);
+    }
     public class OverdriveBuild extends OverdriveProjector.OverdriveBuild{
         @Override
         public void updateTile(){
