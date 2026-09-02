@@ -3445,6 +3445,6 @@ public class MLUnitTypes {
                 }});
                 abilities.add(new DebuffImmunityAbility(0.40f));
                 abilities.add(new DamageLimitAbility(600f, 0.75f));
-            }}
+            }};
     }
 }
