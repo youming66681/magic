@@ -350,7 +350,7 @@ public class MLFx {
             Draw.color(Color.valueOf("FEEBB3FF"));
             Lines.stroke(5f * fout);
             Lines.circle(e.x, e.y, radius);
-            Draw.color(Color.valueOf("97B5EDFF"));
+            Draw.color(Color.valueOf("FEEBB3FF"));
             Lines.stroke(2.5f * fout);
             Lines.circle(e.x, e.y, radius * 0.75f);
             Fill.circle(e.x, e.y, 10f * fout);
@@ -363,7 +363,7 @@ public class MLFx {
                 Fill.poly(e.x + x, e.y + y, 4, width, Angles.angle(x, y));
             });
             Angles.randLenVectors(e.id + 1, 16, 48f * fin, (x, y) -> {
-                Draw.color(Color.valueOf("97B5EDFF"));
+                Draw.color(Color.valueOf("FEEBB3FF"));
                 Fill.circle(e.x + x, e.y + y, 2.5f * fout);
             });
             Draw.color(Color.valueOf("FEEBB3FF"));

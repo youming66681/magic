@@ -3647,10 +3647,10 @@ public class MLUnitTypes {
                             shots = 4;
                             shotDelay = 20f;
                             barrels = new float[]{
-                                    12f, 36f, 0f,
-                                    8f, 36f, 0f,
+                                    -12f, 36f, 0f,
                                     -8f, 36f, 0f,
-                                    -12f, 36f, 0f
+                                    8f, 36f, 0f,
+                                    12f, 36f, 0f
                             };
                         }};
                         bullet = new BasicBulletType() {{
@@ -3719,7 +3719,7 @@ public class MLUnitTypes {
                                 width = 0f;
                                 height = 0f;
                                 speed = 100f;
-                                lifetime = 1.44f;
+                                lifetime = 3f;
                                 splashDamageRadius = 32f;
                                 splashDamage = 500f;
                             }};
