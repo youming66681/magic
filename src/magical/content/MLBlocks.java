@@ -2397,7 +2397,7 @@ public class MLBlocks {
                         }};
                     }};
             );
-            reload = 12f;
+            reload = 10f;
             ammoUseEffect = Fx.casing4;
             range = 880f;
             inaccuracy = 0f;
