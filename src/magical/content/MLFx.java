@@ -290,7 +290,6 @@ public class MLFx {
             float time = e.time;
             float radius = 8f + 120f * finpow;
             float fade = Math.min(foutpow * 1.5f, 1f);
-            Draw.z(Layer.effect);
             Draw.color(Color.valueOf("FEEBB3FF"));
             Fill.circle(e.x, e.y, 24f * fade);
             Draw.color(Color.valueOf("FEEBB3FF"));
