@@ -3454,10 +3454,10 @@ public class MLUnitTypes {
                 rotateSpeed = 3f;
                 mirror = false;
                 alternate = true;
-                inaccuracy = 0f;
+                inaccuracy = 6f;
                 shootSound = MLSounds.explosionAfflict;
                 shake = 10f;
-                layerOffset = 0.002f;
+                layerOffset = 0.001f;
                 parts.addAll(
                         new RegionPart("-l") {{
                             mirror = false;
@@ -3493,7 +3493,7 @@ public class MLUnitTypes {
                 }};
                 bullet = new BasicBulletType() {{
                     damage = 600f;
-                    lifetime = 75f;
+                    lifetime = 90f;
                     speed = 16f;
                     width = 24f;
                     height = 48f;
@@ -3531,7 +3531,7 @@ public class MLUnitTypes {
                         rotateSpeed = 3f;
                         mirror = false;
                         alternate = true;
-                        inaccuracy = 0f;
+                        inaccuracy = 6f;
                         shootSound = MLSounds.explosionAfflict;
                         shake = 10f;
                         layerOffset = 0.002f;
@@ -3570,7 +3570,7 @@ public class MLUnitTypes {
                         }};
                         bullet = new BasicBulletType() {{
                             damage = 600f;
-                            lifetime = 75f;
+                            lifetime = 90f;
                             speed = 16f;
                             width = 24f;
                             height = 48f;
