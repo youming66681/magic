@@ -3453,7 +3453,7 @@ public class MLUnitTypes {
                 rotate = true;
                 rotateSpeed = 3f;
                 mirror = true;
-                alternate = true;
+                alternate = false;
                 inaccuracy = 6f;
                 shootSound = MLSounds.explosionAfflict;
                 shake = 10f;
@@ -3530,7 +3530,7 @@ public class MLUnitTypes {
                         rotate = true;
                         rotateSpeed = 3f;
                         mirror = true;
-                        alternate = true;
+                        alternate = false;
                         inaccuracy = 6f;
                         shootSound = MLSounds.explosionAfflict;
                         shake = 10f;
@@ -3597,6 +3597,131 @@ public class MLUnitTypes {
                                 sizeTo = 0f;
                                 colorFrom = Color.valueOf("FEEBB3FF");
                                 colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                        }};
+                    }},
+                    new Weapon("magic-StarrySky1") {{
+                        reload = 180f;
+                        x = 0f;
+                        y = -64f;
+                        rotate = true;
+                        rotateSpeed = 2f;
+                        mirror = false;
+                        alternate = false;
+                        inaccuracy = 4f;
+                        shootSound = MLSounds.laser;
+                        shake = 20f;
+                        layerOffset = 0.003f;
+                        parts.addAll(
+                                new RegionPart("-l") {{
+                                    mirror = false;
+                                    heatProgress = PartProgress.recoil;
+                                    recoilIndex = 0;
+                                    progress = PartProgress.recoil;
+                                    moveY = -4;
+                                }},
+                                new RegionPart("-ma") {{
+                                    mirror = false;
+                                    heatProgress = PartProgress.recoil;
+                                    recoilIndex = 1;
+                                    progress = PartProgress.recoil;
+                                    moveY = -4;
+                                }},
+                                new RegionPart("-mb") {{
+                                    mirror = false;
+                                    heatProgress = PartProgress.recoil;
+                                    recoilIndex = 2;
+                                    progress = PartProgress.recoil;
+                                    moveY = -4;
+                                }},
+                                new RegionPart("-r") {{
+                                    mirror = false;
+                                    heatProgress = PartProgress.recoil;
+                                    recoilIndex = 3;
+                                    progress = PartProgress.recoil;
+                                    moveY = -4;
+                                }}
+                        );
+                        recoils = 4;
+                        shoot = new ShootBarrel() {{
+                            shots = 4;
+                            shotDelay = 20f;
+                            barrels = new float[]{
+                                    12f, 36f, 0f,
+                                    8f, 36f, 0f,
+                                    -8f, 36f, 0f,
+                                    -12f, 36f, 0f
+                            };
+                        }};
+                        bullet = new BasicBulletType() {{
+                            damage = 1000f;
+                            lifetime = 72f;
+                            speed = 20f;
+                            width = 28f;
+                            height = 56f;
+                            hitSize = 24f;
+                            splashDamageRadius = 64f;
+                            splashDamage = 1500f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            trailLength = 12;
+                            trailWidth = 4f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            hitSound = MLSounds.explosionAfflict;
+                            hitEffect = despawnEffect = MLFx.EnergyExplosion2;
+                            smokeEffect = Fx.smokeCloud;
+                            trailChance = 1f;
+                            trailInterval = 20f;
+                            hittable = false;
+                            trailEffect = new ParticleEffect() {{
+                                particles = 12;
+                                length = 16f;
+                                baseLength = 0f;
+                                lifetime = 12;
+                                sizeFrom = 6f;
+                                sizeTo = 0f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                            fragBullets = 2;
+                            fragBullet = new PointBulletType(){{
+                                hitEffect = new ParticleEffect(){{
+                                    particles = 1;
+                                    sizeFrom = 16f;
+                                    sizeTo = 0f;
+                                    length = 0f;
+                                    baseLength = 0f;
+                                    lifetime = 30f;
+                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                    cone = 60f;
+                                }};
+                                despawnEffect = Fx.none;
+                                frontColor = Color.valueOf("FEEBB3FF");
+                                backColor = Color.valueOf("FEEBB3FF");
+                                trailSpacing = 9f;
+                                hitSound = MLSounds.plasmaboom;
+                                trailEffect = new ParticleEffect(){{
+                                    particles = 1;
+                                    length = 1f;
+                                    baseLength = 0f;
+                                    lifetime = 30f;
+                                    line = true;
+                                    randLength = false;
+                                    lenFrom = 8f;
+                                    lenTo = 8f;
+                                    strokeFrom = 6f;
+                                    strokeTo = 0f;
+                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                    cone = 0f;
+                                }};
+                                width = 0f;
+                                height = 0f;
+                                speed = 100f;
+                                lifetime = 1.44f;
+                                splashDamageRadius = 32f;
+                                splashDamage = 500f;
                             }};
                         }};
                     }});

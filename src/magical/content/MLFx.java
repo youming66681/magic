@@ -30,6 +30,7 @@ public class MLFx {
     public static Effect middleTeleport;
     public static Effect energyMine;
     public static Effect EnergyExplosion;
+    public static Effect EnergyExplosion2;
     public static Effect Explosion4;
 
     public static final Rand rand = new Rand();
@@ -341,6 +342,41 @@ public class MLFx {
                 float angle = Mathf.angle(x, y);
                 Drawf.tri(e.x + x, e.y + y, 5f * fout, 18f * fout, angle);
             });
+        });
+        EnergyExplosion2 = new Effect(45f, 90f, e -> {
+            float fin = e.finpow();
+            float fout = e.foutpow();
+            float radius = 8f + 56f * fin;
+            Draw.color(Color.valueOf("FEEBB3FF"));
+            Lines.stroke(5f * fout);
+            Lines.circle(e.x, e.y, radius);
+            Draw.color(Color.valueOf("97B5EDFF"));
+            Lines.stroke(2.5f * fout);
+            Lines.circle(e.x, e.y, radius * 0.75f);
+            Fill.circle(e.x, e.y, 10f * fout);
+            Draw.color(Color.white);
+            Fill.circle(e.x, e.y, 5f * fout);
+            Angles.randLenVectors(e.id, 24, radius, (x, y) -> {
+                float len = 12f + 32f * fin;
+                float width = (3f + 5f * fout);
+                Draw.color(Color.valueOf("FEEBB3FF"));
+                Fill.poly(e.x + x, e.y + y, 4, width, Angles.angle(x, y));
+            });
+            Angles.randLenVectors(e.id + 1, 16, 48f * fin, (x, y) -> {
+                Draw.color(Color.valueOf("97B5EDFF"));
+                Fill.circle(e.x + x, e.y + y, 2.5f * fout);
+            });
+            Draw.color(Color.valueOf("FEEBB3FF"));
+            Lines.stroke(3f * fout);
+            for(int i = 0; i < 8; i++){
+                float angle = i * 45f + e.rotation;
+                float len = 18f + 46f * fin;
+                float x1 = e.x + Angles.trnsx(angle, 8f);
+                float y1 = e.y + Angles.trnsy(angle, 8f);
+                float x2 = e.x + Angles.trnsx(angle, len);
+                float y2 = e.y + Angles.trnsy(angle, len);
+                Lines.line(x1, y1, x2, y2);
+            }
         });
     }
     public static Effect Slash(Color colorSlash, float len, float width){
