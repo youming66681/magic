@@ -3452,7 +3452,7 @@ public class MLUnitTypes {
                 y = 0f;
                 rotate = true;
                 rotateSpeed = 3f;
-                mirror = false;
+                mirror = true;
                 alternate = true;
                 inaccuracy = 6f;
                 shootSound = MLSounds.explosionAfflict;
@@ -3529,7 +3529,7 @@ public class MLUnitTypes {
                         y = -36f;
                         rotate = true;
                         rotateSpeed = 3f;
-                        mirror = false;
+                        mirror = true;
                         alternate = true;
                         inaccuracy = 6f;
                         shootSound = MLSounds.explosionAfflict;
