@@ -157,7 +157,8 @@ public class MLBlocks {
             //高端科技
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
             LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus, DawN, MysticSteelWall, LargeMysticSteelWall, PhantomGlowWall, LargePhantomGlowWall,
-            FluorescentFeatherDrill, XuansteelConveyor, GlowFeatherBridge, GlowingFeatherConveyor, LumifeatherReactor, PretendingCore, GeneralAssemblyUpgrade,AdvancedGeneralAssemblyUpgradeFactory;
+            FluorescentFeatherDrill, XuansteelConveyor, GlowFeatherBridge, GlowingFeatherConveyor, LumifeatherReactor, PretendingCore, GeneralAssemblyUpgrade,AdvancedGeneralAssemblyUpgradeFactory,
+            RetroProjector;
 
     public static void load() {
 
@@ -200,6 +201,19 @@ public class MLBlocks {
 
             unitCapModifier = 36;
 
+        }};
+        //回溯投影仪
+        RetroProjector = new MendProjector("RetroProjector"){{
+            requirements(Category.effect, ItemStack.with(new Object[]{MLItems.wingedStone, 80, Items.silicon, 150, MLItems.phantomTitaniumSteel, 150, MLItems.acrylic, 130, MLItems.arrayChip, 30}));
+            consumePower(10f);
+            size = 3;
+            reload = 120f;
+            range = 240f;
+            healPercent = 25f;
+            phaseBoost = 25f;
+            phaseRangeBoost = 180f;
+            health = 900;
+            consumeItem(MLItems.fluorescentFeatherStone).boost();
         }};
         //强强
         //厂子

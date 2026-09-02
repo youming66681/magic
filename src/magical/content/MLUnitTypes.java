@@ -2554,6 +2554,12 @@ public class MLUnitTypes {
             rotateSpeed = 3f;
             speed = 3.5f;
             drag = 0.02f;
+            targetFlags = new BlockFlag[]{
+                    BlockFlag.factory,
+                    BlockFlag.generator,
+                    BlockFlag.reactor,
+                    BlockFlag.battery
+            };
             accel = 0.08f;
             hitSize = 48;
             health = 12000;
@@ -2660,6 +2666,12 @@ public class MLUnitTypes {
             speed = 2.4f;
             accel = 0.07f;
             drag = 0.03f;
+            targetFlags = new BlockFlag[]{
+                    BlockFlag.factory,
+                    BlockFlag.generator,
+                    BlockFlag.reactor,
+                    BlockFlag.battery
+            };
             weapons.add(
                     new Weapon("magic-BrokenEdge0") {{
                         x = 20f;
@@ -2828,6 +2840,12 @@ public class MLUnitTypes {
             armor = 10f;
             accel = 0.07f;
             drag = 0.03f;
+            targetFlags = new BlockFlag[]{
+                    BlockFlag.factory,
+                    BlockFlag.generator,
+                    BlockFlag.reactor,
+                    BlockFlag.battery
+            };
             trailLength = 5;
             weapons.add(
                     new Weapon("magic-FlyingSwallow0") {{
@@ -2893,6 +2911,12 @@ public class MLUnitTypes {
                 speed = 1f;
                 accel = 0.07f;
                 drag = 0.03f;
+                targetFlags = new BlockFlag[]{
+                        BlockFlag.factory,
+                        BlockFlag.generator,
+                        BlockFlag.reactor,
+                        BlockFlag.battery
+                };
                 abilities.add(
                         new ForceFieldAbility(
                                 240f,     // radius
@@ -2976,6 +3000,12 @@ public class MLUnitTypes {
             speed = 1.8f;
             accel = 0.06f;
             drag = 0.04f;
+            targetFlags = new BlockFlag[]{
+                    BlockFlag.factory,
+                    BlockFlag.generator,
+                    BlockFlag.reactor,
+                    BlockFlag.battery
+            };
             weapons.add(
                     new Weapon("magic-Aoba0"){{
                         reload = 300f;
@@ -3109,6 +3139,12 @@ public class MLUnitTypes {
                 speed = 1.5f;
                 accel = 0.06f;
                 drag = 0.04f;
+                targetFlags = new BlockFlag[]{
+                    BlockFlag.factory,
+                    BlockFlag.generator,
+                    BlockFlag.reactor,
+                    BlockFlag.battery
+                };
                 abilities.add(new EnergyFieldAbility(
                         80f,   // damage
                         60f,   // reload
@@ -3429,6 +3465,12 @@ public class MLUnitTypes {
                 speed = 1.2f;
                 accel = 0.06f;
                 drag = 0.04f;
+                targetFlags = new BlockFlag[]{
+                    BlockFlag.factory,
+                    BlockFlag.generator,
+                    BlockFlag.reactor,
+                    BlockFlag.battery
+                };
                 abilities.add(new EnergyFieldAbility(
                         120f,   // damage
                         90f,   // reload
