@@ -2368,7 +2368,7 @@ public class MLBlocks {
                             cone = 50f;
                         }};
                     }},
-                    MLItems.phantomLuminousAlloy, new BasicBulletType(16f, 1500f){{
+                    MLItems.phantomLuminousAlloy, new BasicBulletType(16f, 1200f){{
                         lifetime = 55f;
                         width = 24f;
                         height = 48f;
