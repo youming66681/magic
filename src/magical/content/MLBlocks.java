@@ -225,7 +225,7 @@ public class MLBlocks {
             phaseUseTime = 900;
             shieldHealth = 12000;
             radius = 480f;
-            health = 1200
+            health = 1200;
             cooldownNormal = 3f;
             cooldownLiquid = 3f;
             liquidCapacity =150;
