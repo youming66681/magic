@@ -218,7 +218,7 @@ public class MLBlocks {
             consumeItem(MLItems.fluorescentFeatherStone).boost();
         }};
         //幻象投影仪
-        HologramProjector = new ("HologramProjector"){{
+        HologramProjector = new ForceProjector("HologramProjector"){{
             requirements(Category.effect, ItemStack.with(new Object[]{MLItems.wingedStone, 60, Items.silicon, 300, MLItems.mysticCrystal, 90, MLItems.acrylic, 75, MLItems.mysticSteel, 90, MLItems.phantomTitaniumSteel, 80, MLItems.arrayChip, 30}));
             size = 3;
             phaseRadiusBoost = 80f;
