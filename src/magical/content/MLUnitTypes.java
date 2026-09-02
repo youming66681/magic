@@ -66,7 +66,7 @@ public class MLUnitTypes {
     //大型
     BrokenEdge, FlyingSwallow, Tianshu,
     //旗舰
-    Aoba,MoonRise;
+    Aoba, MoonRise, StarrySky;
 
     public static void load() {
         //幻境陆军
@@ -3413,37 +3413,38 @@ public class MLUnitTypes {
                         }};
                     }});
             }};
-        /*MoonRise = new UnitType("MoonRise"){{
+        //T3
+        StarrySky = new UnitType("StarrySky"){{
                 constructor = UnitTypes.flare.constructor;
                 flying = true;
                 faceTarget = true;
                 lowAltitude = true;
                 rotateMoveFirst = true;
                 omniMovement = true;
-                rotateSpeed = 2.5f;
-                health = 180000f;
-                armor = 90f;
-                hitSize = 112f;
-                range = 1200f;
-                speed = 1.5f;
+                rotateSpeed = 2f;
+                health = 540000f;
+                armor = 120f;
+                hitSize = 128f;
+                range = 1440f;
+                speed = 1.2f;
                 accel = 0.06f;
                 drag = 0.04f;
                 abilities.add(new EnergyFieldAbility(
-                        80f,   // damage
-                        60f,   // reload
-                        600f   // range
+                        120f,   // damage
+                        90f,   // reload
+                        720f   // range
                 ) {{
-                    healPercent = 2f;
+                    healPercent = 3f;
                     x = 0f;
                     y = 32f;
-                    maxTargets = 40;
-                    effectRadius = 10f;
+                    maxTargets = 60;
+                    effectRadius = 12f;
                     damageEffect = Fx.chainLightning;
                     shootSound = MLSounds.spark;
                     status = StatusEffects.shocked;
                 }});
-                abilities.add(new DebuffImmunityAbility(0.20f));
-                abilities.add(new DamageLimitAbility(300f, 0.90f));
-            }}*/
+                abilities.add(new DebuffImmunityAbility(0.40f));
+                abilities.add(new DamageLimitAbility(600f, 0.75f));
+            }}
     }
 }
