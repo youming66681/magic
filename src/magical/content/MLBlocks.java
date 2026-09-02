@@ -162,7 +162,7 @@ public class MLBlocks {
             FluorescentFeatherDrill, XuansteelConveyor, GlowFeatherBridge, GlowingFeatherConveyor, LumifeatherReactor, PretendingCore, GeneralAssemblyUpgrade,
             RetroProjector, HologramProjector,
             //终极科技
-            EndCore, GlobalOverdriveProjector, AdvancedGeneralAssemblyUpgradeFactory, CoalMeltingMachine, NanofiberLoom;
+            EndCore, GlobalOverdriveProjector, AdvancedGeneralAssemblyUpgradeFactory, CoalMeltingMachine, NanofiberLoom, NanoCarbonAlloyCombiner;
 
     public static void load() {
 
@@ -579,7 +579,7 @@ public class MLBlocks {
             hasItems = true;
             itemCapacity = 40;
             craftTime = 120f;
-            outputItem = new ItemStack(MLItems.crystallineCarbon, 1);
+            outputItem = new ItemStack(MLItems.nanoEnergyThread, 1);
             size = 4;
             health = 800;
             hasPower = true;
@@ -587,6 +587,24 @@ public class MLBlocks {
             drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawFlame());
 
             consumePower(10f);
+            consumeItems(ItemStack.with(Items.phaseFabric, 2, MLItems.fluorescentFeatherStone, 2));
+        }};
+        //纳米碳合金组合器
+        NanoCarbonAlloyCombiner = new GenericCrafter("NanoCarbonAlloyCombiner") {{
+            requirements(Category.crafting, ItemStack.with(new Object[]{Items.silicon, 80, MLItems.nanoEnergyThread, 40, MLItems.crystallineCarbon, 40, MLItems.mysticSteel, 40, MLItems.wingedMetal, 20, MLItems.matrixChip, 40}));
+
+            hasItems = true;
+            itemCapacity = 40;
+            craftTime = 240f;
+            outputItem = new ItemStack(MLItems.phantomLuminousAlloy, 1);
+            size = 4;
+            health = 1200;
+            armor = 4;
+            hasPower = true;
+            craftEffect = Fx.hitEmpSpark;
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawDefault(), new DrawFlame());
+
+            consumePower(20f);
             consumeItems(ItemStack.with(Items.phaseFabric, 2, MLItems.fluorescentFeatherStone, 2));
         }};
         //factor
