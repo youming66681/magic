@@ -3748,7 +3748,7 @@ public class MLUnitTypes {
                             splashDamage = 120f;
                             homingRange = 1440f;
                             homingPower = 0.9f;
-                            homingDelay = 9f;
+                            homingDelay = 12f;
                             sprite = "magic-导弹";
                             trailLength = 6;
                             trailWidth = 3f;
