@@ -290,6 +290,13 @@ public class MLTechTree {
                         });
                     });
                     /*终焉核心*/node(MLBlocks.EndCore, () -> {
+                        nodeProduce(MLItems.crystallineCarbon, () -> {
+                            nodeProduce(MLItems.nanoEnergyThread, () -> {
+                                nodeProduce(MLItems.nanoCarbonAlloy, () -> {
+
+                                });
+                            });
+                                });
                         /*煤幻溶机*/node(MLBlocks.CoalMeltingMachine, () -> {
                             /*纳米丝织机*/node(MLBlocks.NanofiberLoom, () -> {
                                 /*纳米碳合金组合器*/node(MLBlocks.NanoCarbonAlloyCombiner, () -> {
