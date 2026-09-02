@@ -160,7 +160,7 @@ public class MLBlocks {
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
             LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus, DawN, MysticSteelWall, LargeMysticSteelWall, PhantomGlowWall, LargePhantomGlowWall,
             FluorescentFeatherDrill, XuansteelConveyor, GlowFeatherBridge, GlowingFeatherConveyor, LumifeatherReactor, PretendingCore, GeneralAssemblyUpgrade,AdvancedGeneralAssemblyUpgradeFactory,
-            RetroProjector, HologramProjector;
+            RetroProjector, HologramProjector, GlobalOverdriveProjector;
 
     public static void load() {
 
@@ -218,7 +218,7 @@ public class MLBlocks {
             consumeItem(MLItems.fluorescentFeatherStone).boost();
         }};
         //幻象投影仪
-        HologramProjector = new ForceProjector("HologramProjector"){{
+        HologramProjector = new ww("HologramProjector"){{
             requirements(Category.effect, ItemStack.with(new Object[]{MLItems.wingedStone, 60, Items.silicon, 300, MLItems.mysticCrystal, 90, MLItems.acrylic, 75, MLItems.mysticSteel, 90, MLItems.phantomTitaniumSteel, 80, MLItems.arrayChip, 30}));
             size = 3;
             phaseRadiusBoost = 80f;
@@ -243,7 +243,17 @@ public class MLBlocks {
             itemConsumer = consumeItem(MLItems.fluorescentFeatherStone).boost();
             consumePower(15f);
         }};
-
+        //全域超速仪
+        GlobalOverdriveProjector = new GlobalOverdriveProjector("GlobalOverdriveProjector"){{
+            requirements(Category.effect, ItemStack.with(new Object[]{MLItems.mysticSteel, 200, MLItems.silicon, 200, MLItems.wingedMetal, 200, MLItems.fluorescentFeatherStone, 200, MLItems.phantomLuminousAlloy, 200, MLItems.matrixChip, 40}));
+            consumePower(20f);
+            size = 4;
+            health = 4000;
+            canOverdrive = false;
+            speedBoost = 2;
+            speedBoostPhase 2;
+            consumeItem(MLItems.fluorescentFeatherStone).boost();
+        }};
         //强强
         //厂子
         //幻钢压缩机
