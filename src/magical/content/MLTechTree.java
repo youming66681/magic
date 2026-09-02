@@ -274,14 +274,15 @@ public class MLTechTree {
                             });
                                 /*天枢*/node(MLUnitTypes.Tianshu, () -> {
                                     });
-                            /*高级通用装配升级厂*/node(MLBlocks.AdvancedGeneralAssemblyUpgradeFactory, () -> {
-                                /*青叶*/node(MLUnitTypes.Aoba, () -> {
-                                    /*月涌*/node(MLUnitTypes.MoonRise, () -> {
-                                        /*星空*/node(MLUnitTypes.StarrySky, () -> {
+                            /*青叶*/node(MLUnitTypes.Aoba, () -> {
+                                /*月涌*/node(MLUnitTypes.MoonRise, () -> {
+                                    /*星空*/node(MLUnitTypes.StarrySky, () -> {
 
-                                        });
                                     });
                                 });
+                            });
+                            /*高级通用装配升级厂*/node(MLBlocks.AdvancedGeneralAssemblyUpgradeFactory, () -> {
+
                             });
                         });
                     });
