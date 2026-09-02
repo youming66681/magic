@@ -2395,7 +2395,7 @@ public class MLBlocks {
                             colorTo = Color.valueOf("6569C9FF");
                             cone = 50f;
                         }};
-                    }},
+                    }};
             );
             reload = 12f;
             ammoUseEffect = Fx.casing4;
