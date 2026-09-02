@@ -3683,7 +3683,7 @@ public class MLUnitTypes {
                                 colorFrom = Color.valueOf("FEEBB3FF");
                                 colorTo = Color.valueOf("FEEBB3FF");
                             }};
-                            fragBullets = 2;
+                            fragBullets = 3;
                             fragBullet = new PointBulletType(){{
                                 hitEffect = new ParticleEffect(){{
                                     particles = 1;
