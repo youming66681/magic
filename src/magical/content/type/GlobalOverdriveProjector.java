@@ -51,7 +51,11 @@ public class GlobalOverdriveProjector extends OverdriveProjector{
         }
         @Override
         public void drawSelect(){
-            Drawf.dashCircle(x, y, 128f, baseColor);
+            Groups.build.each(other -> {
+                if(other != null && other.isAdded() && other.team == team && other.block.canOverdrive){
+                    Drawf.selected(other, Tmp.c1.set(baseColor).a(Mathf.absin(4f,1f)));
+                }
+            });
         }
     }
 }
