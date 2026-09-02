@@ -159,8 +159,10 @@ public class MLBlocks {
             //高端科技
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
             LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus, DawN, MysticSteelWall, LargeMysticSteelWall, PhantomGlowWall, LargePhantomGlowWall,
-            FluorescentFeatherDrill, XuansteelConveyor, GlowFeatherBridge, GlowingFeatherConveyor, LumifeatherReactor, PretendingCore, GeneralAssemblyUpgrade,AdvancedGeneralAssemblyUpgradeFactory,
-            RetroProjector, HologramProjector, GlobalOverdriveProjector;
+            FluorescentFeatherDrill, XuansteelConveyor, GlowFeatherBridge, GlowingFeatherConveyor, LumifeatherReactor, PretendingCore, GeneralAssemblyUpgrade,
+            RetroProjector, HologramProjector,
+            //终极科技
+            EndCore, GlobalOverdriveProjector, AdvancedGeneralAssemblyUpgradeFactory;
 
     public static void load() {
 
