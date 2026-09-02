@@ -251,7 +251,7 @@ public class MLBlocks {
             health = 4000;
             canOverdrive = false;
             speedBoost = 2;
-            speedBoostPhase 2;
+            speedBoostPhase = 2;
             consumeItem(MLItems.fluorescentFeatherStone).boost();
         }};
         //强强
