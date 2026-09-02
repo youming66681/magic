@@ -142,6 +142,7 @@ import mindustry.world.draw.DrawLiquidRegion;
 import mindustry.world.blocks.liquid.LiquidBridge;
 import mindustry.world.blocks.units.UnitAssemblerModule;
 import mindustry.world.blocks.defense.MendProjector;
+import mindustry.world.blocks.defense.ForceProjector;
 
 public class MLBlocks {
 
@@ -159,7 +160,7 @@ public class MLBlocks {
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
             LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus, DawN, MysticSteelWall, LargeMysticSteelWall, PhantomGlowWall, LargePhantomGlowWall,
             FluorescentFeatherDrill, XuansteelConveyor, GlowFeatherBridge, GlowingFeatherConveyor, LumifeatherReactor, PretendingCore, GeneralAssemblyUpgrade,AdvancedGeneralAssemblyUpgradeFactory,
-            RetroProjector;
+            RetroProjector, HologramProjector;
 
     public static void load() {
 
@@ -216,6 +217,33 @@ public class MLBlocks {
             health = 900;
             consumeItem(MLItems.fluorescentFeatherStone).boost();
         }};
+        //幻象投影仪
+        HologramProjector = new ForceProjector("HologramProjector"){{
+            requirements(Category.effect, ItemStack.with(new Object[]{MLItems.wingedStone, 60, Items.silicon, 300, MLItems.mysticCrystal, 90, MLItems.acrylic, 75, MLItems.mysticSteel, 90, MLItems.phantomTitaniumSteel, 80, MLItems.arrayChip, 30}));
+            size = 3;
+            phaseRadiusBoost = 80f;
+            phaseUseTime = 900;
+            shieldHealth = 12000;
+            radius = 480f;
+            health = 1200
+            cooldownNormal = 3f;
+            cooldownLiquid = 3f;
+            liquidCapacity =150;
+            cooldownBrokenBase = 0.6f;
+            absorbEffect = new WaveEffect(){{
+                lifetime = 15f;
+                sizeFrom = 12f;
+                sizeTo = 0f;
+                strokeFrom = 1f;
+                strokeTo = 0f;
+                colorFrom = Color.valueOf("FEEBB3FF");
+                colorTo = Color.valueOf("FEEBB3FF");
+            }};
+
+            itemConsumer = consumeItem(MLItems.fluorescentFeatherStone).boost();
+            consumePower(15f);
+        }};
+
         //强强
         //厂子
         //幻钢压缩机
