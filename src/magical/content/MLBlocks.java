@@ -204,6 +204,19 @@ public class MLBlocks {
             unitCapModifier = 36;
 
         }};
+        //终焉核心
+        EndCore = new CoreBlock("EndCore") {{
+            requirements(Category.effect, ItemStack.with(new Object[]{MLItems.fluorescentFeatherStone, 4000, MLItems.mysticSteel, 4000, MLItems.phantomLuminousAlloy, 4000, Items.silicon, 8000, MLItems.wingedMetal, 4000, MLItems.matrixChip, 2000}));
+
+            unitType = MLUnitTypes.Nightingale;
+            health = 40000;
+            itemCapacity = 80000;
+            armor = 20;
+            size = 8;
+
+            unitCapModifier = 60;
+
+        }};
         //回溯投影仪
         RetroProjector = new MendProjector("RetroProjector"){{
             requirements(Category.effect, ItemStack.with(new Object[]{MLItems.wingedStone, 80, Items.silicon, 150, MLItems.phantomTitaniumSteel, 150, MLItems.acrylic, 130, MLItems.arrayChip, 30}));

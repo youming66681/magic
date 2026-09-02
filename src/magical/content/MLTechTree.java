@@ -281,15 +281,22 @@ public class MLTechTree {
                                     });
                                 });
                             });
-                            /*高级通用装配升级厂*/node(MLBlocks.AdvancedGeneralAssemblyUpgradeFactory, () -> {
 
-                            });
                         });
                     });
                     /*回溯投影仪*/node(MLBlocks.RetroProjector, () -> {
                         /*幻象投影仪*/node(MLBlocks.HologramProjector, () -> {
 
                         });
+                    });
+                    /*终焉核心*/node(MLBlocks.EndCore, () -> {
+                        /*全域超速仪*/node(MLBlocks.GlobalOverdriveProjector, () -> {
+
+                                });
+                        /*高级通用装配升级厂*/node(MLBlocks.AdvancedGeneralAssemblyUpgradeFactory, () -> {
+
+                        });
+
                     });
                 });
             });
