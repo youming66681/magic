@@ -561,12 +561,12 @@ public class MLBlocks {
             itemCapacity = 40;
             liquidCapacity = 160;
             craftTime = 120f;
-            outputItem = new ItemStack(Items.crystallineCarbon, 1);
+            outputItem = new ItemStack(MLItems.crystallineCarbon, 1);
             size = 4;
             health = 800;
             hasPower = true;
             craftEffect = Fx.smeltsmoke;
-            drawer = new DrawMulti(new DrawLiquidTile(Liquids.PhantomSteelSolution), new DrawRegion("-bottom"), new DrawDefault(), new DrawFlame());
+            drawer = new DrawMulti(new DrawLiquidTile(MLLiquids.PhantomSteelSolution), new DrawRegion("-bottom"), new DrawDefault(), new DrawFlame());
 
             consumePower(10f);
             consumeItems(ItemStack.with(Items.surgeAlloy, 2, Items.coal, 2));
