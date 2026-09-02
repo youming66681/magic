@@ -2335,7 +2335,7 @@ public class MLBlocks {
         }};
         //争锋
         Compete = new ItemTurret("Compete"){{
-            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomLuminousAlloy, 180, MLItems.mysticSteel, 270, MLItems.wingedMetal, 210, Items.surgeAlloy, 170, MLItems.phantomTitaniumSteel, 310, MLItems.matrixChip, 60,}));
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomLuminousAlloy, 180, MLItems.mysticSteel, 270, MLItems.wingedMetal, 210, Items.surgeAlloy, 170, MLItems.phantomTitaniumSteel, 310, MLItems.crystallineCarbon, 120, MLItems.matrixChip, 60,}));
             ammo(
                     Items.surgeAlloy, new BasicBulletType(16f, 600f){{
                         lifetime = 55f;
