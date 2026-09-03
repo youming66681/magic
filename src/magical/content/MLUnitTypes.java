@@ -1189,7 +1189,7 @@ public class MLUnitTypes {
                         x = 11;
                         y = 15;
                         shootY = 0f;
-                        mirror = false;
+                        mirror = true;
                         rotate = true;
                         rotateSpeed = 6f;
                         inaccuracy = 0f;
@@ -1234,7 +1234,7 @@ public class MLUnitTypes {
                 x = 25;
                 y = 2;
                 shootY = 0f;
-                mirror = false;
+                mirror = true;
                 rotate = true;
                 rotateSpeed = 6f;
                 inaccuracy = 0f;
