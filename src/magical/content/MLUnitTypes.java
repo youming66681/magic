@@ -325,12 +325,12 @@ public class MLUnitTypes {
                             progress = PartProgress.recoil;
                             moveY = -8;
                         }});
-                bullet = new BasicBulletType(16, 400) {{
+                bullet = new BasicBulletType(16, 800) {{
                     lifetime = 30;
                     width = 24;
                     height = 48;
                     splashDamageRadius = 80;
-                    splashDamage = 600;
+                    splashDamage = 1200;
                     trailLength = 8;
                     trailWidth = 4f;
                     trailColor = Color.valueOf("97B5EDFF");
