@@ -2735,7 +2735,7 @@ public class MLBlocks {
             maxAmmo = 150;
             cooldownTime = 180;
             coolantMultiplier = 0.96f;
-            ammoPerShot = 75,
+            ammoPerShot = 75;
                     shoot = new ShootBarrel(){{
                         shots = 150;
                         shotDelay = 1.5f;
