@@ -163,7 +163,7 @@ public class MLBlocks {
             RetroProjector, HologramProjector,
             //终极科技
             EndCore, GlobalOverdriveProjector, AdvancedGeneralAssemblyUpgradeFactory, CoalMeltingMachine, NanofiberLoom, NanoCarbonAlloyCombiner, Compete, FallingStar,
-            BrilliantWorld;
+            BrilliantWorld, NanoCarbonAlloyWall;
 
     public static void load() {
 
@@ -3190,6 +3190,16 @@ public class MLBlocks {
             size = 2;
             chanceDeflect = 20;
         }};
+        NanoCarbonAlloyWall = new Wall("NanoCarbonAlloyWall"){{
+            requirements(Category.defense, ItemStack.with(new Object[]{MLItems.nanoCarbonAlloy, 6 * 9}));
+            health = 600 * whm * 9;
+            size = 3;
+            chanceDeflect = 30;
+            absorbLasers = true;
+            insulated = true;
+            lightningChance = 0.6f;
+            lightningDamage = 60;
+            lightningLength = 30;
         //wall
         //出来了，出来了
         //幻钢钻头
