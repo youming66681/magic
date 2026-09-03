@@ -1937,14 +1937,14 @@ public class MLUnitTypes {
                                 lifetime = 30;
                                 frontColor = Color.valueOf("C8BA8FFF");
                                 backColor = Color.valueOf("958F60FF");
-                                splashDamageRadius = 48;
+                                splashDamageRadius = 64;
                                 splashDamage = 1000;
                                 incendAmount = 6;
                                 incendSpread = 12;
                                 incendChance = 0.6f;
                                 spin = 3f;
                                 makeFire = true;
-                                hitEffect = despawnEffect = MLFx.Explosion4;
+                                hitEffect = despawnEffect = MLFx.Explosion5;
                                 hitSound = MLSounds.explosion;
                                 fragBullets = 12;
                                 fragBullet = new BasicBulletType(4, 300, "magic-十字星") {{
@@ -1956,14 +1956,14 @@ public class MLUnitTypes {
                                     lifetime = 40;
                                     frontColor = Color.valueOf("C8BA8FFF");
                                     backColor = Color.valueOf("958F60FF");
-                                    splashDamageRadius = 48;
+                                    splashDamageRadius = 64;
                                     splashDamage = 500;
                                     incendAmount = 6;
                                     incendSpread = 6;
                                     incendChance = 0.3f;
                                     spin = 3f;
                                     makeFire = true;
-                                    hitEffect = despawnEffect = MLFx.Explosion4;
+                                    hitEffect = despawnEffect = MLFx.Explosion5;
                                     hitSound = MLSounds.explosion;
                                 }};
                             }};
@@ -2110,7 +2110,7 @@ public class MLUnitTypes {
                                 height = 96f;
                                 speed = 0f;
                                 hitSoundVolume = 100f;
-                                hitSound = Sounds.explosionbig;
+                                hitSound = MLSounds.explosionbig;
                             }};
                         }});
             }};

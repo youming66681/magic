@@ -34,6 +34,7 @@ public class MLFx {
     public static Effect EnergyExplosion;
     public static Effect EnergyExplosion2;
     public static Effect Explosion4;
+    public static Effect Explosion5;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -79,7 +80,6 @@ public class MLFx {
                         e.y + y + ny * Mathf.random(8f, 24f)
                 );
             });
-            Draw.reset();
         });
         squareWaveRot = new Effect(14, 40f, e -> {
             rand.setSeed(e.id);
@@ -168,7 +168,6 @@ public class MLFx {
                 );
             });
 
-            Draw.reset();
         });
         smallEnergyBlast = new Effect(30f, e -> {
             float fin = e.finpow();
@@ -453,6 +452,53 @@ public class MLFx {
                 float angle = Angles.angle(x, y);
                 float len = 8f * fout;
                 Lines.lineAngle(e.x + x, e.y + y, angle, len);
+            });
+        });
+        Explosion5 = new Effect(75f, 72f, e -> {
+            float fin = e.finpow();
+            float fout = e.foutpow();
+            Color color = Color.valueOf("FF9B42FF");
+            Draw.color(color);
+            Lines.stroke(4f * fout);
+            Lines.circle(e.x, e.y, 64f * fin);
+            Lines.stroke(3f * fout);
+            Lines.circle(e.x, e.y, 52f * fin);
+            Lines.stroke(2f * fout);
+            Lines.circle(e.x, e.y, 40f * fin);
+            Lines.stroke(1f * fout);
+            Lines.circle(e.x, e.y, 28f * fin);
+            Draw.alpha(fout);
+            Fill.circle(e.x, e.y, 8f * fout);
+            Draw.alpha(fout * 0.5f);
+            Fill.circle(e.x, e.y, 16f * fout);
+            Draw.alpha(1f);
+            Angles.randLenVectors(e.id, 48, 64f * fin, (x, y) -> {
+                float len = Mathf.len(x, y);
+                if(len < 1f)return;
+                float nx = x / len;
+                float ny = y / len;
+                Draw.color(color);
+                Lines.stroke(Mathf.random(1f, 2.5f) * fout);
+                Lines.line(
+                        e.x + x,
+                        e.y + y,
+                        e.x + x + nx * Mathf.random(4f, 12f),
+                        e.y + y + ny * Mathf.random(4f, 12f)
+                );
+            });
+            Angles.randLenVectors(e.id + 1, 24, 48f * fin, (x, y) -> {
+                float len = Mathf.len(x, y);
+                if(len < 1f)return;
+                float nx = x / len;
+                float ny = y / len;
+                Draw.color(color);
+                Lines.stroke(Mathf.random(1f, 2f) * fout);
+                Lines.line(
+                        e.x + x,
+                        e.y + y,
+                        e.x + x + nx * Mathf.random(6f, 16f),
+                        e.y + y + ny * Mathf.random(6f, 16f)
+                );
             });
         });
         EnergyExplosion = new Effect(45f, e -> {
