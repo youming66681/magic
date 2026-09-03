@@ -3200,6 +3200,7 @@ public class MLBlocks {
             lightningChance = 0.6f;
             lightningDamage = 60;
             lightningLength = 30;
+        }};
         //wall
         //出来了，出来了
         //幻钢钻头
