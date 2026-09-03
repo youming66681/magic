@@ -2575,7 +2575,7 @@ public class MLBlocks {
                         fragBullet = new PointBulletType(){{
                             damage = 1f;
                             lifetime = 80f;
-                            speed = 16f;
+                            speed = 8f;
                             trailEffect = Fx.none;
                             hitEffect = Fx.none;
                             fragBullets = 1;
@@ -2588,7 +2588,7 @@ public class MLBlocks {
                                 damage = 100f;
                                 speed = 8f;
                                 spin = 5f;
-                                lifetime = 80f;
+                                lifetime = 20f;
                                 width = 80f;
                                 height = 80f;
                                 drag = -0.016f;
