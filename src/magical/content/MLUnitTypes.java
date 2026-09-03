@@ -50,7 +50,7 @@ public class MLUnitTypes {
     war, BeaconFire, War, CrusadeAgainst, ImperialArmy,
     //空
     //一级
-    Breeze, SlantingWind, Gale, Storm, Hurricane,
+    Breeze, SlantingWind, Gale, Storm, Hurricane, GAle,
     //二级
     BlazingFire, glow, blazing, Ember, BlazingSplendor,
     //海
@@ -327,8 +327,8 @@ public class MLUnitTypes {
                         }});
                 bullet = new BasicBulletType(16, 800) {{
                     lifetime = 30;
-                    width = 24;
-                    height = 48;
+                    width = 32;
+                    height = 56;
                     splashDamageRadius = 80;
                     splashDamage = 1200;
                     trailLength = 8;
@@ -1024,7 +1024,7 @@ public class MLUnitTypes {
                         x = 16f;
                         y = 8f;
                         mirror = true;
-                        reload = 5f;
+                        reload = 2.5f;
                         shootSound = MLSounds.JG;
                         inaccuracy = 2.5f;
                         recoil = 5f;
@@ -1116,6 +1116,163 @@ public class MLUnitTypes {
                             }};
                         }};
                     }});
+        }};
+        //t6
+        GAle = new UnitType("GAle") {{
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            lowAltitude = true;
+            faceTarget = false;
+            rotateSpeed = 3f;
+            speed = 1.5f;
+            drag = 0.04f;
+            accel = 0.1f;
+            hitSize = 88;
+            health = 78000;
+            armor = 64;
+            itemCapacity = 0;
+            engineOffset = 48;
+            engineSize = 16f;
+            range = 360;
+            weapons.add(
+                    new Weapon("magic-GAle0") {{
+                        x = 20f;
+                        y = -28f;
+                        mirror = true;
+                        reload = 3f;
+                        shootSound = MLSounds.JG;
+                        inaccuracy = 3f;
+                        recoil = 6f;
+                        rotate = true;
+                        rotateSpeed = 3f;
+                        shoot = new ShootAlternate() {{
+                            barrels = 2;
+                            spread = 2f;
+                        }};
+                        bullet = new BasicBulletType() {{
+                            damage = 30f;
+                            pierceCap = 3;
+                            pierceBuilding = true;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            width = 8f;
+                            height = 16f;
+                            trailLength = 2;
+                            trailWidth = 2f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            pierce = true;
+                            speed = 16f;
+                            lifetime = 22.5f;
+                            hitEffect = new WaveEffect() {{
+                                lifetime = 8f;
+                                sizeFrom = 0f;
+                                sizeTo = 12f;
+                                strokeFrom = 1f;
+                                strokeTo = 0f;
+                                colorFrom = Color.valueOf("FFFFFF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                            despawnEffect = new WaveEffect() {{
+                                lifetime = 8f;
+                                sizeFrom = 0f;
+                                sizeTo = 12f;
+                                strokeFrom = 1f;
+                                strokeTo = 0f;
+                                colorFrom = Color.valueOf("FFFFFF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                        }};
+                    }},
+                    new Weapon("magic-GAle1") {{
+                        reload = 60f;
+                        recoil = 3f;
+                        x = 11;
+                        y = 15;
+                        shootY = 0f;
+                        mirror = false;
+                        rotate = true;
+                        rotateSpeed = 6f;
+                        inaccuracy = 0f;
+                        ejectEffect = Fx.casing2;
+                        layerOffset = 0.001f;
+                        shootSound = MLSounds.shootFuse;
+                        bullet = new BasicBulletType(12, 60) {{
+                            lifetime = 30;
+                            width = 12;
+                            height = 24;
+                            trailLength = 6;
+                            trailWidth = 3f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            hitEffect = despawnEffect = Fx.none;
+                            hitSound = MLSounds.laser;
+                            fragBullets = 1;
+                            fragSpread = 0;
+                            fragVelocityMin = 0;
+                            fragRandomSpread = 0;
+                            fragBullet = new LaserBulletType(120f) {{
+                                hitSound = MLSounds.laser;
+                                lifetime = 30f;
+                                width = 24f;
+                                length = 96f;
+                                Color.valueOf("FEEBB3FF");
+                                collidesTeam = true;
+                                hitEffect = Fx.none;
+                                despawnEffect = Fx.none;
+                                colors = new Color[]{
+                                        Color.valueOf("FEEBB3FF"),
+                                        Color.valueOf("FEEBB3FF"),
+                                        Color.valueOf("FEEBB3FF")
+                                };
+                            }};
+                        }};
+                    }},
+            new Weapon("magic-GAle1") {{
+                reload = 60f;
+                recoil = 3f;
+                x = 25;
+                y = 2;
+                shootY = 0f;
+                mirror = false;
+                rotate = true;
+                rotateSpeed = 6f;
+                inaccuracy = 0f;
+                ejectEffect = Fx.casing2;
+                layerOffset = 0.001f;
+                shootSound = MLSounds.shootFuse;
+                bullet = new BasicBulletType(12, 60) {{
+                    lifetime = 30;
+                    width = 12;
+                    height = 24;
+                    trailLength = 6;
+                    trailWidth = 3f;
+                    trailColor = Color.valueOf("FEEBB3FF");
+                    frontColor = Color.valueOf("FEEBB3FF");
+                    backColor = Color.valueOf("FEEBB3FF");
+                    hitEffect = despawnEffect = Fx.none;
+                    hitSound = MLSounds.laser;
+                    fragBullets = 1;
+                    fragSpread = 0;
+                    fragVelocityMin = 0;
+                    fragRandomSpread = 0;
+                    fragBullet = new LaserBulletType(120f) {{
+                        hitSound = MLSounds.laser;
+                        lifetime = 30f;
+                        width = 24f;
+                        length = 96f;
+                        Color.valueOf("FEEBB3FF");
+                        collidesTeam = true;
+                        hitEffect = Fx.none;
+                        despawnEffect = Fx.none;
+                        colors = new Color[]{
+                                Color.valueOf("FEEBB3FF"),
+                                Color.valueOf("FEEBB3FF"),
+                                Color.valueOf("FEEBB3FF")
+                        };
+                    }};
+                }};
+            }});
         }};
         //二级
         //t1
