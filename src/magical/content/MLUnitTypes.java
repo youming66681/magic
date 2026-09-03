@@ -52,7 +52,7 @@ public class MLUnitTypes {
     //一级
     Breeze, SlantingWind, Gale, Storm, Hurricane, GAle,
     //二级
-    BlazingFire, glow, blazing, Ember, BlazingSplendor,
+    BlazingFire, glow, blazing, Ember, BlazingSplendor, BrightStar,
     //海
     //一级
     StillWater, ripple, Turbulence, TerrifyingWaves, SeaSuffering, VastOcean,
@@ -812,9 +812,6 @@ public class MLUnitTypes {
                 shootX = 16f;
                 bullet = new BasicBulletType(){{
                     damage = 300f;
-                    pierce = true;
-                    pierceBuilding = true;
-                    pierceCap = 3;
                     speed = 16f;
                     lifetime = 35f;
                     hitSound = MLSounds.laser;
@@ -1850,7 +1847,7 @@ public class MLUnitTypes {
                     BlockFlag.battery
             };
             weapons.add(
-                    new Weapon("magic-Gale1") {{
+                    new Weapon("magic-BlazingSplendor0") {{
                         rotate = false;
                         mirror = false;
                         reload = 60;
@@ -1901,6 +1898,222 @@ public class MLUnitTypes {
                         }};
                     }});
         }};
+        //t6
+        BrightStar = new UnitType("BrightStar") {
+            {
+                constructor = UnitTypes.flare.constructor;
+                flying = true;
+                circleTarget = true;
+                circleTargetRadius = 320;
+                faceTarget = true;
+                omniMovement = false;
+                lowAltitude = false;
+                rotateSpeed = 2f;
+                speed = 2f;
+                drag = 0.02f;
+                accel = 0.06f;
+                hitSize = 88;
+                health = 960000;
+                armor = 80;
+                engineOffset = 28;
+                engineSize = 14f;
+                targetFlags = new BlockFlag[]{BlockFlag.factory};
+                weapons.add(
+                        new Weapon("magic-BlazingSplendor0") {{
+                            rotate = false;
+                            mirror = false;
+                            reload = 60;
+                            x = 0;
+                            y = 0;
+                            shootSound = MLSounds.plasmadrop;
+                            layerOffset = 0.001f;
+                            bullet = new BasicBulletType(0, 400, "magic-十字星") {{
+                                ignoreRotation = true;
+                                collidesAir = false;
+                                collides = false;
+                                maxRange = 60;
+                                width = 128;
+                                height = 128;
+                                lifetime = 30;
+                                frontColor = Color.valueOf("C8BA8FFF");
+                                backColor = Color.valueOf("958F60FF");
+                                splashDamageRadius = 48;
+                                splashDamage = 1000;
+                                incendAmount = 6;
+                                incendSpread = 12;
+                                incendChance = 0.6f;
+                                spin = 3f;
+                                makeFire = true;
+                                hitEffect = despawnEffect = MLFx.Explosion4;
+                                hitSound = MLSounds.explosion;
+                                fragBullets = 12;
+                                fragBullet = new BasicBulletType(4, 300, "magic-十字星") {{
+                                    ignoreRotation = true;
+                                    collidesAir = false;
+                                    collides = false;
+                                    width = 64;
+                                    height = 64;
+                                    lifetime = 40;
+                                    frontColor = Color.valueOf("C8BA8FFF");
+                                    backColor = Color.valueOf("958F60FF");
+                                    splashDamageRadius = 48;
+                                    splashDamage = 500;
+                                    incendAmount = 6;
+                                    incendSpread = 6;
+                                    incendChance = 0.3f;
+                                    spin = 3f;
+                                    makeFire = true;
+                                    hitEffect = despawnEffect = MLFx.Explosion4;
+                                    hitSound = MLSounds.explosion;
+                                }};
+                            }};
+                        }},
+                        new Weapon("magic-BrightStar1"){{
+                            x = 0f;
+                            y = 0f;
+                            mirror = false;
+                            reload = 1800f;
+                            shootSound = MLSounds.nuke;
+                            inaccuracy = 0f;
+                            recoil = 0f;
+                            rotate = false;
+                            rotateSpeed = 0;
+                            bullet = new BasicBulletType(){{
+                                ignoreRotation = true;
+                                collidesAir = false;
+                                collides = false;
+                                maxRange = 120f;
+                                damage = 1800f;
+                                splashDamageRadius = 640f;
+                                splashDamage = 7200f;
+                                hittable = false;
+                                reflectable = false;
+                                makeFire = true;
+                                incendAmount = 64;
+                                incendSpread = 128f;
+                                incendChance = 1f;
+                                hitEffect = new MultiEffect(
+                                        new WaveEffect(){{
+                                            lifetime = 60f;
+                                            sizeFrom = 0f;
+                                            sizeTo = 960f;
+                                            strokeFrom = 0f;
+                                            strokeTo = 16f;
+                                            colorFrom = Color.valueOf("FF5B5B");
+                                            colorTo = Color.valueOf("EEC591");
+                                        }},
+                                        new WaveEffect(){{
+                                            startDelay = 60f;
+                                            lifetime = 60f;
+                                            sizeFrom = 0f;
+                                            sizeTo = 640f;
+                                            strokeFrom = 0f;
+                                            strokeTo = 8f;
+                                            colorFrom = Color.valueOf("FF5B5B");
+                                            colorTo = Color.valueOf("EEC591");
+                                        }},
+                                        new WaveEffect(){{
+                                            startDelay = 120f;
+                                            lifetime = 60f;
+                                            sizeFrom = 0f;
+                                            sizeTo = 320f;
+                                            strokeFrom = 0f;
+                                            strokeTo = 4f;
+                                            colorFrom = Color.valueOf("FF5B5B");
+                                            colorTo = Color.valueOf("EEC591");
+                                        }},
+                                        new ParticleEffect(){{
+                                            particles = 50;
+                                            sizeFrom = 50f;
+                                            sizeTo = 0f;
+                                            length = 640f;
+                                            baseLength = 0f;
+                                            interp = Interp.pow10Out;
+                                            sizeInterp = Interp.pow10In;
+                                            lifetime = 180f;
+                                            colorFrom = Color.valueOf("FF5B5B");
+                                            colorTo = Color.valueOf("EEC591");
+                                        }},
+                                        new ParticleEffect(){{
+                                            particles = 100;
+                                            line = true;
+                                            strokeFrom = 8f;
+                                            strokeTo = 0f;
+                                            interp = Interp.pow5Out;
+                                            sizeInterp = Interp.pow5In;
+                                            lenFrom = 100f;
+                                            lenTo = 0f;
+                                            length = 640f;
+                                            baseLength = 0f;
+                                            lifetime = 180f;
+                                            colorFrom = Color.valueOf("FF5B5B");
+                                            colorTo = Color.valueOf("EEC591");
+                                        }},
+                                        new ParticleEffect(){{
+                                            particles = 1;
+                                            sizeFrom = 0f;
+                                            sizeTo = 320f;
+                                            sizeInterp = Interp.pow5Out;
+                                            length = 0f;
+                                            baseLength = 0f;
+                                            lifetime = 60f;
+                                            colorFrom = Color.valueOf("FF5B5B");
+                                            colorTo = Color.valueOf("EEC591");
+                                        }},
+                                        new ParticleEffect(){{
+                                            particles = 1;
+                                            sizeFrom = 320f;
+                                            sizeTo = 0f;
+                                            sizeInterp = Interp.pow10In;
+                                            length = 0f;
+                                            baseLength = 0f;
+                                            startDelay = 60f;
+                                            lifetime = 120f;
+                                            colorFrom = Color.valueOf("EEC591");
+                                            colorTo = Color.valueOf("FF5B5B");
+                                        }}
+                                );
+                                hitShake = 100f;
+                                despawnEffect = new WaveEffect(){{
+                                    lifetime = 60f;
+                                    sizeFrom = 0f;
+                                    sizeTo = 1280f;
+                                    strokeFrom = 0f;
+                                    strokeTo = 32f;
+                                    colorFrom = Color.valueOf("FF5B5B");
+                                    colorTo = Color.valueOf("EEC591");
+                                }};
+                                shootEffect = Fx.none;
+                                smokeEffect = Fx.none;
+                                scaleLife = true;
+                                sprite = "magic-核弹";
+                                trailColor = Color.valueOf("EEC591");
+                                trailChance = 0f;
+                                trailInterval = 5f;
+                                trailEffect = new ParticleEffect(){{
+                                    particles = 5;
+                                    sizeFrom = 5f;
+                                    sizeTo = 0f;
+                                    lifetime = 120f;
+                                    baseLength = 0f;
+                                    cone = 20f;
+                                    length = -120f;
+                                    colorFrom = Color.valueOf("FF5B5B");
+                                    colorTo = Color.white;
+                                    layer = 110f;
+                                }};
+                                trailRotation = true;
+                                backColor = Color.valueOf("FF5B5B");
+                                frontColor = Color.valueOf("EEC591");
+                                shrinkY = 0f;
+                                width = 32f;
+                                height = 96f;
+                                speed = 0f;
+                                hitSoundVolume = 100f;
+                                hitSound = Sounds.explosionbig;
+                            }};
+                        }});
+            }};
         //幻境海军
         //一级
         //t1

@@ -323,7 +323,9 @@ public class MLTechTree {
                                 });
                             });
                             /*罡风*/node(MLUnitTypes.GAle, () -> {
+                                /*煌星*/node(MLUnitTypes.BrightStar, () -> {
 
+                                });
                             });
                             /*沧溟*/node(MLUnitTypes.VastOcean, () -> {
 
