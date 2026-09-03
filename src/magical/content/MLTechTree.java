@@ -317,6 +317,9 @@ public class MLTechTree {
                         /*纳米碳合金墙*/node(MLBlocks.NanoCarbonAlloyWall, () -> {
 
                                 });
+                        /*狂雨*/node(MLUnitTypes.TorrentialRain, () -> {
+
+                                });
                         /*高级通用装配升级厂*/node(MLBlocks.AdvancedGeneralAssemblyUpgradeFactory, () -> {
 
                         });

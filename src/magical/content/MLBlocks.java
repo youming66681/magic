@@ -3194,7 +3194,7 @@ public class MLBlocks {
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.nanoCarbonAlloy, 6 * 9}));
             health = 600 * whm * 9;
             size = 3;
-            chanceDeflect = 30;
+            chanceDeflect = 60;
             absorbLasers = true;
             insulated = true;
             lightningChance = 0.6f;
@@ -3600,6 +3600,13 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 6),
                     new PayloadStack(MLUnitTypes.drizzle, 3),
                     new PayloadStack(MLUnitTypes.Drizzle, 3));
+            addPlan("T3", MLUnitTypes.TorrentialRain, 14400f, 17, 2,
+                    new PayloadStack(MLBlocks.largePhantomSteelWall, 6),
+                    new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 6),
+                    new PayloadStack(MLBlocks.LargeWingWall, 6),
+                    new PayloadStack(MLUnitTypes.drizzle, 3),
+                    new PayloadStack(MLUnitTypes.Drizzle, 3),
+                    new PayloadStack(MLUnitTypes.drizzlingRain, 3));
             addPlan("T1", MLUnitTypes.Storm, 1800f, 11, 0,
                     new PayloadStack(MLBlocks.largePhantomSteelWall, 6),
                     new PayloadStack(MLUnitTypes.Breeze, 3));

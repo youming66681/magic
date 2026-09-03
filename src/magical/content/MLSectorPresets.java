@@ -23,7 +23,7 @@ public class MLSectorPresets{
         }};
 
         FrozenWinterValley = new SectorPreset("FrozenWinterValley", MLPlanets.cecilia, 5){{
-            difficulty = 5;
+            difficulty = 3;
             captureWave = 45;
         }};
     }

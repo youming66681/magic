@@ -20,6 +20,7 @@ import arc.util.Tmp;
 
 public class MLFx {
     public static Effect smallElectricDetonation;
+    public static Effect largeElectricDetonation;
     public static Effect squareWaveRot;
     public static Effect beamEffect;
     public static Effect Explosion1;
@@ -51,6 +52,34 @@ public class MLFx {
                 float ang = Mathf.angle(x, y);
                 Lines.lineAngle(e.x + x, e.y + y, ang, e.fout() * (float) rand.random(4f, 8f) + 2F);
             });
+        });
+        largeElectricDetonation = new Effect(60f, 100f, e -> {
+            float fin = e.finpow();
+            float fout = e.foutpow();
+            Color color = Color.valueOf("97B5EDFF");
+            Draw.color(color);
+            Lines.stroke(4f * fout);
+            Lines.circle(e.x, e.y, 80f * fin);
+            Lines.stroke(2f * fout);
+            Lines.circle(e.x, e.y, 55f * fin);
+            Lines.stroke(1f * fout);
+            Lines.circle(e.x, e.y, 30f * fin);
+            Draw.alpha(fout);
+            Fill.circle(e.x, e.y, 12f * fout);
+            Angles.randLenVectors(e.id, 48, 80f * fin, (x, y) -> {
+                float len = Mathf.len(x, y);
+                if(len < 1f)return;
+                float nx = x / len;
+                float ny = y / len;
+                Lines.stroke(Mathf.random(1f, 3f) * fout);
+                Lines.line(
+                        e.x + x,
+                        e.y + y,
+                        e.x + x + nx * Mathf.random(8f, 24f),
+                        e.y + y + ny * Mathf.random(8f, 24f)
+                );
+            });
+            Draw.reset();
         });
         squareWaveRot = new Effect(14, 40f, e -> {
             rand.setSeed(e.id);

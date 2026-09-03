@@ -43,9 +43,9 @@ import magical.content.MLFx;
 
 public class MLUnitTypes {
     public static UnitType
-            //陆
-            //一级
-            drizzle, Drizzle, drizzlingRain, ColdRain, HeavyRain,
+    //陆
+    //一级
+    drizzle, Drizzle, drizzlingRain, ColdRain, HeavyRain, TorrentialRain,
     //二级
     war, BeaconFire, War, CrusadeAgainst, ImperialArmy,
     //空
@@ -291,6 +291,105 @@ public class MLUnitTypes {
                     hitSound = MLSounds.explosion;
                 }};
             }});
+        }};
+        //t6
+        TorrentialRain = new UnitType("TorrentialRain") {{
+            constructor = UnitTypes.stell.constructor;
+            omniMovement = false;
+            rotateMoveFirst = false;
+            squareShape = true;
+            rotateSpeed = 1.5f;
+            speed = 0.5f;
+            hitSize = 88f;
+            health = 84000;
+            armor = 72;
+            faceTarget = true;
+            crushDamage = 12;
+            range = 480;
+            weapons.add(new Weapon("magic-TorrentialRain0") {{
+                reload = 180f;
+                recoil = 0f;
+                x = 0;
+                y = 0;
+                mirror = false;
+                rotate = false;
+                rotateSpeed = 0f;
+                inaccuracy = 0f;
+                ejectEffect = Fx.casing4;
+                layerOffset = 0.001f;
+                shootSound = MLSounds.laser;
+                parts.addAll(
+                        new RegionPart("-front") {{
+                            mirror = false;
+                            heatProgress = PartProgress.recoil;
+                            progress = PartProgress.recoil;
+                            moveY = -8;
+                        }});
+                bullet = new BasicBulletType(16, 400) {{
+                    lifetime = 30;
+                    width = 24;
+                    height = 48;
+                    splashDamageRadius = 80;
+                    splashDamage = 600;
+                    trailLength = 8;
+                    trailWidth = 4f;
+                    trailColor = Color.valueOf("97B5EDFF");
+                    backColor = Color.valueOf("97B5EDFF");
+                    frontColor = Color.valueOf("97B5EDFF");
+                    hitEffect = despawnEffect = MLFx.largeElectricDetonation;
+                    hitSound = MLSounds.explosionCleroi;
+                }};
+            }},
+                    new Weapon("magic-TorrentialRain1"){{
+                        mirror = true;
+                        x = 21f;
+                        y = -30f;
+                        reload = 120f;
+                        shoot = new ShootAlternate(){{
+                            shots = 6;
+                            spread = 4f;
+                            shotDelay = 10f;
+                        }};
+                        shootSound = MLSounds.missile;
+                        rotate = true;
+                        rotateSpeed = 3f;
+                        inaccuracy = 0f;
+                        controllable = false;
+                        autoTarget = true;
+                        alternate = false;
+                        bullet = new MissileBulletType(){{
+                            damage = 120f;
+                            splashDamageRadius = 32f;
+                            splashDamage = 120f;
+                            homingRange = 1440f;
+                            homingPower = 0.9f;
+                            homingDelay = 12f;
+                            sprite = "magic-导弹";
+                            trailLength = 6;
+                            trailWidth = 3f;
+                            trailEffect = Fx.none;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            trailEffect = new ParticleEffect() {{
+                                particles = 12;
+                                sizeFrom = 12f;
+                                sizeTo = 0f;
+                                lifetime = 16f;
+                                length = 6f;
+                                baseLength = 0f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                                cone = 30f;
+                            }};
+                            backColor = Color.valueOf("FEEBB3FF");
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            width = 16f;
+                            height = 32f;
+                            speed = 16f;
+                            lifetime = 30f;
+                            hitSound = MLSounds.explosion;
+                            hitEffect = Explosion3
+                        }};
+                    }});
         }};
         //二级
         //t1
