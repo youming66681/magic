@@ -1030,6 +1030,7 @@ public class MLUnitTypes {
                         recoil = 5f;
                         rotate = true;
                         rotateSpeed = 5f;
+                        alternate = false;
                         shoot = new ShootAlternate() {{
                             barrels = 2;
                             spread = 2f;
@@ -1078,6 +1079,7 @@ public class MLUnitTypes {
                         recoil = 5f;
                         rotate = true;
                         rotateSpeed = 5f;
+                        alternate = false;
                         shoot = new ShootAlternate() {{
                             barrels = 2;
                             spread = 2f;
@@ -1145,6 +1147,7 @@ public class MLUnitTypes {
                         recoil = 6f;
                         rotate = true;
                         rotateSpeed = 3f;
+                        alternate = false;
                         shoot = new ShootAlternate() {{
                             barrels = 2;
                             spread = 2f;
@@ -1191,6 +1194,7 @@ public class MLUnitTypes {
                         shootY = 0f;
                         mirror = true;
                         rotate = true;
+                        alternate = false;
                         rotateSpeed = 6f;
                         inaccuracy = 0f;
                         ejectEffect = Fx.casing2;
@@ -1236,6 +1240,7 @@ public class MLUnitTypes {
                 shootY = 0f;
                 mirror = true;
                 rotate = true;
+                alternate = false;
                 rotateSpeed = 6f;
                 inaccuracy = 0f;
                 ejectEffect = Fx.casing2;
