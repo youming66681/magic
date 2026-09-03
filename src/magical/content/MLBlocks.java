@@ -2524,7 +2524,7 @@ public class MLBlocks {
                             cone = 30f;
                         }};
                     }},
-                    Items.fluorescentFeatherStone, new BasicBulletType(){{
+                    MLItems.fluorescentFeatherStone, new BasicBulletType(){{
                         speed = 40f;
                         damage = 200f;
                         splashDamageRadius = 75f;
@@ -2653,7 +2653,7 @@ public class MLBlocks {
                                     frontColor = Color.valueOf("CCCEDBFF");
                                     backColor = Color.valueOf("CCCEDBFF");
                                     trailSpacing = 9f;
-                                    hitSound = Sounds.plasmaboom;
+                                    hitSound = MLSounds.plasmaboom;
                                     trailEffect = new ParticleEffect(){{
                                         particles = 1;
                                         length = 1f;
@@ -2686,7 +2686,7 @@ public class MLBlocks {
                             }};
                         }};
                     }},
-                    Items.phantomLuminousAlloy, new BasicBulletType(){{
+                    MLItems.phantomLuminousAlloy, new BasicBulletType(){{
                         speed = 40f;
                         damage = 1000f;
                         pierce = true;
@@ -2755,7 +2755,7 @@ public class MLBlocks {
             size = 5;
             shootSound = MLSounds.plasmadrop;
             canOverdrive = false;
-            rotateSpeed = 2.5;
+            rotateSpeed = 2.5f;
             coolant = consumeCoolant(1.5f);
 
             drawer = new DrawMulti(
