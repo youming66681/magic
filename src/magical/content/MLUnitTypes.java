@@ -3024,8 +3024,8 @@ public class MLUnitTypes {
                         )
                 );
                 abilities.add(new EnergyFieldAbility(
-                        120f,   // damage
-                        90f,   // reload
+                        60f,   // damage
+                        60f,   // reload
                         360f   // range
                 ) {{
                     healPercent = 1f;
@@ -3232,8 +3232,8 @@ public class MLUnitTypes {
                     BlockFlag.battery
                 };
                 abilities.add(new EnergyFieldAbility(
-                        80f,   // damage
-                        60f,   // reload
+                        120f,   // damage
+                        90f,   // reload
                         600f   // range
                 ) {{
                     healPercent = 2f;
@@ -3558,8 +3558,8 @@ public class MLUnitTypes {
                     BlockFlag.battery
                 };
                 abilities.add(new EnergyFieldAbility(
-                        120f,   // damage
-                        90f,   // reload
+                        180f,   // damage
+                        120f,   // reload
                         720f   // range
                 ) {{
                     healPercent = 3f;

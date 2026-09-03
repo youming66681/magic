@@ -162,7 +162,8 @@ public class MLBlocks {
             FluorescentFeatherDrill, XuansteelConveyor, GlowFeatherBridge, GlowingFeatherConveyor, LumifeatherReactor, PretendingCore, GeneralAssemblyUpgrade,
             RetroProjector, HologramProjector,
             //终极科技
-            EndCore, GlobalOverdriveProjector, AdvancedGeneralAssemblyUpgradeFactory, CoalMeltingMachine, NanofiberLoom, NanoCarbonAlloyCombiner, Compete, FallingStar;
+            EndCore, GlobalOverdriveProjector, AdvancedGeneralAssemblyUpgradeFactory, CoalMeltingMachine, NanofiberLoom, NanoCarbonAlloyCombiner, Compete, FallingStar,
+            BrilliantWorld;
 
     public static void load() {
 
@@ -2375,7 +2376,7 @@ public class MLBlocks {
                         width = 24f;
                         height = 48f;
                         ammoMultiplier = 1f;
-                        reloadMultiplier = 0.9f;
+                        reloadMultiplier = 1f;
                         knockback = 12f;
                         pierce = true;
                         pierceBuilding = true;
@@ -2538,6 +2539,7 @@ public class MLBlocks {
                         trailLength = 10;
                         trailWidth = 5f;
                         trailColor = Color.valueOf("CCCEDBFF");
+                        buildingDamageMultiplier = 0.1f;
                         hitSound = MLSounds.lasercharge2;
                         shootEffect = new ParticleEffect(){{
                             particles = 15;
@@ -2578,6 +2580,7 @@ public class MLBlocks {
                             speed = 8f;
                             trailEffect = Fx.none;
                             hitEffect = Fx.none;
+                            buildingDamageMultiplier = 0.1f;
                             fragBullets = 1;
                             fragAngle = 180f;
                             fragRandomSpread = 0f;
@@ -2595,6 +2598,7 @@ public class MLBlocks {
                                 trailLength = 10;
                                 trailWidth = 10f;
                                 trailColor = Color.valueOf("CCCEDBFF");
+                                buildingDamageMultiplier = 0.1f;
                                 hitShake = 20f;
                                 sprite = "magic-十字星";
                                 backColor = Color.valueOf("CCCEDBFF");
@@ -2654,6 +2658,7 @@ public class MLBlocks {
                                     backColor = Color.valueOf("CCCEDBFF");
                                     trailSpacing = 9f;
                                     hitSound = MLSounds.plasmaboom;
+                                    buildingDamageMultiplier = 0.1f;
                                     trailEffect = new ParticleEffect(){{
                                         particles = 1;
                                         length = 1f;
@@ -2676,6 +2681,7 @@ public class MLBlocks {
                                     hitSound = MLSounds.spark;
                                     fragBullets = 1;
                                     fragBullet = new LightningBulletType(){{
+                                        buildingDamageMultiplier = 0.1f;
                                         lifetime = 25f;
                                         lightningDamage = 50f;
                                         lightning = 5;
@@ -2703,6 +2709,7 @@ public class MLBlocks {
                         trailLength = 6;
                         trailWidth = 2f;
                         trailColor = Color.valueOf("6569C9FF");
+                        buildingDamageMultiplier = 0.1f;
                         buildingDamageMultiplier = 0.1f;
                         hitSound = MLSounds.lasercharge2;
                         shootEffect = new ParticleEffect(){{
@@ -2833,6 +2840,286 @@ public class MLBlocks {
             hasPower = true;
             consumePower(160f);
             armor = 20;
+        }};
+        //耀世
+        BrilliantWorld = new PowerTurret("BrilliantWorld"){{
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomLuminousAlloy, 195, MLItems.fluorescentFeatherStone, 240, MLItems.wingedMetal, 320, Items.surgeAlloy, 270, MLItems.phantomTitaniumSteel, 465, MLItems.nanoEnergyThread, 120, MLItems.matrixChip, 60,}));
+            shootType = new BasicBulletType(){{
+                damage = 1f;
+                buildingDamageMultiplier = 0.1f;
+                speed = 24f;
+                lifetime = 60f;
+                frontColor = Color.valueOf("FEEBB3FF");
+                backColor = Color.valueOf("FEEBB3FF");
+                trailLength = 16;
+                trailWidth = 8f;
+                trailColor = Color.valueOf("FEEBB3FF");
+                hitSound = Sounds.lasercharge2;
+                hitSoundVolume = 10f;
+                sprite = "幻境-十字星";
+                spin = 8f;
+                width = 128f;
+                height = 128f;
+                hitShake = 64f;
+                hitEffect = new MultiEffect(
+                        new WaveEffect(){{
+                            lifetime = 30f;
+                            sizeFrom = 210f;
+                            sizeTo = 0f;
+                            strokeFrom = 0f;
+                            strokeTo = 6f;
+                            colorFrom = Color.valueOf("FEEBB3FF");
+                            colorTo = Color.valueOf("FEEBB3FF");
+                        }},
+                        new ParticleEffect(){{
+                            particles = 48;
+                            baseLength = 0f;
+                            length = 210f;
+                            lifetime = 30f;
+                            line = true;
+                            lenFrom = 12f;
+                            lenTo = 0f;
+                            strokeFrom = 8f;
+                            strokeTo = 1f;
+                            colorFrom = Color.valueOf("FEEBB3FF");
+                            colorTo = Color.valueOf("FEEBB3FF");
+                            cone = 360f;
+                        }},
+                        new ParticleEffect(){{
+                            particles = 72;
+                            sizeFrom = 24f;
+                            sizeTo = 0f;
+                            length = 210f;
+                            baseLength = 0f;
+                            lifetime = 30f;
+                            colorFrom = Color.valueOf("FEEBB3FF");
+                            colorTo = Color.valueOf("FEEBB3FF");
+                        }}
+                );
+                despawnEffect = new MultiEffect(
+                        new WaveEffect(){{
+                            lifetime = 30f;
+                            sizeFrom = 210f;
+                            sizeTo = 0f;
+                            strokeFrom = 0f;
+                            strokeTo = 6f;
+                            colorFrom = Color.valueOf("FEEBB3FF");
+                            colorTo = Color.valueOf("FEEBB3FF");
+                        }},
+                        new ParticleEffect(){{
+                            particles = 48;
+                            baseLength = 0f;
+                            length = 210f;
+                            lifetime = 30f;
+                            line = true;
+                            lenFrom = 12f;
+                            lenTo = 0f;
+                            strokeFrom = 8f;
+                            strokeTo = 1f;
+                            colorFrom = Color.valueOf("FEEBB3FF");
+                            colorTo = Color.valueOf("FEEBB3FF");
+                            cone = 360f;
+                        }},
+                        new ParticleEffect(){{
+                            particles = 72;
+                            sizeFrom = 24f;
+                            sizeTo = 0f;
+                            length = 210f;
+                            baseLength = 0f;
+                            lifetime = 30f;
+                            colorFrom = Color.valueOf("FEEBB3FF");
+                            colorTo = Color.valueOf("FEEBB3FF");
+                        }}
+                );
+                fragBullets = 1;
+                fragBullet = new PointBulletType(){{
+                    buildingDamageMultiplier = 0.1f;
+                    hittable = false;
+                    reflectable = false;
+                    collides = false;
+                    absorbable = false;
+                    pierce = true;
+                    pierceBuilding = true;
+                    speed = 0f;
+                    damage = 1f;
+                    frontColor = Color.valueOf("FEEBB3FF");
+                    backColor = Color.valueOf("FEEBB3FF");
+                    lifetime = 30f;
+                    width = 1f;
+                    height = 1f;
+                    fragBullets = 24;
+                    fragBullet = new BasicBulletType(){{
+                        buildingDamageMultiplier = 0.1f;
+                        speed = 16f;
+                        damage = 1f;
+                        lifetime = 36f;
+                        width = 1f;
+                        height = 1f;
+                        frontColor = Color.valueOf("FEEBB3FF");
+                        backColor = Color.valueOf("FEEBB3FF");
+                        splashDamageRadius = 150f;
+                        splashDamage = 3600f;
+                        hitSound = Sounds.explosionbig;
+                        hitSoundVolume = 10f;
+                        hittable = false;
+                        reflectable = false;
+                        collides = false;
+                        absorbable = false;
+                        pierce = true;
+                        pierceBuilding = true;
+                        status = MLStatusEffects.electromagneticDisorder;
+                        statusDuration = 180f;
+                        hitEffect = new MultiEffect(
+                                new WaveEffect(){{
+                                    lifetime = 60f;
+                                    sizeFrom = 0f;
+                                    sizeTo = 150f;
+                                    strokeFrom = 0f;
+                                    strokeTo = 6f;
+                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                }},
+                                new ParticleEffect(){{
+                                    particles = 48;
+                                    sizeFrom = 9f;
+                                    sizeTo = 0f;
+                                    length = 75f;
+                                    baseLength = 75f;
+                                    lifetime = 90f;
+                                    interp = Interp.pow10Out;
+                                    sizeInterp = Interp.pow10In;
+                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                }},
+                                new ParticleEffect(){{
+                                    particles = 48;
+                                    line = true;
+                                    strokeFrom = 9f;
+                                    strokeTo = 0f;
+                                    lenFrom = 18f;
+                                    lenTo = 0f;
+                                    length = 75f;
+                                    baseLength = 75f;
+                                    lifetime = 90f;
+                                    interp = Interp.pow5Out;
+                                    sizeInterp = Interp.pow5In;
+                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                }}
+                        );
+                        intervalBullets = 1;
+                        bulletInterval = 6f;
+                        intervalBullet = new BasicBulletType(){{
+                            buildingDamageMultiplier = 0.1f;
+                            hitSize = 0f;
+                            damage = 360f;
+                            spin = 16f;
+                            width = 0f;
+                            height = 0f;
+                            hittable = false;
+                            reflectable = false;
+                            pierce = true;
+                            pierceBuilding = true;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            speed = 16f;
+                            lifetime = 16f;
+                            hitSound = Sounds.bz;
+                            hitEffect = new ParticleEffect(){{
+                                lightOpacity = 0f;
+                                length = 0f;
+                                cone = 0f;
+                                randLength = false;
+                                sizeFrom = 96f;
+                                sizeTo = 0f;
+                                region = Core.atlas.find("magic-横");
+                                particles = 1;
+                                lifetime = 90f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                            fragBullets = 1;
+                            fragBullet = new BasicBulletType(){{
+                                hitSize = 0f;
+                                damage = 480f;
+                                spin = 16f;
+                                width = 0f;
+                                height = 0f;
+                                hittable = false;
+                                reflectable = false;
+                                pierce = true;
+                                pierceBuilding = true;
+                                frontColor = Color.valueOf("FEEBB3FF");
+                                backColor = Color.valueOf("FEEBB3FF");
+                                speed = 16f;
+                                lifetime = 16f;
+                                hitSound = Sounds.bz;
+                                hitEffect = new ParticleEffect(){{
+                                    lightOpacity = 0f;
+                                    length = 0f;
+                                    cone = 0f;
+                                    randLength = false;
+                                    sizeFrom = 96f;
+                                    sizeTo = 0f;
+                                    region = Core.atlas.find("magic-竖");
+                                    particles = 1;
+                                    lifetime = 60f;
+                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                }};
+                            }};
+                        }};
+                    }};
+                }};
+            }};
+            range = 1440f;
+            recoil = 6f;
+            reload = 1800f;
+            shake = 24f;
+            size = 6;
+            inaccuracy = 0;
+            armor = 24;
+            health = 18000;
+            rotateSpeed = 1.5;
+            shootSound = MLSounds.shootSmite;
+            canOverdrive = false;
+            coolantMultiplier = 0.96f;
+            coolant = consumeCoolant(1.8f);
+            consumePower(200f);
+            drawer = new DrawTurret(){{
+                parts.add(
+                        new ShapePart(){{
+                            progress = PartProgress.reload;
+                            y = 0f;
+                            color = Color.valueOf("FEEBB3FF");
+                            circle = true;
+                            hollow = false;
+                            radius = 0f;
+                            radiusTo = 6f;
+                            layer = 110f;
+                        }},
+                        new HaloPart(){{
+                            progress = PartProgress.reload;
+                            y = 0f;
+                            rotateSpeed = 0f;
+                            sides = 3;
+                            shapes = 4;
+                            color = Color.valueOf("FEEBB3FF");
+                            tri = true;
+                            hollow = true;
+                            stroke = 0f;
+                            strokeTo = 0.1f;
+                            radius = 10f;
+                            radiusTo = 0f;
+                            triLength = 24f;
+                            triLengthTo = 0f;
+                            haloRadius = 3f;
+                            haloRotation = 0f;
+                            haloRotateSpeed = 1f;
+                            layer = 110f;
+                        }}
+                );
+            }};
         }};
         //turret
         //！？强强？！
