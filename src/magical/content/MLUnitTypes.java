@@ -387,7 +387,7 @@ public class MLUnitTypes {
                             speed = 16f;
                             lifetime = 30f;
                             hitSound = MLSounds.explosion;
-                            hitEffect = MLFx.Explosion3
+                            hitEffect = MLFx.Explosion3;
                         }};
                     }});
         }};
