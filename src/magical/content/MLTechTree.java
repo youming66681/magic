@@ -318,7 +318,8 @@ public class MLTechTree {
 
                                 });
                         /*狂雨*/node(MLUnitTypes.TorrentialRain, () -> {
-
+                            /*统战*/node(MLUnitTypes.UnitedFront, () -> {
+                            });
                                 });
                         /*罡风*/node(MLUnitTypes.GAle, () -> {
 

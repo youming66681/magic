@@ -3646,6 +3646,13 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.LargeWingWall, 6),
                     new PayloadStack(MLUnitTypes.war, 3),
                     new PayloadStack(MLUnitTypes.BeaconFire, 3));
+            addPlan("T3", MLUnitTypes.UnitedFront, 21600f, 17, 2,
+                    new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 6),
+                    new PayloadStack(MLBlocks.LargeWingWall, 6),
+                    new PayloadStack(MLBlocks.LargePhantomGlowWall, 6),
+                    new PayloadStack(MLUnitTypes.war, 3),
+                    new PayloadStack(MLUnitTypes.BeaconFire, 3),
+                    new PayloadStack(MLUnitTypes.War, 3));
             addPlan("T1", MLUnitTypes.Ember, 3000f, 11, 0,
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 6),
                     new PayloadStack(MLUnitTypes.BlazingFire, 3));

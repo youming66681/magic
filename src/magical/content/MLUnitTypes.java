@@ -796,7 +796,67 @@ public class MLUnitTypes {
                     angle = 180f;
                     angleOffset = 0f;
                 }});
-            }};
+            weapons.add(
+            new Weapon("magic-UnitedFront0"){{
+                reload = 6f;
+                shake = 6f;
+                recoil = 6f;
+                x = 36f;
+                rotate = false;
+                top = false;
+                inaccuracy = 0f;
+                shootSound = Sounds.shootBig;
+                alternate = true;
+                ejectEffect = Fx.casing4;
+                shootY = 24f;
+                bullet = new BasicBulletType(){{
+                    damage = 300f;
+                    pierce = true;
+                    pierceBuilding = true;
+                    pierceCap = 3;
+                    speed = 16f;
+                    lifetime = 35f;
+                    hitSound = MLSounds.laser;
+                    shootEffect = Fx.shootBig;
+                    smokeEffect = Fx.shootBigSmoke;
+                    trailLength = 4;
+                    trailWidth = 4f;
+                    trailColor = Color.valueOf("FEEBB3FF");
+                    backColor = Color.valueOf("FEEBB3FF");
+                    frontColor = Color.white;
+                    width = 16f;
+                    height = 32f;
+                    trailChance = 1f;
+                    trailInterval = 20f;
+                    trailEffect = new ParticleEffect(){{
+                        particles = 18;
+                        length = 18f;
+                        baseLength = 0f;
+                        lifetime = 18f;
+                        sizeFrom = 3f;
+                        sizeTo = 0f;
+                        colorFrom = Color.valueOf("FEEBB3FF");
+                        colorTo = Color.white;
+                    }};
+                    fragBullets = 3;
+                    fragBullet = new LaserBulletType(){{
+                        damage = 60f;
+                        //pierceCap = 3;
+                        collidesTeam = true;
+                        hitEffect = Fx.none;
+                        despawnEffect = Fx.none;
+                        colors = new Color[]{
+                                Color.valueOf("958F60FF"),
+                                Color.valueOf("C8BA8FFF"),
+                                Color.white
+                        };
+                        width = 32f;
+                        length = 96f;
+                        lifetime = 16f;
+                    }};
+                }};
+            }});
+        }};
         //幻境空军
         //一级
         //t1
