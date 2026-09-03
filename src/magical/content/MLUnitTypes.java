@@ -47,7 +47,7 @@ public class MLUnitTypes {
     //一级
     drizzle, Drizzle, drizzlingRain, ColdRain, HeavyRain, TorrentialRain,
     //二级
-    war, BeaconFire, War, CrusadeAgainst, ImperialArmy,
+    war, BeaconFire, War, CrusadeAgainst, ImperialArmy, UnitedFront,
     //空
     //一级
     Breeze, SlantingWind, Gale, Storm, Hurricane, GAle,
@@ -771,6 +771,32 @@ public class MLUnitTypes {
                         }};
                     }});
         }};
+        //t6
+        UnitedFront = new UnitType("UnitedFront") {{
+                constructor = MechUnit::create;
+                canDrown = true;
+                rotateSpeed = 0.6f;
+                speed = 0.3f;
+                hitSize = 88f;
+                health = 108000;
+                armor = 96;
+                baseRotateSpeed = 0.6f;
+                mechStepParticles = true;
+                mechFrontSway = 0.6f;
+                mechSideSway = 0.6f;
+                drownTimeMultiplier = 5;
+                range = 560;
+                abilities.add(new ShieldArcAbility() {{
+                    whenShooting = true;
+                    radius = 60f;
+                    width = 12f;
+                    max = 18000f;
+                    regen = 6f;
+                    cooldown = 180f;
+                    angle = 180f;
+                    angleOffset = 0f;
+                }});
+            }};
         //幻境空军
         //一级
         //t1
