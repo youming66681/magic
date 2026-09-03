@@ -2189,71 +2189,72 @@ public class MLUnitTypes {
         }};
         //t6
         VastOcean = new UnitType("VastOcean") {{
-            constructor = UnitTypes.risso.constructor;
-            speed = 0.4f;
-            rotateSpeed = 2;
-            waveTrailX = 0;
-            waveTrailY = -52;
-            hitSize = 88;
-            health = 90000;
-            armor = 60;
-            range = 560f;
-            faceTarget = false;
-            weapons.add(
-                    new Weapon("magic-VastOcean0") {{
-                        reload = 120f;
-                        recoil = 0f;
-                        x = 0;
-                        y = -24;
-                        mirror = false;
-                        rotate = true;
-                        rotateSpeed = 2f;
-                        inaccuracy = 0f;
-                        ejectEffect = Fx.casing4;
-                        layerOffset = 0.001f;
-                        shootSound = MLSounds.laser;
-                        bullet = new BasicBulletType(16, 400) {{
-                            lifetime = 30;
-                            width = 32;
-                            height = 56;
-                            splashDamageRadius = 80;
-                            splashDamage = 600;
-                            trailLength = 8;
-                            trailWidth = 4f;
-                            trailColor = Color.valueOf("97B5EDFF");
-                            backColor = Color.valueOf("97B5EDFF");
-                            frontColor = Color.valueOf("97B5EDFF");
-                            hitEffect = despawnEffect = MLFx.largeElectricDetonation;
-                            hitSound = MLSounds.explosionCleroi;
-                        }};
-                    }},
-                    new Weapon("magic-VastOcean0") {{
-                        reload = 120f;
-                        recoil = 0f;
-                        x = 0;
-                        y = 18;
-                        mirror = false;
-                        rotate = true;
-                        rotateSpeed = 2f;
-                        inaccuracy = 0f;
-                        ejectEffect = Fx.casing4;
-                        layerOffset = 0.001f;
-                        shootSound = MLSounds.laser;
-                        bullet = new BasicBulletType(16, 400) {{
-                            lifetime = 30;
-                            width = 32;
-                            height = 56;
-                            splashDamageRadius = 80;
-                            splashDamage = 600;
-                            trailLength = 8;
-                            trailWidth = 4f;
-                            trailColor = Color.valueOf("97B5EDFF");
-                            backColor = Color.valueOf("97B5EDFF");
-                            frontColor = Color.valueOf("97B5EDFF");
-                            hitEffect = despawnEffect = MLFx.largeElectricDetonation;
-                            hitSound = MLSounds.explosionCleroi;
-                        }};
-                    }},
+                constructor = UnitTypes.risso.constructor;
+                speed = 0.4f;
+                rotateSpeed = 2;
+                waveTrailX = 0;
+                waveTrailY = -52;
+                hitSize = 88;
+                health = 90000;
+                armor = 60;
+                range = 560f;
+                faceTarget = false;
+                weapons.add(
+                        new Weapon("magic-VastOcean0") {{
+                            reload = 120f;
+                            recoil = 0f;
+                            x = 0;
+                            y = -24;
+                            mirror = false;
+                            rotate = true;
+                            rotateSpeed = 2f;
+                            inaccuracy = 0f;
+                            ejectEffect = Fx.casing4;
+                            layerOffset = 0.001f;
+                            shootSound = MLSounds.laser;
+                            bullet = new BasicBulletType(16, 400) {{
+                                lifetime = 30;
+                                width = 32;
+                                height = 56;
+                                splashDamageRadius = 80;
+                                splashDamage = 600;
+                                trailLength = 8;
+                                trailWidth = 4f;
+                                trailColor = Color.valueOf("97B5EDFF");
+                                backColor = Color.valueOf("97B5EDFF");
+                                frontColor = Color.valueOf("97B5EDFF");
+                                hitEffect = despawnEffect = MLFx.largeElectricDetonation;
+                                hitSound = MLSounds.explosionCleroi;
+                            }};
+                        }},
+                        new Weapon("magic-VastOcean0") {{
+                            reload = 120f;
+                            recoil = 0f;
+                            x = 0;
+                            y = 18;
+                            mirror = false;
+                            rotate = true;
+                            rotateSpeed = 2f;
+                            inaccuracy = 0f;
+                            ejectEffect = Fx.casing4;
+                            layerOffset = 0.001f;
+                            shootSound = MLSounds.laser;
+                            bullet = new BasicBulletType(16, 400) {{
+                                lifetime = 30;
+                                width = 32;
+                                height = 56;
+                                splashDamageRadius = 80;
+                                splashDamage = 600;
+                                trailLength = 8;
+                                trailWidth = 4f;
+                                trailColor = Color.valueOf("97B5EDFF");
+                                backColor = Color.valueOf("97B5EDFF");
+                                frontColor = Color.valueOf("97B5EDFF");
+                                hitEffect = despawnEffect = MLFx.largeElectricDetonation;
+                                hitSound = MLSounds.explosionCleroi;
+                            }};
+                        }});
+            }};
         //二级
         //t1
         ExpelDarkness = new UnitType("ExpelDarkness") {{
