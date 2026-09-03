@@ -2854,9 +2854,9 @@ public class MLBlocks {
                 trailLength = 16;
                 trailWidth = 8f;
                 trailColor = Color.valueOf("FEEBB3FF");
-                hitSound = Sounds.lasercharge2;
+                hitSound = MLSounds.lasercharge2;
                 hitSoundVolume = 10f;
-                sprite = "幻境-十字星";
+                sprite = "magic-十字星";
                 spin = 8f;
                 width = 128f;
                 height = 128f;
@@ -2959,7 +2959,7 @@ public class MLBlocks {
                         backColor = Color.valueOf("FEEBB3FF");
                         splashDamageRadius = 150f;
                         splashDamage = 3600f;
-                        hitSound = Sounds.explosionbig;
+                        hitSound = MLSounds.explosionbig;
                         hitSoundVolume = 10f;
                         hittable = false;
                         reflectable = false;
@@ -2967,8 +2967,6 @@ public class MLBlocks {
                         absorbable = false;
                         pierce = true;
                         pierceBuilding = true;
-                        status = MLStatusEffects.electromagneticDisorder;
-                        statusDuration = 180f;
                         hitEffect = new MultiEffect(
                                 new WaveEffect(){{
                                     lifetime = 60f;
@@ -3024,7 +3022,7 @@ public class MLBlocks {
                             backColor = Color.valueOf("FEEBB3FF");
                             speed = 16f;
                             lifetime = 16f;
-                            hitSound = Sounds.bz;
+                            hitSound = MLSounds.bz;
                             hitEffect = new ParticleEffect(){{
                                 lightOpacity = 0f;
                                 length = 0f;
@@ -3032,7 +3030,7 @@ public class MLBlocks {
                                 randLength = false;
                                 sizeFrom = 96f;
                                 sizeTo = 0f;
-                                region = Core.atlas.find("magic-横");
+                                region = "magic-横";
                                 particles = 1;
                                 lifetime = 90f;
                                 colorFrom = Color.valueOf("FEEBB3FF");
@@ -3041,7 +3039,7 @@ public class MLBlocks {
                             fragBullets = 1;
                             fragBullet = new BasicBulletType(){{
                                 hitSize = 0f;
-                                damage = 480f;
+                                damage = 360f;
                                 spin = 16f;
                                 width = 0f;
                                 height = 0f;
@@ -3053,7 +3051,7 @@ public class MLBlocks {
                                 backColor = Color.valueOf("FEEBB3FF");
                                 speed = 16f;
                                 lifetime = 16f;
-                                hitSound = Sounds.bz;
+                                hitSound = MLSounds.bz;
                                 hitEffect = new ParticleEffect(){{
                                     lightOpacity = 0f;
                                     length = 0f;
@@ -3061,7 +3059,7 @@ public class MLBlocks {
                                     randLength = false;
                                     sizeFrom = 96f;
                                     sizeTo = 0f;
-                                    region = Core.atlas.find("magic-竖");
+                                    region = "magic-竖";
                                     particles = 1;
                                     lifetime = 60f;
                                     colorFrom = Color.valueOf("FEEBB3FF");
@@ -3080,7 +3078,7 @@ public class MLBlocks {
             inaccuracy = 0;
             armor = 24;
             health = 18000;
-            rotateSpeed = 1.5;
+            rotateSpeed = 1.5f;
             shootSound = MLSounds.shootSmite;
             canOverdrive = false;
             coolantMultiplier = 0.96f;
