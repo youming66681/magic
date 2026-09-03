@@ -2213,7 +2213,7 @@ public class MLUnitTypes {
                             layerOffset = 0.001f;
                             shootSound = MLSounds.laser;
                             bullet = new BasicBulletType(16, 400) {{
-                                lifetime = 30;
+                                lifetime = 35;
                                 width = 32;
                                 height = 56;
                                 splashDamageRadius = 80;
@@ -2240,7 +2240,7 @@ public class MLUnitTypes {
                             layerOffset = 0.001f;
                             shootSound = MLSounds.laser;
                             bullet = new BasicBulletType(16, 400) {{
-                                lifetime = 30;
+                                lifetime = 35;
                                 width = 32;
                                 height = 56;
                                 splashDamageRadius = 80;
