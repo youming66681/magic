@@ -307,13 +307,13 @@ public class MLUnitTypes {
             crushDamage = 12;
             range = 480;
             weapons.add(new Weapon("magic-TorrentialRain0") {{
-                reload = 180f;
+                reload = 120f;
                 recoil = 0f;
                 x = 0;
                 y = 0;
                 mirror = false;
-                rotate = false;
-                rotateSpeed = 0f;
+                rotate = true;
+                rotateSpeed = 1.5f;
                 inaccuracy = 0f;
                 ejectEffect = Fx.casing4;
                 layerOffset = 0.001f;
@@ -344,11 +344,11 @@ public class MLUnitTypes {
                         mirror = true;
                         x = 21f;
                         y = -30f;
-                        reload = 120f;
+                        reload = 90f;
                         shoot = new ShootAlternate(){{
                             shots = 6;
                             spread = 4f;
-                            shotDelay = 10f;
+                            shotDelay = 5f;
                         }};
                         shootSound = MLSounds.missile;
                         rotate = true;
