@@ -309,6 +309,8 @@ public class MLTechTree {
                                 });
                         /*争锋*/node(MLBlocks.Compete, () -> {
                             /*星落*/node(MLBlocks.FallingStar, () -> {
+                            });
+                            /*耀世*/node(MLBlocks.BrilliantWorld, () -> {
 
                             });
                                 });
