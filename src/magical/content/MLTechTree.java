@@ -317,18 +317,17 @@ public class MLTechTree {
                         /*纳米碳合金墙*/node(MLBlocks.NanoCarbonAlloyWall, () -> {
 
                                 });
-                        /*狂雨*/node(MLUnitTypes.TorrentialRain, () -> {
-                            /*统战*/node(MLUnitTypes.UnitedFront, () -> {
-                            });
-                                });
-                        /*罡风*/node(MLUnitTypes.GAle, () -> {
-
-                                });
-                        /*沧溟*/node(MLUnitTypes.VastOcean, () -> {
-
-                                });
                         /*高级通用装配升级厂*/node(MLBlocks.AdvancedGeneralAssemblyUpgradeFactory, () -> {
+                            /*狂雨*/node(MLUnitTypes.TorrentialRain, () -> {
+                                /*统战*/node(MLUnitTypes.UnitedFront, () -> {
+                                });
+                            });
+                            /*罡风*/node(MLUnitTypes.GAle, () -> {
 
+                            });
+                            /*沧溟*/node(MLUnitTypes.VastOcean, () -> {
+
+                            });
                         });
 
                     });

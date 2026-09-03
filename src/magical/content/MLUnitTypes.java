@@ -805,7 +805,7 @@ public class MLUnitTypes {
                 rotate = false;
                 top = false;
                 inaccuracy = 0f;
-                shootSound = Sounds.shootBig;
+                shootSound = MLSounds.shootBig;
                 alternate = true;
                 ejectEffect = Fx.casing4;
                 shootY = 24f;
