@@ -2202,7 +2202,7 @@ public class MLUnitTypes {
                 weapons.add(
                         new Weapon("magic-VastOcean1") {{
                             reload = 120f;
-                            recoil = 0f;
+                            recoil = 6f;
                             x = 0;
                             y = -24;
                             mirror = false;
@@ -2229,7 +2229,7 @@ public class MLUnitTypes {
                         }},
                         new Weapon("magic-VastOcean1") {{
                             reload = 120f;
-                            recoil = 0f;
+                            recoil = 6f;
                             x = 0;
                             y = 18;
                             mirror = false;
@@ -2237,7 +2237,7 @@ public class MLUnitTypes {
                             rotateSpeed = 2f;
                             inaccuracy = 0f;
                             ejectEffect = Fx.casing4;
-                            layerOffset = 0.001f;
+                            layerOffset = 0.002f;
                             shootSound = MLSounds.laser;
                             bullet = new BasicBulletType(16, 400) {{
                                 lifetime = 35;
@@ -2254,6 +2254,72 @@ public class MLUnitTypes {
                                 hitSound = MLSounds.explosionCleroi;
                             }};
                         }});
+            weapons.add(
+                    new Weapon("magic-VastOcean0") {{
+                        reload = 30f;
+                        x = 12f;
+                        y = 4f;
+                        rotate = true;
+                        rotateSpeed = 2.5f;
+                        mirror = true;
+                        alternate = true;
+                        inaccuracy = 3f;
+                        shootSound = MLSounds.laser;
+                        shake = 3f;
+                        bullet = new BasicBulletType() {{
+                            damage = 90f;
+                            lifetime = 70f;
+                            speed = 8f;
+                            width = 16f;
+                            height = 24f;
+                            hitSize = 16f;
+                            splashDamageRadius = 36f;
+                            splashDamage = 90f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            trailLength = 6;
+                            trailWidth = 2f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            ammoMultiplier = 1f;
+                            hitSound = MLSounds.plasmaboom;
+                            hitEffect = despawnEffect = new MultiEffect(
+                                    new WaveEffect() {{
+                                        lifetime = 30f;
+                                        sizeFrom = 0f;
+                                        sizeTo = 72f;
+                                        strokeFrom = 0f;
+                                        strokeTo = 3f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect() {{
+                                        particles = 10;
+                                        sizeFrom = 9f;
+                                        sizeTo = 0f;
+                                        length = 72f;
+                                        baseLength = 0f;
+                                        lifetime = 30f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                        interp = Interp.pow10Out;
+                                        sizeInterp = Interp.pow10In;
+                                    }}
+                            );
+                            smokeEffect = Fx.smokeCloud;
+                            trailChance = 1f;
+                            trailInterval = 20f;
+                            trailEffect = new ParticleEffect() {{
+                                particles = 6;
+                                length = 9f;
+                                baseLength = 12f;
+                                lifetime = 9f;
+                                sizeFrom = 3f;
+                                sizeTo = 0f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                        }};
+                    }});
             }};
         //二级
         //t1
