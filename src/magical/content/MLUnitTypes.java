@@ -303,7 +303,7 @@ public class MLUnitTypes {
             hitSize = 88f;
             health = 84000;
             armor = 72;
-            faceTarget = true;
+            faceTarget = false;
             crushDamage = 12;
             range = 480;
             weapons.add(new Weapon("magic-TorrentialRain0") {{
