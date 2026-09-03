@@ -801,14 +801,15 @@ public class MLUnitTypes {
                 reload = 6f;
                 shake = 6f;
                 recoil = 6f;
-                x = 36f;
+                x = 36.5f;
                 rotate = false;
                 top = false;
                 inaccuracy = 0f;
                 shootSound = MLSounds.shootBig;
                 alternate = true;
                 ejectEffect = Fx.casing4;
-                shootY = 24f;
+                shootY = 32f;
+                shootX = 16f;
                 bullet = new BasicBulletType(){{
                     damage = 300f;
                     pierce = true;
