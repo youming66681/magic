@@ -320,6 +320,9 @@ public class MLTechTree {
                         /*狂雨*/node(MLUnitTypes.TorrentialRain, () -> {
 
                                 });
+                        /*罡风*/node(MLUnitTypes.GAle, () -> {
+
+                                });
                         /*高级通用装配升级厂*/node(MLBlocks.AdvancedGeneralAssemblyUpgradeFactory, () -> {
 
                         });
