@@ -328,7 +328,7 @@ public class MLTechTree {
                                 });
                             });
                             /*沧溟*/node(MLUnitTypes.VastOcean, () -> {
-                                /*辉耀*/node(MLUnitTypes.SplendidBrilliant, () -> {
+                                /*辉耀*/node(MLUnitTypes.Radiance, () -> {
 
                                 });
                             });

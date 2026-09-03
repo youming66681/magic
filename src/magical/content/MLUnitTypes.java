@@ -3132,7 +3132,7 @@ public class MLUnitTypes {
                     }});
         }};
         //t6
-        SplendidBrilliant = new UnitType("SplendidBrilliant") {{
+        Radiance = new UnitType("Radiance") {{
                 constructor = UnitTypes.risso.constructor;
                 speed = 0.6f;
                 rotateSpeed = 1;
@@ -3154,7 +3154,7 @@ public class MLUnitTypes {
                         )
                 );
                 weapons.add(
-                        new Weapon("magic-SplendidBrilliant0") {{
+                        new Weapon("magic-Radiance0") {{
                             reload = 180f;
                             x = 0f;
                             y = -25f;
