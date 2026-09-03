@@ -323,6 +323,9 @@ public class MLTechTree {
                         /*罡风*/node(MLUnitTypes.GAle, () -> {
 
                                 });
+                        /*沧溟*/node(MLUnitTypes.VastOcean, () -> {
+
+                                });
                         /*高级通用装配升级厂*/node(MLBlocks.AdvancedGeneralAssemblyUpgradeFactory, () -> {
 
                         });

@@ -2200,7 +2200,7 @@ public class MLUnitTypes {
                 range = 560f;
                 faceTarget = false;
                 weapons.add(
-                        new Weapon("magic-VastOcean0") {{
+                        new Weapon("magic-VastOcean1") {{
                             reload = 120f;
                             recoil = 0f;
                             x = 0;
@@ -2227,7 +2227,7 @@ public class MLUnitTypes {
                                 hitSound = MLSounds.explosionCleroi;
                             }};
                         }},
-                        new Weapon("magic-VastOcean0") {{
+                        new Weapon("magic-VastOcean1") {{
                             reload = 120f;
                             recoil = 0f;
                             x = 0;
