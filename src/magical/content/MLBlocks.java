@@ -3676,6 +3676,13 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.LargeWingWall, 6),
                     new PayloadStack(MLUnitTypes.ExpelDarkness, 3),
                     new PayloadStack(MLUnitTypes.ChasingLight, 3));
+            addPlan("T3", MLUnitTypes.SplendidBrilliant, 21600f, 17, 2,
+                    new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 6),
+                    new PayloadStack(MLBlocks.LargeWingWall, 6),
+                    new PayloadStack(MLBlocks.LargePhantomGlowWall, 6),
+                    new PayloadStack(MLUnitTypes.ExpelDarkness, 3),
+                    new PayloadStack(MLUnitTypes.ChasingLight, 3),
+                    new PayloadStack(MLUnitTypes.Dawn, 3));
 
             consumePower(20f);
         }};

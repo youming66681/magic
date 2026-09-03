@@ -3133,152 +3133,153 @@ public class MLUnitTypes {
         }};
         //t6
         SplendidBrilliant = new UnitType("SplendidBrilliant") {{
-            constructor = UnitTypes.risso.constructor;
-            speed = 0.6f;
-            rotateSpeed = 1;
-            waveTrailX = 0;
-            waveTrailY = -52;
-            hitSize = 96;
-            health = 120000;
-            armor = 102;
-            faceTarget = false;
-            range = 600;
-            abilities.add(
-                    new ForceFieldAbility(
-                            180f,     // radius
-                            3f,     // regen
-                            12000f,    // max
-                            360f,     // cooldown
-                            6,        // sides
-                            0f        // rotation
-                    )
-            );
-            weapons.add(
-            new Weapon("magic-SplendidBrilliant0") {{
-                reload = 180f;
-                x = 0f;
-                y = -25f;
-                rotate = true;
-                rotateSpeed = 3f;
-                mirror = false;
-                alternate = false;
-                inaccuracy = 0f;
-                shootSound = MLSounds.laser;
-                shake = 15f;
-                layerOffset = 0.001f;
-                parts.addAll(
-                        new RegionPart("-l") {{
-                            mirror = false;
-                            heatProgress = PartProgress.recoil;
-                            recoilIndex = 0;
-                            progress = PartProgress.recoil;
-                            moveY = -4;
-                        }},
-                        new RegionPart("-ma") {{
-                            mirror = false;
-                            heatProgress = PartProgress.recoil;
-                            recoilIndex = 1;
-                            progress = PartProgress.recoil;
-                            moveY = -4;
-                        }},
-                        new RegionPart("-mb") {{
-                            mirror = false;
-                            heatProgress = PartProgress.recoil;
-                            recoilIndex = 2;
-                            progress = PartProgress.recoil;
-                            moveY = -4;
-                        }},
-                        new RegionPart("-r") {{
-                            mirror = false;
-                            heatProgress = PartProgress.recoil;
-                            recoilIndex = 3;
-                            progress = PartProgress.recoil;
-                            moveY = -4;
-                        }}
+                constructor = UnitTypes.risso.constructor;
+                speed = 0.6f;
+                rotateSpeed = 1;
+                waveTrailX = 0;
+                waveTrailY = -52;
+                hitSize = 96;
+                health = 120000;
+                armor = 102;
+                faceTarget = false;
+                range = 600;
+                abilities.add(
+                        new ForceFieldAbility(
+                                180f,     // radius
+                                3f,     // regen
+                                12000f,    // max
+                                360f,     // cooldown
+                                6,        // sides
+                                0f        // rotation
+                        )
                 );
-                recoils = 4;
-                shoot = new ShootBarrel() {{
-                    shots = 4;
-                    shotDelay = 20f;
-                    barrels = new float[]{
-                            -12f, 36f, 0f,
-                            -8f, 36f, 0f,
-                            8f, 36f, 0f,
-                            12f, 36f, 0f
-                    };
-                }};
-                bullet = new BasicBulletType() {{
-                    damage = 1000f;
-                    lifetime = 37.5f;
-                    speed = 16f;
-                    width = 28f;
-                    height = 56f;
-                    hitSize = 24f;
-                    splashDamageRadius = 64f;
-                    splashDamage = 1500f;
-                    frontColor = Color.valueOf("FEEBB3FF");
-                    backColor = Color.valueOf("FEEBB3FF");
-                    trailLength = 12;
-                    trailWidth = 4f;
-                    trailColor = Color.valueOf("FEEBB3FF");
-                    hitSound = MLSounds.explosionAfflict;
-                    hitEffect = despawnEffect = MLFx.EnergyExplosion2;
-                    smokeEffect = Fx.smokeCloud;
-                    trailChance = 1f;
-                    trailInterval = 20f;
-                    hittable = false;
-                    trailEffect = new ParticleEffect() {{
-                        particles = 12;
-                        length = 16f;
-                        baseLength = 0f;
-                        lifetime = 12;
-                        sizeFrom = 6f;
-                        sizeTo = 0f;
-                        colorFrom = Color.valueOf("FEEBB3FF");
-                        colorTo = Color.valueOf("FEEBB3FF");
-                    }};
-                    fragBullets = 3;
-                    fragBullet = new PointBulletType(){{
-                        hitEffect = new ParticleEffect(){{
-                            particles = 1;
-                            sizeFrom = 16f;
-                            sizeTo = 0f;
-                            length = 0f;
-                            baseLength = 0f;
-                            lifetime = 30f;
-                            colorFrom = Color.valueOf("FEEBB3FF");
-                            colorTo = Color.valueOf("FEEBB3FF");
-                            cone = 60f;
-                        }};
-                        despawnEffect = Fx.none;
-                        frontColor = Color.valueOf("FEEBB3FF");
-                        backColor = Color.valueOf("FEEBB3FF");
-                        trailSpacing = 9f;
-                        hitSound = MLSounds.plasmaboom;
-                        trailEffect = new ParticleEffect(){{
-                            particles = 1;
-                            length = 1f;
-                            baseLength = 0f;
-                            lifetime = 30f;
-                            line = true;
-                            randLength = false;
-                            lenFrom = 8f;
-                            lenTo = 8f;
-                            strokeFrom = 6f;
-                            strokeTo = 0f;
-                            colorFrom = Color.valueOf("FEEBB3FF");
-                            colorTo = Color.valueOf("FEEBB3FF");
-                            cone = 0f;
-                        }};
-                        width = 0f;
-                        height = 0f;
-                        speed = 100f;
-                        lifetime = 3f;
-                        splashDamageRadius = 32f;
-                        splashDamage = 500f;
-                    }};
-                }};
-            }},
+                weapons.add(
+                        new Weapon("magic-SplendidBrilliant0") {{
+                            reload = 180f;
+                            x = 0f;
+                            y = -25f;
+                            rotate = true;
+                            rotateSpeed = 3f;
+                            mirror = false;
+                            alternate = false;
+                            inaccuracy = 0f;
+                            shootSound = MLSounds.laser;
+                            shake = 15f;
+                            layerOffset = 0.001f;
+                            parts.addAll(
+                                    new RegionPart("-l") {{
+                                        mirror = false;
+                                        heatProgress = PartProgress.recoil;
+                                        recoilIndex = 0;
+                                        progress = PartProgress.recoil;
+                                        moveY = -4;
+                                    }},
+                                    new RegionPart("-ma") {{
+                                        mirror = false;
+                                        heatProgress = PartProgress.recoil;
+                                        recoilIndex = 1;
+                                        progress = PartProgress.recoil;
+                                        moveY = -4;
+                                    }},
+                                    new RegionPart("-mb") {{
+                                        mirror = false;
+                                        heatProgress = PartProgress.recoil;
+                                        recoilIndex = 2;
+                                        progress = PartProgress.recoil;
+                                        moveY = -4;
+                                    }},
+                                    new RegionPart("-r") {{
+                                        mirror = false;
+                                        heatProgress = PartProgress.recoil;
+                                        recoilIndex = 3;
+                                        progress = PartProgress.recoil;
+                                        moveY = -4;
+                                    }}
+                            );
+                            recoils = 4;
+                            shoot = new ShootBarrel() {{
+                                shots = 4;
+                                shotDelay = 20f;
+                                barrels = new float[]{
+                                        -12f, 36f, 0f,
+                                        -8f, 36f, 0f,
+                                        8f, 36f, 0f,
+                                        12f, 36f, 0f
+                                };
+                            }};
+                            bullet = new BasicBulletType() {{
+                                damage = 1000f;
+                                lifetime = 37.5f;
+                                speed = 16f;
+                                width = 28f;
+                                height = 56f;
+                                hitSize = 24f;
+                                splashDamageRadius = 64f;
+                                splashDamage = 1500f;
+                                frontColor = Color.valueOf("FEEBB3FF");
+                                backColor = Color.valueOf("FEEBB3FF");
+                                trailLength = 12;
+                                trailWidth = 4f;
+                                trailColor = Color.valueOf("FEEBB3FF");
+                                hitSound = MLSounds.explosionAfflict;
+                                hitEffect = despawnEffect = MLFx.EnergyExplosion2;
+                                smokeEffect = Fx.smokeCloud;
+                                trailChance = 1f;
+                                trailInterval = 20f;
+                                hittable = false;
+                                trailEffect = new ParticleEffect() {{
+                                    particles = 12;
+                                    length = 16f;
+                                    baseLength = 0f;
+                                    lifetime = 12;
+                                    sizeFrom = 6f;
+                                    sizeTo = 0f;
+                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                }};
+                                fragBullets = 3;
+                                fragBullet = new PointBulletType() {{
+                                    hitEffect = new ParticleEffect() {{
+                                        particles = 1;
+                                        sizeFrom = 16f;
+                                        sizeTo = 0f;
+                                        length = 0f;
+                                        baseLength = 0f;
+                                        lifetime = 30f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                        cone = 60f;
+                                    }};
+                                    despawnEffect = Fx.none;
+                                    frontColor = Color.valueOf("FEEBB3FF");
+                                    backColor = Color.valueOf("FEEBB3FF");
+                                    trailSpacing = 9f;
+                                    hitSound = MLSounds.plasmaboom;
+                                    trailEffect = new ParticleEffect() {{
+                                        particles = 1;
+                                        length = 1f;
+                                        baseLength = 0f;
+                                        lifetime = 30f;
+                                        line = true;
+                                        randLength = false;
+                                        lenFrom = 8f;
+                                        lenTo = 8f;
+                                        strokeFrom = 6f;
+                                        strokeTo = 0f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                        cone = 0f;
+                                    }};
+                                    width = 0f;
+                                    height = 0f;
+                                    speed = 100f;
+                                    lifetime = 3f;
+                                    splashDamageRadius = 32f;
+                                    splashDamage = 500f;
+                                }};
+                            }};
+                        }});
+            }};
         //核心机
         //风行
         Popular = new UnitType("Popular") {{
