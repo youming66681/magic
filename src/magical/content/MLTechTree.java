@@ -297,6 +297,9 @@ public class MLTechTree {
                                 });
                             });
                                 });
+                        /*全域超速仪*/node(MLBlocks.GlobalOverdriveProjector, () -> {
+
+                        });
                         /*煤幻溶机*/node(MLBlocks.CoalMeltingMachine, () -> {
                             /*纳米丝织机*/node(MLBlocks.NanofiberLoom, () -> {
                                 /*纳米碳合金组合器*/node(MLBlocks.NanoCarbonAlloyCombiner, () -> {
@@ -304,8 +307,10 @@ public class MLTechTree {
                                 });
                             });
                                 });
-                        /*全域超速仪*/node(MLBlocks.GlobalOverdriveProjector, () -> {
+                        /*争锋*/node(MLBlocks.Compete, () -> {
+                            /*星落*/node(MLBlocks.FallingStar, () -> {
 
+                            });
                                 });
                         /*高级通用装配升级厂*/node(MLBlocks.AdvancedGeneralAssemblyUpgradeFactory, () -> {
 
