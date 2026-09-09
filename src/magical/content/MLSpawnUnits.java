@@ -38,6 +38,8 @@ public class MLSpawnUnits {
                     Unit newUnit = type.create(state.rules.waveTeam);
                     newUnit.set(x, y);
                     MLSounds.shootRipple.at(x, y, 5f);
+                    Fx.circleOut.at(unit.x, unit.y, unit.hitSize, unit.team.color);
+                    Fx.jumpTrailOut.at(unit.x, unit.y, unit.rotation, unit.team.color, unit.type);
                     newUnit.add();
                 });
             }
