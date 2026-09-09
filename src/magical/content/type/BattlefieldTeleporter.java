@@ -58,7 +58,7 @@ public class BattlefieldTeleporter extends UnitAssembler{
         return Core.bundle.has(key) ? Core.bundle.get(key) : key;
     }
     public int getPlanArea(int index){
-        if(index < 0 || index >= planAreas.size) return area;
+        if(index < 0 || index >= planAreas.size) return 0;
         return planAreas.get(index);
     }
     public int getPlanTier(int index){
