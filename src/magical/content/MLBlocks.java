@@ -3255,7 +3255,7 @@ public class MLBlocks {
             speed = 0.2f;
             displayedSpeed = 25f;
         }};
-        phantomSteelBridge = new BufferedItemBridge("phantomSteelBridge"){{
+        phantomSteelBridge = new ItemBridge("phantomSteelBridge"){{
             requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.phantomSteel, 9, Items.graphite, 18}));
             fadeIn = moveArrows = false;
             range = 8;
@@ -3278,7 +3278,7 @@ public class MLBlocks {
             speed = 0.1f;
             itemCapacity = 30;
         }};
-        GlowFeatherBridge = new BufferedItemBridge("GlowFeatherBridge"){{
+        GlowFeatherBridge = new ItemBridge("GlowFeatherBridge"){{
             requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.fluorescentFeatherStone, 5, MLItems.logicChip, 5}));
             fadeIn = moveArrows = false;
             range = 24;
