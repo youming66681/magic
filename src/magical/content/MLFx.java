@@ -17,6 +17,7 @@ import mindustry.content.*;
 import mindustry.graphics.Drawf;
 import mindustry.graphics.Pal;
 import arc.util.Tmp;
+import mindustry.graphics.Layer;
 
 public class MLFx {
     public static Effect smallElectricDetonation;
@@ -563,7 +564,7 @@ public class MLFx {
         jumpTrail = new Effect(120f, 5000, e -> {
             if (!(e.data instanceof UnitType)) return;
             UnitType type = e.data();
-            color(type.engineColor == null ? e.color : type.engineColor);
+            Draw.color(type.engineColor == null ? e.color : type.engineColor);
 
             if (type.engineLayer > 0) Draw.z(type.engineLayer);
             else Draw.z((type.lowAltitude ? Layer.flyingUnitLow : Layer.flyingUnit) - 0.001f);
@@ -578,11 +579,17 @@ public class MLFx {
                 Tmp.v1.trns(e.rotation, engine.y, -engine.x);
 
                 e.scaled(80, i -> {
-                    DrawFunc.tri(i.x + Tmp.v1.x, i.y + Tmp.v1.y, engine.radius * 1.5f * i.fout(Interp.slowFast), 3000 * engine.radius / (type.engineSize + 4), i.rotation + ang - 90);
+                    Drawf.tri(
+                            i.x + Tmp.v1.x,
+                            i.y + Tmp.v1.y,
+                            engine.radius * 1.5f * i.fout(Interp.slowFast),
+                            3000 * engine.radius / (type.engineSize + 4),
+                            i.rotation + ang - 90
+                    );
                     Fill.circle(i.x + Tmp.v1.x, i.y + Tmp.v1.y, engine.radius * 1.5f * i.fout(Interp.slowFast));
                 });
 
-                randLenVectors(e.id + index, 22, 400 * engine.radius / (type.engineSize + 4), e.rotation + ang - 90, 0f, (x, y) -> lineAngle(e.x + x + Tmp.v1.x, e.y + y + Tmp.v1.y, Mathf.angle(x, y), e.fout() * 60));
+                Angles.randLenVectors(e.id + index, 22, 400 * engine.radius / (type.engineSize + 4), e.rotation + ang - 90, 0f, (x, y) -> lineAngle(e.x + x + Tmp.v1.x, e.y + y + Tmp.v1.y, Mathf.angle(x, y), e.fout() * 60));
             }
 
             Draw.color();
@@ -594,7 +601,7 @@ public class MLFx {
                 jumpTrailOut = new Effect(120f, 200, e -> {
                     if (!(e.data instanceof UnitType)) return;
                     UnitType type = e.data();
-                    color(type.engineColor == null ? e.color : type.engineColor);
+                    Draw.color(type.engineColor == null ? e.color : type.engineColor);
 
                     if (type.engineLayer > 0) Draw.z(type.engineLayer);
                     else Draw.z((type.lowAltitude ? Layer.flyingUnitLow : Layer.flyingUnit) - 0.001f);
@@ -612,11 +619,17 @@ public class MLFx {
 
                         rand.setSeed(e.id);
                         e.scaled(80, i -> {
-                            DrawFunc.tri(i.x + Tmp.v1.x, i.y + Tmp.v1.y, engine.radius * 3f * i.fout(Interp.slowFast), 2300 + rand.range(120), i.rotation + ang - 90);
+                            Drawf.tri(
+                                    i.x + Tmp.v1.x,
+                                    i.y + Tmp.v1.y,
+                                    engine.radius * 3f * i.fout(Interp.slowFast),
+                                    2300 + rand.range(120),
+                                    i.rotation + ang - 90
+                            );
                             Fill.circle(i.x + Tmp.v1.x, i.y + Tmp.v1.y, engine.radius * 3f * i.fout(Interp.slowFast));
                         });
 
-                        randLenVectors(e.id + index, 42, 2330, e.rotation + ang - 90, 0f, (x, y) -> lineAngle(e.x + x + Tmp.v1.x, e.y + y + Tmp.v1.y, Mathf.angle(x, y), e.fout() * 60));
+                        Angles.randLenVectors(e.id + index, 42, 2330, e.rotation + ang - 90, 0f, (x, y) -> lineAngle(e.x + x + Tmp.v1.x, e.y + y + Tmp.v1.y, Mathf.angle(x, y), e.fout() * 60));
                     }
                 });
                 circleOut = new Effect(60f, 500f, e -> {
