@@ -3548,12 +3548,6 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.Nebula, 12),
                     new PayloadStack(MLBlocks.LightDescends, 8));
 
-            teleportRanges = new int[]{
-                    400,
-                    480,
-                    560,
-            };
-
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);
         }};
@@ -3690,11 +3684,6 @@ public class MLBlocks {
                     new PayloadStack(MLUnitTypes.ChasingLight, 3),
                     new PayloadStack(MLUnitTypes.Dawn, 3));
 
-            teleportRanges = new int[]{
-                    320,
-                    400,
-                    480,
-            };
             consumePower(20f);
         }};
         //通用装配升级厂
