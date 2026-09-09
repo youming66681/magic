@@ -69,6 +69,7 @@ public class MLSpawnUnits {
                     newUnit.set(x, y);
                     MLSounds.plasmaboom.at(x, y, 10f);
                     newUnit.add();
+                    MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                 });
             }
             else if (unit.type == MLUnitTypes.Tianshu) {
@@ -83,6 +84,7 @@ public class MLSpawnUnits {
                     newUnit.set(x, y);
                     MLSounds.plasmaboom.at(x, y, 10f);
                     newUnit.add();
+                    MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                 });
             }
             else if (unit.type == MLUnitTypes.Aoba) {
@@ -97,6 +99,7 @@ public class MLSpawnUnits {
                     newUnit.set(x, y);
                     MLSounds.laser.at(x, y, 15f);
                     newUnit.add();
+                    MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                 });
             }
             else if (unit.type == MLUnitTypes.MoonRise) {
@@ -111,6 +114,7 @@ public class MLSpawnUnits {
                     newUnit.set(x, y);
                     MLSounds.laser.at(x, y, 15f);
                     newUnit.add();
+                    MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                 });
             }
             else if (unit.type == MLUnitTypes.StarrySky) {
@@ -125,6 +129,7 @@ public class MLSpawnUnits {
                     newUnit.set(x, y);
                     MLSounds.laser.at(x, y, 15f);
                     newUnit.add();
+                    MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                 });
             }
         });

@@ -3537,8 +3537,8 @@ public class MLUnitTypes {
             health = 8800;
             armor = 16;
             itemCapacity = 0;
-            engineOffset = 0;
-            engineSize = 0f;
+            engineOffset = 18;
+            engineSize = 6f;
             buildSpeed = 6;
             buildRange = 320;
             mineSpeed = 15f;
@@ -3623,8 +3623,8 @@ public class MLUnitTypes {
             health = 12000;
             armor = 24;
             itemCapacity = 0;
-            engineOffset = 0;
-            engineSize = 0f;
+            engineOffset = 20;
+            engineSize = 10f;
             trailLength = 12;
             range = 360;
             abilities.add(
@@ -3724,6 +3724,8 @@ public class MLUnitTypes {
             speed = 2.4f;
             accel = 0.07f;
             drag = 0.03f;
+            engineOffset = 36;
+            engineSize = 18f;
             targetFlags = new BlockFlag[]{
                     BlockFlag.factory,
                     BlockFlag.generator,
@@ -3965,6 +3967,8 @@ public class MLUnitTypes {
                 health = 25000f;
                 armor = 30f;
                 hitSize = 82f;
+                engineOffset = 41;
+                engineSize = 20f;
                 range = 480f;
                 speed = 1f;
                 accel = 0.07f;
@@ -4054,6 +4058,8 @@ public class MLUnitTypes {
             health = 60000f;
             armor = 60f;
             hitSize = 96f;
+            engineOffset = 48;
+            engineSize = 24f;
             range = 960f;
             speed = 1.8f;
             accel = 0.06f;
@@ -4193,6 +4199,8 @@ public class MLUnitTypes {
                 health = 180000f;
                 armor = 90f;
                 hitSize = 112f;
+                engineOffset = 56;
+                engineSize = 28f;
                 range = 1200f;
                 speed = 1.5f;
                 accel = 0.06f;
@@ -4519,6 +4527,8 @@ public class MLUnitTypes {
                 health = 540000f;
                 armor = 120f;
                 hitSize = 128f;
+                engineOffset = 64;
+                engineSize = 32f;
                 range = 1440f;
                 speed = 1.2f;
                 accel = 0.06f;
