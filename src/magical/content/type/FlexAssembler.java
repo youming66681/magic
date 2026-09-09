@@ -1,5 +1,4 @@
 package magical.content;
-
 import arc.*;
 import arc.audio.*;
 import arc.graphics.*;
@@ -13,6 +12,7 @@ import arc.util.*;
 import arc.util.io.*;
 import mindustry.*;
 import mindustry.ai.types.AssemblerAI;
+import mindustry.annotations.Annotations.*;
 import mindustry.content.*;
 import mindustry.ctype.*;
 import mindustry.entities.*;
@@ -23,17 +23,17 @@ import mindustry.graphics.*;
 import mindustry.io.*;
 import mindustry.logic.*;
 import mindustry.type.*;
-import mindustry.type.PayloadStack;
 import mindustry.ui.*;
 import mindustry.world.*;
 import mindustry.world.blocks.*;
 import mindustry.world.blocks.ConstructBlock.*;
 import mindustry.world.blocks.payloads.*;
+import mindustry.world.consumers.*;
 import mindustry.world.meta.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import static mindustry.Vars.*;
-
-public class FlexAssembler extends Block{
+public class FlexAssembler extends PayloadBlock{
     public int areaSize = 11;
     public UnitType droneType = UnitTypes.assemblyDrone;
     public int dronesCreated = 4;
@@ -44,8 +44,10 @@ public class FlexAssembler extends Block{
     public float createSoundVolume = 1f;
     public Map<AssemblerUnitPlan, Integer> planAreaMap = new HashMap<>();
     public Map<AssemblerUnitPlan, Integer> tierRequired = new HashMap<>();
-    public TextureRegion sideRegion1;
-    public TextureRegion sideRegion2;
+    public @Load("@-side1") TextureRegion sideRegion1;
+    public @Load("@-side2") TextureRegion sideRegion2;
+    protected @Nullable ConsumePayloadDynamic consPayload;
+    protected @Nullable ConsumeItemDynamic consItem;
     public FlexAssembler(String name){
         super(name);
         update = solid = true;
@@ -111,7 +113,11 @@ public class FlexAssembler extends Block{
             removeBar("liquid");
         }
         addBar("progress", (FlexAssemblerBuild e) ->
-                new Bar("bar.progress", Pal.ammo, () -> e.progress)
+                new Bar(
+                        "bar.progress",
+                        Pal.ammo,
+                        () -> e.progress
+                )
         );
         addBar("units", (FlexAssemblerBuild e) ->
                 new Bar(
@@ -143,7 +149,7 @@ public class FlexAssembler extends Block{
     }
     @Override
     public TextureRegion[] icons(){
-        if(sideRegion1 != null){
+        if(sideRegion1 != null && sideRegion2 != null){
             return new TextureRegion[]{region, sideRegion1, topRegion};
         }
         return new TextureRegion[]{region, topRegion};
@@ -151,6 +157,48 @@ public class FlexAssembler extends Block{
     @Override
     public void init(){
         updateClipRadius((areaSize + 1) * tilesize);
+        consume(
+                consPayload = new ConsumePayloadDynamic(
+                        (FlexAssemblerBuild build) -> {
+                            AssemblerUnitPlan plan = build.plan();
+                            return plan == null || plan.requirements == null ?
+                                    new Seq<PayloadStack>() :
+                                    plan.requirements;
+                        }
+                )
+        );
+        consume(
+                consItem = new ConsumeItemDynamic(
+                        (FlexAssemblerBuild build) -> {
+                            AssemblerUnitPlan plan = build.plan();
+                            return plan == null || plan.itemReq == null ?
+                                    ItemStack.empty :
+                                    plan.itemReq;
+                        }
+                )
+        );
+        consume(
+                new ConsumeLiquidsDynamic(
+                        (FlexAssemblerBuild build) -> {
+                            AssemblerUnitPlan plan = build.plan();
+                            return plan == null || plan.liquidReq == null ?
+                                    LiquidStack.empty :
+                                    plan.liquidReq;
+                        }
+                )
+        );
+        super.init();
+        initCapacities();
+    }
+    @Override
+    public void afterPatch(){
+        initCapacities();
+        super.afterPatch();
+    }
+    public void initCapacities(){
+        consumeBuilder.each(c ->
+                c.multiplier = b -> state.rules.unitCost(b.team)
+        );
         itemCapacity = 10;
         capacities = new int[Vars.content.items().size];
         for(AssemblerUnitPlan plan : plans){
@@ -160,7 +208,10 @@ public class FlexAssembler extends Block{
                             capacities[stack.item.id],
                             stack.amount * 2
                     );
-                    itemCapacity = Math.max(itemCapacity, stack.amount * 2);
+                    itemCapacity = Math.max(
+                            itemCapacity,
+                            stack.amount * 2
+                    );
                 }
             }
             if(plan.liquidReq != null){
@@ -169,12 +220,6 @@ public class FlexAssembler extends Block{
                 }
             }
         }
-        super.init();
-    }
-    @Override
-    public void afterPatch(){
-        init();
-        super.afterPatch();
     }
     @Override
     public void setStats(){
@@ -184,8 +229,11 @@ public class FlexAssembler extends Block{
             table.row();
             Map<Integer, Seq<AssemblerUnitPlan>> byTier = new HashMap<>();
             for(AssemblerUnitPlan plan : plans){
-                int tier = tierRequired.getOrDefault(plan, 0);
-                byTier.computeIfAbsent(tier, k -> new Seq<>()).add(plan);
+                int required = tierRequired.getOrDefault(plan, 0);
+                byTier.computeIfAbsent(
+                        required,
+                        k -> new Seq<>()
+                ).add(plan);
             }
             int maxTier = byTier.keySet().stream()
                     .max(Integer::compareTo)
@@ -194,8 +242,9 @@ public class FlexAssembler extends Block{
                 Seq<AssemblerUnitPlan> group = byTier.get(tier);
                 if(group == null || group.isEmpty()) continue;
                 final int currentTier = tier;
-                table.table(Tex.pane, t ->
-                        t.add(
+                table.table(
+                        Tex.pane,
+                        t -> t.add(
                                 Core.bundle.format(
                                         "flexassembler.tier.stat",
                                         currentTier
@@ -228,13 +277,13 @@ public class FlexAssembler extends Block{
                                         ) + " " +
                                                 Core.bundle.get("unit.seconds")
                                 ).color(Color.lightGray).left();
-                                int tier = tierRequired.getOrDefault(plan, 0);
-                                if(tier > 0){
+                                int required = tierRequired.getOrDefault(plan, 0);
+                                if(required > 0){
                                     info.row();
                                     info.add(
                                             Core.bundle.format(
                                                     "flexassembler.tier.stat",
-                                                    tier
+                                                    required
                                             )
                                     ).color(Color.lightGray).left();
                                 }
@@ -253,16 +302,36 @@ public class FlexAssembler extends Block{
                                 int length = 0;
                                 if(plan.itemReq != null){
                                     for(ItemStack stack : plan.itemReq){
-                                        if(length % 4 == 0) req.row();
-                                        req.add(StatValues.stack(stack)).pad(5);
+                                        if(length % 4 == 0){
+                                            req.row();
+                                        }
+                                        req.add(
+                                                StatValues.stack(stack)
+                                        ).pad(5);
                                         length++;
                                     }
                                 }
                                 if(plan.requirements != null){
                                     for(PayloadStack stack : plan.requirements){
-                                        if(length % 4 == 0) req.row();
-                                        req.add(StatValues.stack(stack)).pad(5);
+                                        if(length % 4 == 0){
+                                            req.row();
+                                        }
+                                        req.add(
+                                                StatValues.stack(stack)
+                                        ).pad(5);
                                         length++;
+                                    }
+                                }
+                                if(plan.liquidReq != null){
+                                    for(LiquidStack stack : plan.liquidReq){
+                                        req.row();
+                                        req.add(
+                                                StatValues.displayLiquid(
+                                                        stack.liquid,
+                                                        stack.amount * 60f,
+                                                        true
+                                                )
+                                        ).pad(5).right();
                                     }
                                 }
                             }).right();
@@ -300,26 +369,36 @@ public class FlexAssembler extends Block{
     public static class YeetData{
         public Vec2 target;
         public UnlockableContent item;
-        public YeetData(Vec2 target, UnlockableContent item){
+        public YeetData(
+                Vec2 target,
+                UnlockableContent item
+        ){
             this.target = target;
             this.item = item;
         }
     }
     @Remote(called = Loc.server)
     public static void flexAssemblerUnitSpawned(Tile tile){
-        if(tile == null || !(tile.build instanceof FlexAssemblerBuild build)) return;
+        if(tile == null || !(tile.build instanceof FlexAssemblerBuild build)){
+            return;
+        }
         build.spawned();
     }
     @Remote(called = Loc.server)
-    public static void flexAssemblerDroneSpawned(Tile tile, int id){
-        if(tile == null || !(tile.build instanceof FlexAssemblerBuild build)) return;
+    public static void flexAssemblerDroneSpawned(
+            Tile tile,
+            int id
+    ){
+        if(tile == null || !(tile.build instanceof FlexAssemblerBuild build)){
+            return;
+        }
         build.droneSpawned(id);
     }
     @Override
     public Building createBuilding(){
         return new FlexAssemblerBuild();
     }
-    public class FlexAssemblerBuild extends PayloadBlockBuild<Payload>{
+    public class FlexAssemblerBuild extends PayloadBlock.PayloadBlockBuild<Payload>{
         private static final int NO_PLAN = -1;
         protected IntSeq readUnits = new IntSeq();
         protected IntSeq whenSyncedUnits = new IntSeq();
@@ -373,12 +452,13 @@ public class FlexAssembler extends Block{
             );
         }
         public Rect getRect(Rect rect){
-            return FlexAssembler.this.getRect(
-                    rect,
-                    x,
-                    y,
-                    rotation
+            float len = tilesize * (myAreaSize + size) / 2f;
+            rect.setCentered(
+                    x + Geometry.d4x(rotation) * len,
+                    y + Geometry.d4y(rotation) * len,
+                    myAreaSize * tilesize
             );
+            return rect;
         }
         public boolean moduleFits(
                 Block other,
@@ -446,22 +526,28 @@ public class FlexAssembler extends Block{
         }
         public AssemblerUnitPlan plan(){
             if(lockedPlan != null){
-                int reqTier = tierRequired.getOrDefault(
+                int required = tierRequired.getOrDefault(
                         lockedPlan,
                         0
                 );
-                if(reqTier <= currentTier){
+                if(required <= currentTier){
                     return lockedPlan;
                 }
             }
-            if(plans.isEmpty()) return null;
+            if(plans.isEmpty()){
+                return null;
+            }
             AssemblerUnitPlan best = null;
             int bestTier = -1;
             for(AssemblerUnitPlan plan : plans){
-                int tier = tierRequired.getOrDefault(plan, 0);
-                if(tier <= currentTier && tier >= bestTier){
+                int required = tierRequired.getOrDefault(
+                        plan,
+                        0
+                );
+                if(required <= currentTier &&
+                        required >= bestTier){
                     best = plan;
-                    bestTier = tier;
+                    bestTier = required;
                 }
             }
             return best;
@@ -469,10 +555,14 @@ public class FlexAssembler extends Block{
         @Override
         public boolean shouldConsume(){
             AssemblerUnitPlan plan = plan();
-            if(plan == null) return false;
+            if(plan == null){
+                return false;
+            }
             return enabled &&
                     !wasOccupied &&
                     Units.canCreate(team, plan.unit) &&
+                    (consPayload == null || consPayload.efficiency(this) > 0) &&
+                    (consItem == null || consItem.efficiency(this) > 0) &&
                     team.activateUnitFactories();
         }
         @Override
@@ -489,13 +579,17 @@ public class FlexAssembler extends Block{
         @Override
         public void display(Table table){
             super.display(table);
-            if(team != player.team()) return;
+            if(team != player.team()){
+                return;
+            }
             table.row();
             table.table(t -> {
                 t.left().defaults().left();
                 Block prev = null;
                 for(FlexAssemblerModule.FlexAssemblerModuleBuild module : modules){
-                    if(prev == module.block) continue;
+                    if(prev == module.block){
+                        continue;
+                    }
                     t.image(module.block.uiIcon)
                             .size(iconMed)
                             .padRight(4);
@@ -514,7 +608,9 @@ public class FlexAssembler extends Block{
         }
         @Override
         public void buildConfiguration(Table table){
-            if(Vars.headless) return;
+            if(Vars.headless){
+                return;
+            }
             updateLockedPlan();
             AssemblerUnitPlan current = lockedPlan;
             boolean locked = current != null;
@@ -560,7 +656,9 @@ public class FlexAssembler extends Block{
             Table grid = new Table();
             int cols = 4;
             for(int i = 0; i < available.size; i++){
-                if(i % cols == 0 && i != 0) grid.row();
+                if(i % cols == 0 && i != 0){
+                    grid.row();
+                }
                 AssemblerUnitPlan plan = available.get(i);
                 boolean chosen = locked && current == plan;
                 int index = plans.indexOf(plan);
@@ -607,10 +705,10 @@ public class FlexAssembler extends Block{
         @Override
         public void configure(@Nullable Object value){
             if(value instanceof Integer){
-                int idx = (Integer)value;
-                if(idx == NO_PLAN ||
-                        (idx >= 0 && idx < plans.size)){
-                    lockedIndex = idx;
+                int index = (Integer)value;
+                if(index == NO_PLAN ||
+                        (index >= 0 && index < plans.size)){
+                    lockedIndex = index;
                     updateLockedPlan();
                     syncArea();
                 }
@@ -634,6 +732,7 @@ public class FlexAssembler extends Block{
                     progress = 0f;
                 }
                 lastTier = lastTier == -2 ? -1 : currentTier;
+                syncArea();
             }
             if(units.size < dronesCreated &&
                     whenSyncedUnits.size > 0){
@@ -785,7 +884,9 @@ public class FlexAssembler extends Block{
         }
         public void spawned(){
             AssemblerUnitPlan plan = plan();
-            if(plan == null) return;
+            if(plan == null){
+                return;
+            }
             Vec2 spawn = getUnitSpawn();
             consume();
             Unit unit = plan.unit.create(team);
@@ -816,8 +917,14 @@ public class FlexAssembler extends Block{
                     plan.unit
             );
             blocks.clear();
-            Events.fire(new EventType.UnitCreateEvent(unit, this));
+            Events.fire(
+                    new EventType.UnitCreateEvent(
+                            unit,
+                            this
+                    )
+            );
         }
+        @Override
         public void draw(){
             Draw.rect(region, x, y);
             if(inRegion != null){
@@ -848,7 +955,9 @@ public class FlexAssembler extends Block{
             drawPayload();
             Draw.z(Layer.blockOver + 0.1f);
             Draw.rect(topRegion, x, y);
-            if(isPayload()) return;
+            if(isPayload()){
+                return;
+            }
             if(droneWarmup > 0.001f){
                 Draw.draw(
                         Layer.blockOver + 0.2f,
@@ -866,7 +975,9 @@ public class FlexAssembler extends Block{
             }
             Vec2 spawn = getUnitSpawn();
             AssemblerUnitPlan plan = plan();
-            if(plan == null) return;
+            if(plan == null){
+                return;
+            }
             Draw.draw(Layer.blockBuilding, () -> {
                 Draw.color(Pal.accent, warmup);
                 Shaders.blockbuild.region =
@@ -976,7 +1087,9 @@ public class FlexAssembler extends Block{
         }
         public boolean checkSolid(Vec2 v, boolean same){
             AssemblerUnitPlan plan = plan();
-            if(plan == null) return true;
+            if(plan == null){
+                return true;
+            }
             UnitType output = plan.unit;
             float hsize = output.hitSize * 1.4f;
             return (
@@ -1127,12 +1240,18 @@ public class FlexAssembler extends Block{
                 write.i(unit.id);
             }
             blocks.write(write);
-            TypeIO.writeVecNullable(write, commandPos);
+            TypeIO.writeVecNullable(
+                    write,
+                    commandPos
+            );
             write.i(lockedIndex);
             write.i(myAreaSize);
         }
         @Override
-        public void read(Reads read, byte revision){
+        public void read(
+                Reads read,
+                byte revision
+        ){
             super.read(read, revision);
             progress = read.f();
             int count = read.b();
@@ -1157,14 +1276,21 @@ public class FlexAssembler extends Block{
         public int tier = 1;
         public FlexAssemblerModule(String name){
             super(name);
+            update = solid = true;
             rotate = true;
             rotateDraw = false;
             acceptsPayload = true;
+            flags = EnumSet.of(BlockFlag.unitAssembler);
+            group = BlockGroup.units;
+            sync = true;
         }
         @Override
         public void setStats(){
             super.setStats();
-            stats.add(Stat.moduleTier, tier);
+            stats.add(
+                    Stat.moduleTier,
+                    tier
+            );
         }
         @Override
         public boolean canPlaceOn(
@@ -1185,29 +1311,28 @@ public class FlexAssembler extends Block{
                 int y,
                 int rotation
         ){
-            return indexer
-                    .getFlagged(
-                            team,
-                            BlockFlag.unitAssembler
-                    )
-                    .<FlexAssemblerBuild>as()
-                    .find(
-                            b ->
-                                    b instanceof FlexAssemblerBuild &&
-                                            ((FlexAssemblerBuild)b)
-                                                    .moduleFits(
-                                                            this,
-                                                            x * tilesize + offset,
-                                                            y * tilesize + offset,
-                                                            rotation
-                                                    )
-                    );
+            Building found = indexer.getFlagged(
+                    team,
+                    BlockFlag.unitAssembler
+            ).find(
+                    b ->
+                            b instanceof FlexAssemblerBuild &&
+                                    ((FlexAssemblerBuild)b).moduleFits(
+                                            this,
+                                            x * tilesize + offset,
+                                            y * tilesize + offset,
+                                            rotation
+                                    )
+            );
+            return found instanceof FlexAssemblerBuild build ?
+                    build :
+                    null;
         }
         @Override
         public Building createBuilding(){
             return new FlexAssemblerModuleBuild();
         }
-        public class FlexAssemblerModuleBuild extends PayloadBlockBuild<Payload>{
+        public class FlexAssemblerModuleBuild extends PayloadBlock.PayloadBlockBuild<Payload>{
             public FlexAssemblerBuild link;
             public int lastChange = -2;
             public void findLink(){
@@ -1247,10 +1372,11 @@ public class FlexAssembler extends Block{
             }
             @Override
             public void onRemoved(){
-                super.onRemoved();
                 if(link != null){
                     link.removeModule(this);
+                    link = null;
                 }
+                super.onRemoved();
             }
             @Override
             public void updateTile(){
@@ -1259,7 +1385,8 @@ public class FlexAssembler extends Block{
                     findLink();
                 }
                 if(
-                        moveInPayload() &&
+                        payload != null &&
+                                moveInPayload() &&
                                 link != null &&
                                 link.moduleFits(
                                         block,
