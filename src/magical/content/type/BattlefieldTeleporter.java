@@ -1,11 +1,9 @@
 package magical.content;
-
 import arc.Core;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Lines;
 import arc.math.Mathf;
 import arc.math.geom.Point2;
-import arc.scene.ui.BaseDialog;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Nullable;
@@ -14,35 +12,61 @@ import arc.util.io.Reads;
 import arc.util.io.Writes;
 import mindustry.Vars;
 import mindustry.content.Fx;
-import mindustry.gen.*;
+import mindustry.gen.Icon;
+import mindustry.gen.Unit;
 import mindustry.graphics.Layer;
 import mindustry.graphics.Pal;
-import mindustry.type.*;
 import mindustry.type.PayloadStack;
-import mindustry.ui.*;
-import mindustry.world.*;
-import mindustry.world.blocks.units.*;
+import mindustry.type.UnitType;
+import mindustry.ui.Styles;
+import mindustry.ui.dialogs.BaseDialog;
+import mindustry.world.Tile;
+import mindustry.world.blocks.units.UnitAssembler;
 import mindustry.world.blocks.units.UnitAssembler.AssemblerUnitPlan;
-import mindustry.world.meta.*;
-
-import static mindustry.Vars.*;
-
+import mindustry.world.meta.Stat;
+import mindustry.world.meta.StatValues;
 public class BattlefieldTeleporter extends UnitAssembler{
     public int[] teleportRanges = {30, 60, 100, 160, 240, 350};
     public float teleportDelay = 30f;
     public float teleportCooldown = 60f;
+    public Seq<String> planNames = new Seq<>();
+    public Seq<Integer> planAreas = new Seq<>();
+    public Seq<Integer> planTiers = new Seq<>();
     public BattlefieldTeleporter(String name){
         super(name);
         configurable = true;
         saveConfig = true;
         sync = true;
+        config(Integer.class, (BattlefieldTeleporterBuild build, Integer value) -> {
+            if(value == null) return;
+            build.setSelectedPlan(value);
+        });
+        config(Point2.class, (BattlefieldTeleporterBuild build, Point2 value) -> {
+            if(value == null) return;
+            build.setTarget(value.x, value.y);
+        });
     }
-    public void addPlan(UnitType output, float time, int area, int requiredTier, PayloadStack... requirements){
+    public void addPlan(String name, UnitType output, float time, int area, int requiredTier, PayloadStack... requirements){
         AssemblerUnitPlan plan = new AssemblerUnitPlan(output, time, new Seq<>(requirements));
         plans.add(plan);
+        planNames.add(name);
+        planAreas.add(area);
+        planTiers.add(requiredTier);
+    }
+    public String getPlanName(int index){
+        if(index < 0 || index >= planNames.size) return "";
+        return Core.bundle.get(planNames.get(index));
+    }
+    public int getPlanArea(int index){
+        if(index < 0 || index >= planAreas.size) return areaSize;
+        return planAreas.get(index);
+    }
+    public int getPlanTier(int index){
+        if(index < 0 || index >= planTiers.size) return 0;
+        return planTiers.get(index);
     }
     public int getTeleportRange(int tier){
-        if(teleportRanges.length == 0) return 0;
+        if(teleportRanges == null || teleportRanges.length == 0) return 0;
         return teleportRanges[Mathf.clamp(tier, 0, teleportRanges.length - 1)];
     }
     @Override
@@ -91,6 +115,16 @@ public class BattlefieldTeleporter extends UnitAssembler{
             targetTileX = -1;
             targetTileY = -1;
         }
+        public void setSelectedPlan(int index){
+            if(index < 0 || index >= plans.size){
+                return;
+            }
+            if(getPlanTier(index) > currentTier){
+                return;
+            }
+            selectedPlan = index;
+            progress = 0f;
+        }
         @Override
         public void created(){
             super.created();
@@ -105,14 +139,7 @@ public class BattlefieldTeleporter extends UnitAssembler{
         @Override
         public void configure(@Nullable Object value){
             if(value instanceof Integer){
-                int index = (Integer)value;
-                if(index >= 0 && index < plans.size){
-                    selectedPlan = index;
-                    return;
-                }
-                if(index == NO_PLAN){
-                    selectedPlan = NO_PLAN;
-                }
+                setSelectedPlan((Integer)value);
                 return;
             }
             if(value instanceof Point2){
@@ -121,11 +148,13 @@ public class BattlefieldTeleporter extends UnitAssembler{
             }
         }
         private void setTarget(int tx, int ty){
-            if(world.tile(tx, ty) == null){
-                clearTarget();
+            Tile tile = world.tile(tx, ty);
+            if(tile == null){
                 return;
             }
-            if(!Mathf.within(x, y, tx * tilesize + tilesize / 2f, ty * tilesize + tilesize / 2f, range() * tilesize)){
+            float txWorld = tx * tilesize + tilesize / 2f;
+            float tyWorld = ty * tilesize + tilesize / 2f;
+            if(!Mathf.within(x, y, txWorld, tyWorld, range() * tilesize)){
                 return;
             }
             targetTileX = tx;
@@ -135,16 +164,27 @@ public class BattlefieldTeleporter extends UnitAssembler{
         public void buildConfiguration(Table table){
             if(Vars.headless) return;
             AssemblerUnitPlan current = selected();
-            table.label(() -> current == null ? Core.bundle.get("battlefield-teleporter.no-unit") : Core.bundle.format("battlefield-teleporter.unit", current.unit.localizedName)).growX().left().row();
-            table.label(() -> Core.bundle.format("battlefield-teleporter.range", range())).growX().left().row();
-            table.label(() -> targetSet() ? Core.bundle.format("battlefield-teleporter.target", targetTileX, targetTileY) : Core.bundle.get("battlefield-teleporter.no-target")).growX().left().row();
+            table.label(() -> current == null
+                    ? Core.bundle.get("battlefield-teleporter.no-unit")
+                    : Core.bundle.format("battlefield-teleporter.unit", current.unit.localizedName)
+            ).growX().left().row();
+            table.label(() ->
+                    Core.bundle.format("battlefield-teleporter.range", range())
+            ).growX().left().row();
+            table.label(() ->
+                    targetSet()
+                            ? Core.bundle.format("battlefield-teleporter.target", targetTileX, targetTileY)
+                            : Core.bundle.get("battlefield-teleporter.no-target")
+            ).growX().left().row();
             table.row();
             table.button(Icon.units, Styles.cleari, this::showUnitSelector).size(50f);
             table.button(Icon.refresh, Styles.cleari, this::clearTarget).size(50f);
         }
         private void showUnitSelector(){
             if(Vars.headless) return;
-            BaseDialog dialog = new BaseDialog(Core.bundle.get("battlefield-teleporter.select-unit"));
+            BaseDialog dialog = new BaseDialog(
+                    Core.bundle.get("battlefield-teleporter.select-unit")
+            );
             Table table = new Table();
             table.defaults().size(90f);
             for(int i = 0; i < plans.size; i++){
@@ -153,12 +193,16 @@ public class BattlefieldTeleporter extends UnitAssembler{
                 table.button(b -> {
                     b.image(plan.unit.uiIcon).size(40f);
                     b.row();
-                    b.add(plan.unit.localizedName).growX();
+                    b.add(getPlanName(index)).growX();
                 }, Styles.cleart, () -> {
-                    configure(index);
-                    dialog.hide();
+                    if(getPlanTier(index) <= currentTier){
+                        configure(index);
+                        dialog.hide();
+                    }
                 });
-                if(i % 4 == 3) table.row();
+                if(i % 4 == 3){
+                    table.row();
+                }
             }
             dialog.cont.add(table).grow();
             dialog.addCloseButton();
@@ -182,6 +226,7 @@ public class BattlefieldTeleporter extends UnitAssembler{
         public void spawned(){
             AssemblerUnitPlan plan = selected();
             if(plan == null) return;
+            if(getPlanTier(selectedPlan) > currentTier) return;
             if(!targetValid()) return;
             if(cooldown > 0f) return;
             if(net.client()) return;
@@ -192,6 +237,7 @@ public class BattlefieldTeleporter extends UnitAssembler{
         private void finishTeleport(){
             if(net.client()){
                 teleporting = false;
+                teleportProgress = 0f;
                 return;
             }
             AssemblerUnitPlan plan = selected();
@@ -204,7 +250,12 @@ public class BattlefieldTeleporter extends UnitAssembler{
             unit.set(targetX(), targetY());
             unit.rotation = rotdeg();
             unit.add();
-            createSound.at(targetX(), targetY(), 1f, createSoundVolume);
+            createSound.at(
+                    targetX(),
+                    targetY(),
+                    1f,
+                    createSoundVolume
+            );
             Fx.spawn.at(targetX(), targetY());
             cooldown = teleportCooldown;
             teleporting = false;
@@ -217,11 +268,19 @@ public class BattlefieldTeleporter extends UnitAssembler{
             super.draw();
             if(targetSet()){
                 Draw.z(Layer.overlayUI);
-                Draw.color(Pal.accent);
+                Draw.color(targetValid() ? Pal.accent : Pal.remove);
                 Lines.stroke(2f);
-                Lines.circle(targetX(), targetY(), 6f + Mathf.absin(Time.time, 4f, 2f));
+                Lines.circle(
+                        targetX(),
+                        targetY(),
+                        6f + Mathf.absin(Time.time, 4f, 2f)
+                );
                 Lines.stroke(1f);
-                Lines.circle(targetX(), targetY(), 10f + Mathf.absin(Time.time, 3f, 2f));
+                Lines.circle(
+                        targetX(),
+                        targetY(),
+                        10f + Mathf.absin(Time.time, 3f, 2f)
+                );
                 Draw.reset();
             }
         }
@@ -231,10 +290,20 @@ public class BattlefieldTeleporter extends UnitAssembler{
             Draw.z(Layer.overlayUI);
             Draw.color(Pal.accent, 0.7f);
             Lines.stroke(2f);
-            Lines.circle(x, y, range() * tilesize);
+            Lines.circle(
+                    x,
+                    y,
+                    range() * tilesize
+            );
             if(targetSet()){
+                Draw.color(targetValid() ? Pal.accent : Pal.remove);
                 Lines.stroke(3f);
-                Lines.line(x, y, targetX(), targetY());
+                Lines.line(
+                        x,
+                        y,
+                        targetX(),
+                        targetY()
+                );
             }
             Draw.reset();
         }
