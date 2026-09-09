@@ -589,7 +589,7 @@ public class MLFx {
             Draw.mixcol(e.color, 1);
             Draw.rect(type.fullIcon, e.x, e.y, type.fullIcon.width * e.fout(Interp.pow2Out) * Draw.scl * 1.2f, type.fullIcon.height * e.fout(Interp.pow2Out) * Draw.scl * 1.2f, e.rotation - 90f);
             Draw.reset();
-        }),
+        });
 
                 jumpTrailOut = new Effect(120f, 200, e -> {
                     if (!(e.data instanceof UnitType)) return;
@@ -618,11 +618,11 @@ public class MLFx {
 
                         randLenVectors(e.id + index, 42, 2330, e.rotation + ang - 90, 0f, (x, y) -> lineAngle(e.x + x + Tmp.v1.x, e.y + y + Tmp.v1.y, Mathf.angle(x, y), e.fout() * 60));
                     }
-                }),
+                });
                 circleOut = new Effect(60f, 500f, e -> {
                     Lines.stroke(2.5f * e.fout(), e.color);
                     Lines.circle(e.x, e.y, e.rotation * e.fin(Interp.pow3Out));
-                }),
+                });
     }
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
