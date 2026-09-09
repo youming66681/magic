@@ -184,7 +184,7 @@ public class FlexAssembler extends UnitAssembler {
                 table.label(() -> Core.bundle.get("flexassembler.no-plans")).pad(10);
                 if (locked) {
                     table.row();
-                    table.button(Core.bundle.get("flexassembler.deselect"), () -> Call.tileConfig(tile, NO_PLAN));
+                    table.button(Core.bundle.get("flexassembler.deselect"), () -> Call.tileConfig(Vars.player, this, NO_PLAN));
                 }
                 return;
             }
@@ -208,7 +208,7 @@ public class FlexAssembler extends UnitAssembler {
                     inner.row();
                     inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
                 }).pad(8);
-                btn.clicked(() -> Call.tileConfig(tile, index));
+                btn.clicked(() -> Call.tileConfig(Vars.player, this, index));
                 grid.add(btn).size(80f, 80f).pad(4f);
             }
             ScrollPane pane = new ScrollPane(grid);
