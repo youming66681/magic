@@ -3494,7 +3494,7 @@ public class MLBlocks {
             );
         }};
         //星港造舰中心
-        starHarborShipbuildingCenter = new magical.content.FlexAssembler("starHarborShipbuildingCenter"){{
+        starHarborShipbuildingCenter = new BattlefieldTeleporter("starHarborShipbuildingCenter"){{
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 500, Items.titanium, 800, Items.silicon, 1200, MLItems.logicChip, 200, MLItems.mysticCrystal, 500}));
             size = 7;
 
@@ -3548,6 +3548,12 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.Nebula, 12),
                     new PayloadStack(MLBlocks.LightDescends, 8));
 
+            teleportRanges = new int[]{
+                    400,
+                    480,
+                    560,
+            };
+
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);
         }};
@@ -3584,7 +3590,7 @@ public class MLBlocks {
             deconstructSpeed = 5f;
         }};
         //太虚构装核心
-        PretendingCore = new FlexAssembler("PretendingCore"){{
+        PretendingCore = new BattlefieldTeleporter("PretendingCore"){{
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.acrylic, 450, MLItems.wingedStone, 450, Items.silicon, 900, MLItems.arrayChip, 180,}));
             size = 9;
 
@@ -3684,6 +3690,11 @@ public class MLBlocks {
                     new PayloadStack(MLUnitTypes.ChasingLight, 3),
                     new PayloadStack(MLUnitTypes.Dawn, 3));
 
+            teleportRanges = new int[]{
+                    320,
+                    400,
+                    480,
+            };
             consumePower(20f);
         }};
         //通用装配升级厂
