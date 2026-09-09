@@ -295,7 +295,7 @@ public class FlexAssembler extends UnitAssembler {
             syncArea();
         }
         @Override
-        public void writeSync(WriteBuffer write) {
+        public void writeSync(Writes write) {
             super.writeSync(write);
             write.i(lockedIndex);
         }
