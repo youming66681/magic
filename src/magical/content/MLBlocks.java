@@ -3494,7 +3494,7 @@ public class MLBlocks {
             );
         }};
         //星港造舰中心
-        starHarborShipbuildingCenter = new BattlefieldTeleporter("starHarborShipbuildingCenter"){{
+        starHarborShipbuildingCenter = new FlexAssembler("starHarborShipbuildingCenter"){{
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.phantomTitaniumSteel, 500, Items.titanium, 800, Items.silicon, 1200, MLItems.logicChip, 200, MLItems.mysticCrystal, 500}));
             size = 7;
 
@@ -3584,7 +3584,7 @@ public class MLBlocks {
             deconstructSpeed = 5f;
         }};
         //太虚构装核心
-        PretendingCore = new BattlefieldTeleporter("PretendingCore"){{
+        PretendingCore = new FlexAssembler("PretendingCore"){{
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.acrylic, 450, MLItems.wingedStone, 450, Items.silicon, 900, MLItems.arrayChip, 180,}));
             size = 9;
 
