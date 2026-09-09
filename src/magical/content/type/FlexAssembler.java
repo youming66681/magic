@@ -104,20 +104,28 @@ public class FlexAssembler extends UnitAssembler {
                 lockedPlan = null;
             }
         }
+        private boolean validPlanIndex(int index) {
+            return index >= 0 && index < plans.size;
+        }
         private void syncArea() {
-            AssemblerUnitPlan effective = plan();
-            if (effective != null) {
-                myAreaSize = planAreaMap.getOrDefault(effective, FlexAssembler.this.areaSize);
+            AssemblerUnitPlan selected = getSelectedPlan();
+            if (selected != null) {
+                myAreaSize = planAreaMap.getOrDefault(selected, FlexAssembler.this.areaSize);
             } else {
                 myAreaSize = FlexAssembler.this.areaSize;
             }
         }
-        private boolean validPlanIndex(int index) {
-            return index >= 0 && index < plans.size;
-        }
-        private boolean canUsePlan(AssemblerUnitPlan plan) {
-            if (plan == null) return false;
-            return tierRequired.getOrDefault(plan, 0) <= currentTier;
+        private AssemblerUnitPlan getSelectedPlan() {
+            if (lockedIndex >= 0 && lockedIndex < plans.size) {
+                lockedPlan = plans.get(lockedIndex);
+                return lockedPlan;
+            }
+            if (lockedIndex == NO_PLAN && plans.size > 0) {
+                lockedPlan = plans.get(0);
+                return lockedPlan;
+            }
+            lockedPlan = null;
+            return null;
         }
         private void setLockedPlan(int index) {
             if (index == NO_PLAN) {
@@ -127,15 +135,16 @@ public class FlexAssembler extends UnitAssembler {
                 return;
             }
             if (!validPlanIndex(index)) return;
-            AssemblerUnitPlan selected = plans.get(index);
-            if (!canUsePlan(selected)) return;
             lockedIndex = index;
-            lockedPlan = selected;
+            lockedPlan = plans.get(index);
             syncArea();
         }
         @Override
         public void created() {
             super.created();
+            if (lockedIndex == NO_PLAN && plans.size > 0) {
+                lockedIndex = 0;
+            }
             updateLockedPlan();
             syncArea();
         }
@@ -162,8 +171,8 @@ public class FlexAssembler extends UnitAssembler {
         public void buildConfiguration(Table table) {
             if (Vars.headless) return;
             updateLockedPlan();
-            AssemblerUnitPlan current = lockedPlan;
-            boolean locked = current != null;
+            AssemblerUnitPlan current = getSelectedPlan();
+            boolean locked = lockedIndex >= 0 && current != null;
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for (AssemblerUnitPlan plan : plans) {
                 if (tierRequired.getOrDefault(plan, 0) <= currentTier) {
@@ -210,35 +219,22 @@ public class FlexAssembler extends UnitAssembler {
         }
         @Override
         public void configure(@Nullable Object value) {
-            if (value instanceof Integer) {
-                int idx = (Integer)value;
-                if (idx == NO_PLAN) {
-                    setLockedPlan(NO_PLAN);
-                } else if (validPlanIndex(idx)) {
-                    setLockedPlan(idx);
-                }
+            if (!(value instanceof Integer)) return;
+            int idx = (Integer)value;
+            if (idx == NO_PLAN) {
+                setLockedPlan(NO_PLAN);
+                return;
             }
+            if (!validPlanIndex(idx)) return;
+            setLockedPlan(idx);
         }
         @Override
         public AssemblerUnitPlan plan() {
-            if (lockedIndex >= 0 && lockedIndex < plans.size) {
-                AssemblerUnitPlan selected = plans.get(lockedIndex);
-                if (tierRequired.getOrDefault(selected, 0) <= currentTier) {
-                    lockedPlan = selected;
-                    return selected;
-                }
-            }
-            if (plans.size > 0) {
-                AssemblerUnitPlan fallback = plans.get(0);
-                lockedPlan = fallback;
-                return fallback;
-            }
-            lockedPlan = null;
-            return null;
+            return getSelectedPlan();
         }
         @Override
         public boolean shouldConsume() {
-            AssemblerUnitPlan selected = plan();
+            AssemblerUnitPlan selected = getSelectedPlan();
             if (selected == null) return false;
             if (tierRequired.getOrDefault(selected, 0) > currentTier) return false;
             return enabled;
@@ -267,12 +263,15 @@ public class FlexAssembler extends UnitAssembler {
         }
         @Override
         public void spawned() {
-            AssemblerUnitPlan selected = plan();
+            AssemblerUnitPlan selected = getSelectedPlan();
             if (selected == null) return;
+            if (tierRequired.getOrDefault(selected, 0) > currentTier) return;
             Vec2 spawn = getUnitSpawn();
             consume();
             Unit unit = selected.unit.create(team);
-            if (unit.isCommandable() && commandPos != null) unit.command().commandPosition(commandPos);
+            if (unit.isCommandable() && commandPos != null) {
+                unit.command().commandPosition(commandPos);
+            }
             unit.set(spawn.x + Mathf.range(0.001f), spawn.y + Mathf.range(0.001f));
             unit.rotation = rotdeg();
             if (!net.client()) unit.add();
@@ -292,6 +291,18 @@ public class FlexAssembler extends UnitAssembler {
             super.read(read, revision);
             lockedIndex = read.i();
             myAreaSize = read.i();
+            updateLockedPlan();
+            syncArea();
+        }
+        @Override
+        public void writeSync(WriteBuffer write) {
+            super.writeSync(write);
+            write.i(lockedIndex);
+        }
+        @Override
+        public void readSync(Reads read, byte revision) {
+            super.readSync(read, revision);
+            lockedIndex = read.i();
             updateLockedPlan();
             syncArea();
         }
