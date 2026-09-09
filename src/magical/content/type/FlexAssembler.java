@@ -221,22 +221,27 @@ public class FlexAssembler extends UnitAssembler {
         }
         @Override
         public AssemblerUnitPlan plan() {
-            if (lockedIndex == NO_PLAN) return null;
-            if (!validPlanIndex(lockedIndex)) return null;
-            AssemblerUnitPlan selected = plans.get(lockedIndex);
-            if (!canUsePlan(selected)) return null;
-            if (lockedPlan != selected) {
-                lockedPlan = selected;
+            if (lockedIndex >= 0 && lockedIndex < plans.size) {
+                AssemblerUnitPlan selected = plans.get(lockedIndex);
+                if (tierRequired.getOrDefault(selected, 0) <= currentTier) {
+                    lockedPlan = selected;
+                    return selected;
+                }
             }
-            return selected;
+            if (plans.size > 0) {
+                AssemblerUnitPlan fallback = plans.get(0);
+                lockedPlan = fallback;
+                return fallback;
+            }
+            lockedPlan = null;
+            return null;
         }
         @Override
         public boolean shouldConsume() {
             AssemblerUnitPlan selected = plan();
-            if (selected != null && tierRequired.getOrDefault(selected, 0) > currentTier) {
-                return false;
-            }
-            return super.shouldConsume();
+            if (selected == null) return false;
+            if (tierRequired.getOrDefault(selected, 0) > currentTier) return false;
+            return enabled;
         }
         @Override
         public void updateTile() {
