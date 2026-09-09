@@ -29,7 +29,7 @@ public class MLSectorPresets{
 
         CrossIceValley = new SectorPreset("CrossIceValley", MLPlanets.cecilia, 6){{
             difficulty = 5;
-            captureWave = 60;
+            captureWave = 52;
         }};
     }
 }

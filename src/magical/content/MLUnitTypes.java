@@ -1398,7 +1398,7 @@ public class MLUnitTypes {
                     width = 16f;
                     height = 16f;
                     shrinkY = 0f;
-                    hitSound = Sounds.explosion;
+                    hitSound = MLSounds.explosion;
                     hitSoundVolume = 20f;
                     status = StatusEffects.slow;
                     statusDuration = 240f;
