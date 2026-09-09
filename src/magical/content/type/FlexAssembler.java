@@ -22,21 +22,17 @@ import mindustry.ai.types.AssemblerAI;
 import mindustry.world.blocks.units.*;
 import mindustry.world.blocks.units.UnitAssemblerModule.UnitAssemblerModuleBuild;
 import mindustry.world.meta.*;
-
 import java.util.*;
 
 import static mindustry.Vars.*;
 
 public class FlexAssembler extends UnitAssembler {
-
     public Map<AssemblerUnitPlan, Integer> planAreaMap = new HashMap<>();
     public Map<AssemblerUnitPlan, Integer> tierRequired = new HashMap<>();
-
     public FlexAssembler(String name) {
         super(name);
         configurable = true;
     }
-
     public void addPlan(String label, UnitType output, float time, int customArea, int requiredTier, PayloadStack... requirements) {
         Seq<PayloadStack> reqSeq = new Seq<>(requirements);
         AssemblerUnitPlan plan = new AssemblerUnitPlan(output, time, reqSeq);
@@ -44,7 +40,6 @@ public class FlexAssembler extends UnitAssembler {
         tierRequired.put(plan, requiredTier);
         planAreaMap.put(plan, customArea);
     }
-
     @Override
     public void setStats() {
         super.setStats();
@@ -97,7 +92,6 @@ public class FlexAssembler extends UnitAssembler {
             }
         });
     }
-
     public class FlexAssemblerBuild extends UnitAssemblerBuild {
         private static final int NO_PLAN = -1;
         private int lockedIndex = NO_PLAN;
@@ -114,7 +108,30 @@ public class FlexAssembler extends UnitAssembler {
             AssemblerUnitPlan effective = plan();
             if (effective != null) {
                 myAreaSize = planAreaMap.getOrDefault(effective, FlexAssembler.this.areaSize);
+            } else {
+                myAreaSize = FlexAssembler.this.areaSize;
             }
+        }
+        private boolean validPlanIndex(int index) {
+            return index >= 0 && index < plans.size;
+        }
+        private boolean canUsePlan(AssemblerUnitPlan plan) {
+            if (plan == null) return false;
+            return tierRequired.getOrDefault(plan, 0) <= currentTier;
+        }
+        private void setLockedPlan(int index) {
+            if (index == NO_PLAN) {
+                lockedIndex = NO_PLAN;
+                lockedPlan = null;
+                syncArea();
+                return;
+            }
+            if (!validPlanIndex(index)) return;
+            AssemblerUnitPlan selected = plans.get(index);
+            if (!canUsePlan(selected)) return;
+            lockedIndex = index;
+            lockedPlan = selected;
+            syncArea();
         }
         @Override
         public void created() {
@@ -181,12 +198,7 @@ public class FlexAssembler extends UnitAssembler {
                     inner.row();
                     inner.add(plan.unit.localizedName).color(isChosen ? Pal.accent : Color.lightGray);
                 }).pad(8);
-                btn.clicked(() -> {
-                    lockedIndex = index;
-                    updateLockedPlan();
-                    configure(index);
-                    syncArea();
-                });
+                btn.clicked(() -> configure(index));
                 grid.add(btn).size(80f, 80f).pad(4f);
             }
             ScrollPane pane = new ScrollPane(grid);
@@ -199,26 +211,29 @@ public class FlexAssembler extends UnitAssembler {
         @Override
         public void configure(@Nullable Object value) {
             if (value instanceof Integer) {
-                int idx = (Integer) value;
-                if (idx == NO_PLAN || (idx >= 0 && idx < plans.size)) {
-                    lockedIndex = idx;
-                    updateLockedPlan();
-                    syncArea();
+                int idx = (Integer)value;
+                if (idx == NO_PLAN) {
+                    setLockedPlan(NO_PLAN);
+                } else if (validPlanIndex(idx)) {
+                    setLockedPlan(idx);
                 }
             }
-            super.configure(value);
         }
         @Override
         public AssemblerUnitPlan plan() {
-            if (lockedPlan != null) {
-                int reqTier = tierRequired.getOrDefault(lockedPlan, 0);
-                if (reqTier <= currentTier) return lockedPlan;
+            if (lockedIndex == NO_PLAN) return null;
+            if (!validPlanIndex(lockedIndex)) return null;
+            AssemblerUnitPlan selected = plans.get(lockedIndex);
+            if (!canUsePlan(selected)) return null;
+            if (lockedPlan != selected) {
+                lockedPlan = selected;
             }
-            return super.plan();
+            return selected;
         }
         @Override
         public boolean shouldConsume() {
-            if (lockedPlan != null && tierRequired.getOrDefault(lockedPlan, 0) > currentTier) {
+            AssemblerUnitPlan selected = plan();
+            if (selected != null && tierRequired.getOrDefault(selected, 0) > currentTier) {
                 return false;
             }
             return super.shouldConsume();
@@ -245,19 +260,20 @@ public class FlexAssembler extends UnitAssembler {
             super.drawSelect();
             areaSize = prevArea;
         }
+        @Override
         public void spawned() {
-            AssemblerUnitPlan plan = lockedPlan != null ? lockedPlan : super.plan();
-            if (plan == null) return;
+            AssemblerUnitPlan selected = plan();
+            if (selected == null) return;
             Vec2 spawn = getUnitSpawn();
             consume();
-            Unit unit = plan.unit.create(team);
+            Unit unit = selected.unit.create(team);
             if (unit.isCommandable() && commandPos != null) unit.command().commandPosition(commandPos);
             unit.set(spawn.x + Mathf.range(0.001f), spawn.y + Mathf.range(0.001f));
             unit.rotation = rotdeg();
             if (!net.client()) unit.add();
             createSound.at(spawn.x, spawn.y, 1f + Mathf.range(0.06f), createSoundVolume);
             progress = 0f;
-            Fx.unitAssemble.at(spawn.x, spawn.y, rotdeg() - 90f, plan.unit);
+            Fx.unitAssemble.at(spawn.x, spawn.y, rotdeg() - 90f, selected.unit);
             blocks.clear();
         }
         @Override
