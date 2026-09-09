@@ -24,7 +24,6 @@ import mindustry.world.Tile;
 import mindustry.world.blocks.units.UnitAssembler;
 import mindustry.world.blocks.units.UnitAssembler.AssemblerUnitPlan;
 import mindustry.world.meta.Stat;
-import mindustry.world.meta.StatValues;
 public class BattlefieldTeleporter extends UnitAssembler{
     public int[] teleportRanges = {30, 60, 100, 160, 240, 350};
     public float teleportDelay = 30f;
@@ -55,10 +54,11 @@ public class BattlefieldTeleporter extends UnitAssembler{
     }
     public String getPlanName(int index){
         if(index < 0 || index >= planNames.size) return "";
-        return Core.bundle.get(planNames.get(index));
+        String key = planNames.get(index);
+        return Core.bundle.has(key) ? Core.bundle.get(key) : key;
     }
     public int getPlanArea(int index){
-        if(index < 0 || index >= planAreas.size) return areaSize;
+        if(index < 0 || index >= planAreas.size) return area;
         return planAreas.get(index);
     }
     public int getPlanTier(int index){
@@ -90,21 +90,21 @@ public class BattlefieldTeleporter extends UnitAssembler{
             return BattlefieldTeleporter.this.getTeleportRange(currentTier);
         }
         private float targetX(){
-            return targetTileX * tilesize + tilesize / 2f;
+            return targetTileX * Vars.tilesize + Vars.tilesize / 2f;
         }
         private float targetY(){
-            return targetTileY * tilesize + tilesize / 2f;
+            return targetTileY * Vars.tilesize + Vars.tilesize / 2f;
         }
         private boolean targetSet(){
             return targetTileX >= 0 && targetTileY >= 0;
         }
         private boolean targetInRange(){
             if(!targetSet()) return false;
-            return Mathf.within(x, y, targetX(), targetY(), range() * tilesize);
+            return Mathf.within(x, y, targetX(), targetY(), range() * Vars.tilesize);
         }
         private boolean targetValid(){
             if(!targetSet()) return false;
-            Tile tile = world.tile(targetTileX, targetTileY);
+            Tile tile = Vars.world.tile(targetTileX, targetTileY);
             if(tile == null) return false;
             if(!targetInRange()) return false;
             if(tile.solid()) return false;
@@ -124,12 +124,18 @@ public class BattlefieldTeleporter extends UnitAssembler{
             }
             selectedPlan = index;
             progress = 0f;
+            blocks.clear();
         }
         @Override
         public void created(){
             super.created();
             if(selectedPlan == NO_PLAN && plans.size > 0){
-                selectedPlan = 0;
+                for(int i = 0; i < plans.size; i++){
+                    if(getPlanTier(i) <= currentTier){
+                        selectedPlan = i;
+                        break;
+                    }
+                }
             }
         }
         @Override
@@ -148,13 +154,13 @@ public class BattlefieldTeleporter extends UnitAssembler{
             }
         }
         private void setTarget(int tx, int ty){
-            Tile tile = world.tile(tx, ty);
+            Tile tile = Vars.world.tile(tx, ty);
             if(tile == null){
                 return;
             }
-            float txWorld = tx * tilesize + tilesize / 2f;
-            float tyWorld = ty * tilesize + tilesize / 2f;
-            if(!Mathf.within(x, y, txWorld, tyWorld, range() * tilesize)){
+            float txWorld = tx * Vars.tilesize + Vars.tilesize / 2f;
+            float tyWorld = ty * Vars.tilesize + Vars.tilesize / 2f;
+            if(!Mathf.within(x, y, txWorld, tyWorld, range() * Vars.tilesize)){
                 return;
             }
             targetTileX = tx;
@@ -164,9 +170,10 @@ public class BattlefieldTeleporter extends UnitAssembler{
         public void buildConfiguration(Table table){
             if(Vars.headless) return;
             AssemblerUnitPlan current = selected();
-            table.label(() -> current == null
-                    ? Core.bundle.get("battlefield-teleporter.no-unit")
-                    : Core.bundle.format("battlefield-teleporter.unit", current.unit.localizedName)
+            table.label(() ->
+                    current == null
+                            ? Core.bundle.get("battlefield-teleporter.no-unit")
+                            : Core.bundle.format("battlefield-teleporter.unit", current.unit.localizedName)
             ).growX().left().row();
             table.label(() ->
                     Core.bundle.format("battlefield-teleporter.range", range())
@@ -190,12 +197,13 @@ public class BattlefieldTeleporter extends UnitAssembler{
             for(int i = 0; i < plans.size; i++){
                 final int index = i;
                 AssemblerUnitPlan plan = plans.get(i);
+                boolean unlocked = getPlanTier(index) <= currentTier;
                 table.button(b -> {
                     b.image(plan.unit.uiIcon).size(40f);
                     b.row();
                     b.add(getPlanName(index)).growX();
-                }, Styles.cleart, () -> {
-                    if(getPlanTier(index) <= currentTier){
+                }, unlocked ? Styles.cleart : Styles.cleari, () -> {
+                    if(unlocked){
                         configure(index);
                         dialog.hide();
                     }
@@ -229,13 +237,13 @@ public class BattlefieldTeleporter extends UnitAssembler{
             if(getPlanTier(selectedPlan) > currentTier) return;
             if(!targetValid()) return;
             if(cooldown > 0f) return;
-            if(net.client()) return;
+            if(Vars.net.client()) return;
             teleporting = true;
             teleportProgress = 0f;
             Fx.unitAssemble.at(targetX(), targetY(), 0f, plan.unit);
         }
         private void finishTeleport(){
-            if(net.client()){
+            if(Vars.net.client()){
                 teleporting = false;
                 teleportProgress = 0f;
                 return;
@@ -293,7 +301,7 @@ public class BattlefieldTeleporter extends UnitAssembler{
             Lines.circle(
                     x,
                     y,
-                    range() * tilesize
+                    range() * Vars.tilesize
             );
             if(targetSet()){
                 Draw.color(targetValid() ? Pal.accent : Pal.remove);
@@ -322,6 +330,8 @@ public class BattlefieldTeleporter extends UnitAssembler{
             targetTileX = read.i();
             targetTileY = read.i();
             cooldown = read.f();
+            teleporting = false;
+            teleportProgress = 0f;
         }
     }
 }
