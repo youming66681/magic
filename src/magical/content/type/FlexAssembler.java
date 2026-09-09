@@ -23,6 +23,7 @@ import mindustry.world.blocks.units.*;
 import mindustry.world.blocks.units.UnitAssemblerModule.UnitAssemblerModuleBuild;
 import mindustry.world.meta.*;
 import java.util.*;
+import mindustry.gen.Call;
 
 import static mindustry.Vars.*;
 
