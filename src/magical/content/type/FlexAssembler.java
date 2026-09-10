@@ -365,8 +365,9 @@ public class FlexAssembler extends PayloadBlock{
         private void syncArea(){
             AssemblerUnitPlan effective = plan();
             if(effective != null){
-                myAreaSize = planAreaMap.getOrDefault(effective, FlexAssembler.this.areaSize);
-            }else{
+                int requiredArea = planAreaMap.getOrDefault(effective, FlexAssembler.this.areaSize);
+                myAreaSize = Math.max(FlexAssembler.this.areaSize, requiredArea);
+            }else if(myAreaSize <= 0){
                 myAreaSize = FlexAssembler.this.areaSize;
             }
         }
@@ -410,19 +411,22 @@ public class FlexAssembler extends PayloadBlock{
         }
         public void removeModule(FlexAssemblerModule.FlexAssemblerModuleBuild build){
             modules.remove(build);
-            checkTier();
         }
         public void checkTier(){
             modules.sort(b -> b.tier());
             int max = 0;
             for(FlexAssemblerModule.FlexAssemblerModuleBuild module : modules){
+                if(module == null || module.link != this) continue;
                 if(module.tier() == max || module.tier() == max + 1){
                     max = module.tier();
                 }else{
                     break;
                 }
             }
-            currentTier = max;
+            if(max != currentTier){
+                currentTier = max;
+                syncArea();
+            }
         }
         public UnitType unit(){
             AssemblerUnitPlan p = plan();
@@ -570,11 +574,13 @@ public class FlexAssembler extends PayloadBlock{
                 readUnits.clear();
             }
             if(lastTier != currentTier){
-                if(lastTier >= 0){
+                if(lastTier >= 0 && currentTier < lastTier){
                     progress = 0f;
                 }
-                lastTier = lastTier == -2 ? -1 : currentTier;
-                syncArea();
+                lastTier = currentTier;
+                if(currentTier > 0){
+                    syncArea();
+                }
             }
             if(units.size < dronesCreated && whenSyncedUnits.size > 0){
                 whenSyncedUnits.each(id -> {
@@ -1048,12 +1054,14 @@ public class FlexAssembler extends PayloadBlock{
             public FlexAssemblerBuild link;
             public int lastChange = -2;
             public void findLink(){
-                if(link != null){
-                    link.removeModule(this);
+                FlexAssemblerBuild oldLink = link;
+                if(oldLink != null){
+                    oldLink.removeModule(this);
                 }
-                link = getLink(team, tile.x, tile.y, rotation);
-                if(link != null){
-                    link.updateModules(this);
+                FlexAssemblerBuild newLink = getLink(team, tile.x, tile.y, rotation);
+                link = newLink;
+                if(newLink != null){
+                    newLink.updateModules(this);
                 }
             }
             public int tier(){
