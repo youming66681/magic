@@ -3509,7 +3509,6 @@ public class MLUnitTypes {
             createWreck = false;
             engineOffset = 5;
             engineSize = 3;
-            /*飞雷神*/abilities.add(new DamageReductionAbility(0.9f));
             weapons.add(new RepairBeamWeapon("magic-repair") {{
                 x = 0f;
                 y = 0f;
@@ -4965,6 +4964,7 @@ public class MLUnitTypes {
                 abilities.add(new DebuffImmunityAbility(0.60f));
                 abilities.add(new DamageLimitAbility(900f, 0.60f));
                 abilities.add(new DamageReductionAbility(0.10f));
+                abilities.add(new PercentAreaDamageAbility(640f,0.01f,MLFx.EnergyExplosion2));
             weapons.add(
                     new Weapon("magic-MilkyWay0") {{
                         reload = 120f;
