@@ -37,7 +37,13 @@ public class PercentAreaDamageAbility extends Ability{
         t.add(abilityStat("percent",(int)(percent*100)));
     }
     @Override
-    public String localized(){
-        return "PercentAreaDamageAbility";
+    public String getBundle(){
+        return "ability.percentareadamage";
+    }
+    @Override
+    public void addStats(Table t){
+        t.add(abilityStat("range",range));
+        t.row();
+        t.add(abilityStat("percent",(int)(percent*100)));
     }
 }

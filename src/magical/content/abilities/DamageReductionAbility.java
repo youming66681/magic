@@ -50,16 +50,7 @@ public class DamageReductionAbility extends Ability{
 
     @Override
     public void addStats(Table t){
-        t.add(
-                abilityStat(
-                        "damageReduction",
-                        (int)(reduction * 100)
-                )
-        );
+        t.add(abilityStat("damageReduction",(int)(reduction * 100)));
     }
 
-    @Override
-    public String localized(){
-        return "DamageReductionAbility";
-    }
 }
