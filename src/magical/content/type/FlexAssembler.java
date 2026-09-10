@@ -69,7 +69,6 @@ public class FlexAssembler extends PayloadBlock{
             if(index == null) return;
             if(index != -1 && (index < 0 || index >= plans.size)) return;
             build.lockedIndex = index;
-            build.updateLockedPlan();
             build.syncArea();
             build.progress = 0f;
         });
@@ -362,15 +361,7 @@ public class FlexAssembler extends PayloadBlock{
         public int lastTier = -2;
         public boolean wasOccupied;
         private int lockedIndex = NO_PLAN;
-        private AssemblerUnitPlan lockedPlan;
         public int myAreaSize = FlexAssembler.this.areaSize;
-        private void updateLockedPlan(){
-            if(lockedIndex >= 0 && lockedIndex < plans.size){
-                lockedPlan = plans.get(lockedIndex);
-            }else{
-                lockedPlan = null;
-            }
-        }
         private void syncArea(){
             AssemblerUnitPlan effective = plan();
             if(effective != null){
@@ -382,7 +373,6 @@ public class FlexAssembler extends PayloadBlock{
         @Override
         public void created(){
             super.created();
-            updateLockedPlan();
             syncArea();
         }
         public Vec2 getUnitSpawn(){
@@ -439,25 +429,14 @@ public class FlexAssembler extends PayloadBlock{
             return p == null ? UnitTypes.alpha : p.unit;
         }
         public AssemblerUnitPlan plan(){
-            if(lockedPlan != null){
-                int required = tierRequired.getOrDefault(lockedPlan, 0);
-                if(required <= currentTier){
-                    return lockedPlan;
-                }
-            }
-            if(plans.isEmpty()){
+            if(lockedIndex < 0 || lockedIndex >= plans.size){
                 return null;
             }
-            AssemblerUnitPlan best = null;
-            int bestTier = -1;
-            for(AssemblerUnitPlan candidate : plans){
-                int required = tierRequired.getOrDefault(candidate, 0);
-                if(required <= currentTier && required >= bestTier){
-                    best = candidate;
-                    bestTier = required;
-                }
+            AssemblerUnitPlan selected = plans.get(lockedIndex);
+            if(tierRequired.getOrDefault(selected, 0) > currentTier){
+                return null;
             }
-            return best;
+            return selected;
         }
         @Override
         public boolean shouldConsume(){
@@ -508,9 +487,8 @@ public class FlexAssembler extends PayloadBlock{
             if(Vars.headless){
                 return;
             }
-            updateLockedPlan();
-            AssemblerUnitPlan current = lockedPlan;
-            boolean locked = current != null;
+            AssemblerUnitPlan current = plan();
+            boolean locked = current != null && lockedIndex >= 0;
             Seq<AssemblerUnitPlan> available = new Seq<>();
             for(AssemblerUnitPlan candidate : plans){
                 if(tierRequired.getOrDefault(candidate, 0) <= currentTier){
@@ -999,7 +977,7 @@ public class FlexAssembler extends PayloadBlock{
         }
         @Override
         public byte version(){
-            return 2;
+            return 1;
         }
         @Override
         public void write(Writes write){
@@ -1011,8 +989,6 @@ public class FlexAssembler extends PayloadBlock{
             }
             blocks.write(write);
             TypeIO.writeVecNullable(write, commandPos);
-            write.i(lockedIndex);
-            write.i(myAreaSize);
         }
         @Override
         public void read(Reads read, byte revision){
@@ -1028,11 +1004,6 @@ public class FlexAssembler extends PayloadBlock{
             if(revision >= 1){
                 commandPos = TypeIO.readVecNullable(read);
             }
-            if(revision >= 2){
-                lockedIndex = read.i();
-                myAreaSize = read.i();
-            }
-            updateLockedPlan();
             syncArea();
         }
     }
