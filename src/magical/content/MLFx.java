@@ -40,6 +40,7 @@ public class MLFx {
     public static Effect jumpTrail;
     public static Effect jumpTrailOut;
     public static Effect circleOut;
+    public static Effect slash1;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -721,7 +722,7 @@ public class MLFx {
                 Drawf.tri(e.x, e.y, 40f, 160f * e.fout(), i * 90 + 45);
             }
             Drawf.light(e.x, e.y, 120f, Pal.bulletYellowBack, 0.8f * e.fout());
-        }),
+        });
     }
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
