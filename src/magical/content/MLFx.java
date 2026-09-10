@@ -31,6 +31,7 @@ public class MLFx {
     public static Effect smallTeleport;
     public static Effect middleTeleport;
     public static Effect LargeTeleport;
+    public static Effect hugeTeleport;
     public static Effect energyMine;
     public static Effect EnergyExplosion;
     public static Effect EnergyExplosion2;
@@ -416,6 +417,80 @@ public class MLFx {
             Lines.circle(e.x, e.y, pulse);
             Draw.color(Color.white, fade);
             Fill.circle(e.x, e.y, (5f + 12f * Mathf.absin(time, 6f, 1f)) * fade);
+        });
+        hugeTeleport = new Effect(180f, 280f, e -> {
+            float fin = e.fin();
+            float fout = e.fout();
+            float finpow = e.finpow();
+            float foutpow = e.foutpow();
+            float sin = Mathf.sin(fin * Mathf.pi);
+            float radius = 280f * finpow;
+            float rot = e.time * 1.8f;
+            Draw.z(Layer.effect);
+            Draw.color(Color.valueOf("FEEBB3FF"));
+            Draw.alpha(fout * 0.9f);
+            Lines.stroke(4f * foutpow);
+            Lines.circle(e.x, e.y, radius);
+            Draw.alpha(fout * 0.55f);
+            Lines.stroke(2f * fout);
+            Lines.circle(e.x, e.y, radius * 0.88f);
+            Draw.alpha(fout * 0.8f);
+            for(int i = 0; i < 12; i++){
+                float angle = rot + i * 30f;
+                float r = radius * (0.94f + Mathf.sin(i * 17f) * 0.025f);
+                Lines.arc(e.x, e.y, r, 0.045f, angle);
+            }
+            Draw.alpha(sin * 0.85f);
+            Lines.stroke(3f * sin);
+            Lines.arc(e.x, e.y, radius * 0.68f, 0.25f, rot * 1.5f);
+            Lines.arc(e.x, e.y, radius * 0.52f, 0.2f, -rot * 2f);
+            Draw.alpha(sin * 0.75f);
+            Lines.stroke(2f);
+            Lines.circle(e.x, e.y, radius * 0.32f);
+            Lines.circle(e.x, e.y, radius * 0.2f);
+            Draw.alpha(fout * 0.75f);
+            for(int i = 0; i < 20; i++){
+                float angle = rot * (i % 2 == 0 ? 1f : -1f) + i * 18f;
+                float inner = radius * 0.18f;
+                float outer = radius * (0.45f + Mathf.absin(i * 11f, 1f, 0.15f));
+                Lines.stroke((i % 4 == 0 ? 3f : 1.5f) * fout);
+                Lines.line(e.x + Angles.trnsx(angle, inner), e.y + Angles.trnsy(angle, inner), e.x + Angles.trnsx(angle, outer), e.y + Angles.trnsy(angle, outer));
+            }
+            Draw.alpha(fout);
+            Angles.randLenVectors(e.id, 70, radius, (x, y) -> {
+                float len = Mathf.len(x, y);
+                float scale = Mathf.clamp(len / Math.max(radius, 1f));
+                Fill.circle(e.x + x, e.y + y, (1.5f + scale * 3f) * fout);
+            });
+            Draw.alpha(foutpow);
+            Angles.randLenVectors(e.id + 1, 35, radius * 0.8f, (x, y) -> {
+                float angle = Mathf.angle(x, y);
+                float length = 12f + 28f * sin;
+                Lines.stroke(1.5f * fout);
+                Lines.lineAngle(e.x + x, e.y + y, angle, length);
+            });
+            float core = 18f + 42f * sin;
+            Draw.alpha(sin);
+            Fill.circle(e.x, e.y, core);
+            Draw.alpha(sin * 0.35f);
+            Fill.circle(e.x, e.y, core * 1.8f);
+            Draw.alpha(sin);
+            Lines.stroke(3f * sin);
+            Lines.arc(e.x, e.y, core * 1.6f, 0.45f, rot * 3f);
+            Lines.arc(e.x, e.y, core * 2.1f, 0.3f, -rot * 2.5f);
+            Draw.alpha(foutpow);
+            Lines.stroke(4f * foutpow);
+            float cross = core * 2.5f;
+            Lines.line(e.x - cross, e.y, e.x + cross, e.y);
+            Lines.line(e.x, e.y - cross, e.x, e.y + cross);
+            for(int i = 0; i < 4; i++){
+                float angle = rot + i * 90f;
+                float start = core * 1.5f;
+                float length = radius * 0.32f * fout;
+                Lines.stroke(2.5f * fout);
+                Lines.lineAngle(e.x + Angles.trnsx(angle, start), e.y + Angles.trnsy(angle, start), angle, length);
+            }
+            Draw.reset();
         });
         energyMine = new Effect(60f, e -> {
             float fin = e.finpow();
