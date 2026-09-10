@@ -5047,7 +5047,7 @@ public class MLUnitTypes {
                             shots = 4;
                             mag = 3f;
                             scl = 3f;
-                        }};
+                        }}
                 );
                 bullet = new BasicBulletType() {{
                     damage = 750f;
@@ -5067,6 +5067,6 @@ public class MLUnitTypes {
                     hitEffect = despawnEffect = MLFx.EnergyExplosion;
                 }};
             }});
-            }};
+        }};
     }
 }
