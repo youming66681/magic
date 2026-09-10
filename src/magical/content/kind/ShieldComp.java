@@ -1,7 +1,6 @@
 package mindustry.entities.comp;
 import arc.util.*;
 import mindustry.*;
-import mindustry.annotations.Annotations.*;
 import mindustry.content.*;
 import mindustry.entities.*;
 import mindustry.game.*;
