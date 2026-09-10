@@ -576,6 +576,20 @@ public class FlexAssembler extends PayloadBlock{
             super.configure(index);
         }
         @Override
+        public void configured(@Nullable Unit builder, @Nullable Object value){
+            super.configured(builder, value);
+            if(!(value instanceof Integer index)){
+                return;
+            }
+            if(index != NO_PLAN && (index < 0 || index >= plans.size)){
+                return;
+            }
+            lockedIndex = index;
+            updateLockedPlan();
+            syncArea();
+            progress = 0f;
+        }
+        @Override
         public void updateTile(){
             if(!readUnits.isEmpty()){
                 units.clear();

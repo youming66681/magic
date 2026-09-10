@@ -3687,14 +3687,14 @@ public class MLBlocks {
             consumePower(20f);
         }};
         //通用装配升级厂
-        GeneralAssemblyUpgrade = new UnitAssemblerModule("GeneralAssemblyUpgrade"){{
+        GeneralAssemblyUpgrade = new FlexAssemblerModule("GeneralAssemblyUpgrade"){{
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.wingedMetal, 250, MLItems.fluorescentFeatherStone, 250, Items.silicon, 500, MLItems.arrayChip, 150,}));
             consumePower(10f);
 
             size = 3;
             health = 2500;
         }};
-        AdvancedGeneralAssemblyUpgradeFactory = new UnitAssemblerModule("AdvancedGeneralAssemblyUpgradeFactory"){{
+        AdvancedGeneralAssemblyUpgradeFactory = new FlexAssemblerModule("AdvancedGeneralAssemblyUpgradeFactory"){{
             requirements(Category.units, ItemStack.with(new Object[]{MLItems.wingedMetal, 500, MLItems.fluorescentFeatherStone, 500, Items.silicon, 1000, MLItems.phantomLuminousAlloy, 250, MLItems.matrixChip, 250,}));
             consumePower(20f);
 
