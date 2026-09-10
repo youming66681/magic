@@ -46,6 +46,7 @@ public class MLSounds {
     public static Sound nuke;
     public static Sound shootSmite;
     public static Sound explosionbig;
+    public static Sound shootCollaris;
 
     public static void load() {
         if (Vars.headless) return;
@@ -87,6 +88,7 @@ public class MLSounds {
         nuke = loadSoundSafe("nuke.ogg");
         shootSmite = loadSoundSafe("shootSmite.ogg");
         explosionbig = loadSoundSafe("explosionbig.ogg");
+        shootCollaris = loadSoundSafe("shootCollaris.ogg");
     }
 
     private static Sound loadSoundSafe(String name) {
@@ -136,5 +138,6 @@ public class MLSounds {
         nuke                = new Sound();
         shootSmite          = new Sound();
         explosionbig        = new Sound();
+        shootCollaris       = new Sound();
     }
 }

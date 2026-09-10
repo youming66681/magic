@@ -4978,7 +4978,7 @@ public class MLUnitTypes {
                         shootSound = MLSounds.shootSmite;
                         shake = 30f;
                         layerOffset = 0.001f;
-                        recoil = 6;
+                        recoil = 9;
                         shoot = new ShootMulti(
                                 new ShootBarrel() {{
                                     shots = 4;
@@ -5027,7 +5027,46 @@ public class MLUnitTypes {
                             pierceBuilding = true;
                             pierceCap = 3;
                         }};
-                    }});
+                    }},
+            new Weapon("magic-MilkyWay1") {{
+                reload = 180f;
+                x = 49f;
+                y = 14f;
+                rotate = true;
+                rotateSpeed = 6f;
+                mirror = true;
+                alternate = false;
+                inaccuracy = 0f;
+                shootSound = MLSounds.shootCollaris;
+                shake = 15f;
+                layerOffset = 0.001f;
+                recoil = 6;
+                shootY = 12;
+                shoot = new ShootMulti(
+                        shoot = new ShootHelix() {{
+                            shots = 4;
+                            mag = 3f;
+                            scl = 3f;
+                        }};
+                );
+                bullet = new BasicBulletType() {{
+                    damage = 750f;
+                    lifetime = 40f;
+                    speed = 16f;
+                    width = 8f;
+                    height = 16f;
+                    hitSize = 24f;
+                    splashDamageRadius = 48f;
+                    splashDamage = 750f;
+                    frontColor = Color.valueOf("FEEBB3FF");
+                    backColor = Color.valueOf("FEEBB3FF");
+                    trailLength = 9;
+                    trailWidth = 3f;
+                    trailColor = Color.valueOf("FEEBB3FF");
+                    hitSound = MLSounds.plasmaboom;
+                    hitEffect = despawnEffect = MLFx.EnergyExplosion;
+                }};
+            }});
             }};
     }
 }
