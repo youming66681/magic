@@ -3521,6 +3521,7 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        /*飞雷神*/abilities.add(new DamageReductionAbility(1f));
         Starlight = new UnitType("Starlight") {{
             constructor = UnitTypes.flare.constructor;
             aiController = FlyingFollowAI::new;
@@ -4963,6 +4964,7 @@ public class MLUnitTypes {
                 }});
                 abilities.add(new DebuffImmunityAbility(0.60f));
                 abilities.add(new DamageLimitAbility(900f, 0.60f));
+                abilities.add(new DamageReductionAbility(0.10f));
             weapons.add(
                     new Weapon("magic-MilkyWay0") {{
                         reload = 120f;
