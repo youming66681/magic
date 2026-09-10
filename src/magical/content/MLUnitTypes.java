@@ -4987,27 +4987,15 @@ public class MLUnitTypes {
                                             -36f, 24f, 0f
                                     };
                                 }},
-                                new ShootBarrel() {{
+                                new ShootPattern() {{
                                     shots = 4;
                                     shotDelay = 0f;
-                                    firstShotDelay = 20f;
-                                    barrels = new float[]{
-                                            32f, 24f, 0f,
-                                            24f, 24f, 0f,
-                                            -24f, 24f, 0f,
-                                            -36f, 24f, 0f
-                                    };
+                                    firstShotDelay = 15f;
                                 }},
-                                new ShootBarrel() {{
+                                new ShootPattern() {{
                                     shots = 4;
                                     shotDelay = 0f;
-                                    firstShotDelay = 40f;
-                                    barrels = new float[]{
-                                            32f, 24f, 0f,
-                                            24f, 24f, 0f,
-                                            -24f, 24f, 0f,
-                                            -36f, 24f, 0f
-                                    };
+                                    firstShotDelay = 30f;
                                 }}
                         );
                         bullet = new BasicBulletType() {{
