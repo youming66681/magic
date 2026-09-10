@@ -132,6 +132,21 @@ public class MLSpawnUnits {
                     MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                 });
             }
+            else if (unit.type == MLUnitTypes.MilkyWay) {
+                float delay = 1f;
+                float x = unit.x + Mathf.random(-240f, 240f);
+                float y = unit.y + Mathf.random(-240f, 240f);
+                UnitType type = unit.type;
+                //MLFx.LargeTeleport.at(x, y);
+                unit.remove();
+                Time.run(delay * 150f, () -> {
+                    Unit newUnit = type.create(state.rules.waveTeam);
+                    newUnit.set(x, y);
+                    MLSounds.shootForeshadow.at(x, y, 15f);
+                    newUnit.add();
+                    MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
+                });
+            }
         });
     }
 }
