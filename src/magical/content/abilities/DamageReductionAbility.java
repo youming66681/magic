@@ -8,7 +8,6 @@ public class DamageReductionAbility extends Ability{
     public DamageReductionAbility(float reduction){
         this.reduction = Math.max(0f, Math.min(reduction, 0.9999f));
     }
-    @Override
     public float modifyDamage(Unit unit, float amount){
         return amount * (1f - reduction);
     }
