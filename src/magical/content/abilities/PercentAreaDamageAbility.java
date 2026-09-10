@@ -31,12 +31,6 @@ public class PercentAreaDamageAbility extends Ability{
         });
     }
     @Override
-    public void addStats(Table t){
-        t.add(abilityStat("range",range));
-        t.row();
-        t.add(abilityStat("percent",(int)(percent*100)));
-    }
-    @Override
     public String getBundle(){
         return "ability.percentareadamage";
     }

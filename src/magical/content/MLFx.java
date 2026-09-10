@@ -713,11 +713,11 @@ public class MLFx {
                     Lines.circle(e.x, e.y, e.rotation * e.fin(Interp.pow3Out));
                 });
         slash1 = new Effect(60f, 100f, e -> {
-            color(Pal.bulletYellowBack);
+            Draw.color(Pal.bulletYellowBack);
             for(int i = 0; i < 4; i++){
                 Drawf.tri(e.x, e.y, 80f, 320f * e.fout(), i * 90 + 45);
             }
-            color();
+            Draw.color();
             for(int i = 0; i < 4; i++){
                 Drawf.tri(e.x, e.y, 40f, 160f * e.fout(), i * 90 + 45);
             }
