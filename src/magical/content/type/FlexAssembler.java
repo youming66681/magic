@@ -882,9 +882,6 @@ public class FlexAssembler extends PayloadBlock{
                         })
                         .pad(8);
                 button.clicked(() -> {
-                    lockedIndex = index;
-                    updateLockedPlan();
-                    syncArea();
                     configure(index);
                 });
                 grid.add(button)
@@ -915,21 +912,18 @@ public class FlexAssembler extends PayloadBlock{
             return lockedIndex;
         }
         @Override
-        public void configure(
-                @Nullable Object value
-        ){
-            if(value instanceof Integer){
-                int index =
-                        (Integer)value;
-                if(index == NO_PLAN ||
-                        (index >= 0 &&
-                                index < plans.size)){
-                    lockedIndex = index;
-                    updateLockedPlan();
-                    syncArea();
-                }
+        public void configure(@Nullable Object value){
+            if(!(value instanceof Integer index)){
+                return;
             }
-            super.configure(value);
+            if(index != NO_PLAN &&
+                    (index < 0 || index >= plans.size)){
+                return;
+            }
+            lockedIndex = index;
+            updateLockedPlan();
+            syncArea();
+            progress = 0f;
         }
         @Override
         public void updateTile(){

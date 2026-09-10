@@ -3967,8 +3967,8 @@ public class MLUnitTypes {
                 health = 25000f;
                 armor = 30f;
                 hitSize = 82f;
-                engineOffset = 41;
-                engineSize = 20f;
+                engineOffset = 26;
+                engineSize = 13f;
                 range = 480f;
                 speed = 1f;
                 accel = 0.07f;
