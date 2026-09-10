@@ -3509,6 +3509,7 @@ public class MLUnitTypes {
             createWreck = false;
             engineOffset = 5;
             engineSize = 3;
+            /*飞雷神*/abilities.add(new DamageReductionAbility(1f));
             weapons.add(new RepairBeamWeapon("magic-repair") {{
                 x = 0f;
                 y = 0f;
@@ -3521,7 +3522,6 @@ public class MLUnitTypes {
                 }};
             }});
         }};
-        /*飞雷神*/abilities.add(new DamageReductionAbility(1f));
         Starlight = new UnitType("Starlight") {{
             constructor = UnitTypes.flare.constructor;
             aiController = FlyingFollowAI::new;
