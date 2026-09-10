@@ -4976,6 +4976,7 @@ public class MLUnitTypes {
                         shootSound = MLSounds.shootSmite;
                         shake = 30f;
                         layerOffset = 0.001f;
+                        recoil = 6;
                         shoot = new ShootMulti(
                                 new ShootBarrel() {{
                                     shots = 4;
