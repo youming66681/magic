@@ -3712,7 +3712,7 @@ public class MLUnitTypes {
         //大型
         BrokenEdge = new UnitType("BrokenEdge") {{
             flying = true;
-            faceTarget = true;
+            faceTarget = false;
             lowAltitude = true;
             rotateMoveFirst = true;
             omniMovement = true;
@@ -3959,7 +3959,7 @@ public class MLUnitTypes {
             Tianshu = new UnitType("Tianshu") {{
                 constructor = UnitTypes.flare.constructor;
                 flying = true;
-                faceTarget = true;
+                faceTarget = false;
                 lowAltitude = true;
                 rotateMoveFirst = true;
                 omniMovement = true;
@@ -4050,7 +4050,7 @@ public class MLUnitTypes {
         Aoba = new UnitType("Aoba"){{
             constructor = UnitTypes.flare.constructor;
             flying = true;
-            faceTarget = true;
+            faceTarget = false;
             lowAltitude = true;
             rotateMoveFirst = true;
             omniMovement = true;
@@ -4191,7 +4191,7 @@ public class MLUnitTypes {
         MoonRise = new UnitType("MoonRise"){{
                 constructor = UnitTypes.flare.constructor;
                 flying = true;
-                faceTarget = true;
+                faceTarget = false;
                 lowAltitude = true;
                 rotateMoveFirst = true;
                 omniMovement = true;
@@ -4456,6 +4456,7 @@ public class MLUnitTypes {
                         autoTarget = true;
                         alternate = false;
                         bullet = new MissileBulletType(){{
+                            ignoreRotation = true;
                             damage = 90f;
                             splashDamageRadius = 36f;
                             splashDamage = 90f;
