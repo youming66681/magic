@@ -5043,6 +5043,16 @@ public class MLUnitTypes {
                 recoil = 6;
                 shootY = 12;
                 shoot = new ShootMulti(
+                        new ShootBarrel() {{
+                            shots = 4;
+                            shotDelay = 0f;
+                            barrels = new float[]{
+                                    2f, 12f, 0f,
+                                    4f, 12f, 0f,
+                                    -4f, 12f, 0f,
+                                    -2f, 12f, 0f
+                            };
+                        }},
                         shoot = new ShootHelix() {{
                             shots = 4;
                             mag = 3f;
