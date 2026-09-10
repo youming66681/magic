@@ -968,8 +968,8 @@ public class MLUnitTypes {
                         shootSound = MLSounds.plasmadrop;
                         ejectEffect = Fx.casing1;
                         layerOffset = 0.001f;
+                        ignoreRotation = true;
                         bullet = new BasicBulletType(0, 10, "large-bomb") {{
-                            ignoreRotation = true;
                             collidesAir = false;
                             maxRange = 10;
                             width = 24;
@@ -1856,8 +1856,8 @@ public class MLUnitTypes {
                         shootSound = MLSounds.plasmadrop;
                         ejectEffect = Fx.casing1;
                         layerOffset = 0.001f;
+                        ignoreRotation = true;
                         bullet = new BasicBulletType(0, 250, "magic-十字星") {{
-                            ignoreRotation = true;
                             collidesAir = false;
                             collides = false;
                             maxRange = 40;
@@ -1927,8 +1927,8 @@ public class MLUnitTypes {
                             y = 0;
                             shootSound = MLSounds.plasmadrop;
                             layerOffset = 0.001f;
+                            ignoreRotation = true;
                             bullet = new BasicBulletType(0, 400, "magic-十字星") {{
-                                ignoreRotation = true;
                                 collidesAir = false;
                                 collides = false;
                                 maxRange = 60;
@@ -1948,7 +1948,6 @@ public class MLUnitTypes {
                                 hitSound = MLSounds.explosion;
                                 fragBullets = 12;
                                 fragBullet = new BasicBulletType(4, 300, "magic-十字星") {{
-                                    ignoreRotation = true;
                                     collidesAir = false;
                                     collides = false;
                                     width = 64;
@@ -1978,8 +1977,8 @@ public class MLUnitTypes {
                             recoil = 0f;
                             rotate = false;
                             rotateSpeed = 0;
+                            ignoreRotation = true;
                             bullet = new BasicBulletType(){{
-                                ignoreRotation = true;
                                 collidesAir = false;
                                 collides = false;
                                 maxRange = 120f;
@@ -4455,8 +4454,8 @@ public class MLUnitTypes {
                         controllable = false;
                         autoTarget = true;
                         alternate = false;
+                        ignoreRotation = true;
                         bullet = new MissileBulletType(){{
-                            ignoreRotation = true;
                             damage = 90f;
                             splashDamageRadius = 36f;
                             splashDamage = 90f;
