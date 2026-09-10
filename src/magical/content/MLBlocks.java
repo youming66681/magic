@@ -3547,7 +3547,7 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.BulletsRain, 2),
                     new PayloadStack(MLBlocks.Nebula, 12),
                     new PayloadStack(MLBlocks.LightDescends, 8));
-            addPlan("T3", MLUnitTypes.MilkyWay, 108000f, 39, 1,
+            addPlan("T3", MLUnitTypes.MilkyWay, 108000f, 39, 2,
                     new PayloadStack(MLBlocks.LargeWingWall, 9),
                     new PayloadStack(MLBlocks.LargePhantomGlowWall, 9),
                     new PayloadStack(MLBlocks.NanoCarbonAlloyWall, 9),

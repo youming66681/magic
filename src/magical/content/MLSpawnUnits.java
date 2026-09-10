@@ -139,7 +139,7 @@ public class MLSpawnUnits {
                 UnitType type = unit.type;
                 MLFx.hugeTeleport.at(x, y);
                 unit.remove();
-                Time.run(delay * 300f, () -> {
+                Time.run(delay * 180f, () -> {
                     Unit newUnit = type.create(state.rules.waveTeam);
                     newUnit.set(x, y);
                     MLSounds.shootForeshadow.at(x, y, 15f);
