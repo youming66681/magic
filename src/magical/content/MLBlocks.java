@@ -3547,6 +3547,12 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.BulletsRain, 2),
                     new PayloadStack(MLBlocks.Nebula, 12),
                     new PayloadStack(MLBlocks.LightDescends, 8));
+            addPlan("T3", MLUnitTypes.MilkyWay, 108000f, 39, 1,
+                    new PayloadStack(MLBlocks.LargeWingWall, 9),
+                    new PayloadStack(MLBlocks.LargePhantomGlowWall, 9),
+                    new PayloadStack(MLBlocks.NanoCarbonAlloyWall, 9),
+                    new PayloadStack(MLBlocks.LuoLing, 6),
+                    new PayloadStack(MLBlocks.DawN, 1));
 
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);
@@ -3564,6 +3570,7 @@ public class MLBlocks {
                     MLBlocks.largePhantomTitaniumSteelWall,
                     MLBlocks.LargeWingWall,
                     MLBlocks.LargePhantomGlowWall,
+                    MLBlocks.NanoCarbonAlloyWall,
                     Blocks.repairPoint,
                     Blocks.forceProjector,
                     Blocks.lancer,
@@ -3573,6 +3580,8 @@ public class MLBlocks {
                     MLBlocks.Nebula,
                     MLBlocks.PhantomCrystal,
                     MLBlocks.BulletsRain,
+                    MLBlocks.LuoLing,
+                    MLBlocks.DawN,
                     MLBlocks.BreakingArmy
             );
         }};
