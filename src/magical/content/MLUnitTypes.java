@@ -5031,7 +5031,7 @@ public class MLUnitTypes {
             new Weapon("magic-MilkyWay1") {{
                 reload = 90f;
                 x = 49f;
-                y = 7f;
+                y = -7f;
                 rotate = true;
                 rotateSpeed = 6f;
                 mirror = true;
