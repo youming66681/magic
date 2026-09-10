@@ -65,6 +65,14 @@ public class FlexAssembler extends PayloadBlock{
         ambientSound = Sounds.loopUnitBuilding;
         ambientSoundVolume = 0.13f;
         configurable = true;
+        config(Integer.class, (FlexAssemblerBuild build, Integer index) -> {
+            if(index == null) return;
+            if(index != -1 && (index < 0 || index >= plans.size)) return;
+            build.lockedIndex = index;
+            build.updateLockedPlan();
+            build.syncArea();
+            build.progress = 0f;
+        });
     }
     public void addPlan(String label, UnitType output, float time, int customArea, int requiredTier, PayloadStack... requirements){
         Seq<PayloadStack> reqSeq = new Seq<>(requirements);
@@ -569,25 +577,7 @@ public class FlexAssembler extends PayloadBlock{
             if(index != NO_PLAN && (index < 0 || index >= plans.size)){
                 return;
             }
-            lockedIndex = index;
-            updateLockedPlan();
-            syncArea();
-            progress = 0f;
             super.configure(index);
-        }
-        @Override
-        public void configured(@Nullable Unit builder, @Nullable Object value){
-            super.configured(builder, value);
-            if(!(value instanceof Integer index)){
-                return;
-            }
-            if(index != NO_PLAN && (index < 0 || index >= plans.size)){
-                return;
-            }
-            lockedIndex = index;
-            updateLockedPlan();
-            syncArea();
-            progress = 0f;
         }
         @Override
         public void updateTile(){
