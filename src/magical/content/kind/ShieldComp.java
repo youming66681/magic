@@ -7,12 +7,11 @@ import mindustry.entities.*;
 import mindustry.game.*;
 import mindustry.gen.*;
 import mindustry.type.*;
-@Component
 abstract class ShieldComp implements Healthc, Posc{
-    @Import float health, hitTime, x, y, healthMultiplier, armorOverride;
-    @Import boolean dead;
-    @Import Team team;
-    @Import UnitType type;
+     float health, hitTime, x, y, healthMultiplier, armorOverride;
+     boolean dead;
+     Team team;
+     UnitType type;
     /** Absorbs health damage. */
     float shield;
     /** Subtracts an amount from damage. No need to save. */
@@ -33,14 +32,12 @@ abstract class ShieldComp implements Healthc, Posc{
         }
         return amount;
     }
-    @Replace
     @Override
     public void damage(float amount){
         amount = Damage.applyArmor(amount, armorOverride >= 0f ? armorOverride : armor) / healthMultiplier / Vars.state.rules.unitHealth(team);
         amount = modifyIncomingDamage(amount);
         rawDamage(amount);
     }
-    @Replace
     @Override
     public void damagePierce(float amount, boolean withEffect){
         float pre = hitTime;
@@ -51,7 +48,6 @@ abstract class ShieldComp implements Healthc, Posc{
             hitTime = pre;
         }
     }
-    @Replace
     @Override
     public void damageArmorMult(float amount, float armorMult, boolean withEffect){
         float pre = hitTime;
