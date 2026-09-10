@@ -4927,7 +4927,7 @@ public class MLUnitTypes {
         MilkyWay = new UnitType("MilkyWay"){{
                 constructor = UnitTypes.flare.constructor;
                 flying = true;
-                faceTarget = true;
+                faceTarget = false;
                 lowAltitude = true;
                 rotateMoveFirst = true;
                 omniMovement = true;
