@@ -66,7 +66,7 @@ public class MLUnitTypes {
     //大型
     BrokenEdge, FlyingSwallow, Tianshu,
     //旗舰
-    Aoba, MoonRise, StarrySky;
+    Aoba, MoonRise, StarrySky, MilkyWay;
 
     public static void load() {
         //幻境陆军
@@ -3885,7 +3885,7 @@ public class MLUnitTypes {
             speed = 5f;
             rotateSpeed = 5f;
             hitSize = 16;
-            health = 1000;
+            health = 2000;
             logicControllable = false;
             playerControllable = false;
             allowedInPayloads = false;
@@ -3922,7 +3922,7 @@ public class MLUnitTypes {
                             spread = 2f;
                         }};
                         bullet = new BasicBulletType() {{
-                            damage = 90f;
+                            damage = 60f;
                             pierceCap = 2;
                             pierceBuilding = true;
                             frontColor = Color.valueOf("FEEBB3FF");
@@ -4923,5 +4923,115 @@ public class MLUnitTypes {
                         }};
                     }});
         }};
+        //T4
+        MilkyWay = new UnitType("MilkyWay"){{
+                constructor = UnitTypes.flare.constructor;
+                flying = true;
+                faceTarget = true;
+                lowAltitude = true;
+                rotateMoveFirst = true;
+                omniMovement = true;
+                rotateSpeed = 1.5f;
+                health = 1080000f;
+                armor = 240f;
+                hitSize = 72f;
+                engineOffset = 36;
+                engineSize = 18f;
+                range = 640f;
+                speed = 0.9f;
+                accel = 0.06f;
+                drag = 0.04f;
+                targetFlags = new BlockFlag[]{
+                        BlockFlag.factory,
+                        BlockFlag.generator,
+                        BlockFlag.reactor,
+                        BlockFlag.battery
+                };
+                abilities.add(new EnergyFieldAbility(
+                        210f,   // damage
+                        150f,   // reload
+                        320f   // range
+                ) {{
+                    healPercent = 4f;
+                    x = 0f;
+                    y = -16f;
+                    maxTargets = 80;
+                    effectRadius = 24f;
+                    damageEffect = Fx.chainLightning;
+                    shootSound = MLSounds.spark;
+                    status = StatusEffects.shocked;
+                }});
+                abilities.add(new DebuffImmunityAbility(0.60f));
+                abilities.add(new DamageLimitAbility(900f, 0.60f));
+            weapons.add(
+                    new Weapon("magic-MilkyWay0") {{
+                        reload = 120f;
+                        x = 0f;
+                        y = -54f;
+                        rotate = true;
+                        rotateSpeed = 3f;
+                        mirror = false;
+                        alternate = false;
+                        inaccuracy = 0f;
+                        shootSound = MLSounds.shootSmite;
+                        shake = 30f;
+                        layerOffset = 0.001f;
+                        shoot = new ShootMulti(
+                                new ShootBarrel() {{
+                                    shots = 4;
+                                    shotDelay = 0f;
+                                    barrels = new float[]{
+                                            32f, 24f, 0f,
+                                            24f, 24f, 0f,
+                                            -24f, 24f, 0f,
+                                            -36f, 24f, 0f
+                                    };
+                                }},
+                                new ShootBarrel() {{
+                                    shots = 4;
+                                    shotDelay = 0f;
+                                    firstShotDelay = 20f;
+                                    barrels = new float[]{
+                                            32f, 24f, 0f,
+                                            24f, 24f, 0f,
+                                            -24f, 24f, 0f,
+                                            -36f, 24f, 0f
+                                    };
+                                }},
+                                new ShootBarrel() {{
+                                    shots = 4;
+                                    shotDelay = 0f;
+                                    firstShotDelay = 40f;
+                                    barrels = new float[]{
+                                            32f, 24f, 0f,
+                                            24f, 24f, 0f,
+                                            -24f, 24f, 0f,
+                                            -36f, 24f, 0f
+                                    };
+                                }}
+                        );
+                        bullet = new BasicBulletType() {{
+                            damage = 1500f;
+                            lifetime = 25.6f;
+                            speed = 25f;
+                            width = 16f;
+                            height = 48f;
+                            hitSize = 24f;
+                            splashDamageRadius = 24f;
+                            splashDamage = 1500f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            trailLength = 9;
+                            trailWidth = 3f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            hitSound = MLSounds.plasmaboom;
+                            hitEffect = despawnEffect = Fx.instBomb;
+                            smokeEffect = Fx.smokeCloud;
+                            pierce = true;
+                            pierceBuilding = true;
+                            pierceCap = 3;
+                        }};
+                    }});
+            }};
     }
 }
