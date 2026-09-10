@@ -4519,7 +4519,7 @@ public class MLUnitTypes {
         StarrySky = new UnitType("StarrySky"){{
                 constructor = UnitTypes.flare.constructor;
                 flying = true;
-                faceTarget = true;
+                faceTarget = false;
                 lowAltitude = true;
                 rotateMoveFirst = true;
                 omniMovement = true;
