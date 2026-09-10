@@ -712,14 +712,14 @@ public class MLFx {
                     Lines.stroke(2.5f * e.fout(), e.color);
                     Lines.circle(e.x, e.y, e.rotation * e.fin(Interp.pow3Out));
                 });
-        slash1 = new Effect(60f, 100f, e -> {
+        slash1 = new Effect(30f, 100f, e -> {
             Draw.color(Pal.bulletYellowBack);
             for(int i = 0; i < 4; i++){
-                Drawf.tri(e.x, e.y, 80f, 320f * e.fout(), i * 90 + 45);
+                Drawf.tri(e.x, e.y, 40f, 320f * e.fout(), i * 90 + 45);
             }
             Draw.color();
             for(int i = 0; i < 4; i++){
-                Drawf.tri(e.x, e.y, 40f, 160f * e.fout(), i * 90 + 45);
+                Drawf.tri(e.x, e.y, 20f, 160f * e.fout(), i * 90 + 45);
             }
             Drawf.light(e.x, e.y, 120f, Pal.bulletYellowBack, 0.8f * e.fout());
         });
