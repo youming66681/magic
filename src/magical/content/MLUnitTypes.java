@@ -4982,11 +4982,16 @@ public class MLUnitTypes {
                                     shots = 4;
                                     shotDelay = 0f;
                                     barrels = new float[]{
-                                            32f, 24f, 0f,
                                             24f, 24f, 0f,
-                                            -24f, 24f, 0f,
-                                            -36f, 24f, 0f
+                                            20f, 24f, 0f,
+                                            -20f, 24f, 0f,
+                                            -24f, 24f, 0f
                                     };
+                                }},
+                                new ShootPattern() {{
+                                    shots = 4;
+                                    shotDelay = 0f;
+                                    firstShotDelay = 0f;
                                 }},
                                 new ShootPattern() {{
                                     shots = 4;
