@@ -29,6 +29,7 @@ import mindustry.entities.pattern.ShootAlternate;
 import mindustry.content.StatusEffects;
 import mindustry.gen.MechUnit;
 import mindustry.type.weapons.RepairBeamWeapon;
+import mindustry.entities.part.*;
 
 import static arc.graphics.g2d.Draw.*;
 import static arc.graphics.g2d.Lines.*;
@@ -5176,6 +5177,73 @@ public class MLUnitTypes {
                             hitEffect = despawnEffect = MLFx.EnergyExplosion;
                         }};
                     }});
+            weapons.add(
+            new Weapon("magic-StarrySky2"){{
+                mirror = true;
+                x = 0f;
+                y = -16f;
+                reload = 180f;
+                shoot = new ShootAlternate(){{
+                    shots = 60;
+                    shotDelay = 1f;
+                }};
+                shootSound = MLSounds.missileLarge;
+                rotate = false;
+                rotateSpeed = 0f;
+                inaccuracy = 360f;
+                controllable = false;
+                autoTarget = true;
+                alternate = false;
+                ignoreRotation = true;
+                parts = new DrawPart[]{
+                        new HaloPart(){{
+                            sides = 3;
+                            shapes = 2;
+                            color = Color.valueOf("FEEBB3FF");
+                            colorTo = Color.valueOf("FEEBB3FF");
+                            tri = true;
+                            radius = 6f;
+                            radiusTo = 6f;
+                            triLength = 24f;
+                            triLengthTo = 24f;
+                            haloRadius = 0f;
+                            haloRotation = 0f;
+                            haloRotateSpeed = 1.5f;
+                        }}
+                };
+                bullet = new MissileBulletType(){{
+                    damage = 150f;
+                    splashDamageRadius = 48f;
+                    splashDamage = 150f;
+                    homingRange = 800f;
+                    homingPower = 1f;
+                    homingDelay = 30f;
+                    sprite = "magic-大导弹";
+                    trailLength = 6;
+                    trailWidth = 3f;
+                    trailEffect = Fx.none;
+                    trailColor = Color.valueOf("FEEBB3FF");
+                    trailEffect = new ParticleEffect() {{
+                        particles = 12;
+                        sizeFrom = 12f;
+                        sizeTo = 0f;
+                        lifetime = 12f;
+                        length = 6f;
+                        baseLength = 0f;
+                        colorFrom = Color.valueOf("FEEBB3FF");
+                        colorTo = Color.valueOf("FEEBB3FF");
+                        cone = 30f;
+                    }};
+                    backColor = Color.valueOf("FEEBB3FF");
+                    frontColor = Color.valueOf("FEEBB3FF");
+                    width = 16f;
+                    height = 32f;
+                    speed = 16f;
+                    lifetime = 50f;
+                    hitSound = MLSounds.plasmaboom;
+                    hitEffect = despawnEffect = MLFx.EnergyExplosion;
+                }};
+            }});
         }};
     }
 }
