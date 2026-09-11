@@ -5179,11 +5179,11 @@ public class MLUnitTypes {
                         }};
                     }});
             weapons.add(
-            new Weapon("magic-StarrySky2"){{
+            new Weapon("magic-MilkyWay2"){{
                 mirror = false;
                 x = 0f;
                 y = -16f;
-                reload = 180f;
+                reload = 240f;
                 shoot = new ShootAlternate(){{
                     shots = 60;
                     shotDelay = 1f;
