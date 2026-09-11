@@ -16,6 +16,7 @@ import mindustry.game.EventType.WorldLoadEvent;
 import mindustry.game.SpawnGroup;
 import mindustry.game.EventType.*;
 import arc.math.Mathf;
+import mindustry.ui.Fonts;
 import mindustry.gen.Call;
 import mindustry.gen.Iconc;
 
@@ -139,6 +140,8 @@ public class MLSpawnUnits {
                 float x = unit.x + Mathf.random(-240f, 240f);
                 float y = unit.y + Mathf.random(-240f, 240f);
                 Call.warningToast(Iconc.warning, "星河号已介入战局！");
+                Log.info("warning = @", Iconc.warning);
+                Log.info("glyph = @", Fonts.icon.getData().getGlyph((char)Iconc.warning));
                 Events.fire(new UnitFocusEvent(x,y, 180f));
                 UnitType type = unit.type;
                 MLFx.hugeTeleport.at(x, y);
