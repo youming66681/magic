@@ -4967,6 +4967,7 @@ public class MLUnitTypes {
                 abilities.add(new DamageReductionAbility(0.10f));
                 abilities.add(new PercentAreaDamageAbility(640f,0.01f,MLFx.slash1));
                 abilities.add(new TargetTeleportAbility(MLFx.jumpTrail));
+                abilities.add(new PlayerFocusAbility(0f, 200f));
             weapons.add(
                     new Weapon("magic-MilkyWay0") {{
                         reload = 120f;
