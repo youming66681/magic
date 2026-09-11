@@ -6,7 +6,7 @@ import mindustry.entities.Effect;
 import mindustry.entities.abilities.Ability;
 import mindustry.gen.Groups;
 import mindustry.gen.Unit;
-import mindustry.ai.types.AIController;
+import mindustry.ai.AIController;
 import mindustry.gen.Teamc;
 import mindustry.gen.Unit;
 
