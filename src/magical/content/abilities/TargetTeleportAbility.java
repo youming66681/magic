@@ -16,7 +16,7 @@ public class TargetTeleportAbility extends Ability{
 
     @Override
     public void update(Unit unit){
-        if(!(unit.target instanceof Unit target)) return;
+        if(!(unit.target() instanceof Unit target)) return;
         if(!target.isValid()) return;
         if(target.team == unit.team) return;
 
