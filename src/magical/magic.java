@@ -33,19 +33,20 @@ public class magic extends Mod {
     private Unit focusUnit;
     private float focusTime;
     public magic() {
-        Events.on(UnitFocusEvent.class,e -> {
-            if(Vars.headless)return;
-            if(focusTime > e.time)return;
-            focusTime = e.time;
-            Vars.ui.hudGroup.visible = false;
-            Vars.control.input.panCamera(
-                    new Vec2(e.x,e.y)
-            );
-            Timer.schedule(() -> {
-                Vars.ui.hudGroup.visible = true;
-                focusTime = 0f;
-            },e.time / 60f);
-        });
+        if(Vars.headless)return;
+        if(focusTime > e.time)return;
+        focusTime = e.time;
+        if(e.message != null && !e.message.isEmpty()){
+            Call.infoMessage(e.message);
+        }
+        Vars.ui.hudGroup.visible = false;
+        Vars.control.input.panCamera(
+                new Vec2(e.x,e.y)
+        );
+        Timer.schedule(() -> {
+            Vars.ui.hudGroup.visible = true;
+            focusTime = 0f;
+        },e.time / 60f);
     }
     public static String name(String add) {
         return ModName + "-" + add;

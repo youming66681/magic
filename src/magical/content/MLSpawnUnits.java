@@ -136,7 +136,7 @@ public class MLSpawnUnits {
                 float delay = 1f;
                 float x = unit.x + Mathf.random(-240f, 240f);
                 float y = unit.y + Mathf.random(-240f, 240f);
-                Events.fire(new UnitFocusEvent(x,y, 180f));
+                Events.fire(new UnitFocusEvent(x,y, 180f,"[scarlet]警告：星空号介入战局！"));
                 UnitType type = unit.type;
                 MLFx.hugeTeleport.at(x, y);
                 unit.remove();
