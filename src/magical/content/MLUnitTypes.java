@@ -5179,48 +5179,32 @@ public class MLUnitTypes {
                     }});
             weapons.add(
             new Weapon("magic-StarrySky2"){{
-                mirror = true;
+                mirror = false;
                 x = 0f;
                 y = -16f;
                 reload = 180f;
                 shoot = new ShootAlternate(){{
                     shots = 60;
-                    shotDelay = 1f;
+                    shotDelay = 1.5f;
                 }};
                 shootSound = MLSounds.missileLarge;
-                rotate = false;
-                rotateSpeed = 0f;
+                rotate = true;
+                rotateSpeed = 360f;
                 inaccuracy = 360f;
                 controllable = false;
                 autoTarget = true;
                 alternate = false;
                 ignoreRotation = true;
-                parts.add(
-                        new HaloPart(){{
-                            sides = 3;
-                            shapes = 2;
-                            color = Color.valueOf("FEEBB3FF");
-                            colorTo = Color.valueOf("FEEBB3FF");
-                            tri = true;
-                            radius = 6f;
-                            radiusTo = 6f;
-                            triLength = 24f;
-                            triLengthTo = 24f;
-                            haloRadius = 0f;
-                            haloRotation = 0f;
-                            haloRotateSpeed = 1.5f;
-                        }}
-                );
                 bullet = new MissileBulletType(){{
                     damage = 150f;
                     splashDamageRadius = 48f;
                     splashDamage = 150f;
                     homingRange = 800f;
                     homingPower = 1f;
-                    homingDelay = 30f;
+                    homingDelay = 18f;
                     sprite = "magic-大导弹";
-                    trailLength = 6;
-                    trailWidth = 3f;
+                    trailLength = 8;
+                    trailWidth = 4f;
                     trailEffect = Fx.none;
                     trailColor = Color.valueOf("FEEBB3FF");
                     trailEffect = new ParticleEffect() {{
@@ -5236,12 +5220,28 @@ public class MLUnitTypes {
                     }};
                     backColor = Color.valueOf("FEEBB3FF");
                     frontColor = Color.valueOf("FEEBB3FF");
-                    width = 16f;
-                    height = 32f;
+                    width = 24f;
+                    height = 48f;
                     speed = 16f;
                     lifetime = 50f;
                     hitSound = MLSounds.plasmaboom;
                     hitEffect = despawnEffect = MLFx.EnergyExplosion;
+                    parts.add(
+                            new HaloPart(){{
+                                sides = 3;
+                                shapes = 2;
+                                color = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                                tri = true;
+                                radius = 8f;
+                                radiusTo = 8f;
+                                triLength = 32f;
+                                triLengthTo = 32f;
+                                haloRadius = 0f;
+                                haloRotation = 0f;
+                                haloRotateSpeed = 3f;
+                            }}
+                    );
                 }};
             }});
         }};
