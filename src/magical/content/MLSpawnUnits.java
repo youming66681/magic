@@ -17,6 +17,7 @@ import mindustry.game.SpawnGroup;
 import mindustry.game.EventType.*;
 import arc.math.Mathf;
 import mindustry.gen.Call;
+import mindustry.gen.Iconc;
 
 import static mindustry.Vars.*;
 
@@ -137,7 +138,7 @@ public class MLSpawnUnits {
                 float delay = 1f;
                 float x = unit.x + Mathf.random(-240f, 240f);
                 float y = unit.y + Mathf.random(-240f, 240f);
-                Call.infoMessage("[scarlet]警告：星空号介入战局！");
+                Call.warningToast(Iconc.warning,"[unit]星空号介入战局！");
                 Events.fire(new UnitFocusEvent(x,y, 180f));
                 UnitType type = unit.type;
                 MLFx.hugeTeleport.at(x, y);
