@@ -37,8 +37,8 @@ public class PercentAreaDamageAbility extends Ability{
     @Override
     public void addStats(Table t){
         super.addStats(t);
-        t.add(abilityStat("range",range));
+        t.add(abilityStat("range",(int)(range / 8f)));
         t.row();
-        t.add(abilityStat("percent",(int)(percent*100)));
+        t.add(abilityStat("percent",(int)(percent * 100)));
     }
 }

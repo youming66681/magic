@@ -5185,7 +5185,7 @@ public class MLUnitTypes {
                 reload = 180f;
                 shoot = new ShootAlternate(){{
                     shots = 60;
-                    shotDelay = 1.5f;
+                    shotDelay = 1f;
                 }};
                 shootSound = MLSounds.missileLarge;
                 rotate = true;
@@ -5200,8 +5200,8 @@ public class MLUnitTypes {
                     splashDamageRadius = 48f;
                     splashDamage = 150f;
                     homingRange = 800f;
-                    homingPower = 1f;
-                    homingDelay = 18f;
+                    homingPower = 4f;
+                    homingDelay = 20f;
                     sprite = "magic-大导弹";
                     trailLength = 8;
                     trailWidth = 4f;

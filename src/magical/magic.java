@@ -27,7 +27,25 @@ public class magic extends Mod {
     public static Mods.LoadedMod ML;
     public static final String ModName = "magic";
     public static Mods.LoadedMod mod;
-    public magic() {}
+    public magic() {
+        Events.on(UnitFocusEvent.class,e -> {
+
+            if(!Vars.headless){
+
+                if(e.unit == null)return;
+
+                Timer.schedule(() -> {
+
+                    Vars.control.input.panCamera(
+                            e.unit.x,
+                            e.unit.y
+                    );
+
+                },0.1f);
+            }
+
+        });
+    }
     public static String name(String add) {
         return ModName + "-" + add;
     }
