@@ -37,9 +37,6 @@ public class magic extends Mod {
             if(Vars.headless)return;
             if(focusTime > e.time)return;
             focusTime = e.time;
-            if(e.message != null && !e.message.isEmpty()){
-                Call.infoMessage(e.message);
-            }
             Vars.ui.hudGroup.visible = false;
             Vars.control.input.panCamera(
                     new Vec2(e.x,e.y)
