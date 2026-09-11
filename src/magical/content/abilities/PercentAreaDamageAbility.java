@@ -20,13 +20,13 @@ public class PercentAreaDamageAbility extends Ability{
         timer+=Time.delta;
         if(timer<60f)return;
         timer=0f;
-        Groups.unit.each(target->{
-            if(target.team==unit.team)return;
-            if(!target.within(unit.x,unit.y,range))return;
-            float damage=target.health()*percent;
+        Groups.unit.each(target -> {
+            if(target.team == unit.team)return;
+            if(!target.within(unit.x, unit.y, range))return;
+            float damage = target.maxHealth() * percent;
             target.damagePierce(damage);
-            if(hitEffect!=null){
-                hitEffect.at(target.x,target.y);
+            if(hitEffect != null){
+                hitEffect.at(target.x, target.y);
             }
         });
     }
