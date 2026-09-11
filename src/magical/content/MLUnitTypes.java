@@ -5195,7 +5195,7 @@ public class MLUnitTypes {
                 autoTarget = true;
                 alternate = false;
                 ignoreRotation = true;
-                parts = new DrawPart[]{
+                parts.add(
                         new HaloPart(){{
                             sides = 3;
                             shapes = 2;
@@ -5210,7 +5210,7 @@ public class MLUnitTypes {
                             haloRotation = 0f;
                             haloRotateSpeed = 1.5f;
                         }}
-                };
+                );
                 bullet = new MissileBulletType(){{
                     damage = 150f;
                     splashDamageRadius = 48f;

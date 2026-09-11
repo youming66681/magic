@@ -17,15 +17,23 @@ public class TargetTeleportAbility extends Ability{
     }
     private Unit getTarget(Unit unit){
         try{
-            Object controller = unit.controller();
+            Class<?> cls = unit.controller().getClass();
 
-            var field = controller.getClass().getSuperclass().getDeclaredField("target");
-            field.setAccessible(true);
+            while(cls != null){
+                try{
+                    var field = cls.getDeclaredField("target");
+                    field.setAccessible(true);
 
-            Object target = field.get(controller);
+                    Object obj = field.get(unit.controller());
 
-            if(target instanceof Unit u){
-                return u;
+                    if(obj instanceof Unit u){
+                        return u;
+                    }
+
+                    break;
+                }catch(NoSuchFieldException e){
+                    cls = cls.getSuperclass();
+                }
             }
         }catch(Exception ignored){
         }
@@ -35,23 +43,32 @@ public class TargetTeleportAbility extends Ability{
     @Override
     public void update(Unit unit){
         Unit target = getTarget(unit);
+
         if(target == null)return;
         if(!target.isValid())return;
         if(target.team == unit.team)return;
+
         float selfRange = unit.type.range;
+
         if(unit.within(target.x,target.y,selfRange))return;
+
         if(target.type.range <= selfRange)return;
-        unit.set(target.x,target.y);
-            if(teleportEffect != null){
-                teleportEffect.at(
-                        unit.x,
-                        unit.y,
-                        unit.rotation,
-                        unit.team.color,
-                        unit.type
-                );
-            }
+
+        float x = target.x;
+        float y = target.y;
+
+        unit.set(x,y);
+
+        if(teleportEffect != null){
+            teleportEffect.at(
+                    x,
+                    y,
+                    unit.rotation,
+                    unit.team.color,
+                    unit.type
+            );
         }
+    }
 
     @Override
     public void addStats(Table t){
