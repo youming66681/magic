@@ -15,16 +15,21 @@ public class TargetTeleportAbility extends Ability{
     public TargetTeleportAbility(Effect teleportEffect){
         this.teleportEffect = teleportEffect;
     }
+    private Unit getTarget(Unit unit){
+        if(unit.controller() instanceof mindustry.ai.types.FlyingAI ai){
+            if(ai.target instanceof Unit u)return u;
+        }
+        if(unit.controller() instanceof mindustry.ai.types.GroundAI ai){
+            if(ai.target instanceof Unit u)return u;
+        }
+        if(unit.controller() instanceof mindustry.ai.types.HoverAI ai){
+            if(ai.target instanceof Unit u)return u;
+        }
+        return null;
+    }
     @Override
     public void update(Unit unit){
-        Unit target = null;
-        for(Weapon weapon : unit.type.weapons){
-            if(weapon.bullet == null)continue;
-            if(unit.isShooting()){
-                target = unit.aimTarget instanceof Unit ? (Unit)unit.aimTarget : null;
-                if(target != null)break;
-            }
-        }
+        Unit target = getTarget(unit);
         if(target == null)return;
         if(!target.isValid())return;
         if(target.team == unit.team)return;
