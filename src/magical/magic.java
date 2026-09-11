@@ -22,12 +22,14 @@ import magical.content.MLStatusEffects;
 import magical.content.MLSpawnUnits;
 import magical.content.MLSectorPresets;
 import magical.content.MLLiquids;
-import magical.content.kind.UnitFocusEvent;
+import magical.content.UnitFocusEvent;
 
 public class magic extends Mod {
     public static Mods.LoadedMod ML;
     public static final String ModName = "magic";
     public static Mods.LoadedMod mod;
+    private Unit focusUnit;
+    private float focusTime;
     public magic() {
         Events.on(UnitFocusEvent.class,e -> {
             if(Vars.headless)return;
