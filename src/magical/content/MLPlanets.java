@@ -52,7 +52,7 @@ public class MLPlanets {
              accessible = true;
              hasAtmosphere = true;
              updateLighting = true;
-             allowLaunchToNumbered = true;
+             allowLaunchToNumbered = false;
              allowSectorInvasion = true;
              bloom = false;
              allowLaunchSchematics = true;
