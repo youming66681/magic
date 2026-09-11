@@ -23,7 +23,7 @@ public class PercentAreaDamageAbility extends Ability{
         Groups.unit.each(target->{
             if(target.team==unit.team)return;
             if(!target.within(unit.x,unit.y,range))return;
-            float damage=target.maxHealth()*percent;
+            float damage=target.health()*percent;
             target.damagePierce(damage);
             if(hitEffect!=null){
                 hitEffect.at(target.x,target.y);
@@ -36,6 +36,7 @@ public class PercentAreaDamageAbility extends Ability{
     }
     @Override
     public void addStats(Table t){
+        super.addStats(t);
         t.add(abilityStat("range",range));
         t.row();
         t.add(abilityStat("percent",(int)(percent*100)));
