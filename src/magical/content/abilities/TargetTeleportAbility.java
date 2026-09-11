@@ -50,7 +50,13 @@ public class TargetTeleportAbility extends Ability{
             unit.set(target.x, target.y);
 
             if(teleportEffect != null){
-                teleportEffect.at(unit.x, unit.y);
+                teleportEffect.at(
+                        unit.x,
+                        unit.y,
+                        unit.rotation,
+                        unit.team.color,
+                        unit.type
+                );
             }
         }
     }
