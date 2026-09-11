@@ -7,7 +7,6 @@ import mindustry.entities.abilities.Ability;
 import mindustry.gen.Call;
 import mindustry.gen.Groups;
 import mindustry.gen.Unit;
-import magical.content.event.UnitFocusEvent;
 
 public class PlayerFocusAbility extends Ability{
 

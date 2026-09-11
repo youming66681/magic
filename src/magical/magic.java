@@ -9,6 +9,7 @@ import mindustry.ui.dialogs.*;
 import mindustry.Vars;
 import mindustry.mod.Mod;
 import mindustry.mod.Mods;
+import mindustry.gen.Unit;
 import arc.audio.Sound;
 
 import magical.content.MLItems;
