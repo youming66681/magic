@@ -45,7 +45,6 @@ public class TargetTeleportAbility extends Ability{
                 );
             }
         }
-    }
 
     @Override
     public void addStats(Table t){
