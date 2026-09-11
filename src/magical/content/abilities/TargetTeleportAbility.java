@@ -1,11 +1,11 @@
 package magical.content;
+
 import arc.scene.ui.layout.Table;
 import arc.util.Time;
 import mindustry.entities.Effect;
 import mindustry.entities.abilities.Ability;
 import mindustry.gen.Groups;
 import mindustry.gen.Unit;
-import mindustry.gen.Vars;
 
 public class TargetTeleportAbility extends Ability{
     public float interval;
@@ -33,11 +33,9 @@ public class TargetTeleportAbility extends Ability{
             if(!other.isValid())continue;
 
             float distance = unit.dst(other);
-
             float targetRange = other.type.range;
 
             boolean near = distance <= selfRange / 2f;
-
             boolean higherRange = targetRange > selfRange;
 
             if(near || higherRange){
@@ -49,13 +47,13 @@ public class TargetTeleportAbility extends Ability{
         }
 
         if(target != null){
-
             unit.set(target.x, target.y);
 
             if(teleportEffect != null){
                 teleportEffect.at(unit.x, unit.y);
             }
         }
+    }
 
     @Override
     public void addStats(Table t){
