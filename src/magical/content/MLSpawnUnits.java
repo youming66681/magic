@@ -138,7 +138,7 @@ public class MLSpawnUnits {
                 float x = unit.x + Mathf.random(-240f, 240f);
                 float y = unit.y + Mathf.random(-240f, 240f);
                 Call.infoMessage("[scarlet]警告：星空号介入战局！");
-                Events.fire(new UnitFocusEvent(x,y, 180f,));
+                Events.fire(new UnitFocusEvent(x,y, 180f));
                 UnitType type = unit.type;
                 MLFx.hugeTeleport.at(x, y);
                 unit.remove();
