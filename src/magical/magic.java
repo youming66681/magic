@@ -22,7 +22,7 @@ import magical.content.MLStatusEffects;
 import magical.content.MLSpawnUnits;
 import magical.content.MLSectorPresets;
 import magical.content.MLLiquids;
-import magical.content.event.UnitFocusEvent;
+import magical.content.kind.UnitFocusEvent;
 
 public class magic extends Mod {
     public static Mods.LoadedMod ML;
@@ -31,13 +31,13 @@ public class magic extends Mod {
     public magic() {
         Events.on(UnitFocusEvent.class,e -> {
             if(Vars.headless)return;
-            if(e.unit == null || !e.unit.isValid())return;
             if(focusTime > e.time)return;
             focusUnit = e.unit;
             focusTime = e.time;
             Vars.ui.hudGroup.visible = false;
             Timer.schedule(() -> {
                 if(focusUnit != null && focusUnit.isValid()){
+
                     Vars.control.input.panCamera(
                             focusUnit.x,
                             focusUnit.y
@@ -45,8 +45,8 @@ public class magic extends Mod {
                 }
             },0.1f);
             Timer.schedule(() -> {
-                focusTime = 0f;
                 focusUnit = null;
+                focusTime = 0f;
                 Vars.ui.hudGroup.visible = true;
             },focusTime);
         });
