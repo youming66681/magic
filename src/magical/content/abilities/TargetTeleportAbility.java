@@ -8,12 +8,9 @@ import mindustry.gen.Groups;
 import mindustry.gen.Unit;
 
 public class TargetTeleportAbility extends Ability{
-    public float interval;
     public Effect teleportEffect;
-    private float timer;
 
-    public TargetTeleportAbility(float interval, Effect teleportEffect){
-        this.interval = interval;
+    public TargetTeleportAbility(Effect teleportEffect){
         this.teleportEffect = teleportEffect;
     }
 
@@ -61,7 +58,6 @@ public class TargetTeleportAbility extends Ability{
     @Override
     public void addStats(Table t){
         super.addStats(t);
-        t.add(abilityStat("interval", interval / 60f));
     }
 
     @Override
