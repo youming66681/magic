@@ -11,6 +11,7 @@ import mindustry.mod.Mod;
 import mindustry.mod.Mods;
 import mindustry.gen.Unit;
 import arc.audio.Sound;
+import arc.math.geom.Vec2;
 
 import magical.content.MLItems;
 import magical.content.MLBlocks;
@@ -42,8 +43,7 @@ public class magic extends Mod {
                 if(focusUnit != null && focusUnit.isValid()){
 
                     Vars.control.input.panCamera(
-                            focusUnit.x,
-                            focusUnit.y
+                            new Vec2(focusUnit.x, focusUnit.y)
                     );
                 }
             },0.1f);
