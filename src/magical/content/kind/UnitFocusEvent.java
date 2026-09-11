@@ -1,13 +1,13 @@
 package magical.content;
 
-import mindustry.gen.Unit;
-
 public class UnitFocusEvent{
-    public Unit unit;
+    public float x;
+    public float y;
     public float time;
 
-    public UnitFocusEvent(Unit unit,float time){
-        this.unit = unit;
+    public UnitFocusEvent(float x,float y,float time){
+        this.x = x;
+        this.y = y;
         this.time = time;
     }
 }

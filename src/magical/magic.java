@@ -36,22 +36,15 @@ public class magic extends Mod {
         Events.on(UnitFocusEvent.class,e -> {
             if(Vars.headless)return;
             if(focusTime > e.time)return;
-            focusUnit = e.unit;
             focusTime = e.time;
             Vars.ui.hudGroup.visible = false;
+            Vars.control.input.panCamera(
+                    new Vec2(e.x,e.y)
+            );
             Timer.schedule(() -> {
-                if(focusUnit != null && focusUnit.isValid()){
-
-                    Vars.control.input.panCamera(
-                            new Vec2(focusUnit.x, focusUnit.y)
-                    );
-                }
-            },0.1f);
-            Timer.schedule(() -> {
-                focusUnit = null;
-                focusTime = 0f;
                 Vars.ui.hudGroup.visible = true;
-            },focusTime);
+                focusTime = 0f;
+            },e.time / 60f);
         });
     }
     public static String name(String add) {
