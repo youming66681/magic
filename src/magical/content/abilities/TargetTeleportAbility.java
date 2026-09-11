@@ -16,15 +16,20 @@ public class TargetTeleportAbility extends Ability{
         this.teleportEffect = teleportEffect;
     }
     private Unit getTarget(Unit unit){
-        if(unit.controller() instanceof mindustry.ai.types.FlyingAI ai){
-            if(ai.target instanceof Unit u)return u;
+        try{
+            Object controller = unit.controller();
+
+            var field = controller.getClass().getSuperclass().getDeclaredField("target");
+            field.setAccessible(true);
+
+            Object target = field.get(controller);
+
+            if(target instanceof Unit u){
+                return u;
+            }
+        }catch(Exception ignored){
         }
-        if(unit.controller() instanceof mindustry.ai.types.GroundAI ai){
-            if(ai.target instanceof Unit u)return u;
-        }
-        if(unit.controller() instanceof mindustry.ai.types.HoverAI ai){
-            if(ai.target instanceof Unit u)return u;
-        }
+
         return null;
     }
     @Override
