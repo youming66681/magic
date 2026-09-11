@@ -16,28 +16,18 @@ public class TargetTeleportAbility extends Ability{
 
     @Override
     public void update(Unit unit){
+        if(!(unit.target instanceof Unit target)) return;
+        if(!target.isValid()) return;
+        if(target.team == unit.team) return;
+
         float selfRange = unit.type.range;
 
-        Unit target = null;
-        float closest = Float.MAX_VALUE;
+        if(unit.within(target.x, target.y, selfRange)){
+            return;
+        }
 
-        for(Unit other : Groups.unit){
-            if(other.team == unit.team)continue;
-            if(!other.isValid())continue;
-
-            float distance = unit.dst(other);
-
-            // 自己索敌范围内，不传送
-            if(distance <= selfRange)continue;
-
-            // 目标索敌范围必须大于自身
-            if(other.type.range <= selfRange)continue;
-
-            // 寻找最近符合条件的目标
-            if(distance < closest){
-                closest = distance;
-                target = other;
-            }
+        if(target.type.range <= selfRange){
+            return;
         }
 
         if(target != null){
