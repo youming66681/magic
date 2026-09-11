@@ -1,4 +1,4 @@
-package magical.content.abilities;
+package magical.content;
 
 import arc.scene.ui.layout.Table;
 import arc.util.Timer;

@@ -4,8 +4,10 @@ import mindustry.gen.Unit;
 
 public class UnitFocusEvent{
     public Unit unit;
+    public float time;
 
-    public UnitFocusEvent(Unit unit){
+    public UnitFocusEvent(Unit unit,float time){
         this.unit = unit;
+        this.time = time;
     }
 }
