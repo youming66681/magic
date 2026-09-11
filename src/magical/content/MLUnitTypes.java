@@ -4967,7 +4967,6 @@ public class MLUnitTypes {
                 abilities.add(new DamageReductionAbility(0.10f));
                 abilities.add(new PercentAreaDamageAbility(640f,0.01f,MLFx.slash1));
                 abilities.add(new TargetTeleportAbility(MLFx.jumpTrail));
-                abilities.add(new PlayerFocusAbility(0f, 200f));
             weapons.add(
                     new Weapon("magic-MilkyWay0") {{
                         reload = 120f;
@@ -5178,73 +5177,6 @@ public class MLUnitTypes {
                             hitEffect = despawnEffect = MLFx.EnergyExplosion;
                         }};
                     }});
-            weapons.add(
-            new Weapon("magic-MilkyWay2"){{
-                mirror = false;
-                x = 0f;
-                y = -16f;
-                reload = 240f;
-                shoot = new ShootAlternate(){{
-                    shots = 60;
-                    shotDelay = 1f;
-                }};
-                shootSound = MLSounds.missileLarge;
-                rotate = true;
-                rotateSpeed = 360f;
-                inaccuracy = 360f;
-                controllable = false;
-                autoTarget = true;
-                alternate = false;
-                ignoreRotation = true;
-                bullet = new MissileBulletType(){{
-                    damage = 150f;
-                    splashDamageRadius = 48f;
-                    splashDamage = 150f;
-                    homingRange = 800f;
-                    homingPower = 4f;
-                    homingDelay = 20f;
-                    sprite = "magic-大导弹";
-                    trailLength = 8;
-                    trailWidth = 4f;
-                    trailEffect = Fx.none;
-                    trailColor = Color.valueOf("FEEBB3FF");
-                    trailEffect = new ParticleEffect() {{
-                        particles = 12;
-                        sizeFrom = 12f;
-                        sizeTo = 0f;
-                        lifetime = 12f;
-                        length = 6f;
-                        baseLength = 0f;
-                        colorFrom = Color.valueOf("FEEBB3FF");
-                        colorTo = Color.valueOf("FEEBB3FF");
-                        cone = 30f;
-                    }};
-                    backColor = Color.valueOf("FEEBB3FF");
-                    frontColor = Color.valueOf("FEEBB3FF");
-                    width = 24f;
-                    height = 48f;
-                    speed = 16f;
-                    lifetime = 50f;
-                    hitSound = MLSounds.plasmaboom;
-                    hitEffect = despawnEffect = MLFx.EnergyExplosion;
-                    parts.add(
-                            new HaloPart(){{
-                                sides = 3;
-                                shapes = 2;
-                                color = Color.valueOf("FEEBB3FF");
-                                colorTo = Color.valueOf("FEEBB3FF");
-                                tri = true;
-                                radius = 8f;
-                                radiusTo = 8f;
-                                triLength = 32f;
-                                triLengthTo = 32f;
-                                haloRadius = 0f;
-                                haloRotation = 0f;
-                                haloRotateSpeed = 3f;
-                            }}
-                    );
-                }};
-            }});
         }};
     }
 }
