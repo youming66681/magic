@@ -52,9 +52,6 @@ public class magic extends Mod {
     }
     @Override
     public void loadContent() {
-
-        maxSchematicSize = 2048;
-
         mod = Vars.mods.getMod(this.getClass());
 
         MLStatusEffects.load();
