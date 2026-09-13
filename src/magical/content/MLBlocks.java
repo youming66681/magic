@@ -2496,7 +2496,7 @@ public class MLBlocks {
         FallingStar = new ItemTurret("FallingStar"){{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomLuminousAlloy, 195, MLItems.fluorescentFeatherStone, 240, MLItems.wingedMetal, 320, Items.surgeAlloy, 270, MLItems.phantomTitaniumSteel, 465, MLItems.crystallineCarbon, 120, MLItems.matrixChip, 50,}));
             ammo(
-                    Items.surgeAlloy, new BasicBulletType(40f, 500f){{
+                    Items.surgeAlloy, new BasicBulletType(40f, 300f){{
                         lifetime = 32f;
                         width = 24f;
                         height = 48f;
@@ -2507,9 +2507,9 @@ public class MLBlocks {
                         backColor = Color.valueOf("FEEBB3FF");
                         trailLength = 8;
                         trailWidth = 6f;
-                        lightningDamage = 50;
-                        lightning = 5 ;
-                        lightningLength = 25;
+                        lightningDamage = 30;
+                        lightning = 6 ;
+                        lightningLength = 3;
                         hitSound = MLSounds.spark;
                         trailColor = Color.valueOf("FEEBB3FF");
                         buildingDamageMultiplier = 0.1f;
@@ -2588,13 +2588,13 @@ public class MLBlocks {
                             fragVelocityMin = 1f;
                             fragBullet = new BasicBulletType(){{
                                 reflectable = false;
-                                damage = 100f;
+                                damage = 90f;
                                 speed = 8f;
                                 spin = 5f;
                                 lifetime = 20f;
                                 width = 80f;
                                 height = 80f;
-                                drag = -0.016f;
+                                drag = -0.01f;
                                 trailLength = 10;
                                 trailWidth = 10f;
                                 trailColor = Color.valueOf("CCCEDBFF");
@@ -2694,10 +2694,10 @@ public class MLBlocks {
                     }},
                     MLItems.phantomLuminousAlloy, new BasicBulletType(){{
                         speed = 40f;
-                        damage = 1000f;
+                        damage = 900f;
                         pierce = true;
                         knockback = 10f;
-                        pierceCap = 4;
+                        pierceCap = 3;
                         pierceBuilding = true;
                         reloadMultiplier = 1f;
                         lifetime = 32f;
@@ -3192,7 +3192,7 @@ public class MLBlocks {
         }};
         NanoCarbonAlloyWall = new Wall("NanoCarbonAlloyWall"){{
             requirements(Category.defense, ItemStack.with(new Object[]{MLItems.nanoCarbonAlloy, 6 * 9}));
-            health = 600 * whm * 9;
+            health = 900 * whm * 9;
             size = 3;
             chanceDeflect = 60;
             absorbLasers = true;
