@@ -5009,14 +5009,14 @@ public class MLUnitTypes {
                                 }}
                         );
                         bullet = new BasicBulletType() {{
-                            damage = 1000f;
+                            damage = 600f;
                             lifetime = 25.6f;
                             speed = 25f;
                             width = 16f;
                             height = 48f;
                             hitSize = 24f;
                             splashDamageRadius = 24f;
-                            splashDamage = 1000f;
+                            splashDamage = 600f;
                             frontColor = Color.valueOf("FEEBB3FF");
                             backColor = Color.valueOf("FEEBB3FF");
                             trailLength = 9;
@@ -5062,14 +5062,14 @@ public class MLUnitTypes {
                         }}
                 );
                 bullet = new BasicBulletType() {{
-                    damage = 500f;
+                    damage = 300f;
                     lifetime = 40f;
                     speed = 16f;
                     width = 8f;
                     height = 16f;
                     hitSize = 24f;
                     splashDamageRadius = 48f;
-                    splashDamage = 500f;
+                    splashDamage = 300f;
                     frontColor = Color.valueOf("FEEBB3FF");
                     backColor = Color.valueOf("FEEBB3FF");
                     trailLength = 9;
@@ -5111,14 +5111,14 @@ public class MLUnitTypes {
                         }}
                 );
                 bullet = new BasicBulletType() {{
-                    damage = 500f;
+                    damage = 300f;
                     lifetime = 40f;
                     speed = 16f;
                     width = 8f;
                     height = 16f;
                     hitSize = 24f;
                     splashDamageRadius = 48f;
-                    splashDamage = 500f;
+                    splashDamage = 300f;
                     frontColor = Color.valueOf("FEEBB3FF");
                     backColor = Color.valueOf("FEEBB3FF");
                     trailLength = 9;
@@ -5160,14 +5160,14 @@ public class MLUnitTypes {
                                 }}
                         );
                         bullet = new BasicBulletType() {{
-                            damage = 500f;
+                            damage = 300f;
                             lifetime = 40f;
                             speed = 16f;
                             width = 8f;
                             height = 16f;
                             hitSize = 24f;
                             splashDamageRadius = 48f;
-                            splashDamage = 500f;
+                            splashDamage = 300f;
                             frontColor = Color.valueOf("FEEBB3FF");
                             backColor = Color.valueOf("FEEBB3FF");
                             trailLength = 9;

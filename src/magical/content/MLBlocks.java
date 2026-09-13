@@ -987,7 +987,7 @@ public class MLBlocks {
         PhantomCrystal = new ItemTurret("PhantomCrystal"){{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.acrylic,80 , MLItems.phantomTitaniumSteel, 60, MLItems.wingedStone, 90, MLItems.logicChip, 30}));
             ammo(
-                    MLItems.wingedStone, new BasicBulletType(10f, 50){{
+                    MLItems.wingedStone, new BasicBulletType(10f, 60){{
                         hitSize = 16f;
                         width = 12f;
                         height = 21f;
@@ -1007,12 +1007,12 @@ public class MLBlocks {
                         frontColor = Color.valueOf("9C88C3FF");
                         buildingDamageMultiplier = 0.1f;
                     }},
-                    Items.titanium, new BasicBulletType(10f, 40){{
+                    Items.titanium, new BasicBulletType(10f, 50){{
                         hitSize = 16f;
                         width = 12f;
                         height = 21f;
                         shootEffect = Fx.shootBig;
-                        ammoMultiplier = 1.2f;
+                        ammoMultiplier = 1f;
                         reloadMultiplier = 1f;
                         pierceCap = 2;
                         pierceBuilding = true;
