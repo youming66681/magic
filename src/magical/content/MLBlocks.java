@@ -152,7 +152,7 @@ public class MLBlocks {
             fluvialErosion, adaptiveWall, largeAdaptiveWall, Birefringence, phantomSteelDrill, phantomSteelConveyor, phantomSteelBridge, phantomSteeljunction,
             phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode, excitedYuan, fuelPoweredGenerator, phantomTitaniumSteelConveyor,
             phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod, quantumFactory, chipMachine,
-            BasicManufacturingPlant, PhantomSteelLiquidBridge,
+            BasicManufacturingPlant, PhantomSteelLiquidBridge, mysticCrystalBattery
             //进阶科技
             starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
             Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, Constructor, Deconstructor,
@@ -3319,6 +3319,12 @@ public class MLBlocks {
             laserRange = 30;
             underBullets = true;
             consumePowerBuffered(4000f);
+        }};
+        mysticCrystalBattery = new Battery("mysticCrystalBattery"){{
+            requirements(Category.power, ItemStack.with(new Object[]{Items.silicon, 40, MLItems.mysticCrystal, 20}));
+            size = 4;
+            consumePowerBuffered(400000f);
+            baseExplosiveness = 40f;
         }};
             //燃能发电机
         fuelPoweredGenerator = new ConsumeGenerator("fuelPoweredGenerator"){{

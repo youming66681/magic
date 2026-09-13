@@ -51,7 +51,9 @@ public class MLTechTree {
                 /*燃能发电机*/node(MLBlocks.fuelPoweredGenerator, () -> {
                         });
                 /*幻钛钢节点*/node(MLBlocks.phantomTitaniumSteelPowerNode, () -> {
+                    /*玄晶电池*/node(MLBlocks.mysticCrystalBattery, () -> {
 
+                    });
                         });
                     });
             /*幻钢钻*/node(MLBlocks.phantomSteelDrill, () -> {
