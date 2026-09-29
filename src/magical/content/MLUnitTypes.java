@@ -5241,7 +5241,6 @@ public class MLUnitTypes {
                 rotateSpeed = 360f;
                 inaccuracy = 0f;
                 controllable = false;
-                autoTarget = true;
                 alternate = false;
                 shootCone = 360;
                 bullet = new MissileBulletType(){{
