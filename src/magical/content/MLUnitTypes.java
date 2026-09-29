@@ -5236,10 +5236,11 @@ public class MLUnitTypes {
                         }}
                 );
                 shootSound = MLSounds.missileLaunch;
-                rotate = false;
-                ignoreRotation = true;
+                rotate = true;
                 rotateSpeed = 360f;
                 inaccuracy = 0f;
+                controllable = false;
+                autoTarget = true;
                 alternate = false;
                 shootCone = 360;
                 bullet = new MissileBulletType(){{
