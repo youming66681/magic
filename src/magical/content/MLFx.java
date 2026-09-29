@@ -718,15 +718,16 @@ public class MLFx {
             float scale=e.rotation;
             float width=40f*scale*e.fout();
             float length=320f*scale;
-            float innerWidth=20f*scale;
+            float innerWidth=20f*scale*e.fout();
             float innerLength=160f*scale;
-            Draw.color((arc.graphics.Color)e.data);
+            Color color=e.data instanceof Color?(Color)e.data:Pal.bulletYellowBack;
+            Draw.color(color);
             Drawf.tri(e.x,e.y,width,length,315f);
             Drawf.tri(e.x,e.y,width,length,135f);
-            Draw.color();
             Drawf.tri(e.x,e.y,innerWidth,innerLength,315f);
             Drawf.tri(e.x,e.y,innerWidth,innerLength,135f);
-            Drawf.light(e.x,e.y,120f*scale,e.data instanceof arc.graphics.Color?(arc.graphics.Color)e.data:Pal.bulletYellowBack,0.8f*e.fout());
+            Drawf.light(e.x,e.y,120f*scale,color,0.8f*e.fout());
+            Draw.color();
         });
     }
     public static Effect Slash(Color colorSlash, float len, float width){
