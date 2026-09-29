@@ -29,7 +29,7 @@ public class PercentAreaDamageAbility extends Ability{
             float damage=target.maxHealth()*percent;
             target.damagePierce(damage);
             if(hitEffect!=null){
-                float scale=target.hitSize/8f;
+                float scale=target.hitSize/16f;
                 hitEffect.at(target.x,target.y,scale);
             }
         });

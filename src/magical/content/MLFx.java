@@ -714,13 +714,19 @@ public class MLFx {
             Lines.stroke(2.5f * e.fout(), e.color);
             Lines.circle(e.x, e.y, e.rotation * e.fin(Interp.pow3Out));
         });
-        slash1 = new Effect(30f, 100f, e -> {
-            float scale = e.rotation;
+        slash1 = new Effect(30f,90f,e -> {
+            float scale=e.rotation;
+            float length=320f*scale*e.fout();
+            float width=40f*scale;
+            float innerLength=160f*scale*e.fout();
+            float innerWidth=20f*scale;
             Draw.color(Pal.bulletYellowBack);
-            Drawf.tri(e.x, e.y, 40f * scale, 320f * scale * e.fout(), 320f);
+            Drawf.tri(e.x,e.y,width,length,315f);
+            Drawf.tri(e.x,e.y,width,length,135f);
             Draw.color();
-            Drawf.tri(e.x, e.y, 20f * scale, 160f * scale * e.fout(), 320f);
-            Drawf.light(e.x, e.y, 120f * scale, Pal.bulletYellowBack, 0.8f * e.fout());
+            Drawf.tri(e.x,e.y,innerWidth,innerLength,315f);
+            Drawf.tri(e.x,e.y,innerWidth,innerLength,135f);
+            Drawf.light(e.x,e.y,120f*scale,Pal.bulletYellowBack,0.8f*e.fout());
         });
     }
     public static Effect Slash(Color colorSlash, float len, float width){
