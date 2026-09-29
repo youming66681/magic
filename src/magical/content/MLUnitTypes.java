@@ -5234,7 +5234,8 @@ public class MLUnitTypes {
                             };
                         }};
                 shootSound = MLSounds.missileLaunch;
-                rotate = true;
+                rotate = false;
+                ignoreRotation = true;
                 rotateSpeed = 360f;
                 inaccuracy = 0f;
                 controllable = false;
