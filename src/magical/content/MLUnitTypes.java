@@ -5225,10 +5225,10 @@ public class MLUnitTypes {
                 mirror = false;
                 x = 0f;
                 y = -45f;
-                reload = 180f;
+                reload = 240f;
                 shoot = new ShootBarrel() {{
                             shots = 8;
-                            shotDelay = 10f;
+                            shotDelay = 15f;
                             barrels = new float[]{
                                     16f, 16f, -45f,
                             };
@@ -5244,9 +5244,9 @@ public class MLUnitTypes {
                 shootCone = 360;
                 bullet = new MissileBulletType(){{
                     maxRange = 800;
-                    damage = 180f;
+                    damage = 210f;
                     splashDamageRadius = 48f;
-                    splashDamage = 180f;
+                    splashDamage = 210f;
                     homingRange = 800f;
                     homingPower = 3f;
                     homingDelay = 15f;
