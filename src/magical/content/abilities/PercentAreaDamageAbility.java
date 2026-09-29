@@ -39,7 +39,7 @@ public class PercentAreaDamageAbility extends Ability{
             target.damagePierce(damage);
             if(hitEffect!=null){
                 float scale=target.hitSize/32f;
-                hitEffect.at(target.x,target.y,0f,new EffectData(target.team.color,scale));
+                hitEffect.at(target.x,target.y,0f,new EffectData(unit.team.color,scale));
             }
         });
     }
