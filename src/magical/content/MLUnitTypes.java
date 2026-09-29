@@ -5243,6 +5243,7 @@ public class MLUnitTypes {
                 controllable = false;
                 autoTarget = true;
                 alternate = false;
+                shootCone = 360;
                 bullet = new MissileBulletType(){{
                     maxRange = 800;
                     damage = 180f;
