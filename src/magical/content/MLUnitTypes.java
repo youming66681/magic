@@ -5230,7 +5230,10 @@ public class MLUnitTypes {
                             shots = 8;
                             shotDelay = 15f;
                             barrels = new float[]{
-                                    16f, 16f, -45f,
+                                    14f, 14f, -45f,
+                                    14f, -14f, 45f,
+                                    -14f, -14f, 135f,
+                                    -14f, 14f, -135f,
                             };
                         }};
                 shootSound = MLSounds.missileLaunch;
@@ -5244,9 +5247,9 @@ public class MLUnitTypes {
                 shootCone = 360;
                 bullet = new MissileBulletType(){{
                     maxRange = 800;
-                    damage = 210f;
+                    damage = 300f;
                     splashDamageRadius = 48f;
-                    splashDamage = 210f;
+                    splashDamage = 300f;
                     homingRange = 800f;
                     homingPower = 3f;
                     homingDelay = 15f;
@@ -5287,7 +5290,7 @@ public class MLUnitTypes {
                         radiusTo = 12f;
                         triLength = 36f;
                         triLengthTo = 36f;
-                        haloRadius = 40f;
+                        haloRadius = 30f;
                         haloRotation = 0f;
                         haloRotateSpeed = 3f;
                     }});
