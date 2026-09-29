@@ -5220,6 +5220,79 @@ public class MLUnitTypes {
                 abilities.add(new DamageReductionAbility(0.20f));
                 abilities.add(new PercentAreaDamageAbility(800f, 0.02f, MLFx.slash1));
                 abilities.add(new TargetTeleportAbility(MLFx.jumpTrail));
-            }};
+            weapons.add(
+            new Weapon("magic-TheWorld0"){{
+                mirror = false;
+                x = 0f;
+                y = -45f;
+                reload = 180f;
+                shoot = new ShootMulti(
+                        new ShootBarrel() {{
+                            shots = 8;
+                            shotDelay = 10f;
+                            barrels = new float[]{
+                                    16f, 16f, -45f,
+                            };
+                        }}
+                );
+                shootSound = MLSounds.missileLaunch;
+                rotate = false;
+                ignoreRotation = true;
+                rotateSpeed = 360f;
+                inaccuracy = 0f;
+                controllable = false;
+                autoTarget = true;
+                alternate = false;
+                bullet = new MissileBulletType(){{
+                    damage = 180f;
+                    splashDamageRadius = 48f;
+                    splashDamage = 180f;
+                    homingRange = 800f;
+                    homingPower = 3f;
+                    homingDelay = 15f;
+                    sprite = "magic-大导弹";
+                    trailLength = 8;
+                    trailWidth = 4f;
+                    trailEffect = Fx.none;
+                    trailColor = Color.valueOf("FEEBB3FF");
+                    trailEffect = new ParticleEffect() {{
+                        particles = 15;
+                        sizeFrom = 15f;
+                        sizeTo = 0f;
+                        lifetime = 15f;
+                        length = 15f;
+                        baseLength = 15f;
+                        region = "magic-X";
+                        colorFrom = Color.valueOf("FEEBB3FF");
+                        colorTo = Color.valueOf("FEEBB3FF");
+                        cone = 30f;
+                    }};
+                    backColor = Color.valueOf("FEEBB3FF");
+                    frontColor = Color.valueOf("FEEBB3FF");
+                    width = 24f;
+                    height = 48f;
+                    speed = 16f;
+                    lifetime = 50f;
+                    hitSound = MLSounds.plasmaboom;
+                    hitSoundVolume = 30f;
+                    hitEffect = MLFx.EnergyExplosion;
+                    parts.add(
+                        new HaloPart(){{
+                        sides = 3;
+                        shapes = 4;
+                        color = Color.valueOf("FEEBB3FF");
+                        colorTo = Color.valueOf("FEEBB3FF");
+                        tri = true;
+                        radius = 12f;
+                        radiusTo = 12f;
+                        triLength = 36f;
+                        triLengthTo = 36f;
+                        haloRadius = 80f;
+                        haloRotation = 0f;
+                        haloRotateSpeed = 1.5f;
+                    }});
+                }};
+            }});
+        }};
     }
 }
