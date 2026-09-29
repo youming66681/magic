@@ -1,14 +1,17 @@
 package magical.content;
+
 import arc.scene.ui.layout.Table;
 import arc.util.Time;
 import mindustry.entities.Effect;
 import mindustry.entities.abilities.Ability;
 import mindustry.gen.Groups;
 import mindustry.gen.Unit;
+
 public class PercentAreaDamageAbility extends Ability{
     public float range;
     public float percent;
     public Effect hitEffect;
+    public float effectScale=1f;
     private float timer;
     public PercentAreaDamageAbility(float range,float percent,Effect hitEffect){
         this.range=range;
@@ -22,11 +25,12 @@ public class PercentAreaDamageAbility extends Ability{
         timer=0f;
         Groups.unit.each(target -> {
             if(target.team == unit.team)return;
-            if(!target.within(unit.x, unit.y, range))return;
-            float damage = target.maxHealth() * percent;
+            if(!target.within(unit.x,unit.y,range))return;
+            float damage=target.maxHealth()*percent;
             target.damagePierce(damage);
-            if(hitEffect != null){
-                hitEffect.at(target.x, target.y);
+            if(hitEffect!=null){
+                float scale=target.hitSize/8f;
+                hitEffect.at(target.x,target.y,scale);
             }
         });
     }
@@ -37,8 +41,8 @@ public class PercentAreaDamageAbility extends Ability{
     @Override
     public void addStats(Table t){
         super.addStats(t);
-        t.add(abilityStat("range",(int)(range / 8f)));
+        t.add(abilityStat("range",(int)(range/8f)));
         t.row();
-        t.add(abilityStat("percent",(int)(percent * 100)));
+        t.add(abilityStat("percent",(int)(percent*100)));
     }
 }

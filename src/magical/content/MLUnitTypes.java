@@ -67,7 +67,7 @@ public class MLUnitTypes {
     //大型
     BrokenEdge, FlyingSwallow, Tianshu,
     //旗舰
-    Aoba, MoonRise, StarrySky, MilkyWay;
+    Aoba, MoonRise, StarrySky, MilkyWay, TheWorld;
 
     public static void load() {
         //幻境陆军
@@ -5178,5 +5178,47 @@ public class MLUnitTypes {
                         }};
                     }});
         }};
+        TheWorld = new UnitType("TheWorld"){{
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            faceTarget = false;
+            lowAltitude = true;
+            rotateMoveFirst = true;
+            omniMovement = true;
+            rotateSpeed = 1f;
+            health = 2160000f;
+            armor = 480f;
+            hitSize = 160f;
+            engineOffset = 80;
+            engineSize = 40f;
+            range = 800f;
+            speed = 0.6f;
+            accel = 0.06f;
+            drag = 0.04f;
+            targetFlags = new BlockFlag[]{
+                    BlockFlag.factory,
+                    BlockFlag.generator,
+                    BlockFlag.reactor,
+                    BlockFlag.battery
+            };
+            abilities.add(new EnergyFieldAbility(
+                    240f,   // damage
+                    180f,   // reload
+                    400f   // range
+            ) {{
+                healPercent = 5f;
+                x = 0f;
+                y = 0f;
+                maxTargets = 80;
+                effectRadius = 25f;
+                damageEffect = Fx.chainLightning;
+                shootSound = MLSounds.spark;
+                status = StatusEffects.shocked;
+            }});
+            abilities.add(new DebuffImmunityAbility(0.80f));
+            abilities.add(new DamageLimitAbility(1200f, 0.45f));
+            abilities.add(new DamageReductionAbility(0.20f));
+            abilities.add(new PercentAreaDamageAbility(800f,0.02f,MLFx.slash1));
+            abilities.add(new TargetTeleportAbility(MLFx.jumpTrail));
     }
 }
