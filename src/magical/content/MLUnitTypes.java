@@ -5275,7 +5275,7 @@ public class MLUnitTypes {
                     width = 24f;
                     height = 48f;
                     speed = 16f;
-                    lifetime = 50f;
+                    lifetime = 60f;
                     hitSound = MLSounds.plasmaboom;
                     hitSoundVolume = 30f;
                     hitEffect = MLFx.EnergyExplosion;
