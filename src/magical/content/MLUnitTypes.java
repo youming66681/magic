@@ -5244,6 +5244,7 @@ public class MLUnitTypes {
                 autoTarget = true;
                 alternate = false;
                 bullet = new MissileBulletType(){{
+                    maxRange = 800;
                     damage = 180f;
                     splashDamageRadius = 48f;
                     splashDamage = 180f;
