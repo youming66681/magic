@@ -157,7 +157,7 @@ public class MLTechTree {
                 /*大翼石墙*/node(MLBlocks.LargeWingWall, () -> {
                    });
                 });
-                /*电磁裂变炉*/node(MLBlocks.ElectromagneticFissionReactor, () -> {
+                /*电磁裂变炉*/node(MLBlocks.ElectromagneticFissionReactor, Seq.with(new SectorComplete(MLSectorPresets.CrossIceValley)), () -> {
 
                 });
                 /*兵戈*/node(MLUnitTypes.war, Seq.with(new Objectives.Research(MLBlocks.BasicManufacturingPlant), new SectorComplete(MLSectorPresets.CrossIceValley)), () -> {

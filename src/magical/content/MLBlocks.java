@@ -3259,6 +3259,7 @@ public class MLBlocks {
             requirements(Category.distribution, ItemStack.with(new Object[]{MLItems.phantomSteel, 9, Items.graphite, 18}));
             fadeIn = moveArrows = false;
             range = 8;
+            hasPower = false;
             health = 60;
             transportTime = 3;
         }};
