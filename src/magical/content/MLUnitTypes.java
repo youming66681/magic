@@ -5287,9 +5287,9 @@ public class MLUnitTypes {
                         radiusTo = 12f;
                         triLength = 36f;
                         triLengthTo = 36f;
-                        haloRadius = 80f;
+                        haloRadius = 40f;
                         haloRotation = 0f;
-                        haloRotateSpeed = 1.5f;
+                        haloRotateSpeed = 3f;
                     }});
                 }};
             }});
