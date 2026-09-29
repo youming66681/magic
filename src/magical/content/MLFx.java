@@ -715,12 +715,13 @@ public class MLFx {
             Lines.circle(e.x, e.y, e.rotation * e.fin(Interp.pow3Out));
         });
         slash1 = new Effect(30f,100f,e -> {
-            float scale=e.rotation;
+            PercentAreaDamageAbility.EffectData data=e.data instanceof PercentAreaDamageAbility.EffectData?(PercentAreaDamageAbility.EffectData)e.data:null;
+            Color color=data==null?Pal.bulletYellowBack:data.color;
+            float scale=data==null?1f:data.scale;
             float width=40f*scale*e.fout();
             float length=320f*scale;
             float innerWidth=20f*scale*e.fout();
             float innerLength=160f*scale;
-            Color color=e.data instanceof Color?(Color)e.data:Pal.bulletYellowBack;
             Draw.color(color);
             Drawf.tri(e.x,e.y,width,length,315f);
             Drawf.tri(e.x,e.y,width,length,135f);

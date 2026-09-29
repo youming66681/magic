@@ -6,6 +6,7 @@ import mindustry.entities.Effect;
 import mindustry.entities.abilities.Ability;
 import mindustry.gen.Groups;
 import mindustry.gen.Unit;
+import arc.graphics.Color;
 
 public class PercentAreaDamageAbility extends Ability{
     public float range;
@@ -17,6 +18,14 @@ public class PercentAreaDamageAbility extends Ability{
         this.range=range;
         this.percent=percent;
         this.hitEffect=hitEffect;
+    }
+    public static class EffectData{
+        public final Color color;
+        public final float scale;
+        public EffectData(Color color,float scale){
+            this.color=color;
+            this.scale=scale;
+        }
     }
     @Override
     public void update(Unit unit){
@@ -30,7 +39,7 @@ public class PercentAreaDamageAbility extends Ability{
             target.damagePierce(damage);
             if(hitEffect!=null){
                 float scale=target.hitSize/32f;
-                hitEffect.at(target.x,target.y,scale,target.team.color);
+                hitEffect.at(target.x,target.y,0f,new EffectData(target.team.color,scale));
             }
         });
     }
