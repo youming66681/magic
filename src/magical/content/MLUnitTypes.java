@@ -5226,15 +5226,13 @@ public class MLUnitTypes {
                 x = 0f;
                 y = -45f;
                 reload = 180f;
-                shoot = new ShootMulti(
-                        new ShootBarrel() {{
+                shoot = new ShootBarrel() {{
                             shots = 8;
                             shotDelay = 10f;
                             barrels = new float[]{
                                     16f, 16f, -45f,
                             };
-                        }}
-                );
+                        }};
                 shootSound = MLSounds.missileLaunch;
                 rotate = true;
                 rotateSpeed = 360f;
