@@ -5227,8 +5227,8 @@ public class MLUnitTypes {
                 y = -45f;
                 reload = 240f;
                 shoot = new ShootBarrel() {{
-                            shots = 8;
-                            shotDelay = 15f;
+                            shots = 16;
+                            shotDelay = 10f;
                             barrels = new float[]{
                                     14f, 14f, -45f,
                                     14f, -14f, 45f,
