@@ -5296,7 +5296,7 @@ public class MLUnitTypes {
                     }});
                 }};
             }},
-                    new Weapon("magic-MilkyWay0") {{
+                    new Weapon("magic-TheWorld1") {{
                         reload = 180f;
                         x = 66f;
                         y = 9f;
@@ -5310,14 +5310,14 @@ public class MLUnitTypes {
                         layerOffset = 0.001f;
                         recoil = 12;
                         bullet = new BasicBulletType() {{
-                            damage = 500f;
-                            lifetime = 50f;
-                            speed = 16f;
+                            damage = 1000f;
+                            lifetime = 80f;
+                            speed = 10f;
                             width = 48f;
                             height = 48f;
                             hitSize = 48f;
-                            splashDamageRadius = 128f;
-                            splashDamage = 500f;
+                            splashDamageRadius = 256f;
+                            splashDamage = 1000f;
                             frontColor = Color.valueOf("FEEBB3FF");
                             backColor = Color.valueOf("FEEBB3FF");
                             sprite = "magic-X";
@@ -5331,7 +5331,7 @@ public class MLUnitTypes {
                                     new WaveEffect() {{
                                         lifetime = 30f;
                                         sizeFrom = 0f;
-                                        sizeTo = 128f;
+                                        sizeTo = 256f;
                                         strokeFrom = 0f;
                                         strokeTo = 4f;
                                         colorFrom = Color.valueOf("FEEBB3FF");
@@ -5339,9 +5339,9 @@ public class MLUnitTypes {
                                     }},
                                     new ParticleEffect() {{
                                         particles = 32;
-                                        sizeFrom = 4f;
+                                        sizeFrom = 8f;
                                         sizeTo = 0f;
-                                        length = 48f;
+                                        length = 128f;
                                         baseLength = 0f;
                                         lifetime = 30f;
                                         region = "magic-X";
