@@ -5338,10 +5338,10 @@ public class MLUnitTypes {
                                         colorTo = Color.valueOf("FEEBB3FF");
                                     }},
                                     new ParticleEffect() {{
-                                        particles = 32;
+                                        particles = 64;
                                         sizeFrom = 8f;
                                         sizeTo = 0f;
-                                        length = 128f;
+                                        length = 256f;
                                         baseLength = 0f;
                                         lifetime = 30f;
                                         region = "magic-X";
@@ -5381,6 +5381,64 @@ public class MLUnitTypes {
                                 radiusTo = 50f;
                                 haloRadius = 0f;
                             }});
+                            fragBullets = 1;
+                            fragBullet = new BasicBulletType(){{
+                                damage = 0f;
+                                lifetime = 25f;
+                                speed = 0f;
+                                width = 0f;
+                                height = 0f;
+                                hitSize = 0f;
+                                hittable = false;
+                                reflectable = false;
+                                collides = false;
+                                absorbable = false;
+                                intervalBullets = 1;
+                                bulletInterval = 2.5f;
+                                intervalBullet = new BasicBulletType(){{
+                                    damage = 500f;
+                                    lifetime = 32f;
+                                    speed = 8f;
+                                    width = 0f;
+                                    height = 0f;
+                                    hitSize = 0f;
+                                    splashDamageRadius = 128f;
+                                    splashDamage = 500f;
+                                    frontColor = Color.valueOf("FEEBB3FF");
+                                    backColor = Color.valueOf("FEEBB3FF");
+                                    sprite = "magic-X";
+                                    spin = 5;
+                                    trailLength = 9;
+                                    trailWidth = 6f;
+                                    trailColor = Color.valueOf("FEEBB3FF");
+                                    hitSound = MLSounds.explosionbig;
+                                    hitEffect = despawnEffect =
+                                            new MultiEffect(
+                                                    new WaveEffect() {{
+                                                        lifetime = 60f;
+                                                        sizeFrom = 0f;
+                                                        sizeTo = 128f;
+                                                        strokeFrom = 0f;
+                                                        strokeTo = 4f;
+                                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                                        colorTo = Color.valueOf("FEEBB3FF");
+                                                    }},
+                                                    new ParticleEffect() {{
+                                                        particles = 32;
+                                                        sizeFrom = 4f;
+                                                        sizeTo = 0f;
+                                                        length = 64f;
+                                                        baseLength = 64f;
+                                                        lifetime = 60f;
+                                                        region = "magic-X";
+                                                        interp = Interp.pow10Out;
+                                                        sizeInterp = Interp.pow10In;
+                                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                                        colorTo = Color.valueOf("FEEBB3FF");
+                                                    }}
+                                            );
+                                }};
+                            }};
                         }};
                     }});
         }};
