@@ -5429,7 +5429,7 @@ public class MLUnitTypes {
                         y = -62f;
                         rotate = true;
                         rotateSpeed = 3f;
-                        mirror = false;
+                        mirror = true;
                         alternate = false;
                         inaccuracy = 0f;
                         shootSound = MLSounds.shootSmite;
