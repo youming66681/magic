@@ -156,6 +156,26 @@ public class MLSpawnUnits {
                     MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                 });
             }
+            else if (unit.type == MLUnitTypes.TheWorl) {
+                float delay = 1f;
+                float x = unit.x + Mathf.random(-240f, 240f);
+                float y = unit.y + Mathf.random(-240f, 240f);
+                Vars.ui.hudfrag.showToast(
+                        Fonts.getGlyph(Fonts.icon, (char)Iconc.warning),
+                        "寰宇号已介入战局！"
+                );
+                Events.fire(new UnitFocusEvent(x,y, 180f));
+                UnitType type = unit.type;
+                MLFx.hugeTeleport.at(x, y);
+                unit.remove();
+                Time.run(delay * 180f, () -> {
+                    Unit newUnit = type.create(state.rules.waveTeam);
+                    newUnit.set(x, y);
+                    MLSounds.shootForeshadow.at(x, y, 15f);
+                    newUnit.add();
+                    MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
+                });
+            }
         });
     }
 }
