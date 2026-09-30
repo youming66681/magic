@@ -5295,7 +5295,94 @@ public class MLUnitTypes {
                         haloRotateSpeed = 3f;
                     }});
                 }};
-            }});
+            }},
+                    new Weapon("magic-MilkyWay0") {{
+                        reload = 180f;
+                        x = 66f;
+                        y = 9f;
+                        rotate = true;
+                        rotateSpeed = 2.5f;
+                        mirror = true;
+                        alternate = false;
+                        inaccuracy = 0f;
+                        shootSound = MLSounds.shootBeamPlasma;
+                        shake = 25f;
+                        layerOffset = 0.001f;
+                        recoil = 12;
+                        bullet = new BasicBulletType() {{
+                            damage = 500f;
+                            lifetime = 50f;
+                            speed = 16f;
+                            width = 48f;
+                            height = 48f;
+                            hitSize = 48f;
+                            splashDamageRadius = 128f;
+                            splashDamage = 500f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            sprite = "magic-X";
+                            spin = 5;
+                            trailLength = 9;
+                            trailWidth = 6f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            hitSound = MLSounds.explosionbig;
+                            hitEffect = despawnEffect =
+                                    new MultiEffect(
+                                    new WaveEffect() {{
+                                        lifetime = 30f;
+                                        sizeFrom = 0f;
+                                        sizeTo = 128f;
+                                        strokeFrom = 0f;
+                                        strokeTo = 4f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect() {{
+                                        particles = 32;
+                                        sizeFrom = 4f;
+                                        sizeTo = 0f;
+                                        length = 48f;
+                                        baseLength = 0f;
+                                        lifetime = 30f;
+                                        region = "magic-X";
+                                        interp = Interp.pow10Out;
+                                        sizeInterp = Interp.pow10In;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }}
+                            );
+                            smokeEffect = Fx.smokeCloud;
+                            parts.add(
+                                    new HaloPart(){{
+                                            sides = 5;
+                                            shapes = 1;
+                                            rotateSpeed = 2.5f;
+                                            color = Color.valueOf("FEEBB3FF");
+                                            colorTo = Color.valueOf("FEEBB3FF");
+                                            tri = false;
+                                            hollow = true;
+                                            stroke = 2.5f;
+                                            strokeTo = 2.5f;
+                                            radius = 50f;
+                                            radiusTo = 50f;
+                                            haloRadius = 0f;
+                                        }},
+                            new HaloPart(){{
+                                sides = 5;
+                                shapes = 1;
+                                rotateSpeed = -2.5f;
+                                color = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                                tri = false;
+                                hollow = true;
+                                stroke = 2.5f;
+                                strokeTo = 2.5f;
+                                radius = 50f;
+                                radiusTo = 50f;
+                                haloRadius = 0f;
+                            }});
+                        }};
+                    }});
         }};
     }
 }
