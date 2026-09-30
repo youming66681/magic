@@ -5329,7 +5329,7 @@ public class MLUnitTypes {
                             hitEffect = despawnEffect =
                                     new MultiEffect(
                                     new WaveEffect() {{
-                                        lifetime = 90f;
+                                        lifetime = 60f;
                                         sizeFrom = 0f;
                                         sizeTo = 256f;
                                         strokeFrom = 0f;
@@ -5343,7 +5343,7 @@ public class MLUnitTypes {
                                         sizeTo = 0f;
                                         length = 256f;
                                         baseLength = 0f;
-                                        lifetime = 90f;
+                                        lifetime = 60f;
                                         region = "magic-X";
                                         interp = Interp.pow10Out;
                                         sizeInterp = Interp.pow10In;
@@ -5389,6 +5389,7 @@ public class MLUnitTypes {
                                     width = 0f;
                                     height = 0f;
                                     hitSize = 0f;
+                                    collides = false;
                                     splashDamageRadius = 128f;
                                     splashDamage = 500f;
                                     frontColor = Color.valueOf("FEEBB3FF");
