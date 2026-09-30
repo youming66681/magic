@@ -156,7 +156,7 @@ public class MLSpawnUnits {
                     MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                 });
             }
-            else if (unit.type == MLUnitTypes.TheWorl) {
+            else if (unit.type == MLUnitTypes.TheWorld) {
                 float delay = 1f;
                 float x = unit.x + Mathf.random(-240f, 240f);
                 float y = unit.y + Mathf.random(-240f, 240f);
