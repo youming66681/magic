@@ -5422,6 +5422,311 @@ public class MLUnitTypes {
                                             );
                             }};
                         }};
+                    }},
+                    new Weapon("magic-TheWorld3") {{
+                        reload = 120f;
+                        x = 54f;
+                        y = -62f;
+                        rotate = true;
+                        rotateSpeed = 3f;
+                        mirror = false;
+                        alternate = false;
+                        inaccuracy = 0f;
+                        shootSound = MLSounds.shootSmite;
+                        shake = 30f;
+                        layerOffset = 0.001f;
+                        recoil = 9;
+                        shoot = new ShootMulti(
+                                new ShootBarrel() {{
+                                    shots = 4;
+                                    shotDelay = 0f;
+                                    barrels = new float[]{
+                                            24f, 24f, 0f,
+                                            20f, 24f, 0f,
+                                            -20f, 24f, 0f,
+                                            -24f, 24f, 0f
+                                    };
+                                }},
+                                new ShootPattern() {{
+                                    shots = 4;
+                                    shotDelay = 0f;
+                                    firstShotDelay = 0f;
+                                }},
+                                new ShootPattern() {{
+                                    shots = 4;
+                                    shotDelay = 0f;
+                                    firstShotDelay = 15f;
+                                }},
+                                new ShootPattern() {{
+                                    shots = 4;
+                                    shotDelay = 0f;
+                                    firstShotDelay = 30f;
+                                }}
+                        );
+                        bullet = new BasicBulletType() {{
+                            damage = 600f;
+                            lifetime = 32f;
+                            speed = 25f;
+                            width = 16f;
+                            height = 48f;
+                            hitSize = 24f;
+                            splashDamageRadius = 24f;
+                            splashDamage = 600f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            trailLength = 9;
+                            trailWidth = 3f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            hitSound = MLSounds.plasmaboom;
+                            hitEffect = despawnEffect = Fx.instBomb;
+                            smokeEffect = Fx.smokeCloud;
+                            pierce = true;
+                            pierceBuilding = true;
+                            pierceCap = 3;
+                        }};
+                    }},
+                    new Weapon("magic-TheWorld4") {{
+                        reload = 90f;
+                        x = 78f;
+                        y = 68f;
+                        rotate = true;
+                        rotateSpeed = 6f;
+                        mirror = true;
+                        alternate = false;
+                        inaccuracy = 0f;
+                        shootSound = MLSounds.shootCollaris;
+                        shake = 15f;
+                        layerOffset = 0.001f;
+                        recoil = 6;
+                        shootY = 12;
+                        shoot = new ShootMulti(
+                                new ShootBarrel() {{
+                                    shots = 4;
+                                    shotDelay = 0f;
+                                    barrels = new float[]{
+                                            3f, 12f, 0f,
+                                            6f, 12f, 0f,
+                                            -6f, 12f, 0f,
+                                            -3f, 12f, 0f
+                                    };
+                                }},
+                                shoot = new ShootHelix() {{
+                                    shots = 4;
+                                    mag = 3f;
+                                    scl = 3f;
+                                }}
+                        );
+                        bullet = new BasicBulletType() {{
+                            damage = 300f;
+                            lifetime = 50f;
+                            speed = 16f;
+                            width = 8f;
+                            height = 16f;
+                            hitSize = 24f;
+                            splashDamageRadius = 48f;
+                            splashDamage = 300f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            trailLength = 9;
+                            trailWidth = 3f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            hitSound = MLSounds.plasmaboom;
+                            hitEffect = despawnEffect = MLFx.EnergyExplosion;
+                        }};
+                    }});
+            weapons.add(
+                    new Weapon("magic-TheWorld4") {{
+                        reload = 90f;
+                        x = 43f;
+                        y = 56f;
+                        rotate = true;
+                        rotateSpeed = 6f;
+                        mirror = true;
+                        alternate = false;
+                        inaccuracy = 0f;
+                        shootSound = MLSounds.shootCollaris;
+                        shake = 15f;
+                        layerOffset = 0.001f;
+                        recoil = 6;
+                        shootY = 12;
+                        shoot = new ShootMulti(
+                                new ShootBarrel() {{
+                                    shots = 4;
+                                    shotDelay = 0f;
+                                    barrels = new float[]{
+                                            3f, 12f, 0f,
+                                            6f, 12f, 0f,
+                                            -6f, 12f, 0f,
+                                            -3f, 12f, 0f
+                                    };
+                                }},
+                                shoot = new ShootHelix() {{
+                                    shots = 4;
+                                    mag = 3f;
+                                    scl = 3f;
+                                }}
+                        );
+                        bullet = new BasicBulletType() {{
+                            damage = 300f;
+                            lifetime = 50f;
+                            speed = 16f;
+                            width = 8f;
+                            height = 16f;
+                            hitSize = 24f;
+                            splashDamageRadius = 48f;
+                            splashDamage = 300f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            trailLength = 9;
+                            trailWidth = 3f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            hitSound = MLSounds.plasmaboom;
+                            hitEffect = despawnEffect = MLFx.EnergyExplosion;
+                        }};
+                    }},
+                    new Weapon("magic-TheWorld2") {{
+                        x = 44f;
+                        y = 93f;
+                        mirror = true;
+                        reload = 2.5f;
+                        shootSound = MLSounds.JG;
+                        inaccuracy = 0f;
+                        recoil = 2.5f;
+                        rotate = true;
+                        rotateSpeed = 5f;
+                        shoot = new ShootAlternate() {{
+                            barrels = 2;
+                            spread = 2f;
+                        }};
+                        bullet = new BasicBulletType() {{
+                            damage = 50f;
+                            pierceCap = 3;
+                            pierceBuilding = true;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            width = 8f;
+                            height = 16f;
+                            trailLength = 2;
+                            trailWidth = 2f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            pierce = true;
+                            speed = 16f;
+                            lifetime = 50f;
+                            hitEffect = new WaveEffect() {{
+                                lifetime = 8f;
+                                sizeFrom = 0f;
+                                sizeTo = 12f;
+                                strokeFrom = 1f;
+                                strokeTo = 0f;
+                                colorFrom = Color.white;
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                            despawnEffect = new WaveEffect() {{
+                                lifetime = 8f;
+                                sizeFrom = 0f;
+                                sizeTo = 12f;
+                                strokeFrom = 1f;
+                                strokeTo = 0f;
+                                colorFrom = Color.white;
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                        }};
+                    }},
+                    new Weapon("magic-TheWorld2") {{
+                        x = 80f;
+                        y = 112f;
+                        mirror = true;
+                        reload = 2.5f;
+                        shootSound = MLSounds.JG;
+                        inaccuracy = 0f;
+                        recoil = 2.5f;
+                        rotate = true;
+                        rotateSpeed = 5f;
+                        shoot = new ShootAlternate() {{
+                            barrels = 2;
+                            spread = 2f;
+                        }};
+                        bullet = new BasicBulletType() {{
+                            damage = 50f;
+                            pierceCap = 3;
+                            pierceBuilding = true;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            width = 8f;
+                            height = 16f;
+                            trailLength = 2;
+                            trailWidth = 2f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            pierce = true;
+                            speed = 16f;
+                            lifetime = 50f;
+                            hitEffect = new WaveEffect() {{
+                                lifetime = 8f;
+                                sizeFrom = 0f;
+                                sizeTo = 12f;
+                                strokeFrom = 1f;
+                                strokeTo = 0f;
+                                colorFrom = Color.white;
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                            despawnEffect = new WaveEffect() {{
+                                lifetime = 8f;
+                                sizeFrom = 0f;
+                                sizeTo = 12f;
+                                strokeFrom = 1f;
+                                strokeTo = 0f;
+                                colorFrom = Color.white;
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                        }};
+                    }},
+                    new Weapon("magic-TheWorld2") {{
+                        x = 70f;
+                        y = -108f;
+                        mirror = true;
+                        reload = 2.5f;
+                        shootSound = MLSounds.JG;
+                        inaccuracy = 0f;
+                        recoil = 2.5f;
+                        rotate = true;
+                        rotateSpeed = 5f;
+                        shoot = new ShootAlternate() {{
+                            barrels = 2;
+                            spread = 2f;
+                        }};
+                        bullet = new BasicBulletType() {{
+                            damage = 50f;
+                            pierceCap = 3;
+                            pierceBuilding = true;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            width = 8f;
+                            height = 16f;
+                            trailLength = 2;
+                            trailWidth = 2f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            pierce = true;
+                            speed = 16f;
+                            lifetime = 50f;
+                            hitEffect = new WaveEffect() {{
+                                lifetime = 8f;
+                                sizeFrom = 0f;
+                                sizeTo = 12f;
+                                strokeFrom = 1f;
+                                strokeTo = 0f;
+                                colorFrom = Color.white;
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                            despawnEffect = new WaveEffect() {{
+                                lifetime = 8f;
+                                sizeFrom = 0f;
+                                sizeTo = 12f;
+                                strokeFrom = 1f;
+                                strokeTo = 0f;
+                                colorFrom = Color.white;
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                        }};
                     }});
         }};
     }
