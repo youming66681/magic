@@ -983,11 +983,12 @@ public class FlexAssembler extends PayloadBlock{
         }
         @Override
         public byte version(){
-            return 1;
+            return 2;
         }
         @Override
         public void write(Writes write){
             super.write(write);
+            write.i(lockedIndex);
             write.f(progress);
             write.b(units.size);
             for(Unit unit : units){
@@ -999,6 +1000,11 @@ public class FlexAssembler extends PayloadBlock{
         @Override
         public void read(Reads read, byte revision){
             super.read(read, revision);
+            if(revision >= 2){
+                lockedIndex = read.i();
+            }else{
+                lockedIndex = NO_PLAN;
+            }
             progress = read.f();
             int count = read.b();
             readUnits.clear();
@@ -1012,7 +1018,6 @@ public class FlexAssembler extends PayloadBlock{
             }
             syncArea();
         }
-    }
     public static class FlexAssemblerModule extends PayloadBlock{
         public int tier = 1;
         public FlexAssemblerModule(String name){
