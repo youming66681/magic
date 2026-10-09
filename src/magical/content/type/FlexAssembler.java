@@ -1069,8 +1069,11 @@ public class FlexAssembler extends PayloadBlock{
             }
             @Override
             public boolean acceptPayload(Building source, Payload payload){
-                return link != null &&
+                return payload != null &&
                         this.payload == null &&
+                        link != null &&
+                        link.moduleFits(block, x, y, rotation) &&
+                        !link.wasOccupied &&
                         link.acceptPayload(this, payload);
             }
             @Override
