@@ -3094,9 +3094,9 @@ public class MLUnitTypes {
                             shots = 3;
                             shotDelay = 20f;
                             barrels = new float[]{
-                                    8f, 32f, 0f,
+                                    -8f, 32f, 0f,
                                     0f, 32f, 0f,
-                                    -8f, 32f, 0f
+                                    8f, 32f, 0f
                             };
                         }};
                         bullet = new BasicBulletType() {{
@@ -5277,7 +5277,6 @@ public class MLUnitTypes {
                     speed = 16f;
                     lifetime = 60f;
                     hitSound = MLSounds.plasmaboom;
-                    hitSoundVolume = 30f;
                     hitEffect = MLFx.EnergyExplosion;
                     parts.add(
                         new HaloPart(){{

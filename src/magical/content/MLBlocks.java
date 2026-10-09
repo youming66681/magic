@@ -3560,6 +3560,15 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.NanoCarbonAlloyWall, 9),
                     new PayloadStack(MLBlocks.LuoLing, 6),
                     new PayloadStack(MLBlocks.DawN, 1));
+            addPlan("T3", MLUnitTypes.TheWorld, 216000f, 48, 2,
+                    new PayloadStack(MLBlocks.LargeWingWall, 18),
+                    new PayloadStack(MLBlocks.LargePhantomGlowWall, 18),
+                    new PayloadStack(MLBlocks.NanoCarbonAlloyWall, 18),
+                    new PayloadStack(MLBlocks.LuoLing, 4),
+                    new PayloadStack(MLBlocks.BulletsRain, 6),
+                    new PayloadStack(MLBlocks.SeekingSky, 4),
+                    new PayloadStack(MLBlocks.Stars, 2),
+                    new PayloadStack(MLBlocks.DawN, 2));
 
             consumePower(20f);
             consumeLiquid(Liquids.water, 1f);
@@ -3589,6 +3598,8 @@ public class MLBlocks {
                     MLBlocks.BulletsRain,
                     MLBlocks.LuoLing,
                     MLBlocks.DawN,
+                    MLBlocks.Stars,
+                    MLBlocks.SeekingSky,
                     MLBlocks.BreakingArmy
             );
         }};
