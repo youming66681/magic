@@ -1032,11 +1032,6 @@ public class FlexAssembler extends PayloadBlock{
         @Override
         public void read(Reads read, byte revision) {
             super.read(read, revision);
-            if (revision >= 2) {
-                lockedIndex = read.i();
-            } else {
-                lockedIndex = NO_PLAN;
-            }
             progress = read.f();
             int count = read.b();
             readUnits.clear();
@@ -1045,14 +1040,9 @@ public class FlexAssembler extends PayloadBlock{
             }
             whenSyncedUnits.clear();
             blocks.read(read);
-            if (revision >= 2) {
-                int savedIndex = read.i();
-                if (savedIndex == NO_PLAN || (savedIndex >= 0 && savedIndex < plans.size)) {
-                    lockedIndex = savedIndex;
-                } else {
-                    lockedIndex = NO_PLAN;
-                }
-            }
+            commandPos = revision >= 1 ? TypeIO.readVecNullable(read) : null;
+            lockedIndex = NO_PLAN;
+            syncArea();
         }
     }
     public static class FlexAssemblerModule extends PayloadBlock{
