@@ -1046,18 +1046,19 @@ public class FlexAssembler extends PayloadBlock{
             }
             whenSyncedUnits.clear();
             blocks.read(read);
-            if(revision >= 1){
+            if (revision >= 1) {
                 commandPos = TypeIO.readVecNullable(read);
             }
-            if(revision >= 2){
+            if (revision >= 2) {
                 int savedIndex = read.i();
-                if(savedIndex == NO_PLAN || (savedIndex >= 0 && savedIndex < plans.size)){
+                if (savedIndex == NO_PLAN || (savedIndex >= 0 && savedIndex < plans.size)) {
                     lockedIndex = savedIndex;
-                }else{
+                } else {
                     lockedIndex = NO_PLAN;
                 }
             }
             syncArea();
+        }
     }
     public static class FlexAssemblerModule extends PayloadBlock{
         public int tier = 1;
