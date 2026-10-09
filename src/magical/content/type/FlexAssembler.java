@@ -562,20 +562,18 @@ public class FlexAssembler extends PayloadBlock{
             }
         }
 
-        @Override
-        public Object config() {
-            return lockedIndex;
-        }
 
         @Override
-        public void configure(@Nullable Object value) {
-            if (!(value instanceof Integer index)) {
-                return;
-            }
-            if (index != NO_PLAN && (index < 0 || index >= plans.size)) {
-                return;
-            }
-            super.configure(index);
+        public Object config(){
+            return lockedIndex;
+        }
+        @Override
+        public void configure(@Nullable Object value){
+            if(!(value instanceof Integer index)) return;
+            if(index != NO_PLAN && (index < 0 || index >= plans.size)) return;
+            if(index != NO_PLAN && tierRequired.getOrDefault(plans.get(index), 0) > currentTier) return;
+            lockedIndex = index;
+            syncArea();
         }
 
         @Override
@@ -1048,11 +1046,18 @@ public class FlexAssembler extends PayloadBlock{
             }
             whenSyncedUnits.clear();
             blocks.read(read);
-            if (revision >= 1) {
+            if(revision >= 1){
                 commandPos = TypeIO.readVecNullable(read);
             }
+            if(revision >= 2){
+                int savedIndex = read.i();
+                if(savedIndex == NO_PLAN || (savedIndex >= 0 && savedIndex < plans.size)){
+                    lockedIndex = savedIndex;
+                }else{
+                    lockedIndex = NO_PLAN;
+                }
+            }
             syncArea();
-        }
     }
     public static class FlexAssemblerModule extends PayloadBlock{
         public int tier = 1;
