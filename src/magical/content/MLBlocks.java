@@ -3560,7 +3560,7 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.NanoCarbonAlloyWall, 9),
                     new PayloadStack(MLBlocks.LuoLing, 6),
                     new PayloadStack(MLBlocks.DawN, 1));
-            addPlan("T3", MLUnitTypes.TheWorld, 216000f, 48, 2,
+            addPlan("T3", MLUnitTypes.TheWorld, 216000f, 45, 2,
                     new PayloadStack(MLBlocks.LargeWingWall, 18),
                     new PayloadStack(MLBlocks.LargePhantomGlowWall, 18),
                     new PayloadStack(MLBlocks.NanoCarbonAlloyWall, 18),
