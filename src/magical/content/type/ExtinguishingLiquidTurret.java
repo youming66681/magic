@@ -3,28 +3,27 @@ package magical.content;
 import arc.math.Mathf;
 import arc.struct.ObjectMap;
 import mindustry.Vars;
-import mindustry.content.Liquids;
 import mindustry.entities.Fires;
 import mindustry.type.Liquid;
 import mindustry.world.Tile;
 import mindustry.world.blocks.defense.turrets.ContinuousLiquidTurret;
 
-public class AutoExtinguishingLiquidTurret extends ContinuousLiquidTurret{
+public class ExtinguishingLiquidTurret extends ContinuousLiquidTurret{
     public ObjectMap<Liquid, Float> extinguishIntensities = new ObjectMap<>();
     public float extinguishInterval = 10f;
-    public AutoExtinguishingLiquidTurret(String name){
+    public ExtinguishingLiquidTurret(String name){
         super(name);
         targetGround = true;
         targetAir = false;
     }
-    public AutoExtinguishingLiquidTurret extinguishIntensity(Liquid liquid, float intensity){
+    public ExtinguishingLiquidTurret extinguishIntensity(Liquid liquid, float intensity){
         extinguishIntensities.put(liquid, intensity);
         return this;
     }
     public float getExtinguishIntensity(Liquid liquid){
         return extinguishIntensities.get(liquid, 0f);
     }
-    public class AutoExtinguishingLiquidTurretBuild extends ContinuousLiquidTurretBuild{
+    public class ExtinguishingLiquidTurretBuild extends ContinuousLiquidTurretBuild{
         private float extinguishTimer;
         @Override
         public void updateTile(){
