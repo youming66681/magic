@@ -1215,10 +1215,8 @@ public class MLBlocks {
                                 moveY = -2f;
                                 progress = PartProgress.recoil;
                                 heatProgress = PartProgress.recoil;
-                            }},
-                            );
-                }};
-            );
+                            }});
+                }});
         shoot = new ShootAlternate() {{
             barrels = 2;
             spread = 4f;
