@@ -221,7 +221,7 @@ public class MLBlocks {
 
         }};
         //回溯投影仪
-        RetroProjector = new MendProjector("RetroProjector"){{
+        RetroProjector = new MendProjector("RetroProjector") {{
             requirements(Category.effect, ItemStack.with(new Object[]{MLItems.wingedStone, 80, Items.silicon, 150, MLItems.phantomTitaniumSteel, 150, MLItems.acrylic, 130, MLItems.arrayChip, 30}));
             consumePower(10f);
             size = 3;
@@ -234,7 +234,7 @@ public class MLBlocks {
             consumeItem(MLItems.fluorescentFeatherStone).boost();
         }};
         //幻象投影仪
-        HologramProjector = new ForceProjector("HologramProjector"){{
+        HologramProjector = new ForceProjector("HologramProjector") {{
             requirements(Category.effect, ItemStack.with(new Object[]{MLItems.wingedStone, 60, Items.silicon, 300, MLItems.mysticCrystal, 90, MLItems.acrylic, 75, MLItems.mysticSteel, 90, MLItems.phantomTitaniumSteel, 80, MLItems.arrayChip, 30}));
             size = 3;
             phaseRadiusBoost = 80f;
@@ -244,9 +244,9 @@ public class MLBlocks {
             health = 1200;
             cooldownNormal = 3f;
             cooldownLiquid = 3f;
-            liquidCapacity =150;
+            liquidCapacity = 150;
             cooldownBrokenBase = 0.6f;
-            absorbEffect = new WaveEffect(){{
+            absorbEffect = new WaveEffect() {{
                 lifetime = 15f;
                 sizeFrom = 12f;
                 sizeTo = 0f;
@@ -260,7 +260,7 @@ public class MLBlocks {
             consumePower(15f);
         }};
         //全域超速仪
-        GlobalOverdriveProjector = new GlobalOverdriveProjector("GlobalOverdriveProjector"){{
+        GlobalOverdriveProjector = new GlobalOverdriveProjector("GlobalOverdriveProjector") {{
             requirements(Category.effect, ItemStack.with(new Object[]{MLItems.mysticSteel, 200, Items.silicon, 200, MLItems.wingedMetal, 200, MLItems.fluorescentFeatherStone, 200, MLItems.phantomLuminousAlloy, 200, MLItems.matrixChip, 40}));
             consumePower(20f);
             size = 4;
@@ -335,7 +335,7 @@ public class MLBlocks {
             consumePower(1.0f);
         }};
         //芯片制造机
-        chipMachine = new magical.content.MultiCrafter("chipMachine"){{
+        chipMachine = new magical.content.MultiCrafter("chipMachine") {{
             requirements(Category.crafting, ItemStack.with(MLItems.phantomSteel, 30, MLItems.phantomTitaniumSteel, 10, MLItems.mysticCrystal, 20, Items.silicon, 40, Items.metaglass, 50));
             consumePower(15f);
             health = 400;
@@ -349,24 +349,24 @@ public class MLBlocks {
             drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
             hasPower = true;
             craftPlans = Seq.with(
-                    new CraftPlan(){{
+                    new CraftPlan() {{
                         craftTime = 60f;
                         consumePower(10f);
                         consumeItems(ItemStack.with(MLItems.phantomSteel, 1, MLItems.phantomTitaniumSteel, 1, MLItems.mysticCrystal, 1, Items.silicon, 3));
                         outputItems = ItemStack.with(MLItems.logicChip, 1);
                     }},
-            new CraftPlan(){{
-                craftTime = 120f;
-                consumePower(20f);
-                consumeItems(ItemStack.with(MLItems.wingedStone, 1, MLItems.acrylic, 1, Items.silicon, 6));
-                outputItems = ItemStack.with(MLItems.arrayChip, 1);
-            }},
-            new CraftPlan(){{
-                craftTime = 180f;
-                consumePower(30f);
-                consumeItems(ItemStack.with(MLItems.fluorescentFeatherStone, 1, MLItems.mysticSteel, 1, MLItems.phantomLuminousAlloy, 1, MLItems.wingedMetal, 1, Items.silicon, 9));
-                outputItems = ItemStack.with(MLItems.matrixChip, 1);
-            }}
+                    new CraftPlan() {{
+                        craftTime = 120f;
+                        consumePower(20f);
+                        consumeItems(ItemStack.with(MLItems.wingedStone, 1, MLItems.acrylic, 1, Items.silicon, 6));
+                        outputItems = ItemStack.with(MLItems.arrayChip, 1);
+                    }},
+                    new CraftPlan() {{
+                        craftTime = 180f;
+                        consumePower(30f);
+                        consumeItems(ItemStack.with(MLItems.fluorescentFeatherStone, 1, MLItems.mysticSteel, 1, MLItems.phantomLuminousAlloy, 1, MLItems.wingedMetal, 1, Items.silicon, 9));
+                        outputItems = ItemStack.with(MLItems.matrixChip, 1);
+                    }}
             );
         }};
         //翼石冲压机
@@ -515,7 +515,7 @@ public class MLBlocks {
             consumeItems(ItemStack.with(MLItems.mysticSteel, 1, MLItems.fluorescentFeatherStone, 1, MLItems.wingedMetal, 1));
         }};
         //大型相织布编织器
-        LargePhaseWeaver = new GenericCrafter("LargePhaseWeaver"){{
+        LargePhaseWeaver = new GenericCrafter("LargePhaseWeaver") {{
             requirements(Category.crafting, ItemStack.with(new Object[]{Items.silicon, 150, Items.lead, 160, Items.thorium, 110, MLItems.arrayChip, 15}));
             craftEffect = Fx.smeltsmoke;
             outputItem = new ItemStack(Items.phaseFabric, 2);
@@ -523,15 +523,15 @@ public class MLBlocks {
             size = 3;
             hasPower = true;
             drawer = new DrawMulti(
-                    new DrawRegion("-Z1"){{
+                    new DrawRegion("-Z1") {{
                         rotateSpeed = 3f;
                         rotation = 0f;
                     }},
-                    new DrawRegion("-Z2"){{
+                    new DrawRegion("-Z2") {{
                         rotateSpeed = -3f;
                         rotation = 0f;
                     }},
-            new DrawDefault());
+                    new DrawDefault());
 
             ambientSound = MLSounds.loopTech;
             ambientSoundVolume = 0.02f;
@@ -611,7 +611,7 @@ public class MLBlocks {
         //factor
         //炮
         //电戈
-        electroge = new PowerTurret("electroge"){{
+        electroge = new PowerTurret("electroge") {{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 75, Items.graphite, 25}));
             range = 200f;
 
@@ -628,7 +628,7 @@ public class MLBlocks {
 
             consumePower(6f);
 
-            shootType = new BasicBulletType(5f, 30f){{
+            shootType = new BasicBulletType(5f, 30f) {{
                 hitEffect = MLFx.smallElectricDetonation;//Slash(frontColor, 80f, 20f);
                 despawnEffect = hitEffect;
                 hitSize = 16f;
@@ -645,19 +645,19 @@ public class MLBlocks {
                 hitSound = MLSounds.explosionCleroi;
                 despawnSound = MLSounds.explosionCleroi;
                 fragBullets = 1;
-                fragBullet = new LightningBulletType(){{
-                        lifetime = 1f;
-                        hitEffect = Fx.hitLancer;
-                        lightColor = Color.valueOf("97B5EDFF");
-                        damage = 10f;
-                        lightning = 6;
-                        lightningLength = 5;
-                        lightningLengthRand= 5;
-                    }};
+                fragBullet = new LightningBulletType() {{
+                    lifetime = 1f;
+                    hitEffect = Fx.hitLancer;
+                    lightColor = Color.valueOf("97B5EDFF");
+                    damage = 10f;
+                    lightning = 6;
+                    lightningLength = 5;
+                    lightningLengthRand = 5;
                 }};
             }};
+        }};
         //流冲
-        fluvialErosion = new ContinuousLiquidTurret("fluvialErosion"){{
+        fluvialErosion = new ContinuousLiquidTurret("fluvialErosion") {{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 100, MLItems.phantomTitaniumSteel, 30, MLItems.mysticCrystal, 50, Items.metaglass, 80}));
             liquidCapacity = 60f;
             liquidConsumed = 18f / 60f;
@@ -671,58 +671,58 @@ public class MLBlocks {
             loopSound = MLSounds.shootSublimate;
             shootEffect = Fx.shootLiquid;
             ammo(
-            Liquids.water, new ContinuousFlameBulletType(){{
-            damage = 20f;
-            length = 144f;
-            status = Liquids.water.effect;
-            ammoMultiplier = 1f;
-            knockback = 2f;
-            pierceCap = 2;
+                    Liquids.water, new ContinuousFlameBulletType() {{
+                        damage = 20f;
+                        length = 144f;
+                        status = Liquids.water.effect;
+                        ammoMultiplier = 1f;
+                        knockback = 2f;
+                        pierceCap = 2;
 
-            colors = new Color[]{Color.valueOf("596ab8").a(0.55f), Color.valueOf("596ab8").a(0.7f), Color.valueOf("596ab8").a(0.8f), Color.valueOf("596ab8"), Color.white};
-            flareColor = Color.valueOf("596ab8");
-               }},
-            Liquids.cryofluid, new ContinuousFlameBulletType(){{
-            damage = 30f;
-            length = 144f;
-            status = Liquids.cryofluid.effect;
-            ammoMultiplier = 1f;
-            knockback = 2f;
-            pierceCap = 2;
-
-            colors = new Color[]{Color.valueOf("6ecdec").a(0.55f), Color.valueOf("6ecdec").a(0.7f), Color.valueOf("6ecdec").a(0.8f), Color.valueOf("6ecdec"), Color.white};
-            flareColor = Color.valueOf("6ecdec");
-                        }},
-            Liquids.slag, new ContinuousFlameBulletType() {{
-            damage = 40f;
-            length = 144f;
-            status = Liquids.slag.effect;
-            ammoMultiplier = 1f;
-            knockback = 3f;
-            pierceCap = 3;
-
-            colors = new Color[]{Color.valueOf("ffa166").a(0.55f), Color.valueOf("ffa166").a(0.7f), Color.valueOf("ffa166").a(0.8f), Color.valueOf("ffa166"), Color.white};
-            flareColor = Color.valueOf("ffa166");
+                        colors = new Color[]{Color.valueOf("596ab8").a(0.55f), Color.valueOf("596ab8").a(0.7f), Color.valueOf("596ab8").a(0.8f), Color.valueOf("596ab8"), Color.white};
+                        flareColor = Color.valueOf("596ab8");
                     }},
-            Liquids.oil, new ContinuousFlameBulletType() {{
-            damage = 20f;
-            length = 144f;
-            status = Liquids.oil.effect;
-            ammoMultiplier = 1f;
-            knockback = 2f;
-            pierceCap = 2;
+                    Liquids.cryofluid, new ContinuousFlameBulletType() {{
+                        damage = 30f;
+                        length = 144f;
+                        status = Liquids.cryofluid.effect;
+                        ammoMultiplier = 1f;
+                        knockback = 2f;
+                        pierceCap = 2;
 
-            colors = new Color[]{Color.valueOf("313131").a(0.55f), Color.valueOf("313131").a(0.7f), Color.valueOf("313131").a(0.8f), Color.valueOf("313131"), Color.white};
-            flareColor = Color.valueOf("313131");
+                        colors = new Color[]{Color.valueOf("6ecdec").a(0.55f), Color.valueOf("6ecdec").a(0.7f), Color.valueOf("6ecdec").a(0.8f), Color.valueOf("6ecdec"), Color.white};
+                        flareColor = Color.valueOf("6ecdec");
+                    }},
+                    Liquids.slag, new ContinuousFlameBulletType() {{
+                        damage = 40f;
+                        length = 144f;
+                        status = Liquids.slag.effect;
+                        ammoMultiplier = 1f;
+                        knockback = 3f;
+                        pierceCap = 3;
+
+                        colors = new Color[]{Color.valueOf("ffa166").a(0.55f), Color.valueOf("ffa166").a(0.7f), Color.valueOf("ffa166").a(0.8f), Color.valueOf("ffa166"), Color.white};
+                        flareColor = Color.valueOf("ffa166");
+                    }},
+                    Liquids.oil, new ContinuousFlameBulletType() {{
+                        damage = 20f;
+                        length = 144f;
+                        status = Liquids.oil.effect;
+                        ammoMultiplier = 1f;
+                        knockback = 2f;
+                        pierceCap = 2;
+
+                        colors = new Color[]{Color.valueOf("313131").a(0.55f), Color.valueOf("313131").a(0.7f), Color.valueOf("313131").a(0.8f), Color.valueOf("313131"), Color.white};
+                        flareColor = Color.valueOf("313131");
                     }}
             );
         }};
         //裂光
-        Birefringence = new PowerTurret("Birefringence"){{
+        Birefringence = new PowerTurret("Birefringence") {{
             float brange = range = 320f;
             shootY = 0;
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 150, MLItems.phantomTitaniumSteel, 50, MLItems.mysticCrystal, 80, Items.silicon, 100}));
-            shootType = new PointBulletType(){{
+            shootType = new PointBulletType() {{
                 shootEffect = Fx.despawn;
                 hitEffect = MLFx.squareWaveRot;
                 smokeEffect = Fx.smeltsmoke;
@@ -739,7 +739,7 @@ public class MLBlocks {
             reload = 120f;
             ammoUseEffect = Fx.casing3Double;
             recoil = 6f;
-            cooldownTime = reload/2;
+            cooldownTime = reload / 2;
             shake = 3f;
             size = 3;
             shootCone = 2f;
@@ -752,79 +752,79 @@ public class MLBlocks {
             consumePower(8f);
         }};
         //激沅
-        excitedYuan = new ItemTurret("excitedYuan"){{
-        requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 50, Items.graphite, 80, Items.titanium, 40}));
-        ammo(
-                Items.copper, new BasicBulletType(8f, 20){{
-                    hitSize = 2f;
-                    width = 16f;
-                    height = 24f;
-                    shootEffect = Fx.shootSmall;
-                    ammoMultiplier = 2;
-                    reloadMultiplier = 2f;
-                    //knockback = 0.3f;
-                    lifetime = 25f;
-                    trailLength = 6;
-                    trailWidth = 3f;
+        excitedYuan = new ItemTurret("excitedYuan") {{
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 50, Items.graphite, 80, Items.titanium, 40}));
+            ammo(
+                    Items.copper, new BasicBulletType(8f, 20) {{
+                        hitSize = 2f;
+                        width = 16f;
+                        height = 24f;
+                        shootEffect = Fx.shootSmall;
+                        ammoMultiplier = 2;
+                        reloadMultiplier = 2f;
+                        //knockback = 0.3f;
+                        lifetime = 25f;
+                        trailLength = 6;
+                        trailWidth = 3f;
 
-                    hitEffect = despawnEffect = Fx.hitBulletColor;
-                    hitColor = backColor = trailColor = Color.valueOf("d99d73");
-                    frontColor = Color.valueOf("d99d73");
-                    buildingDamageMultiplier = 0.1f;
-                }},
-                Items.graphite, new BasicBulletType(8f, 30){{
-                    hitSize = 2f;
-                    width = 16f;
-                    height = 24f;
-                    shootEffect = Fx.shootSmall;
-                    ammoMultiplier = 1;
-                    reloadMultiplier = 1.5f;
-                    knockback = 0.5f;
-                    lifetime = 25f;
-                    trailLength = 6;
-                    trailWidth = 3f;
+                        hitEffect = despawnEffect = Fx.hitBulletColor;
+                        hitColor = backColor = trailColor = Color.valueOf("d99d73");
+                        frontColor = Color.valueOf("d99d73");
+                        buildingDamageMultiplier = 0.1f;
+                    }},
+                    Items.graphite, new BasicBulletType(8f, 30) {{
+                        hitSize = 2f;
+                        width = 16f;
+                        height = 24f;
+                        shootEffect = Fx.shootSmall;
+                        ammoMultiplier = 1;
+                        reloadMultiplier = 1.5f;
+                        knockback = 0.5f;
+                        lifetime = 25f;
+                        trailLength = 6;
+                        trailWidth = 3f;
 
-                    hitEffect = despawnEffect = Fx.hitBulletColor;
-                    hitColor = backColor = trailColor = Color.valueOf("b2c6d2");
-                    frontColor = Color.valueOf("b2c6d2");
-                    buildingDamageMultiplier = 0.1f;
-                }},
-                Items.titanium, new BasicBulletType(8f, 40){{
-                    hitSize = 2f;
-                    width = 16f;
-                    height = 24f;
-                    shootEffect = Fx.shootSmall;
-                    ammoMultiplier = 1;
-                    reloadMultiplier = 1f;
-                    knockback = 1f;
-                    pierceCap = 2;
-                    lifetime = 25f;
-                    trailLength = 6;
-                    trailWidth = 3f;
+                        hitEffect = despawnEffect = Fx.hitBulletColor;
+                        hitColor = backColor = trailColor = Color.valueOf("b2c6d2");
+                        frontColor = Color.valueOf("b2c6d2");
+                        buildingDamageMultiplier = 0.1f;
+                    }},
+                    Items.titanium, new BasicBulletType(8f, 40) {{
+                        hitSize = 2f;
+                        width = 16f;
+                        height = 24f;
+                        shootEffect = Fx.shootSmall;
+                        ammoMultiplier = 1;
+                        reloadMultiplier = 1f;
+                        knockback = 1f;
+                        pierceCap = 2;
+                        lifetime = 25f;
+                        trailLength = 6;
+                        trailWidth = 3f;
 
-                    hitEffect = despawnEffect = Fx.hitBulletColor;
-                    hitColor = backColor = trailColor = Color.valueOf("8da1e3");
-                    frontColor = Color.valueOf("8da1e3");
-                    buildingDamageMultiplier = 0.1f;
-                }}
-        );
-        reload = 25f;
-        recoilTime = reload / 2f;
-        ammoUseEffect = Fx.casing1;
-        range = 200f;
-        inaccuracy = 0f;
-        recoil = 3f;
-        shoot = new ShootAlternate(10f);
-        shake = 2f;
-        size = 3;
-        shootCone = 24f;
-        shootSound = MLSounds.shootAlt;
+                        hitEffect = despawnEffect = Fx.hitBulletColor;
+                        hitColor = backColor = trailColor = Color.valueOf("8da1e3");
+                        frontColor = Color.valueOf("8da1e3");
+                        buildingDamageMultiplier = 0.1f;
+                    }}
+            );
+            reload = 25f;
+            recoilTime = reload / 2f;
+            ammoUseEffect = Fx.casing1;
+            range = 200f;
+            inaccuracy = 0f;
+            recoil = 3f;
+            shoot = new ShootAlternate(10f);
+            shake = 2f;
+            size = 3;
+            shootCone = 24f;
+            shootSound = MLSounds.shootAlt;
 
-        health = 1120;
-        coolant = consumeCoolant(0.3f);
+            health = 1120;
+            coolant = consumeCoolant(0.3f);
         }};
         //光降
-        LightDescends = new ItemTurret("LightDescends"){{
+        LightDescends = new ItemTurret("LightDescends") {{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 120, Items.silicon, 80, Items.titanium, 90, MLItems.phantomTitaniumSteel, 75, MLItems.logicChip, 60,}));
             ammo(
                     Items.graphite, new BasicBulletType(16f, 30) {{
@@ -837,75 +837,75 @@ public class MLBlocks {
                         homingPower = 0.3f;
                         sprite = "magic-导弹";
                         frontColor = Color.valueOf("E3E3E3FF");
-                        backColor  = Color.valueOf("FF5B5BFF");
+                        backColor = Color.valueOf("FF5B5BFF");
                         trailLength = 15;
-                        trailWidth  = 5;
-                        trailColor  = Color.valueOf("E3E3E3");
+                        trailWidth = 5;
+                        trailColor = Color.valueOf("E3E3E3");
                         homingDelay = 3f;
                         homingRange = 360f;
-                        width  = 32f;
+                        width = 32f;
                         height = 64f;
                         hitShake = 1f;
                         ammoMultiplier = 1f;
                         smokeEffect = Fx.shootSmallFlame;
-                        hitEffect   = Fx.flakExplosionBig;
-                        hitSound    = MLSounds.explosion;
+                        hitEffect = Fx.flakExplosionBig;
+                        hitSound = MLSounds.explosion;
                         buildingDamageMultiplier = 0.1f;
                     }},
-            MLItems.phantomSteel, new BasicBulletType(16f, 60) {{
-                splashDamageRadius = 32f;
-                splashDamage = 60f;
-                knockback = 2f;
-                speed = 16f;
-                damage = 60f;
-                lifetime = 45f;
-                homingPower = 0.6f;
-                sprite = "magic-导弹";
-                frontColor = Color.valueOf("97B5EDFF");
-                backColor  = Color.valueOf("97B5EDFF");
-                trailLength = 15;
-                trailWidth  = 5;
-                trailColor  = Color.valueOf("97B5EDFF");
-                homingDelay = 2f;
-                homingRange = 360f;
-                width  = 32f;
-                height = 64f;
-                hitShake = 1f;
-                ammoMultiplier = 1f;
-                smokeEffect = Fx.shootSmallFlame;
-                hitEffect   = Fx.flakExplosionBig;
-                hitSound    = MLSounds.explosion;
-                buildingDamageMultiplier = 0.1f;
-            }},
-            MLItems.phantomTitaniumSteel, new BasicBulletType(16f, 90) {{
-                splashDamageRadius = 32f;
-                splashDamage = 90f;
-                knockback = 4f;
-                speed = 16f;
-                damage = 90f;
-                lifetime = 45f;
-                homingPower = 0.9f;
-                sprite = "magic-导弹";
-                frontColor = Color.valueOf("46649AFF");
-                backColor  = Color.valueOf("46649AFF");
-                trailLength = 15;
-                trailWidth  = 5;
-                trailColor  = Color.valueOf("46649AFF");
-                homingDelay = 1f;
-                homingRange = 360f;
-                width  = 32f;
-                height = 64f;
-                hitShake = 1f;
-                ammoMultiplier = 1f;
-                smokeEffect = Fx.shootSmallFlame;
-                hitEffect   = Fx.flakExplosionBig;
-                hitSound    = MLSounds.explosion;
-                buildingDamageMultiplier = 0.1f;
-            }}
+                    MLItems.phantomSteel, new BasicBulletType(16f, 60) {{
+                        splashDamageRadius = 32f;
+                        splashDamage = 60f;
+                        knockback = 2f;
+                        speed = 16f;
+                        damage = 60f;
+                        lifetime = 45f;
+                        homingPower = 0.6f;
+                        sprite = "magic-导弹";
+                        frontColor = Color.valueOf("97B5EDFF");
+                        backColor = Color.valueOf("97B5EDFF");
+                        trailLength = 15;
+                        trailWidth = 5;
+                        trailColor = Color.valueOf("97B5EDFF");
+                        homingDelay = 2f;
+                        homingRange = 360f;
+                        width = 32f;
+                        height = 64f;
+                        hitShake = 1f;
+                        ammoMultiplier = 1f;
+                        smokeEffect = Fx.shootSmallFlame;
+                        hitEffect = Fx.flakExplosionBig;
+                        hitSound = MLSounds.explosion;
+                        buildingDamageMultiplier = 0.1f;
+                    }},
+                    MLItems.phantomTitaniumSteel, new BasicBulletType(16f, 90) {{
+                        splashDamageRadius = 32f;
+                        splashDamage = 90f;
+                        knockback = 4f;
+                        speed = 16f;
+                        damage = 90f;
+                        lifetime = 45f;
+                        homingPower = 0.9f;
+                        sprite = "magic-导弹";
+                        frontColor = Color.valueOf("46649AFF");
+                        backColor = Color.valueOf("46649AFF");
+                        trailLength = 15;
+                        trailWidth = 5;
+                        trailColor = Color.valueOf("46649AFF");
+                        homingDelay = 1f;
+                        homingRange = 360f;
+                        width = 32f;
+                        height = 64f;
+                        hitShake = 1f;
+                        ammoMultiplier = 1f;
+                        smokeEffect = Fx.shootSmallFlame;
+                        hitEffect = Fx.flakExplosionBig;
+                        hitSound = MLSounds.explosion;
+                        buildingDamageMultiplier = 0.1f;
+                    }}
             );
             reload = 300f;
             recoilTime = 0;
-            ammoUseEffect =  new ParticleEffect() {{
+            ammoUseEffect = new ParticleEffect() {{
                 particles = 16;
                 sizeFrom = 4f;
                 sizeTo = 0f;
@@ -948,35 +948,35 @@ public class MLBlocks {
             ammoPerShot = 8;
             shootY = 0;
 
-            drawer = new DrawTurret(){{
-            parts.add(new RegionPart("-1") {{
-                        mirror = false;
-                        x = 0f;
-                        y = 0f;
-                        moveX = 4f;
-                        moveY = 4f;
-                    }},
-            new RegionPart("-2") {{
-                        mirror = false;
-                        x = 0f;
-                        y = 0f;
-                        moveX = -4f;
-                        moveY = -4f;
-                    }},
-            new RegionPart("-3") {{
-                        mirror = false;
-                        x = 0f;
-                        y = 0f;
-                        moveX = -4f;
-                        moveY = 4f;
-                    }},
-            new RegionPart("-4") {{
-                        mirror = false;
-                        x = 0f;
-                        y = 0f;
-                        moveX = 4f;
-                        moveY = -4f;
-               }});
+            drawer = new DrawTurret() {{
+                parts.add(new RegionPart("-1") {{
+                              mirror = false;
+                              x = 0f;
+                              y = 0f;
+                              moveX = 4f;
+                              moveY = 4f;
+                          }},
+                        new RegionPart("-2") {{
+                            mirror = false;
+                            x = 0f;
+                            y = 0f;
+                            moveX = -4f;
+                            moveY = -4f;
+                        }},
+                        new RegionPart("-3") {{
+                            mirror = false;
+                            x = 0f;
+                            y = 0f;
+                            moveX = -4f;
+                            moveY = 4f;
+                        }},
+                        new RegionPart("-4") {{
+                            mirror = false;
+                            x = 0f;
+                            y = 0f;
+                            moveX = 4f;
+                            moveY = -4f;
+                        }});
             }};
 
             health = 1600;
@@ -984,10 +984,10 @@ public class MLBlocks {
             consumePower(5f);
         }};
         //幻晶
-        PhantomCrystal = new ItemTurret("PhantomCrystal"){{
-            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.acrylic,80 , MLItems.phantomTitaniumSteel, 60, MLItems.wingedStone, 90, MLItems.logicChip, 30}));
+        PhantomCrystal = new ItemTurret("PhantomCrystal") {{
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.acrylic, 80, MLItems.phantomTitaniumSteel, 60, MLItems.wingedStone, 90, MLItems.logicChip, 30}));
             ammo(
-                    MLItems.wingedStone, new BasicBulletType(10f, 60){{
+                    MLItems.wingedStone, new BasicBulletType(10f, 60) {{
                         hitSize = 16f;
                         width = 12f;
                         height = 21f;
@@ -1007,7 +1007,7 @@ public class MLBlocks {
                         frontColor = Color.valueOf("9C88C3FF");
                         buildingDamageMultiplier = 0.1f;
                     }},
-                    Items.titanium, new BasicBulletType(10f, 50){{
+                    Items.titanium, new BasicBulletType(10f, 50) {{
                         hitSize = 16f;
                         width = 12f;
                         height = 21f;
@@ -1040,10 +1040,10 @@ public class MLBlocks {
             coolant = consumeCoolant(0.4f);
         }};
         //雷云
-        Thundercloud = new PowerTurret("Thundercloud"){{
+        Thundercloud = new PowerTurret("Thundercloud") {{
             range = 240f;
-            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.acrylic,80 , MLItems.phantomTitaniumSteel, 60, MLItems.wingedStone, 90, Items.silicon, 75, MLItems.logicChip, 30}));
-            shootType = new BasicBulletType(8f, 50f){{
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.acrylic, 80, MLItems.phantomTitaniumSteel, 60, MLItems.wingedStone, 90, Items.silicon, 75, MLItems.logicChip, 30}));
+            shootType = new BasicBulletType(8f, 50f) {{
                 homingPower = 0.03f;
                 homingDelay = 1.5f;
                 homingRange = 190f;
@@ -1062,7 +1062,7 @@ public class MLBlocks {
                 hitSound = MLSounds.plasmadrop;
                 buildingDamageMultiplier = 0.1f;
                 hitEffect = new MultiEffect(
-                        new WaveEffect(){{
+                        new WaveEffect() {{
                             lifetime = 30f;
                             sizeFrom = 0f;
                             sizeTo = 24f;
@@ -1071,7 +1071,7 @@ public class MLBlocks {
                             colorFrom = Color.valueOf("97B5EDFF");
                             colorTo = Color.valueOf("97B5EDFF");
                         }},
-                        new ParticleEffect(){{
+                        new ParticleEffect() {{
                             particles = 8;
                             sizeFrom = 4f;
                             sizeTo = 0f;
@@ -1088,7 +1088,7 @@ public class MLBlocks {
                 smokeEffect = Fx.smokeCloud;
                 trailChance = 1f;
                 trailInterval = 20f;
-                trailEffect = new ParticleEffect(){{
+                trailEffect = new ParticleEffect() {{
                     particles = 9;
                     length = 9f;
                     baseLength = 0f;
@@ -1099,7 +1099,7 @@ public class MLBlocks {
                     colorTo = Color.valueOf("97B5EDFF");
                 }};
                 fragBullets = 2;
-                fragBullet = new BasicBulletType(16f, 1f){{
+                fragBullet = new BasicBulletType(16f, 1f) {{
                     hitSound = MLSounds.laser;
                     width = 8f;
                     height = 8f;
@@ -1115,7 +1115,7 @@ public class MLBlocks {
                     hitEffect = Fx.none;
                     buildingDamageMultiplier = 0.1f;
                     fragBullets = 1;
-                    fragBullet = new LaserBulletType(40f){{
+                    fragBullet = new LaserBulletType(40f) {{
                         hitSound = MLSounds.laser;
                         lifetime = 32f;
                         width = 16f;
@@ -1127,7 +1127,7 @@ public class MLBlocks {
                         lightningAngleRand = 4;
                         lightningDamage = 20f;
                         lightningColor =
-                        Color.valueOf("97B5EDFF");
+                                Color.valueOf("97B5EDFF");
                         collidesTeam = true;
                         hitEffect = Fx.none;
                         despawnEffect = Fx.none;
@@ -1141,9 +1141,9 @@ public class MLBlocks {
                 }};
             }};
             drawer = new DrawMulti(
-                    new DrawTurret(){{
+                    new DrawTurret() {{
                         parts.add(
-                                new HaloPart(){{
+                                new HaloPart() {{
                                     sides = 4;
                                     shapes = 1;
                                     y = 8f;
@@ -1162,17 +1162,17 @@ public class MLBlocks {
                         );
                     }}
             );
-            shoot = new ShootBarrel(){{
+            shoot = new ShootBarrel() {{
                 shots = 7;
                 shotDelay = 1f;
                 barrels = new float[]{
-                        0,0,30,
-                        0,0,20,
-                        0,0,10,
-                        0,0,0,
-                        0,0,-10,
-                        0,0,-20,
-                        0,0,-30
+                        0, 0, 30,
+                        0, 0, 20,
+                        0, 0, 10,
+                        0, 0, 0,
+                        0, 0, -10,
+                        0, 0, -20,
+                        0, 0, -30
                 };
             }};
             rotateSpeed = 3f;
@@ -1188,53 +1188,52 @@ public class MLBlocks {
             consumePower(10f);
         }};
         //雷恒
-        LeiHeng = new PowerTurret("LeiHeng"){{
+        LeiHeng = new PowerTurret("LeiHeng") {{
             range = 192f;
-            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel,100, Items.silicon, 80, MLItems.logicChip, 40}));
-            shootType = new LightningBulletType(){{
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 100, Items.silicon, 80, MLItems.logicChip, 40}));
+            shootType = new LightningBulletType() {{
                 buildingDamageMultiplier = 0.1f;
                 lifetime = 30f;
                 lightningDamage = 40f;
                 lightningLength = 24;
                 lightningLengthRand = 24;
-                }};
             }};
-            recoils = 2;
-            drawer = new DrawMulti(
-                    new DrawTurret(){{
-                        parts.add(
-                                new RegionPart("-l"){{
-                                    under = true;
-                                    recoilIndex = 0;
-                                    moveY = -2f;
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
-                                }},
-                                new RegionPart("-r"){{
-                                    under = true;
-                                    recoilIndex = 1;
-                                    moveY = -2f;
-                                    progress = PartProgress.recoil;
-                                    heatProgress = PartProgress.recoil;
-                                }},
-                        );
-                    }}
+        recoils = 2;
+        drawer = new DrawMulti(
+                new DrawTurret() {{
+                    parts.add(
+                            new RegionPart("-l") {{
+                                under = true;
+                                recoilIndex = 0;
+                                moveY = -2f;
+                                progress = PartProgress.recoil;
+                                heatProgress = PartProgress.recoil;
+                            }},
+                            new RegionPart("-r") {{
+                                under = true;
+                                recoilIndex = 1;
+                                moveY = -2f;
+                                progress = PartProgress.recoil;
+                                heatProgress = PartProgress.recoil;
+                            }},
+                            );
+                }};
             );
-            shoot = new ShootAlternate(){{
+        shoot = new ShootAlternate() {{
             barrels = 2;
             spread = 4f;
-            }};
-            rotateSpeed = 4f;
-            reload = 15f;
-            shootEffect = Fx.lightningShoot;
-            recoil = 2f;
-            shake = 4f;
-            size = 4;
-            shootSound = MLSounds.spark;
-            armor = 6;
-            health = 2400;
-            coolant = consumeCoolant(0.4f);
-            consumePower(15f);
+        }};
+        rotateSpeed = 4f;
+        reload = 15f;
+        shootEffect = Fx.lightningShoot;
+        recoil = 2f;
+        shake = 4f;
+        size = 4;
+        shootSound = MLSounds.spark;
+        armor = 6;
+        health = 2400;
+        coolant = consumeCoolant(0.4f);
+        consumePower(15f);
         }};
         //破军
         BreakingArmy = new PowerTurret("BreakingArmy"){{
