@@ -1,4 +1,4 @@
-package magical.content.type;
+package magical.content;
 import arc.math.Mathf;
 import mindustry.Vars;
 import mindustry.entities.Fires;
