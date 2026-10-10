@@ -1,14 +1,12 @@
 package magical.content;
-
 import arc.math.Mathf;
+import arc.math.geom.Geometry;
 import arc.math.geom.Point2;
 import mindustry.Vars;
 import mindustry.entities.Fires;
-import mindustry.entities.Geometry;
 import mindustry.type.Liquid;
 import mindustry.world.Tile;
 import mindustry.world.blocks.defense.turrets.ContinuousLiquidTurret;
-
 public class ExtinguishingLiquidTurret extends ContinuousLiquidTurret{
     public float extinguishInterval = 5f;
     public float puddleSize = 6f;
@@ -34,9 +32,9 @@ public class ExtinguishingLiquidTurret extends ContinuousLiquidTurret{
             extinguishTimer += delta();
             if(extinguishTimer < extinguishInterval) return;
             extinguishTimer = 0f;
-            float beamLength = length;
-            int rangeTiles = Mathf.ceil(beamLength / Vars.tilesize);
+            float beamLength = Math.max(0f, lastLength);
             float range2 = beamLength * beamLength;
+            int rangeTiles = Mathf.ceil(beamLength / Vars.tilesize);
             for(int tx = tile.x - rangeTiles; tx <= tile.x + rangeTiles; tx++){
                 for(int ty = tile.y - rangeTiles; ty <= tile.y + rangeTiles; ty++){
                     Tile target = Vars.world.tile(tx, ty);
