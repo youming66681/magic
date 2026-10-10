@@ -657,7 +657,7 @@ public class MLBlocks {
                 }};
             }};
         //流冲
-        fluvialErosion = new ContinuousLiquidTurret("fluvialErosion"){{
+        fluvialErosion = new ExtinguishingLiquidTurret("fluvialErosion"){{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 100, MLItems.phantomTitaniumSteel, 30, MLItems.mysticCrystal, 50, Items.metaglass, 80}));
             liquidCapacity = 60f;
             liquidConsumed = 18f / 60f;
