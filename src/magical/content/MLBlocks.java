@@ -1194,6 +1194,7 @@ public class MLBlocks {
             shootType = new LightningBulletType() {{
                 buildingDamageMultiplier = 0.1f;
                 lifetime = 30f;
+                lightning = 4 ;
                 lightningDamage = 40f;
                 lightningLength = 24;
                 lightningLengthRand = 24;
@@ -2576,6 +2577,7 @@ public class MLBlocks {
                             lifetime = 30f;
                             lightningDamage = 30f;
                             lightning = 3;
+                            lightningColor = Color.valueOf("FEEBB3FF");
                             lightningLength = 15;
                             lightningLengthRand = 15;
                         }};
