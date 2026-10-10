@@ -155,7 +155,7 @@ public class MLBlocks {
             BasicManufacturingPlant, PhantomSteelLiquidBridge, mysticCrystalBattery,
             //进阶科技
             starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
-            Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, Constructor, Deconstructor,
+            Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, Constructor, Deconstructor, LeiHeng,
             //高端科技
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
             LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus, DawN, MysticSteelWall, LargeMysticSteelWall, PhantomGlowWall, LargePhantomGlowWall,
@@ -657,7 +657,7 @@ public class MLBlocks {
                 }};
             }};
         //流冲
-        fluvialErosion = new ExtinguishingLiquidTurret("fluvialErosion"){{
+        fluvialErosion = new ContinuousLiquidTurret("fluvialErosion"){{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 100, MLItems.phantomTitaniumSteel, 30, MLItems.mysticCrystal, 50, Items.metaglass, 80}));
             liquidCapacity = 60f;
             liquidConsumed = 18f / 60f;
@@ -1186,6 +1186,55 @@ public class MLBlocks {
             health = 2100;
             coolant = consumeCoolant(0.3f);
             consumePower(10f);
+        }};
+        //雷恒
+        LeiHeng = new PowerTurret("LeiHeng"){{
+            range = 192f;
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel,100, Items.silicon, 80, MLItems.logicChip, 40}));
+            shootType = new LightningBulletType(){{
+                buildingDamageMultiplier = 0.1f;
+                lifetime = 30f;
+                lightningDamage = 40f;
+                lightningLength = 24;
+                lightningLengthRand = 24;
+                }};
+            }};
+            recoils = 2;
+            drawer = new DrawMulti(
+                    new DrawTurret(){{
+                        parts.add(
+                                new RegionPart("-l"){{
+                                    under = true;
+                                    recoilIndex = 0;
+                                    moveY = -2f;
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                }},
+                                new RegionPart("-r"){{
+                                    under = true;
+                                    recoilIndex = 1;
+                                    moveY = -2f;
+                                    progress = PartProgress.recoil;
+                                    heatProgress = PartProgress.recoil;
+                                }},
+                        );
+                    }}
+            );
+            shoot = new ShootAlternate(){{
+            barrels = 2;
+            spread = 4f;
+            }};
+            rotateSpeed = 4f;
+            reload = 15f;
+            shootEffect = Fx.lightningShoot;
+            recoil = 2f;
+            shake = 4f;
+            size = 4;
+            shootSound = MLSounds.spark;
+            armor = 6;
+            health = 2400;
+            coolant = consumeCoolant(0.4f);
+            consumePower(15f);
         }};
         //破军
         BreakingArmy = new PowerTurret("BreakingArmy"){{
@@ -2523,6 +2572,15 @@ public class MLBlocks {
                             colorFrom = Color.valueOf("FEEBB3FF");
                             colorTo = Color.valueOf("FEEBB3FF");
                             cone = 30f;
+                        }};
+                        fragBullets = 1;
+                        fragBullet = new LightningBulletType(){{
+                            buildingDamageMultiplier = 0.1f;
+                            lifetime = 30f;
+                            lightningDamage = 30f;
+                            lightning = 3;
+                            lightningLength = 15;
+                            lightningLengthRand = 15;
                         }};
                     }},
                     MLItems.fluorescentFeatherStone, new BasicBulletType(){{
