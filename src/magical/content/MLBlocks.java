@@ -1192,6 +1192,7 @@ public class MLBlocks {
             range = 192f;
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 100, Items.silicon, 80, MLItems.logicChip, 40}));
             shootType = new LightningBulletType() {{
+                damage = 50;
                 buildingDamageMultiplier = 0.1f;
                 lifetime = 25f;
                 lightningDamage = 50f;
