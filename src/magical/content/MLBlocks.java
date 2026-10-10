@@ -1193,11 +1193,10 @@ public class MLBlocks {
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 100, Items.silicon, 80, MLItems.logicChip, 40}));
             shootType = new LightningBulletType() {{
                 buildingDamageMultiplier = 0.1f;
-                lifetime = 30f;
-                lightning = 4 ;
-                lightningDamage = 40f;
-                lightningLength = 24;
-                lightningLengthRand = 24;
+                lifetime = 25f;
+                lightningDamage = 50f;
+                lightningLength = 25;
+                lightningLengthRand = 25;
             }};
         recoils = 2;
         drawer = new DrawMulti(
@@ -1223,7 +1222,7 @@ public class MLBlocks {
             spread = 4f;
         }};
         rotateSpeed = 4f;
-        reload = 15f;
+        reload = 10f;
         shootEffect = Fx.lightningShoot;
         recoil = 2f;
         shake = 4f;
