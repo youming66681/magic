@@ -1426,6 +1426,73 @@ public class MLBlocks {
                     }}
             );
             }};
+        //折光
+        Refraction = new PowerTurret("Refraction"){{
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedStone, 120, MLItems.phantomTitaniumSteel, 100, MLItems.acrylic, 80, Items.silicon, 200,MLItems.logicChip, 40}));
+            range = 640f;
+            shootType = new PointBulletType() {{
+                shootEffect = Fx.despawn;
+                hitEffect = MLFx.squareWaveRot;
+                smokeEffect = Fx.smeltsmoke;
+                trailEffect = MLFx.beamEffect;
+                despawnEffect = MLFx.squareWaveRot;
+                trailSpacing = 20f;
+                damage = 200;
+                buildingDamageMultiplier = 0.1f;
+                speed = brange;
+                hitShake = 3f;
+                ammoMultiplier = 1f;
+            }};
+            rotateSpeed = 4f;
+            reload = 240f;
+            ammoUseEffect = Fx.casing4Double;
+            recoil = 6f;
+            shake = 6f;
+            size =4;
+            shootCone = 2f;
+            shootSound = MLSounds.shootForeshadow;
+            unitSort = UnitSorts.strongest;
+
+            health = 2800;
+            armor = 7;
+
+            coolant = consumeCoolant(0.4f);
+            consumePower(16f);
+            drawer = new DrawMulti(
+                    new DrawTurret(){{
+                        parts.add(
+                                new RegionPart("-l1") {{
+                                    mirror = false;
+                                    x = 0f;
+                                    y = 0f;
+                                    moveX = -1f;
+                                    moveY = 9f;
+                                }},
+                                new RegionPart("-r1") {{
+                                    mirror = false;
+                                    x = 0f;
+                                    y = 0f;
+                                    moveX = 1f;
+                                    moveY = 9f;
+                                }},
+                                 new RegionPart("-l2") {{
+                                 mirror = false;
+                                 x = 0f;
+                                 y = 0f;
+                                 moveX = -6f;
+                                 moveY = -6f;
+                                 }},
+                                 new RegionPart("-r2") {{
+                                    mirror = false;
+                                    x = 0f;
+                                    y = 0f;
+                                    moveX = 6f;
+                                    moveY = -6f;
+                                }}
+                        );
+                    }}
+            );
+        }};
         //弹雨
         BulletsRain = new ItemTurret("BulletsRain"){{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedMetal, 100, Items.surgeAlloy, 140, MLItems.phantomTitaniumSteel, 120, MLItems.mysticSteel, 80, MLItems.arrayChip, 40,}));
@@ -2274,9 +2341,9 @@ public class MLBlocks {
                         backColor = Color.valueOf("FEEBB3FF");
                         trailLength = 8;
                         trailWidth = 6f;
-                        lightningDamage = 50;
-                        lightning = 5 ;
-                        lightningLength = 25;
+                        lightningDamage = 30;
+                        lightning = 3 ;
+                        lightningLength = 30;
                         trailColor = Color.valueOf("FEEBB3FF");
                         buildingDamageMultiplier = 0.1f;
                         hitSound = MLSounds.spark;
