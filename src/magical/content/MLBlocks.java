@@ -1508,7 +1508,7 @@ public class MLBlocks {
                                         haloRadius = 0f;
                                         haloRotation = 0f;
                                         haloRotateSpeed = -2f;
-                                    }};
+                                    }},
                                 new HaloPart(){{
                                         sides = 3;
                                         shapes = 4;
@@ -1518,13 +1518,12 @@ public class MLBlocks {
                                         radius = 0f;
                                         radiusTo = 8f;
                                         triLength = 0f;
-                                        triLengthTo = 24f;
+                                        triLengthTo = 16f;
                                         haloRadius = 0f;
                                         haloRotation = 0f;
                                         haloRotateSpeed = -2f;
                                     }});
-                    }}
-            );
+                    }});
         }};
         //弹雨
         BulletsRain = new ItemTurret("BulletsRain"){{
