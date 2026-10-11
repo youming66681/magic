@@ -1516,12 +1516,12 @@ public class MLBlocks {
                                         colorTo = Color.valueOf("FEEBB3FF");
                                         tri = true;
                                         radius = 0f;
-                                        radiusTo = 8f;
+                                        radiusTo = 6f;
                                         triLength = 0f;
-                                        triLengthTo = 16f;
+                                        triLengthTo = 12f;
                                         haloRadius = 0f;
                                         haloRotation = 0f;
-                                        haloRotateSpeed = -2f;
+                                        haloRotateSpeed = 2f;
                                     }});
                     }});
         }};
