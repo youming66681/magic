@@ -958,7 +958,9 @@ public class MLUnitTypes {
             targetAir = false;
             engineOffset = 14;
             engineSize = 6f;
-            targetFlags = new BlockFlag[]{BlockFlag.factory};
+            targetFlags = new BlockFlag[]{
+                    BlockFlag.factory
+            };
             weapons.add(
                     new Weapon("magic-Gale1") {{
                         rotate = false;
@@ -4040,6 +4042,12 @@ public class MLUnitTypes {
             speed = 1.8f;
             accel = 0.06f;
             drag = 0.04f;
+            targetFlags = new BlockFlag[]{
+                    BlockFlag.factory
+                    BlockFlag.generator,
+                    BlockFlag.reactor,
+                    BlockFlag.battery
+            };
             weapons.add(
                     new Weapon("magic-Aoba0"){{
                         reload = 300f;
@@ -4175,6 +4183,12 @@ public class MLUnitTypes {
                 speed = 1.5f;
                 accel = 0.06f;
                 drag = 0.04f;
+                targetFlags = new BlockFlag[]{
+                    BlockFlag.factory
+                    BlockFlag.generator,
+                    BlockFlag.reactor,
+                    BlockFlag.battery
+                };
                 abilities.add(new EnergyFieldAbility(
                         120f,   // damage
                         90f,   // reload
@@ -4498,6 +4512,12 @@ public class MLUnitTypes {
                 speed = 1.2f;
                 accel = 0.06f;
                 drag = 0.04f;
+                targetFlags = new BlockFlag[]{
+                    BlockFlag.factory
+                    BlockFlag.generator,
+                    BlockFlag.reactor,
+                    BlockFlag.battery
+                };
                 abilities.add(new EnergyFieldAbility(
                         180f,   // damage
                         120f,   // reload
@@ -5130,6 +5150,7 @@ public class MLUnitTypes {
                         }};
                     }});
         }};
+        //T5
         TheWorld = new UnitType("TheWorld"){{
                 constructor = UnitTypes.flare.constructor;
                 flying = true;
