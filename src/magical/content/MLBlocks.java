@@ -1436,7 +1436,7 @@ public class MLBlocks {
                 smokeEffect = Fx.smeltsmoke;
                 trailEffect = MLFx.triangleTrail;
                 trailSpacing = 20f;
-                damage = 300;
+                damage = 400;
                 splashDamageRadius = 48;
                 splashDamage = 100;
                 buildingDamageMultiplier = 0.1f;
@@ -1445,11 +1445,11 @@ public class MLBlocks {
                 ammoMultiplier = 1f;
             }};
             rotateSpeed = 4f;
-            reload = 240f;
+            reload = 150f;
             ammoUseEffect = Fx.hitEmpSpark;
             recoil = 6f;
             shake = 6f;
-            size =4;
+            size = 4;
             shootCone = 2f;
             shootSound = MLSounds.shootForeshadow;
             unitSort = UnitSorts.strongest;
