@@ -145,18 +145,13 @@ public class MLTechTree {
                         });
                    });
                 /*幻晶*/node(MLBlocks.PhantomCrystal, Seq.with(new OnSector(MLSectorPresets.CrossIceValley)), () -> {
-                            /*光降*/
-                            node(MLBlocks.LightDescends, Seq.with(new SectorComplete(MLSectorPresets.CrossIceValley)), () -> {
-                                /*雷云*/
-                                node(MLBlocks.Thundercloud, () -> {
-                                    /*雷恒*/
-                                    node(MLBlocks.LeiHeng, () -> {
+                            /*光降*/node(MLBlocks.LightDescends, Seq.with(new SectorComplete(MLSectorPresets.CrossIceValley)), () -> {
+                                /*雷恒*/node(MLBlocks.LeiHeng, () -> {
+                                    /*雷云*/node(MLBlocks.Thundercloud, () -> {
                                     });
                                 });
-                                /*星云*/
-                                node(MLBlocks.Nebula, Seq.with(new SectorComplete(MLSectorPresets.CrossIceValley)), () -> {
-                                    /*破军*/
-                                    node(MLBlocks.BreakingArmy, () -> {
+                                /*星云*/node(MLBlocks.Nebula, Seq.with(new SectorComplete(MLSectorPresets.CrossIceValley)), () -> {
+                                    /*破军*/node(MLBlocks.BreakingArmy, () -> {
                                     });
                                 });
                             });

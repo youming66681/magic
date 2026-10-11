@@ -1232,7 +1232,7 @@ public class MLBlocks {
         armor = 6;
         health = 2400;
         coolant = consumeCoolant(0.4f);
-        consumePower(15f);
+        consumePower(10f);
         }};
         //破军
         BreakingArmy = new PowerTurret("BreakingArmy"){{
