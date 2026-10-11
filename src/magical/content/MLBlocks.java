@@ -1270,7 +1270,7 @@ public class MLBlocks {
                             moveY = 0f;
                         }});
             }};
-            shootType = new BasicBulletType(16f, 480f){{
+            shootType = new BasicBulletType(16f, 600f){{
                 hitEffect = Fx.colorSparkBig;
                 despawnEffect = hitEffect;
                 hitSize = 16f;
@@ -1468,6 +1468,7 @@ public class MLBlocks {
                                     y = 0f;
                                     moveX = -1f;
                                     moveY = 9f;
+                                    layerOffset = -0.001f;
                                 }},
                                 new RegionPart("-r1") {{
                                     mirror = false;
@@ -1475,6 +1476,7 @@ public class MLBlocks {
                                     y = 0f;
                                     moveX = 1f;
                                     moveY = 9f;
+                                    layerOffset = -0.001f;
                                 }},
                                  new RegionPart("-l2") {{
                                  mirror = false;
@@ -1482,15 +1484,45 @@ public class MLBlocks {
                                  y = 0f;
                                  moveX = -6f;
                                  moveY = -6f;
+                                 layerOffset = -0.001f;
                                  }},
                                  new RegionPart("-r2") {{
-                                    mirror = false;
-                                    x = 0f;
-                                    y = 0f;
-                                    moveX = 6f;
-                                    moveY = -6f;
-                                }}
-                        );
+                                 mirror = false;
+                                 x = 0f;
+                                 y = 0f;
+                                 moveX = 6f;
+                                 moveY = -6f;
+                                 layerOffset = -0.001f;
+                                }});
+                        parts.add(
+                                new HaloPart(){{
+                                        sides = 3;
+                                        shapes = 4;
+                                        color = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                        tri = true;
+                                        radius = 0f;
+                                        radiusTo = 8f;
+                                        triLength = 0f;
+                                        triLengthTo = 24f;
+                                        haloRadius = 0f;
+                                        haloRotation = 0f;
+                                        haloRotateSpeed = -2f;
+                                    }};
+                                new HaloPart(){{
+                                        sides = 3;
+                                        shapes = 4;
+                                        color = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                        tri = true;
+                                        radius = 0f;
+                                        radiusTo = 8f;
+                                        triLength = 0f;
+                                        triLengthTo = 24f;
+                                        haloRadius = 0f;
+                                        haloRotation = 0f;
+                                        haloRotateSpeed = -2f;
+                                    }});
                     }}
             );
         }};

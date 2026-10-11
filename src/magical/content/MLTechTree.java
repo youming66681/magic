@@ -151,8 +151,12 @@ public class MLTechTree {
                                     });
                                 });
                                 /*星云*/node(MLBlocks.Nebula, Seq.with(new SectorComplete(MLSectorPresets.CrossIceValley)), () -> {
+
                                     /*破军*/node(MLBlocks.BreakingArmy, () -> {
-                                    });
+                            /*折光*/node(MLBlocks.Refraction, () -> {
+
+                                });
+                            });
                                 });
                             });
                         });
