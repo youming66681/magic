@@ -41,7 +41,7 @@ public class MLFx {
     public static Effect jumpTrailOut;
     public static Effect circleOut;
     public static Effect slash1;
-    public static final Effect triangleTrail;
+    public static Effect triangleTrail;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();

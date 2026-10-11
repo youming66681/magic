@@ -1434,7 +1434,7 @@ public class MLBlocks {
                 shootEffect = Fx.despawn;
                 hitEffect = despawnEffect = MLFx.EnergyExplosion;
                 smokeEffect = Fx.smeltsmoke;
-                trailEffect = MLFx.beamEffect;
+                trailEffect = MLFx.triangleTrail;
                 trailSpacing = 20f;
                 damage = 300;
                 splashDamageRadius = 48;
