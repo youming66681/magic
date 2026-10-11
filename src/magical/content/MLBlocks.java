@@ -1497,7 +1497,7 @@ public class MLBlocks {
                         parts.add(
                                 new HaloPart(){{
                                         sides = 3;
-                                        shapes = 4;
+                                        shapes = 2;
                                         color = Color.valueOf("FEEBB3FF");
                                         colorTo = Color.valueOf("FEEBB3FF");
                                         tri = true;
@@ -1511,14 +1511,14 @@ public class MLBlocks {
                                     }},
                                 new HaloPart(){{
                                         sides = 3;
-                                        shapes = 4;
+                                        shapes = 2;
                                         color = Color.valueOf("FEEBB3FF");
                                         colorTo = Color.valueOf("FEEBB3FF");
                                         tri = true;
                                         radius = 0f;
-                                        radiusTo = 6f;
+                                        radiusTo = 7f;
                                         triLength = 0f;
-                                        triLengthTo = 12f;
+                                        triLengthTo = 21f;
                                         haloRadius = 0f;
                                         haloRotation = 0f;
                                         haloRotateSpeed = 2f;
