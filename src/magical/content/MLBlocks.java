@@ -729,7 +729,7 @@ public class MLBlocks {
                 trailEffect = MLFx.beamEffect;
                 despawnEffect = MLFx.squareWaveRot;
                 trailSpacing = 20f;
-                damage = 200;
+                damage = 150;
                 buildingDamageMultiplier = 0.1f;
                 speed = brange;
                 hitShake = 3f;
@@ -1270,7 +1270,7 @@ public class MLBlocks {
                             moveY = 0f;
                         }});
             }};
-            shootType = new BasicBulletType(16f, 600f){{
+            shootType = new BasicBulletType(16f, 480f){{
                 hitEffect = Fx.colorSparkBig;
                 despawnEffect = hitEffect;
                 hitSize = 16f;
@@ -1436,7 +1436,7 @@ public class MLBlocks {
                 smokeEffect = Fx.smeltsmoke;
                 trailEffect = MLFx.triangleTrail;
                 trailSpacing = 20f;
-                damage = 400;
+                damage = 300;
                 splashDamageRadius = 48;
                 splashDamage = 100;
                 buildingDamageMultiplier = 0.1f;
