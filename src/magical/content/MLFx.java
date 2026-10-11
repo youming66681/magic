@@ -715,40 +715,40 @@ public class MLFx {
             Lines.stroke(2.5f * e.fout(), e.color);
             Lines.circle(e.x, e.y, e.rotation * e.fin(Interp.pow3Out));
         });
-        slash1 = new Effect(30f,100f,e -> {
-            PercentAreaDamageAbility.EffectData data=e.data instanceof PercentAreaDamageAbility.EffectData?(PercentAreaDamageAbility.EffectData)e.data:null;
-            Color color=data==null?Pal.bulletYellowBack:data.color;
-            float scale=data==null?1f:data.scale;
-            float width=40f*scale*e.fout();
-            float length=320f*scale;
-            float innerWidth=20f*scale*e.fout();
-            float innerLength=160f*scale;
+        slash1 = new Effect(30f, 100f, e -> {
+            PercentAreaDamageAbility.EffectData data = e.data instanceof PercentAreaDamageAbility.EffectData ? (PercentAreaDamageAbility.EffectData) e.data : null;
+            Color color = data == null ? Pal.bulletYellowBack : data.color;
+            float scale = data == null ? 1f : data.scale;
+            float width = 40f * scale * e.fout();
+            float length = 320f * scale;
+            float innerWidth = 20f * scale * e.fout();
+            float innerLength = 160f * scale;
             Draw.color(color);
-            Drawf.tri(e.x,e.y,width,length,315f);
-            Drawf.tri(e.x,e.y,width,length,135f);
-            Drawf.tri(e.x,e.y,innerWidth,innerLength,315f);
-            Drawf.tri(e.x,e.y,innerWidth,innerLength,135f);
-            Drawf.light(e.x,e.y,120f*scale,color,0.8f*e.fout());
+            Drawf.tri(e.x, e.y, width, length, 315f);
+            Drawf.tri(e.x, e.y, width, length, 135f);
+            Drawf.tri(e.x, e.y, innerWidth, innerLength, 315f);
+            Drawf.tri(e.x, e.y, innerWidth, innerLength, 135f);
+            Drawf.light(e.x, e.y, 120f * scale, color, 0.8f * e.fout());
             Draw.color();
         });
+        triangleTrail = new Effect(45f, e -> {
+            float radius = 18f;
+            float rotation = e.rotation;
+            float alpha = e.fout();
+            Draw.color(Color.valueOf("FEEBB3FF"), alpha);
+            Lines.stroke(2f * alpha);
+            float x1 = e.x + Angles.trnsx(rotation, radius);
+            float y1 = e.y + Angles.trnsy(rotation, radius);
+            float x2 = e.x + Angles.trnsx(rotation + 120f, radius);
+            float y2 = e.y + Angles.trnsy(rotation + 120f, radius);
+            float x3 = e.x + Angles.trnsx(rotation + 240f, radius);
+            float y3 = e.y + Angles.trnsy(rotation + 240f, radius);
+            Lines.line(x1, y1, x2, y2);
+            Lines.line(x2, y2, x3, y3);
+            Lines.line(x3, y3, x1, y1);
+            Draw.reset();
+        });
     }
-    triangleTrail = new Effect(45f, e -> {
-        float radius = 18f;
-        float rotation = e.rotation;
-        float alpha = e.fout();
-        Draw.color(Color.valueOf("FEEBB3FF"), alpha);
-        Lines.stroke(2f * alpha);
-        float x1 = e.x + Angles.trnsx(rotation, radius);
-        float y1 = e.y + Angles.trnsy(rotation, radius);
-        float x2 = e.x + Angles.trnsx(rotation + 120f, radius);
-        float y2 = e.y + Angles.trnsy(rotation + 120f, radius);
-        float x3 = e.x + Angles.trnsx(rotation + 240f, radius);
-        float y3 = e.y + Angles.trnsy(rotation + 240f, radius);
-        Lines.line(x1, y1, x2, y2);
-        Lines.line(x2, y2, x3, y3);
-        Lines.line(x3, y3, x1, y1);
-        Draw.reset();
-    });
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
 
