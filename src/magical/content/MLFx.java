@@ -41,6 +41,7 @@ public class MLFx {
     public static Effect jumpTrailOut;
     public static Effect circleOut;
     public static Effect slash1;
+    public static final Effect triangleTrail;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -731,6 +732,23 @@ public class MLFx {
             Draw.color();
         });
     }
+    triangleTrail = new Effect(45f, e -> {
+        float radius = 18f;
+        float rotation = e.rotation;
+        float alpha = e.fout();
+        Draw.color(Color.valueOf("FEEBB3FF"), alpha);
+        Lines.stroke(2f * alpha);
+        float x1 = e.x + Angles.trnsx(rotation, radius);
+        float y1 = e.y + Angles.trnsy(rotation, radius);
+        float x2 = e.x + Angles.trnsx(rotation + 120f, radius);
+        float y2 = e.y + Angles.trnsy(rotation + 120f, radius);
+        float x3 = e.x + Angles.trnsx(rotation + 240f, radius);
+        float y3 = e.y + Angles.trnsy(rotation + 240f, radius);
+        Lines.line(x1, y1, x2, y2);
+        Lines.line(x2, y2, x3, y3);
+        Lines.line(x3, y3, x1, y1);
+        Draw.reset();
+    });
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
 

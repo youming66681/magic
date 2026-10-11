@@ -155,7 +155,7 @@ public class MLBlocks {
             BasicManufacturingPlant, PhantomSteelLiquidBridge, mysticCrystalBattery,
             //进阶科技
             starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
-            Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, Constructor, Deconstructor, LeiHeng,
+            Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, Constructor, Deconstructor, LeiHeng, Refraction,
             //高端科技
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
             LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus, DawN, MysticSteelWall, LargeMysticSteelWall, PhantomGlowWall, LargePhantomGlowWall,
@@ -1429,15 +1429,16 @@ public class MLBlocks {
         //折光
         Refraction = new PowerTurret("Refraction"){{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.wingedStone, 120, MLItems.phantomTitaniumSteel, 100, MLItems.acrylic, 80, Items.silicon, 200,MLItems.logicChip, 40}));
-            range = 640f;
+            float brange = range = 640f;
             shootType = new PointBulletType() {{
                 shootEffect = Fx.despawn;
-                hitEffect = MLFx.squareWaveRot;
+                hitEffect = despawnEffect = MLFx.EnergyExplosion;
                 smokeEffect = Fx.smeltsmoke;
                 trailEffect = MLFx.beamEffect;
-                despawnEffect = MLFx.squareWaveRot;
                 trailSpacing = 20f;
-                damage = 200;
+                damage = 300;
+                splashDamageRadius = 48;
+                splashDamage = 100;
                 buildingDamageMultiplier = 0.1f;
                 speed = brange;
                 hitShake = 3f;
@@ -1445,7 +1446,7 @@ public class MLBlocks {
             }};
             rotateSpeed = 4f;
             reload = 240f;
-            ammoUseEffect = Fx.casing4Double;
+            ammoUseEffect = Fx.hitEmpSpark;
             recoil = 6f;
             shake = 6f;
             size =4;
