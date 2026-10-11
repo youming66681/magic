@@ -327,12 +327,12 @@ public class MLUnitTypes {
                             progress = PartProgress.recoil;
                             moveY = -8;
                         }});
-                bullet = new BasicBulletType(16, 800) {{
+                bullet = new BasicBulletType(16, 1200) {{
                     lifetime = 30;
                     width = 32;
                     height = 56;
                     splashDamageRadius = 80;
-                    splashDamage = 1200;
+                    splashDamage = 1800;
                     trailLength = 8;
                     trailWidth = 4f;
                     trailColor = Color.valueOf("97B5EDFF");
@@ -839,7 +839,7 @@ public class MLUnitTypes {
                     }};
                     fragBullets = 3;
                     fragBullet = new LaserBulletType(){{
-                        damage = 60f;
+                        damage = 90f;
                         //pierceCap = 3;
                         collidesTeam = true;
                         hitEffect = Fx.none;
@@ -1241,7 +1241,7 @@ public class MLUnitTypes {
                             spread = 2f;
                         }};
                         bullet = new BasicBulletType() {{
-                            damage = 30f;
+                            damage = 60f;
                             pierceCap = 3;
                             pierceBuilding = true;
                             frontColor = Color.valueOf("FEEBB3FF");
@@ -1288,7 +1288,7 @@ public class MLUnitTypes {
                         ejectEffect = Fx.casing2;
                         layerOffset = 0.001f;
                         shootSound = MLSounds.shootFuse;
-                        bullet = new BasicBulletType(12, 60) {{
+                        bullet = new BasicBulletType(12, 120) {{
                             lifetime = 30;
                             width = 12;
                             height = 24;
@@ -1303,7 +1303,7 @@ public class MLUnitTypes {
                             fragSpread = 0;
                             fragVelocityMin = 0;
                             fragRandomSpread = 0;
-                            fragBullet = new LaserBulletType(120f) {{
+                            fragBullet = new LaserBulletType(240f) {{
                                 hitSound = MLSounds.laser;
                                 lifetime = 30f;
                                 width = 24f;
@@ -1334,7 +1334,7 @@ public class MLUnitTypes {
                 ejectEffect = Fx.casing2;
                 layerOffset = 0.001f;
                 shootSound = MLSounds.shootFuse;
-                bullet = new BasicBulletType(12, 60) {{
+                bullet = new BasicBulletType(12, 120) {{
                     lifetime = 30;
                     width = 12;
                     height = 24;
@@ -1349,7 +1349,7 @@ public class MLUnitTypes {
                     fragSpread = 0;
                     fragVelocityMin = 0;
                     fragRandomSpread = 0;
-                    fragBullet = new LaserBulletType(120f) {{
+                    fragBullet = new LaserBulletType(240f) {{
                         hitSound = MLSounds.laser;
                         lifetime = 30f;
                         width = 24f;
@@ -2514,12 +2514,12 @@ public class MLUnitTypes {
                             ejectEffect = Fx.casing4;
                             layerOffset = 0.001f;
                             shootSound = MLSounds.laser;
-                            bullet = new BasicBulletType(16, 400) {{
+                            bullet = new BasicBulletType(16, 600) {{
                                 lifetime = 35;
                                 width = 32;
                                 height = 56;
                                 splashDamageRadius = 80;
-                                splashDamage = 600;
+                                splashDamage = 1000;
                                 trailLength = 8;
                                 trailWidth = 4f;
                                 trailColor = Color.valueOf("97B5EDFF");
@@ -2541,12 +2541,12 @@ public class MLUnitTypes {
                             ejectEffect = Fx.casing4;
                             layerOffset = 0.002f;
                             shootSound = MLSounds.laser;
-                            bullet = new BasicBulletType(16, 400) {{
+                            bullet = new BasicBulletType(16, 600) {{
                                 lifetime = 35;
                                 width = 32;
                                 height = 56;
                                 splashDamageRadius = 80;
-                                splashDamage = 600;
+                                splashDamage = 1000;
                                 trailLength = 8;
                                 trailWidth = 4f;
                                 trailColor = Color.valueOf("97B5EDFF");
@@ -2569,14 +2569,14 @@ public class MLUnitTypes {
                         shootSound = MLSounds.laser;
                         shake = 3f;
                         bullet = new BasicBulletType() {{
-                            damage = 120f;
+                            damage = 240f;
                             lifetime = 70f;
                             speed = 8f;
                             width = 16f;
                             height = 24f;
                             hitSize = 16f;
                             splashDamageRadius = 36f;
-                            splashDamage = 120f;
+                            splashDamage = 240f;
                             frontColor = Color.valueOf("FEEBB3FF");
                             backColor = Color.valueOf("FEEBB3FF");
                             trailLength = 6;
@@ -2633,14 +2633,14 @@ public class MLUnitTypes {
                 shootSound = MLSounds.laser;
                 shake = 3f;
                 bullet = new BasicBulletType() {{
-                    damage = 120f;
+                    damage = 240f;
                     lifetime = 70f;
                     speed = 8f;
                     width = 16f;
                     height = 24f;
                     hitSize = 16f;
                     splashDamageRadius = 36f;
-                    splashDamage = 120f;
+                    splashDamage = 240f;
                     frontColor = Color.valueOf("FEEBB3FF");
                     backColor = Color.valueOf("FEEBB3FF");
                     trailLength = 6;
@@ -2697,14 +2697,14 @@ public class MLUnitTypes {
                 shootSound = MLSounds.laser;
                 shake = 3f;
                 bullet = new BasicBulletType() {{
-                    damage = 120f;
+                    damage = 240f;
                     lifetime = 70f;
                     speed = 8f;
                     width = 16f;
                     height = 24f;
                     hitSize = 16f;
                     splashDamageRadius = 36f;
-                    splashDamage = 120f;
+                    splashDamage = 240f;
                     frontColor = Color.valueOf("FEEBB3FF");
                     backColor = Color.valueOf("FEEBB3FF");
                     trailLength = 6;
@@ -3210,14 +3210,14 @@ public class MLUnitTypes {
                                 };
                             }};
                             bullet = new BasicBulletType() {{
-                                damage = 1000f;
+                                damage = 1200f;
                                 lifetime = 37.5f;
                                 speed = 16f;
                                 width = 28f;
                                 height = 56f;
                                 hitSize = 24f;
                                 splashDamageRadius = 64f;
-                                splashDamage = 1500f;
+                                splashDamage = 1800f;
                                 frontColor = Color.valueOf("FEEBB3FF");
                                 backColor = Color.valueOf("FEEBB3FF");
                                 trailLength = 12;
@@ -3277,7 +3277,7 @@ public class MLUnitTypes {
                                     speed = 100f;
                                     lifetime = 3f;
                                     splashDamageRadius = 32f;
-                                    splashDamage = 500f;
+                                    splashDamage = 600f;
                                 }};
                             }};
                         }});
@@ -4043,7 +4043,7 @@ public class MLUnitTypes {
             accel = 0.06f;
             drag = 0.04f;
             targetFlags = new BlockFlag[]{
-                    BlockFlag.factory
+                    BlockFlag.factory,
                     BlockFlag.generator,
                     BlockFlag.reactor,
                     BlockFlag.battery
@@ -4184,7 +4184,7 @@ public class MLUnitTypes {
                 accel = 0.06f;
                 drag = 0.04f;
                 targetFlags = new BlockFlag[]{
-                    BlockFlag.factory
+                    BlockFlag.factory,
                     BlockFlag.generator,
                     BlockFlag.reactor,
                     BlockFlag.battery
@@ -4513,7 +4513,7 @@ public class MLUnitTypes {
                 accel = 0.06f;
                 drag = 0.04f;
                 targetFlags = new BlockFlag[]{
-                    BlockFlag.factory
+                    BlockFlag.factory,
                     BlockFlag.generator,
                     BlockFlag.reactor,
                     BlockFlag.battery
