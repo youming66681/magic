@@ -705,7 +705,7 @@ public class MLFx {
             Fill.circle(e.x, e.y, 12f * fout);
             Draw.color(main, alpha * 0.8f);
             Fill.circle(e.x, e.y, 7f * fout);
-            Draw.reset();
+             Draw.reset();
         });
         jumpTrail = new Effect(120f, 5000, e -> {
             if (!(e.data instanceof UnitType)) return;
