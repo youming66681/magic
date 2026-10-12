@@ -5281,7 +5281,7 @@ public class MLUnitTypes {
                         fragRandomSpread = 5;
                         fragVelocityMin = 0.95f;
                         fragVelocityMax = 1.05f;
-                        fragBullet = new BasicBulletType(16, 500, "magic-十字星") {{
+                        fragBullet = new BasicBulletType(16, 1000, "magic-十字星") {{
                             splashDamage = damage;
                             splashDamageRadius = 64;
                             scaledSplashDamage = true;
@@ -5306,7 +5306,7 @@ public class MLUnitTypes {
                             }};
                             hitShake = 25;
                             hitSound = MLSounds.plasmaboom;
-                            hitEffect = despawnEffect = MLFx.EnergyExplosion2;
+                            hitEffect = despawnEffect = MLFx.EnergyExplosion3;
                         }};
                     }};
                 }};

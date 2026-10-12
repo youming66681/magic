@@ -35,6 +35,7 @@ public class MLFx {
     public static Effect energyMine;
     public static Effect EnergyExplosion;
     public static Effect EnergyExplosion2;
+    public static Effect EnergyExplosion3;
     public static Effect Explosion4;
     public static Effect Explosion5;
     public static Effect jumpTrail;
@@ -639,6 +640,72 @@ public class MLFx {
                 float y2 = e.y + Angles.trnsy(angle, len);
                 Lines.line(x1, y1, x2, y2);
             }
+        });
+        EnergyExplosion3 = new Effect(60f, 240f, e -> {
+            float fin = e.fin();
+            float fout = e.fout();
+            float radius = 96f * fin;
+            float alpha = fout;
+            Color main = Color.valueOf("FEEBB3FF");
+            Color secondary = Color.valueOf("97B5EDFF");
+            Draw.color(main, alpha);
+            Lines.stroke(4f * fout);
+            Lines.circle(e.x, e.y, radius);
+            Lines.stroke(2.5f * fout);
+            Lines.circle(e.x, e.y, radius * 0.78f);
+            Lines.stroke(1.5f * fout);
+            Lines.circle(e.x, e.y, radius * 0.55f);
+            Draw.color(secondary, alpha * 0.8f);
+            Lines.stroke(2f * fout);
+            Lines.circle(e.x, e.y, radius * 0.9f);
+            for(int i = 0; i < 24; i++){
+                float angle = i * 15f;
+                float inner = radius * (i % 2 == 0 ? 0.48f : 0.68f);
+                float outer = radius * (i % 3 == 0 ? 1f : 0.88f);
+                float x1 = e.x + Angles.trnsx(angle, inner);
+                float y1 = e.y + Angles.trnsy(angle, inner);
+                float x2 = e.x + Angles.trnsx(angle, outer);
+                float y2 = e.y + Angles.trnsy(angle, outer);
+                Draw.color(i % 3 == 0 ? Color.white : main, alpha);
+                Lines.stroke((i % 3 == 0 ? 2.8f : 1.2f) * fout);
+                Lines.line(x1, y1, x2, y2);
+            }
+            float triangleRadius = radius * 0.7f;
+            Draw.color(main, alpha);
+            Lines.stroke(2.5f * fout);
+            float tx1 = e.x + Angles.trnsx(0f, triangleRadius);
+            float ty1 = e.y + Angles.trnsy(0f, triangleRadius);
+            float tx2 = e.x + Angles.trnsx(120f, triangleRadius);
+            float ty2 = e.y + Angles.trnsy(120f, triangleRadius);
+            float tx3 = e.x + Angles.trnsx(240f, triangleRadius);
+            float ty3 = e.y + Angles.trnsy(240f, triangleRadius);
+            Lines.line(tx1, ty1, tx2, ty2);
+            Lines.line(tx2, ty2, tx3, ty3);
+            Lines.line(tx3, ty3, tx1, ty1);
+            float innerRadius = radius * 0.32f;
+            float ix1 = e.x + Angles.trnsx(0f, innerRadius);
+            float iy1 = e.y + Angles.trnsy(0f, innerRadius);
+            float ix2 = e.x + Angles.trnsx(120f, innerRadius);
+            float iy2 = e.y + Angles.trnsy(120f, innerRadius);
+            float ix3 = e.x + Angles.trnsx(240f, innerRadius);
+            float iy3 = e.y + Angles.trnsy(240f, innerRadius);
+            Lines.stroke(1.5f * fout);
+            Lines.line(ix1, iy1, ix2, iy2);
+            Lines.line(ix2, iy2, ix3, iy3);
+            Lines.line(ix3, iy3, ix1, iy1);
+            Draw.color(main, alpha);
+            for(int i = 0; i < 16; i++){
+                float angle = i * 22.5f + 11.25f;
+                float distance = radius * (0.35f + (i % 4) * 0.16f);
+                float px = e.x + Angles.trnsx(angle, distance);
+                float py = e.y + Angles.trnsy(angle, distance);
+                Fill.circle(px, py, (1.5f + (i % 3)) * fout);
+            }
+            Draw.color(Color.white, alpha);
+            Fill.circle(e.x, e.y, 12f * fout);
+            Draw.color(main, alpha * 0.8f);
+            Fill.circle(e.x, e.y, 7f * fout);
+            Draw.reset();
         });
         jumpTrail = new Effect(120f, 5000, e -> {
             if (!(e.data instanceof UnitType)) return;
