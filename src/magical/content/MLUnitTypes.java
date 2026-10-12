@@ -5252,7 +5252,7 @@ public class MLUnitTypes {
                     fragRandomSpread = 50;
                     fragVelocityMin = fragVelocityMax = 1;
                     fragBullet = new PointBulletType() {{
-                        lifetime = 120;
+                        lifetime = 60;
                         speed = 16;
                         trailEffect = hitEffect = Fx.none;
                         despawnEffect = new MultiEffect(
@@ -5285,7 +5285,7 @@ public class MLUnitTypes {
                             splashDamage = damage;
                             splashDamageRadius = 64;
                             scaledSplashDamage = true;
-                            lifetime = 30;
+                            lifetime = 60;
                             collides = false;
                             width = 128;
                             height = 128;
