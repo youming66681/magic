@@ -971,6 +971,7 @@ public class MLUnitTypes {
                         shootSound = MLSounds.plasmadrop;
                         ejectEffect = Fx.casing1;
                         layerOffset = 0.001f;
+                        shootCone = 360;
                         ignoreRotation = true;
                         bullet = new BasicBulletType(0, 10, "large-bomb") {{
                             collidesAir = false;
@@ -1860,6 +1861,7 @@ public class MLUnitTypes {
                         ejectEffect = Fx.casing1;
                         layerOffset = 0.001f;
                         ignoreRotation = true;
+                        shootCone = 360;
                         bullet = new BasicBulletType(0, 250, "magic-十字星") {{
                             collidesAir = false;
                             collides = false;
@@ -1931,6 +1933,7 @@ public class MLUnitTypes {
                             shootSound = MLSounds.plasmadrop;
                             layerOffset = 0.001f;
                             ignoreRotation = true;
+                            shootCone = 360;
                             bullet = new BasicBulletType(0, 400, "magic-十字星") {{
                                 collidesAir = false;
                                 collides = false;
@@ -5192,9 +5195,9 @@ public class MLUnitTypes {
                 mirror = false;
                 x = 0f;
                 y = -45f;
-                reload = 240f;
+                reload = 300f;
                 shoot = new ShootBarrel() {{
-                            shots = 16;
+                            shots = 8;
                             shotDelay = 10f;
                             barrels = new float[]{
                                     14f, 14f, -45f,
@@ -5212,17 +5215,16 @@ public class MLUnitTypes {
                 autoTarget = true;
                 alternate = false;
                 shootCone = 360;
-                bullet = new MissileBulletType(){{
+                bullet = new BasicBulletType(16, 500){{
                     maxRange = 800;
-                    damage = 300f;
                     splashDamageRadius = 48f;
-                    splashDamage = 300f;
+                    splashDamage = 500f;
                     homingRange = 800f;
-                    homingPower = 3f;
-                    homingDelay = 15f;
-                    sprite = "magic-大导弹";
-                    trailLength = 8;
-                    trailWidth = 4f;
+                    homingPower = 10f;
+                    homingDelay = 5f;
+                    sprite = "magic-十字星";
+                    trailLength = 6;
+                    trailWidth = 6f;
                     trailEffect = Fx.none;
                     trailColor = Color.valueOf("FEEBB3FF");
                     trailEffect = new ParticleEffect() {{
@@ -5239,27 +5241,87 @@ public class MLUnitTypes {
                     }};
                     backColor = Color.valueOf("FEEBB3FF");
                     frontColor = Color.valueOf("FEEBB3FF");
-                    width = 24f;
+                    width = 48f;
                     height = 48f;
-                    speed = 16f;
                     lifetime = 60f;
                     hitSound = MLSounds.plasmaboom;
                     hitEffect = MLFx.EnergyExplosion;
-                    parts.add(
-                        new HaloPart(){{
-                        sides = 3;
-                        shapes = 4;
-                        color = Color.valueOf("FEEBB3FF");
-                        colorTo = Color.valueOf("FEEBB3FF");
-                        tri = true;
-                        radius = 12f;
-                        radiusTo = 12f;
-                        triLength = 36f;
-                        triLengthTo = 36f;
-                        haloRadius = 30f;
-                        haloRotation = 0f;
-                        haloRotateSpeed = 3f;
-                    }});
+                    fragBullets = 5;
+                    fragAngle = 180;
+                    fragRandomSpread = 50;
+                    fragVelocityMin = fragVelocityMax = 1;
+                    fragBullet = new PointBulletType() {{
+                        lifetime = 120;
+                        speed = 16;
+                        trailEffect = hitEffect = Fx.none;
+                        despawnEffect = new MultiEffect(
+                                new WaveEffect(){{
+                                    lifetime = 30f;
+                                    sizeFrom = 0f;
+                                    sizeTo = 40f;
+                                    strokeFrom = 0f;
+                                    strokeTo = 2f;
+                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                }},
+                                new WaveEffect(){{
+                                    lifetime = 20f;
+                                    sizeFrom = 0f;
+                                    sizeTo = 60f;
+                                    strokeFrom = 0f;
+                                    strokeTo = 3f;
+                                    startDelay = 10f;
+                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                }}
+                        );
+                        fragBullets = 1;
+                        fragAngle = 180;
+                        fragRandomSpread = 5;
+                        fragVelocityMin = 0.95f;
+                        fragVelocityMax = 1.05f;
+                        fragBullet = new BasicBulletType(16, 500, "magic-十字星") {{
+                            splashDamage = damage;
+                            splashDamageRadius = 64;
+                            scaledSplashDamage = true;
+                            lifetime = 60;
+                            collides = false;
+                            width = 64;
+                            height = 64;
+                            trailLength = 16;
+                            trailWidth = 8;
+                            trailColor = backColor = Color.valueOf("FEEBB3FF");
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            trailEffect = new ParticleEffect() {{
+                                particles = 5;
+                                region = "magic-X";
+                                sizeFrom = 5;
+                                sizeTo = 15;
+                                length = 50;
+                                lifetime = 30;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                            hitShake = 25;
+                            hitSound = MLSounds.plasmaboom;
+                            hitEffect = despawnEffect = EnergyExplosion2;
+                            parts.add(
+                                    new HaloPart(){{
+                                        sides = 3;
+                                        shapes = 4;
+                                        color = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                        tri = true;
+                                        radius = 12f;
+                                        radiusTo = 12f;
+                                        triLength = 36f;
+                                        triLengthTo = 36f;
+                                        haloRadius = 32f;
+                                        haloRotation = 0f;
+                                        haloRotateSpeed = 3f;
+                                    }});
+                        }};
+                    }};
                 }};
             }},
                     new Weapon("magic-TheWorld1") {{
