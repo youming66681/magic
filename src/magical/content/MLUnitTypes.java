@@ -5304,7 +5304,7 @@ public class MLUnitTypes {
                             }};
                             hitShake = 25;
                             hitSound = MLSounds.plasmaboom;
-                            hitEffect = despawnEffect = EnergyExplosion2;
+                            hitEffect = despawnEffect = MLFx.EnergyExplosion2;
                             parts.add(
                                     new HaloPart(){{
                                         sides = 3;
