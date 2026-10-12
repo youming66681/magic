@@ -5257,8 +5257,8 @@ public class MLUnitTypes {
                         despawnEffect = new MultiEffect(
                                 new WaveEffect(){{
                                     lifetime = 30f;
-                                    sizeFrom = 0f;
-                                    sizeTo = 40f;
+                                    sizeFrom = 40f;
+                                    sizeTo = 0f;
                                     strokeFrom = 0f;
                                     strokeTo = 2f;
                                     colorFrom = Color.valueOf("FEEBB3FF");
@@ -5266,8 +5266,8 @@ public class MLUnitTypes {
                                 }},
                                 new WaveEffect(){{
                                     lifetime = 20f;
-                                    sizeFrom = 0f;
-                                    sizeTo = 60f;
+                                    sizeFrom = 60f;
+                                    sizeTo = 0f;
                                     strokeFrom = 0f;
                                     strokeTo = 3f;
                                     startDelay = 10f;
