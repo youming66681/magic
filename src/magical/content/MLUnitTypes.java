@@ -5217,14 +5217,15 @@ public class MLUnitTypes {
                 shootCone = 360;
                 bullet = new BasicBulletType(16, 500){{
                     maxRange = 800;
+                    spin = 5;
                     splashDamageRadius = 48f;
                     splashDamage = 500f;
                     homingRange = 800f;
                     homingPower = 10f;
                     homingDelay = 5f;
                     sprite = "magic-十字星";
-                    trailLength = 6;
-                    trailWidth = 6f;
+                    trailLength = 12;
+                    trailWidth = 12f;
                     trailEffect = Fx.none;
                     trailColor = Color.valueOf("FEEBB3FF");
                     trailEffect = new ParticleEffect() {{
@@ -5241,8 +5242,8 @@ public class MLUnitTypes {
                     }};
                     backColor = Color.valueOf("FEEBB3FF");
                     frontColor = Color.valueOf("FEEBB3FF");
-                    width = 48f;
-                    height = 48f;
+                    width = 96f;
+                    height = 96f;
                     lifetime = 60f;
                     hitSound = MLSounds.plasmaboom;
                     hitEffect = MLFx.EnergyExplosion;
@@ -5284,12 +5285,13 @@ public class MLUnitTypes {
                             splashDamage = damage;
                             splashDamageRadius = 64;
                             scaledSplashDamage = true;
-                            lifetime = 60;
+                            lifetime = 30;
                             collides = false;
-                            width = 64;
-                            height = 64;
+                            width = 128;
+                            height = 128;
                             trailLength = 16;
-                            trailWidth = 8;
+                            trailWidth = 16;
+                            spin = 5;
                             trailColor = backColor = Color.valueOf("FEEBB3FF");
                             frontColor = Color.valueOf("FEEBB3FF");
                             trailEffect = new ParticleEffect() {{
@@ -5305,21 +5307,6 @@ public class MLUnitTypes {
                             hitShake = 25;
                             hitSound = MLSounds.plasmaboom;
                             hitEffect = despawnEffect = MLFx.EnergyExplosion2;
-                            parts.add(
-                                    new HaloPart(){{
-                                        sides = 3;
-                                        shapes = 4;
-                                        color = Color.valueOf("FEEBB3FF");
-                                        colorTo = Color.valueOf("FEEBB3FF");
-                                        tri = true;
-                                        radius = 12f;
-                                        radiusTo = 12f;
-                                        triLength = 36f;
-                                        triLengthTo = 36f;
-                                        haloRadius = 32f;
-                                        haloRotation = 0f;
-                                        haloRotateSpeed = 3f;
-                                    }});
                         }};
                     }};
                 }};
