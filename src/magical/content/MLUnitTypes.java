@@ -5283,7 +5283,7 @@ public class MLUnitTypes {
                         fragVelocityMax = 1.05f;
                         fragBullet = new BasicBulletType(16, 1000, "magic-十字星") {{
                             splashDamage = damage;
-                            splashDamageRadius = 64;
+                            splashDamageRadius = 96;
                             scaledSplashDamage = true;
                             lifetime = 60;
                             collides = false;

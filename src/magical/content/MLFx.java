@@ -647,7 +647,7 @@ public class MLFx {
             float radius = 96f * fin;
             float alpha = fout;
             Color main = Color.valueOf("FEEBB3FF");
-            Color secondary = Color.valueOf("97B5EDFF");
+            Color secondary = Color.valueOf("FEEBB3FF");
             Draw.color(main, alpha);
             Lines.stroke(4f * fout);
             Lines.circle(e.x, e.y, radius);
