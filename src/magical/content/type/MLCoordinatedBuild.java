@@ -14,6 +14,7 @@ import mindustry.gen.Icon;
 import mindustry.gen.Unit;
 import mindustry.ui.Styles;
 import java.lang.reflect.Field;
+import arc.scene.Scene;
 
 public class MLCoordinatedBuild{
     private static boolean enabled=false;
@@ -40,20 +41,27 @@ public class MLCoordinatedBuild{
         }
         updateButtonState();
     }
+
     private static void ensureHudButton(){
-        if(Vars.ui==null||Vars.ui.hudGroup==null)return;
-        if(hudTable!=null&&hudTable.parent!=null)return;
+        if(Core.scene==null||Vars.ui==null||Vars.state==null)return;
+        if(hudTable!=null&&hudTable.parent!=null){
+            hudTable.visible=!Vars.state.isMenu();
+            hudTable.toFront();
+            return;
+        }
         hudTable=new Table();
         hudTable.setFillParent(true);
         hudTable.top().right();
         hudTable.marginTop(150f);
         hudTable.marginRight(8f);
-        hudButton=hudTable.button(Icon.units,Styles.clearNoneTogglei,MLCoordinatedBuild::toggle).size(48f).get();
-        hudButton.addListener(new arc.scene.ui.Tooltip(t -> t.background(Styles.black6).add(Core.bundle.get("ml-coordinated-build", "协调建造：自动分配建造计划")).style(Styles.outlineLabel)));
-        hudTable.update(MLCoordinatedBuild::updateButtonState);
-        Vars.ui.hudGroup.addChild(hudTable);
-        updateButtonState();
+        hudButton=hudTable.button(Icon.units,Styles.clearNoneTogglei,MLCoordinatedBuild::toggle).size(56f).get();
+        hudTable.update(()->{
+            hudTable.visible=Vars.state!=null&&!Vars.state.isMenu();
+            if(hudTable.visible)hudTable.toFront();
+        });
+        Core.scene.add(hudTable);
     }
+
     private static void updateButtonState(){
         if(hudTable == null)return;
         hudTable.visible = Vars.state != null && !Vars.state.isMenu();
