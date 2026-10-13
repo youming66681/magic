@@ -1,5 +1,5 @@
-package magical.content;
 
+package magical.content;
 import arc.Core;
 import arc.Events;
 import arc.scene.ui.ImageButton;
@@ -14,7 +14,6 @@ import mindustry.gen.Groups;
 import mindustry.gen.Icon;
 import mindustry.gen.Unit;
 import mindustry.ui.Styles;
-
 public class MLCoordinatedBuild{
     private static boolean enabled=false;
     private static boolean initialized=false;
@@ -36,6 +35,14 @@ public class MLCoordinatedBuild{
     public static void toggle(){
         enabled=!enabled;
         updateButtonState();
+        if(!enabled){
+            for(Unit builder:builders){
+                if(builder!=null&&builder.isValid()&&builder.controller() instanceof BuilderAI ai){
+                    ai.following=null;
+                    ai.assistFollowing=null;
+                }
+            }
+        }
     }
     private static void ensureHudButton(){
         if(Core.scene==null||Vars.ui==null||Vars.state==null)return;
@@ -84,6 +91,7 @@ public class MLCoordinatedBuild{
         if(builders.isEmpty())return;
         cleanupDispatchedPlans();
         distributePlans();
+        helpIdleBuilders();
     }
     private static void collectBuilders(){
         builders.clear();
@@ -98,40 +106,38 @@ public class MLCoordinatedBuild{
         if(Vars.player==null||Vars.player.unit()==null)return;
         var source=Vars.player.unit().plans;
         if(source.isEmpty())return;
-        int checked=0;
-        int maxChecks=source.size;
-        while(!source.isEmpty()&&!builders.isEmpty()&&checked<maxChecks){
+        int attempts=source.size;
+        while(!source.isEmpty()&&!builders.isEmpty()&&attempts-->0){
             boolean assigned=false;
-            for(int i=0;i<builders.size;i++){
-                if(source.isEmpty())return;
+            int checked=0;
+            while(checked<builders.size){
                 Unit builder=nextBuilder();
-                if(builder==null)return;
+                checked++;
+                if(builder==null||!builder.isValid())continue;
                 if(!builder.plans().isEmpty())continue;
                 BuildPlan plan=source.first();
                 if(plan==null){
                     source.removeFirst();
-                    checked++;
-                    continue;
+                    assigned=true;
+                    break;
                 }
                 String key=planKey(plan);
                 if(dispatchedPlans.contains(key)){
                     source.removeFirst();
-                    checked++;
-                    continue;
+                    assigned=true;
+                    break;
                 }
-                builder.addBuild(plan.copy());
                 if(builder.controller() instanceof BuilderAI ai){
                     ai.following=null;
                     ai.assistFollowing=null;
                 }
+                builder.addBuild(plan.copy());
                 dispatchedPlans.add(key);
                 source.removeFirst();
                 assigned=true;
                 break;
             }
             if(!assigned)break;
-            checked=0;
-            maxChecks=source.size;
         }
     }
     private static Unit nextBuilder(){
@@ -155,6 +161,34 @@ public class MLCoordinatedBuild{
         }
         for(String key:stalePlans){
             dispatchedPlans.remove(key);
+        }
+    }
+    private static void helpIdleBuilders(){
+        for(Unit builder:builders){
+            if(builder==null||!builder.isValid())continue;
+            if(!(builder.controller() instanceof BuilderAI ai))continue;
+            if(!builder.plans().isEmpty())continue;
+            if(builder.isBuilding())continue;
+            Unit target=null;
+            float bestDistance=Float.MAX_VALUE;
+            for(Unit other:Groups.unit){
+                if(other==builder||!other.isValid())continue;
+                if(other.team!=builder.team)continue;
+                if(!other.canBuild()||!other.activelyBuilding())continue;
+                if(other.buildPlan()==null)continue;
+                float distance=builder.dst2(other);
+                if(distance<bestDistance){
+                    bestDistance=distance;
+                    target=other;
+                }
+            }
+            if(target!=null){
+                ai.following=target;
+                ai.assistFollowing=target;
+            }else{
+                ai.following=null;
+                ai.assistFollowing=null;
+            }
         }
     }
     private static String planKey(BuildPlan plan){
