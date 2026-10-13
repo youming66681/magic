@@ -2,11 +2,11 @@ package magical.content;
 
 import arc.Core;
 import arc.Events;
-import arc.scene.event.Touchable;
+import arc.scene.Touchable;
 import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.Table;
+import arc.struct.ObjectSet;
 import arc.struct.Seq;
-import arc.util.Time;
 import mindustry.Vars;
 import mindustry.entities.units.BuildPlan;
 import mindustry.game.EventType.Trigger;
@@ -15,148 +15,125 @@ import mindustry.gen.Icon;
 import mindustry.gen.Unit;
 import mindustry.ui.Styles;
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 public class MLCoordinatedBuild{
     private static boolean enabled=false;
     private static boolean initialized=false;
-    private static final Seq<Unit> builders=new Seq<>();
-    private static final Seq<BuildPlan> plans=new Seq<>();
-    private static final Map<String,Unit> assignedBuilders=new HashMap<>();
-    private static final Map<String,BuildPlan> confirmedPlans=new HashMap<>();
-    private static int nextBuilder=0;
-    private static float updateTimer=0f;
-    private static final float updateInterval=10f;
     private static Table hudTable;
     private static ImageButton hudButton;
-    private MLCoordinatedBuild(){}
+    private static final Seq<BuildPlan> plans=new Seq<>();
+    private static final Seq<Unit> builders=new Seq<>();
+    private static final ObjectSet<String> dispatchedPlans=new ObjectSet<>();
+    private static int nextBuilder=0;
     public static void init(){
         if(initialized)return;
         initialized=true;
-        Events.run(Trigger.update,MLCoordinatedBuild::update);
         Events.run(Trigger.update,MLCoordinatedBuild::ensureHudButton);
-    }
-    public static void toggle(){
-        setEnabled(!enabled);
+        Events.run(Trigger.update,MLCoordinatedBuild::update);
     }
     public static boolean isEnabled(){
         return enabled;
     }
-    public static boolean canShowButton(){
-        return Vars.state!=null&&!Vars.state.isMenu()&&Vars.player!=null&&!Vars.player.dead();
+    public static void toggle(){
+        enabled=!enabled;
+        if(!enabled){
+            dispatchedPlans.clear();
+        }
+        updateButtonState();
     }
     private static void ensureHudButton(){
         if(Vars.ui==null||Vars.ui.hudGroup==null)return;
         if(hudTable!=null&&hudTable.parent!=null)return;
-        addHudButton();
-    }
-    private static void addHudButton(){
         hudTable=new Table();
         hudTable.setFillParent(true);
         hudTable.touchable=Touchable.childrenOnly;
-        hudTable.update(() -> hudTable.setVisible(Vars.state!=null&&!Vars.state.isMenu()));
         hudTable.top().right();
         hudTable.marginTop(150f);
         hudTable.marginRight(8f);
-        hudButton=hudTable.button(Icon.units,Styles.clearNoneTogglei,MLCoordinatedBuild::toggle)
-                .size(48f)
-                .checked(button -> MLCoordinatedBuild.isEnabled())
-                .tooltip(Core.bundle.get("ml-coordinated-build", "Coordinated Building"), true)
-                .get();
+        hudButton=hudTable.button(Icon.units,Styles.clearNoneTogglei,MLCoordinatedBuild::toggle).size(48f).get();
+        hudButton.tooltip(Core.bundle.get("ml-coordinated-build","协调建造：自动分配建造计划"));
+        hudTable.update(MLCoordinatedBuild::updateButtonState);
         Vars.ui.hudGroup.addChild(hudTable);
+        updateButtonState();
     }
-    public static void setEnabled(boolean value){
-        enabled=value;
-        updateTimer=0f;
-        if(!enabled){
-            assignedBuilders.clear();
-            confirmedPlans.clear();
+    private static void updateButtonState(){
+        if(hudTable==null)return;
+        hudTable.visible=Vars.state!=null&&!Vars.state.isMenu()&&hasSelectedBuilder();
+        if(hudButton!=null){
+            hudButton.setChecked(enabled);
         }
     }
-    private static void update(){
-        if(!enabled||Vars.state==null||Vars.state.isMenu()||Vars.player==null||Vars.player.dead()||Vars.control==null||Vars.control.input==null){
-            updateTimer=0f;
-            return;
-        }
-        updateTimer+=Time.delta;
-        if(updateTimer<updateInterval)return;
-        updateTimer=0f;
-        collectBuilders();
-        collectCandidatePlans();
-        if(builders.isEmpty()||confirmedPlans.isEmpty())return;
-        assignPlans();
-    }
-    private static void collectBuilders(){
-        builders.clear();
-        if(Vars.player==null)return;
-        Groups.unit.each(unit -> {
-            if(unit==null||!unit.isValid()||unit.dead)return;
-            if(unit.team!=Vars.player.team())return;
-            if(!unit.canBuild())return;
-            builders.add(unit);
-        });
-        if(nextBuilder>=builders.size)nextBuilder=0;
-    }
-    private static void collectCandidatePlans(){
-        plans.clear();
-        Vars.control.input.getSyncedPlans(plans);
-        Set<String> seen=new HashSet<>();
-        for(BuildPlan plan:plans){
-            if(plan==null||plan.breaking||plan.block==null)continue;
-            String key=planKey(plan);
-            seen.add(key);
-            confirmedPlans.putIfAbsent(key,plan.copy());
-        }
-        confirmedPlans.keySet().retainAll(seen);
-        assignedBuilders.keySet().retainAll(seen);
-    }
-    private static void assignPlans(){
-        if(builders.isEmpty()||confirmedPlans.isEmpty())return;
-        for(Map.Entry<String,BuildPlan> entry:confirmedPlans.entrySet()){
-            String key=entry.getKey();
-            BuildPlan plan=entry.getValue();
-            if(plan==null)continue;
-            Unit assigned=assignedBuilders.get(key);
-            if(isAvailableBuilder(assigned)&&hasEquivalentPlan(assigned,plan))continue;
-            assignedBuilders.remove(key);
-            Unit builder=findBuilderForPlan();
-            if(builder==null)return;
+    private static boolean hasSelectedBuilder(){
+        if(Vars.player==null||Vars.player.dead())return false;
+        if(Vars.control==null||Vars.control.input==null)return false;
+        Object input=Vars.control.input;
+        Class<?> type=input.getClass();
+        while(type!=null){
             try{
-                if(!hasEquivalentPlan(builder,plan)){
-                    builder.addBuild(plan.copy());
+                Field field=type.getDeclaredField("selectedUnits");
+                field.setAccessible(true);
+                Object selected=field.get(input);
+                if(selected instanceof Iterable<?>){
+                    for(Object object:(Iterable<?>)selected){
+                        if(object instanceof Unit){
+                            Unit unit=(Unit)object;
+                            if(isFriendlyBuilder(unit))return true;
+                        }
+                    }
                 }
-                assignedBuilders.put(key,builder);
+                return false;
+            }catch(NoSuchFieldException ignored){
+                type=type.getSuperclass();
             }catch(Exception ignored){
-                assignedBuilders.remove(key);
+                return false;
             }
-        }
-    }
-    private static boolean hasEquivalentPlan(Unit unit,BuildPlan target){
-        if(unit==null||target==null)return false;
-        for(BuildPlan plan:unit.plans()){
-            if(plan==null)continue;
-            if(planKey(plan).equals(planKey(target)))return true;
         }
         return false;
     }
-    private static boolean isAvailableBuilder(Unit unit){
-        return unit!=null&&unit.isValid()&&!unit.dead&&Vars.player!=null&&unit.team==Vars.player.team()&&unit.canBuild();
+    private static boolean isFriendlyBuilder(Unit unit){
+        return unit!=null
+                &&unit.isValid()
+                &&Vars.player!=null
+                &&unit.team==Vars.player.team()
+                &&unit.type!=null
+                &&unit.type.buildSpeed>0f;
     }
-    private static Unit findBuilderForPlan(){
-        if(builders.isEmpty())return null;
-        int count=builders.size;
-        for(int i=0;i<count;i++){
-            if(nextBuilder>=count)nextBuilder=0;
-            Unit unit=builders.get(nextBuilder++);
-            if(isAvailableBuilder(unit))return unit;
+    private static void update(){
+        if(!enabled||Vars.state==null||Vars.state.isMenu())return;
+        if(Vars.player==null||Vars.player.dead())return;
+        if(Vars.control==null||Vars.control.input==null)return;
+        collectBuilders();
+        if(builders.isEmpty())return;
+        plans.clear();
+        Vars.control.input.getSyncedPlans(plans);
+        for(BuildPlan plan:plans){
+            if(plan==null)continue;
+            String key=planKey(plan);
+            if(dispatchedPlans.contains(key))continue;
+            Unit builder=nextBuilder();
+            if(builder==null)break;
+            builder.addBuild(plan.copy());
+            dispatchedPlans.add(key);
         }
-        return null;
+    }
+    private static void collectBuilders(){
+        builders.clear();
+        Groups.unit.each(unit->{
+            if(isFriendlyBuilder(unit)){
+                builders.add(unit);
+            }
+        });
+        if(nextBuilder>=builders.size())nextBuilder=0;
+    }
+    private static Unit nextBuilder(){
+        if(builders.isEmpty())return null;
+        if(nextBuilder>=builders.size())nextBuilder=0;
+        Unit result=builders.get(nextBuilder);
+        nextBuilder=(nextBuilder+1)%builders.size();
+        return result;
     }
     private static String planKey(BuildPlan plan){
-        String blockId=plan.block==null?"break":String.valueOf(plan.block.id);
-        return plan.x+":"+plan.y+":"+blockId+":"+plan.rotation;
+        String blockName=plan.block==null?"null":plan.block.name;
+        return plan.x+":"+plan.y+":"+blockName+":"+plan.rotation+":"+plan.breaking;
     }
 }
