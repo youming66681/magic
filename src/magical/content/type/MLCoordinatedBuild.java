@@ -55,9 +55,9 @@ public class MLCoordinatedBuild{
         updateButtonState();
     }
     private static void updateButtonState(){
-        if(hudTable==null)return;
-        hudTable.visible=Vars.state!=null&&!Vars.state.isMenu()&&hasSelectedBuilder();
-        if(hudButton!=null){
+        if(hudTable == null)return;
+        hudTable.visible = Vars.state != null && !Vars.state.isMenu();
+        if(hudButton != null){
             hudButton.setChecked(enabled);
         }
     }
