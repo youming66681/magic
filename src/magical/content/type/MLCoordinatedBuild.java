@@ -1,13 +1,19 @@
 package magical.content;
 
+import arc.Core;
 import arc.Events;
+import arc.scene.event.Touchable;
+import arc.scene.ui.ImageButton;
+import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Time;
 import mindustry.Vars;
 import mindustry.entities.units.BuildPlan;
 import mindustry.game.EventType.Trigger;
 import mindustry.gen.Groups;
+import mindustry.gen.Icon;
 import mindustry.gen.Unit;
+import mindustry.ui.Styles;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -24,11 +30,14 @@ public class MLCoordinatedBuild{
     private static int nextBuilder=0;
     private static float updateTimer=0f;
     private static final float updateInterval=10f;
+    private static Table hudTable;
+    private static ImageButton hudButton;
     private MLCoordinatedBuild(){}
     public static void init(){
         if(initialized)return;
         initialized=true;
         Events.run(Trigger.update,MLCoordinatedBuild::update);
+        Events.run(Trigger.update,MLCoordinatedBuild::ensureHudButton);
     }
     public static void toggle(){
         setEnabled(!enabled);
@@ -37,38 +46,27 @@ public class MLCoordinatedBuild{
         return enabled;
     }
     public static boolean canShowButton(){
-        if(Vars.state==null||Vars.state.isMenu()||Vars.player==null||Vars.player.dead())return false;
-        if(Vars.control==null||Vars.control.input==null)return false;
-        Object input=Vars.control.input;
-        try{
-            Field modeField=findField(input.getClass(),"commandMode");
-            Field unitsField=findField(input.getClass(),"selectedUnits");
-            if(modeField==null||unitsField==null)return false;
-            modeField.setAccessible(true);
-            unitsField.setAccessible(true);
-            if(!modeField.getBoolean(input))return false;
-            Object selected=unitsField.get(input);
-            if(!(selected instanceof Iterable<?>))return false;
-            for(Object object:(Iterable<?>)selected){
-                if(!(object instanceof Unit))continue;
-                Unit unit=(Unit)object;
-                if(unit!=null&&unit.isValid()&&!unit.dead&&unit.team==Vars.player.team()&&unit.canBuild())return true;
-            }
-        }catch(Exception ignored){
-            return false;
-        }
-        return false;
+        return Vars.state!=null&&!Vars.state.isMenu()&&Vars.player!=null&&!Vars.player.dead();
     }
-    private static Field findField(Class<?> type,String name){
-        Class<?> current=type;
-        while(current!=null){
-            try{
-                return current.getDeclaredField(name);
-            }catch(NoSuchFieldException ignored){
-                current=current.getSuperclass();
-            }
-        }
-        return null;
+    private static void ensureHudButton(){
+        if(Vars.ui==null||Vars.ui.hudGroup==null)return;
+        if(hudTable!=null&&hudTable.parent!=null)return;
+        addHudButton();
+    }
+    private static void addHudButton(){
+        hudTable=new Table();
+        hudTable.setFillParent(true);
+        hudTable.touchable=Touchable.childrenOnly;
+        hudTable.update(() -> hudTable.setVisible(Vars.state!=null&&!Vars.state.isMenu()));
+        hudTable.top().right();
+        hudTable.marginTop(150f);
+        hudTable.marginRight(8f);
+        hudButton=hudTable.button(Icon.units,Styles.clearNoneTogglei,MLCoordinatedBuild::toggle)
+                .size(48f)
+                .checked(button -> MLCoordinatedBuild.isEnabled())
+                .tooltip(Core.bundle.get("ml-coordinated-build", "Coordinated Building"), true)
+                .get();
+        Vars.ui.hudGroup.addChild(hudTable);
     }
     public static void setEnabled(boolean value){
         enabled=value;
@@ -94,7 +92,7 @@ public class MLCoordinatedBuild{
     private static void collectBuilders(){
         builders.clear();
         if(Vars.player==null)return;
-        Groups.unit.each(unit->{
+        Groups.unit.each(unit -> {
             if(unit==null||!unit.isValid()||unit.dead)return;
             if(unit.team!=Vars.player.team())return;
             if(!unit.canBuild())return;
