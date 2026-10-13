@@ -192,18 +192,13 @@ public class MobileInput extends InputHandler implements GestureListener{
     @Override
     public void buildPlacementUI(Table table){
         table.left().margin(0f).defaults().size(48f);
-
         table.button(Icon.hammer, Styles.clearNoneTogglei, () -> {
             mode = mode == breaking ? block == null ? none : placing : breaking;
             lastBlock = block;
         }).update(l -> l.setChecked(mode == breaking)).name("breakmode");
-
-        //diagonal swap button
         table.button(Icon.diagonal, Styles.clearNoneTogglei, () -> {
             Core.settings.put("swapdiagonal", !Core.settings.getBool("swapdiagonal"));
         }).update(l -> l.setChecked(Core.settings.getBool("swapdiagonal")));
-
-        //rotate button
         table.button(Icon.right, Styles.clearNoneTogglei, () -> {
             if(block != null && block.rotate){
                 rotation = Mathf.mod(rotation + 1, 4);
@@ -218,28 +213,22 @@ public class MobileInput extends InputHandler implements GestureListener{
             }
         }).update(i -> {
             boolean arrow = block != null && block.rotate;
-
             i.getImage().setRotationOrigin(!arrow ? 0 : rotation * 90, Align.center);
             i.getStyle().imageUp = arrow ? Icon.right : Icon.copy;
             i.setChecked(!arrow && schematicMode);
         });
-
-        //confirm button
         table.button(Icon.ok, Styles.clearNoneTogglei, () -> {
             if(schematicMode){
                 rebuildMode = !rebuildMode;
             }else if(!player.dead()){
                 for(BuildPlan plan : selectPlans){
                     Tile tile = plan.tile();
-
-                    //actually place/break all selected blocks
                     if(tile != null){
                         if(!plan.breaking){
                             if(validPlace(plan.x, plan.y, plan.block, plan.rotation, null, true)){
                                 BuildPlan other = getPlan(plan.x, plan.y, plan.block.size, null);
                                 BuildPlan copy = plan.copy();
                                 plan.block.onNewPlan(copy);
-
                                 if(other == null){
                                     player.unit().addBuild(copy);
                                 }else if(!other.breaking && other.x == plan.x && other.y == plan.y && other.block.size == plan.block.size){
@@ -247,15 +236,12 @@ public class MobileInput extends InputHandler implements GestureListener{
                                     player.unit().addBuild(copy);
                                 }
                             }
-
                             rotation = plan.rotation;
                         }else{
                             tryBreakBlock(tile.x, tile.y);
                         }
                     }
                 }
-
-                //move all current plans to removal array so they fade out
                 removals.addAll(selectPlans.select(r -> !r.breaking));
                 selectPlans.clear();
                 selecting = false;
@@ -264,18 +250,15 @@ public class MobileInput extends InputHandler implements GestureListener{
             i.getStyle().imageUp = schematicMode || rebuildMode ? Icon.wrench : Icon.ok;
             i.setChecked(rebuildMode);
             i.setDisabled(() -> player.dead());
-
         }).name("confirmplace");
-        Table coordinatedTable = new Table();
-        coordinatedTable.right();
-        coordinatedTable.button(Icon.units, Styles.clearNoneTogglei, MLCoordinatedBuild::toggle)
+        table.button(Icon.units, Styles.clearNoneTogglei, MLCoordinatedBuild::toggle)
                 .size(48f)
                 .checked(button -> MLCoordinatedBuild.isEnabled())
+                .visible(() -> MLCoordinatedBuild.canShowButton())
                 .tooltip(Core.bundle.get("ml-coordinated-build", "协调建造：自动分配建造计划"), true)
                 .name("coordinatedbuild");
-        table.add(coordinatedTable).right();
-        coordinatedTable.visible(() -> commandMode && hasCoordinatedBuildSelectedBuilder());
     }
+
 
     public boolean isCoordinatedBuildCommandMode(){
         return commandMode;
