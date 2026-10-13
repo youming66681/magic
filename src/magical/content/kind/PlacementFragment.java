@@ -14,6 +14,7 @@ import arc.scene.ui.layout.Stack;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
+import arc.Core;
 import mindustry.ai.*;
 import mindustry.ai.types.*;
 import mindustry.content.*;
@@ -31,6 +32,7 @@ import mindustry.world.*;
 import mindustry.world.blocks.ConstructBlock.*;
 import mindustry.world.meta.*;
 import java.util.*;
+
 import static mindustry.Vars.*;
 
 public class PlacementFragment{
@@ -479,7 +481,7 @@ public class PlacementFragment{
                                                 coms.button(Icon.hammer, Styles.clearNoneTogglei, () -> coordinatedBuildToggle.run())
                                                         .checked(i -> coordinatedBuildEnabled.getAsBoolean())
                                                         .size(50f)
-                                                        .tooltip("协调建造", true);
+                                                        .tooltip(Core.bundle.get("ml-coordinated-build"), true);
                                                 scol++;
                                             }
                                             if(scol % 6 == 0) coms.row();

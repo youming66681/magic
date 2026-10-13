@@ -8,7 +8,7 @@ import mindustry.entities.units.BuildPlan;
 import mindustry.game.EventType.Trigger;
 import mindustry.gen.Groups;
 import mindustry.gen.Unit;
-import mindustry.ui.fragments.PlacementFragment;
+import magical.content.kind.PlacementFragment;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
