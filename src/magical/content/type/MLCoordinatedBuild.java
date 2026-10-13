@@ -8,6 +8,7 @@ import mindustry.entities.units.BuildPlan;
 import mindustry.game.EventType.Trigger;
 import mindustry.gen.Groups;
 import mindustry.gen.Unit;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -36,9 +37,38 @@ public class MLCoordinatedBuild{
         return enabled;
     }
     public static boolean canShowButton(){
-        if(Vars.state == null || Vars.state.isMenu() || Vars.player == null || Vars.player.dead())return false;
-        if(Vars.control == null || Vars.control.input == null)return false;
+        if(Vars.state==null||Vars.state.isMenu()||Vars.player==null||Vars.player.dead())return false;
+        if(Vars.control==null||Vars.control.input==null)return false;
+        Object input=Vars.control.input;
+        try{
+            Field modeField=findField(input.getClass(),"commandMode");
+            Field unitsField=findField(input.getClass(),"selectedUnits");
+            if(modeField==null||unitsField==null)return false;
+            modeField.setAccessible(true);
+            unitsField.setAccessible(true);
+            if(!modeField.getBoolean(input))return false;
+            Object selected=unitsField.get(input);
+            if(!(selected instanceof Iterable<?>))return false;
+            for(Object object:(Iterable<?>)selected){
+                if(!(object instanceof Unit))continue;
+                Unit unit=(Unit)object;
+                if(unit!=null&&unit.isValid()&&!unit.dead&&unit.team==Vars.player.team()&&unit.canBuild())return true;
+            }
+        }catch(Exception ignored){
+            return false;
+        }
         return false;
+    }
+    private static Field findField(Class<?> type,String name){
+        Class<?> current=type;
+        while(current!=null){
+            try{
+                return current.getDeclaredField(name);
+            }catch(NoSuchFieldException ignored){
+                current=current.getSuperclass();
+            }
+        }
+        return null;
     }
     public static void setEnabled(boolean value){
         enabled=value;

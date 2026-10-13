@@ -281,7 +281,7 @@ public class MobileInput extends InputHandler implements GestureListener{
         return commandMode;
     }
     public boolean hasCoordinatedBuildSelectedBuilder(){
-        if(!commandMode || player == null || player.dead())return false;
+        if(!commandMode || player == null || player.dead()) return false;
         for(Unit unit : selectedUnits){
             if(unit != null && unit.isValid() && !unit.dead && unit.team == player.team() && unit.canBuild()){
                 return true;
