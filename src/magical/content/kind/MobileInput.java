@@ -266,11 +266,14 @@ public class MobileInput extends InputHandler implements GestureListener{
             i.setDisabled(() -> player.dead());
 
         }).name("confirmplace");
-        table.button(Icon.units, Styles.clearNoneTogglei, MLCoordinatedBuild::toggle)
+        Table coordinatedTable = new Table();
+        coordinatedTable.right();
+        coordinatedTable.button(Icon.units, Styles.clearNoneTogglei, MLCoordinatedBuild::toggle)
                 .size(48f)
                 .checked(button -> MLCoordinatedBuild.isEnabled())
                 .tooltip(Core.bundle.get("ml-coordinated-build", "协调建造：自动分配建造计划"), true)
                 .name("coordinatedbuild");
+        table.add(coordinatedTable).right();
     }
 
     public boolean showCancel(){
