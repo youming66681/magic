@@ -274,7 +274,7 @@ public class MobileInput extends InputHandler implements GestureListener{
                 .tooltip(Core.bundle.get("ml-coordinated-build", "协调建造：自动分配建造计划"), true)
                 .name("coordinatedbuild");
         table.add(coordinatedTable).right();
-        coordinatedTable.visible(MLCoordinatedBuild::canShowButton);
+        coordinatedTable.visible(() -> commandMode && hasCoordinatedBuildSelectedBuilder());
     }
 
     public boolean isCoordinatedBuildCommandMode(){
