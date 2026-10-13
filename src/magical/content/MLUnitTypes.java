@@ -5603,7 +5603,7 @@ public class MLUnitTypes {
                         x = 44f;
                         y = 93f;
                         mirror = true;
-                        reload = 2.5f;
+                        reload = 2f;
                         shootSound = MLSounds.JG;
                         inaccuracy = 0f;
                         recoil = 2.5f;
@@ -5651,7 +5651,7 @@ public class MLUnitTypes {
                         x = 80f;
                         y = 112f;
                         mirror = true;
-                        reload = 2.5f;
+                        reload = 2f;
                         shootSound = MLSounds.JG;
                         inaccuracy = 0f;
                         recoil = 2.5f;
@@ -5699,7 +5699,7 @@ public class MLUnitTypes {
                         x = 70f;
                         y = -108f;
                         mirror = true;
-                        reload = 2.5f;
+                        reload = 2f;
                         shootSound = MLSounds.JG;
                         inaccuracy = 0f;
                         recoil = 2.5f;
