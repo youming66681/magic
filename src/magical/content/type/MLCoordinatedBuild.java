@@ -7,7 +7,6 @@ import arc.scene.Group;
 import arc.scene.ui.TextButton;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
-import arc.util.Log;
 import arc.util.Time;
 import mindustry.Vars;
 import mindustry.entities.units.BuildPlan;
@@ -33,8 +32,7 @@ public class MLCoordinatedBuild{
     private static int nextBuilder = 0;
     private static float updateTimer = 0f;
     private static final float updateInterval = 10f;
-    private static final String BUTTON_BUNDLE = "command.coordinated-build";
-    private static final String BUTTON_TEXT = "Coordinated Building";
+    private static final String BUTTON_TEXT = "协调建造";
     private MLCoordinatedBuild(){}
     public static void init(){
         if(initialized)return;
@@ -51,18 +49,17 @@ public class MLCoordinatedBuild{
     public static boolean isEnabled(){
         return enabled;
     }
+    public static void setEnabled(boolean value){
+        enabled = value;
+        updateTimer = 0f;
+        if(injectedButton != null)injectedButton.setChecked(enabled);
+    }
     private static void installCommandButton(){
         if(Core.scene == null || Core.scene.root == null)return;
         if(injectedButton != null && injectedButton.parent != null)return;
         commandTable = findCommandTable(Core.scene.root);
         if(commandTable == null)return;
-        for(Element element : commandTable.getChildren()){
-            if(element instanceof TextButton button && button.getLabel().getText().toString().equals(Core.bundle.get(BUTTON_BUNDLE, BUTTON_TEXT))){
-                injectedButton = button;
-                return;
-            }
-        }
-        injectedButton = commandTable.button(Core.bundle.get(BUTTON_BUNDLE, BUTTON_TEXT), Styles.clearTogglet, MLCoordinatedBuild::toggle).size(48f).get();
+        injectedButton = commandTable.button(BUTTON_TEXT, Styles.clearTogglet, MLCoordinatedBuild::toggle).size(48f).get();
         injectedButton.update(() -> injectedButton.setChecked(enabled));
     }
     private static Table findCommandTable(Group group){
@@ -78,21 +75,16 @@ public class MLCoordinatedBuild{
     }
     private static boolean containsUnitCommandButton(Table table){
         if(table == null)return false;
-        boolean hasUnitCommand = false;
+        boolean hasMove = false;
+        boolean hasAssist = false;
         for(Element child : table.getChildren()){
             if(child instanceof TextButton button){
                 String text = button.getLabel().getText().toString();
-                if(text.equals(Core.bundle.get(BUTTON_BUNDLE, BUTTON_TEXT)))return false;
-                if(text.equals(Core.bundle.get("command.move", "Move")) ||
-                        text.equals(Core.bundle.get("command.repair", "Repair")) ||
-                        text.equals(Core.bundle.get("command.rebuild", "Rebuild")) ||
-                        text.equals(Core.bundle.get("command.assist", "Assist")) ||
-                        text.equals(Core.bundle.get("command.mine", "Mine"))){
-                    hasUnitCommand = true;
-                }
+                if(text.equals(Core.bundle.get("command.move", "Move")))hasMove = true;
+                if(text.equals(Core.bundle.get("command.assist", "Assist")))hasAssist = true;
             }
         }
-        return hasUnitCommand;
+        return hasMove && hasAssist;
     }
     private static void update(){
         if(!enabled || Vars.state == null || Vars.state.isMenu() || Vars.player == null || Vars.control == null || Vars.control.input == null){
@@ -141,7 +133,7 @@ public class MLCoordinatedBuild{
             try{
                 builder.addBuild(plan.copy());
                 assignedBuilders.put(key, builder);
-            }catch(Exception e){
+            }catch(Exception ignored){
                 assignedBuilders.remove(key);
             }
         }
