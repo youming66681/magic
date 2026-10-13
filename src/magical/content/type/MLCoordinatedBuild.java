@@ -38,8 +38,7 @@ public class MLCoordinatedBuild{
     public static boolean canShowButton(){
         if(Vars.state == null || Vars.state.isMenu() || Vars.player == null || Vars.player.dead())return false;
         if(Vars.control == null || Vars.control.input == null)return false;
-        return Vars.control.input.isCoordinatedBuildCommandMode()
-                && Vars.control.input.hasCoordinatedBuildSelectedBuilder();
+        return false;
     }
     public static void setEnabled(boolean value){
         enabled=value;
