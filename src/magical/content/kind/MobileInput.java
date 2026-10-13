@@ -24,7 +24,7 @@ import mindustry.type.*;
 import mindustry.ui.*;
 import mindustry.world.*;
 import mindustry.world.blocks.*;
-import magical.content.;
+import magical.content;
 
 import static arc.Core.*;
 import static mindustry.Vars.*;
