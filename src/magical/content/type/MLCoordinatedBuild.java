@@ -1,14 +1,19 @@
 package magical.content;
 
+import arc.Core;
 import arc.Events;
+import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Time;
 import mindustry.Vars;
 import mindustry.entities.units.BuildPlan;
+import mindustry.game.EventType.ClientLoadEvent;
 import mindustry.game.EventType.Trigger;
 import mindustry.gen.Groups;
+import mindustry.gen.Icon;
 import mindustry.gen.Unit;
-import mindustry.ui.fragments.PlacementFragment;
+import mindustry.ui.Styles;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -17,6 +22,7 @@ import java.util.Set;
 public class MLCoordinatedBuild{
     private static boolean enabled = false;
     private static boolean initialized = false;
+    private static boolean buttonCreated = false;
     private static final Seq<Unit> builders = new Seq<>();
     private static final Seq<BuildPlan> plans = new Seq<>();
     private static final Set<String> currentPlans = new HashSet<>();
@@ -24,20 +30,37 @@ public class MLCoordinatedBuild{
     private static int nextBuilder = 0;
     private static float updateTimer = 0f;
     private static final float updateInterval = 10f;
+
     private MLCoordinatedBuild(){}
+
     public static void init(){
         if(initialized)return;
-        PlacementFragment.coordinatedBuildToggle = MLCoordinatedBuild::toggle;
-        PlacementFragment.coordinatedBuildEnabled = MLCoordinatedBuild::isEnabled;
         initialized = true;
+        Events.on(ClientLoadEvent.class, event -> installHudButton());
         Events.run(Trigger.update, MLCoordinatedBuild::update);
     }
+
+    private static void installHudButton(){
+        if(buttonCreated || Vars.ui == null || Vars.ui.hudGroup == null)return;
+        Table table = new Table();
+        table.setFillParent(true);
+        table.top().left().marginTop(65f).marginLeft(8f);
+        table.button(Icon.hammer, Styles.clearNoneTogglei, () -> toggle())
+                .size(50f)
+                .checked(button -> enabled)
+                .tooltip(Core.bundle.get("ml-coordinated-build"), true);
+        Vars.ui.hudGroup.addChild(table);
+        buttonCreated = true;
+    }
+
     public static void toggle(){
         setEnabled(!enabled);
     }
+
     public static boolean isEnabled(){
         return enabled;
     }
+
     public static void setEnabled(boolean value){
         enabled = value;
         updateTimer = 0f;
@@ -45,6 +68,7 @@ public class MLCoordinatedBuild{
             assignedBuilders.clear();
         }
     }
+
     private static void update(){
         if(!enabled || Vars.state == null || Vars.state.isMenu() || Vars.player == null || Vars.control == null || Vars.control.input == null){
             updateTimer = 0f;
@@ -58,6 +82,7 @@ public class MLCoordinatedBuild{
         if(builders.isEmpty() || plans.isEmpty())return;
         assignPlans();
     }
+
     private static void collectBuilders(){
         builders.clear();
         if(Vars.player == null)return;
@@ -69,6 +94,7 @@ public class MLCoordinatedBuild{
         });
         if(nextBuilder >= builders.size)nextBuilder = 0;
     }
+
     private static void collectPlans(){
         plans.clear();
         currentPlans.clear();
@@ -79,6 +105,7 @@ public class MLCoordinatedBuild{
         }
         assignedBuilders.keySet().retainAll(currentPlans);
     }
+
     private static void assignPlans(){
         if(builders.isEmpty() || plans.isEmpty())return;
         for(BuildPlan plan : plans){
@@ -97,9 +124,11 @@ public class MLCoordinatedBuild{
             }
         }
     }
+
     private static boolean isAvailableBuilder(Unit unit){
         return unit != null && unit.isValid() && !unit.dead && Vars.player != null && unit.team == Vars.player.team() && unit.canBuild();
     }
+
     private static Unit findBuilderForPlan(){
         if(builders.isEmpty())return null;
         int count = builders.size;
@@ -110,6 +139,7 @@ public class MLCoordinatedBuild{
         }
         return null;
     }
+
     private static String planKey(BuildPlan plan){
         String blockId = plan.block == null ? "break" : String.valueOf(plan.block.id);
         return plan.x + ":" + plan.y + ":" + blockId + ":" + plan.rotation;
