@@ -274,11 +274,20 @@ public class MobileInput extends InputHandler implements GestureListener{
                 .tooltip(Core.bundle.get("ml-coordinated-build", "协调建造：自动分配建造计划"), true)
                 .name("coordinatedbuild");
         table.add(coordinatedTable).right();
-        coordinatedTable.update(() -> {
-            coordinatedTable.visible(() -> Vars.player != null
-                    && Vars.player.unit() != null
-                    && Vars.player.unit().canBuild());
-        });
+        coordinatedTable.visible(MLCoordinatedBuild::canShowButton);
+    }
+
+    public boolean isCoordinatedBuildCommandMode(){
+        return commandMode;
+    }
+    public boolean hasCoordinatedBuildSelectedBuilder(){
+        if(!commandMode)return false;
+        for(Unit unit : selectedUnits){
+            if(unit != null && unit.isValid() && !unit.dead && unit.team == Vars.player.team() && unit.canBuild()){
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean showCancel(){
