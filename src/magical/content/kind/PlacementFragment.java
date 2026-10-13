@@ -476,7 +476,7 @@ public class PlacementFragment{
                                             }).checked(i -> activeCommands.get(command.id)).size(50f).tooltip(command.localized(), true);
                                             scol++;
                                             if(command == UnitCommand.assistCommand){
-                                                coms.button(Icon.construct, Styles.clearNoneTogglei, () -> coordinatedBuildToggle.run())
+                                                coms.button(Icon.hammer, Styles.clearNoneTogglei, () -> coordinatedBuildToggle.run())
                                                         .checked(i -> coordinatedBuildEnabled.getAsBoolean())
                                                         .size(50f)
                                                         .tooltip("协调建造", true);
