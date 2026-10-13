@@ -10,7 +10,6 @@ import arc.util.Time;
 import mindustry.Vars;
 import mindustry.entities.units.BuildPlan;
 import mindustry.game.EventType.Trigger;
-import mindustry.gen.Icon;
 import mindustry.gen.Unit;
 import java.util.HashSet;
 import java.util.Set;
@@ -55,9 +54,10 @@ public class MLCoordinatedBuild{
         builders.clear();
         if(!Vars.control.input.commandMode)return;
         for(Unit unit : Vars.control.input.selectedUnits){
-            if(unit == null || !unit.isValid() || unit.dead || unit.team != Vars.player.team())continue;
-            if(!unit.canBuild())continue;
+            if(unit == null || !unit.isValid() || unit.dead)continue;
+            if(unit.team != Vars.player.team())continue;
             if(!unit.type.playerControllable)continue;
+            if(!unit.canBuild())continue;
             builders.add(unit);
         }
     }
