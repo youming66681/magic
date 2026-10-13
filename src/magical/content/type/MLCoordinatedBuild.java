@@ -2,7 +2,6 @@ package magical.content;
 
 import arc.Core;
 import arc.Events;
-import arc.scene.Touchable;
 import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.Table;
 import arc.struct.ObjectSet;
@@ -46,12 +45,11 @@ public class MLCoordinatedBuild{
         if(hudTable!=null&&hudTable.parent!=null)return;
         hudTable=new Table();
         hudTable.setFillParent(true);
-        hudTable.touchable=Touchable.childrenOnly;
         hudTable.top().right();
         hudTable.marginTop(150f);
         hudTable.marginRight(8f);
         hudButton=hudTable.button(Icon.units,Styles.clearNoneTogglei,MLCoordinatedBuild::toggle).size(48f).get();
-        hudButton.tooltip(Core.bundle.get("ml-coordinated-build","协调建造：自动分配建造计划"));
+        new arc.scene.ui.Tooltip(t -> t.background(Styles.black6).add(Core.bundle.get("ml-coordinated-build","协调建造：自动分配建造计划")).style(Styles.outlineLabel)).build(hudButton);
         hudTable.update(MLCoordinatedBuild::updateButtonState);
         Vars.ui.hudGroup.addChild(hudTable);
         updateButtonState();
@@ -123,13 +121,13 @@ public class MLCoordinatedBuild{
                 builders.add(unit);
             }
         });
-        if(nextBuilder>=builders.size())nextBuilder=0;
+        if(nextBuilder>=builders.size)nextBuilder=0;
     }
     private static Unit nextBuilder(){
         if(builders.isEmpty())return null;
-        if(nextBuilder>=builders.size())nextBuilder=0;
+        if(nextBuilder>=builders.size)nextBuilder=0;
         Unit result=builders.get(nextBuilder);
-        nextBuilder=(nextBuilder+1)%builders.size();
+        nextBuilder=(nextBuilder+1)%builders.size;
         return result;
     }
     private static String planKey(BuildPlan plan){
