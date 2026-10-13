@@ -3,7 +3,7 @@ package magical.content;
 import arc.Core;
 import arc.Events;
 import arc.graphics.g2d.TextureRegion;
-import arc.scene.layout.Table;
+import arc.scene.ui.layout.Table;
 import arc.scene.style.TextureRegionDrawable;
 import arc.struct.Seq;
 import arc.util.Time;

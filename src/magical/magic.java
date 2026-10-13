@@ -26,6 +26,7 @@ import magical.content.MLSpawnUnits;
 import magical.content.MLSectorPresets;
 import magical.content.MLLiquids;
 import magical.content.UnitFocusEvent;
+import magical.content.MLCoordinatedBuild;
 
 public class magic extends Mod {
     public static Mods.LoadedMod ML;
