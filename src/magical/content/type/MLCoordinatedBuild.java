@@ -49,7 +49,7 @@ public class MLCoordinatedBuild{
         hudTable.marginTop(150f);
         hudTable.marginRight(8f);
         hudButton=hudTable.button(Icon.units,Styles.clearNoneTogglei,MLCoordinatedBuild::toggle).size(48f).get();
-        new arc.scene.ui.Tooltip(t -> t.background(Styles.black6).add(Core.bundle.get("ml-coordinated-build","协调建造：自动分配建造计划")).style(Styles.outlineLabel)).build(hudButton);
+        hudButton.addListener(new arc.scene.ui.Tooltip(t -> t.background(Styles.black6).add(Core.bundle.get("ml-coordinated-build", "协调建造：自动分配建造计划")).style(Styles.outlineLabel)));
         hudTable.update(MLCoordinatedBuild::updateButtonState);
         Vars.ui.hudGroup.addChild(hudTable);
         updateButtonState();
