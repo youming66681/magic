@@ -5,7 +5,6 @@ import arc.Events;
 import arc.scene.Element;
 import arc.scene.Group;
 import arc.scene.ui.TextButton;
-import arc.scene.layout.Cell;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Log;
