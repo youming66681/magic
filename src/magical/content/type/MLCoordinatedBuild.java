@@ -1,20 +1,14 @@
 package magical.content;
 
-import arc.Core;
 import arc.Events;
-import arc.scene.Element;
-import arc.scene.Group;
-import arc.scene.ui.TextButton;
-import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Time;
 import mindustry.Vars;
 import mindustry.entities.units.BuildPlan;
-import mindustry.game.EventType.ClientLoadEvent;
 import mindustry.game.EventType.Trigger;
 import mindustry.gen.Groups;
 import mindustry.gen.Unit;
-import mindustry.ui.Styles;
+import mindustry.ui.fragments.PlacementFragment;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -23,8 +17,6 @@ import java.util.Set;
 public class MLCoordinatedBuild{
     private static boolean enabled = false;
     private static boolean initialized = false;
-    private static Table commandTable;
-    private static TextButton injectedButton;
     private static final Seq<Unit> builders = new Seq<>();
     private static final Seq<BuildPlan> plans = new Seq<>();
     private static final Set<String> currentPlans = new HashSet<>();
@@ -32,19 +24,16 @@ public class MLCoordinatedBuild{
     private static int nextBuilder = 0;
     private static float updateTimer = 0f;
     private static final float updateInterval = 10f;
-    private static final String BUTTON_TEXT = "协调建造";
     private MLCoordinatedBuild(){}
     public static void init(){
         if(initialized)return;
+        PlacementFragment.coordinatedBuildToggle = MLCoordinatedBuild::toggle;
+        PlacementFragment.coordinatedBuildEnabled = MLCoordinatedBuild::isEnabled;
         initialized = true;
         Events.run(Trigger.update, MLCoordinatedBuild::update);
-        Events.run(Trigger.update, MLCoordinatedBuild::installCommandButton);
-        Events.on(ClientLoadEvent.class, event -> installCommandButton());
     }
     public static void toggle(){
-        enabled = !enabled;
-        updateTimer = 0f;
-        if(injectedButton != null)injectedButton.setChecked(enabled);
+        setEnabled(!enabled);
     }
     public static boolean isEnabled(){
         return enabled;
@@ -52,39 +41,9 @@ public class MLCoordinatedBuild{
     public static void setEnabled(boolean value){
         enabled = value;
         updateTimer = 0f;
-        if(injectedButton != null)injectedButton.setChecked(enabled);
-    }
-    private static void installCommandButton(){
-        if(Core.scene == null || Core.scene.root == null)return;
-        if(injectedButton != null && injectedButton.parent != null)return;
-        commandTable = findCommandTable(Core.scene.root);
-        if(commandTable == null)return;
-        injectedButton = commandTable.button(BUTTON_TEXT, Styles.clearTogglet, MLCoordinatedBuild::toggle).size(48f).get();
-        injectedButton.update(() -> injectedButton.setChecked(enabled));
-    }
-    private static Table findCommandTable(Group group){
-        if(group == null)return null;
-        for(Element element : group.getChildren()){
-            if(element instanceof Table table && containsUnitCommandButton(table))return table;
-            if(element instanceof Group childGroup){
-                Table found = findCommandTable(childGroup);
-                if(found != null)return found;
-            }
+        if(!enabled){
+            assignedBuilders.clear();
         }
-        return null;
-    }
-    private static boolean containsUnitCommandButton(Table table){
-        if(table == null)return false;
-        boolean hasMove = false;
-        boolean hasAssist = false;
-        for(Element child : table.getChildren()){
-            if(child instanceof TextButton button){
-                String text = button.getLabel().getText().toString();
-                if(text.equals(Core.bundle.get("command.move", "Move")))hasMove = true;
-                if(text.equals(Core.bundle.get("command.assist", "Assist")))hasAssist = true;
-            }
-        }
-        return hasMove && hasAssist;
     }
     private static void update(){
         if(!enabled || Vars.state == null || Vars.state.isMenu() || Vars.player == null || Vars.control == null || Vars.control.input == null){
