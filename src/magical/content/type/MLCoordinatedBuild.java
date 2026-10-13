@@ -1,36 +1,29 @@
-
 package magical.content;
+
 import arc.Core;
 import arc.Events;
-import arc.math.geom.Vec2;
 import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.Table;
-import arc.struct.ObjectMap;
 import arc.struct.ObjectSet;
 import arc.struct.Seq;
 import mindustry.Vars;
+import mindustry.ai.types.BuilderAI;
 import mindustry.entities.units.BuildPlan;
 import mindustry.game.EventType.Trigger;
-import mindustry.gen.Call;
+import mindustry.gen.Groups;
 import mindustry.gen.Icon;
 import mindustry.gen.Unit;
 import mindustry.ui.Styles;
+
 public class MLCoordinatedBuild{
     private static boolean enabled=false;
     private static boolean initialized=false;
     private static Table hudTable;
     private static ImageButton hudButton;
-    private static final Seq<BuildPlan> plans=new Seq<>();
     private static final Seq<Unit> builders=new Seq<>();
     private static final ObjectSet<String> dispatchedPlans=new ObjectSet<>();
-    private static final ObjectMap<Unit,Vec2> lastFollowPositions=new ObjectMap<>();
-    private static final Vec2 lastPlayerPosition=new Vec2();
-    private static final Vec2 followDirection=new Vec2(1f,0f);
-    private static boolean hasLastPlayerPosition=false;
+    private static final Seq<String> stalePlans=new Seq<>();
     private static int nextBuilder=0;
-    private static final float followDistance=80f;
-    private static final float followUpdateDistance=24f;
-    private static final float followSpacing=24f;
     public static void init(){
         if(initialized)return;
         initialized=true;
@@ -42,11 +35,6 @@ public class MLCoordinatedBuild{
     }
     public static void toggle(){
         enabled=!enabled;
-        if(!enabled){
-            lastFollowPositions.clear();
-            dispatchedPlans.clear();
-            hasLastPlayerPosition=false;
-        }
         updateButtonState();
     }
     private static void ensureHudButton(){
@@ -82,6 +70,7 @@ public class MLCoordinatedBuild{
     private static boolean isFriendlyBuilder(Unit unit){
         return unit!=null&&unit.isValid()
                 &&Vars.player!=null
+                &&unit!=Vars.player.unit()
                 &&unit.team==Vars.player.team()
                 &&unit.type!=null
                 &&unit.type.buildSpeed>0f;
@@ -91,30 +80,10 @@ public class MLCoordinatedBuild{
         if(Vars.player==null||Vars.player.dead())return;
         if(Vars.control==null||Vars.control.input==null)return;
         if(!enabled)return;
-        updateFollowDirection();
         collectBuilders();
-        if(builders.isEmpty()){
-            lastFollowPositions.clear();
-            return;
-        }
+        if(builders.isEmpty())return;
         cleanupDispatchedPlans();
         distributePlans();
-        cleanupDispatchedPlans();
-        followIdleBuilders();
-    }
-    private static void updateFollowDirection(){
-        Unit playerUnit=Vars.player.unit();
-        if(playerUnit==null||!playerUnit.isValid())return;
-        float dx=playerUnit.x-lastPlayerPosition.x;
-        float dy=playerUnit.y-lastPlayerPosition.y;
-        if(hasLastPlayerPosition&&dx*dx+dy*dy>0.25f){
-            followDirection.set(dx,dy).nor();
-        }else if(!hasLastPlayerPosition){
-            float angle=(float)Math.toRadians(playerUnit.rotation);
-            followDirection.set((float)Math.cos(angle),(float)Math.sin(angle));
-        }
-        lastPlayerPosition.set(playerUnit.x,playerUnit.y);
-        hasLastPlayerPosition=true;
     }
     private static void collectBuilders(){
         builders.clear();
@@ -125,27 +94,46 @@ public class MLCoordinatedBuild{
         }
         if(nextBuilder>=builders.size)nextBuilder=0;
     }
-
     private static void distributePlans(){
         if(Vars.player==null||Vars.player.unit()==null)return;
         var source=Vars.player.unit().plans;
         if(source.isEmpty())return;
-        plans.clear();
-        for(BuildPlan plan:source){
-            if(plan!=null)plans.add(plan.copy());
+        int checked=0;
+        int maxChecks=source.size;
+        while(!source.isEmpty()&&!builders.isEmpty()&&checked<maxChecks){
+            boolean assigned=false;
+            for(int i=0;i<builders.size;i++){
+                if(source.isEmpty())return;
+                Unit builder=nextBuilder();
+                if(builder==null)return;
+                if(!builder.plans().isEmpty())continue;
+                BuildPlan plan=source.first();
+                if(plan==null){
+                    source.removeFirst();
+                    checked++;
+                    continue;
+                }
+                String key=planKey(plan);
+                if(dispatchedPlans.contains(key)){
+                    source.removeFirst();
+                    checked++;
+                    continue;
+                }
+                builder.addBuild(plan.copy());
+                if(builder.controller() instanceof BuilderAI ai){
+                    ai.following=null;
+                    ai.assistFollowing=null;
+                }
+                dispatchedPlans.add(key);
+                source.removeFirst();
+                assigned=true;
+                break;
+            }
+            if(!assigned)break;
+            checked=0;
+            maxChecks=source.size;
         }
-        if(plans.isEmpty())return;
-        for(BuildPlan plan:plans){
-            String key=planKey(plan);
-            if(dispatchedPlans.contains(key))continue;
-            Unit builder=nextBuilder();
-            if(builder==null)return;
-            builder.addBuild(plan.copy());
-            dispatchedPlans.add(key);
-        }
-        source.clear();
     }
-
     private static Unit nextBuilder(){
         if(builders.isEmpty())return null;
         if(nextBuilder>=builders.size)nextBuilder=0;
@@ -155,58 +143,22 @@ public class MLCoordinatedBuild{
     }
     private static void cleanupDispatchedPlans(){
         ObjectSet<String> activePlans=new ObjectSet<>();
-        for(Unit builder:builders){
-            if(builder==null||!builder.isValid())continue;
-            for(BuildPlan plan:builder.plans()){
+        Groups.unit.each(unit->{
+            if(unit==null||!unit.isValid())return;
+            for(BuildPlan plan:unit.plans()){
                 if(plan!=null)activePlans.add(planKey(plan));
             }
-        }
-        Seq<String> stale=new Seq<>();
+        });
+        stalePlans.clear();
         for(String key:dispatchedPlans){
-            if(!activePlans.contains(key))stale.add(key);
+            if(!activePlans.contains(key))stalePlans.add(key);
         }
-        for(String key:stale){
+        for(String key:stalePlans){
             dispatchedPlans.remove(key);
         }
     }
-    private static void followIdleBuilders(){
-        if(Vars.player==null||Vars.player.dead())return;
-        Unit playerUnit=Vars.player.unit();
-        if(playerUnit==null||!playerUnit.isValid())return;
-        float backX=-followDirection.x;
-        float backY=-followDirection.y;
-        float sideX=-backY;
-        float sideY=backX;
-        for(int i=0;i<builders.size;i++){
-            Unit builder=builders.get(i);
-            if(builder==null||!builder.isValid())continue;
-            if(!builder.plans().isEmpty())continue;
-            float sideOffset=(i-(builders.size-1)/2f)*followSpacing;
-            float targetX=playerUnit.x+backX*followDistance+sideX*sideOffset;
-            float targetY=playerUnit.y+backY*followDistance+sideY*sideOffset;
-            float dx=builder.x-targetX;
-            float dy=builder.y-targetY;
-            if(dx*dx+dy*dy<followUpdateDistance*followUpdateDistance){
-                lastFollowPositions.remove(builder);
-                continue;
-            }
-            Vec2 last=lastFollowPositions.get(builder);
-            if(last!=null&&last.dst2(targetX,targetY)<followUpdateDistance*followUpdateDistance)continue;
-            Vec2 target=new Vec2(targetX,targetY);
-            Call.commandUnits(
-                    Vars.player,
-                    new int[]{builder.id()},
-                    null,
-                    null,
-                    target,
-                    false,
-                    true
-            );
-            lastFollowPositions.put(builder,target);
-        }
-    }
     private static String planKey(BuildPlan plan){
-        String blockName=plan.block==null?"null":plan.block.name;
+        String blockName=plan.block==null?"break":plan.block.name;
         return plan.x+":"+plan.y+":"+blockName+":"+plan.rotation+":"+plan.breaking;
     }
 }
