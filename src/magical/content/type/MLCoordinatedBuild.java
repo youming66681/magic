@@ -2,19 +2,21 @@ package magical.content;
 
 import arc.Core;
 import arc.Events;
+import arc.math.geom.Vec2;
 import arc.scene.ui.ImageButton;
 import arc.scene.ui.layout.Table;
+import arc.struct.ObjectMap;
 import arc.struct.ObjectSet;
 import arc.struct.Seq;
 import mindustry.Vars;
 import mindustry.entities.units.BuildPlan;
 import mindustry.game.EventType.Trigger;
+import mindustry.gen.Call;
 import mindustry.gen.Groups;
 import mindustry.gen.Icon;
 import mindustry.gen.Unit;
 import mindustry.ui.Styles;
 import java.lang.reflect.Field;
-import arc.scene.Scene;
 
 public class MLCoordinatedBuild{
     private static boolean enabled=false;
@@ -24,7 +26,10 @@ public class MLCoordinatedBuild{
     private static final Seq<BuildPlan> plans=new Seq<>();
     private static final Seq<Unit> builders=new Seq<>();
     private static final ObjectSet<String> dispatchedPlans=new ObjectSet<>();
+    private static final ObjectMap<Unit,Vec2> lastFollowPositions=new ObjectMap<>();
     private static int nextBuilder=0;
+    private static final float followDistance=100f;
+    private static final float followUpdateDistance=48f;
     public static void init(){
         if(initialized)return;
         initialized=true;
@@ -38,14 +43,14 @@ public class MLCoordinatedBuild{
         enabled=!enabled;
         if(!enabled){
             dispatchedPlans.clear();
+            lastFollowPositions.clear();
         }
         updateButtonState();
     }
-
     private static void ensureHudButton(){
         if(Core.scene==null||Vars.ui==null||Vars.state==null)return;
         if(hudTable!=null&&hudTable.parent!=null){
-            hudTable.visible=!Vars.state.isMenu();
+            updateButtonState();
             hudTable.toFront();
             return;
         }
@@ -55,19 +60,14 @@ public class MLCoordinatedBuild{
         hudTable.marginTop(150f);
         hudTable.marginRight(8f);
         hudButton=hudTable.button(Icon.units,Styles.clearNoneTogglei,MLCoordinatedBuild::toggle).size(56f).get();
-        hudTable.update(()->{
-            hudTable.visible=Vars.state!=null&&!Vars.state.isMenu();
-            if(hudTable.visible)hudTable.toFront();
-        });
+        hudTable.update(MLCoordinatedBuild::updateButtonState);
         Core.scene.add(hudTable);
+        updateButtonState();
     }
-
     private static void updateButtonState(){
-        if(hudTable == null)return;
-        hudTable.visible = Vars.state != null && !Vars.state.isMenu();
-        if(hudButton != null){
-            hudButton.setChecked(enabled);
-        }
+        if(hudTable==null)return;
+        hudTable.visible=Vars.state!=null&&!Vars.state.isMenu()&&hasSelectedBuilder();
+        if(hudButton!=null)hudButton.setChecked(enabled);
     }
     private static boolean hasSelectedBuilder(){
         if(Vars.player==null||Vars.player.dead())return false;
@@ -81,10 +81,7 @@ public class MLCoordinatedBuild{
                 Object selected=field.get(input);
                 if(selected instanceof Iterable<?>){
                     for(Object object:(Iterable<?>)selected){
-                        if(object instanceof Unit){
-                            Unit unit=(Unit)object;
-                            if(isFriendlyBuilder(unit))return true;
-                        }
+                        if(object instanceof Unit&&isFriendlyBuilder((Unit)object))return true;
                     }
                 }
                 return false;
@@ -97,19 +94,30 @@ public class MLCoordinatedBuild{
         return false;
     }
     private static boolean isFriendlyBuilder(Unit unit){
-        return unit!=null
-                &&unit.isValid()
+        return unit!=null&&unit.isValid()
                 &&Vars.player!=null
                 &&unit.team==Vars.player.team()
                 &&unit.type!=null
                 &&unit.type.buildSpeed>0f;
     }
     private static void update(){
-        if(!enabled||Vars.state==null||Vars.state.isMenu())return;
+        if(Vars.state==null||Vars.state.isMenu())return;
         if(Vars.player==null||Vars.player.dead())return;
         if(Vars.control==null||Vars.control.input==null)return;
+        if(!enabled)return;
         collectBuilders();
         if(builders.isEmpty())return;
+        distributePlans();
+        followIdleBuilders();
+    }
+    private static void collectBuilders(){
+        builders.clear();
+        Groups.unit.each(unit->{
+            if(isFriendlyBuilder(unit))builders.add(unit);
+        });
+        if(nextBuilder>=builders.size)nextBuilder=0;
+    }
+    private static void distributePlans(){
         plans.clear();
         Vars.control.input.getSyncedPlans(plans);
         for(BuildPlan plan:plans){
@@ -122,21 +130,35 @@ public class MLCoordinatedBuild{
             dispatchedPlans.add(key);
         }
     }
-    private static void collectBuilders(){
-        builders.clear();
-        Groups.unit.each(unit->{
-            if(isFriendlyBuilder(unit)){
-                builders.add(unit);
-            }
-        });
-        if(nextBuilder>=builders.size)nextBuilder=0;
-    }
     private static Unit nextBuilder(){
         if(builders.isEmpty())return null;
         if(nextBuilder>=builders.size)nextBuilder=0;
         Unit result=builders.get(nextBuilder);
         nextBuilder=(nextBuilder+1)%builders.size;
         return result;
+    }
+    private static void followIdleBuilders(){
+        Vec2 playerPosition=new Vec2(Vars.player.x,Vars.player.y);
+        for(Unit builder:builders){
+            if(builder==null||!builder.isValid())continue;
+            if(!builder.plans().isEmpty())continue;
+            if(builder.within(Vars.player,followDistance)){
+                lastFollowPositions.put(builder,playerPosition.cpy());
+                continue;
+            }
+            Vec2 last=lastFollowPositions.get(builder);
+            if(last!=null&&last.dst2(playerPosition)<followUpdateDistance*followUpdateDistance)continue;
+            Call.commandUnits(
+                    Vars.player,
+                    new int[]{builder.id()},
+                    null,
+                    null,
+                    playerPosition.cpy(),
+                    false,
+                    true
+            );
+            lastFollowPositions.put(builder,playerPosition.cpy());
+        }
     }
     private static String planKey(BuildPlan plan){
         String blockName=plan.block==null?"null":plan.block.name;
