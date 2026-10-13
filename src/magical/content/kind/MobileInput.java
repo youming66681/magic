@@ -275,11 +275,9 @@ public class MobileInput extends InputHandler implements GestureListener{
                 .name("coordinatedbuild");
         table.add(coordinatedTable).right();
         coordinatedTable.update(() -> {
-            boolean show = false;
-            if(Vars.player != null && Vars.player.unit() != null){
-                show = Vars.player.unit().canBuild();
-            }
-            coordinatedTable.visible(show);
+            coordinatedTable.visible(() -> Vars.player != null
+                    && Vars.player.unit() != null
+                    && Vars.player.unit().canBuild());
         });
     }
 
