@@ -65,5 +65,6 @@ public class magic extends Mod {
         MLSpawnUnits.load();
         MLBlocks.load();
         MLTechTree.load();
+        MLCoordinatedBuild.init();
      }
 }
