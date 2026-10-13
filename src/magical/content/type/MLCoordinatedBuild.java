@@ -28,7 +28,7 @@ public class MLCoordinatedBuild{
     private static final Vec2 followDirection=new Vec2(1f,0f);
     private static boolean hasLastPlayerPosition=false;
     private static int nextBuilder=0;
-    private static final float followDistance=100f;
+    private static final float followDistance=80f;
     private static final float followUpdateDistance=24f;
     private static final float followSpacing=24f;
     public static void init(){
@@ -125,9 +125,10 @@ public class MLCoordinatedBuild{
         }
         if(nextBuilder>=builders.size)nextBuilder=0;
     }
+
     private static void distributePlans(){
         if(Vars.player==null||Vars.player.unit()==null)return;
-        Seq<BuildPlan> source=Vars.player.unit().plans;
+        var source=Vars.player.unit().plans;
         if(source.isEmpty())return;
         plans.clear();
         for(BuildPlan plan:source){
@@ -138,12 +139,13 @@ public class MLCoordinatedBuild{
             String key=planKey(plan);
             if(dispatchedPlans.contains(key))continue;
             Unit builder=nextBuilder();
-            if(builder==null)break;
+            if(builder==null)return;
             builder.addBuild(plan.copy());
             dispatchedPlans.add(key);
         }
         source.clear();
     }
+
     private static Unit nextBuilder(){
         if(builders.isEmpty())return null;
         if(nextBuilder>=builders.size)nextBuilder=0;
