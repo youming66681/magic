@@ -3,7 +3,6 @@ package magical.content;
 import arc.Core;
 import arc.Events;
 import arc.graphics.g2d.TextureRegion;
-import arc.scene.ui.Image;
 import arc.scene.ui.layout.Table;
 import arc.struct.Seq;
 import arc.util.Time;
@@ -37,7 +36,7 @@ public class MLCoordinatedBuild{
     }
     public static void buildButton(Table table){
         TextureRegion region = Core.atlas.find("MLCoordinatedBuild");
-        table.button(new Image(region), MLCoordinatedBuild::toggle).size(48f);
+        table.button(new arc.scene.style.TextureRegionDrawable(region), MLCoordinatedBuild::toggle).size(48f);
     }
     private static void update(){
         if(!enabled || Vars.state == null || Vars.state.isMenu() || Vars.player == null || Vars.control == null || Vars.control.input == null)return;
