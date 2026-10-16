@@ -4053,7 +4053,7 @@ public class MLUnitTypes {
             parts.add(
                 new RegionPart("-l"){{
                         mirror = false;
-                        engineOffset = -0.001;
+                        engineOffset = -0.001f;
                         under = false;
                         x = 0f;
                         y = 0f;
@@ -4063,7 +4063,7 @@ public class MLUnitTypes {
                     }},
             new RegionPart("-r"){{
                 mirror = false;
-                engineOffset = -0.001;
+                engineOffset = -0.001f;
                 under = false;
                 x = 0f;
                 y = 0f;
