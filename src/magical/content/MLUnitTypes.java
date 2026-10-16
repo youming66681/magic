@@ -4038,8 +4038,8 @@ public class MLUnitTypes {
             health = 42000f;
             armor = 42f;
             hitSize = 88f;
-            engineOffset = 44;
-            engineSize = 22f;
+            engineOffset = 66;
+            engineSize = 11f;
             range = 480f;
             speed = 2.8f;
             accel = 0.07f;
@@ -4117,6 +4117,7 @@ public class MLUnitTypes {
                         inaccuracy = 3f;
                         shootSound = MLSounds.laser;
                         shake = 3f;
+                        layerOffset = 0.001f;
                         bullet = new BasicBulletType() {{
                             damage = 180f;
                             lifetime = 70f;
