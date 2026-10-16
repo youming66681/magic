@@ -65,7 +65,7 @@ public class MLUnitTypes {
     //小型
     Pioneer, Starlight, Qingxiao,
     //大型
-    BrokenEdge, FlyingSwallow, Tianshu,
+    BrokenEdge, FlyingSwallow, Tianshu, ConstantGlow,
     //旗舰
     Aoba, MoonRise, StarrySky, MilkyWay, TheWorld;
 
@@ -4026,6 +4026,215 @@ public class MLUnitTypes {
                             }};
                         }});
             }};
+            //恒晖
+        ConstantGlow = new UnitType("ConstantGlow") {{
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            faceTarget = false;
+            lowAltitude = true;
+            rotateMoveFirst = true;
+            omniMovement = true;
+            rotateSpeed = 2f;
+            health = 42000f;
+            armor = 42f;
+            hitSize = 88f;
+            engineOffset = 44;
+            engineSize = 22f;
+            range = 480f;
+            speed = 2.8f;
+            accel = 0.07f;
+            drag = 0.03f;
+            targetFlags = new BlockFlag[]{
+                    BlockFlag.factory,
+                    BlockFlag.generator,
+                    BlockFlag.reactor,
+                    BlockFlag.battery
+            };
+            parts.add(
+                new RegionPart("-l"){{
+                        mirror = false;
+                        engineOffset = -0.001;
+                        under = false;
+                        x = 0f;
+                        y = 0f;
+                        moveX = 0f;
+                        moveY = 0f;
+                        moveRot = 0f;
+                    }},
+            new RegionPart("-r"){{
+                mirror = false;
+                engineOffset = -0.001;
+                under = false;
+                x = 0f;
+                y = 0f;
+                moveX = 0f;
+                moveY = 0f;
+                moveRot = 0f;
+            }}
+            );
+            weapons.add(
+                    new Weapon("magic-MoonRise0") {{
+                        reload = 180f;
+                        x = 0f;
+                        y = -10f;
+                        rotate = true;
+                        rotateSpeed = 3f;
+                        mirror = true;
+                        alternate = false;
+                        inaccuracy = 0f;
+                        shootSound = MLSounds.laserblast;
+                        chargeSound = MLSounds.lasercharge;
+                        layerOffset = 0.001f;
+                        shoot = new ShootPattern() {{
+                            firstShotDelay = 80f;
+                        }};
+                        shake = 20f;
+                        shootY = 16f;
+                        bullet = new LaserBulletType() {{
+                            length = 480f;
+                            width = 60f;
+                            damage = 300f;
+                            lifetime = 60f;
+                            colors = new Color[]{
+                                    Color.valueOf("958F60FF"),
+                                    Color.valueOf("C8BA8FFF"),
+                                    Color.valueOf("FFFFFFFF")
+                            };
+                            despawnEffect = Fx.none;
+                            hitEffect = Fx.none;
+                            smokeEffect = Fx.bigShockwave;
+                            chargeEffect = Fx.greenLaserCharge;
+                        }};
+                    }},
+                    new Weapon("magic-ConstantGlow1") {{
+                        reload = 30f;
+                        x = 23f;
+                        y = -12f;
+                        rotate = true;
+                        rotateSpeed = 2.5f;
+                        mirror = true;
+                        alternate = true;
+                        inaccuracy = 3f;
+                        shootSound = MLSounds.laser;
+                        shake = 3f;
+                        bullet = new BasicBulletType() {{
+                            damage = 180f;
+                            lifetime = 70f;
+                            speed = 8f;
+                            width = 16f;
+                            height = 24f;
+                            hitSize = 16f;
+                            splashDamageRadius = 36f;
+                            splashDamage = 180f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            trailLength = 6;
+                            trailWidth = 2f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            hitSound = MLSounds.plasmaboom;
+                            hitEffect = despawnEffect = new MultiEffect(
+                                    new WaveEffect() {{
+                                        lifetime = 30f;
+                                        sizeFrom = 0f;
+                                        sizeTo = 72f;
+                                        strokeFrom = 0f;
+                                        strokeTo = 3f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect() {{
+                                        particles = 10;
+                                        sizeFrom = 9f;
+                                        sizeTo = 0f;
+                                        length = 72f;
+                                        baseLength = 0f;
+                                        lifetime = 30f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                        interp = Interp.pow10Out;
+                                        sizeInterp = Interp.pow10In;
+                                    }}
+                            );
+                            smokeEffect = Fx.smokeCloud;
+                            trailChance = 1f;
+                            trailInterval = 20f;
+                            trailEffect = new ParticleEffect() {{
+                                particles = 6;
+                                length = 9f;
+                                baseLength = 12f;
+                                lifetime = 9f;
+                                sizeFrom = 3f;
+                                sizeTo = 0f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                        }};
+                    }},
+                    new Weapon("magic-ConstantGlow1") {{
+                        reload = 30f;
+                        x = 21f;
+                        y = -33f;
+                        rotate = true;
+                        rotateSpeed = 2.5f;
+                        mirror = true;
+                        alternate = true;
+                        inaccuracy = 3f;
+                        shootSound = MLSounds.laser;
+                        shake = 3f;
+                        bullet = new BasicBulletType() {{
+                            damage = 180f;
+                            lifetime = 70f;
+                            speed = 8f;
+                            width = 16f;
+                            height = 24f;
+                            hitSize = 16f;
+                            splashDamageRadius = 36f;
+                            splashDamage = 180f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            trailLength = 6;
+                            trailWidth = 2f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            hitSound = MLSounds.plasmaboom;
+                            hitEffect = despawnEffect = new MultiEffect(
+                                    new WaveEffect() {{
+                                        lifetime = 30f;
+                                        sizeFrom = 0f;
+                                        sizeTo = 72f;
+                                        strokeFrom = 0f;
+                                        strokeTo = 3f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect() {{
+                                        particles = 10;
+                                        sizeFrom = 9f;
+                                        sizeTo = 0f;
+                                        length = 72f;
+                                        baseLength = 0f;
+                                        lifetime = 30f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                        interp = Interp.pow10Out;
+                                        sizeInterp = Interp.pow10In;
+                                    }}
+                            );
+                            smokeEffect = Fx.smokeCloud;
+                            trailChance = 1f;
+                            trailInterval = 20f;
+                            trailEffect = new ParticleEffect() {{
+                                particles = 6;
+                                length = 9f;
+                                baseLength = 12f;
+                                lifetime = 9f;
+                                sizeFrom = 3f;
+                                sizeTo = 0f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }};
+                        }};
+                    }});
+        }};
             //旗舰
         //T1
         Aoba = new UnitType("Aoba"){{
