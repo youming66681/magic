@@ -91,6 +91,21 @@ public class MLSpawnUnits {
                     MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                 });
             }
+            else if (unit.type == MLUnitTypes.ConstantGlow) {
+                float delay = 1f;
+                float x = unit.x + Mathf.random(-240f, 240f);
+                float y = unit.y + Mathf.random(-240f, 240f);
+                UnitType type = unit.type;
+                MLFx.middleTeleport.at(x, y);
+                unit.remove();
+                Time.run(delay * 60f, () -> {
+                    Unit newUnit = type.create(state.rules.waveTeam);
+                    newUnit.set(x, y);
+                    MLSounds.plasmaboom.at(x, y, 10f);
+                    newUnit.add();
+                    MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
+                });
+            }
             else if (unit.type == MLUnitTypes.Aoba) {
                 float delay = 1f;
                 float x = unit.x + Mathf.random(-240f, 240f);
