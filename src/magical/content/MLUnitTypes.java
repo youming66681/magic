@@ -4073,7 +4073,7 @@ public class MLUnitTypes {
             }}
             );
             weapons.add(
-                    new Weapon("magic-MoonRise0") {{
+                    new Weapon("magic-ConstantGlow0") {{
                         reload = 180f;
                         x = 0f;
                         y = -10f;
