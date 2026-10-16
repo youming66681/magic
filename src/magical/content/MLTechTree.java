@@ -279,6 +279,8 @@ public class MLTechTree {
                             });
                                 });
                         /*通用装配升级厂*/node(MLBlocks.GeneralAssemblyUpgrade, () -> {
+                            /*恒晖*/node(MLUnitTypes.ConstantGlow, () -> {
+                            });
                             /*破锋*/node(MLUnitTypes.BrokenEdge, () -> {
                             });
                                 /*天枢*/node(MLUnitTypes.Tianshu, () -> {
