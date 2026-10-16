@@ -4182,6 +4182,7 @@ public class MLUnitTypes {
                         inaccuracy = 3f;
                         shootSound = MLSounds.laser;
                         shake = 3f;
+                        layerOffset = 0.001f;
                         bullet = new BasicBulletType() {{
                             damage = 180f;
                             lifetime = 70f;
