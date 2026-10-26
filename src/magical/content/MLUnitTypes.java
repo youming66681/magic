@@ -67,7 +67,8 @@ public class MLUnitTypes {
     //大型
     BrokenEdge, FlyingSwallow, Tianshu, ConstantGlow,
     //旗舰
-    Aoba, MoonRise, StarrySky, MilkyWay, TheWorld;
+    Aoba, MoonRise, StarrySky, MilkyWay, TheWorld,
+    LiYao;
 
     public static void load() {
         //幻境陆军
@@ -4120,7 +4121,7 @@ public class MLUnitTypes {
                         layerOffset = 0.001f;
                         bullet = new BasicBulletType() {{
                             damage = 180f;
-                            lifetime = 70f;
+                            lifetime = 60f;
                             speed = 8f;
                             width = 16f;
                             height = 24f;
@@ -4185,7 +4186,7 @@ public class MLUnitTypes {
                         layerOffset = 0.001f;
                         bullet = new BasicBulletType() {{
                             damage = 180f;
-                            lifetime = 70f;
+                            lifetime = 60f;
                             speed = 8f;
                             width = 16f;
                             height = 24f;
@@ -5814,7 +5815,7 @@ public class MLUnitTypes {
                         x = 44f;
                         y = 93f;
                         mirror = true;
-                        reload = 2f;
+                        reload = 2.5f;
                         shootSound = MLSounds.JG;
                         inaccuracy = 0f;
                         recoil = 2.5f;
@@ -5825,7 +5826,7 @@ public class MLUnitTypes {
                             spread = 2f;
                         }};
                         bullet = new BasicBulletType() {{
-                            damage = 50f;
+                            damage = 100f;
                             pierceCap = 3;
                             pierceBuilding = true;
                             frontColor = Color.valueOf("FEEBB3FF");
@@ -5862,7 +5863,7 @@ public class MLUnitTypes {
                         x = 80f;
                         y = 112f;
                         mirror = true;
-                        reload = 2f;
+                        reload = 2.5f;
                         shootSound = MLSounds.JG;
                         inaccuracy = 0f;
                         recoil = 2.5f;
@@ -5873,7 +5874,7 @@ public class MLUnitTypes {
                             spread = 2f;
                         }};
                         bullet = new BasicBulletType() {{
-                            damage = 50f;
+                            damage = 100f;
                             pierceCap = 3;
                             pierceBuilding = true;
                             frontColor = Color.valueOf("FEEBB3FF");
@@ -5910,7 +5911,7 @@ public class MLUnitTypes {
                         x = 70f;
                         y = -108f;
                         mirror = true;
-                        reload = 2f;
+                        reload = 2.5f;
                         shootSound = MLSounds.JG;
                         inaccuracy = 0f;
                         recoil = 2.5f;
@@ -5921,7 +5922,7 @@ public class MLUnitTypes {
                             spread = 2f;
                         }};
                         bullet = new BasicBulletType() {{
-                            damage = 50f;
+                            damage = 100f;
                             pierceCap = 3;
                             pierceBuilding = true;
                             frontColor = Color.valueOf("FEEBB3FF");
@@ -5955,5 +5956,62 @@ public class MLUnitTypes {
                         }};
                     }});
         }};
+        //LiYao
+        LiYao = new UnitType("LiYao"){{
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            faceTarget = false;
+            lowAltitude = true;
+            rotateMoveFirst = true;
+            omniMovement = true;
+            rotateSpeed = 1.8f;
+            health = 600000f;
+            armor = 150f;
+            hitSize = 128f;
+            engineOffset = 64;
+            engineSize = 32f;
+            range = 800f;
+            speed = 0.9f;
+            accel = 0.06f;
+            drag = 0.04f;
+            targetFlags = new BlockFlag[]{
+                    BlockFlag.factory,
+                    BlockFlag.generator,
+                    BlockFlag.reactor,
+                    BlockFlag.battery
+            };
+            abilities.add(new EnergyFieldAbility(
+                    180f,   // damage
+                    120f,   // reload
+                    720f   // range
+            ) {{
+                healPercent = 3f;
+                x = 0f;
+                y = 120f;
+                maxTargets = 60;
+                effectRadius = 12f;
+                damageEffect = Fx.chainLightning;
+                shootSound = MLSounds.spark;
+                status = StatusEffects.shocked;
+            }});
+            abilities.add(new DebuffImmunityAbility(0.40f));
+            abilities.add(new DamageLimitAbility(600f, 0.75f));
+            parts.add(
+                    new HaloPart(){{
+                        y = 120;
+                        sides = 3;
+                        shapes = 2;
+                        color = Color.valueOf("FEEBB3FF");
+                        colorTo = Color.valueOf("FEEBB3FF");
+                        tri = true;
+                        radius = 0f;
+                        radiusTo = 8f;
+                        triLength = 0f;
+                        triLengthTo = 32f;
+                        haloRadius = 0f;
+                        haloRotation = 0f;
+                        haloRotateSpeed = 3f;
+                    }}
+                    );
     }
 }

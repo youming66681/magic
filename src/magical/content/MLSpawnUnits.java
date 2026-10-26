@@ -41,7 +41,7 @@ public class MLSpawnUnits {
                 Time.run(delay * 35f, () -> {
                     Unit newUnit = type.create(state.rules.waveTeam);
                     newUnit.set(x, y);
-                    MLSounds.shootRipple.at(x, y, 5f);
+                    MLSounds.shootRipple.at(x, y, 1f);
                     newUnit.add();
                     MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                 });
@@ -56,7 +56,7 @@ public class MLSpawnUnits {
                     Time.run(delay * 35f, () -> {
                         Unit newUnit = type.create(state.rules.waveTeam);
                         newUnit.set(x, y);
-                        MLSounds.shootRipple.at(x, y, 5f);
+                        MLSounds.shootRipple.at(x, y, 1f);
                         newUnit.add();
                         MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                     });
@@ -71,7 +71,7 @@ public class MLSpawnUnits {
                 Time.run(delay * 60f, () -> {
                     Unit newUnit = type.create(state.rules.waveTeam);
                     newUnit.set(x, y);
-                    MLSounds.plasmaboom.at(x, y, 10f);
+                    MLSounds.plasmaboom.at(x, y, 1f);
                     newUnit.add();
                     MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                 });
@@ -86,7 +86,7 @@ public class MLSpawnUnits {
                 Time.run(delay * 60f, () -> {
                     Unit newUnit = type.create(state.rules.waveTeam);
                     newUnit.set(x, y);
-                    MLSounds.plasmaboom.at(x, y, 10f);
+                    MLSounds.plasmaboom.at(x, y, 1f);
                     newUnit.add();
                     MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                 });
@@ -101,7 +101,7 @@ public class MLSpawnUnits {
                 Time.run(delay * 60f, () -> {
                     Unit newUnit = type.create(state.rules.waveTeam);
                     newUnit.set(x, y);
-                    MLSounds.plasmaboom.at(x, y, 10f);
+                    MLSounds.plasmaboom.at(x, y, 1f);
                     newUnit.add();
                     MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                 });
@@ -116,7 +116,7 @@ public class MLSpawnUnits {
                 Time.run(delay * 150f, () -> {
                     Unit newUnit = type.create(state.rules.waveTeam);
                     newUnit.set(x, y);
-                    MLSounds.laser.at(x, y, 15f);
+                    MLSounds.laser.at(x, y, 1f);
                     newUnit.add();
                     MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                 });
@@ -131,7 +131,7 @@ public class MLSpawnUnits {
                 Time.run(delay * 150f, () -> {
                     Unit newUnit = type.create(state.rules.waveTeam);
                     newUnit.set(x, y);
-                    MLSounds.laser.at(x, y, 15f);
+                    MLSounds.laser.at(x, y, 1f);
                     newUnit.add();
                     MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                 });
@@ -146,7 +146,7 @@ public class MLSpawnUnits {
                 Time.run(delay * 150f, () -> {
                     Unit newUnit = type.create(state.rules.waveTeam);
                     newUnit.set(x, y);
-                    MLSounds.laser.at(x, y, 15f);
+                    MLSounds.laser.at(x, y, 1f);
                     newUnit.add();
                     MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                 });
@@ -166,7 +166,7 @@ public class MLSpawnUnits {
                 Time.run(delay * 180f, () -> {
                     Unit newUnit = type.create(state.rules.waveTeam);
                     newUnit.set(x, y);
-                    MLSounds.shootForeshadow.at(x, y, 15f);
+                    MLSounds.shootForeshadow.at(x, y, 1f);
                     newUnit.add();
                     MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                 });
@@ -186,7 +186,7 @@ public class MLSpawnUnits {
                 Time.run(delay * 180f, () -> {
                     Unit newUnit = type.create(state.rules.waveTeam);
                     newUnit.set(x, y);
-                    MLSounds.shootForeshadow.at(x, y, 15f);
+                    MLSounds.shootForeshadow.at(x, y, 1f);
                     newUnit.add();
                     MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                 });

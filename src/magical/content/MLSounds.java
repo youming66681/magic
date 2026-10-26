@@ -82,7 +82,7 @@ public class MLSounds {
         malignShoot = loadSoundSafe("malignShoot.ogg");
         shootBig = loadSoundSafe("shootBig.ogg");
         mediumCannon = loadSoundSafe("mediumCannon.ogg");
-        shoot = loadSoundSafe("mediumCannon.ogg");
+        shoot = loadSoundSafe("shoot.ogg");
         shootRipple = loadSoundSafe("shootRipple.ogg");
         shootArtillerySapBig = loadSoundSafe("shootArtillerySapBig.ogg");
         bz = loadSoundSafe("bz.ogg");
