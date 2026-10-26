@@ -5970,7 +5970,7 @@ public class MLUnitTypes {
             armor = 150f;
             hitSize = 128f;
             engineOffset = 64;
-            engineSize = 32f;
+            engineSize = 16f;
             range = 800f;
             speed = 0.9f;
             accel = 0.06f;
@@ -5988,9 +5988,9 @@ public class MLUnitTypes {
             ) {{
                 healPercent = 3f;
                 x = 0f;
-                y = 120f;
+                y = 64f;
                 maxTargets = 60;
-                effectRadius = 12f;
+                effectRadius = 10f;
                 damageEffect = Fx.chainLightning;
                 shootSound = MLSounds.spark;
                 status = StatusEffects.shocked;
@@ -5999,15 +5999,15 @@ public class MLUnitTypes {
             abilities.add(new DamageLimitAbility(600f, 0.75f));
             parts.add(
                     new HaloPart() {{
-                        y = 120;
+                        y = 64;
                         sides = 3;
                         shapes = 2;
                         color = Color.valueOf("FEEBB3FF");
                         colorTo = Color.valueOf("FEEBB3FF");
                         tri = true;
-                        radius = 0f;
+                        radius = 8f;
                         radiusTo = 8f;
-                        triLength = 0f;
+                        triLength = 32f;
                         triLengthTo = 32f;
                         haloRadius = 0f;
                         haloRotation = 0f;
