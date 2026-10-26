@@ -6013,5 +6013,5 @@ public class MLUnitTypes {
                         haloRotateSpeed = 3f;
                     }}
                     );
-    }
+    }};
 }
