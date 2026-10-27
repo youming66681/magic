@@ -5969,7 +5969,7 @@ public class MLUnitTypes {
             health = 600000f;
             armor = 150f;
             hitSize = 128f;
-            engineOffset = 64;
+            engineOffset = 56;
             engineSize = 16f;
             range = 800f;
             speed = 0.9f;
@@ -6005,10 +6005,10 @@ public class MLUnitTypes {
                         color = Color.valueOf("FEEBB3FF");
                         colorTo = Color.valueOf("FEEBB3FF");
                         tri = true;
-                        radius = 8f;
-                        radiusTo = 8f;
-                        triLength = 32f;
-                        triLengthTo = 32f;
+                        radius = 12f;
+                        radiusTo = 12f;
+                        triLength = 48f;
+                        triLengthTo = 48f;
                         haloRadius = 0f;
                         haloRotation = 0f;
                         haloRotateSpeed = 3f;
