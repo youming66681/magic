@@ -287,8 +287,10 @@ public class MLTechTree {
                                     });
                             /*青叶*/node(MLUnitTypes.Aoba, () -> {
                                 /*月涌*/node(MLUnitTypes.MoonRise, () -> {
-                                    /*星空*/node(MLUnitTypes.StarrySky, () -> {
 
+                                    /*星空*/node(MLUnitTypes.StarrySky, () -> {
+                                        /*LiYao*/node(MLUnitTypes.LiYao, () -> {
+                                        });
                                     });
                                 });
                             });

@@ -5984,11 +5984,11 @@ public class MLUnitTypes {
             abilities.add(new EnergyFieldAbility(
                     180f,   // damage
                     120f,   // reload
-                    720f   // range
+                    400f   // range
             ) {{
                 healPercent = 3f;
                 x = 0f;
-                y = 64f;
+                y = 60f;
                 maxTargets = 60;
                 effectRadius = 10f;
                 damageEffect = Fx.chainLightning;
@@ -5999,7 +5999,7 @@ public class MLUnitTypes {
             abilities.add(new DamageLimitAbility(600f, 0.75f));
             parts.add(
                     new HaloPart() {{
-                        y = 64;
+                        y = 60;
                         sides = 3;
                         shapes = 2;
                         color = Color.valueOf("FEEBB3FF");
