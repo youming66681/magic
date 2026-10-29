@@ -6163,7 +6163,7 @@ public class MLUnitTypes {
                                     height = 80f;
                                     sprite = "magic-十字星";
                                     reflectable = false;
-                                    collides = true;
+                                    collides = false;
                                     frontColor = Color.valueOf("FEEBB3FF");
                                     backColor = Color.valueOf("FEEBB3FF");
                                     speed = 16f;
