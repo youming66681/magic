@@ -3772,13 +3772,13 @@ public class MLUnitTypes {
                         }}
                 );
                 inaccuracy = 0f;
-                bullet = new MissileBulletType(8f, 280f) {{
+                bullet = new MissileBulletType(8f, 140f) {{
                     hitSound = MLSounds.plasmaboom;
                     homingRange = 288f;
                     homingPower = 0.014f;
                     homingDelay = 0f;
                     splashDamageRadius = 48f;
-                    splashDamage = 120f;
+                    splashDamage = 60f;
                     hitEffect = MLFx.EnergyExplosion;
                     despawnEffect = Fx.none;
                     trailLength = 9;
