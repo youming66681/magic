@@ -6154,7 +6154,7 @@ public class MLUnitTypes {
                                     hitSize = 80f;
                                     damage = 1f;
                                     splashDamageRadius = 64f;
-                                    splashDamage = 400f;
+                                    splashDamage = 600f;
                                     homingRange = 1600f;
                                     homingPower = 0.2f;
                                     homingDelay = 20f;
