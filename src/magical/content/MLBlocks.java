@@ -3665,16 +3665,20 @@ public class MLBlocks {
             dronesCreated = 4;
             health = 6300;
             // 配方：(等级标签, 输出单位, 时间(秒), 范围(格), 需要模块数, 载荷需求...)
-            addPlan("T1", MLUnitTypes.Starlight, 1200f, 11, 0,
+            addPlan("T1", MLUnitTypes.Starlight, 880f, 11, 0,
                     new PayloadStack(MLBlocks.largePhantomSteelWall, 8),
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 8),
                     new PayloadStack(Blocks.repairPoint, 8),
                     new PayloadStack(Blocks.forceProjector, 4));
-            addPlan("T1", MLUnitTypes.Qingxiao, 1500f, 11, 0,
+            addPlan("T1", MLUnitTypes.Qingxiao, 1200f, 11, 0,
                     new PayloadStack(MLBlocks.largePhantomSteelWall, 8),
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 8),
                     new PayloadStack(Blocks.lancer, 4),
                     new PayloadStack(Blocks.forceProjector, 2));
+            addPlan("T1", MLUnitTypes.Zenith, 1400f, 13, 0,
+                    new PayloadStack(MLBlocks.largePhantomSteelWall, 8),
+                    new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 8),
+                    new PayloadStack(Blocks.swarmer, 6));
             addPlan("T2", MLUnitTypes.BrokenEdge, 4500f, 15, 1,
                     new PayloadStack(MLBlocks.largePhantomSteelWall, 10),
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 10),
@@ -3759,6 +3763,7 @@ public class MLBlocks {
                     Blocks.forceProjector,
                     Blocks.lancer,
                     Blocks.salvo,
+                    Blocks.swarmer,
                     MLBlocks.electroge,
                     MLBlocks.LightDescends,
                     MLBlocks.BasicManufacturingPlant,

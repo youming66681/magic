@@ -140,10 +140,12 @@ public class MLTechTree {
                             });
 
                     /*星芒*/node(MLUnitTypes.Starlight, Seq.with(new SectorComplete(MLSectorPresets.CrossIceValley)), () -> {
-                            });
                         /*箐霄*/node(MLUnitTypes.Qingxiao, () -> {
                         });
+                    /*天顶*/node(MLUnitTypes.Zenith, () -> {
+                    });
                    });
+                });
                 /*幻晶*/node(MLBlocks.PhantomCrystal, Seq.with(new OnSector(MLSectorPresets.CrossIceValley)), () -> {
                             /*光降*/node(MLBlocks.LightDescends, Seq.with(new SectorComplete(MLSectorPresets.CrossIceValley)), () -> {
                                 /*雷恒*/node(MLBlocks.LeiHeng, () -> {

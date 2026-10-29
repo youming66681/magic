@@ -63,7 +63,7 @@ public class MLUnitTypes {
     Popular, SpinningSpear, Nightingale,
     //星舰
     //小型
-    Pioneer, Starlight, Qingxiao,
+    Pioneer, Starlight, Qingxiao, Zenith,
     //大型
     BrokenEdge, FlyingSwallow, Tianshu, ConstantGlow,
     //旗舰
@@ -3710,6 +3710,81 @@ public class MLUnitTypes {
                         }};
                     }});
         }};
+        Zenith = new UnitType("Zenith") {{
+            constructor = UnitTypes.flare.constructor;
+            flying = true;
+            lowAltitude = true;
+            rotateMoveFirst = true;
+            omniMovement = true;
+            rotateSpeed = 2.25f;
+            speed = 6f;
+            drag = 0.02f;
+            accel = 0.08f;
+            hitSize = 48;
+            health = 14000;
+            armor = 28;
+            itemCapacity = 0;
+            engineOffset = 24;
+            engineSize = 12f;
+            trailLength = 12;
+            range = 288;
+            weapons.add(
+            new Weapon("magic-Ember1") {{
+                x = 0f;
+                y = 0f;
+                reload = 150f;
+                mirror = false;
+                alternate = false;
+                ignoreRotation = true;
+                shootCone = 180;
+                shootSound = MLSounds.missileLaunch;
+                shoot = new ShootMulti(
+                        new ShootBarrel() {{
+                            shots = 6;
+                            shotDelay = 0f;
+                            barrels = new float[]{
+                                    16f, 8f, 0f,
+                                    -16f, 8f, 0f,
+                            };
+                        }},
+                        new ShootPattern() {{
+                            shots = 2;
+                            shotDelay = 0f;
+                            firstShotDelay = 0f;
+                        }},
+                        new ShootPattern() {{
+                            shots = 2;
+                            shotDelay = 0f;
+                            firstShotDelay = 15f;
+                        }},
+                        new ShootPattern() {{
+                            shots = 2;
+                            shotDelay = 0f;
+                            firstShotDelay = 30f;
+                        }}
+                );
+                inaccuracy = 0f;
+                bullet = new MissileBulletType(8f, 280f) {{
+                    hitSound = MLSounds.plasmaboom;
+                    homingRange = 288f;
+                    homingPower = 0.014f;
+                    homingDelay = 0f;
+                    splashDamageRadius = 48f;
+                    splashDamage = 120f;
+                    hitEffect = MLFx.EnergyExplosion;
+                    despawnEffect = Fx.none;
+                    trailLength = 9;
+                    trailWidth = 3f;
+                    trailColor = Color.valueOf("FEEBB3FF");
+                    frontColor = Color.valueOf("FEEBB3FF");
+                    backColor = Color.valueOf("FEEBB3FF");
+                    width = 24f;
+                    height = 48f;
+                    lifetime = 36f;
+                    sprite = "magic-大导弹";
+                }};
+            }});
+        }};
         //大型
         BrokenEdge = new UnitType("BrokenEdge") {{
             flying = true;
@@ -6152,7 +6227,7 @@ public class MLUnitTypes {
                             bulletInterval = 1f;
                             intervalBullet = new BasicBulletType(){{
                                     hitSize = 80f;
-                                    damage = 1f;
+                                    damage = 400f;
                                     splashDamageRadius = 64f;
                                     splashDamage = 600f;
                                     homingRange = 1600f;
