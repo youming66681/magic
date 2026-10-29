@@ -3748,7 +3748,7 @@ public class MLUnitTypes {
                 shootSound = MLSounds.missileLaunch;
                 shoot = new ShootMulti(
                         new ShootBarrel() {{
-                            shots = 0;
+                            shots = 2;
                             shotDelay = 0f;
                             barrels = new float[]{
                                     16f, 8f, 0f,
