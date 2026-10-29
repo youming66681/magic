@@ -3733,6 +3733,9 @@ public class MLUnitTypes {
             engineSize = 12f;
             trailLength = 12;
             range = 288;
+            targetFlags = new BlockFlag[]{
+                    BlockFlag.factory
+            };
             weapons.add(
             new Weapon("magic-Zenith0") {{
                 x = 0f;
