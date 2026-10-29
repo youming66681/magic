@@ -3529,6 +3529,7 @@ public class MLUnitTypes {
                 }};
             }});
         }};
+        //星芒
         Starlight = new UnitType("Starlight") {{
             constructor = UnitTypes.flare.constructor;
             aiController = FlyingFollowAI::new;
@@ -3610,6 +3611,7 @@ public class MLUnitTypes {
                         }};
                     }});
         }};
+        //箐霄
         Qingxiao = new UnitType("Qingxiao") {{
             constructor = UnitTypes.flare.constructor;
             flying = true;
@@ -3710,12 +3712,15 @@ public class MLUnitTypes {
                         }};
                     }});
         }};
+        //天顶
         Zenith = new UnitType("Zenith") {{
             constructor = UnitTypes.flare.constructor;
             flying = true;
             lowAltitude = true;
             rotateMoveFirst = true;
             omniMovement = true;
+            circleTarget = true;
+            circleTargetRadius = 550;
             rotateSpeed = 2.25f;
             speed = 6f;
             drag = 0.02f;
@@ -3729,7 +3734,7 @@ public class MLUnitTypes {
             trailLength = 12;
             range = 288;
             weapons.add(
-            new Weapon("magic-Ember1") {{
+            new Weapon("magic-Zenith0") {{
                 x = 0f;
                 y = 0f;
                 reload = 150f;
