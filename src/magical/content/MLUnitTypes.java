@@ -6022,7 +6022,7 @@ public class MLUnitTypes {
                 reload = 180f;
                 shoot = new ShootBarrel() {{
                     shots = 60;
-                    shotDelay = 2f;
+                    shotDelay = 1f;
                     barrels = new float[]{
                             28f, -56f, 0f,
                             28f, -56f, -18f,
@@ -6062,7 +6062,55 @@ public class MLUnitTypes {
                     hitSound = MLSounds.plasmaboom;
                     hitEffect = MLFx.EnergyExplosion;
                 }};
-            }});
+            }},
+                    new Weapon("magic-LiYao0") {{
+                            mirror = false;
+                            x = 0f;
+                            y = 0f;
+                            reload = 180f;
+                            shoot = new ShootBarrel() {{
+                                shots = 60;
+                                shotDelay = 1f;
+                                barrels = new float[]{
+                                        -28f, -56f, 0f,
+                                        -28f, -56f, 18f,
+                                        -28f, -56f, 36f,
+                                        -28f, -56f, 54f,
+                                        -28f, -56f, 72f,
+                                        -28f, -56f, 90f,
+                                };
+                            }};
+                            shootSound = MLSounds.missileLarge;
+                            rotate = false;
+                            rotateSpeed = 3f;
+                            inaccuracy = 0f;
+                            controllable = false;
+                            autoTarget = true;
+                            alternate = false;
+                            ignoreRotation = true;
+                            shootCone = 360;
+                            bullet = new MissileBulletType() {{
+                                damage = 120f;
+                                splashDamageRadius = 48f;
+                                splashDamage = 120f;
+                                homingRange = 800f;
+                                homingPower = 0.25f;
+                                homingDelay = 10f;
+                                sprite = "magic-大导弹";
+                                trailLength = 6;
+                                trailWidth = 3f;
+                                trailEffect = Fx.none;
+                                trailColor = Color.valueOf("FEEBB3FF");
+                                backColor = Color.valueOf("FEEBB3FF");
+                                frontColor = Color.valueOf("FEEBB3FF");
+                                width = 24f;
+                                height = 48f;
+                                speed = 8f;
+                                lifetime = 100f;
+                                hitSound = MLSounds.plasmaboom;
+                                hitEffect = MLFx.EnergyExplosion;
+                            }};
+                        }});
         }};
     }
 }
