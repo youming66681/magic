@@ -6132,7 +6132,7 @@ public class MLUnitTypes {
                             hittable = false;
                             reflectable = false;
                             homingRange = 800f;
-                            homingPower = 0.5f;
+                            homingPower = 0.4f;
                             homingDelay = 0f;
                             damage = 1f;
                             speed = 16f;
@@ -6149,15 +6149,15 @@ public class MLUnitTypes {
                             hitEffect = Fx.none;
                             despawnEffect = Fx.none;
                             intervalBullets = 1;
-                            bulletInterval = 2f;
+                            bulletInterval = 1f;
                             intervalBullet = new BasicBulletType(){{
                                     hitSize = 80f;
                                     damage = 1f;
                                     splashDamageRadius = 64f;
                                     splashDamage = 400f;
                                     homingRange = 1600f;
-                                    homingPower = 0.25f;
-                                    homingDelay = 10f;
+                                    homingPower = 0.2f;
+                                    homingDelay = 20f;
                                     spin = 4f;
                                     width = 80f;
                                     height = 80f;
@@ -6167,7 +6167,7 @@ public class MLUnitTypes {
                                     frontColor = Color.valueOf("FEEBB3FF");
                                     backColor = Color.valueOf("FEEBB3FF");
                                     speed = 16f;
-                                    lifetime = 50f;
+                                    lifetime = 100f;
                                     trailColor = Color.valueOf("FEEBB3FF");
                                     trailChance = 1f;
                                     trailLength = 16;
