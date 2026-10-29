@@ -6110,7 +6110,46 @@ public class MLUnitTypes {
                                 hitSound = MLSounds.plasmaboom;
                                 hitEffect = MLFx.EnergyExplosion;
                             }};
-                        }});
+                        }},
+                    new Weapon("magic-LiYao1") {{
+                        reload = 600f;
+                        x = 0f;
+                        y = 56f;
+                        rotate = false;
+                        rotateSpeed = 1.5f;
+                        mirror = false;
+                        alternate = true;
+                        inaccuracy = 0f;
+                        shootSound = MLSounds.laserblast;
+                        shake = 30f;
+                        ignoreRotation = true;
+                        shootCone = 360;
+                        bullet = new BasicBulletType() {{
+                            hitSize = 48f;
+                            pierce = true;
+                            pierceBuilding = true;
+                            collides = true;
+                            hittable = false;
+                            reflectable = false;
+                            homingRange = 800f;
+                            homingPower = 1f;
+                            homingDelay = 0f;
+                            damage = 1f;
+                            speed = 32f;
+                            lifetime = 25f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            sprite = "magic-透彻";
+                            trailLength = 12;
+                            trailWidth = 6f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            hitSound = MLSounds.explosionCleroi;
+                            width = 48f;
+                            height = 96f;
+                            hitEffect = Fx.none;
+                            despawnEffect = Fx.none;
+                        }};
+                    }},
         }};
     }
 }
