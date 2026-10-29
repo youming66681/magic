@@ -5968,7 +5968,7 @@ public class MLUnitTypes {
             rotateSpeed = 1.8f;
             health = 600000f;
             armor = 150f;
-            hitSize = 128f;
+            hitSize = 120f;
             engineOffset = 56;
             engineSize = 16f;
             range = 800f;
@@ -5988,7 +5988,7 @@ public class MLUnitTypes {
             ) {{
                 healPercent = 3f;
                 x = 0f;
-                y = 60f;
+                y = 56f;
                 maxTargets = 60;
                 effectRadius = 10f;
                 damageEffect = Fx.chainLightning;
@@ -5999,7 +5999,7 @@ public class MLUnitTypes {
             abilities.add(new DamageLimitAbility(600f, 0.75f));
             parts.add(
                     new HaloPart() {{
-                        y = 60;
+                        y = 56;
                         sides = 3;
                         shapes = 2;
                         color = Color.valueOf("FEEBB3FF");
@@ -6014,6 +6014,53 @@ public class MLUnitTypes {
                         haloRotateSpeed = 3f;
                     }}
             );
+            new Weapon("magic-LiYao0") {{
+                mirror = false;
+                x = 28f;
+                y = -56f;
+                reload = 180f;
+                shoot = new ShootBarrel() {{
+                    shots = 50;
+                    shotDelay = 1f;
+                    barrels = new float[]{
+                            28f, -56f, 0f,
+                            28f, -56f, -18f,
+                            28f, -56f, -27f,
+                            28f, -56f, -54f,
+                            28f, -56f, -90f,
+                    };
+                }};
+                shootSound = MLSounds.missileLarge;
+                rotate = false;
+                rotateSpeed = 3f;
+                inaccuracy = 0f;
+                controllable = false;
+                autoTarget = true;
+                alternate = false;
+                ignoreRotation = true;
+                shootCone = 360;
+                bullet = new MissileBulletType() {{
+                    damage = 120f;
+                    splashDamageRadius = 48f;
+                    splashDamage = 120f;
+                    homingRange = 800f;
+                    homingPower = 0.25f;
+                    homingDelay = 10f;
+                    sprite = "magic-大导弹";
+                    trailLength = 6;
+                    trailWidth = 3f;
+                    trailEffect = Fx.none;
+                    trailColor = Color.valueOf("FEEBB3FF");
+                    backColor = Color.valueOf("FEEBB3FF");
+                    frontColor = Color.valueOf("FEEBB3FF");
+                    width = 16f;
+                    height = 32f;
+                    speed = 8f;
+                    lifetime = 100f;
+                    hitSound = MLSounds.plasmaboom;
+                    hitEffect = MLFx.EnergyExplosion;
+                }};
+            }});
         }};
     }
 }
