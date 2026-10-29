@@ -5971,7 +5971,7 @@ public class MLUnitTypes {
             hitSize = 120f;
             engineOffset = 56;
             engineSize = 16f;
-            range = 800f;
+            range = 1600f;
             speed = 0.9f;
             accel = 0.06f;
             drag = 0.04f;
@@ -5984,7 +5984,7 @@ public class MLUnitTypes {
             abilities.add(new EnergyFieldAbility(
                     180f,   // damage
                     120f,   // reload
-                    400f   // range
+                    800f   // range
             ) {{
                 healPercent = 3f;
                 x = 0f;
@@ -6058,7 +6058,7 @@ public class MLUnitTypes {
                     width = 24f;
                     height = 48f;
                     speed = 8f;
-                    lifetime = 100f;
+                    lifetime = 200f;
                     hitSound = MLSounds.plasmaboom;
                     hitEffect = MLFx.EnergyExplosion;
                 }};
@@ -6106,7 +6106,7 @@ public class MLUnitTypes {
                                 width = 24f;
                                 height = 48f;
                                 speed = 8f;
-                                lifetime = 100f;
+                                lifetime = 200f;
                                 hitSound = MLSounds.plasmaboom;
                                 hitEffect = MLFx.EnergyExplosion;
                             }};
@@ -6135,8 +6135,8 @@ public class MLUnitTypes {
                             homingPower = 1f;
                             homingDelay = 0f;
                             damage = 1f;
-                            speed = 32f;
-                            lifetime = 25f;
+                            speed = 16f;
+                            lifetime = 100f;
                             frontColor = Color.valueOf("FEEBB3FF");
                             backColor = Color.valueOf("FEEBB3FF");
                             sprite = "magic-透彻";
@@ -6148,6 +6148,41 @@ public class MLUnitTypes {
                             height = 96f;
                             hitEffect = Fx.none;
                             despawnEffect = Fx.none;
+                            intervalBullets = 1;
+                            bulletInterval = 5f;
+                            intervalBullet = new BasicBulletType(){{
+                                    hitSize = 72f;
+                                    damage = 1f;
+                                    splashDamageRadius = 64f;
+                                    splashDamage = 400f;
+                                    homingRange = 1600f;
+                                    homingPower = 0.5f;
+                                    homingDelay = 10f;
+                                    spin = 4f;
+                                    width = 72f;
+                                    height = 72f;
+                                    sprite = "magic-十字星";
+                                    reflectable = false;
+                                    collides = true;
+                                    frontColor = Color.valueOf("FEEBB3FF");
+                                    backColor = Color.valueOf("FEEBB3FF");
+                                    speed = 16f;
+                                    lifetime = 50f;
+                                    trailLength = 12;
+                                    trailWidth = 6f;
+                                    trailEffect = new ParticleEffect() {{
+                                        particles = 8;
+                                        length = 16f;
+                                        baseLength = 16f;
+                                        lifetime = 8f;
+                                        sizeFrom = 4f;
+                                        sizeTo = 0f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }};
+                                    hitSound = MLSounds.explosionCleroi;
+                                    hitEffect = MLFx.EnergyExplosion2;
+                                }};
                         }};
                     }});
         }};
