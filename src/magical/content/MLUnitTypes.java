@@ -6014,6 +6014,7 @@ public class MLUnitTypes {
                         haloRotateSpeed = 3f;
                     }}
             );
+            weapons.add(
             new Weapon("magic-LiYao0") {{
                 mirror = false;
                 x = 28f;
