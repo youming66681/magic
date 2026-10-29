@@ -6131,7 +6131,7 @@ public class MLUnitTypes {
                             collides = true;
                             hittable = false;
                             reflectable = false;
-                            homingRange = 800f;
+                            homingRange = 1600f;
                             homingPower = 0.4f;
                             homingDelay = 0f;
                             damage = 1f;
