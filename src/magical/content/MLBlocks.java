@@ -3721,7 +3721,7 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 24),
                     new PayloadStack(MLBlocks.LargeWingWall, 24),
                     new PayloadStack(MLBlocks.LargePhantomGlowWall, 24),
-                    new PayloadStack(MLBlocks.SeekingSky, 10),
+                    new PayloadStack(MLBlocks.SeekingSky, 10));
             addPlan("T3", MLUnitTypes.MilkyWay, 108000f, 39, 2,
                     new PayloadStack(MLBlocks.LargeWingWall, 9),
                     new PayloadStack(MLBlocks.LargePhantomGlowWall, 9),
