@@ -6017,17 +6017,18 @@ public class MLUnitTypes {
             weapons.add(
             new Weapon("magic-LiYao0") {{
                 mirror = false;
-                x = 28f;
-                y = -56f;
+                x = 0f;
+                y = 0f;
                 reload = 180f;
                 shoot = new ShootBarrel() {{
-                    shots = 50;
-                    shotDelay = 1f;
+                    shots = 60;
+                    shotDelay = 2f;
                     barrels = new float[]{
                             28f, -56f, 0f,
                             28f, -56f, -18f,
-                            28f, -56f, -27f,
+                            28f, -56f, -36f,
                             28f, -56f, -54f,
+                            28f, -56f, -72f,
                             28f, -56f, -90f,
                     };
                 }};
@@ -6054,8 +6055,8 @@ public class MLUnitTypes {
                     trailColor = Color.valueOf("FEEBB3FF");
                     backColor = Color.valueOf("FEEBB3FF");
                     frontColor = Color.valueOf("FEEBB3FF");
-                    width = 16f;
-                    height = 32f;
+                    width = 24f;
+                    height = 48f;
                     speed = 8f;
                     lifetime = 100f;
                     hitSound = MLSounds.plasmaboom;
