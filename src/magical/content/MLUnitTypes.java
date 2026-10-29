@@ -6149,7 +6149,7 @@ public class MLUnitTypes {
                             hitEffect = Fx.none;
                             despawnEffect = Fx.none;
                         }};
-                    }},
+                    }});
         }};
     }
 }
