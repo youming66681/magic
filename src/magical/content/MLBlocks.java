@@ -883,8 +883,8 @@ public class MLBlocks {
                         shots = 2;
                         shotDelay = 0f;
                         barrels = new float[]{
-                                6f, 12f, 0f,
-                                -6f, 12f, 0f,
+                                6f, 0f, 0f,
+                                -6f, 0f, 0f,
                         };
                     }},
                     new ShootPattern() {{
@@ -895,12 +895,12 @@ public class MLBlocks {
                     new ShootPattern() {{
                         shots = 2;
                         shotDelay = 0f;
-                        firstShotDelay = 8f;
+                        firstShotDelay = 5f;
                     }},
                     new ShootPattern() {{
                         shots = 2;
                         shotDelay = 0f;
-                        firstShotDelay = 16f;
+                        firstShotDelay = 10f;
                     }}
             );
             shake = 3f;
