@@ -878,6 +878,7 @@ public class MLBlocks {
             range = 240f;
             inaccuracy = 0f;
             recoil = 3f;
+            ammoPerShot = 3;
             shoot = new ShootMulti(
                     new ShootBarrel() {{
                         shots = 2;
