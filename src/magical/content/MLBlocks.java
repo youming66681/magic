@@ -755,7 +755,7 @@ public class MLBlocks {
         excitedYuan = new ItemTurret("excitedYuan") {{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 50, Items.graphite, 80}));
             ammo(
-                    Items.copper, new BasicBulletType(8f, 20) {{
+                    Items.copper, new BasicBulletType(8f, 30) {{
                         hitSize = 16f;
                         width = 16f;
                         height = 24f;
@@ -772,7 +772,7 @@ public class MLBlocks {
                         frontColor = Color.valueOf("d99d73");
                         buildingDamageMultiplier = 0.1f;
                     }},
-                    Items.graphite, new BasicBulletType(8f, 30) {{
+                    Items.graphite, new BasicBulletType(8f, 40) {{
                         hitSize = 16f;
                         width = 16f;
                         height = 24f;
@@ -789,7 +789,7 @@ public class MLBlocks {
                         frontColor = Color.valueOf("b2c6d2");
                         buildingDamageMultiplier = 0.1f;
                     }},
-                    Items.titanium, new BasicBulletType(8f, 40) {{
+                    Items.titanium, new BasicBulletType(8f, 50) {{
                         hitSize = 16f;
                         width = 16f;
                         height = 24f;
@@ -873,7 +873,7 @@ public class MLBlocks {
                         buildingDamageMultiplier = 0.1f;
                     }}
             );
-            reload = 60f;
+            reload = 90f;
             ammoUseEffect = Fx.casing2Double;
             range = 240f;
             inaccuracy = 0f;
