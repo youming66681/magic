@@ -735,7 +735,7 @@ public class MLBlocks {
                 hitShake = 3f;
                 ammoMultiplier = 1f;
             }};
-            rotateSpeed = 6 f;
+            rotateSpeed = 6f;
             reload = 120f;
             ammoUseEffect = Fx.casing3Double;
             recoil = 6f;
