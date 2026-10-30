@@ -152,7 +152,7 @@ public class MLBlocks {
             fluvialErosion, adaptiveWall, largeAdaptiveWall, Birefringence, phantomSteelDrill, phantomSteelConveyor, phantomSteelBridge, phantomSteeljunction,
             phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode, excitedYuan, fuelPoweredGenerator, phantomTitaniumSteelConveyor,
             phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod, quantumFactory, chipMachine,
-            BasicManufacturingPlant, PhantomSteelLiquidBridge, mysticCrystalBattery,
+            BasicManufacturingPlant, PhantomSteelLiquidBridge, mysticCrystalBattery, CrystalEdge,
             //进阶科技
             starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
             Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, Constructor, Deconstructor, LeiHeng, Refraction,
@@ -735,7 +735,7 @@ public class MLBlocks {
                 hitShake = 3f;
                 ammoMultiplier = 1f;
             }};
-            rotateSpeed = 6f;
+            rotateSpeed = 6 f;
             reload = 120f;
             ammoUseEffect = Fx.casing3Double;
             recoil = 6f;
@@ -756,7 +756,7 @@ public class MLBlocks {
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 50, Items.graphite, 80}));
             ammo(
                     Items.copper, new BasicBulletType(8f, 20) {{
-                        hitSize = 2f;
+                        hitSize = 16f;
                         width = 16f;
                         height = 24f;
                         shootEffect = Fx.shootSmall;
@@ -773,7 +773,7 @@ public class MLBlocks {
                         buildingDamageMultiplier = 0.1f;
                     }},
                     Items.graphite, new BasicBulletType(8f, 30) {{
-                        hitSize = 2f;
+                        hitSize = 16f;
                         width = 16f;
                         height = 24f;
                         shootEffect = Fx.shootSmall;
@@ -790,7 +790,7 @@ public class MLBlocks {
                         buildingDamageMultiplier = 0.1f;
                     }},
                     Items.titanium, new BasicBulletType(8f, 40) {{
-                        hitSize = 2f;
+                        hitSize = 16f;
                         width = 16f;
                         height = 24f;
                         shootEffect = Fx.shootSmall;
@@ -821,6 +821,93 @@ public class MLBlocks {
             shootSound = MLSounds.shootAlt;
 
             health = 1120;
+            coolant = consumeCoolant(0.3f);
+        }};
+        //晶棱
+        CrystalEdge = new ItemTurret("CrystalEdge") {{
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 90, Items.graphite, 90, Items.titanium, 60}));
+            ammo(
+                    Items.copper, new BasicBulletType(8f, 20) {{
+                        hitSize = 16f;
+                        width = 16f;
+                        height = 32f;
+                        shootEffect = Fx.shootSmall;
+                        ammoMultiplier = 1;
+                        reloadMultiplier = 1f;
+                        knockback = 0.3f;
+                        lifetime = 30f;
+
+                        hitEffect = despawnEffect = Fx.hitBulletColor;
+                        hitColor = backColor = Color.valueOf("d99d73");
+                        frontColor = Color.valueOf("d99d73");
+                        buildingDamageMultiplier = 0.1f;
+                    }},
+                    Items.lead, new BasicBulletType(8f, 20) {{
+                        hitSize = 16f;
+                        width = 16f;
+                        height = 32f;
+                        shootEffect = Fx.shootSmall;
+                        ammoMultiplier = 1;
+                        reloadMultiplier = 1f;
+                        knockback = 0.3f;
+                        lifetime = 30f;
+
+                        hitEffect = despawnEffect = Fx.hitBulletColor;
+                        hitColor = backColor = Color.valueOf("8c7fa9");
+                        frontColor = Color.valueOf("8c7fa9");
+                        buildingDamageMultiplier = 0.1f;
+                    }},
+                    MLItems.phantomSteel, new BasicBulletType(8f, 40) {{
+                        hitSize = 16f;
+                        width = 16f;
+                        height = 32f;
+                        shootEffect = Fx.shootSmall;
+                        ammoMultiplier = 1;
+                        reloadMultiplier = 1f;
+                        knockback = 0.6f;
+                        lifetime = 30f;
+
+                        hitEffect = despawnEffect = Fx.hitBulletColor;
+                        hitColor = backColor = Color.valueOf("97B5EDFF");
+                        frontColor = Color.valueOf("97B5EDFF");
+                        buildingDamageMultiplier = 0.1f;
+                    }}
+            );
+            reload = 60f;
+            ammoUseEffect = Fx.casing2Double;
+            range = 240f;
+            inaccuracy = 0f;
+            recoil = 3f;
+            shoot = new ShootMulti(
+                    new ShootBarrel() {{
+                        shots = 2;
+                        shotDelay = 0f;
+                        barrels = new float[]{
+                                6f, 12f, 0f,
+                                -6f, 12f, 0f,
+                        };
+                    }},
+                    new ShootPattern() {{
+                        shots = 2;
+                        shotDelay = 0f;
+                        firstShotDelay = 0f;
+                    }},
+                    new ShootPattern() {{
+                        shots = 2;
+                        shotDelay = 0f;
+                        firstShotDelay = 8f;
+                    }},
+                    new ShootPattern() {{
+                        shots = 2;
+                        shotDelay = 0f;
+                        firstShotDelay = 16f;
+                    }}
+            );
+            shake = 3f;
+            size = 3;
+            shootSound = MLSounds.shoot;
+
+            health = 1200;
             coolant = consumeCoolant(0.3f);
         }};
         //光降

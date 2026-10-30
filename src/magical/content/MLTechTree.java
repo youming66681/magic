@@ -63,6 +63,8 @@ public class MLTechTree {
                         });
             });
        /*激沅*/node(MLBlocks.excitedYuan, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
+                /*晶棱*/node(MLBlocks.excitedYuan, Seq.with(new OnSector(MLSectorPresets.DeepSecludedJungle)), () -> {
+                        });
             /*流冲*/node(MLBlocks.fluvialErosion, Seq.with(new SectorComplete(MLSectorPresets.LandingZone)), ()-> {
                 });
             });
