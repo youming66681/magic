@@ -880,7 +880,7 @@ public class MLBlocks {
             recoil = 3f;
             shoot = new ShootMulti(
                     new ShootBarrel() {{
-                        shots = 2;
+                        shots = 1;
                         shotDelay = 0f;
                         barrels = new float[]{
                                 6f, 0f, 0f,

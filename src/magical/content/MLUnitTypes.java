@@ -3748,7 +3748,7 @@ public class MLUnitTypes {
                 shootSound = MLSounds.missileLaunch;
                 shoot = new ShootMulti(
                         new ShootBarrel() {{
-                            shots = 2;
+                            shots = 1;
                             shotDelay = 0f;
                             barrels = new float[]{
                                     16f, 8f, 0f,
@@ -3772,13 +3772,13 @@ public class MLUnitTypes {
                         }}
                 );
                 inaccuracy = 0f;
-                bullet = new MissileBulletType(8f, 140f) {{
+                bullet = new MissileBulletType(8f, 180f) {{
                     hitSound = MLSounds.plasmaboom;
                     homingRange = 288f;
                     homingPower = 0.014f;
                     homingDelay = 0f;
                     splashDamageRadius = 48f;
-                    splashDamage = 60f;
+                    splashDamage = 120f;
                     hitEffect = MLFx.EnergyExplosion;
                     despawnEffect = Fx.none;
                     trailLength = 9;
@@ -5254,7 +5254,7 @@ public class MLUnitTypes {
                         recoil = 9;
                         shoot = new ShootMulti(
                                 new ShootBarrel() {{
-                                    shots = 4;
+                                    shots = 1;
                                     shotDelay = 0f;
                                     barrels = new float[]{
                                             24f, 24f, 0f,
@@ -5280,14 +5280,14 @@ public class MLUnitTypes {
                                 }}
                         );
                         bullet = new BasicBulletType() {{
-                            damage = 600f;
+                            damage = 2400f;
                             lifetime = 25.6f;
                             speed = 25f;
                             width = 16f;
                             height = 48f;
                             hitSize = 24f;
                             splashDamageRadius = 24f;
-                            splashDamage = 600f;
+                            splashDamage = 2400f;
                             frontColor = Color.valueOf("FEEBB3FF");
                             backColor = Color.valueOf("FEEBB3FF");
                             trailLength = 9;
@@ -5317,7 +5317,7 @@ public class MLUnitTypes {
                         shootY = 12;
                         shoot = new ShootMulti(
                                 new ShootBarrel() {{
-                                    shots = 4;
+                                    shots = 1;
                                     shotDelay = 0f;
                                     barrels = new float[]{
                                             3f, 12f, 0f,
@@ -5333,14 +5333,14 @@ public class MLUnitTypes {
                                 }}
                         );
                         bullet = new BasicBulletType() {{
-                            damage = 300f;
+                            damage = 1200f;
                             lifetime = 40f;
                             speed = 16f;
                             width = 8f;
                             height = 16f;
                             hitSize = 24f;
                             splashDamageRadius = 48f;
-                            splashDamage = 300f;
+                            splashDamage = 1200f;
                             frontColor = Color.valueOf("FEEBB3FF");
                             backColor = Color.valueOf("FEEBB3FF");
                             trailLength = 9;
@@ -5366,7 +5366,7 @@ public class MLUnitTypes {
                         shootY = 12;
                         shoot = new ShootMulti(
                                 new ShootBarrel() {{
-                                    shots = 4;
+                                    shots = 1;
                                     shotDelay = 0f;
                                     barrels = new float[]{
                                             3f, 12f, 0f,
@@ -5382,14 +5382,14 @@ public class MLUnitTypes {
                                 }}
                         );
                         bullet = new BasicBulletType() {{
-                            damage = 300f;
+                            damage = 1200f;
                             lifetime = 40f;
                             speed = 16f;
                             width = 8f;
                             height = 16f;
                             hitSize = 24f;
                             splashDamageRadius = 48f;
-                            splashDamage = 300f;
+                            splashDamage = 1200f;
                             frontColor = Color.valueOf("FEEBB3FF");
                             backColor = Color.valueOf("FEEBB3FF");
                             trailLength = 9;
@@ -5415,7 +5415,7 @@ public class MLUnitTypes {
                         shootY = 12;
                         shoot = new ShootMulti(
                                 new ShootBarrel() {{
-                                    shots = 4;
+                                    shots = 1;
                                     shotDelay = 0f;
                                     barrels = new float[]{
                                             3f, 12f, 0f,
@@ -5431,14 +5431,14 @@ public class MLUnitTypes {
                                 }}
                         );
                         bullet = new BasicBulletType() {{
-                            damage = 300f;
+                            damage = 1200f;
                             lifetime = 40f;
                             speed = 16f;
                             width = 8f;
                             height = 16f;
                             hitSize = 24f;
                             splashDamageRadius = 48f;
-                            splashDamage = 300f;
+                            splashDamage = 1200f;
                             frontColor = Color.valueOf("FEEBB3FF");
                             backColor = Color.valueOf("FEEBB3FF");
                             trailLength = 9;
@@ -5749,7 +5749,7 @@ public class MLUnitTypes {
                         recoil = 9;
                         shoot = new ShootMulti(
                                 new ShootBarrel() {{
-                                    shots = 4;
+                                    shots = 1;
                                     shotDelay = 0f;
                                     barrels = new float[]{
                                             24f, 24f, 0f,
@@ -5775,14 +5775,14 @@ public class MLUnitTypes {
                                 }}
                         );
                         bullet = new BasicBulletType() {{
-                            damage = 600f;
+                            damage = 2400f;
                             lifetime = 32f;
                             speed = 25f;
                             width = 16f;
                             height = 48f;
                             hitSize = 24f;
                             splashDamageRadius = 24f;
-                            splashDamage = 600f;
+                            splashDamage = 2400f;
                             frontColor = Color.valueOf("FEEBB3FF");
                             backColor = Color.valueOf("FEEBB3FF");
                             trailLength = 9;
@@ -5812,7 +5812,7 @@ public class MLUnitTypes {
                         shootY = 12;
                         shoot = new ShootMulti(
                                 new ShootBarrel() {{
-                                    shots = 4;
+                                    shots = 1;
                                     shotDelay = 0f;
                                     barrels = new float[]{
                                             3f, 12f, 0f,
@@ -5828,14 +5828,14 @@ public class MLUnitTypes {
                                 }}
                         );
                         bullet = new BasicBulletType() {{
-                            damage = 300f;
+                            damage = 1200f;
                             lifetime = 50f;
                             speed = 16f;
                             width = 8f;
                             height = 16f;
                             hitSize = 24f;
                             splashDamageRadius = 48f;
-                            splashDamage = 300f;
+                            splashDamage = 1200f;
                             frontColor = Color.valueOf("FEEBB3FF");
                             backColor = Color.valueOf("FEEBB3FF");
                             trailLength = 9;
@@ -5862,7 +5862,7 @@ public class MLUnitTypes {
                         shootY = 12;
                         shoot = new ShootMulti(
                                 new ShootBarrel() {{
-                                    shots = 4;
+                                    shots = 1;
                                     shotDelay = 0f;
                                     barrels = new float[]{
                                             3f, 12f, 0f,
@@ -5878,14 +5878,14 @@ public class MLUnitTypes {
                                 }}
                         );
                         bullet = new BasicBulletType() {{
-                            damage = 300f;
+                            damage = 1200f;
                             lifetime = 50f;
                             speed = 16f;
                             width = 8f;
                             height = 16f;
                             hitSize = 24f;
                             splashDamageRadius = 48f;
-                            splashDamage = 300f;
+                            splashDamage = 1200f;
                             frontColor = Color.valueOf("FEEBB3FF");
                             backColor = Color.valueOf("FEEBB3FF");
                             trailLength = 9;
