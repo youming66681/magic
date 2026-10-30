@@ -3748,7 +3748,7 @@ public class MLUnitTypes {
                 shootSound = MLSounds.missileLaunch;
                 shoot = new ShootMulti(
                         new ShootBarrel() {{
-                            shots = 1;
+                            shots = 2;
                             shotDelay = 0f;
                             barrels = new float[]{
                                     16f, 8f, 0f,
@@ -3756,17 +3756,17 @@ public class MLUnitTypes {
                             };
                         }},
                         new ShootPattern() {{
-                            shots = 2;
+                            shots = 1;
                             shotDelay = 0f;
                             firstShotDelay = 0f;
                         }},
                         new ShootPattern() {{
-                            shots = 2;
+                            shots = 1;
                             shotDelay = 0f;
                             firstShotDelay = 15f;
                         }},
                         new ShootPattern() {{
-                            shots = 2;
+                            shots = 1;
                             shotDelay = 0f;
                             firstShotDelay = 30f;
                         }}
@@ -5254,7 +5254,7 @@ public class MLUnitTypes {
                         recoil = 9;
                         shoot = new ShootMulti(
                                 new ShootBarrel() {{
-                                    shots = 1;
+                                    shots = 4;
                                     shotDelay = 0f;
                                     barrels = new float[]{
                                             24f, 24f, 0f,
@@ -5264,17 +5264,17 @@ public class MLUnitTypes {
                                     };
                                 }},
                                 new ShootPattern() {{
-                                    shots = 4;
+                                    shots = 1;
                                     shotDelay = 0f;
                                     firstShotDelay = 0f;
                                 }},
                                 new ShootPattern() {{
-                                    shots = 4;
+                                    shots = 1;
                                     shotDelay = 0f;
                                     firstShotDelay = 15f;
                                 }},
                                 new ShootPattern() {{
-                                    shots = 4;
+                                    shots = 1;
                                     shotDelay = 0f;
                                     firstShotDelay = 30f;
                                 }}
@@ -5317,7 +5317,7 @@ public class MLUnitTypes {
                         shootY = 12;
                         shoot = new ShootMulti(
                                 new ShootBarrel() {{
-                                    shots = 1;
+                                    shots = 4;
                                     shotDelay = 0f;
                                     barrels = new float[]{
                                             3f, 12f, 0f,
@@ -5327,7 +5327,7 @@ public class MLUnitTypes {
                                     };
                                 }},
                                 shoot = new ShootHelix() {{
-                                    shots = 4;
+                                    shots = 1;
                                     mag = 3f;
                                     scl = 3f;
                                 }}
@@ -5366,7 +5366,7 @@ public class MLUnitTypes {
                         shootY = 12;
                         shoot = new ShootMulti(
                                 new ShootBarrel() {{
-                                    shots = 1;
+                                    shots = 4;
                                     shotDelay = 0f;
                                     barrels = new float[]{
                                             3f, 12f, 0f,
@@ -5376,7 +5376,7 @@ public class MLUnitTypes {
                                     };
                                 }},
                                 shoot = new ShootHelix() {{
-                                    shots = 4;
+                                    shots = 1;
                                     mag = 3f;
                                     scl = 3f;
                                 }}
@@ -5415,7 +5415,7 @@ public class MLUnitTypes {
                         shootY = 12;
                         shoot = new ShootMulti(
                                 new ShootBarrel() {{
-                                    shots = 1;
+                                    shots = 4;
                                     shotDelay = 0f;
                                     barrels = new float[]{
                                             3f, 12f, 0f,
@@ -5425,7 +5425,7 @@ public class MLUnitTypes {
                                     };
                                 }},
                                 shoot = new ShootHelix() {{
-                                    shots = 4;
+                                    shots = 1;
                                     mag = 3f;
                                     scl = 3f;
                                 }}
@@ -5749,7 +5749,7 @@ public class MLUnitTypes {
                         recoil = 9;
                         shoot = new ShootMulti(
                                 new ShootBarrel() {{
-                                    shots = 1;
+                                    shots = 4;
                                     shotDelay = 0f;
                                     barrels = new float[]{
                                             24f, 24f, 0f,
@@ -5759,17 +5759,17 @@ public class MLUnitTypes {
                                     };
                                 }},
                                 new ShootPattern() {{
-                                    shots = 4;
+                                    shots = 1;
                                     shotDelay = 0f;
                                     firstShotDelay = 0f;
                                 }},
                                 new ShootPattern() {{
-                                    shots = 4;
+                                    shots = 1;
                                     shotDelay = 0f;
                                     firstShotDelay = 15f;
                                 }},
                                 new ShootPattern() {{
-                                    shots = 4;
+                                    shots = 1;
                                     shotDelay = 0f;
                                     firstShotDelay = 30f;
                                 }}
@@ -5812,7 +5812,7 @@ public class MLUnitTypes {
                         shootY = 12;
                         shoot = new ShootMulti(
                                 new ShootBarrel() {{
-                                    shots = 1;
+                                    shots = 4;
                                     shotDelay = 0f;
                                     barrels = new float[]{
                                             3f, 12f, 0f,
@@ -5822,7 +5822,7 @@ public class MLUnitTypes {
                                     };
                                 }},
                                 shoot = new ShootHelix() {{
-                                    shots = 4;
+                                    shots = 1;
                                     mag = 3f;
                                     scl = 3f;
                                 }}
@@ -5862,7 +5862,7 @@ public class MLUnitTypes {
                         shootY = 12;
                         shoot = new ShootMulti(
                                 new ShootBarrel() {{
-                                    shots = 1;
+                                    shots = 4;
                                     shotDelay = 0f;
                                     barrels = new float[]{
                                             3f, 12f, 0f,
@@ -5872,7 +5872,7 @@ public class MLUnitTypes {
                                     };
                                 }},
                                 shoot = new ShootHelix() {{
-                                    shots = 4;
+                                    shots = 1;
                                     mag = 3f;
                                     scl = 3f;
                                 }}
