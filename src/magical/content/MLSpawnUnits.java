@@ -61,6 +61,21 @@ public class MLSpawnUnits {
                         MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
                     });
                 }
+            else if (unit.type == MLUnitTypes.Zenith) {
+                float delay = 1f ;
+                float x = unit.x + Mathf.random(-240f, 240f);
+                float y = unit.y + Mathf.random(-240f, 240f);
+                UnitType type = unit.type;
+                MLFx.smallTeleport.at(x, y);
+                unit.remove();
+                Time.run(delay * 35f, () -> {
+                    Unit newUnit = type.create(state.rules.waveTeam);
+                    newUnit.set(x, y);
+                    MLSounds.shootRipple.at(x, y, 1f);
+                    newUnit.add();
+                    MLFx.jumpTrail.at(x, y, unit.rotation, unit.team.color, unit.type);
+                });
+            }
             else if (unit.type == MLUnitTypes.BrokenEdge) {
                 float delay = 1f;
                 float x = unit.x + Mathf.random(-240f, 240f);

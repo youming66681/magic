@@ -6040,7 +6040,7 @@ public class MLUnitTypes {
                         }};
                     }});
         }};
-        //LiYao
+        //离曜
         LiYao = new UnitType("LiYao") {{
             constructor = UnitTypes.flare.constructor;
             flying = true;
@@ -6232,7 +6232,7 @@ public class MLUnitTypes {
                             hitEffect = Fx.none;
                             despawnEffect = Fx.none;
                             intervalBullets = 1;
-                            bulletInterval = 1f;
+                            bulletInterval = 0.5f;
                             intervalBullet = new BasicBulletType(){{
                                     hitSize = 80f;
                                     damage = 400f;

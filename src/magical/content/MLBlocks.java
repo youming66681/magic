@@ -658,7 +658,7 @@ public class MLBlocks {
         }};
         //流冲
         fluvialErosion = new ContinuousLiquidTurret("fluvialErosion") {{
-            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 100, MLItems.phantomTitaniumSteel, 30, MLItems.mysticCrystal, 50, Items.metaglass, 80}));
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 100, MLItems.mysticCrystal, 50, Items.metaglass, 80}));
             liquidCapacity = 60f;
             liquidConsumed = 18f / 60f;
             targetInterval = 5f;
@@ -753,7 +753,7 @@ public class MLBlocks {
         }};
         //激沅
         excitedYuan = new ItemTurret("excitedYuan") {{
-            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 50, Items.graphite, 80, Items.titanium, 40}));
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 50, Items.graphite, 80}));
             ammo(
                     Items.copper, new BasicBulletType(8f, 20) {{
                         hitSize = 2f;
