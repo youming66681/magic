@@ -1122,7 +1122,7 @@ public class MLUnitTypes {
                         rotateSpeed = 5f;
                         alternate = false;
                         shoot = new ShootBarrel(){{
-                            shots = 4;
+                            shots = 10;
                             shotDelay = 5f;
                             barrels = new float[]{
                                     2f, 0f, 0f,
@@ -1175,7 +1175,7 @@ public class MLUnitTypes {
                         rotateSpeed = 5f;
                         alternate = false;
                         shoot = new ShootBarrel(){{
-                            shots = 4;
+                            shots = 10;
                             shotDelay = 5f;
                             barrels = new float[]{
                                     2f, 0f, 0f,
