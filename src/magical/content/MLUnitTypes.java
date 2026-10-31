@@ -1246,9 +1246,13 @@ public class MLUnitTypes {
                         rotate = true;
                         rotateSpeed = 3f;
                         alternate = false;
-                        shoot = new ShootAlternate() {{
-                            barrels = 2;
-                            spread = 2f;
+                        shoot = new ShootBarrel(){{
+                            shots = 12;
+                            shotDelay = 6f;
+                            barrels = new float[]{
+                                    2f, 0f, 0f,
+                                    -2f, 0f, 0f,
+                            };
                         }};
                         bullet = new BasicBulletType() {{
                             damage = 60f;
@@ -3829,9 +3833,13 @@ public class MLUnitTypes {
                         recoil = 2.5f;
                         rotate = true;
                         rotateSpeed = 5f;
-                        shoot = new ShootAlternate() {{
-                            barrels = 2;
-                            spread = 2f;
+                        shoot = new ShootBarrel(){{
+                            shots = 10;
+                            shotDelay = 5f;
+                            barrels = new float[]{
+                                    2f, 0f, 0f,
+                                    -2f, 0f, 0f,
+                            };
                         }};
                         bullet = new BasicBulletType() {{
                             damage = 50f;
@@ -3899,9 +3907,9 @@ public class MLUnitTypes {
                             homingDelay = 15f;
                             homingPower = 0.9f;
                             homingRange = 240f;
-                            damage = 90f;
+                            damage = 100f;
                             splashDamageRadius = 36f;
-                            splashDamage = 90f;
+                            splashDamage = 100f;
                             frontColor = Color.valueOf("FEEBB3FF");
                             backColor = Color.valueOf("FEEBB3FF");
                             trailLength = 9;
@@ -5913,9 +5921,13 @@ public class MLUnitTypes {
                         recoil = 2.5f;
                         rotate = true;
                         rotateSpeed = 5f;
-                        shoot = new ShootAlternate() {{
-                            barrels = 2;
-                            spread = 2f;
+                        shoot = new ShootBarrel(){{
+                            shots = 18;
+                            shotDelay = 6f;
+                            barrels = new float[]{
+                                    2f, 0f, 0f,
+                                    -2f, 0f, 0f,
+                            };
                         }};
                         bullet = new BasicBulletType() {{
                             damage = 100f;
@@ -5961,9 +5973,13 @@ public class MLUnitTypes {
                         recoil = 2.5f;
                         rotate = true;
                         rotateSpeed = 5f;
-                        shoot = new ShootAlternate() {{
-                            barrels = 2;
-                            spread = 2f;
+                        shoot = new ShootBarrel(){{
+                            shots = 18;
+                            shotDelay = 6f;
+                            barrels = new float[]{
+                                    2f, 0f, 0f,
+                                    -2f, 0f, 0f,
+                            };
                         }};
                         bullet = new BasicBulletType() {{
                             damage = 100f;
@@ -6009,9 +6025,13 @@ public class MLUnitTypes {
                         recoil = 2.5f;
                         rotate = true;
                         rotateSpeed = 5f;
-                        shoot = new ShootAlternate() {{
-                            barrels = 2;
-                            spread = 2f;
+                        shoot = new ShootBarrel(){{
+                            shots = 18;
+                            shotDelay = 6f;
+                            barrels = new float[]{
+                                    2f, 0f, 0f,
+                                    -2f, 0f, 0f,
+                            };
                         }};
                         bullet = new BasicBulletType() {{
                             damage = 100f;
