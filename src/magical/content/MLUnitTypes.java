@@ -1121,9 +1121,13 @@ public class MLUnitTypes {
                         rotate = true;
                         rotateSpeed = 5f;
                         alternate = false;
-                        shoot = new ShootAlternate() {{
-                            barrels = 2;
-                            spread = 2f;
+                        shoot = new ShootBarrel(){{
+                            shots = 4;
+                            shotDelay = 5f;
+                            barrels = new float[]{
+                                    2f, 0f, 0f,
+                                    -2f, 0f, 0f,
+                            };
                         }};
                         bullet = new BasicBulletType() {{
                             damage = 25f;
@@ -1170,9 +1174,13 @@ public class MLUnitTypes {
                         rotate = true;
                         rotateSpeed = 5f;
                         alternate = false;
-                        shoot = new ShootAlternate() {{
-                            barrels = 2;
-                            spread = 2f;
+                        shoot = new ShootBarrel(){{
+                            shots = 4;
+                            shotDelay = 5f;
+                            barrels = new float[]{
+                                    2f, 0f, 0f,
+                                    -2f, 0f, 0f,
+                            };
                         }};
                         bullet = new BasicBulletType() {{
                             damage = 25f;
