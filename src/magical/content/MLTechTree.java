@@ -314,8 +314,9 @@ public class MLTechTree {
                                 });
                             });
                                 });
+                        /*纳晶聚变反应堆*/node(MLBlocks.NanoCrystalFusionReactor, () -> {
+                        });
                         /*全域超速仪*/node(MLBlocks.GlobalOverdriveProjector, () -> {
-
                         });
                         /*煤幻溶机*/node(MLBlocks.CoalMeltingMachine, () -> {
                             /*纳米丝织机*/node(MLBlocks.NanofiberLoom, () -> {

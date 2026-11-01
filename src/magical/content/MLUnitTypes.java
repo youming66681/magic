@@ -6239,7 +6239,7 @@ public class MLUnitTypes {
                             hitSize = 48f;
                             pierce = true;
                             pierceBuilding = true;
-                            collides = true;
+                            collides = false;
                             hittable = false;
                             reflectable = false;
                             homingRange = 1600f;

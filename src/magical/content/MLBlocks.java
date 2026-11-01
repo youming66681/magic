@@ -163,7 +163,7 @@ public class MLBlocks {
             RetroProjector, HologramProjector,
             //终极科技
             EndCore, GlobalOverdriveProjector, AdvancedGeneralAssemblyUpgradeFactory, CoalMeltingMachine, NanofiberLoom, NanoCarbonAlloyCombiner, Compete, FallingStar,
-            BrilliantWorld, NanoCarbonAlloyWall;
+            BrilliantWorld, NanoCarbonAlloyWall, NanoCrystalFusionReactor;
 
     public static void load() {
 
@@ -3618,10 +3618,10 @@ public class MLBlocks {
             consumeItem(MLItems.fluorescentFeatherStone, 2);
             consumeLiquids(LiquidStack.with(MLLiquids.PhantomSteelSolution, 0.25f,Liquids.water, 1));
 
-                explosionShake = 25;
+                explosionShake = 32;
                 explosionShakeDuration = 180f;
                 explosionDamage = 5000;
-                explosionRadius = 50;
+                explosionRadius = 64;
                 explodeSound = MLSounds.largeCannon;
                 explodeEffect = new MultiEffect(
                     new WaveEffect(){{
@@ -3692,6 +3692,143 @@ public class MLBlocks {
             }}, new DrawDefault());
 
         }};
+        //纳晶聚变反应堆
+        NanoCrystalFusionReactor = new PhantomReactor("NanoCrystalFusionReactor"){{
+                requirements(Category.power, ItemStack.with(new Object[]{MLItems.nanoEnergyThread, 80, MLItems.crystallineCarbon, 80, MLItems.phantomLuminousAlloy, 160, MLItems.wingedMetal, 320, Items.silicon, 800, MLItems.matrixChip, 80}));
+                size = 8;
+                health = 6400;
+                armor = 8;
+                itemDuration = 800f;
+                powerProduction = 6400f;
+                heating = 0.02f;
+
+                canOverdrive = false
+                squareSprite = false;
+
+                consumeItems(ItemStack.with(MLItems.nanoEnergyThread, 4, MLItems.crystallineCarbon, 4));
+                consumeLiquids(LiquidStack.with(Liquids.cryofluid, 1.6));
+
+                drawer = new DrawMulti(new DrawRegion("-bottom"),
+                        new DrawLiquidRegion() {{
+                            drawLiquid = Liquids.cryofluid;
+                            suffix = "-liquid";
+                        }}, new DrawDefault());
+
+                destroyBullet = new ExplosionBulletType(800, 800) {{
+                    hitSound = MLSounds.laserblast;
+                    hitShake = 80f;
+                    hitEffect = new MultiEffect(
+                    new WaveEffect() {{
+                        lifetime = 40f;
+                        sizeFrom = 800f;
+                        sizeTo = 0f;
+                        strokeFrom = 40;
+                        strokeTo = 0;
+                    }};
+                    new WaveEffect() {{
+                        lifetime = 30f;
+                        sizeFrom = 800f;
+                        sizeTo = 0f;
+                        strokeFrom = 40;
+                        strokeTo = 0;
+                        startDelay = 10;
+                    }};
+                    new WaveEffect() {{
+                        lifetime = 20f;
+                        sizeFrom = 800f;
+                        sizeTo = 0f;
+                        strokeFrom = 40;
+                        strokeTo = 0;
+                        startDelay = 20;
+                    }};
+                    );
+                    fragBullets = 1;
+                    fragBullet = new BasicBulletType() {{
+                        fragBullet = new BasicBulletType() {{
+                            hittable = false;
+                            absorbable = false;
+                            collides = false;
+                            lifetime = 0f;
+                            height = 0;
+                            width = 0;
+                            speed = 0;
+                            splashDamage = 8000f;
+                            splashDamageRadius = 800f;
+                            makeFire = true;
+                            lightning = 180;
+                            lightningLength = 400;
+                            lightningLengthRand = 400;
+                            incendAmount = 400;
+                            incendSpread = 400;
+                            incendChance = 1f;
+                            hitSound = MLSounds.explosionbig;
+                            hitSoundVolume = 100;
+                            hitShake = 800f;
+                            hitEffect = new MultiEffect(
+                                    new WaveEffect(){{
+                                        lifetime = 60f;
+                                        sizeFrom = 0f;
+                                        sizeTo = 640f;
+                                        strokeFrom = 0f;
+                                        strokeTo = 16f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect(){{
+                                        particles = 50;
+                                        sizeFrom = 50f;
+                                        sizeTo = 0f;
+                                        length = 480f;
+                                        baseLength = 0f;
+                                        interp = Interp.pow10Out;
+                                        sizeInterp = Interp.pow10In;
+                                        lifetime = 180f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect(){{
+                                        particles = 100;
+                                        line = true;
+                                        strokeFrom = 8f;
+                                        strokeTo = 0f;
+                                        interp = Interp.pow5Out;
+                                        sizeInterp = Interp.pow5In;
+                                        lenFrom = 100f;
+                                        lenTo = 0f;
+                                        length = 480f;
+                                        baseLength = 0f;
+                                        lifetime = 180f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect(){{
+                                        particles = 1;
+                                        sizeFrom = 0f;
+                                        sizeTo = 320f;
+                                        sizeInterp = Interp.pow5Out;
+                                        length = 0f;
+                                        baseLength = 0f;
+                                        lifetime = 60f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }},
+                                    new ParticleEffect(){{
+                                        particles = 1;
+                                        sizeFrom = 320f;
+                                        sizeTo = 0f;
+                                        sizeInterp = Interp.pow10In;
+                                        length = 0f;
+                                        baseLength = 0f;
+                                        startDelay = 60f;
+                                        lifetime = 120f;
+                                        colorFrom = Color.valueOf("FEEBB3FF");
+                                        colorTo = Color.valueOf("FEEBB3FF");
+                                    }}
+                            );
+                        }};
+                    }};
+                }};
+            }};
         //power
         //单位
         //基础制造厂
