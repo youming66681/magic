@@ -3702,7 +3702,7 @@ public class MLBlocks {
                 powerProduction = 6400f;
                 heating = 0.02f;
 
-                canOverdrive = false
+                canOverdrive = false;
                 squareSprite = false;
 
                 consumeItems(ItemStack.with(MLItems.nanoEnergyThread, 4, MLItems.crystallineCarbon, 4));
@@ -3724,7 +3724,7 @@ public class MLBlocks {
                         sizeTo = 0f;
                         strokeFrom = 40;
                         strokeTo = 0;
-                    }};
+                    }},
                     new WaveEffect() {{
                         lifetime = 30f;
                         sizeFrom = 800f;
@@ -3732,7 +3732,7 @@ public class MLBlocks {
                         strokeFrom = 40;
                         strokeTo = 0;
                         startDelay = 10;
-                    }};
+                    }},
                     new WaveEffect() {{
                         lifetime = 20f;
                         sizeFrom = 800f;
@@ -3740,7 +3740,7 @@ public class MLBlocks {
                         strokeFrom = 40;
                         strokeTo = 0;
                         startDelay = 20;
-                    }};
+                    }}
                     );
                     fragBullets = 1;
                     fragBullet = new BasicBulletType() {{
