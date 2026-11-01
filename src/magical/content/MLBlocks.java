@@ -3702,6 +3702,8 @@ public class MLBlocks {
                 itemDuration = 800f;
                 powerProduction = 6400f;
                 heating = 0.02f;
+                liquidCapacity = 800;
+                itemCapacity = 40;
 
                 canOverdrive = false;
                 squareSprite = false;
