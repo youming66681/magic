@@ -3744,7 +3744,6 @@ public class MLBlocks {
                     );
                     fragBullets = 1;
                     fragBullet = new BasicBulletType() {{
-                        fragBullet = new BasicBulletType() {{
                             hittable = false;
                             absorbable = false;
                             collides = false;
@@ -3756,10 +3755,10 @@ public class MLBlocks {
                             splashDamageRadius = 800f;
                             makeFire = true;
                             lightning = 180;
-                            lightningLength = 400;
-                            lightningLengthRand = 400;
-                            incendAmount = 400;
-                            incendSpread = 400;
+                            lightningLength = 100;
+                            lightningLengthRand = 100;
+                            incendAmount = 100;
+                            incendSpread = 100;
                             incendChance = 1f;
                             hitSound = MLSounds.explosionbig;
                             hitSoundVolume = 100;
@@ -3768,7 +3767,7 @@ public class MLBlocks {
                                     new WaveEffect(){{
                                         lifetime = 60f;
                                         sizeFrom = 0f;
-                                        sizeTo = 640f;
+                                        sizeTo = 960f;
                                         strokeFrom = 0f;
                                         strokeTo = 16f;
                                         colorFrom = Color.valueOf("FEEBB3FF");
@@ -3778,7 +3777,7 @@ public class MLBlocks {
                                         particles = 50;
                                         sizeFrom = 50f;
                                         sizeTo = 0f;
-                                        length = 480f;
+                                        length = 640f;
                                         baseLength = 0f;
                                         interp = Interp.pow10Out;
                                         sizeInterp = Interp.pow10In;
@@ -3795,7 +3794,7 @@ public class MLBlocks {
                                         sizeInterp = Interp.pow5In;
                                         lenFrom = 100f;
                                         lenTo = 0f;
-                                        length = 480f;
+                                        length = 640f;
                                         baseLength = 0f;
                                         lifetime = 180f;
                                         colorFrom = Color.valueOf("FEEBB3FF");
@@ -3804,7 +3803,7 @@ public class MLBlocks {
                                     new ParticleEffect(){{
                                         particles = 1;
                                         sizeFrom = 0f;
-                                        sizeTo = 320f;
+                                        sizeTo = 480f;
                                         sizeInterp = Interp.pow5Out;
                                         length = 0f;
                                         baseLength = 0f;
@@ -3814,7 +3813,7 @@ public class MLBlocks {
                                     }},
                                     new ParticleEffect(){{
                                         particles = 1;
-                                        sizeFrom = 320f;
+                                        sizeFrom = 480f;
                                         sizeTo = 0f;
                                         sizeInterp = Interp.pow10In;
                                         length = 0f;
@@ -3825,6 +3824,68 @@ public class MLBlocks {
                                         colorTo = Color.valueOf("FEEBB3FF");
                                     }}
                             );
+                        fragBullets = 8;
+                        fragBullet = new BasicBulletType() {{
+                            hitSize = 48f;
+                            pierce = true;
+                            pierceBuilding = true;
+                            collides = false;
+                            hittable = false;
+                            reflectable = false;
+                            homingRange = 800f;
+                            homingPower = 0.2f;
+                            homingDelay = 0f;
+                            damage = 1f;
+                            speed = 16f;
+                            lifetime = 50f;
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            sprite = "magic-透彻";
+                            trailLength = 12;
+                            trailWidth = 6f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            hitSound = MLSounds.explosionCleroi;
+                            width = 48f;
+                            height = 96f;
+                            hitEffect = Fx.none;
+                            despawnEffect = Fx.none;
+                            intervalBullets = 1;
+                            bulletInterval = 1f;
+                            intervalBullet = new BasicBulletType(){{
+                                hitSize = 80f;
+                                damage = 400f;
+                                splashDamageRadius = 96f;
+                                splashDamage = 800f;
+                                homingRange = 800f;
+                                homingPower = 0.1f;
+                                homingDelay = 20f;
+                                spin = 4f;
+                                width = 80f;
+                                height = 80f;
+                                sprite = "magic-十字星";
+                                reflectable = false;
+                                collides = false;
+                                frontColor = Color.valueOf("FEEBB3FF");
+                                backColor = Color.valueOf("FEEBB3FF");
+                                speed = 16f;
+                                lifetime = 50f;
+                                trailColor = Color.valueOf("FEEBB3FF");
+                                trailChance = 1f;
+                                trailLength = 16;
+                                trailWidth = 8f;
+                                trailEffect = new ParticleEffect() {{
+                                    particles = 8;
+                                    length = 16f;
+                                    baseLength = 16f;
+                                    lifetime = 8f;
+                                    sizeFrom = 4f;
+                                    sizeTo = 0f;
+                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                }};
+                                hitSound = MLSounds.explosionCleroi;
+                                hitEffect = MLFx.EnergyExplosion3;
+                            }};
                         }};
                     }};
                 }};
