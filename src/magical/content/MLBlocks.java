@@ -3700,7 +3700,7 @@ public class MLBlocks {
                 health = 6400;
                 armor = 8;
                 itemDuration = 800f;
-                powerProduction = 6400f;
+                powerProduction = 1600f;
                 heating = 0.02f;
                 liquidCapacity = 800;
                 itemCapacity = 40;
