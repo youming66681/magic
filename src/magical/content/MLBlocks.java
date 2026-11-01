@@ -3707,7 +3707,7 @@ public class MLBlocks {
                 squareSprite = false;
 
                 consumeItems(ItemStack.with(MLItems.nanoEnergyThread, 4, MLItems.crystallineCarbon, 4));
-                consumeLiquids(LiquidStack.with(Liquids.cryofluid, 1.6));
+                consumeLiquid(Liquids.cryofluid, 1.6f).update(false);
 
                 drawer = new DrawMulti(new DrawRegion("-bottom"),
                         new DrawLiquidRegion() {{
