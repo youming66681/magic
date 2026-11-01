@@ -3694,7 +3694,7 @@ public class MLBlocks {
 
         }};
         //纳晶聚变反应堆
-        NanoCrystalFusionReactor = new PhantomReactor("NanoCrystalFusionReactor"){{
+        NanoCrystalFusionReactor = new NuclearReactor("NanoCrystalFusionReactor"){{
                 requirements(Category.power, ItemStack.with(new Object[]{MLItems.nanoEnergyThread, 80, MLItems.crystallineCarbon, 80, MLItems.phantomLuminousAlloy, 160, MLItems.wingedMetal, 320, Items.silicon, 800, MLItems.matrixChip, 80}));
                 size = 8;
                 health = 6400;
