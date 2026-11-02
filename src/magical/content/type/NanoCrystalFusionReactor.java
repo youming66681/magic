@@ -1,3 +1,4 @@
+
 package magical.content;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
@@ -16,6 +17,7 @@ import mindustry.entities.effect.MultiEffect;
 import mindustry.entities.effect.ParticleEffect;
 import mindustry.entities.effect.WaveEffect;
 import mindustry.gen.*;
+import mindustry.type.Liquid;
 import mindustry.graphics.Layer;
 import mindustry.world.blocks.power.PowerGenerator;
 public class NanoCrystalFusionReactor extends PowerGenerator{
@@ -242,6 +244,10 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
         public boolean running;
         public boolean sequenceActive;
         @Override
+        public boolean acceptLiquid(Building source, Liquid liquid){
+            return liquid == Liquids.cryofluid && liquids.get(liquid) < liquidCapacity;
+        }
+        @Override
         public void updateTile(){
             float delta = delta();
             if(!running && enabled && heat < restartHeat && items.get(MLItems.nanoEnergyThread) >= nanoThreadUse && items.get(MLItems.crystallineCarbon) >= crystallineCarbonUse){
@@ -262,19 +268,18 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
             }else{
                 heat = Math.max(0f, heat - 0.0002f * delta);
             }
-            if(heat > 0f && liquids.get(Liquids.cryofluid) > 0f){
+            if(heat > 0f && liquids.get(Liquids.cryofluid) > 0.0001f){
                 float used = Math.min(liquids.get(Liquids.cryofluid), coolantUse * delta);
                 liquids.remove(Liquids.cryofluid, used);
                 heat = Math.max(0f, heat - used * coolantPower);
             }
-            heat = Math.min(heat, maxHeat);
-            productionEfficiency = enabled && running && heat < stopHeat ? 1f : 0f;
             if(heat >= maxHeat){
                 heat = maxHeat;
                 productionEfficiency = 0f;
-                running = false;
-                cycleProgress = 0f;
+                kill();
+                return;
             }
+            productionEfficiency = enabled && running && heat < stopHeat ? 1f : 0f;
             effectWarmup = Mathf.approach(effectWarmup, productionEfficiency, 0.025f * delta);
             if(sequenceActive){
                 sequenceProgress += delta;
@@ -297,23 +302,22 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
             }
         }
         public float getSequenceRadius(){
-            float time = sequenceProgress;
-            if(time < 18f){
-                float progress = Interp.pow4In.apply(Mathf.clamp(time / 18f));
+            if(sequenceProgress < 18f){
+                float progress = Interp.pow4In.apply(Mathf.clamp(sequenceProgress / 18f));
                 return Mathf.lerp(38f, 24f, progress);
             }
-            if(time < 24f){
+            if(sequenceProgress < 24f){
                 return 24f;
             }
-            if(time < 42f){
-                float progress = Interp.pow4In.apply(Mathf.clamp((time - 24f) / 18f));
+            if(sequenceProgress < 42f){
+                float progress = Interp.pow4In.apply(Mathf.clamp((sequenceProgress - 24f) / 18f));
                 return Mathf.lerp(24f, 12f, progress);
             }
-            if(time < 48f){
+            if(sequenceProgress < 48f){
                 return 12f;
             }
-            if(time < 66f){
-                float progress = Interp.pow4In.apply(Mathf.clamp((time - 48f) / 18f));
+            if(sequenceProgress < 66f){
+                float progress = Interp.pow4In.apply(Mathf.clamp((sequenceProgress - 48f) / 18f));
                 return Mathf.lerp(12f, 3f, progress);
             }
             return 3f;
@@ -347,11 +351,10 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
                 Draw.color(Color.white);
                 Draw.alpha(warmup * 0.75f);
                 Fill.circle(x, y, Math.max(1.5f, radius * 0.18f));
-                if(sequenceActive && sequenceProgress >= 66f){
-                    float flash = Mathf.absin(Time.time, 4f, 0.5f) + 0.5f;
+                if(sequenceActive){
                     Draw.color(Color.white);
-                    Draw.alpha(warmup * flash);
-                    Fill.circle(x, y, 5f + flash * 5f);
+                    Draw.alpha(warmup * (0.35f + 0.65f * Mathf.absin(Time.time, 12f, 0.5f)));
+                    Fill.circle(x, y, 5f + Mathf.absin(Time.time, 8f, 4f));
                 }
             }
             Draw.z(Layer.block);
