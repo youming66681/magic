@@ -301,8 +301,11 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
                     sequenceCooldown = 0f;
                     if(Vars.net.server()){
                         Call.effect(runtimeExplosionEffect, x, y, 0f, Color.white);
+                    }else if(!Vars.net.client()){
+                        runtimeExplosionEffect.at(x, y, 0f, Color.white);
                     }
                 }
+            }
             }else if(productionEfficiency > 0f){
                 sequenceCooldown += delta;
                 if(sequenceCooldown >= sequenceInterval){
