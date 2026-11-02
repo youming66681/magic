@@ -24,7 +24,7 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
     public float itemDuration = 800f;
     public int nanoThreadUse = 4;
     public int crystallineCarbonUse = 4;
-    public float heating = 0.0008f;
+    public float heating = 0.008f;
     public float coolantUse = 0.08f;
     public float coolantPower = 0.1f;
     public float maxHeat = 1f;
