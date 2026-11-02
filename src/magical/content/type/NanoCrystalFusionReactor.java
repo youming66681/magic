@@ -23,7 +23,7 @@ import mindustry.graphics.Pal;
 import mindustry.type.Liquid;
 import mindustry.ui.Bar;
 import mindustry.world.Block;
-import mindustry.world.Building;
+import mindustry.gen.Building;
 import mindustry.world.blocks.power.PowerGenerator;
 public class NanoCrystalFusionReactor extends PowerGenerator{
     public float itemDuration = 800f;
@@ -127,7 +127,7 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
         addBar("cryofluid", (NanoCrystalFusionReactorBuild build) ->
                 new Bar(
                         () -> Core.bundle.format("bar.cryofluid", Mathf.round(build.liquids.get(Liquids.cryofluid) * 10f) / 10f, liquidCapacity),
-                        () -> Pal.liquid,
+                        () -> Liquids.cryofluid.color,
                         () -> Mathf.clamp(build.liquids.get(Liquids.cryofluid) / liquidCapacity)
                 )
         );
