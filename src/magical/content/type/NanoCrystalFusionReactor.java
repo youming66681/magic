@@ -35,7 +35,7 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
         Fill.circle(e.x, e.y, 4f * e.fout());
         Draw.reset();
     });
-    public NanoCrystalFusionReactor(String name){
+    public NanoCrystalFusionReactor(String name) {
         super(name);
         size = 8;
         health = 6400;
@@ -49,58 +49,128 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
         powerProduction = 12800f / 60f;
         squareSprite = false;
         buildType = NanoCrystalFusionReactorBuild::new;
-        explosionRadius = 100;
-        explosionDamage = 80000;
-        explosionShake = 80f;
-        explosionShakeDuration = 30f;
-        explodeSound = MLSounds.explosionbig;
-        explodeEffect = new MultiEffect(
-                new WaveEffect(){{
-                    lifetime = 60f;
-                    sizeFrom = 0f;
-                    sizeTo = 960f;
-                    strokeFrom = 0f;
-                    strokeTo = 16f;
-                    colorFrom = Color.valueOf("FEEBB3FF");
-                    colorTo = Color.valueOf("FEEBB3FF");
-                }},
-                new WaveEffect(){{
-                    lifetime = 40f;
-                    sizeFrom = 800f;
-                    sizeTo = 0f;
-                    strokeFrom = 40f;
-                    strokeTo = 0f;
-                    colorFrom = Color.valueOf("FEEBB3FF");
-                    colorTo = Color.valueOf("FEEBB3FF");
-                }},
-                new ParticleEffect(){{
-                    particles = 50;
-                    sizeFrom = 50f;
-                    sizeTo = 0f;
-                    length = 640f;
-                    baseLength = 0f;
-                    interp = Interp.pow10Out;
-                    sizeInterp = Interp.pow10In;
-                    lifetime = 180f;
-                    colorFrom = Color.valueOf("FEEBB3FF");
-                    colorTo = Color.valueOf("FEEBB3FF");
-                }},
-                new ParticleEffect(){{
-                    particles = 100;
-                    line = true;
-                    strokeFrom = 8f;
-                    strokeTo = 0f;
-                    interp = Interp.pow5Out;
-                    sizeInterp = Interp.pow5In;
-                    lenFrom = 100f;
-                    lenTo = 0f;
-                    length = 640f;
-                    baseLength = 0f;
-                    lifetime = 180f;
-                    colorFrom = Color.valueOf("FEEBB3FF");
-                    colorTo = Color.valueOf("FEEBB3FF");
-                }}
-        );
+        destroyBullet = new ExplosionBulletType(800, 800) {{
+            hitSound = MLSounds.laserblast;
+            hitShake = 80f;
+            hitEffect = new MultiEffect(
+                    new WaveEffect() {{
+                        lifetime = 40f;
+                        sizeFrom = 800f;
+                        sizeTo = 0f;
+                        strokeFrom = 40;
+                        strokeTo = 0;
+                    }},
+                    new WaveEffect() {{
+                        lifetime = 30f;
+                        sizeFrom = 800f;
+                        sizeTo = 0f;
+                        strokeFrom = 40;
+                        strokeTo = 0;
+                        startDelay = 10;
+                    }},
+                    new WaveEffect() {{
+                        lifetime = 20f;
+                        sizeFrom = 800f;
+                        sizeTo = 0f;
+                        strokeFrom = 40;
+                        strokeTo = 0;
+                        startDelay = 20;
+                    }}
+            );
+            fragBullets = 1;
+            fragBullet = new BasicBulletType() {{
+                hittable = false;
+                absorbable = false;
+                collides = false;
+                lifetime = 40f;
+                height = 0;
+                width = 0;
+                speed = 0;
+                fragBullets = 1;
+                fragBullet = new BasicBulletType() {{
+                    hittable = false;
+                    absorbable = false;
+                    collides = false;
+                    lifetime = 0f;
+                    height = 0;
+                    width = 0;
+                    speed = 0;
+                    splashDamage = 80000f;
+                    splashDamageRadius = 800f;
+                    makeFire = true;
+                    lightning = 180;
+                    lightningLength = 100;
+                    lightningLengthRand = 100;
+                    incendAmount = 100;
+                    incendSpread = 100;
+                    incendChance = 1f;
+                    hitSound = MLSounds.explosionbig;
+                    hitSoundVolume = 100;
+                    hitShake = 800f;
+                    hitEffect = new MultiEffect(
+                            new WaveEffect() {{
+                                lifetime = 60f;
+                                sizeFrom = 0f;
+                                sizeTo = 960f;
+                                strokeFrom = 0f;
+                                strokeTo = 16f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }},
+                            new ParticleEffect() {{
+                                particles = 50;
+                                sizeFrom = 50f;
+                                sizeTo = 0f;
+                                length = 640f;
+                                baseLength = 0f;
+                                interp = Interp.pow10Out;
+                                sizeInterp = Interp.pow10In;
+                                lifetime = 180f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }},
+                            new ParticleEffect() {{
+                                particles = 100;
+                                line = true;
+                                strokeFrom = 8f;
+                                strokeTo = 0f;
+                                interp = Interp.pow5Out;
+                                sizeInterp = Interp.pow5In;
+                                lenFrom = 100f;
+                                lenTo = 0f;
+                                length = 640f;
+                                baseLength = 0f;
+                                lifetime = 180f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }},
+                            new ParticleEffect() {{
+                                particles = 1;
+                                sizeFrom = 0f;
+                                sizeTo = 480f;
+                                sizeInterp = Interp.pow5Out;
+                                length = 0f;
+                                baseLength = 0f;
+                                lifetime = 60f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }},
+                            new ParticleEffect() {{
+                                particles = 1;
+                                sizeFrom = 480f;
+                                sizeTo = 0f;
+                                sizeInterp = Interp.pow10In;
+                                length = 0f;
+                                baseLength = 0f;
+                                startDelay = 60f;
+                                lifetime = 120f;
+                                colorFrom = Color.valueOf("FEEBB3FF");
+                                colorTo = Color.valueOf("FEEBB3FF");
+                            }}
+                    );
+                }};
+            }};
+        }};
     }
     public class NanoCrystalFusionReactorBuild extends GeneratorBuild{
         public float heat;
