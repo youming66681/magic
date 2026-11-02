@@ -1,18 +1,22 @@
+
 package magical.content;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
+import arc.graphics.g2d.Lines;
 import arc.math.Interp;
+import arc.math.Mathf;
+import arc.util.Time;
 import arc.util.io.Reads;
 import arc.util.io.Writes;
+import mindustry.Vars;
 import mindustry.content.Liquids;
+import mindustry.entities.Effect;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.entities.effect.ParticleEffect;
 import mindustry.entities.effect.WaveEffect;
 import mindustry.gen.*;
 import mindustry.world.blocks.power.PowerGenerator;
-import magical.content.MLItems;
-import magical.content.MLSounds;
 public class NanoCrystalFusionReactor extends PowerGenerator{
     public float itemDuration = 800f;
     public int nanoThreadUse = 4;
@@ -23,6 +27,14 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
     public float maxHeat = 1f;
     public float stopHeat = 0.9f;
     public float restartHeat = 0.6f;
+    public Effect reactorEffect = new Effect(45f, e -> {
+        Draw.color(Color.valueOf("FEEBB3FF"), Color.valueOf("FF5A20FF"), e.fin());
+        Lines.stroke(3f * e.fout());
+        Lines.circle(e.x, e.y, 8f + e.fin() * 28f);
+        Draw.color(Color.valueOf("FEEBB3FF"));
+        Fill.circle(e.x, e.y, 4f * e.fout());
+        Draw.reset();
+    });
     public NanoCrystalFusionReactor(String name){
         super(name);
         size = 8;
@@ -38,7 +50,7 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
         squareSprite = false;
         buildType = NanoCrystalFusionReactorBuild::new;
         explosionRadius = 100;
-        explosionDamage = 80000f;
+        explosionDamage = 80000;
         explosionShake = 80f;
         explosionShakeDuration = 30f;
         explodeSound = MLSounds.explosionbig;
@@ -93,6 +105,8 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
     public class NanoCrystalFusionReactorBuild extends GeneratorBuild{
         public float heat;
         public float cycleProgress;
+        public float effectTimer;
+        public float effectWarmup;
         public boolean running;
         @Override
         public void updateTile(){
@@ -125,12 +139,54 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
             if(heat >= maxHeat){
                 productionEfficiency = 0f;
                 kill();
+                return;
+            }
+            effectWarmup = Mathf.approachDelta(effectWarmup, productionEfficiency, 0.025f, delta);
+            if(effectWarmup > 0.05f){
+                effectTimer += delta * effectWarmup;
+                if(effectTimer >= 18f){
+                    effectTimer = 0f;
+                    if(Vars.net.server()){
+                        Call.effect(
+                                reactorEffect,
+                                x + Mathf.range(22f),
+                                y + Mathf.range(22f),
+                                0f,
+                                Color.white
+                        );
+                    }
+                }
+            }else{
+                effectTimer = 0f;
             }
         }
         @Override
         public void draw(){
             super.draw();
-            Draw.color(Color.valueOf("FEEBB3FF"), Color.red, heat);
+            float warmup = effectWarmup;
+            float temperature = Mathf.clamp(heat);
+            Color coreColor = Color.valueOf("FEEBB3FF").lerp(Color.valueOf("FF5A20FF"), temperature);
+            if(warmup > 0.01f){
+                Draw.z(0.5f);
+                Draw.color(coreColor);
+                Draw.alpha(warmup * 0.25f);
+                Fill.circle(x, y, 38f);
+                Draw.alpha(warmup * 0.8f);
+                Lines.stroke(2f * warmup);
+                Lines.circle(x, y, 32f + Mathf.absin(Time.time, 5f, 3f));
+                Draw.color(Color.valueOf("FEEBB3FF"));
+                Lines.stroke(1.5f * warmup);
+                Draw.arc(x, y, 43f, 0.65f, Time.time * 2f);
+                Draw.arc(x, y, 43f, 0.65f, -Time.time * 2f);
+                Draw.color(coreColor);
+                Draw.alpha(warmup * (0.55f + Mathf.absin(Time.time, 3f, 0.3f)));
+                Fill.circle(x, y, 17f + Mathf.absin(Time.time, 4f, 3f));
+                Draw.color(Color.white);
+                Draw.alpha(warmup * 0.7f);
+                Fill.circle(x, y, 7f);
+                Draw.reset();
+            }
+            Draw.color(Color.valueOf("FEEBB3FF"), Color.valueOf("FF5A20FF"), temperature);
             Draw.alpha(heat * 0.25f);
             Fill.rect(x, y, block.size * 8f, block.size * 8f);
             Draw.reset();
@@ -141,6 +197,7 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
             write.f(heat);
             write.f(cycleProgress);
             write.bool(running);
+            write.f(effectWarmup);
         }
         @Override
         public void read(Reads read, byte revision){
@@ -148,6 +205,9 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
             heat = read.f();
             cycleProgress = read.f();
             running = read.bool();
+            if(revision >= 1){
+                effectWarmup = read.f();
+            }
         }
         @Override
         public byte version(){
