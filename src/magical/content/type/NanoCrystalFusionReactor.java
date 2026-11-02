@@ -255,31 +255,31 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
             return liquid == Liquids.cryofluid && liquids.get(Liquids.cryofluid) < liquidCapacity;
         }
         @Override
-        public void updateTile(){
+        public void updateTile() {
             float delta = delta();
-            if(!running && enabled && heat < restartHeat && items.get(MLItems.nanoEnergyThread) >= nanoThreadUse && items.get(MLItems.crystallineCarbon) >= crystallineCarbonUse){
+            if (!running && enabled && heat < restartHeat && items.get(MLItems.nanoEnergyThread) >= nanoThreadUse && items.get(MLItems.crystallineCarbon) >= crystallineCarbonUse) {
                 items.remove(MLItems.nanoEnergyThread, nanoThreadUse);
                 items.remove(MLItems.crystallineCarbon, crystallineCarbonUse);
                 running = true;
                 cycleProgress = 0f;
             }
-            if(running){
-                if(heat < stopHeat){
+            if (running) {
+                if (heat < stopHeat) {
                     cycleProgress += delta;
                 }
-                if(cycleProgress >= itemDuration){
+                if (cycleProgress >= itemDuration) {
                     cycleProgress = 0f;
                     running = false;
                 }
-            }else{
+            } else {
                 heat = Math.max(0f, heat - 0.0002f * delta);
             }
-            if(running){
+            if (running) {
                 heat += heating * delta;
             }
             float cryofluid = liquids.get(Liquids.cryofluid);
             float heatBeforeCooling = heat;
-            if(cryofluid > 0f && heat > 0f){
+            if (cryofluid > 0f && heat > 0f) {
                 float used = Math.min(cryofluid, coolantUse * delta);
                 liquids.remove(Liquids.cryofluid, used);
                 float cooling = used * coolantPower;
@@ -287,33 +287,34 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
             }
             heat = Mathf.clamp(heat, 0f, maxHeat);
             productionEfficiency = enabled && running && heat < stopHeat ? 1f : 0f;
-            if(heat >= maxHeat){
+            if (heat >= maxHeat) {
                 productionEfficiency = 0f;
                 kill();
                 return;
             }
             effectWarmup = Mathf.approach(effectWarmup, productionEfficiency, 0.025f * delta);
-            if(sequenceActive){
+            if (sequenceActive) {
                 sequenceProgress += delta;
-                if(sequenceProgress >= 72f){
+                if (sequenceProgress >= 72f) {
                     sequenceActive = false;
                     sequenceProgress = 0f;
                     sequenceCooldown = 0f;
-                    if(Vars.net.server()){
+                    if (Vars.net.server()) {
                         Call.effect(runtimeExplosionEffect, x, y, 0f, Color.white);
-                    }else if(!Vars.net.client()){
+                    } else if (!Vars.net.client()) {
                         runtimeExplosionEffect.at(x, y, 0f, Color.white);
                     }
                 }
-            }else if(productionEfficiency > 0f){
+            } else if (productionEfficiency > 0f) {
                 sequenceCooldown += delta;
-                if(sequenceCooldown >= sequenceInterval){
+                if (sequenceCooldown >= sequenceInterval) {
                     sequenceActive = true;
                     sequenceProgress = 0f;
                 }
-            }else{
+            } else {
                 sequenceCooldown = 0f;
             }
+        }
         @Override
         public void draw(){
             super.draw();
