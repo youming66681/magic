@@ -305,7 +305,6 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
                         runtimeExplosionEffect.at(x, y, 0f, Color.white);
                     }
                 }
-            }
             }else if(productionEfficiency > 0f){
                 sequenceCooldown += delta;
                 if(sequenceCooldown >= sequenceInterval){
@@ -315,7 +314,6 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
             }else{
                 sequenceCooldown = 0f;
             }
-        }
         @Override
         public void draw(){
             super.draw();
