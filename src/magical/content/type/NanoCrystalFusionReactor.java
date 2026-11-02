@@ -1,5 +1,4 @@
 package magical.content;
-
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
@@ -19,7 +18,6 @@ import mindustry.entities.effect.WaveEffect;
 import mindustry.gen.*;
 import mindustry.graphics.Layer;
 import mindustry.world.blocks.power.PowerGenerator;
-
 public class NanoCrystalFusionReactor extends PowerGenerator{
     public float itemDuration = 800f;
     public int nanoThreadUse = 4;
@@ -297,6 +295,28 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
                 sequenceCooldown = 0f;
             }
         }
+        public float getSequenceRadius(){
+            float time = sequenceProgress;
+            if(time < 18f){
+                float progress = Interp.pow4In.apply(Mathf.clamp(time / 18f));
+                return Mathf.lerp(38f, 24f, progress);
+            }
+            if(time < 24f){
+                return 24f;
+            }
+            if(time < 42f){
+                float progress = Interp.pow4In.apply(Mathf.clamp((time - 24f) / 18f));
+                return Mathf.lerp(24f, 12f, progress);
+            }
+            if(time < 48f){
+                return 12f;
+            }
+            if(time < 66f){
+                float progress = Interp.pow4In.apply(Mathf.clamp((time - 48f) / 18f));
+                return Mathf.lerp(12f, 3f, progress);
+            }
+            return 3f;
+        }
         @Override
         public void draw(){
             super.draw();
@@ -308,11 +328,7 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
                 float radius = 25f;
                 float pulse = Mathf.absin(Time.time, 3f, 2f);
                 if(sequenceActive){
-                    float phase = sequenceProgress % 24f;
-                    float contraction = phase < 10f ? phase / 10f : 1f - (phase - 10f) / 14f;
-                    contraction = Mathf.clamp(contraction);
-                    contraction = Interp.pow3In.apply(contraction);
-                    radius = Mathf.lerp(38f, 4f, contraction);
+                    radius = getSequenceRadius();
                     pulse = 0f;
                 }
                 Draw.color(coreColor);
@@ -330,16 +346,18 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
                 Draw.color(Color.white);
                 Draw.alpha(warmup * 0.75f);
                 Fill.circle(x, y, Math.max(1.5f, radius * 0.18f));
-                if(sequenceActive){
+                if(sequenceActive && sequenceProgress >= 66f){
+                    float flash = Mathf.absin(Time.time, 4f, 0.5f) + 0.5f;
                     Draw.color(Color.white);
-                    Draw.alpha(warmup * (0.35f + 0.65f * Mathf.absin(Time.time, 12f, 0.5f)));
-                    Fill.circle(x, y, 5f + Mathf.absin(Time.time, 8f, 4f));
+                    Draw.alpha(warmup * flash);
+                    Fill.circle(x, y, 5f + flash * 5f);
                 }
             }
             Draw.z(Layer.block);
             Draw.color(Color.valueOf("FEEBB3FF"), Color.red, temperature);
             Draw.alpha(heat * 0.25f);
             Fill.rect(x, y, block.size * 8f, block.size * 8f);
+            Draw.reset();
         }
         @Override
         public void write(Writes write){
