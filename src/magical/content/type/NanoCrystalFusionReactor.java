@@ -1,5 +1,6 @@
 
 package magical.content;
+import arc.Core;
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
@@ -17,8 +18,12 @@ import mindustry.entities.effect.MultiEffect;
 import mindustry.entities.effect.ParticleEffect;
 import mindustry.entities.effect.WaveEffect;
 import mindustry.gen.*;
-import mindustry.type.Liquid;
 import mindustry.graphics.Layer;
+import mindustry.graphics.Pal;
+import mindustry.type.Liquid;
+import mindustry.ui.Bar;
+import mindustry.world.Block;
+import mindustry.world.Building;
 import mindustry.world.blocks.power.PowerGenerator;
 public class NanoCrystalFusionReactor extends PowerGenerator{
     public float itemDuration = 800f;
@@ -112,6 +117,20 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
         powerProduction = 12800f;
         squareSprite = false;
         buildType = NanoCrystalFusionReactorBuild::new;
+        addBar("heat", (NanoCrystalFusionReactorBuild build) ->
+                new Bar(
+                        () -> Core.bundle.format("bar.heat", Mathf.round(build.heat / maxHeat * 100f)),
+                        () -> Pal.lightOrange,
+                        () -> Mathf.clamp(build.heat / maxHeat)
+                )
+        );
+        addBar("cryofluid", (NanoCrystalFusionReactorBuild build) ->
+                new Bar(
+                        () -> Core.bundle.format("bar.cryofluid", Mathf.round(build.liquids.get(Liquids.cryofluid) * 10f) / 10f, liquidCapacity),
+                        () -> Pal.liquid,
+                        () -> Mathf.clamp(build.liquids.get(Liquids.cryofluid) / liquidCapacity)
+                )
+        );
         destroyBullet = new ExplosionBulletType(800, 800){{
             hitSound = MLSounds.laserblast;
             hitShake = 80f;
@@ -268,18 +287,19 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
             }else{
                 heat = Math.max(0f, heat - 0.0002f * delta);
             }
-            if(heat > 0f && liquids.get(Liquids.cryofluid) > 0.0001f){
-                float used = Math.min(liquids.get(Liquids.cryofluid), coolantUse * delta);
+            float cryofluid = liquids.get(Liquids.cryofluid);
+            if(heat > 0f && cryofluid > 0f){
+                float used = Math.min(cryofluid, coolantUse * delta);
                 liquids.remove(Liquids.cryofluid, used);
                 heat = Math.max(0f, heat - used * coolantPower);
             }
+            heat = Math.min(heat, maxHeat);
+            productionEfficiency = enabled && running && heat < stopHeat ? 1f : 0f;
             if(heat >= maxHeat){
-                heat = maxHeat;
                 productionEfficiency = 0f;
                 kill();
                 return;
             }
-            productionEfficiency = enabled && running && heat < stopHeat ? 1f : 0f;
             effectWarmup = Mathf.approach(effectWarmup, productionEfficiency, 0.025f * delta);
             if(sequenceActive){
                 sequenceProgress += delta;
@@ -301,27 +321,6 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
                 sequenceCooldown = 0f;
             }
         }
-        public float getSequenceRadius(){
-            if(sequenceProgress < 18f){
-                float progress = Interp.pow4In.apply(Mathf.clamp(sequenceProgress / 18f));
-                return Mathf.lerp(38f, 24f, progress);
-            }
-            if(sequenceProgress < 24f){
-                return 24f;
-            }
-            if(sequenceProgress < 42f){
-                float progress = Interp.pow4In.apply(Mathf.clamp((sequenceProgress - 24f) / 18f));
-                return Mathf.lerp(24f, 12f, progress);
-            }
-            if(sequenceProgress < 48f){
-                return 12f;
-            }
-            if(sequenceProgress < 66f){
-                float progress = Interp.pow4In.apply(Mathf.clamp((sequenceProgress - 48f) / 18f));
-                return Mathf.lerp(12f, 3f, progress);
-            }
-            return 3f;
-        }
         @Override
         public void draw(){
             super.draw();
@@ -333,7 +332,12 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
                 float radius = 25f;
                 float pulse = Mathf.absin(Time.time, 3f, 2f);
                 if(sequenceActive){
-                    radius = getSequenceRadius();
+                    int stage = Math.min(2, (int)(sequenceProgress / 24f));
+                    float phase = (sequenceProgress - stage * 24f) / 24f;
+                    float startRadius = 38f - stage * 12f;
+                    float contraction = phase < 0.65f ? phase / 0.65f : 1f - (phase - 0.65f) / 0.35f;
+                    contraction = Interp.pow3In.apply(Mathf.clamp(contraction));
+                    radius = Mathf.lerp(startRadius, 4f, contraction);
                     pulse = 0f;
                 }
                 Draw.color(coreColor);
