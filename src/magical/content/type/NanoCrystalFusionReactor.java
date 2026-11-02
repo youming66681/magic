@@ -12,10 +12,12 @@ import arc.util.io.Writes;
 import mindustry.Vars;
 import mindustry.content.Liquids;
 import mindustry.entities.Effect;
+import mindustry.entities.bullet.*;
 import mindustry.entities.effect.MultiEffect;
 import mindustry.entities.effect.ParticleEffect;
 import mindustry.entities.effect.WaveEffect;
 import mindustry.gen.*;
+import mindustry.graphics.Layer;
 import mindustry.world.blocks.power.PowerGenerator;
 public class NanoCrystalFusionReactor extends PowerGenerator{
     public float itemDuration = 800f;
@@ -27,15 +29,75 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
     public float maxHeat = 1f;
     public float stopHeat = 0.9f;
     public float restartHeat = 0.6f;
-    public Effect reactorEffect = new Effect(45f, e -> {
-        Draw.color(Color.valueOf("FEEBB3FF"), Color.valueOf("FF5A20FF"), e.fin());
-        Lines.stroke(3f * e.fout());
-        Lines.circle(e.x, e.y, 8f + e.fin() * 28f);
-        Draw.color(Color.valueOf("FEEBB3FF"));
-        Fill.circle(e.x, e.y, 4f * e.fout());
-        Draw.reset();
-    });
-    public NanoCrystalFusionReactor(String name) {
+    public float sequenceInterval = 240f;
+    public Effect runtimeExplosionEffect = new MultiEffect(
+            new WaveEffect(){{
+                lifetime = 55f;
+                sizeFrom = 0f;
+                sizeTo = 560f;
+                strokeFrom = 0f;
+                strokeTo = 22f;
+                colorFrom = Color.valueOf("FEEBB3FF");
+                colorTo = Color.valueOf("FF8A35FF");
+            }},
+            new WaveEffect(){{
+                lifetime = 40f;
+                sizeFrom = 420f;
+                sizeTo = 0f;
+                strokeFrom = 28f;
+                strokeTo = 0f;
+                colorFrom = Color.valueOf("FFFFFFFF");
+                colorTo = Color.valueOf("FEEBB3FF");
+            }},
+            new WaveEffect(){{
+                lifetime = 65f;
+                sizeFrom = 0f;
+                sizeTo = 360f;
+                strokeFrom = 0f;
+                strokeTo = 8f;
+                colorFrom = Color.valueOf("FF5A20FF");
+                colorTo = Color.valueOf("FEEBB3FF");
+            }},
+            new ParticleEffect(){{
+                particles = 100;
+                sizeFrom = 22f;
+                sizeTo = 0f;
+                length = 420f;
+                baseLength = 0f;
+                interp = Interp.pow5Out;
+                sizeInterp = Interp.pow5In;
+                lifetime = 90f;
+                colorFrom = Color.valueOf("FFFFFFFF");
+                colorTo = Color.valueOf("FF5A20FF");
+            }},
+            new ParticleEffect(){{
+                particles = 120;
+                line = true;
+                strokeFrom = 9f;
+                strokeTo = 0f;
+                lenFrom = 120f;
+                lenTo = 0f;
+                length = 520f;
+                baseLength = 0f;
+                interp = Interp.pow5Out;
+                sizeInterp = Interp.pow5In;
+                lifetime = 100f;
+                colorFrom = Color.valueOf("FEEBB3FF");
+                colorTo = Color.valueOf("FF5A20FF");
+            }},
+            new ParticleEffect(){{
+                particles = 1;
+                sizeFrom = 0f;
+                sizeTo = 520f;
+                length = 0f;
+                baseLength = 0f;
+                sizeInterp = Interp.pow5Out;
+                lifetime = 45f;
+                colorFrom = Color.valueOf("FFFFFFFF");
+                colorTo = Color.valueOf("FEEBB3FF");
+            }}
+    );
+    public NanoCrystalFusionReactor(String name){
         super(name);
         size = 8;
         health = 6400;
@@ -49,52 +111,52 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
         powerProduction = 12800f / 60f;
         squareSprite = false;
         buildType = NanoCrystalFusionReactorBuild::new;
-        destroyBullet = new ExplosionBulletType(800, 800) {{
+        destroyBullet = new ExplosionBulletType(800, 800){{
             hitSound = MLSounds.laserblast;
             hitShake = 80f;
             hitEffect = new MultiEffect(
-                    new WaveEffect() {{
+                    new WaveEffect(){{
                         lifetime = 40f;
                         sizeFrom = 800f;
                         sizeTo = 0f;
-                        strokeFrom = 40;
-                        strokeTo = 0;
+                        strokeFrom = 40f;
+                        strokeTo = 0f;
                     }},
-                    new WaveEffect() {{
+                    new WaveEffect(){{
                         lifetime = 30f;
                         sizeFrom = 800f;
                         sizeTo = 0f;
-                        strokeFrom = 40;
-                        strokeTo = 0;
-                        startDelay = 10;
+                        strokeFrom = 40f;
+                        strokeTo = 0f;
+                        startDelay = 10f;
                     }},
-                    new WaveEffect() {{
+                    new WaveEffect(){{
                         lifetime = 20f;
                         sizeFrom = 800f;
                         sizeTo = 0f;
-                        strokeFrom = 40;
-                        strokeTo = 0;
-                        startDelay = 20;
+                        strokeFrom = 40f;
+                        strokeTo = 0f;
+                        startDelay = 20f;
                     }}
             );
             fragBullets = 1;
-            fragBullet = new BasicBulletType() {{
+            fragBullet = new BasicBulletType(){{
                 hittable = false;
                 absorbable = false;
                 collides = false;
                 lifetime = 40f;
-                height = 0;
-                width = 0;
-                speed = 0;
+                height = 0f;
+                width = 0f;
+                speed = 0f;
                 fragBullets = 1;
-                fragBullet = new BasicBulletType() {{
+                fragBullet = new BasicBulletType(){{
                     hittable = false;
                     absorbable = false;
                     collides = false;
                     lifetime = 0f;
-                    height = 0;
-                    width = 0;
-                    speed = 0;
+                    height = 0f;
+                    width = 0f;
+                    speed = 0f;
                     splashDamage = 80000f;
                     splashDamageRadius = 800f;
                     makeFire = true;
@@ -105,10 +167,10 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
                     incendSpread = 100;
                     incendChance = 1f;
                     hitSound = MLSounds.explosionbig;
-                    hitSoundVolume = 100;
+                    hitSoundVolume = 100f;
                     hitShake = 800f;
                     hitEffect = new MultiEffect(
-                            new WaveEffect() {{
+                            new WaveEffect(){{
                                 lifetime = 60f;
                                 sizeFrom = 0f;
                                 sizeTo = 960f;
@@ -117,7 +179,7 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
                                 colorFrom = Color.valueOf("FEEBB3FF");
                                 colorTo = Color.valueOf("FEEBB3FF");
                             }},
-                            new ParticleEffect() {{
+                            new ParticleEffect(){{
                                 particles = 50;
                                 sizeFrom = 50f;
                                 sizeTo = 0f;
@@ -129,7 +191,7 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
                                 colorFrom = Color.valueOf("FEEBB3FF");
                                 colorTo = Color.valueOf("FEEBB3FF");
                             }},
-                            new ParticleEffect() {{
+                            new ParticleEffect(){{
                                 particles = 100;
                                 line = true;
                                 strokeFrom = 8f;
@@ -144,7 +206,7 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
                                 colorFrom = Color.valueOf("FEEBB3FF");
                                 colorTo = Color.valueOf("FEEBB3FF");
                             }},
-                            new ParticleEffect() {{
+                            new ParticleEffect(){{
                                 particles = 1;
                                 sizeFrom = 0f;
                                 sizeTo = 480f;
@@ -155,7 +217,7 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
                                 colorFrom = Color.valueOf("FEEBB3FF");
                                 colorTo = Color.valueOf("FEEBB3FF");
                             }},
-                            new ParticleEffect() {{
+                            new ParticleEffect(){{
                                 particles = 1;
                                 sizeFrom = 480f;
                                 sizeTo = 0f;
@@ -175,9 +237,11 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
     public class NanoCrystalFusionReactorBuild extends GeneratorBuild{
         public float heat;
         public float cycleProgress;
-        public float effectTimer;
+        public float sequenceCooldown;
+        public float sequenceProgress;
         public float effectWarmup;
         public boolean running;
+        public boolean sequenceActive;
         @Override
         public void updateTile(){
             float delta = delta();
@@ -211,23 +275,25 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
                 kill();
                 return;
             }
-            effectWarmup = Mathf.approachDelta(effectWarmup, productionEfficiency, 0.025f, delta);
-            if(effectWarmup > 0.05f){
-                effectTimer += delta * effectWarmup;
-                if(effectTimer >= 18f){
-                    effectTimer = 0f;
+            effectWarmup = Mathf.approach(effectWarmup, productionEfficiency, 0.025f * delta);
+            if(sequenceActive){
+                sequenceProgress += delta;
+                if(sequenceProgress >= 72f){
+                    sequenceActive = false;
+                    sequenceProgress = 0f;
+                    sequenceCooldown = 0f;
                     if(Vars.net.server()){
-                        Call.effect(
-                                reactorEffect,
-                                x + Mathf.range(22f),
-                                y + Mathf.range(22f),
-                                0f,
-                                Color.white
-                        );
+                        Call.effect(runtimeExplosionEffect, x, y, 0f, Color.white);
                     }
                 }
+            }else if(productionEfficiency > 0f){
+                sequenceCooldown += delta;
+                if(sequenceCooldown >= sequenceInterval){
+                    sequenceActive = true;
+                    sequenceProgress = 0f;
+                }
             }else{
-                effectTimer = 0f;
+                sequenceCooldown = 0f;
             }
         }
         @Override
@@ -236,30 +302,43 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
             float warmup = effectWarmup;
             float temperature = Mathf.clamp(heat);
             Color coreColor = Color.valueOf("FEEBB3FF").lerp(Color.valueOf("FF5A20FF"), temperature);
+            Draw.z(Layer.block + 0.1f);
             if(warmup > 0.01f){
-                Draw.z(0.5f);
+                float radius = 25f;
+                float pulse = Mathf.absin(Time.time, 3f, 2f);
+                if(sequenceActive){
+                    float phase = sequenceProgress % 24f;
+                    float contraction = phase < 10f ? phase / 10f : 1f - (phase - 10f) / 14f;
+                    contraction = Mathf.clamp(contraction);
+                    contraction = Interp.pow3In.apply(contraction);
+                    radius = Mathf.lerp(38f, 4f, contraction);
+                    pulse = 0f;
+                }
                 Draw.color(coreColor);
-                Draw.alpha(warmup * 0.25f);
-                Fill.circle(x, y, 38f);
+                Draw.alpha(warmup * 0.22f);
+                Fill.circle(x, y, radius + 12f);
                 Draw.alpha(warmup * 0.8f);
-                Lines.stroke(2f * warmup);
-                Lines.circle(x, y, 32f + Mathf.absin(Time.time, 5f, 3f));
+                Lines.stroke(2.5f * warmup);
+                Lines.circle(x, y, radius + pulse);
                 Draw.color(Color.valueOf("FEEBB3FF"));
                 Lines.stroke(1.5f * warmup);
-                Draw.arc(x, y, 43f, 0.65f, Time.time * 2f);
-                Draw.arc(x, y, 43f, 0.65f, -Time.time * 2f);
+                Lines.circle(x, y, radius + 8f + pulse);
                 Draw.color(coreColor);
-                Draw.alpha(warmup * (0.55f + Mathf.absin(Time.time, 3f, 0.3f)));
-                Fill.circle(x, y, 17f + Mathf.absin(Time.time, 4f, 3f));
+                Draw.alpha(warmup * 0.8f);
+                Fill.circle(x, y, Math.max(2f, radius * 0.45f));
                 Draw.color(Color.white);
-                Draw.alpha(warmup * 0.7f);
-                Fill.circle(x, y, 7f);
-                Draw.reset();
+                Draw.alpha(warmup * 0.75f);
+                Fill.circle(x, y, Math.max(1.5f, radius * 0.18f));
+                if(sequenceActive){
+                    Draw.color(Color.white);
+                    Draw.alpha(warmup * (0.35f + 0.65f * Mathf.absin(Time.time, 12f, 0.5f)));
+                    Fill.circle(x, y, 5f + Mathf.absin(Time.time, 8f, 4f));
+                }
             }
+            Draw.z(Layer.block);
             Draw.color(Color.valueOf("FEEBB3FF"), Color.red, temperature);
             Draw.alpha(heat * 0.25f);
             Fill.rect(x, y, block.size * 8f, block.size * 8f);
-            Draw.reset();
         }
         @Override
         public void write(Writes write){
@@ -274,6 +353,10 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
             heat = read.f();
             cycleProgress = read.f();
             running = read.bool();
+            sequenceCooldown = 0f;
+            sequenceProgress = 0f;
+            sequenceActive = false;
+            effectWarmup = 0f;
         }
         @Override
         public byte version(){
