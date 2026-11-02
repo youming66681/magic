@@ -270,9 +270,10 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
             heat = Math.min(heat, maxHeat);
             productionEfficiency = enabled && running && heat < stopHeat ? 1f : 0f;
             if(heat >= maxHeat){
+                heat = maxHeat;
                 productionEfficiency = 0f;
-                kill();
-                return;
+                running = false;
+                cycleProgress = 0f;
             }
             effectWarmup = Mathf.approach(effectWarmup, productionEfficiency, 0.025f * delta);
             if(sequenceActive){
