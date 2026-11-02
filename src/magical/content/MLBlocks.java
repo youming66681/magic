@@ -3695,7 +3695,18 @@ public class MLBlocks {
         }};
         //纳晶聚变反应堆
         NanoCrystalFusionReactor = new NuclearReactor("NanoCrystalFusionReactor"){{
-                requirements(Category.power, ItemStack.with(new Object[]{MLItems.nanoEnergyThread, 80, MLItems.crystallineCarbon, 80, MLItems.phantomLuminousAlloy, 160, MLItems.wingedMetal, 320, Items.silicon, 800, MLItems.matrixChip, 80}));
+            size = 8;
+            health = 6400;
+            armor = 8;
+            itemCapacity = 40;
+            liquidCapacity = 800f;
+            hasItems = true;
+            hasLiquids = true;
+            hasPower = true;
+            outputsPower = true;
+            powerProduction = 12800f;
+            squareSprite = false;
+            requirements(Category.power, ItemStack.with(new Object[]{MLItems.nanoEnergyThread, 80, MLItems.crystallineCarbon, 80, MLItems.phantomLuminousAlloy, 160, MLItems.wingedMetal, 320, Items.silicon, 800, MLItems.matrixChip, 80}));
             }};
         //power
         //单位

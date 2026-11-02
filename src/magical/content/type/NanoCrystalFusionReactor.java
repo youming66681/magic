@@ -1,5 +1,5 @@
-
 package magical.content;
+
 import arc.graphics.Color;
 import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
@@ -19,6 +19,7 @@ import mindustry.entities.effect.WaveEffect;
 import mindustry.gen.*;
 import mindustry.graphics.Layer;
 import mindustry.world.blocks.power.PowerGenerator;
+
 public class NanoCrystalFusionReactor extends PowerGenerator{
     public float itemDuration = 800f;
     public int nanoThreadUse = 4;
@@ -108,7 +109,7 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
         hasLiquids = true;
         hasPower = true;
         outputsPower = true;
-        powerProduction = 12800f / 60f;
+        powerProduction = 12800f;
         squareSprite = false;
         buildType = NanoCrystalFusionReactorBuild::new;
         destroyBullet = new ExplosionBulletType(800, 800){{
