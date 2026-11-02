@@ -186,7 +186,7 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
                 Fill.circle(x, y, 7f);
                 Draw.reset();
             }
-            Draw.color(Color.valueOf("FEEBB3FF"), Color.valueOf("FF5A20FF"), temperature);
+            Draw.color(Color.valueOf("FEEBB3FF"), Color.red, temperature);
             Draw.alpha(heat * 0.25f);
             Fill.rect(x, y, block.size * 8f, block.size * 8f);
             Draw.reset();
@@ -197,7 +197,6 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
             write.f(heat);
             write.f(cycleProgress);
             write.bool(running);
-            write.f(effectWarmup);
         }
         @Override
         public void read(Reads read, byte revision){
@@ -205,9 +204,6 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
             heat = read.f();
             cycleProgress = read.f();
             running = read.bool();
-            if(revision >= 1){
-                effectWarmup = read.f();
-            }
         }
         @Override
         public byte version(){
