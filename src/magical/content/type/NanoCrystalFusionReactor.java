@@ -267,7 +267,6 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
                 if(heat < stopHeat){
                     cycleProgress += delta;
                 }
-                heat += heating * delta;
                 if(cycleProgress >= itemDuration){
                     cycleProgress = 0f;
                     running = false;
@@ -275,11 +274,15 @@ public class NanoCrystalFusionReactor extends PowerGenerator{
             }else{
                 heat = Math.max(0f, heat - 0.0002f * delta);
             }
+            if(running){
+                heat += heating * delta;
+            }
             float cryofluid = liquids.get(Liquids.cryofluid);
+            float heatBeforeCooling = heat;
             if(cryofluid > 0f && heat > 0f){
                 float used = Math.min(cryofluid, coolantUse * delta);
-                float cooling = used * coolantPower;
                 liquids.remove(Liquids.cryofluid, used);
+                float cooling = used * coolantPower;
                 heat = Math.max(0f, heat - cooling);
             }
             heat = Mathf.clamp(heat, 0f, maxHeat);
