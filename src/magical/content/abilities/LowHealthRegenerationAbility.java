@@ -1,5 +1,5 @@
 
-package magical.content.type;
+package magical.content;
 import arc.Core;
 import arc.struct.ObjectMap;
 import arc.struct.ObjectSet;
