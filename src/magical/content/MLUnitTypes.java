@@ -6330,6 +6330,7 @@ public class MLUnitTypes {
                                 reload = 120f;
                                 x = 0f;
                                 y = -20f;
+                                recoil = 10;
                                 rotate = true;
                                 rotateSpeed = 4f;
                                 mirror = false;
@@ -6342,8 +6343,9 @@ public class MLUnitTypes {
                                 shoot = new ShootPattern() {{
                                     firstShotDelay = 40f;
                                 }};
+                                shootY = 16;
                                 bullet = new PointBulletType() {{
-                                    chargeEffect = Fx.lancerLaserCharge;
+                                    chargeEffect = Fx.greenLaserCharge;
                                     hitEffect = despawnEffect = MLFx.EnergyExplosion;
                                     smokeEffect = Fx.smeltsmoke;
                                     trailEffect = MLFx.beamEffect;
@@ -6352,6 +6354,7 @@ public class MLUnitTypes {
                                     splashDamageRadius = 48;
                                     splashDamage = 1450;
                                     speed = 576;
+                                    lifetime = 1;
                                     hitShake = 10f;
                                 }};
                             }});
