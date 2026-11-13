@@ -6317,12 +6317,12 @@ public class MLUnitTypes {
                 crushDamage = 40;
                 range = 576;
                 abilities.add(new LowHealthRegenerationAbility() {{
-                    healAmount = 7250f;
+                    healAmount = 725f;
                     duration = 70f;
                     stationaryMultiplier = 3f;
                     allyDuration = 60f * 24f;
                     allyRange = 288f;
-                    allyHealAmount = 3625f;
+                    allyHealAmount = 362.5f;
                 }});
             }};
     }
