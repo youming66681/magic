@@ -6346,12 +6346,12 @@ public class MLUnitTypes {
                                 shootY = 24;
                                 bullet = new PointBulletType() {{
                                     chargeEffect = Fx.greenLaserCharge;
-                                    hitEffect = despawnEffect = MLFx.EnergyExplosion2;
+                                    hitEffect = despawnEffect = MLFx.EnergyExplosion3;
                                     smokeEffect = Fx.smeltsmoke;
                                     trailEffect = MLFx.beamEffect;
                                     trailSpacing = 20f;
                                     damage = 1450;
-                                    splashDamageRadius = 64;
+                                    splashDamageRadius = 96;
                                     splashDamage = 1450;
                                     speed = 576;
                                     lifetime = 1;
