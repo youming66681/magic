@@ -28,6 +28,7 @@ public class LowHealthRegenerationAbility extends Ability{
         t.add("[lightgray]" + Core.bundle.get("ability.low-health-regeneration.description") + "[]");
         t.row();
     }
+
     @Override
     public void update(Unit unit){
         if(unit.dead || !unit.isAdded()){
