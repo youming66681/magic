@@ -6304,25 +6304,26 @@ public class MLUnitTypes {
         //BOSSS
         //乳齿象
         Mammoth = new UnitType("Mammoth") {{
-            constructor = UnitTypes.stell.constructor;
-            omniMovement = false;
-            rotateMoveFirst = false;
-            squareShape = true;
-            rotateSpeed = 1.6f;
-            speed = 0.8f;
-            hitSize = 144f;
-            health = 1450000;
-            armor = 145;
-            faceTarget = false;
-            crushDamage = 40;
-            range = 576;
-            abilities.add(new LowHealthRegenerationAbility(){{
-                healAmount = 7250f;
-                duration = 70f;
-                stationaryMultiplier = 3f;
-                allyDuration = 60f * 24f;
-                allyRange = 288f;
-                allyHealAmount = 3625f;
-            }});
+                constructor = UnitTypes.stell.constructor;
+                omniMovement = false;
+                rotateMoveFirst = false;
+                squareShape = true;
+                rotateSpeed = 1.6f;
+                speed = 0.8f;
+                hitSize = 144f;
+                health = 1450000;
+                armor = 145;
+                faceTarget = false;
+                crushDamage = 40;
+                range = 576;
+                abilities.add(new LowHealthRegenerationAbility() {{
+                    healAmount = 7250f;
+                    duration = 70f;
+                    stationaryMultiplier = 3f;
+                    allyDuration = 60f * 24f;
+                    allyRange = 288f;
+                    allyHealAmount = 3625f;
+                }});
+            }}
     }
 }
