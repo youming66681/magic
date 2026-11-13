@@ -6314,7 +6314,7 @@ public class MLUnitTypes {
                 health = 1450000;
                 armor = 145;
                 faceTarget = false;
-                crushDamage = 40;
+                crushDamage = 25;
                 range = 576;
                 abilities.add(new LowHealthRegenerationAbility() {{
                     healAmount = 500f;
