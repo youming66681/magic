@@ -68,7 +68,9 @@ public class MLUnitTypes {
     BrokenEdge, FlyingSwallow, Tianshu, ConstantGlow,
     //旗舰
     Aoba, MoonRise, StarrySky, MilkyWay, TheWorld,
-            LiYao;
+    LiYao,
+    //BOSS
+    Mammoth;
 
     public static void load() {
         //幻境陆军
@@ -3732,7 +3734,7 @@ public class MLUnitTypes {
             rotateMoveFirst = true;
             omniMovement = true;
             circleTarget = true;
-            circleTargetRadius = 550;
+            circleTargetRadius = 250;
             rotateSpeed = 2.25f;
             speed = 6f;
             drag = 0.02f;
@@ -6299,5 +6301,28 @@ public class MLUnitTypes {
                         }};
                     }});
         }};
+        //BOSSS
+        //乳齿象
+        Mammoth = new UnitType("Mammoth") {{
+            constructor = UnitTypes.stell.constructor;
+            omniMovement = false;
+            rotateMoveFirst = false;
+            squareShape = true;
+            rotateSpeed = 1.6f;
+            speed = 0.8f;
+            hitSize = 144f;
+            health = 1450000;
+            armor = 145;
+            faceTarget = false;
+            crushDamage = 40;
+            range = 576;
+            abilities.add(new LowHealthRegenerationAbility(){{
+                healAmount = 7250f;
+                duration = 70f;
+                stationaryMultiplier = 3f;
+                allyDuration = 60f * 24f;
+                allyRange = 288f;
+                allyHealAmount = 3625f;
+            }});
     }
 }
