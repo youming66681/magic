@@ -6324,6 +6324,6 @@ public class MLUnitTypes {
                     allyRange = 288f;
                     allyHealAmount = 3625f;
                 }});
-            }}
+            }};
     }
 }
