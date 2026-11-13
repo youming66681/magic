@@ -6341,17 +6341,17 @@ public class MLUnitTypes {
                                 shake = 10f;
                                 layerOffset = 0.001f;
                                 shoot = new ShootPattern() {{
-                                    firstShotDelay = 40f;
+                                    firstShotDelay = 80f;
                                 }};
-                                shootY = 16;
+                                shootY = 24;
                                 bullet = new PointBulletType() {{
                                     chargeEffect = Fx.greenLaserCharge;
-                                    hitEffect = despawnEffect = MLFx.EnergyExplosion;
+                                    hitEffect = despawnEffect = MLFx.EnergyExplosion2;
                                     smokeEffect = Fx.smeltsmoke;
                                     trailEffect = MLFx.beamEffect;
                                     trailSpacing = 20f;
                                     damage = 1450;
-                                    splashDamageRadius = 48;
+                                    splashDamageRadius = 64;
                                     splashDamage = 1450;
                                     speed = 576;
                                     lifetime = 1;
