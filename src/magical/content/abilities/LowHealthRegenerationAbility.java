@@ -1,4 +1,4 @@
-package magical.content.type;
+package magical.content;
 import arc.struct.ObjectMap;
 import arc.struct.ObjectSet;
 import arc.util.Time;
