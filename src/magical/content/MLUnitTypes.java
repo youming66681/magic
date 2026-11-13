@@ -6325,35 +6325,36 @@ public class MLUnitTypes {
                     allyHealAmount = 250f;
                 }});
                 weapons.add(
-                        new Weapon("magic-Mammoth0") {{
-                            reload = 120f;
-                            x = 0f;
-                            y = -20f;
-                            rotate = true;
-                            rotateSpeed = 4f;
-                            mirror = false;
-                            alternate = false;
-                            inaccuracy = 0f;
-                            chargeSound = MLSounds.lasercharge2;
-                            shootSound = MLSounds.shootForeshadow;
-                            shake = 10f;
-                            layerOffset = 0.001f;
-                            shoot = new ShootPattern() {{
-                                firstShotDelay = 40f;
-                            }};
-                            bullet = new PointBulletType() {{
-                                chargeEffect = Fx.lancerLaserCharge;
-                                hitEffect = despawnEffect = MLFx.EnergyExplosion;
-                                smokeEffect = Fx.smeltsmoke;
-                                trailEffect = MLFx.beamEffect;
-                                trailSpacing = 20f;
-                                damage = 1450;
-                                splashDamageRadius = 48;
-                                splashDamage = 1450;
-                                speed = 576;
-                                hitShake = 10f;
-                            }};
-                )
+                        new Weapon("magic-Mammoth0") {
+                            {
+                                reload = 120f;
+                                x = 0f;
+                                y = -20f;
+                                rotate = true;
+                                rotateSpeed = 4f;
+                                mirror = false;
+                                alternate = false;
+                                inaccuracy = 0f;
+                                chargeSound = MLSounds.lasercharge2;
+                                shootSound = MLSounds.shootForeshadow;
+                                shake = 10f;
+                                layerOffset = 0.001f;
+                                shoot = new ShootPattern() {{
+                                    firstShotDelay = 40f;
+                                }};
+                                bullet = new PointBulletType() {{
+                                    chargeEffect = Fx.lancerLaserCharge;
+                                    hitEffect = despawnEffect = MLFx.EnergyExplosion;
+                                    smokeEffect = Fx.smeltsmoke;
+                                    trailEffect = MLFx.beamEffect;
+                                    trailSpacing = 20f;
+                                    damage = 1450;
+                                    splashDamageRadius = 48;
+                                    splashDamage = 1450;
+                                    speed = 576;
+                                    hitShake = 10f;
+                                }};
+                            }});
             }};
     }
 }
