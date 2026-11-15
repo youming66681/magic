@@ -117,7 +117,7 @@ public class MLTechTree {
                 });
             });
             //进阶科技
-            /*基站核心*/node(MLBlocks.baseStationCore, () -> {
+            /*基站核心*/node(MLBlocks.baseStationCore, Seq.with(new OnSector(MLSectorPresets.FrozenWinterValley)), () -> {
                 nodeProduce(MLItems.wingedStone, () -> {
                   nodeProduce(MLItems.acrylic, () -> {
                     nodeProduce(MLItems.arrayChip, () -> {
