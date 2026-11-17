@@ -153,7 +153,7 @@ public class MLBlocks {
             fluvialErosion, adaptiveWall, largeAdaptiveWall, Birefringence, phantomSteelDrill, phantomSteelConveyor, phantomSteelBridge, phantomSteeljunction,
             phantomSteelUnloader, phantomSteelPowerNode, phantomTitaniumSteelPowerNode, excitedYuan, fuelPoweredGenerator, phantomTitaniumSteelConveyor,
             phantomSteelWall, largePhantomSteelWall, phantomTitaniumSteelWall, largePhantomTitaniumSteelWall, curvatureEvolutionPod, quantumFactory, chipMachine,
-            BasicManufacturingPlant, PhantomSteelLiquidBridge, mysticCrystalBattery, CrystalEdge,
+            BasicManufacturingPlant, PhantomSteelLiquidBridge, mysticCrystalBattery, CrystalEdge, Hellfire,
             //进阶科技
             starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
             Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, Constructor, Deconstructor, LeiHeng, Refraction,
@@ -912,6 +912,46 @@ public class MLBlocks {
             health = 1200;
             coolant = consumeCoolant(0.3f);
         }};
+        //狱火
+        Hellfire = new ItemTurret("Hellfire") {{
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 60, Items.graphite, 60, MLItems.mysticCrystal, 30}));
+            ammo(
+                    Items.coal, new BulletType(4f, 30f){{
+                        width = 0f;
+                        height = 0f;
+                        hitSize = 16f;
+                        lifetime = 22.5f;
+                        pierce = true;
+                        status = StatusEffects.burning;
+                        statusDuration = 60f * 10f;
+                        hitEffect = MLFx.FlameEffects.flameHit;
+                        despawnEffect = MLFx.FlameEffects.flameHit;
+                        hittable = false;
+                        absorbable = false;
+                    }},
+                    Items.pyratite, new BulletType(4f, 60f){{
+                        width = 0f;
+                        height = 0f;
+                        hitSize = 16f;
+                        lifetime = 22.5f;
+                        pierce = true;
+                        status = StatusEffects.burning;
+                        statusDuration = 60f * 20f;
+                        hitEffect = MLFx.FlameEffects.flameHit;
+                        despawnEffect = MLFx.FlameEffects.flameHit;
+                        hittable = false;
+                        absorbable = false;
+                    }}
+            );
+            recoil = 3f;
+            reload = 3f;
+            range = 90f;
+            size = 3;
+            ammoUseEffect = Fx.none;
+            health = 1200;
+            shootSound = Sounds.shootFlame;
+            coolant = consumeCoolant(0.3f);
+        }}
         //光降
         LightDescends = new ItemTurret("LightDescends") {{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 120, Items.silicon, 80, Items.titanium, 90, MLItems.phantomTitaniumSteel, 75, MLItems.logicChip, 60,}));

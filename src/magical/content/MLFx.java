@@ -43,6 +43,8 @@ public class MLFx {
     public static Effect circleOut;
     public static Effect slash1;
     public static Effect triangleTrail;
+    public static Effect flameHit;
+    public static Effect flameShoot;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -814,7 +816,19 @@ public class MLFx {
             Lines.line(x2, y2, x3, y3);
             Lines.line(x3, y3, x1, y1);
             Draw.reset();
-        });
+        });、
+        flameHit = new Effect(18f, e -> {
+                Draw.color(Color.orange, Color.yellow, e.fin());
+                Lines.stroke(3f * e.fout());
+                Lines.circle(e.x, e.y, 3f + e.fin() * 9f);
+                Draw.reset();
+            });
+        flameShoot = new Effect(12f, e -> {
+                Draw.color(Color.orange, Color.yellow, e.fin());
+                Lines.stroke(2f * e.fout());
+                Lines.circle(e.x, e.y, 2f + e.fin() * 5f);
+                Draw.reset();
+            });
     }
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {

@@ -66,6 +66,9 @@ public class MLTechTree {
                 /*晶棱*/node(MLBlocks.excitedYuan, Seq.with(new OnSector(MLSectorPresets.DeepSecludedJungle)), () -> {
                         });
             /*流冲*/node(MLBlocks.fluvialErosion, Seq.with(new SectorComplete(MLSectorPresets.LandingZone)), ()-> {
+                    /*狱火*/node(MLBlocks.Hellfire, Seq.with(new SectorComplete(MLSectorPresets.DeepSecludedJungle)), ()-> {
+
+                    });
                 });
             });
             /*基础制造厂*/node(MLBlocks.BasicManufacturingPlant, Seq.with(new OnSector(MLSectorPresets.LandingZone)), () -> {
