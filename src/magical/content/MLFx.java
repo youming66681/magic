@@ -823,7 +823,7 @@ public class MLFx {
                 Lines.circle(e.x, e.y, 3f + e.fin() * 9f);
                 Draw.reset();
             });
-        flameShoot = new Effect(33f, 80f e -> {
+        flameShoot = new Effect(33f, 80f, e -> {
             color(Pal.lightPyraFlame, Pal.darkPyraFlame, Color.gray, e.fin());
 
             randLenVectors(e.id, 15, e.finpow() * 90f, e.rotation, 15f, (x, y) -> {
