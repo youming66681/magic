@@ -926,9 +926,10 @@ public class MLBlocks {
                         statusDuration = 60f * 10f;
                         hitEffect = MLFx.flameHit;
                         despawnEffect = MLFx.flameHit;
-                        shootEffect = MLFx.flameShoot;
+                        shootEffect = MLFx.shootSmallFlame;
                         hittable = false;
                         absorbable = false;
+                        buildingDamageMultiplier = 0.1f;
                     }},
                     Items.pyratite, new BasicBulletType(4f, 60f){{
                         width = 0f;
@@ -940,9 +941,10 @@ public class MLBlocks {
                         statusDuration = 60f * 20f;
                         hitEffect = MLFx.flameHit;
                         despawnEffect = MLFx.flameHit;
-                        shootEffect = MLFx.flameShoot;
+                        shootEffect = MLFx.shootSmallFlame;
                         hittable = false;
                         absorbable = false;
+                        buildingDamageMultiplier = 0.1f;
                     }}
             );
             recoil = 3f;
