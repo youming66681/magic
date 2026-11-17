@@ -926,6 +926,7 @@ public class MLBlocks {
                         statusDuration = 60f * 10f;
                         hitEffect = MLFx.flameHit;
                         despawnEffect = MLFx.flameHit;
+                        shootEffect = MLFx.flameShoot;
                         hittable = false;
                         absorbable = false;
                     }},
@@ -939,6 +940,7 @@ public class MLBlocks {
                         statusDuration = 60f * 20f;
                         hitEffect = MLFx.flameHit;
                         despawnEffect = MLFx.flameHit;
+                        shootEffect = MLFx.flameShoot;
                         hittable = false;
                         absorbable = false;
                     }}
@@ -947,7 +949,7 @@ public class MLBlocks {
             reload = 3f;
             range = 90f;
             size = 3;
-            ammoUseEffect = MLFx.flameShoot;
+            ammoUseEffect = Fx.none;
             health =1200;
             shootSound = Sounds.shootFlame;
             coolant = consumeCoolant(0.3f);
