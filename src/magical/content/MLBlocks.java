@@ -924,8 +924,8 @@ public class MLBlocks {
                         pierce = true;
                         status = StatusEffects.burning;
                         statusDuration = 60f * 10f;
-                        hitEffect = MLFx.flameHit;
-                        despawnEffect = MLFx.flameHit;
+                        hitEffect = Fx.none;
+                        despawnEffect = Fx.none;
                         shootEffect = MLFx.flameShoot;
                         hittable = false;
                         absorbable = false;
@@ -939,8 +939,8 @@ public class MLBlocks {
                         pierce = true;
                         status = StatusEffects.burning;
                         statusDuration = 60f * 20f;
-                        hitEffect = MLFx.flameHit;
-                        despawnEffect = MLFx.flameHit;
+                        hitEffect = Fx.none;
+                        despawnEffect = Fx.none;
                         shootEffect = MLFx.flameShoot;
                         hittable = false;
                         absorbable = false;
