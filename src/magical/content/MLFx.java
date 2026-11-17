@@ -44,6 +44,7 @@ public class MLFx {
     public static Effect slash1;
     public static Effect triangleTrail;
     public static Effect flameHit;
+    public static Effect flameShoot;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -822,6 +823,13 @@ public class MLFx {
                 Lines.circle(e.x, e.y, 3f + e.fin() * 9f);
                 Draw.reset();
             });
+        flameShoot = new Effect(33f, 80f e -> {
+            color(Pal.lightPyraFlame, Pal.darkPyraFlame, Color.gray, e.fin());
+
+            randLenVectors(e.id, 15, e.finpow() * 90f, e.rotation, 15f, (x, y) -> {
+                Fill.circle(e.x + x, e.y + y, 0.65f + e.fout() * 1.6f);
+            });
+        }).followParent(false),
     }
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
