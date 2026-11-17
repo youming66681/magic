@@ -947,7 +947,7 @@ public class MLBlocks {
             reload = 3f;
             range = 90f;
             size = 3;
-            ammoUseEffect = Fx.flameShoot;
+            ammoUseEffect = MLFx.flameShoot;
             health = 1200;
             shootSound = Sounds.shootFlame;
             coolant = consumeCoolant(0.3f);
