@@ -829,7 +829,7 @@ public class MLFx {
             randLenVectors(e.id, 15, e.finpow() * 90f, e.rotation, 15f, (x, y) -> {
                 Fill.circle(e.x + x, e.y + y, 0.65f + e.fout() * 1.6f);
             });
-        }).followParent(false),
+        }).followParent(false);
     }
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {
