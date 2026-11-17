@@ -825,9 +825,9 @@ public class MLFx {
                 Draw.reset();
             });
         flameShoot = new Effect(33f, 80f, e -> {
-            color(Pal.lightPyraFlame, Pal.darkPyraFlame, Color.gray, e.fin());
+            Draw.color(Pal.lightPyraFlame, Pal.darkPyraFlame, Color.gray, e.fin());
 
-            randLenVectors(e.id, 15, e.finpow() * 90f, e.rotation, 15f, (x, y) -> {
+            Angles.randLenVectors(e.id, 15, e.finpow() * 90f, e.rotation, 15f, (x, y) -> {
                 Fill.circle(e.x + x, e.y + y, 0.65f + e.fout() * 1.6f);
             });
         }).followParent(false);
