@@ -916,7 +916,7 @@ public class MLBlocks {
         Hellfire = new ItemTurret("Hellfire") {{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 60, Items.graphite, 60, MLItems.mysticCrystal, 30}));
             ammo(
-                    Items.coal, new BulletType(4f, 30f){{
+                    Items.coal, new BasicBulletType(4f, 30f){{
                         width = 0f;
                         height = 0f;
                         hitSize = 16f;
@@ -924,12 +924,12 @@ public class MLBlocks {
                         pierce = true;
                         status = StatusEffects.burning;
                         statusDuration = 60f * 10f;
-                        hitEffect = MLFx.FlameEffects.flameHit;
-                        despawnEffect = MLFx.FlameEffects.flameHit;
+                        hitEffect = MLFx.flameHit;
+                        despawnEffect = MLFx.flameHit;
                         hittable = false;
                         absorbable = false;
                     }},
-                    Items.pyratite, new BulletType(4f, 60f){{
+                    Items.pyratite, new BasicBulletType(4f, 60f){{
                         width = 0f;
                         height = 0f;
                         hitSize = 16f;
@@ -937,8 +937,8 @@ public class MLBlocks {
                         pierce = true;
                         status = StatusEffects.burning;
                         statusDuration = 60f * 20f;
-                        hitEffect = MLFx.FlameEffects.flameHit;
-                        despawnEffect = MLFx.FlameEffects.flameHit;
+                        hitEffect = MLFx.flameHit;
+                        despawnEffect = MLFx.flameHit;
                         hittable = false;
                         absorbable = false;
                     }}
@@ -947,7 +947,7 @@ public class MLBlocks {
             reload = 3f;
             range = 90f;
             size = 3;
-            ammoUseEffect = Fx.none;
+            ammoUseEffect = Fx.flameShoot;
             health = 1200;
             shootSound = Sounds.shootFlame;
             coolant = consumeCoolant(0.3f);
