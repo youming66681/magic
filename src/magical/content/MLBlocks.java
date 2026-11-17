@@ -926,7 +926,7 @@ public class MLBlocks {
                         statusDuration = 60f * 10f;
                         hitEffect = MLFx.flameHit;
                         despawnEffect = MLFx.flameHit;
-                        shootEffect = MLFx.shootSmallFlame;
+                        shootEffect = Fx.shootSmallFlame;
                         hittable = false;
                         absorbable = false;
                         buildingDamageMultiplier = 0.1f;
@@ -941,7 +941,7 @@ public class MLBlocks {
                         statusDuration = 60f * 20f;
                         hitEffect = MLFx.flameHit;
                         despawnEffect = MLFx.flameHit;
-                        shootEffect = MLFx.shootSmallFlame;
+                        shootEffect = Fx.shootSmallFlame;
                         hittable = false;
                         absorbable = false;
                         buildingDamageMultiplier = 0.1f;
