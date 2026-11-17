@@ -816,7 +816,7 @@ public class MLFx {
             Lines.line(x2, y2, x3, y3);
             Lines.line(x3, y3, x1, y1);
             Draw.reset();
-        });、
+        });
         flameHit = new Effect(18f, e -> {
                 Draw.color(Color.orange, Color.yellow, e.fin());
                 Lines.stroke(3f * e.fout());

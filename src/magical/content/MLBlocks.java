@@ -951,7 +951,7 @@ public class MLBlocks {
             health = 1200;
             shootSound = Sounds.shootFlame;
             coolant = consumeCoolant(0.3f);
-        }}
+        }};
         //光降
         LightDescends = new ItemTurret("LightDescends") {{
             requirements(Category.turret, ItemStack.with(new Object[]{MLItems.phantomSteel, 120, Items.silicon, 80, Items.titanium, 90, MLItems.phantomTitaniumSteel, 75, MLItems.logicChip, 60,}));
