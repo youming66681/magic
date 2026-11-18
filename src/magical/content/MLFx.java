@@ -46,6 +46,7 @@ public class MLFx {
     public static Effect triangleTrail;
     public static Effect flameHit;
     public static Effect flameShoot;
+    public static Effect electronicExplosion;
 
     public static final Rand rand = new Rand();
     Vec2 temp = new Vec2();
@@ -92,6 +93,7 @@ public class MLFx {
                 );
             });
         });
+
         squareWaveRot = new Effect(14, 40f, e -> {
             rand.setSeed(e.id);
             Draw.color(Color.valueOf("FEEBB3FF"), e.color, rand.random(0.8f, 1.5f) * e.fin());
@@ -830,7 +832,24 @@ public class MLFx {
             Angles.randLenVectors(e.id, 15, e.finpow() * 90f, e.rotation, 15f, (x, y) -> {
                 Fill.circle(e.x + x, e.y + y, 0.65f + e.fout() * 1.6f);
             });
-        }).followParent(false);
+        }).followParent(false),
+
+        electronicExplosion = new Effect(70f, 160f, e -> {
+            Color electricBlue = Color.valueOf("97B5EDFF");
+            Draw.color(Color.white, electricBlue, e.fin());
+            Lines.stroke(5f * e.fout());
+            Lines.circle(e.x, e.y, e.finpow() * 128f);
+            Draw.color(electricBlue, Color.white, e.fin());
+            Lines.stroke(3f * e.fout());
+            Lines.circle(e.x, e.y, e.finpow() * 102.4f);
+            Draw.color(Color.white, electricBlue, e.fin());
+            Angles.randLenVectors(e.id, 90, e.finpow() * 128f, (x, y) -> {
+                Fill.circle(e.x + x, e.y + y, 1.5f + e.fout() * 3f);
+            });
+            Draw.color(Color.white, electricBlue, e.fin());
+            Fill.circle(e.x, e.y, 12f * e.fout());
+            Draw.reset();
+        });
     }
     public static Effect Slash(Color colorSlash, float len, float width){
         return new Effect(30f, e -> {

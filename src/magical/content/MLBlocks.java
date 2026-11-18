@@ -156,7 +156,7 @@ public class MLBlocks {
             BasicManufacturingPlant, PhantomSteelLiquidBridge, mysticCrystalBattery, CrystalEdge, Hellfire,
             //进阶科技
             starHarborShipbuildingCenter, baseStationCore, WingStonePunchingMachine, metaglassBooster, LightDescends, PhantomCrystal,LargePlastaniumCompressor,
-            Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, Constructor, Deconstructor, LeiHeng, Refraction,
+            Thundercloud, BreakingArmy, Nebula, wingWall, LargeWingWall, ElectromagneticFissionReactor, Constructor, Deconstructor, LeiHeng, Refraction, Shadow,
             //高端科技
             TerminalCore, WingEssenceMetalSynthesizer, PhantomSteelIncinerator, XuansteelMixer, LuminFeatherStoneReactor, PhantomGlowAlloyCombiner, LargePhaseWeaver,
             LargeSurgeSmelter, BulletsRain, Stars, SeekingSky, LuoLing, Mosasaurus, DawN, MysticSteelWall, LargeMysticSteelWall, PhantomGlowWall, LargePhantomGlowWall,
@@ -1657,6 +1657,117 @@ public class MLBlocks {
                                         haloRotateSpeed = 2f;
                                     }});
                     }});
+        }};
+        //幽影
+        Shadow = new PowerTurret("Shadow"){{
+            requirements(Category.turret, ItemStack.with(new Object[]{MLItems.acrylic, 120, MLItems.phantomTitaniumSteel, 80, MLItems.wingedStone, 120, Items.silicon, 120, Items.plastanium, 80, MLItems.logicChip, 40}));
+            shootType = new BasicBulletType(16f, 200f) {{
+                width = 48f;
+                height = 48f;
+                sprite = "magic-X";
+                splashDamageRadius = 128f;
+                splashDamage = 800f;
+                spin = 4;
+                lifetime = 30f;
+                frontColor = Color.valueOf("97B5EDFF");
+                backColor = Color.valueOf("97B5EDFF");
+                trailLength = 4;
+                trailWidth = 4f;
+                trailColor = Color.valueOf("97B5EDFF");
+                hitSound = MLSounds.explosionbig;
+                trailEffect = MLFx.squareWaveRot;
+                hitEffect = MLFx.electronicExplosion;
+                parts.add(
+                        new HaloPart() {{
+                            sides = 4;
+                            shapes = 1;
+                            rotateSpeed = 2f;
+                            color = Color.valueOf("97B5EDFF");
+                            colorTo = Color.valueOf("97B5EDFF");
+                            tri = false;
+                            hollow = true;
+                            stroke = 2f;
+                            strokeTo = 2f;
+                            radius = 48f;
+                            radiusTo = 48f;
+                            haloRadius = 0f;
+                        }},
+                        new HaloPart() {{
+                            sides = 4;
+                            shapes = 1;
+                            rotateSpeed = -2f;
+                            color = Color.valueOf("97B5EDFF");
+                            colorTo = Color.valueOf("97B5EDFF");
+                            tri = false;
+                            hollow = true;
+                            stroke = 2f;
+                            strokeTo = 2f;
+                            radius = 48f;
+                            radiusTo = 48f;
+                            haloRadius = 0f;
+                        }});
+                shootEffect = new WaveEffect() {{
+                    lifetime = 20f;
+                    size = 0;
+                    sizeTo = 24f;
+                    strokeFrom = 0f;
+                    strokeTo = 4f;
+                    colorFrom = Color.valueOf("97B5EDFF");
+                    colorTo = Color.valueOf("97B5EDFF");
+                }};
+            }};
+            range = 480f;
+            recoil = 8f;
+            reload = 240f;
+            shake = 16f;
+            liquidCapacity = 80;
+            shootEffect = Fx.none;
+            smokeEffect = Fx.smeltsmoke;
+            size = 4;
+            armor = 8;
+            health = 2400;
+            rotateSpeed = 4;
+            shootSound = MLSounds.shootArtillerySapBig;
+            coolant = consumeCoolant(0.4f);
+            consumePower(20f);
+            drawer = new DrawMulti(
+                    new DrawTurret(){{
+                        parts.add(
+                                new HaloPart() {{
+                                    sides = 4;
+                                    shapes = 1;
+                                    y = 16f;
+                                    color = Color.valueOf("97B5EDFF");
+                                    colorTo = Color.valueOf("97B5EDFF");
+                                    tri = false;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1f;
+                                    radius = 0f;
+                                    radiusTo = 4f;
+                                    haloRadius = 0f;
+                                    haloRotateSpeed = -2f;
+                                    layer = 110f;
+                                }},
+                                new HaloPart() {{
+                                    sides = 4;
+                                    shapes = 1;
+                                    y = 16f;
+                                    color = Color.valueOf("97B5EDFF");
+                                    colorTo = Color.valueOf("97B5EDFF");
+                                    tri = false;
+                                    hollow = true;
+                                    stroke = 0f;
+                                    strokeTo = 1f;
+                                    radius = 0f;
+                                    radiusTo = 8f;
+                                    haloRadius = 0f;
+                                    haloRotateSpeed = 2f;
+                                    layer = 110f;
+                                }}
+                        );
+                    }}
+            );
         }};
         //弹雨
         BulletsRain = new ItemTurret("BulletsRain"){{
