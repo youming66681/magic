@@ -1671,39 +1671,40 @@ public class MLBlocks {
                 lifetime = 30f;
                 frontColor = Color.valueOf("97B5EDFF");
                 backColor = Color.valueOf("97B5EDFF");
-                trailLength = 4;
-                trailWidth = 4f;
+                trailLength = 8;
+                trailWidth = 8f;
                 trailColor = Color.valueOf("97B5EDFF");
                 hitSound = MLSounds.explosionbig;
                 trailEffect = MLFx.squareWaveRot;
                 hitEffect = MLFx.electronicExplosion;
+                trailChance = 1f;
                 parts.add(
                         new HaloPart() {{
                             sides = 4;
                             shapes = 1;
-                            rotateSpeed = 2f;
+                            rotateSpeed = 4f;
                             color = Color.valueOf("97B5EDFF");
                             colorTo = Color.valueOf("97B5EDFF");
                             tri = false;
                             hollow = true;
                             stroke = 2f;
                             strokeTo = 2f;
-                            radius = 48f;
-                            radiusTo = 48f;
+                            radius = 24f;
+                            radiusTo = 24f;
                             haloRadius = 0f;
                         }},
                         new HaloPart() {{
                             sides = 4;
                             shapes = 1;
-                            rotateSpeed = -2f;
+                            rotateSpeed = -4f;
                             color = Color.valueOf("97B5EDFF");
                             colorTo = Color.valueOf("97B5EDFF");
                             tri = false;
                             hollow = true;
                             stroke = 2f;
                             strokeTo = 2f;
-                            radius = 48f;
-                            radiusTo = 48f;
+                            radius = 24f;
+                            radiusTo = 24f;
                             haloRadius = 0f;
                         }});
                 shootEffect = new WaveEffect() {{
