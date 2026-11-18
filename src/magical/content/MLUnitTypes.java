@@ -3735,7 +3735,7 @@ public class MLUnitTypes {
             omniMovement = true;
             circleTarget = true;
             circleTargetRadius = 250;
-            rotateSpeed = 2.25f;
+            rotateSpeed = 12f;
             speed = 6f;
             drag = 0.02f;
             accel = 0.08f;
