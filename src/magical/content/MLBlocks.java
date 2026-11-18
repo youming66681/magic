@@ -1678,6 +1678,7 @@ public class MLBlocks {
                 trailEffect = MLFx.squareWaveRot;
                 hitEffect = MLFx.electronicExplosion;
                 trailChance = 1f;
+                buildingDamageMultiplier = 0.1f;
                 parts.add(
                         new HaloPart() {{
                             sides = 4;
