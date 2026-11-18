@@ -155,6 +155,8 @@ public class MLTechTree {
                             /*光降*/node(MLBlocks.LightDescends, Seq.with(new SectorComplete(MLSectorPresets.CrossIceValley)), () -> {
                                 /*雷恒*/node(MLBlocks.LeiHeng, () -> {
                                     /*雷云*/node(MLBlocks.Thundercloud, () -> {
+                                /*幽影*/node(MLBlocks.Shadow, () -> {
+                                });
                                     });
                                 });
                                 /*星云*/node(MLBlocks.Nebula, Seq.with(new SectorComplete(MLSectorPresets.CrossIceValley)), () -> {

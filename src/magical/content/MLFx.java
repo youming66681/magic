@@ -832,7 +832,7 @@ public class MLFx {
             Angles.randLenVectors(e.id, 15, e.finpow() * 90f, e.rotation, 15f, (x, y) -> {
                 Fill.circle(e.x + x, e.y + y, 0.65f + e.fout() * 1.6f);
             });
-        }).followParent(false),
+        }).followParent(false);
 
         electronicExplosion = new Effect(70f, 160f, e -> {
             Color electricBlue = Color.valueOf("97B5EDFF");
