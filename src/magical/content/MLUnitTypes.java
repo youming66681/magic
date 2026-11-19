@@ -68,7 +68,7 @@ public class MLUnitTypes {
     BrokenEdge, FlyingSwallow, Tianshu, ConstantGlow,
     //旗舰
     Aoba, MoonRise, StarrySky, MilkyWay, TheWorld,
-    LiYao,
+    LiYao, SkyRise,
     //BOSS
     Mammoth;
 
@@ -6301,7 +6301,75 @@ public class MLUnitTypes {
                         }};
                     }});
         }};
-        //BOSSS
+        //天衍
+        SkyRise = new UnitType("SkyRise") {{
+                constructor = UnitTypes.flare.constructor;
+                flying = true;
+                faceTarget = false;
+                lowAltitude = true;
+                rotateMoveFirst = true;
+                omniMovement = true;
+                rotateSpeed = 1.8f;
+                health = 12000f;
+                armor = 75f;
+                hitSize = 96f;
+                engineOffset = 48;
+                engineSize = 24f;
+                range = 720;
+                speed = 2.1f;
+                accel = 0.06f;
+                drag = 0.04f;
+                targetFlags = new BlockFlag[]{
+                        BlockFlag.factory,
+                        BlockFlag.generator,
+                        BlockFlag.reactor,
+                        BlockFlag.battery
+                };
+                abilities.add(new EnergyFieldAbility(
+                        60f,   // damage
+                        60f,   // reload
+                        360f   // range
+                ) {{
+                    healPercent = 1f;
+                    x = 0f;
+                    y = 24f;
+                    maxTargets = 20;
+                    effectRadius = 12f;
+                    damageEffect = Fx.chainLightning;
+                    shootSound = MLSounds.spark;
+                    status = StatusEffects.shocked;
+                }});
+            parts.add(
+                    new HaloPart() {{
+                        sides = 4;
+                        shapes = 1;
+                        rotateSpeed = 2f;
+                        color = Color.valueOf("FEEBB3FF");
+                        colorTo = Color.valueOf("FEEBB3FF");
+                        tri = false;
+                        hollow = true;
+                        stroke = 2f;
+                        strokeTo = 2f;
+                        radius = 24f;
+                        radiusTo = 24f;
+                        haloRadius = 0f;
+                    }},
+                    new HaloPart() {{
+                        sides = 4;
+                        shapes = 1;
+                        rotateSpeed = -2f;
+                        color = Color.valueOf("FEEBB3FF");
+                        colorTo = Color.valueOf("FEEBB3FF");
+                        tri = false;
+                        hollow = true;
+                        stroke = 2f;
+                        strokeTo = 2f;
+                        radius = 30f;
+                        radiusTo = 30f;
+                        haloRadius = 0f;
+                    }});
+            }}
+        //BOSS
         //乳齿象
         Mammoth = new UnitType("Mammoth") {{
                 constructor = UnitTypes.stell.constructor;

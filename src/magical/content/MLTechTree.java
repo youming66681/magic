@@ -295,6 +295,8 @@ public class MLTechTree {
                                 /*天枢*/node(MLUnitTypes.Tianshu, () -> {
                                     });
                             /*青叶*/node(MLUnitTypes.Aoba, () -> {
+                                /*天衍*/node(MLUnitTypes.SkyRise, () -> {
+                                        });
                                 /*月涌*/node(MLUnitTypes.MoonRise, () -> {
 
                                     /*星空*/node(MLUnitTypes.StarrySky, () -> {
