@@ -6310,7 +6310,7 @@ public class MLUnitTypes {
                 rotateMoveFirst = true;
                 omniMovement = true;
                 rotateSpeed = 1.8f;
-                health = 12000f;
+                health = 120000f;
                 armor = 75f;
                 hitSize = 96f;
                 engineOffset = 48;
@@ -6332,9 +6332,9 @@ public class MLUnitTypes {
                 ) {{
                     healPercent = 1f;
                     x = 0f;
-                    y = 24f;
+                    y = 36f;
                     maxTargets = 20;
-                    effectRadius = 12f;
+                    effectRadius = 18f;
                     damageEffect = Fx.chainLightning;
                     shootSound = MLSounds.spark;
                     status = StatusEffects.shocked;
@@ -6343,7 +6343,23 @@ public class MLUnitTypes {
                     new HaloPart() {{
                         sides = 4;
                         shapes = 1;
+                        y = 36;
                         rotateSpeed = 2f;
+                        color = Color.valueOf("FEEBB3FF");
+                        colorTo = Color.valueOf("FEEBB3FF");
+                        tri = false;
+                        hollow = true;
+                        stroke = 2f;
+                        strokeTo = 2f;
+                        radius = 18f;
+                        radiusTo = 18f;
+                        haloRadius = 0f;
+                    }},
+                    new HaloPart() {{
+                        sides = 4;
+                        shapes = 1;
+                        y = 36;
+                        rotateSpeed = -2f;
                         color = Color.valueOf("FEEBB3FF");
                         colorTo = Color.valueOf("FEEBB3FF");
                         tri = false;
@@ -6352,20 +6368,6 @@ public class MLUnitTypes {
                         strokeTo = 2f;
                         radius = 24f;
                         radiusTo = 24f;
-                        haloRadius = 0f;
-                    }},
-                    new HaloPart() {{
-                        sides = 4;
-                        shapes = 1;
-                        rotateSpeed = -2f;
-                        color = Color.valueOf("FEEBB3FF");
-                        colorTo = Color.valueOf("FEEBB3FF");
-                        tri = false;
-                        hollow = true;
-                        stroke = 2f;
-                        strokeTo = 2f;
-                        radius = 30f;
-                        radiusTo = 30f;
                         haloRadius = 0f;
                     }});
             }};

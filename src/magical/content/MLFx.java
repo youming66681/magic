@@ -323,6 +323,7 @@ public class MLFx {
                 Lines.circle(e.x, e.y, 28f * shrink);
             }
         });
+
         LargeTeleport = new Effect(150f, 160f, e -> {
             float fin = e.fin();
             float fout = e.fout();
@@ -331,39 +332,41 @@ public class MLFx {
             float time = e.time;
             float radius = 8f + 120f * finpow;
             float fade = Math.min(foutpow * 1.5f, 1f);
-            Draw.color(Color.valueOf("FEEBB3FF"));
+            Color blue = Color.valueOf("FEEBB3FF");
+            Color paleBlue = Color.valueOf("FEEBB3FF");
+            Draw.color(blue);
             Fill.circle(e.x, e.y, 24f * fade);
-            Draw.color(Color.valueOf("FEEBB3FF"));
+            Draw.color(paleBlue);
             Fill.circle(e.x, e.y, 16f * fade);
             Draw.color(Color.white);
             Fill.circle(e.x, e.y, 7f * fade);
-            Draw.color(Color.valueOf("FEEBB3FF"));
+            Draw.color(blue);
             Lines.stroke(3f * fade);
             float cross = 18f + 20f * fin;
             Lines.line(e.x - cross, e.y, e.x + cross, e.y);
             Lines.line(e.x, e.y - cross, e.x, e.y + cross);
-            Draw.color(Color.valueOf("FEEBB3FF"));
+            Draw.color(paleBlue);
             Lines.stroke(3f * fade);
             Lines.arc(e.x, e.y, 30f + 8f * fin, 0.65f, e.rotation + time * 3f);
             Lines.arc(e.x, e.y, 30f + 8f * fin, 0.65f, e.rotation + time * 3f + 180f);
-            Draw.color(Color.valueOf("FEEBB3FF"));
+            Draw.color(blue);
             Lines.stroke(5f * fade);
             Lines.arc(e.x, e.y, 46f + 16f * fin, 0.45f, e.rotation - time * 2.2f);
             Lines.arc(e.x, e.y, 46f + 16f * fin, 0.45f, e.rotation - time * 2.2f + 180f);
-            Draw.color(Color.valueOf("FEEBB3FF"));
+            Draw.color(paleBlue);
             Lines.stroke(2.5f * fade);
             Lines.arc(e.x, e.y, 68f * finpow, 0.28f, e.rotation + time * 1.4f);
             Lines.arc(e.x, e.y, 68f * finpow, 0.28f, e.rotation + time * 1.4f + 120f);
             Lines.arc(e.x, e.y, 68f * finpow, 0.28f, e.rotation + time * 1.4f + 240f);
-            Draw.color(Color.valueOf("FEEBB3FF"));
+            Draw.color(blue);
             Lines.stroke(4f * fade);
             Lines.circle(e.x, e.y, radius);
-            Draw.color(Color.valueOf("FEEBB3FF"));
+            Draw.color(paleBlue);
             Lines.stroke(2f * fade);
             Lines.circle(e.x, e.y, radius - 7f);
-            Draw.color(Color.valueOf("FEEBB3FF"));
+            Draw.color(blue);
             Lines.stroke(3f * fade);
-            for (int i = 0; i < 12; i++) {
+            for(int i = 0; i < 12; i++){
                 float rotation = e.rotation + time * 1.8f + i * 30f;
                 float start = radius * 0.78f;
                 float end = radius * 0.96f;
@@ -373,17 +376,17 @@ public class MLFx {
                 float y2 = e.y + Angles.trnsy(rotation, end);
                 Lines.line(x1, y1, x2, y2);
             }
-            Draw.color(Color.valueOf("FEEBB3FF"));
-            for (int i = 0; i < 16; i++) {
+            Draw.color(paleBlue);
+            for(int i = 0; i < 16; i++){
                 float rotation = e.rotation - time * 2.5f + i * 22.5f;
                 float spikeRadius = 78f * finpow;
                 float x = e.x + Angles.trnsx(rotation, spikeRadius);
                 float y = e.y + Angles.trnsy(rotation, spikeRadius);
                 Drawf.tri(x, y, 5f + 7f * fade, 20f + 34f * fin, rotation);
             }
-            Draw.color(Color.valueOf("FEEBB3FF"));
+            Draw.color(blue);
             Lines.stroke(2.5f * fade);
-            for (int i = 0; i < 24; i++) {
+            for(int i = 0; i < 24; i++){
                 float rotation = e.rotation + i * 15f + time * 1.2f;
                 float inner = 35f + 15f * fin;
                 float outer = radius * (0.72f + 0.18f * Mathf.sin(time * 0.08f + i));
@@ -393,38 +396,39 @@ public class MLFx {
                 float y2 = e.y + Angles.trnsy(rotation, outer);
                 Lines.line(x1, y1, x2, y2);
             }
+            Draw.color(blue);
             Angles.randLenVectors(e.id, 50, radius * 0.9f, (x, y) -> {
                 float size = (1.5f + 3.5f * Mathf.random()) * fade;
-                Draw.color(Color.valueOf("FEEBB3FF"));
                 Fill.circle(e.x + x, e.y + y, size);
             });
+            Draw.color(paleBlue);
             Angles.randLenVectors(e.id + 1, 35, radius * 0.7f, (x, y) -> {
                 float size = (1f + 2.5f * Mathf.random()) * fade;
-                Draw.color(Color.valueOf("FEEBB3FF"));
                 Fill.circle(e.x + x, e.y + y, size);
             });
+            Draw.color(blue);
             Angles.randLenVectors(e.id + 2, 20, radius * 0.95f, (x, y) -> {
                 float angle = Angles.angle(x, y);
                 float len = 8f + 18f * fin;
                 float x2 = e.x + x + Angles.trnsx(angle, len);
                 float y2 = e.y + y + Angles.trnsy(angle, len);
-                Draw.color(Color.valueOf("FEEBB3FF"));
                 Lines.stroke(2f * fade);
                 Lines.line(e.x + x, e.y + y, x2, y2);
             });
             Draw.color(Color.white);
-            for (int i = 0; i < 8; i++) {
+            for(int i = 0; i < 8; i++){
                 float rotation = e.rotation + time * 5f + i * 45f;
                 float length = 20f + 16f * fin;
                 float width = 3f * fade;
                 Drawf.tri(e.x + Angles.trnsx(rotation, length), e.y + Angles.trnsy(rotation, length), width, 22f * fade, rotation);
             }
-            Draw.color(Color.valueOf("FEEBB3FF"));
+            Draw.color(blue);
             Lines.stroke(2f * fade);
             float pulse = radius + Mathf.sin(time * 0.18f) * 6f;
             Lines.circle(e.x, e.y, pulse);
             Draw.color(Color.white, fade);
             Fill.circle(e.x, e.y, (5f + 12f * Mathf.absin(time, 6f, 1f)) * fade);
+            Draw.reset();
         });
         hugeTeleport = new Effect(180f, 280f, e -> {
             float fin = e.fin();
