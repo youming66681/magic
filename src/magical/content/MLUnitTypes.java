@@ -6368,7 +6368,7 @@ public class MLUnitTypes {
                         radiusTo = 30f;
                         haloRadius = 0f;
                     }});
-            }}
+            }};
         //BOSS
         //乳齿象
         Mammoth = new UnitType("Mammoth") {{
