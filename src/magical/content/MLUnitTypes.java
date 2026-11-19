@@ -6351,8 +6351,8 @@ public class MLUnitTypes {
                         hollow = true;
                         stroke = 2f;
                         strokeTo = 2f;
-                        radius = 18f;
-                        radiusTo = 18f;
+                        radius = 24f;
+                        radiusTo = 24f;
                         haloRadius = 0f;
                     }},
                     new HaloPart() {{
@@ -6366,8 +6366,8 @@ public class MLUnitTypes {
                         hollow = true;
                         stroke = 2f;
                         strokeTo = 2f;
-                        radius = 24f;
-                        radiusTo = 24f;
+                        radius = 28f;
+                        radiusTo = 28f;
                         haloRadius = 0f;
                     }});
             }};
