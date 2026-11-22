@@ -6426,7 +6426,7 @@ public class MLUnitTypes {
                                             particles = 25;
                                             sizeFrom = 50f;
                                             sizeTo = 0f;
-                                            length = 128f;
+                                            length = 192f;
                                             baseLength = 0f;
                                             interp = Interp.pow10Out;
                                             sizeInterp = Interp.pow10In;
@@ -6443,7 +6443,7 @@ public class MLUnitTypes {
                                             sizeInterp = Interp.pow5In;
                                             lenFrom = 50f;
                                             lenTo = 0f;
-                                            length = 128f;
+                                            length = 192f;
                                             baseLength = 0f;
                                             lifetime = 180f;
                                             colorFrom = Color.valueOf("FEEBB3FF");
@@ -6452,7 +6452,7 @@ public class MLUnitTypes {
                                         new ParticleEffect(){{
                                             particles = 1;
                                             sizeFrom = 0f;
-                                            sizeTo = 160f;
+                                            sizeTo = 128f;
                                             sizeInterp = Interp.pow5Out;
                                             length = 0f;
                                             baseLength = 0f;
@@ -6462,7 +6462,7 @@ public class MLUnitTypes {
                                         }},
                                         new ParticleEffect(){{
                                             particles = 1;
-                                            sizeFrom = 160f;
+                                            sizeFrom = 128f;
                                             sizeTo = 0f;
                                             sizeInterp = Interp.pow10In;
                                             length = 0f;
