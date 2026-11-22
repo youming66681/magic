@@ -6334,7 +6334,7 @@ public class MLUnitTypes {
                     x = 0f;
                     y = 36f;
                     maxTargets = 20;
-                    effectRadius = 18f;
+                    effectRadius = 16f;
                     damageEffect = Fx.chainLightning;
                     shootSound = MLSounds.spark;
                     status = StatusEffects.shocked;
@@ -6370,6 +6370,141 @@ public class MLUnitTypes {
                         radiusTo = 28f;
                         haloRadius = 0f;
                     }});
+            weapons.add(
+                    new Weapon("magic-SkyRise2") {{
+                            reload = 240f;
+                            x = 0f;
+                            y = 36f;
+                            rotate = false;
+                            rotateSpeed = 1.5f;
+                            mirror = false;
+                            ignoreRotation = true;
+                            shootCone = 360;
+                            alternate = true;
+                            inaccuracy = 0f;
+                            shootSound = MLSounds.shootArtillerySapBig;
+                            shake = 10f;
+                            bullet = new BasicBulletType() {{
+                                width = 48f;
+                                height = 48f;
+                                sprite = "magic-X";
+                                damage = 400;
+                                splashDamageRadius = 256f;
+                                splashDamage = 1600f;
+                                spin = 4;
+                                lifetime = 45f;
+                                frontColor = Color.valueOf("FEEBB3FF");
+                                backColor = Color.valueOf("FEEBB3FF");
+                                trailLength = 8;
+                                trailWidth = 8f;
+                                trailColor = Color.valueOf("FEEBB3FF");
+                                hitSound = MLSounds.explosionbig;
+                                trailEffect = new ParticleEffect() {{
+                                    particles = 10;
+                                    sizeFrom = 10f;
+                                    sizeTo = 0f;
+                                    lifetime = 10f;
+                                    length = 10f;
+                                    baseLength = 10f;
+                                    region = "magic-X";
+                                    colorFrom = Color.valueOf("FEEBB3FF");
+                                    colorTo = Color.valueOf("FEEBB3FF");
+                                    cone = 30f;
+                                }};
+                                hitEffect = new MultiEffect(
+                                        new WaveEffect(){{
+                                            lifetime = 60f;
+                                            sizeFrom = 0f;
+                                            sizeTo = 256f;
+                                            strokeFrom = 0f;
+                                            strokeTo = 8f;
+                                            colorFrom = Color.valueOf("FEEBB3FF");
+                                            colorTo = Color.valueOf("FEEBB3FF");
+                                        }},
+                                        new ParticleEffect(){{
+                                            particles = 25;
+                                            sizeFrom = 50f;
+                                            sizeTo = 0f;
+                                            length = 128f;
+                                            baseLength = 0f;
+                                            interp = Interp.pow10Out;
+                                            sizeInterp = Interp.pow10In;
+                                            lifetime = 180f;
+                                            colorFrom = Color.valueOf("FEEBB3FF");
+                                            colorTo = Color.valueOf("FEEBB3FF");
+                                        }},
+                                        new ParticleEffect(){{
+                                            particles = 50;
+                                            line = true;
+                                            strokeFrom = 4f;
+                                            strokeTo = 0f;
+                                            interp = Interp.pow5Out;
+                                            sizeInterp = Interp.pow5In;
+                                            lenFrom = 50f;
+                                            lenTo = 0f;
+                                            length = 128f;
+                                            baseLength = 0f;
+                                            lifetime = 180f;
+                                            colorFrom = Color.valueOf("FEEBB3FF");
+                                            colorTo = Color.valueOf("FEEBB3FF");
+                                        }},
+                                        new ParticleEffect(){{
+                                            particles = 1;
+                                            sizeFrom = 0f;
+                                            sizeTo = 160f;
+                                            sizeInterp = Interp.pow5Out;
+                                            length = 0f;
+                                            baseLength = 0f;
+                                            lifetime = 60f;
+                                            colorFrom = Color.valueOf("FEEBB3FF");
+                                            colorTo = Color.valueOf("FEEBB3FF");
+                                        }},
+                                        new ParticleEffect(){{
+                                            particles = 1;
+                                            sizeFrom = 160f;
+                                            sizeTo = 0f;
+                                            sizeInterp = Interp.pow10In;
+                                            length = 0f;
+                                            baseLength = 0f;
+                                            startDelay = 60f;
+                                            lifetime = 120f;
+                                            colorFrom = Color.valueOf("FEEBB3FF");
+                                            colorTo = Color.valueOf("FEEBB3FF");
+                                        }}
+                                );
+                                trailChance = 1f;
+                                parts.add(
+                                        new HaloPart() {{
+                                            sides = 4;
+                                            shapes = 1;
+                                            rotateSpeed = 4f;
+                                            color = Color.valueOf("FEEBB3FF");
+                                            colorTo = Color.valueOf("FEEBB3FF");
+                                            tri = false;
+                                            hollow = true;
+                                            stroke = 2f;
+                                            strokeTo = 2f;
+                                            radius = 24f;
+                                            radiusTo = 24f;
+                                            haloRadius = 0f;
+                                        }},
+                                        new HaloPart() {{
+                                            sides = 4;
+                                            shapes = 1;
+                                            rotateSpeed = -4f;
+                                            color = Color.valueOf("FEEBB3FF");
+                                            colorTo = Color.valueOf("FEEBB3FF");
+                                            tri = false;
+                                            hollow = true;
+                                            stroke = 2f;
+                                            strokeTo = 2f;
+                                            radius = 24f;
+                                            radiusTo = 24f;
+                                            haloRadius = 0f;
+                                        }});
+
+                            }};
+                        }});
             }};
         //BOSS
         //乳齿象
