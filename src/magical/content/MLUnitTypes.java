@@ -6372,7 +6372,7 @@ public class MLUnitTypes {
                     }});
             weapons.add(
                     new Weapon("magic-SkyRise2") {{
-                            reload = 240f;
+                            reload = 300f;
                             x = 0f;
                             y = 36f;
                             rotate = false;
