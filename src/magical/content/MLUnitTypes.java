@@ -6392,6 +6392,7 @@ public class MLUnitTypes {
                                 splashDamageRadius = 256f;
                                 splashDamage = 1600f;
                                 spin = 4;
+                                speed = 16;
                                 lifetime = 45f;
                                 frontColor = Color.valueOf("FEEBB3FF");
                                 backColor = Color.valueOf("FEEBB3FF");
