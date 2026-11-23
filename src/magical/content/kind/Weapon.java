@@ -468,7 +468,7 @@ public class Weapon implements Cloneable{
             chargeSound.at(shootX, shootY, Mathf.random(soundPitchMin, soundPitchMax));
             bullet.chargeEffect.followParent = true;
             bullet.chargeEffect.rotWithParent = true;
-            bullet.chargeEffect.at(shootX, shootY, rotation, new WeaponChargeParent(unit, this, mount));
+            bullet.chargeEffect.at(shootX, shootY, rotation, unit);
         }
 
         shoot.shoot(mount.barrelCounter, (xOffset, yOffset, angle, delay, mover) -> {
@@ -587,44 +587,4 @@ public class Weapon implements Cloneable{
         return name == null || name.isEmpty() ? "Weapon" : "Weapon: " + name;
     }
 
-    private static class WeaponChargeParent implements Posc, Rotc{
-        private final Unit unit;
-        private final Weapon weapon;
-        private final WeaponMount mount;
-        WeaponChargeParent(Unit unit, Weapon weapon, WeaponMount mount){
-            this.unit = unit;
-            this.weapon = weapon;
-            this.mount = mount;
-        }
-        @Override
-        public float x(){
-            return unit.x + Angles.trnsx(unit.rotation - 90f, weapon.x, weapon.y);
-        }
-        @Override
-        public float y(){
-            return unit.y + Angles.trnsy(unit.rotation - 90f, weapon.x, weapon.y);
-        }
-        @Override
-        public void x(float x){}
-        @Override
-        public void y(float y){}
-        @Override
-        public void trns(float x, float y){}
-        @Override
-        public void trns(Position position){}
-        @Override
-        public void set(float x, float y){}
-        @Override
-        public void set(Position position){}
-        @Override
-        public Tile tileOn(){
-            return Vars.world.tileWorld(x(), y());
-        }
-        @Override
-        public float rotation(){
-            return unit.rotation - 90f + (weapon.rotate ? mount.rotation : weapon.baseRotation);
-        }
-        @Override
-        public void rotation(float rotation){}
-    }
 }
