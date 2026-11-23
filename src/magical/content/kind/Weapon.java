@@ -12,7 +12,6 @@ import arc.struct.*;
 import arc.util.*;
 import mindustry.*;
 import mindustry.ai.types.*;
-import mindustry.annotations.Annotations.*;
 import mindustry.audio.*;
 import mindustry.content.*;
 import mindustry.entities.*;
@@ -434,7 +433,6 @@ public class Weapon implements Cloneable{
         if(mount.shoot && //must be shooting
                 can && //must be able to shoot
                 !(bullet.killShooter && mount.totalShots > 0) && //if the bullet kills the shooter, you should only ever be able to shoot once
-                (!useAmmo || unit.ammo > 0 || !state.rules.unitAmmo || unit.team.rules().infiniteAmmo) && //check ammo
                 (!alternate || wasFlipped == flipSprite) &&
                 mount.warmup >= minWarmup && //must be warmed up
                 velLen >= minShootVelocity && //check velocity requirements
@@ -445,10 +443,6 @@ public class Weapon implements Cloneable{
 
             mount.reload = reload;
 
-            if(useAmmo){
-                unit.ammo--;
-                if(unit.ammo < 0) unit.ammo = 0;
-            }
         }
     }
 
@@ -568,7 +562,6 @@ public class Weapon implements Cloneable{
         }
     }
 
-    @CallSuper
     public void init(){
         if(alwaysContinuous){
             continuous = true;
@@ -602,13 +595,17 @@ public class Weapon implements Cloneable{
             this.mount = mount;
         }
         @Override
-        public float getX(){
+        public float x(){
             return unit.x + Angles.trnsx(unit.rotation - 90f, weapon.x, weapon.y);
         }
         @Override
-        public float getY(){
+        public float y(){
             return unit.y + Angles.trnsy(unit.rotation - 90f, weapon.x, weapon.y);
         }
+        @Override
+        public void x(float x){}
+        @Override
+        public void y(float y){}
         @Override
         public float rotation(){
             return unit.rotation - 90f + (weapon.rotate ? mount.rotation : weapon.baseRotation);
