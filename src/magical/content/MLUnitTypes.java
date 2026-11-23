@@ -6507,7 +6507,7 @@ public class MLUnitTypes {
                             }};
                         }},
                     new Weapon("magic-SkyRise1") {{
-                        reload = 120f;
+                        reload = 90f;
                         recoil = 6f;
                         x = 23;
                         y = -33;
@@ -6535,14 +6535,14 @@ public class MLUnitTypes {
                         }};
                     }},
                     new Weapon("magic-SkyRise0") {{
-                            reload = 180f;
+                            reload = 150f;
                             x = 19f;
                             y = 2f;
                             recoil = 2;
                             rotate = true;
                             rotateSpeed = 4f;
                             mirror = true;
-                            alternate = false;
+                            alternate = true;
                             inaccuracy = 0f;
                             chargeSound = MLSounds.lasercharge2;
                             shootSound = MLSounds.laser;
@@ -6559,6 +6559,7 @@ public class MLUnitTypes {
                                         Color.valueOf("FEEBB3FF"),
                                         Color.valueOf("FEEBB3FF")
                                 };
+                                chargeEffect = Fx.greenLaserCharge;
                                 width = 16f;
                                 length = 720;
                             }};
