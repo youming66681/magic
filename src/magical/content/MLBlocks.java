@@ -4105,7 +4105,7 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.LargePhantomGlowWall, 12),
                     new PayloadStack(MLBlocks.Shadow, 2),
                     new PayloadStack(MLBlocks.Nebula, 4),
-                    new PayloadStack(MLBlocks.lancer, 6));
+                    new PayloadStack(Blocks.lancer, 6));
             addPlan("T2", MLUnitTypes.MoonRise, 18000f, 23, 1,
                     new PayloadStack(MLBlocks.largePhantomSteelWall, 18),
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 18),
