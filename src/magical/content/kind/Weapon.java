@@ -612,6 +612,8 @@ public class Weapon implements Cloneable{
         @Override
         public void trns(Position position){}
         @Override
+        public void set(float x, float y){}
+        @Override
         public float rotation(){
             return unit.rotation - 90f + (weapon.rotate ? mount.rotation : weapon.baseRotation);
         }
