@@ -11,6 +11,7 @@ import arc.math.geom.*;
 import arc.scene.ui.layout.*;
 import arc.struct.*;
 import arc.util.*;
+import mindustry.world.*;
 import mindustry.*;
 import mindustry.ai.types.*;
 import mindustry.audio.*;
@@ -615,6 +616,10 @@ public class Weapon implements Cloneable{
         public void set(float x, float y){}
         @Override
         public void set(Position position){}
+        @Override
+        public Tile tileOn(){
+            return Vars.world.tileWorld(x(), y());
+        }
         @Override
         public float rotation(){
             return unit.rotation - 90f + (weapon.rotate ? mount.rotation : weapon.baseRotation);
