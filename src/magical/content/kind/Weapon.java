@@ -3,6 +3,7 @@ package mindustry.type;
 import arc.*;
 import arc.audio.*;
 import arc.func.*;
+import arc.math.geom.*;
 import arc.graphics.*;
 import arc.graphics.g2d.*;
 import arc.math.*;
@@ -160,6 +161,8 @@ public class Weapon implements Cloneable{
     public @Nullable Effect shootOnDeathEffect = null;
     /** extra animated parts */
     public Seq<DrawPart> parts = new Seq<>(DrawPart.class);
+
+    private final Vec2 tmp = new Vec2();
 
     public Weapon(String name){
         this.name = name;
@@ -612,5 +615,9 @@ public class Weapon implements Cloneable{
         }
         @Override
         public void rotation(float rotation){}
+        @Override
+        public Vec2 trns(float angle, float amount){
+            return tmp.trns(angle, amount);
+        }
     }
 }
