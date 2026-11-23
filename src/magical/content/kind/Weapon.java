@@ -162,8 +162,6 @@ public class Weapon implements Cloneable{
     /** extra animated parts */
     public Seq<DrawPart> parts = new Seq<>(DrawPart.class);
 
-    private final Vec2 tmp = new Vec2();
-
     public Weapon(String name){
         this.name = name;
     }
@@ -610,14 +608,12 @@ public class Weapon implements Cloneable{
         @Override
         public void y(float y){}
         @Override
+        public void trns(float x, float y){}
+        @Override
         public float rotation(){
             return unit.rotation - 90f + (weapon.rotate ? mount.rotation : weapon.baseRotation);
         }
         @Override
         public void rotation(float rotation){}
-        @Override
-        public Vec2 trns(float angle, float amount){
-            return tmp.trns(angle, amount);
-        }
     }
 }
