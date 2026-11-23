@@ -6505,6 +6505,63 @@ public class MLUnitTypes {
                                         }});
 
                             }};
+                        }},
+                    new Weapon("magic-SkyRise1") {{
+                        reload = 120f;
+                        recoil = 6f;
+                        x = 23;
+                        y = -33;
+                        mirror = true;
+                        rotate = true;
+                        rotateSpeed = 2f;
+                        inaccuracy = 0f;
+                        ejectEffect = Fx.casing4;
+                        layerOffset = 0.001f;
+                        shootSound = MLSounds.laser;
+                        alternate = true;
+                        bullet = new BasicBulletType(16, 400) {{
+                            lifetime = 45;
+                            width = 32;
+                            height = 64;
+                            splashDamageRadius = 64;
+                            splashDamage = 600;
+                            trailLength = 8;
+                            trailWidth = 4f;
+                            trailColor = Color.valueOf("FEEBB3FF");
+                            backColor = Color.valueOf("FEEBB3FF");
+                            frontColor = Color.valueOf("FEEBB3FF");
+                            hitEffect = despawnEffect = MLFx.EnergyExplosion2;
+                            hitSound = MLSounds.explosionCleroi;
+                        }};
+                    }},
+                    new Weapon("magic-SkyRise0") {{
+                            reload = 180f;
+                            x = 19f;
+                            y = 2f;
+                            recoil = 2;
+                            rotate = true;
+                            rotateSpeed = 4f;
+                            mirror = true;
+                            alternate = false;
+                            inaccuracy = 0f;
+                            chargeSound = MLSounds.lasercharge2;
+                            shootSound = MLSounds.laser;
+                            shake = 5f;
+                            layerOffset = 0.001f;
+                            shoot = new ShootPattern() {{
+                                firstShotDelay = 80f;
+                            }};
+                            bullet = new LaserBulletType() {{
+                                damage = 500f;
+                                smokeEffect = Fx.bigShockwave;
+                                colors = new Color[]{
+                                        Color.valueOf("FEEBB3FF"),
+                                        Color.valueOf("FEEBB3FF"),
+                                        Color.valueOf("FEEBB3FF")
+                                };
+                                width = 16f;
+                                length = 720;
+                            }};
                         }});
             }};
         //BOSS
@@ -6531,8 +6588,7 @@ public class MLUnitTypes {
                     allyHealAmount = 250f;
                 }});
                 weapons.add(
-                        new Weapon("magic-Mammoth0") {
-                            {
+                        new Weapon("magic-Mammoth0") {{
                                 reload = 120f;
                                 x = 0f;
                                 y = -20f;
