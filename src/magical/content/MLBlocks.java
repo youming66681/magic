@@ -4098,6 +4098,14 @@ public class MLBlocks {
                     new PayloadStack(MLBlocks.LargePhantomGlowWall, 12),
                     new PayloadStack(MLBlocks.BreakingArmy, 2),
                     new PayloadStack(MLBlocks.LightDescends, 4));
+            addPlan("T2", MLUnitTypes.SkyRise, 12000f, 19, 1,
+                    new PayloadStack(MLBlocks.largePhantomSteelWall, 12),
+                    new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 12),
+                    new PayloadStack(MLBlocks.LargeWingWall, 12),
+                    new PayloadStack(MLBlocks.LargePhantomGlowWall, 12),
+                    new PayloadStack(MLBlocks.Shadow, 2),
+                    new PayloadStack(MLBlocks.Nebula, 4),
+                    new PayloadStack(MLBlocks.lancer, 6));
             addPlan("T2", MLUnitTypes.MoonRise, 18000f, 23, 1,
                     new PayloadStack(MLBlocks.largePhantomSteelWall, 18),
                     new PayloadStack(MLBlocks.largePhantomTitaniumSteelWall, 18),
